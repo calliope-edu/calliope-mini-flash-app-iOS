@@ -1,0 +1,69 @@
+ "_localizable" = "de";
+
+"_MainViewController" = "<b>Hallo und willkommen in der Calliope mini App!</b><br>Mit Hilfe dieser App kannst du dich mit deinem <b>mini</b> verbinden und mobil programmieren.<br>Unter <b>„Mit mini verbinden“</b> kannst du deinen <b>mini</b> finden und eine Bluetooth Verbindung herstellen.<br>Der Punkt <b>„Code erstellen“</b> gibt dir die Möglichkeit unterschiedliche Programmieroberflächen zu testen und deinen <b>mini</b> zu steuern.<br>Bei <b>„Programme aufrufen“</b> kannst du gespeicherte Programme auswählen oder das original Skript auf den <b>mini</b> spielen.<br><br>Falls du Fragen oder Anmerkungen hast, kannst du uns an die Emailadresse info@calliope.cc eine Nachricht schreiben.<br><br>Viel Spaß wünscht dir das Calliope Team!<br><br>Calliope gGmbH<br>Raumerstrasse 11<br>10437 Berlin<br>Telefon 03044047014<br>
+";
+"_ScannerViewController" = "Hier kannst du dich mobil mit deinem <b>mini</b> verbinden!<br>So geht es:<br><br>Halte die Tasten A+B gleichzeitig gedrückt, warte ein paar Sekunden und drücke dann dazu Reset.<br><br>Halte dann alle Tasten etwa fünf Sekunden gemeinsam gedrückt und lass dann die Reset Taste los. Ein paar Sekunden danach kannst du auch die Tasten A+B loslassen.<br><br>Dann sollte ein Muster auf dem <b>mini</b> erscheinen. Dieses Muster überträgst du dann auf das 5x5 Raster in der App.<br>Drücke dazu einfach auf die einzelnen Felder. Die App merkt, ob es den passenden <b>mini</b> in der Nähe gibt und sobald du Verbinden drückst, startet der Verbindungsaufbau.<br><br>Danach bist du mit dem <b>mini</b> gekoppelt und kannst mit dem Programmieren loslegen!<br>";
+"_EditorsViewController" = "Hacken, basteln, Coden!<br>Wähle eine Programmieroberfläche aus und lade deine Ideen auf deinen <b>mini</b>!<br>Alle Editoren funktionieren relativ ähnlich, probier am besten alle einmal aus, um herauszufinden, welcher dir am besten liegt.<br><br>Mit diesen Editoren kannst Du ganz einfach einen eigenen Text auf dem Display anzeigen lassen, externe Sensoren auslesen oder sogar selbst gebaute <b>mini</b>-Roboter programmieren – probier' es einfach aus!<br><br>";
+"_EditorViewController" = "<b>Calliope mini Editor</b>, die einfachste Art den <b>mini</b> zu programmieren!<br>Mit dem Calliope <b>mini</b>-Editor kannst Du ganz einfach und schnell eigene Bilder und Texte auf deinen <b>mini</b> bringen.<br><br><b>MakeCode</b> – mit Hilfe des MakeCode Editors kann der Calliope <b>mini</b> vielfältig gesteuert werden. Entweder durch das Anordnen von Programmier-Blöcken oder mit JavaScript.<br><br><b>Open Roberta Lab®</b>, Mit Open Roberta wird Programmieren zum Kinderspiel!<br>Im „Open Roberta Lab“ lernen selbst Neulinge mit der grafischen Programmiersprache NEPO® intuitiv programmieren! Die Open-Source-Plattform beruht auf der langjährigen Erfahrung der Fraunhofer-Initiative „Roberta® – Lernen mit Robotern“.<br>";
+"_UploaderViewController" = "Help UPLOADER<b>(en)</b>";
+"_HistoryViewController" = "<b>Hier kannst du deine</b> letzten Programme auswählen oder den <b>mini</b> in den Originalzustand zurücksetzen. Um ein Programm auf den <b>mini</b> zu spielen, muss zuerst ein <b>mini</b> mit der App verbunden sein!<br>";
+
+"button.help" = "Hilfe!";
+"button.cancel" = "Abbruch";
+
+"help.title" = "Hilfe";
+
+"alert.ok" = "OK";
+"alert.cancel" = "Abbruch";
+
+"main.text.none" = "Spiele eigene Programme auf deinen mini!";
+"main.text.selected" = "Du bist mit dem mini [%@] verbunden. Erstelle nun dein eigenes Programm!";
+"main.scanner.none" = "Mit mini verbinden";
+"main.scanner.selected" = "Anderen mini wählen";
+"main.editors" = "Code erstellen";
+"main.history" = "Deine Programme";
+
+"scanner.title" = "";
+"scanner.text" = "Drücke A+B und Reset. Nach 5 Sek. Reset loslassen. Wenn Pairing erscheint, A+B loslassen. Übertrage das Muster der LEDs.";
+"scanner.button" = "Verbinden";
+
+"connect.ready.heading" = "Verbinde mit dem mini";
+"connect.ready.text" = "";
+"connect.success.heading" = "JUCHU!";
+"connect.success.text" = "Du bist jetzt mit deinem mini verbunden!";
+"connect.error.heading" = "BLEIB COOL!";
+
+"connect.button.abort" = "Abbrechen";
+"connect.button.success" = "Auf zum Programmieren!";
+"connect.button.error" = "Versuche es einfach noch mal!";
+
+"editors.title" = "Code erstellen";
+"editors.text" = "Währe deinen Lieblings-Editor aus und leg einfach los!";
+"editors.button" = "Editor Öffnen";
+
+"editor.mini.name" = "Calliope mini Editor";
+"editor.mini.text" = "Die einfachste Art den mini zu programmieren";
+
+"editor.microbit.name" = "MakeCode";
+"editor.microbit.text" = "Mit dem MakeCode-Editor kann der mini vielfältig gesteuert werden";
+
+"editor.roberta.name" = "Open Roberta NEPO®";
+"editor.roberta.text" = "Nutze die grafischen NEPO® Blöcke zum intuitiven programmieren";
+
+"upload.ready.text" = "Suche mini";
+"upload.retrieving.text" = "Suche mini";
+"upload.missing.text" = "Gerät nicht gefunden";
+"upload.rebooted.text" = "Neu gestartet";
+"upload.uploading.text" = "Übertragung %1.0f%%";
+"upload.success.text" = "Übertragung erfolgreich";
+"upload.error.text" = "Übertragung fehlgeschlagen";
+
+"upload.button.abort" = "Abbrechen";
+"upload.button.success" = "OK";
+"upload.button.error" = "OK";
+
+"history.title" = "Programme aufrufen";
+"history.text" = "Wähle gespeicherte Programme aus oder versetze den mini in den Originalzustand.";
+"history.button" = "Auf mini laden";
+
+//

@@ -1,0 +1,69 @@
+ "_localizable" = "en";
+
+"_MainViewController" = "<b>Hello and welcome to the Calliope mini app!</b><br>By using this app you can connect, code and flash scripts to your <b>mini</b> via Bluetooth.<br><br>Have fun!<br><br>Calliope gGmbH<br>Raumerstrasse 11<br>10437 Berlin<br>Tel. 0049 (0) 30 44047014<br>
+";
+"_ScannerViewController" = "Connect with your <b>mini</b>!<br>To know the pattern of your <b>mini</b>: Please hold A and B buttons down and then press Reset.<br><br>Wait for 5 seconds and than release Reset. If <b>PAIRING</b> appears you can release A+B. A pattern will appear on your mini. Draw the same pattern within the app and you are ready to connect!<br>";
+"_EditorsViewController" = "Now you can start to hack, code and tinker!<br>Select your own editor and flash your own ideas to your <b>mini</b>!<br><br>";
+"_EditorViewController" = "<b>Calliope mini Editor</b>, the easiest way to write code for your <b>mini</b>!<br><br><b>MakeCode</b> brings computer science to life for all students with fun projects, immediate results, and both block and text editors for learners at different levels.<br><br><b>Open Roberta Lab®</b> is a cloud-based integrated programming environment that enables children and adolescents to program microcontroller systems easily. This platform is completely open source so taking part is desirable! Both the software and the open source developer tools are available via Fraunhofer servers.<br>";
+"_UploaderViewController" = "Help UPLOADER<b>(en)</b>";
+"_HistoryViewController" = "Select your previous scripts, or reset your <b>mini</b> to the default state.<br>";
+
+"button.help" = "Help!";
+"button.cancel" = "Abort";
+
+"help.title" = "Help";
+
+"alert.ok" = "OK";
+"alert.cancel" = "Cancel";
+
+"main.text.none" = "Flash own scripts to your mini!";
+"main.text.selected" = "You are connected to the mini [%@]. Now write your own code!";
+"main.scanner.none" = "Connect your mini";
+"main.scanner.selected" = "Select different mini";
+"main.editors" = "Start coding";
+"main.history" = "Your scripts";
+
+"scanner.title" = "";
+"scanner.text" = "Press A+B and Reset. Wait 5 sec. and release Reset, if you see the PAIRING note, release A+B. Redraw the pattern from your mini.";
+"scanner.button" = "Connect";
+
+"connect.ready.heading" = "Connect your mini";
+"connect.ready.text" = "";
+"connect.success.heading" = "Yeah!";
+"connect.success.text" = "You are now connected to your mini!";
+"connect.error.heading" = "Stay cool!";
+
+"connect.button.abort" = "Abort";
+"connect.button.success" = "Start coding";
+"connect.button.error" = "Try it again";
+
+"editors.title" = "Start coding";
+"editors.text" = "Select your favorite editor and start coding!";
+"editors.button" = "Start coding";
+
+"editor.mini.name" = "Calliope mini Editor";
+"editor.mini.text" = "";
+
+"editor.microbit.name" = "MakeCode";
+"editor.microbit.text" = "";
+
+"editor.roberta.name" = "Open Roberta NEPO®";
+"editor.roberta.text" = "";
+
+"upload.ready.text" = "Searching for mini";
+"upload.retrieving.text" = "Searching for mini";
+"upload.missing.text" = "Device not visible";
+"upload.rebooted.text" = "Restart";
+"upload.uploading.text" = "Flashing %1.0f%%";
+"upload.success.text" = "Flashing succeded";
+"upload.error.text" = "Flashing failed";
+
+"upload.button.abort" = "Abort";
+"upload.button.success" = "OK";
+"upload.button.error" = "OK";
+
+"history.title" = "Selecting scripts";
+"history.text" = "Select a recent program or flash the default script to your mini.";
+"history.button" = "Flash to mini";
+
+//
