@@ -1,6 +1,7 @@
-[![Build Status](https://travis-ci.org/{ORG-or-USERNAME}/{REPO-NAME}.png?branch=master)](https://travis-ci.org/{ORG-or-USERNAME}/{REPO-NAME})
 
-[![Github commits (since latest release)](https://img.shields.io/github/commits-since/SubtitleEdit/subtitleedit/latest.svg)]()
+## Calliope mini app
+
+This app connects a smartphone or tablet with the Calliope mini and flashes hex files or blobs from webviews of the editors to the Calliope mini.
 
 ## Where to get it
 
