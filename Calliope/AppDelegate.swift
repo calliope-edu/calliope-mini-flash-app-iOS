@@ -37,12 +37,15 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
+        UIApplication.shared.isIdleTimerDisabled = false
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
+        UIApplication.shared.isIdleTimerDisabled = true
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
+        UIApplication.shared.isIdleTimerDisabled = true
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

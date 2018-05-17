@@ -28,7 +28,7 @@ final class MiniEditor: Editor {
 // https://pxt.calliope.cc/
 final class MicrobitEditor: Editor {
     public let name = "MakeCode"
-    public let url = URL(string: "https://pxt.calliope.cc/")!
+    public let url = URL(string: "https://makecode.calliope.cc/")!
 
     func download(_ request: URLRequest) -> EditorDownload? {
         guard let s = request.url?.absoluteString else { return nil }

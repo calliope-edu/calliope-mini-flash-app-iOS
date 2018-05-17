@@ -38,14 +38,14 @@
 "connect.button.error" = "Versuche es einfach noch mal!";
 
 "editors.title" = "Code erstellen";
-"editors.text" = "Währe deinen Lieblings-Editor aus und leg einfach los!";
-"editors.button" = "Editor Öffnen";
+"editors.text" = "Wähle dein Lieblingswerkzeug aus und leg einfach los!";
+"editors.button" = "Editor öffnen";
 
 "editor.mini.name" = "Calliope mini Editor";
 "editor.mini.text" = "Die einfachste Art den mini zu programmieren";
 
 "editor.microbit.name" = "MakeCode";
-"editor.microbit.text" = "Mit dem MakeCode-Editor kann der mini vielfältig gesteuert werden";
+"editor.microbit.text" = "Mit MakeCode kann der mini vielfältig gesteuert werden";
 
 "editor.roberta.name" = "Open Roberta NEPO®";
 "editor.roberta.text" = "Nutze die grafischen NEPO® Blöcke zum intuitiven programmieren";
