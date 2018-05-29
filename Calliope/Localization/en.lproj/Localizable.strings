@@ -19,7 +19,7 @@
 "main.text.none" = "Flash own scripts to your mini!";
 "main.text.selected" = "You are connected to the mini [%@]. Now write your own code!";
 "main.scanner.none" = "Connect your mini";
-"main.scanner.selected" = "Select different mini";
+"main.scanner.selected" = "Select new mini";
 "main.editors" = "Start coding";
 "main.history" = "Your scripts";
 
