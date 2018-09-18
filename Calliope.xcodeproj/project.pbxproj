@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		80E33C9120D8024C00BF83AE /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 80E33C9020D8024C00BF83AE /* Settings.bundle */; };
 		9D02A0181F31DE59004113B1 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D02A0171F31DE59004113B1 /* Global.swift */; };
 		9D02A01E1F322847004113B1 /* ExtBluetooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D02A01D1F322847004113B1 /* ExtBluetooth.swift */; };
 		9D1461121F5577F5000DD8B8 /* Checksum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1461111F5577F5000DD8B8 /* Checksum.swift */; };
@@ -61,6 +62,7 @@
 /* Begin PBXFileReference section */
 		00CD16BA0517A1007D5C37FE /* Pods_Calliope.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Calliope.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		187D027987EA3CD6BF52AE2C /* Pods-Calliope.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope.release.xcconfig"; path = "Pods/Target Support Files/Pods-Calliope/Pods-Calliope.release.xcconfig"; sourceTree = "<group>"; };
+		80E33C9020D8024C00BF83AE /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		9D02A0171F31DE59004113B1 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		9D02A01D1F322847004113B1 /* ExtBluetooth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtBluetooth.swift; sourceTree = "<group>"; };
 		9D1461111F5577F5000DD8B8 /* Checksum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checksum.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 				9D55AF7A1F65D9EF002B8431 /* Bluetooth */,
 				9DAC99FD1F942B20007C1B42 /* Microbit.swift */,
 				9D1790B41F61552900CDF964 /* Editors.swift */,
+				80E33C9020D8024C00BF83AE /* Settings.bundle */,
 				9D1790B21F614F3100CDF964 /* Device.swift */,
 				9DFA2DD51F59FC5600DD1A10 /* HexParser.swift */,
 				9D1461111F5577F5000DD8B8 /* Checksum.swift */,
@@ -333,6 +336,7 @@
 				9DA818911F7A779D00093031 /* RobotoMono-Regular.ttf in Resources */,
 				9D3A59BD1F8875F5009023CA /* RobotoMono-Bold.ttf in Resources */,
 				9D366AEE1F7D0DC300BB5A26 /* Localizable.strings in Resources */,
+				80E33C9120D8024C00BF83AE /* Settings.bundle in Resources */,
 				9D6404461F2E49C3005B54A9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

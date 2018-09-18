@@ -41,18 +41,18 @@ import CoreBluetooth
      The service delegate is an object that will be notified about state changes of the DFU Service.
      Setting it is optional but recommended.
      */
-    public weak var delegate: DFUServiceDelegate?
+    @objc public weak var delegate: DFUServiceDelegate?
     
     /**
      An optional progress delegate will be called only during upload. It notifies about current upload
      percentage and speed.
      */
-    public weak var progressDelegate: DFUProgressDelegate?
+    @objc public weak var progressDelegate: DFUProgressDelegate?
     
     /**
      The logger is an object that should print given messages to the user. It is optional.
      */
-    public weak var logger: LoggerDelegate?
+    @objc public weak var logger: LoggerDelegate?
     
     /**
      The selector object is used when the device needs to disconnect and start advertising with a different address
@@ -68,17 +68,27 @@ import CoreBluetooth
      
      Ignore this property if not updating Softdevice and Application from one ZIP file or your 
      */
-    public var peripheralSelector: DFUPeripheralSelectorDelegate
+    @objc public var peripheralSelector: DFUPeripheralSelectorDelegate
 
     /**
      The number of packets of firmware data to be received by the DFU target before sending
      a new Packet Receipt Notification.
      If this value is 0, the packet receipt notification will be disabled by the DFU target.
-     Default value is 12. Higher values (~20+), or disabling it, may speed up the upload process,
-     but also cause a buffer overflow and hang the Bluetooth adapter.
+     Default value is 12.
+     
+     PRNs are no longer required on iOS 11 and MacOS 10.13 or newer, but make sure
+     your device is able to be updated without. Old SDKs, before SDK 7 had very slow
+     memory management and could not handle packets that fast. If your device
+     is based on such SDK it is recommended to leave the default value.
+     
+     Disabling PRNs on iPhone 8 with iOS 11.1.2 increased the speed from 1.7 KB/s to 2.7 KB/s
+     on DFU from SDK 14.1 where packet size is 20 bytes (higher MTU not supported yet).
+     
+     On older versions, higher values of PRN (~20+), or disabling it, may speed up
+     the upload process, but also cause a buffer overflow and hang the Bluetooth adapter.
      Maximum verified values were 29 for iPhone 6 Plus or 22 for iPhone 7, both iOS 10.1.
      */
-    public var packetReceiptNotificationParameter: UInt16 = 12
+    @objc public var packetReceiptNotificationParameter: UInt16 = 12
     
     /**
      **Legacy DFU only.**
@@ -127,7 +137,26 @@ import CoreBluetooth
      if the only service found is the DFU Service. Setting the forceDfu to true (YES) will prevent from
      jumping in these both cases.
      */
-    public var forceDfu = false
+    @objc public var forceDfu = false
+    
+    /**
+     In SDK 14.0.0 a new feature was added to the Buttonless DFU for non-bonded devices which allows to send a unique name
+     to the device before it is switched to bootloader mode. After jump, the bootloader will advertise with this name
+     as the Complete Local Name making it easy to select proper device. In this case you don't have to override the default
+     peripheral selector.
+     
+     Read more: http://infocenter.nordicsemi.com/topic/com.nordic.infocenter.sdk5.v14.0.0/service_dfu.html
+     
+     Setting this flag to false you will disable this feature. iOS DFU Library will not send the 0x02-[len]-[new name]
+     command prior jumping and will rely on the DfuPeripheralSelectorDelegate just like it used to in previous SDK.
+     
+     This flag is ignored in Legacy DFU.
+     
+     **It is recommended to keep this flag set to true unless necessary.**
+     
+     For more information read: https://github.com/NordicSemiconductor/IOS-nRF-Connect/issues/16
+     */
+    @objc public var alternativeAdvertisingNameEnabled = true
     
     /**
      Set this flag to true to enable experimental buttonless feature in Secure DFU. When the 
@@ -164,7 +193,7 @@ import CoreBluetooth
      passing bond information to the bootloader, encryption, well tested). It is recommended to use this 
      new service when SDK 13 (or later) is out. TODO: fix the docs when SDK 13 is out.
      */
-    public var enableUnsafeExperimentalButtonlessServiceInSecureDfu = false
+    @objc public var enableUnsafeExperimentalButtonlessServiceInSecureDfu = false
     
     //MARK: - Public API
     
@@ -183,7 +212,7 @@ import CoreBluetooth
      - seeAlso: peripheralSelector property - a selector used when scanning for a device in DFU Bootloader mode
      in case you want to update a Softdevice and Application from a single ZIP Distribution Packet.
      */
-    public init(centralManager: CBCentralManager, target: CBPeripheral) {
+    @objc public init(centralManager: CBCentralManager, target: CBPeripheral) {
         self.centralManager = centralManager
         // Just to be sure that manager is not scanning
         self.centralManager.stopScan()
@@ -201,7 +230,7 @@ import CoreBluetooth
      
      - returns: the initiator instance to allow chain use
      */
-    public func with(firmware file: DFUFirmware) -> DFUServiceInitiator {
+    @objc public func with(firmware file: DFUFirmware) -> DFUServiceInitiator {
         self.file = file
         return self
     }
@@ -219,7 +248,7 @@ import CoreBluetooth
      
      - returns: A DFUServiceController object that can be used to control the DFU operation.
      */
-    public func start() -> DFUServiceController? {
+    @objc public func start() -> DFUServiceController? {
         // The firmware file must be specified before calling `start()`
         if file == nil {
             delegate?.dfuError(.fileNotSpecified, didOccurWithMessage: "Firmare not specified")

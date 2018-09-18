@@ -16,6 +16,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
+    
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
 
         if url.isFileURL {
@@ -53,4 +54,29 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
+
+func registerDefaultsFromSettingsBundle() {
+    
+    let userDefaults = UserDefaults.standard
+    if let settingsURL = Bundle.main.url(forResource: "Root", withExtension: "plist", subdirectory: "Settings.bundle"),
+        let settings = NSDictionary(contentsOf: settingsURL),
+        let preferences = settings["PreferenceSpecifiers"] as? [NSDictionary] {
+
+        var defaultsToRegister = [String: AnyObject]()
+        for prefSpecification in preferences {
+            if let key = prefSpecification["name_preference"] as? String,
+                let value = prefSpecification["DefaultValue"] {
+                
+                defaultsToRegister[key] = value as AnyObject
+                debugPrint("registerDefaultsFromSettingsBundle: (\(key), \(value)) \(type(of: value))")
+            }
+        }
+        
+        userDefaults.register(defaults: defaultsToRegister)
+        
+    } else {
+        debugPrint("registerDefaultsFromSettingsBundle: Could not find Settings.bundle")
+    }
+}
+
 

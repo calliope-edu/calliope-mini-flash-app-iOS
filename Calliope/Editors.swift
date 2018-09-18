@@ -25,7 +25,7 @@ final class MiniEditor: Editor {
     }
 }
 
-// https://pxt.calliope.cc/
+
 final class MicrobitEditor: Editor {
     public let name = "MakeCode"
     public let url = URL(string: "https://makecode.calliope.cc/")!
@@ -41,10 +41,12 @@ final class MicrobitEditor: Editor {
 
 // https://lab.open-roberta.org/c0d66d4c-5cc9-4ed9-9b7d-6940aa291f4a
 final class RobertaEditor: Editor {
+
     public let name = "Open Roberta NEPO®"
+    //public let url = URL(string: "https://lab.open-roberta.org/#loadSystem&&calliope2017​/")!
     public let url = URL(string: "https://lab.open-roberta.org/")!
-
-
+  //public let url = URL()!
+    
     func download(_ request: URLRequest) -> EditorDownload? {
         guard let url = request.url else { return nil }
         let s = url.absoluteString

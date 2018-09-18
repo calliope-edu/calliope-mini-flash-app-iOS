@@ -3,7 +3,7 @@ use_frameworks!
 inhibit_all_warnings!
 
 pod 'SnapKit', '~> 3.2'
-pod 'iOSDFULibrary', '~> 3.2.1'
+pod 'iOSDFULibrary'
 
 target 'Calliope'
 

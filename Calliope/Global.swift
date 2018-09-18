@@ -32,3 +32,4 @@ func range(_ low: CGFloat, _ high: CGFloat) -> CGFloat {
     let factor = (width - minWidth) / (maxWidth - minWidth)
     return low + max(0,min(1,factor)) * (high-low)
 }
+

@@ -37,6 +37,8 @@
 	<string>auto</string>
 	<key>CFBundleVersion</key>
 	<string>auto</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSBluetoothPeripheralUsageDescription</key>
@@ -99,7 +101,5 @@
 			</dict>
 		</dict>
 	</array>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
 </dict>
 </plist>
