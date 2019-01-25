@@ -12,7 +12,7 @@ class URLManager {
     
     private static let calliopeDefault = "https://miniedit.calliope.cc"
     private static let makeCodeDefault = "https://makecode.calliope.cc/"
-    private static let robertaDefault = "https://lab.open-roberta.org/"
+    private static let robertaDefault = "https://lab.open-roberta.org/#loadSystem&&calliope2017​"
     
     /// Url for the Calliope mini editor
     ///
@@ -40,7 +40,7 @@ class URLManager {
         }
     }
     
-    /// Url for the Open ORberta NEOP® editor
+    /// Url for the Open Roberta NEOP® editor
     ///
     /// Vars will be saved in the user defaults
     static var  robertaUrl: String? {
