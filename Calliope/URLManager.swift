@@ -12,7 +12,7 @@ class URLManager {
     
     private static let calliopeDefault = "https://miniedit.calliope.cc"
     private static let makeCodeDefault = "https://makecode.calliope.cc/"
-    private static let robertaDefault = "https://lab.open-roberta.org/#loadSystem&&calliope2017​"
+    private static let robertaDefault = "https://lab.open-roberta.org/#loadSystem&&calliope2017"
     
     /// Url for the Calliope mini editor
     ///
