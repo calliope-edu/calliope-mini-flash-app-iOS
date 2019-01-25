@@ -62,7 +62,7 @@ class SettingsViewController: UIViewController {
             make.height.width.equalTo(view)
         }
         // OpenROberta
-        robertaView = TextFieldView(title: "Colliope mini Editor",
+        robertaView = TextFieldView(title: "Open Roberta NEPO®",
                                         color: Styles.colorBlue,
                                         text: URLManager.robertaUrl ?? "") {[weak self] (text) in
                                             self?.editedRobertaUrl = text
