@@ -31,9 +31,11 @@ final class MainViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let settingsBarItem = UIBarButtonItem(barButtonSystemItem: .edit,
-                                              target: self,
-                                              action: #selector(showSettings))
+        let settingsBarItem = UIBarButtonItem(title: "main.settings".localized,
+                                             style: .done,
+                                             target: self,
+                                             action: #selector(showSettings))
+        
         navigationItem.leftBarButtonItem = settingsBarItem
         
         navigationItem.title = ""

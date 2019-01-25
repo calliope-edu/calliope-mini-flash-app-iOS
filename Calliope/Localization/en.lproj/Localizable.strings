@@ -22,6 +22,7 @@
 "main.scanner.selected" = "Select new mini";
 "main.editors" = "Start coding";
 "main.history" = "Your scripts";
+"main.settings" = "Settings";
 
 "scanner.title" = "";
 "scanner.text" = "Press A+B and Reset. Wait 5 sec. and release Reset, if you see the PAIRING note, release A+B. Redraw the pattern from your mini.";
