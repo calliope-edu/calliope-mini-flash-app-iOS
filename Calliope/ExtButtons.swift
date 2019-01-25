@@ -16,7 +16,7 @@ fileprivate class ClosureSleeve<T> {
 }
 
 extension UIButton {
-    func addAction(for controlEvents: UIControlEvents, _ action: @escaping (UIButton) -> ()) {
+    func addAction(for controlEvents: UIControl.Event, _ action: @escaping (UIButton) -> ()) {
         let sleeve = ClosureSleeve<UIButton>(attachTo: self, closure: action)
         addTarget(sleeve, action: #selector(ClosureSleeve<UIButton>.invoke), for: controlEvents)
     }

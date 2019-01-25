@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		37B118FCB72BC6B824BBDDCA /* Pods_Calliope.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3088E08C1CD5B315657F45A /* Pods_Calliope.framework */; };
 		9D02A0181F31DE59004113B1 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D02A0171F31DE59004113B1 /* Global.swift */; };
 		9D02A01E1F322847004113B1 /* ExtBluetooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D02A01D1F322847004113B1 /* ExtBluetooth.swift */; };
 		9D1461121F5577F5000DD8B8 /* Checksum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1461111F5577F5000DD8B8 /* Checksum.swift */; };
@@ -55,11 +56,12 @@
 		9DFA2DD81F5A16AC00DD1A10 /* StreamReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFA2DD71F5A16AC00DD1A10 /* StreamReader.swift */; };
 		9DFA2DDA1F5A1F2D00DD1A10 /* ExtString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFA2DD91F5A1F2D00DD1A10 /* ExtString.swift */; };
 		9DFA61B11F4DB5F000E0CDAF /* ExtButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFA61B01F4DB5F000E0CDAF /* ExtButtons.swift */; };
-		B153CC8FC63604D759537BDB /* Pods_Calliope.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CD16BA0517A1007D5C37FE /* Pods_Calliope.framework */; };
+		D49A2B5321FA58780093F2E3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49A2B5221FA58780093F2E3 /* SettingsViewController.swift */; };
+		D49A2B5621FA5AE30093F2E3 /* URLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49A2B5521FA5AE30093F2E3 /* URLManager.swift */; };
+		D49A2B5821FA5D0B0093F2E3 /* TextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49A2B5721FA5D0B0093F2E3 /* TextFieldView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		00CD16BA0517A1007D5C37FE /* Pods_Calliope.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Calliope.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		187D027987EA3CD6BF52AE2C /* Pods-Calliope.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope.release.xcconfig"; path = "Pods/Target Support Files/Pods-Calliope/Pods-Calliope.release.xcconfig"; sourceTree = "<group>"; };
 		9D02A0171F31DE59004113B1 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		9D02A01D1F322847004113B1 /* ExtBluetooth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtBluetooth.swift; sourceTree = "<group>"; };
@@ -114,6 +116,10 @@
 		9DFA2DD91F5A1F2D00DD1A10 /* ExtString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtString.swift; sourceTree = "<group>"; };
 		9DFA61B01F4DB5F000E0CDAF /* ExtButtons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtButtons.swift; sourceTree = "<group>"; };
 		AD5B59281443F564F0AF92FB /* Pods-Calliope.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Calliope/Pods-Calliope.debug.xcconfig"; sourceTree = "<group>"; };
+		B3088E08C1CD5B315657F45A /* Pods_Calliope.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Calliope.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D49A2B5221FA58780093F2E3 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		D49A2B5521FA5AE30093F2E3 /* URLManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLManager.swift; sourceTree = "<group>"; };
+		D49A2B5721FA5D0B0093F2E3 /* TextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,7 +128,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9DCE159F1F5B049700264A99 /* WebKit.framework in Frameworks */,
-				B153CC8FC63604D759537BDB /* Pods_Calliope.framework in Frameworks */,
+				37B118FCB72BC6B824BBDDCA /* Pods_Calliope.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,6 +138,7 @@
 		9D55AF791F65D9AF002B8431 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				D49A2B5221FA58780093F2E3 /* SettingsViewController.swift */,
 				9D6404421F2E49C3005B54A9 /* MainViewController.swift */,
 				9DBD88871F4B615300D0F83A /* ScannerViewController.swift */,
 				9D85C9081F7E8DBF005B808F /* EditorsViewController.swift */,
@@ -186,6 +193,7 @@
 				9D3A59BC1F88745F009023CA /* RobotoMono-Bold.ttf */,
 				9D02A0171F31DE59004113B1 /* Global.swift */,
 				9DD46B941F3395F400123EF0 /* Constants.swift */,
+				D49A2B5521FA5AE30093F2E3 /* URLManager.swift */,
 				9D55AF811F661022002B8431 /* Styles.swift */,
 				9D6404491F2E49C3005B54A9 /* LaunchScreen.storyboard */,
 				9D6404441F2E49C3005B54A9 /* Main.storyboard */,
@@ -211,6 +219,7 @@
 		9DA818971F7A879D00093031 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				D49A2B5721FA5D0B0093F2E3 /* TextFieldView.swift */,
 				9DAC99FB1F93E14E007C1B42 /* MatrixView.swift */,
 			);
 			name = Components;
@@ -247,7 +256,7 @@
 			isa = PBXGroup;
 			children = (
 				9DCE159E1F5B049700264A99 /* WebKit.framework */,
-				00CD16BA0517A1007D5C37FE /* Pods_Calliope.framework */,
+				B3088E08C1CD5B315657F45A /* Pods_Calliope.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -274,7 +283,6 @@
 				9D64043B1F2E49C3005B54A9 /* Resources */,
 				9D8B5B221F9798E30023DC09 /* Automatic Build Number */,
 				A2357D51B854AB4C1A6D1206 /* [CP] Embed Pods Frameworks */,
-				9442C96EE0EF436E8379B43F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -292,12 +300,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0910;
+				LastUpgradeCheck = 1010;
 				TargetAttributes = {
 					9D64043C1F2E49C3005B54A9 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = GKA87N33H4;
-						LastSwiftMigration = 0900;
+						DevelopmentTeam = KW752MR3Z2;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -358,21 +366,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9442C96EE0EF436E8379B43F /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Calliope/Pods-Calliope-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		9D8B5B221F9798E30023DC09 /* Automatic Build Number */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -395,12 +388,14 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Calliope/Pods-Calliope-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/TPKeyboardAvoiding/TPKeyboardAvoiding.framework",
 				"${BUILT_PRODUCTS_DIR}/Zip/Zip.framework",
 				"${BUILT_PRODUCTS_DIR}/iOSDFULibrary/iOSDFULibrary.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPKeyboardAvoiding.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Zip.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSDFULibrary.framework",
 			);
@@ -424,10 +419,12 @@
 				9DFA2DD61F59FC5700DD1A10 /* HexParser.swift in Sources */,
 				9D02A0181F31DE59004113B1 /* Global.swift in Sources */,
 				9D55AF7C1F65EBEF002B8431 /* BaseViewController.swift in Sources */,
+				D49A2B5821FA5D0B0093F2E3 /* TextFieldView.swift in Sources */,
 				9D3A59B41F862FAF009023CA /* ProgressViewController.swift in Sources */,
 				9DBA2BB91F6078B800DCEC96 /* HistoryViewController.swift in Sources */,
 				9D85C9091F7E8DBF005B808F /* EditorsViewController.swift in Sources */,
 				9DBD88881F4B615300D0F83A /* ScannerViewController.swift in Sources */,
+				D49A2B5621FA5AE30093F2E3 /* URLManager.swift in Sources */,
 				9DAC99FE1F942B20007C1B42 /* Microbit.swift in Sources */,
 				9D3A59BA1F87D738009023CA /* UploadViewController.swift in Sources */,
 				9D55AF7E1F660E2B002B8431 /* ExtImage.swift in Sources */,
@@ -439,6 +436,7 @@
 				9D1461121F5577F5000DD8B8 /* Checksum.swift in Sources */,
 				9DFA61B11F4DB5F000E0CDAF /* ExtButtons.swift in Sources */,
 				9D02A01E1F322847004113B1 /* ExtBluetooth.swift in Sources */,
+				D49A2B5321FA58780093F2E3 /* SettingsViewController.swift in Sources */,
 				9D63E1C31F8FCD5100D35167 /* ExtImagePdf.swift in Sources */,
 				9D8B5B241F979A470023DC09 /* Application.swift in Sources */,
 				9D2CC1501F9664600025E84F /* ExtLabel.swift in Sources */,
@@ -504,6 +502,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -511,6 +510,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -562,6 +562,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -569,6 +570,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -605,16 +607,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GKA87N33H4;
+				DEVELOPMENT_TEAM = KW752MR3Z2;
 				INFOPLIST_FILE = Calliope/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cc.calliope.ios.flash;
+				PRODUCT_BUNDLE_IDENTIFIER = benediktSpohr.calliope;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -626,16 +628,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GKA87N33H4;
+				DEVELOPMENT_TEAM = KW752MR3Z2;
 				INFOPLIST_FILE = Calliope/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cc.calliope.ios.flash;
+				PRODUCT_BUNDLE_IDENTIFIER = benediktSpohr.calliope;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

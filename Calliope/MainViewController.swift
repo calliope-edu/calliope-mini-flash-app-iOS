@@ -18,12 +18,12 @@ final class MainViewController: BaseViewController {
         button.setTitle(title, for: .normal)
         button.setTitleColor(Styles.colorWhite, for: .normal)
         button.titleLabel?.font = Styles.defaultFont(size: range(20...42))
-        button.titleEdgeInsets = UIEdgeInsetsMake(0.0, spaceX, 0.0, 0.0)
+        button.titleEdgeInsets = UIEdgeInsets.init(top: 0.0, left: spaceX, bottom: 0.0, right: 0.0)
         button.setImage(image.imageTinted(Styles.colorWhite), for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
-        button.imageEdgeInsets = UIEdgeInsetsMake(marginY, 0.0, marginY, 0.0)
+        button.imageEdgeInsets = UIEdgeInsets.init(top: marginY, left: 0.0, bottom: marginY, right: 0.0)
         button.contentHorizontalAlignment = .left
-        button.contentEdgeInsets = UIEdgeInsetsMake(0.0, left, 0.0, 0.0)
+        button.contentEdgeInsets = UIEdgeInsets.init(top: 0.0, left: left, bottom: 0.0, right: 0.0)
         button.backgroundColor = color
         button.sizeToFit()
     }
@@ -31,6 +31,13 @@ final class MainViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let settingsBarItem = UIBarButtonItem(title: "main.settings".localized,
+                                             style: .done,
+                                             target: self,
+                                             action: #selector(showSettings))
+        
+        navigationItem.leftBarButtonItem = settingsBarItem
+        
         navigationItem.title = ""
         view.backgroundColor = Styles.colorWhite
 
@@ -190,6 +197,13 @@ final class MainViewController: BaseViewController {
         if let navigationController = self.navigationController {
             navigationController.pushViewController(vc, animated: true)
         }
+    }
+    
+    @objc func showSettings() {
+        let settingsViewController = SettingsViewController()
+        let navigationController = UINavigationController()
+        navigationController.viewControllers = [settingsViewController]
+        present(navigationController, animated: true, completion: nil)
     }
 
 }

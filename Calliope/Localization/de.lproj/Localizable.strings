@@ -22,6 +22,7 @@
 "main.scanner.selected" = "Anderen mini wählen";
 "main.editors" = "Code erstellen";
 "main.history" = "Deine Programme";
+"main.settings" = "Einstellungen";
 
 "scanner.title" = "";
 "scanner.text" = "Drücke A+B und Reset. Nach 5 Sek. Reset loslassen. Wenn Pairing erscheint, A+B loslassen. Übertrage das Muster der LEDs.";
@@ -66,4 +67,7 @@
 "history.text" = "Wähle gespeicherte Programme aus oder versetze den mini in den Originalzustand.";
 "history.button" = "Auf mini laden";
 
-//
+"settings.settings" = "Einstellungen";
+"settings.save" = "Speichern";
+"settings.canel" = "Abbrechen";
+"settings.restore" = "Zurücksetzen";

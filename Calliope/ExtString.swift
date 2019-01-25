@@ -95,25 +95,9 @@ extension String {
 }
 
 extension String {
-    private func checked(_ localized: String) -> String {
-        if localized == self {
-            print("failed to find translation for [\(self)]")
-            fatalError()
-        }
-        return localized
-    }
-
+    /// return the localized string from self or self
     var localized: String {
-        return checked(NSLocalizedString(self, comment: "") as String)
-    }
-
-    func localized(comment:String) -> String {
-        return checked(NSLocalizedString(self, comment: comment) as String)
-    }
-
-    func localizedFor(class referenceClass:AnyClass) -> String {
-        let bundle = Bundle(for: referenceClass)
-        return checked(NSLocalizedString(self, bundle: bundle, comment: "") as String)
+        return NSLocalizedString(self, comment: "")
     }
 }
 

@@ -26,9 +26,12 @@ final class EditorViewController: BaseViewController, WKNavigationDelegate, WKUI
         self.view.addSubview(webView)
         self.webview = webView
 
-        let url = editor.url
-
+        guard let url = editor.url else {
+            LOG("URL is empty!)")
+            return
+        }
         LOG("loading \(url)")
+
         webView.load(URLRequest(url: url))
 
         webView.snp.makeConstraints { make in
@@ -50,10 +53,10 @@ final class EditorViewController: BaseViewController, WKNavigationDelegate, WKUI
                 let alert = UIAlertController(
                     title: "No Device",
                     message: "Please connect a device first",
-                    preferredStyle: UIAlertControllerStyle.alert)
+                    preferredStyle: UIAlertController.Style.alert)
                 alert.addAction(UIAlertAction(
                     title: "OK",
-                    style: UIAlertActionStyle.default,
+                    style: UIAlertAction.Style.default,
                     handler: nil))
                 present(alert, animated: true, completion: nil)
 
@@ -123,7 +126,6 @@ final class EditorViewController: BaseViewController, WKNavigationDelegate, WKUI
     }
 
     //
-
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo,
                  completionHandler: @escaping () -> Void) {
 
