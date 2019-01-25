@@ -7,7 +7,7 @@ final class Binary {
         case big
     }
 
-    open static func pack(format: String, values:[Any]) -> Data {
+    public static func pack(format: String, values:[Any]) -> Data {
         let encoder = Encoder()
         var v = 0
 	for f in format {

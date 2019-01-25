@@ -66,4 +66,8 @@
 "history.text" = "Select a recent program or flash the default script to your mini.";
 "history.button" = "Flash to mini";
 
+"settings.settings" = "Settings";
+"settings.save" = "Save";
+"settings.canel" = "Cancel";
+"settings.restore" = "Restore";
 //

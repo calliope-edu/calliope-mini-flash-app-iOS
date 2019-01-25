@@ -7,14 +7,14 @@ struct EditorDownload {
 
 protocol Editor {
     var name: String { get }
-    var url: URL { get }
+    var url: URL? { get }
     func download(_ request: URLRequest) -> EditorDownload?
 }
 
 // https://miniedit.calliope.cc/86184610-93de-11e7-a0b1-cd0ef2962ca5
 final class MiniEditor: Editor {
     public let name = "Calliope mini Editor"
-    public let url = URL(string: "https://miniedit.calliope.cc/")!
+    public let url = URL(string: URLManager.calliopeUrl ?? "")
 
     func download(_ request: URLRequest) -> EditorDownload? {
         guard let url = request.url else { return nil }
@@ -28,7 +28,7 @@ final class MiniEditor: Editor {
 // https://pxt.calliope.cc/
 final class MicrobitEditor: Editor {
     public let name = "MakeCode"
-    public let url = URL(string: "https://makecode.calliope.cc/")!
+    public let url = URL(string: URLManager.makeCodeUrl ?? "")
 
     func download(_ request: URLRequest) -> EditorDownload? {
         guard let s = request.url?.absoluteString else { return nil }
@@ -42,7 +42,7 @@ final class MicrobitEditor: Editor {
 // https://lab.open-roberta.org/c0d66d4c-5cc9-4ed9-9b7d-6940aa291f4a
 final class RobertaEditor: Editor {
     public let name = "Open Roberta NEPO®"
-    public let url = URL(string: "https://lab.open-roberta.org/")!
+    public let url = URL(string: URLManager.robertaUrl ?? "")
 
 
     func download(_ request: URLRequest) -> EditorDownload? {

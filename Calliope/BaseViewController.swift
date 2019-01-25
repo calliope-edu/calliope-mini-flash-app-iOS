@@ -53,19 +53,4 @@ class BaseViewController: UIViewController {
             navigationController.pushViewController(vc, animated: true)
         }
     }
-
-//    @objc func backButtonAction() {
-//        dismiss(animated: true, completion: nil)
-//    }
-//
-//    func setBackButton(title: String) {
-//        if let nav = self.navigationController, let item = nav.navigationBar.topItem {
-//            item.backBarButtonItem = UIBarButtonItem(
-//                title: title,
-//                style: .plain,
-//                target: self, action:
-//                #selector(self.backButtonAction))
-//        }
-//    }
-
 }

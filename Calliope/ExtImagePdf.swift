@@ -233,12 +233,12 @@ extension UIImage {
 
             PDFResourceHelper.renderIntoContext(ctx, url:nil, data:data, size:size, page:page, preserveAspectRatio:preserveAspectRatio)
             if let image: CGImage = ctx.makeImage(){
-                pdfImage =  UIImage(cgImage: image, scale: screenScale, orientation: UIImageOrientation.up)
+                pdfImage =  UIImage(cgImage: image, scale: screenScale, orientation: UIImage.Orientation.up)
             }
 
             if(_shouldCacheOnDisk)
             {
-                if let data = UIImagePNGRepresentation( pdfImage! ) {
+                if let data = pdfImage!.pngData( ) {
                     try? data.write(to: URL(fileURLWithPath: cacheFilePath), options: [])
                 }
             }
@@ -293,12 +293,12 @@ extension UIImage {
 
             PDFResourceHelper.renderIntoContext(ctx, url:URL, data:nil, size:size, page:page, preserveAspectRatio:preserveAspectRatio)
             if let image: CGImage = ctx.makeImage(){
-                pdfImage =  UIImage(cgImage: image, scale: screenScale, orientation: UIImageOrientation.up)
+                pdfImage =  UIImage(cgImage: image, scale: screenScale, orientation: UIImage.Orientation.up)
             }
 
             if(_shouldCacheOnDisk)
             {
-                if let data = UIImagePNGRepresentation( pdfImage! ) {
+                if let data = pdfImage!.pngData( ) {
                     try? data.write(to: Foundation.URL(fileURLWithPath: cacheFilePath), options: [])
                 }
             }

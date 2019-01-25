@@ -14,7 +14,7 @@ final class HistoryTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
 
         let cornerRadius = range(8...20)
@@ -169,7 +169,7 @@ final class HistoryViewController: BaseViewController, UITableViewDelegate, UITa
         tableView.separatorStyle = .none
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = range(200...400)
         view.addSubview(tableView)
 
@@ -196,7 +196,7 @@ final class HistoryViewController: BaseViewController, UITableViewDelegate, UITa
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        tableView.contentInset = UIEdgeInsetsMake(instructionsView.bounds.size.height, 0, 0, 0)
+        tableView.contentInset = UIEdgeInsets.init(top: instructionsView.bounds.size.height, left: 0, bottom: 0, right: 0)
         tableView.contentOffset = CGPoint(x:0, y:-instructionsView.bounds.size.height)
     }
 
@@ -273,10 +273,10 @@ final class HistoryViewController: BaseViewController, UITableViewDelegate, UITa
             let alert = UIAlertController(
                 title: "No Device",
                 message: "Please connect a device first",
-                preferredStyle: UIAlertControllerStyle.alert)
+                preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(
                 title: "OK",
-                style: UIAlertActionStyle.default,
+                style: UIAlertAction.Style.default,
                 handler: nil))
             present(alert, animated: true, completion: nil)
 

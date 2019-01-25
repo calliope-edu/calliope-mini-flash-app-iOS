@@ -66,4 +66,7 @@
 "history.text" = "Wähle gespeicherte Programme aus oder versetze den mini in den Originalzustand.";
 "history.button" = "Auf mini laden";
 
-//
+"settings.settings" = "Einstellungen";
+"settings.save" = "Speichern";
+"settings.canel" = "Abbrechen";
+"settings.restore" = "Zurücksetzen";

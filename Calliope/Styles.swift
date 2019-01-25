@@ -22,32 +22,22 @@ struct Styles {
 
     static func apply() {
 
-//        for family: String in UIFont.familyNames {
-//             print("\(family)")
-//             for names: String in UIFont.fontNames(forFamilyName: family) {
-//                 print("== \(names)")
-//             }
-//        }
-
 		UIWindow.appearance().tintColor = colorTint
 		
 		for window in UIApplication.shared.windows {
 			window.tintColor = colorTint
 		}
 
-		// MARK: Status Bar
-        UIApplication.shared.statusBarStyle = .default // .lightContent
-
 		// MARK: Navigation Bar
         UINavigationBar.appearance().barTintColor = colorWhite
         UINavigationBar.appearance().isTranslucent = false
         UINavigationBar.appearance().titleTextAttributes = [
-            NSAttributedStringKey.font: defaultFont(size: range(15...25)),
+            NSAttributedString.Key.font: defaultFont(size: range(15...25)),
         ]
 
         // MARK: UIBarButtonItem
         UIBarButtonItem.appearance().setTitleTextAttributes([
-            NSAttributedStringKey.font: defaultFont(size: range(15...25)),
+            NSAttributedString.Key.font: defaultFont(size: range(15...25)),
         ], for: .normal)
 
     }
