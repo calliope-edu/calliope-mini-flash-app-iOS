@@ -1,7 +1,6 @@
 import CoreBluetooth
 
 // FIXME
-let uuid_peripheral_calliope = UUID(uuidString: "19D1B789-0D1A-4103-8E2E-80C981934FF1")!
 
 let uuid_service_reboot = CBUUID(string:"E95D93B1-251D-470A-A062-FA1922DFA9A8")
 let uuid_service_dfu = CBUUID(string:"E95D93B0-251D-470A-A062-FA1922DFA9A8")
