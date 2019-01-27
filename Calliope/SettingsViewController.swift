@@ -36,6 +36,10 @@ class SettingsViewController: UIViewController {
         super.viewDidLoad()
         setup()
         setBarButtons()
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
         layout()
     }
     
