@@ -2,161 +2,108 @@ import UIKit
 
 final class EditorsViewController: UIViewController {
 
+    // MARK: - UIElements
     private let labelText = UILabel()
-    
-    private let buttonEditorMini = UIButton()
-    private let buttonEditorMicrobit = UIButton()
-    private let buttonEditorRoberta = UIButton()
+    private var robertaView: UIView!
+    private var makeCodeView: UIView!
+    private var calliopeView: UIView!
 
-    private func setup(button: UIButton, name: String, text: String, color: UIColor) {
-
-        let cornerRadius = range(8...20)
-        let roundedView = UIView()
-        roundedView.backgroundColor = color
-        roundedView.layer.cornerRadius = cornerRadius
-        roundedView.isExclusiveTouch = false
-        roundedView.isUserInteractionEnabled = false
-        button.addSubview(roundedView)
-        roundedView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-
-        let nameLabel = UILabel()
-        nameLabel.numberOfLines = 1
-        nameLabel.font = Styles.defaultFont(size: range(15...35))
-        nameLabel.textColor = Styles.colorWhite
-        nameLabel.text = name
-        roundedView.addSubview(nameLabel)
-
-        let lineView = UIView()
-        lineView.backgroundColor = Styles.colorWhite
-        roundedView.addSubview(lineView)
-
-        let image = UIImage(named:"IconCode") ?? UIImage()
-        let iconView = UIImageView()
-        iconView.image = image.imageTinted(Styles.colorWhite)
-        iconView.contentMode = .scaleAspectFit
-        roundedView.addSubview(iconView)
-
-        let actionLabel = UILabel()
-        actionLabel.text = "editors.button".localized
-        actionLabel.font = Styles.defaultFont(size: range(15...35))
-        actionLabel.numberOfLines = 1
-        actionLabel.textColor = Styles.colorWhite
-        roundedView.addSubview(actionLabel)
-
-        let superview = roundedView
-
-        let imageRatio = image.size.height/image.size.width
-
-        let marginX = range(20...40)
-        let marginY = marginX
-        let spaceY = range(20...21)
-        let marginButtonX = range(40...250)
-
-        nameLabel.snp.makeConstraints { make in
-            make.top.equalTo(superview).offset(marginY)
-            make.left.equalTo(superview).offset(marginX)
-            make.right.equalTo(superview).offset(-marginX)
-        }
-
-        lineView.snp.makeConstraints { make in
-            make.left.right.equalTo(nameLabel)
-            make.height.equalTo(1)
-            make.top.equalTo(nameLabel.snp.bottom).offset(spaceY)
-        }
-
-        iconView.snp.makeConstraints { make in
-            make.top.equalTo(lineView.snp.bottom).offset(spaceY)
-            make.left.equalTo(marginButtonX)
-            make.bottom.equalTo(superview).offset(-marginY)
-            make.width.equalTo(superview).multipliedBy(0.1)
-            make.height.equalTo(iconView.snp.width).multipliedBy(imageRatio)
-        }
-
-        actionLabel.snp.makeConstraints { make in
-            make.left.equalTo(iconView.snp.right).offset(marginX)
-            make.right.equalTo(superview).offset(marginX)
-            make.centerY.equalTo(iconView)
-        }
-    }
-
+    // MAKR: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setup()
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        layout()
+    }
 
-        navigationItem.title = "editors.title".localized
-        view.backgroundColor = Styles.colorWhite
-
+    // MARK: - Setup
+    private func setup() {
+        // NavigationBar
         addHelpButton()
+        navigationItem.title = "editors.title".localized
+        // View
+        view.backgroundColor = Styles.colorWhite
+        // LabelText
         labelText.text = "editors.text".localized
         labelText.numberOfLines = 0
         labelText.font = Styles.defaultFont(size: range(15...35))
         labelText.textColor = Styles.colorGray
-        view.addSubview(labelText)
-
-        setup(button: buttonEditorMini,
-              name: "editor.mini.name".localized,
-              text: "editor.mini.text".localized,
-              color: Styles.colorYellow)
-        buttonEditorMini.addAction(for: .touchUpInside, actionEditorMini)
-        view.addSubview(buttonEditorMini)
-
-        setup(button: buttonEditorMicrobit,
-              name: "editor.microbit.name".localized,
-              text: "editor.microbit.text".localized,
-              color: Styles.colorGreen)
-        buttonEditorMicrobit.addAction(for: .touchUpInside, actionEditorMicrobit)
-        view.addSubview(buttonEditorMicrobit)
-
-        setup(button: buttonEditorRoberta,
-              name: "editor.roberta.name".localized,
-              text: "editor.roberta.text".localized,
-              color: Styles.colorBlue)
-        buttonEditorRoberta.addAction(for: .touchUpInside, actionEditorRoberta)
-        view.addSubview(buttonEditorRoberta)
-
-        layout()
+        
+        // RobertaView
+        robertaView = ButtonView(title: "editor.roberta.name".localized,
+                                 subtitle: "editors.button".localized,
+                                 icon: UIImage(named:"IconCode"),
+                                 color: Styles.colorBlue) { [weak self] in
+                                    self?.robertaButtonPressed()
+        }
+        // RobertaView
+        makeCodeView = ButtonView(title: "editor.microbit.name".localized,
+                                 subtitle: "editors.button".localized,
+                                 icon: UIImage(named:"IconCode"),
+                                 color: Styles.colorGreen) { [weak self] in
+                                    self?.makeCodeButtonPressed()
+        }
+        // CalliopeVIew
+        calliopeView = ButtonView(title: "editor.mini.name".localized,
+                                  subtitle: "editors.button".localized,
+                                  icon: UIImage(named:"IconCode"),
+                                  color: Styles.colorYellow) { [weak self] in
+                                    self?.calliopeButtonPressed()
+        }
     }
-
+    
     func layout() {
-        let superview = view!
-
-        let marginX = range(20...40)
-        let marginY = marginX
-        let spacingY = range(20...40)
-
-        labelText.snp.makeConstraints { make in
-            make.top.equalTo(superview).offset(marginY)
-            make.left.equalTo(superview).offset(marginX)
-            make.right.equalTo(superview).offset(-marginX)
+        // Constants
+        var buttonHeight = view.frame.height
+        if  #available(iOS 11.0, *) {
+            buttonHeight -= view.safeAreaInsets.top + view.safeAreaInsets.bottom
         }
-        labelText.setContentCompressionResistancePriority(.required, for: .vertical)
-
-        buttonEditorMini.snp.makeConstraints { make in
-            make.top.greaterThanOrEqualTo(labelText.snp.bottom).offset(spacingY)
-            make.left.equalTo(superview).offset(marginX)
-            make.right.equalTo(superview).offset(-marginX)
+        buttonHeight = buttonHeight / 5
+        // RobertaView
+        view.addSubview(robertaView)
+        robertaView.snp.remakeConstraints { (make) in
+            make.bottom.right.equalToSuperview().offset(range(-20,-40))
+            make.left.equalToSuperview().offset(range(20,40))
+            make.height.lessThanOrEqualTo(buttonHeight)
         }
-        buttonEditorMicrobit.snp.makeConstraints { make in
-            make.top.equalTo(buttonEditorMini.snp.bottom).offset(spacingY)
-            make.left.right.height.equalTo(buttonEditorMini)
+        // MakeCodeView
+        view.addSubview(makeCodeView)
+        makeCodeView.snp.remakeConstraints { (make) in
+            make.bottom.equalTo(robertaView.snp.top).offset(range(-20,-40))
+            make.right.equalToSuperview().offset(range(-20,-40))
+            make.left.equalToSuperview().offset(range(20,40))
+            make.height.lessThanOrEqualTo(buttonHeight)
         }
-        buttonEditorRoberta.snp.makeConstraints { make in
-            make.top.equalTo(buttonEditorMicrobit.snp.bottom).offset(spacingY)
-            make.left.right.height.equalTo(buttonEditorMini)
-            make.bottom.equalTo(superview.snp.bottom).offset(-marginX)
+        // CalliopeView
+        view.addSubview(calliopeView)
+        calliopeView.snp.remakeConstraints { (make) in
+            make.bottom.equalTo(makeCodeView.snp.top).offset(range(-20,-40))
+            make.right.equalToSuperview().offset(range(-20,-40))
+            make.left.equalToSuperview().offset(range(20,40))
+            make.height.lessThanOrEqualTo(buttonHeight)
+        }
+        // Label
+        view.addSubview(labelText)
+        labelText.snp.remakeConstraints { (make) in
+            make.top.left.equalToSuperview().offset(range(20,40))
+            make.right.equalToSuperview().offset(range(-20,-40))
+            make.bottom.greaterThanOrEqualTo(calliopeView.snp.top).offset(range(-20,-40))
         }
     }
-
-    func actionEditorMini(button: UIButton) {
+  
+    // MARK: - User interaction
+    private func calliopeButtonPressed() {
         actionEditor(editor: MiniEditor())
     }
 
-    func actionEditorMicrobit(button: UIButton) {
+    private func makeCodeButtonPressed() {
         actionEditor(editor: MicrobitEditor())
     }
 
-    func actionEditorRoberta(button: UIButton) {
+    private func robertaButtonPressed() {
         actionEditor(editor: RobertaEditor())
     }
 
@@ -167,5 +114,4 @@ final class EditorsViewController: UIViewController {
             navigationController.pushViewController(vc, animated: true)
         }
     }
-
 }

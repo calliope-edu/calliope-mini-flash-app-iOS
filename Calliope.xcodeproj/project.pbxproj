@@ -59,6 +59,7 @@
 		D49A2B5821FA5D0B0093F2E3 /* TextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49A2B5721FA5D0B0093F2E3 /* TextFieldView.swift */; };
 		D4E1120121FDC174004F9003 /* HelpButtonProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1120021FDC174004F9003 /* HelpButtonProtocol.swift */; };
 		D4E1120321FDC61F004F9003 /* CancelButtonProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1120221FDC61F004F9003 /* CancelButtonProtocol.swift */; };
+		D4E1120521FDCA8B004F9003 /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1120421FDCA8B004F9003 /* ButtonView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -119,6 +120,7 @@
 		D49A2B5721FA5D0B0093F2E3 /* TextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldView.swift; sourceTree = "<group>"; };
 		D4E1120021FDC174004F9003 /* HelpButtonProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpButtonProtocol.swift; sourceTree = "<group>"; };
 		D4E1120221FDC61F004F9003 /* CancelButtonProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelButtonProtocol.swift; sourceTree = "<group>"; };
+		D4E1120421FDCA8B004F9003 /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +185,7 @@
 		9D64043F1F2E49C3005B54A9 /* Calliope */ = {
 			isa = PBXGroup;
 			children = (
+				D4E1120621FDD9A2004F9003 /* Protocols */,
 				D4E111FB21FCE2F5004F9003 /* Ressources */,
 				9D64044C1F2E49C3005B54A9 /* Info.plist */,
 				9D6404471F2E49C3005B54A9 /* Assets.xcassets */,
@@ -216,8 +219,7 @@
 			children = (
 				D49A2B5721FA5D0B0093F2E3 /* TextFieldView.swift */,
 				9DAC99FB1F93E14E007C1B42 /* MatrixView.swift */,
-				D4E1120021FDC174004F9003 /* HelpButtonProtocol.swift */,
-				D4E1120221FDC61F004F9003 /* CancelButtonProtocol.swift */,
+				D4E1120421FDCA8B004F9003 /* ButtonView.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -282,6 +284,15 @@
 				9D3A59BC1F88745F009023CA /* RobotoMono-Bold.ttf */,
 			);
 			name = Fonts;
+			sourceTree = "<group>";
+		};
+		D4E1120621FDD9A2004F9003 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				D4E1120021FDC174004F9003 /* HelpButtonProtocol.swift */,
+				D4E1120221FDC61F004F9003 /* CancelButtonProtocol.swift */,
+			);
+			name = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -430,6 +441,7 @@
 				9DBA2BB31F6033D600DCEC96 /* BluetoothScan.swift in Sources */,
 				D4E1120121FDC174004F9003 /* HelpButtonProtocol.swift in Sources */,
 				9D1790B51F61552900CDF964 /* Editors.swift in Sources */,
+				D4E1120521FDCA8B004F9003 /* ButtonView.swift in Sources */,
 				9DFA2DD61F59FC5700DD1A10 /* HexParser.swift in Sources */,
 				9D02A0181F31DE59004113B1 /* Global.swift in Sources */,
 				D49A2B5821FA5D0B0093F2E3 /* TextFieldView.swift in Sources */,
@@ -623,7 +635,7 @@
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -644,7 +656,7 @@
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
