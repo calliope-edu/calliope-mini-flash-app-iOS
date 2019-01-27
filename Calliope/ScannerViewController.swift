@@ -95,19 +95,19 @@ final class ScannerViewController: UIViewController {
 
         guard let image = viewImage.animationImages?.first else { return }
         
-        viewImage.snp.makeConstraints { make in
+        viewImage.snp.remakeConstraints { make in
             make.top.equalTo(superview).offset(marginY)
             make.centerX.equalTo(labelText)
             make.width.equalTo(labelText).multipliedBy(0.5)
         }
         labelText.setContentCompressionResistancePriority(.required, for: .vertical)
-        labelText.snp.makeConstraints { make in
+        labelText.snp.remakeConstraints { make in
             make.top.equalTo(viewImage.snp.bottom).offset(spacingY)
             make.left.equalTo(superview).offset(marginX)
             make.right.equalTo(superview).offset(-marginX)
         }
 
-        viewMatrix.snp.makeConstraints { make in
+        viewMatrix.snp.remakeConstraints { make in
             make.top.equalTo(labelText.snp.bottom).offset(spacingY)
             make.centerX.equalToSuperview()
             make.width.equalTo(viewMatrix.snp.height)
@@ -117,12 +117,11 @@ final class ScannerViewController: UIViewController {
             }
         }
 
-        buttonPair.snp.makeConstraints { make in
+        buttonPair.snp.remakeConstraints { make in
             make.top.equalTo(viewMatrix.snp.bottom).offset(spacingY)
             make.left.right.bottom.equalTo(superview)
             make.height.equalTo(height)
         }
-
     }
 
     override func viewWillAppear(_ animated: Bool) {

@@ -222,13 +222,15 @@ class ProgressViewController: UIViewController {
         }
 
         labelHeading.snp.makeConstraints { make in
-            make.top.equalTo(progressView.snp.bottom).offset(spacingY)
+            make.top.lessThanOrEqualTo(progressView.snp.bottom).offset(spacingY)
             make.left.equalTo(superview).offset(margin)
             make.right.equalTo(superview).offset(-margin)
         }
 
+        labelText.setContentHuggingPriority(.required, for: .vertical)
         labelText.snp.makeConstraints { make in
             make.top.equalTo(labelHeading.snp.bottom).offset(spacingY)
+            make.bottom.greaterThanOrEqualTo(button.snp.top).offset(range(-20, -40))
             make.left.right.equalTo(labelHeading)
         }
 
