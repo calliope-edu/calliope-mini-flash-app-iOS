@@ -2,6 +2,7 @@ import UIKit
 
 final class MainViewController: BaseViewController {
 
+    // MARK: - UIElemets
     private let viewLogo = UIImageView()
     private let viewImageL = UIImageView()
     private let viewImageR = UIImageView()
@@ -11,6 +12,81 @@ final class MainViewController: BaseViewController {
     private let buttonEditors = UIButton()
     private let buttonHistory = UIButton()
 
+
+    
+
+
+    // MARK- Lifecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        setupNavigationBar()
+       
+        view.backgroundColor = Styles.colorWhite
+
+        let buttonHelp = createHelpButton()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView:buttonHelp)
+
+        viewLogo.image = UIImage(named: "WelcomeLogo") ?? UIImage()
+        viewLogo.contentMode = .scaleAspectFit
+        view.addSubview(viewLogo)
+
+        viewImageL.image = UIImage(named: "DotsL") ?? UIImage()
+        viewImageL.contentMode = .scaleAspectFit
+        view.addSubview(viewImageL)
+
+        viewImageR.image = UIImage(named: "DotsR") ?? UIImage()
+        viewImageR.contentMode = .scaleAspectFit
+        view.addSubview(viewImageR)
+
+        labelWelcome.text = "main.text.none".localized
+        labelWelcome.numberOfLines = 0
+        labelWelcome.textAlignment = .center
+        labelWelcome.font = Styles.defaultFont(size: range(15...35))
+        labelWelcome.textColor = Styles.colorGray
+        view.addSubview(labelWelcome)
+
+        viewArrow.image = UIImage(named: "Arrow")?.imageTinted(Styles.colorYellow)
+        viewArrow.contentMode = .scaleAspectFit
+        view.addSubview(viewArrow)
+
+        setup(button: buttonScanner,
+              title: "main.scanner.none".localized,
+              image: UIImage(named: "IconBluetooth") ?? UIImage(),
+              color: Styles.colorYellow)
+        buttonScanner.addAction(for: .touchUpInside, actionScanner)
+        view.addSubview(buttonScanner)
+
+        setup(button: buttonEditors,
+              title: "main.editors".localized,
+              image: UIImage(named: "IconCode") ?? UIImage(),
+              color: Styles.colorGreen)
+        buttonEditors.addAction(for: .touchUpInside, actionEditors)
+        view.addSubview(buttonEditors)
+
+        setup(button: buttonHistory,
+              title: "main.history".localized,
+              image: UIImage(named: "IconDevice") ?? UIImage(),
+              color: Styles.colorBlue)
+        buttonHistory.addAction(for: .touchUpInside, actionHistory)
+        view.addSubview(buttonHistory)
+
+        layout()
+    }
+
+    // MARK: - Setup
+    
+    private func setupNavigationBar() {
+        let settingsBarItem = UIBarButtonItem(title: "main.settings".localized,
+                                              style: .done,
+                                              target: self,
+                                              action: #selector(showSettings))
+        
+        navigationItem.leftBarButtonItem = settingsBarItem
+        
+        navigationItem.title = ""
+    }
+    
     private func setup(button: UIButton, title: String, image: UIImage, color: UIColor) {
         let left = range(-40...140)
         let spaceX = range(-40...40)
@@ -27,70 +103,6 @@ final class MainViewController: BaseViewController {
         button.backgroundColor = color
         button.sizeToFit()
     }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        let settingsBarItem = UIBarButtonItem(title: "main.settings".localized,
-                                             style: .done,
-                                             target: self,
-                                             action: #selector(showSettings))
-        
-        navigationItem.leftBarButtonItem = settingsBarItem
-        
-        navigationItem.title = ""
-        view.backgroundColor = Styles.colorWhite
-
-        let buttonHelp = createHelpButton()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView:buttonHelp)
-
-        viewLogo.image = UIImage.loadImage(named: "WelcomeLogo")
-        viewLogo.contentMode = .scaleAspectFit
-        view.addSubview(viewLogo)
-
-        viewImageL.image = UIImage.loadImage(named: "DotsL")
-        viewImageL.contentMode = .scaleAspectFit
-        view.addSubview(viewImageL)
-
-        viewImageR.image = UIImage.loadImage(named: "DotsR")
-        viewImageR.contentMode = .scaleAspectFit
-        view.addSubview(viewImageR)
-
-        labelWelcome.text = "main.text.none".localized
-        labelWelcome.numberOfLines = 0
-        labelWelcome.textAlignment = .center
-        labelWelcome.font = Styles.defaultFont(size: range(15...35))
-        labelWelcome.textColor = Styles.colorGray
-        view.addSubview(labelWelcome)
-
-        viewArrow.image = UIImage.loadImage(named: "Arrow").imageTinted(Styles.colorYellow)
-        viewArrow.contentMode = .scaleAspectFit
-        view.addSubview(viewArrow)
-
-        setup(button: buttonScanner,
-              title: "main.scanner.none".localized,
-              image: UIImage.loadImage(named: "IconBluetooth"),
-              color: Styles.colorYellow)
-        buttonScanner.addAction(for: .touchUpInside, actionScanner)
-        view.addSubview(buttonScanner)
-
-        setup(button: buttonEditors,
-              title: "main.editors".localized,
-              image: UIImage.loadImage(named: "IconCode"),
-              color: Styles.colorGreen)
-        buttonEditors.addAction(for: .touchUpInside, actionEditors)
-        view.addSubview(buttonEditors)
-
-        setup(button: buttonHistory,
-              title: "main.history".localized,
-              image: UIImage.loadImage(named: "IconDevice"),
-              color: Styles.colorBlue)
-        buttonHistory.addAction(for: .touchUpInside, actionHistory)
-        view.addSubview(buttonHistory)
-
-        layout()
-    }
-
 
     func layout() {
         let superview = view!

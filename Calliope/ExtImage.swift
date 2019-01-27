@@ -18,15 +18,3 @@ extension UIImage {
         }
     }
 }
-
-extension UIImage {
-
-    static func loadImage(named: String) -> UIImage {
-        if let image = UIImage(named: named) {
-            return image
-        } else {
-            print("failed to load [\(named)]")
-            fatalError()
-        }
-    }
-}

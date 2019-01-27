@@ -30,10 +30,10 @@ final class ScannerViewController: BaseViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView:buttonHelp)
 
         viewImage.animationImages = [
-            UIImage.loadImage(named:"AnimPressToPair/a"),
-            UIImage.loadImage(named:"AnimPressToPair/b"),
-            UIImage.loadImage(named:"AnimPressToPair/c"),
-            UIImage.loadImage(named:"AnimPressToPair/b"),
+            UIImage(named:"AnimPressToPair/a") ?? UIImage(),
+            UIImage(named:"AnimPressToPair/b") ?? UIImage(),
+            UIImage(named:"AnimPressToPair/c") ?? UIImage(),
+            UIImage(named:"AnimPressToPair/b") ?? UIImage(),
         ]
         viewImage.animationDuration = 2
         viewImage.animationRepeatCount = -1

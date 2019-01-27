@@ -31,9 +31,7 @@ class ProgressViewController: BaseViewController {
         var images = [UIImage]()
         for i in 1..<count+1 {
             let name = String(format:"%@/%04d", folder, i)
-            images.append(UIImage
-                .loadImage(named: name)
-                .imageTinted(Styles.colorWhite))
+            images.append(UIImage(named: name)?.imageTinted(Styles.colorWhite) ?? UIImage())
         }
         return images
     }

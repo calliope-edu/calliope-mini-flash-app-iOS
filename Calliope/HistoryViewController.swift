@@ -36,7 +36,7 @@ final class HistoryTableViewCell: UITableViewCell {
         lineView.backgroundColor = Styles.colorWhite
         rounded.addSubview(lineView)
 
-        let image = UIImage.loadImage(named:"IconDevice")
+        let image = UIImage(named:"IconDevice") ?? UIImage()
         iconView.image = image.imageTinted(Styles.colorWhite)
         iconView.contentMode = .scaleAspectFit
         rounded.addSubview(iconView)
@@ -63,7 +63,7 @@ final class HistoryTableViewCell: UITableViewCell {
             ))
         }
 
-        let imageRatio = image.size.height/image.size.width
+        let imageRatio = image.size.height / image.size.width
 
         filenameLabel.snp.makeConstraints { make in
             make.top.equalTo(superview).offset(marginY)

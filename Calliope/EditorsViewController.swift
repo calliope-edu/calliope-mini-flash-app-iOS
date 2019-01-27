@@ -32,7 +32,7 @@ final class EditorsViewController: BaseViewController {
         lineView.backgroundColor = Styles.colorWhite
         roundedView.addSubview(lineView)
 
-        let image = UIImage.loadImage(named:"IconCode")
+        let image = UIImage(named:"IconCode") ?? UIImage()
         let iconView = UIImageView()
         iconView.image = image.imageTinted(Styles.colorWhite)
         iconView.contentMode = .scaleAspectFit

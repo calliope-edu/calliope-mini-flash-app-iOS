@@ -33,7 +33,6 @@
 		9D63E1CA1F90B51700D35167 /* Calliope-mini-Start.hex in Resources */ = {isa = PBXBuildFile; fileRef = 9D63E1C81F90B48500D35167 /* Calliope-mini-Start.hex */; };
 		9D6404411F2E49C3005B54A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6404401F2E49C3005B54A9 /* AppDelegate.swift */; };
 		9D6404431F2E49C3005B54A9 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6404421F2E49C3005B54A9 /* MainViewController.swift */; };
-		9D6404461F2E49C3005B54A9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D6404441F2E49C3005B54A9 /* Main.storyboard */; };
 		9D6404481F2E49C3005B54A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D6404471F2E49C3005B54A9 /* Assets.xcassets */; };
 		9D64044B1F2E49C3005B54A9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D6404491F2E49C3005B54A9 /* LaunchScreen.storyboard */; };
 		9D85C9091F7E8DBF005B808F /* EditorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D85C9081F7E8DBF005B808F /* EditorsViewController.swift */; };
@@ -75,7 +74,7 @@
 		9D3A59B31F862FAF009023CA /* ProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewController.swift; sourceTree = "<group>"; };
 		9D3A59B71F87D703009023CA /* ConnectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectViewController.swift; sourceTree = "<group>"; };
 		9D3A59B91F87D738009023CA /* UploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
-		9D3A59BC1F88745F009023CA /* RobotoMono-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "RobotoMono-Bold.ttf"; path = "Fonts/Roboto Mono/RobotoMono-Bold.ttf"; sourceTree = "<group>"; };
+		9D3A59BC1F88745F009023CA /* RobotoMono-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoMono-Bold.ttf"; sourceTree = "<group>"; };
 		9D55AF7B1F65EBEF002B8431 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		9D55AF7D1F660E2B002B8431 /* ExtImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtImage.swift; sourceTree = "<group>"; };
 		9D55AF7F1F660FAC002B8431 /* ExtColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtColor.swift; sourceTree = "<group>"; };
@@ -88,13 +87,12 @@
 		9D64043D1F2E49C3005B54A9 /* Calliope.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calliope.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D6404401F2E49C3005B54A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9D6404421F2E49C3005B54A9 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		9D6404451F2E49C3005B54A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9D6404471F2E49C3005B54A9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9D64044A1F2E49C3005B54A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9D64044C1F2E49C3005B54A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9D85C9081F7E8DBF005B808F /* EditorsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorsViewController.swift; sourceTree = "<group>"; };
 		9D8B5B231F979A470023DC09 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
-		9DA818901F7A750400093031 /* RobotoMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "RobotoMono-Regular.ttf"; path = "Fonts/Roboto Mono/RobotoMono-Regular.ttf"; sourceTree = "<group>"; };
+		9DA818901F7A750400093031 /* RobotoMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoMono-Regular.ttf"; sourceTree = "<group>"; };
 		9DA818951F7A803000093031 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = Localization/de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9DA818961F7A804300093031 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localization/en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9DAC99FB1F93E14E007C1B42 /* MatrixView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixView.swift; sourceTree = "<group>"; };
@@ -104,7 +102,6 @@
 		9DBA2BB61F60563000DCEC96 /* BluetoothReboot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothReboot.swift; sourceTree = "<group>"; };
 		9DBA2BB81F6078B800DCEC96 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		9DBD88871F4B615300D0F83A /* ScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
-		9DBD888B1F4B626900D0F83A /* Bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bridge.h; sourceTree = "<group>"; };
 		9DCE159C1F5AECD600264A99 /* ExtObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtObject.swift; sourceTree = "<group>"; };
 		9DCE159E1F5B049700264A99 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		9DD46B941F3395F400123EF0 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -185,18 +182,15 @@
 		9D64043F1F2E49C3005B54A9 /* Calliope */ = {
 			isa = PBXGroup;
 			children = (
-				9DBD888B1F4B626900D0F83A /* Bridge.h */,
+				D4E111FB21FCE2F5004F9003 /* Ressources */,
 				9D64044C1F2E49C3005B54A9 /* Info.plist */,
 				9D6404471F2E49C3005B54A9 /* Assets.xcassets */,
 				9DA818941F7A803000093031 /* Localizable.strings */,
-				9DA818901F7A750400093031 /* RobotoMono-Regular.ttf */,
-				9D3A59BC1F88745F009023CA /* RobotoMono-Bold.ttf */,
 				9D02A0171F31DE59004113B1 /* Global.swift */,
 				9DD46B941F3395F400123EF0 /* Constants.swift */,
 				D49A2B5521FA5AE30093F2E3 /* URLManager.swift */,
 				9D55AF811F661022002B8431 /* Styles.swift */,
 				9D6404491F2E49C3005B54A9 /* LaunchScreen.storyboard */,
-				9D6404441F2E49C3005B54A9 /* Main.storyboard */,
 				9D6404401F2E49C3005B54A9 /* AppDelegate.swift */,
 				9D55AF791F65D9AF002B8431 /* Controller */,
 				9DA818971F7A879D00093031 /* Components */,
@@ -270,6 +264,23 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		D4E111FB21FCE2F5004F9003 /* Ressources */ = {
+			isa = PBXGroup;
+			children = (
+				D4E111FC21FCE2FD004F9003 /* Fonts */,
+			);
+			name = Ressources;
+			sourceTree = "<group>";
+		};
+		D4E111FC21FCE2FD004F9003 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				9DA818901F7A750400093031 /* RobotoMono-Regular.ttf */,
+				9D3A59BC1F88745F009023CA /* RobotoMono-Bold.ttf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -341,7 +352,6 @@
 				9DA818911F7A779D00093031 /* RobotoMono-Regular.ttf in Resources */,
 				9D3A59BD1F8875F5009023CA /* RobotoMono-Bold.ttf in Resources */,
 				9D366AEE1F7D0DC300BB5A26 /* Localizable.strings in Resources */,
-				9D6404461F2E49C3005B54A9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,14 +469,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		9D6404441F2E49C3005B54A9 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9D6404451F2E49C3005B54A9 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		9D6404491F2E49C3005B54A9 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -617,7 +619,7 @@
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -638,7 +640,7 @@
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};
