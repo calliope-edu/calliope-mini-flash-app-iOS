@@ -60,9 +60,7 @@ class SettingsViewController: UIViewController {
         var height = view.frame.height
         if  #available(iOS 11.0, *) {
             if let safeAreaInsets = presentingViewController?.view.safeAreaInsets {
-                height -= (safeAreaInsets.top +
-                    safeAreaInsets.bottom +
-                    (navigationController?.navigationBar.frame.height ?? 0.0))
+                height -= safeAreaInsets.bottom
             }
         }
         //SCrollView

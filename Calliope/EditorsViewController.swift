@@ -59,7 +59,7 @@ final class EditorsViewController: UIViewController {
         // Constants
         var buttonHeight = view.frame.height
         if  #available(iOS 11.0, *) {
-            buttonHeight -= view.safeAreaInsets.top + view.safeAreaInsets.bottom
+            buttonHeight -= view.safeAreaInsets.bottom
         }
         buttonHeight = buttonHeight / 5
         // RobertaView
@@ -90,7 +90,6 @@ final class EditorsViewController: UIViewController {
         labelText.snp.remakeConstraints { (make) in
             make.top.left.equalToSuperview().offset(range(20,40))
             make.right.equalToSuperview().offset(range(-20,-40))
-            make.bottom.greaterThanOrEqualTo(calliopeView.snp.top).offset(range(-20,-40))
         }
     }
   
