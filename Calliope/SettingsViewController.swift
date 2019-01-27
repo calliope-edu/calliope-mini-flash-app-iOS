@@ -52,6 +52,16 @@ class SettingsViewController: UIViewController {
     
     
     private func layout() {
+        // Constants
+        var height = view.frame.height
+        if  #available(iOS 11.0, *) {
+            if let safeAreaInsets = presentingViewController?.view.safeAreaInsets {
+                height -= (safeAreaInsets.top +
+                    safeAreaInsets.bottom +
+                    (navigationController?.navigationBar.frame.height ?? 0.0))
+            }
+        }
+        //SCrollView
         view.addSubview(scrollView)
         scrollView.snp.makeConstraints { (make) in
             make.top.right.bottom.left.equalToSuperview()
@@ -59,7 +69,8 @@ class SettingsViewController: UIViewController {
         scrollView.addSubview(scrollContentView)
         scrollContentView.snp.makeConstraints { (make) in
             make.top.right.bottom.left.equalToSuperview()
-            make.height.width.equalTo(view)
+            make.width.equalTo(view)
+            make.height.equalTo(height)
         }
         // OpenROberta
         robertaView = TextFieldView(title: "Open Roberta NEPO®",
