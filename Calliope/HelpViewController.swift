@@ -2,7 +2,7 @@ import UIKit
 import WebKit
 import SnapKit
 
-final class HelpViewController: BaseViewController {
+final class HelpViewController: UIViewController {
 
     public var html = ""
 

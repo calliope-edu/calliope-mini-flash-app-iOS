@@ -8,14 +8,15 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         LOG("> \(Application.identifier) \(Application.version) \(Application.build) \(Application.revision)")
-        // Set default stypes for UI Elements
-        Styles.apply()
+    
         // Set first viewController
         self.window = UIWindow(frame: UIScreen.main.bounds)
         let navigationController = UINavigationController()
         navigationController.viewControllers = [MainViewController()]
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
+        // Set default stypes for UI Elements
+        Styles.apply()
         return true
     }
 

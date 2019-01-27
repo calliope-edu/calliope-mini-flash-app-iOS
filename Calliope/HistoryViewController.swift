@@ -108,7 +108,7 @@ final class HistoryTableViewCell: UITableViewCell {
 }
 
 
-final class HistoryViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
+final class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     private let instructionsView = UIView()
     private let tableView = UITableView()
@@ -125,8 +125,7 @@ final class HistoryViewController: BaseViewController, UITableViewDelegate, UITa
         navigationItem.title = "history.title".localized
         view.backgroundColor = Styles.colorWhite
 
-        let buttonHelp = createHelpButton()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView:buttonHelp)
+        addHelpButton()
 
         setupTable()
         setupInstructions()

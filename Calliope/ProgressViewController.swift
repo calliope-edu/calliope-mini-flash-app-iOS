@@ -21,7 +21,7 @@ struct Animation {
     let repeatCount: Int
 }
 
-class ProgressViewController: BaseViewController {
+class ProgressViewController: UIViewController {
 
     public var buttonPressAction: ((ProgressViewControllerState)->())? = nil
 

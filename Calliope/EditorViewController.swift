@@ -1,7 +1,7 @@
 import UIKit
 import WebKit
 
-final class EditorViewController: BaseViewController, WKNavigationDelegate, WKUIDelegate {
+final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
 
     public var editor: Editor!
 
@@ -13,9 +13,7 @@ final class EditorViewController: BaseViewController, WKNavigationDelegate, WKUI
         navigationItem.title = editor.name
         view.backgroundColor = Styles.colorWhite
 
-        let buttonHelp = createHelpButton()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView:buttonHelp)
-
+        addHelpButton()
         let controller = WKUserContentController()
         let configuration = WKWebViewConfiguration()
         configuration.userContentController = controller;

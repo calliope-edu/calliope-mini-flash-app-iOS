@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-final class ScannerViewController: BaseViewController {
+final class ScannerViewController: UIViewController {
 
     private let viewImage = UIImageView()
     private let labelText = UILabel()
@@ -22,13 +22,11 @@ final class ScannerViewController: BaseViewController {
         navigationItem.title = "scanner.title".localized
         view.backgroundColor = Styles.colorWhite
 
-        let buttonCancel = createCancelButton()
-        buttonCancel.addAction(for: .touchUpInside, actionCancel)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView:buttonCancel)
-
-        let buttonHelp = createHelpButton()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView:buttonHelp)
-
+        addCancelButton { [weak self] in
+            self?.actionCancel()
+        }
+      
+        addHelpButton()
         viewImage.animationImages = [
             UIImage(named:"AnimPressToPair/a") ?? UIImage(),
             UIImage(named:"AnimPressToPair/b") ?? UIImage(),
@@ -70,18 +68,11 @@ final class ScannerViewController: BaseViewController {
         layout()
 
         let scanner = BluetoothScan({ map in
-//            for discovery in map.values {
-//                let name = discovery.name
-//                let identifier = discovery.peripheral.identifier
-//                let advertisementData = discovery.advertisementData
-//                LOG(" - [\(name ?? "")] [\(identifier)]: \(advertisementData)")
-//            }
             me.discoveries = Array(map.values
             .filter({ discovery -> Bool in
                 return discovery.name?.hasPrefix("BBC micro:bit [") ?? false
                     || discovery.name?.hasPrefix("Calliope mini [") ?? false
             }))
-//            LOG("found \(map.count) devices, \(me.discoveries.count) relevant")
             me.updateMatch()
         })
         process = scanner
@@ -138,7 +129,7 @@ final class ScannerViewController: BaseViewController {
         }
     }
 
-    func actionCancel(button: UIButton) {
+    func actionCancel() {
         if let scanner = process {
             scanner.stop()
         }

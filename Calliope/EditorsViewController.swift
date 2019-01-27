@@ -1,6 +1,6 @@
 import UIKit
 
-final class EditorsViewController: BaseViewController {
+final class EditorsViewController: UIViewController {
 
     private let labelText = UILabel()
     
@@ -87,9 +87,7 @@ final class EditorsViewController: BaseViewController {
         navigationItem.title = "editors.title".localized
         view.backgroundColor = Styles.colorWhite
 
-        let buttonHelp = createHelpButton()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView:buttonHelp)
-
+        addHelpButton()
         labelText.text = "editors.text".localized
         labelText.numberOfLines = 0
         labelText.font = Styles.defaultFont(size: range(15...35))

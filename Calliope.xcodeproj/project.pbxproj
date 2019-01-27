@@ -22,7 +22,6 @@
 		9D3A59B81F87D703009023CA /* ConnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3A59B71F87D703009023CA /* ConnectViewController.swift */; };
 		9D3A59BA1F87D738009023CA /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3A59B91F87D738009023CA /* UploadViewController.swift */; };
 		9D3A59BD1F8875F5009023CA /* RobotoMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9D3A59BC1F88745F009023CA /* RobotoMono-Bold.ttf */; };
-		9D55AF7C1F65EBEF002B8431 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D55AF7B1F65EBEF002B8431 /* BaseViewController.swift */; };
 		9D55AF7E1F660E2B002B8431 /* ExtImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D55AF7D1F660E2B002B8431 /* ExtImage.swift */; };
 		9D55AF801F660FAC002B8431 /* ExtColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D55AF7F1F660FAC002B8431 /* ExtColor.swift */; };
 		9D55AF821F661022002B8431 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D55AF811F661022002B8431 /* Styles.swift */; };
@@ -58,6 +57,8 @@
 		D49A2B5321FA58780093F2E3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49A2B5221FA58780093F2E3 /* SettingsViewController.swift */; };
 		D49A2B5621FA5AE30093F2E3 /* URLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49A2B5521FA5AE30093F2E3 /* URLManager.swift */; };
 		D49A2B5821FA5D0B0093F2E3 /* TextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49A2B5721FA5D0B0093F2E3 /* TextFieldView.swift */; };
+		D4E1120121FDC174004F9003 /* HelpButtonProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1120021FDC174004F9003 /* HelpButtonProtocol.swift */; };
+		D4E1120321FDC61F004F9003 /* CancelButtonProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1120221FDC61F004F9003 /* CancelButtonProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,7 +76,6 @@
 		9D3A59B71F87D703009023CA /* ConnectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectViewController.swift; sourceTree = "<group>"; };
 		9D3A59B91F87D738009023CA /* UploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
 		9D3A59BC1F88745F009023CA /* RobotoMono-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoMono-Bold.ttf"; sourceTree = "<group>"; };
-		9D55AF7B1F65EBEF002B8431 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		9D55AF7D1F660E2B002B8431 /* ExtImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtImage.swift; sourceTree = "<group>"; };
 		9D55AF7F1F660FAC002B8431 /* ExtColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtColor.swift; sourceTree = "<group>"; };
 		9D55AF811F661022002B8431 /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
@@ -117,6 +117,8 @@
 		D49A2B5221FA58780093F2E3 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		D49A2B5521FA5AE30093F2E3 /* URLManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLManager.swift; sourceTree = "<group>"; };
 		D49A2B5721FA5D0B0093F2E3 /* TextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldView.swift; sourceTree = "<group>"; };
+		D4E1120021FDC174004F9003 /* HelpButtonProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpButtonProtocol.swift; sourceTree = "<group>"; };
+		D4E1120221FDC61F004F9003 /* CancelButtonProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelButtonProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,7 +134,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9D55AF791F65D9AF002B8431 /* Controller */ = {
+		9D55AF791F65D9AF002B8431 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
 				D49A2B5221FA58780093F2E3 /* SettingsViewController.swift */,
@@ -145,9 +147,8 @@
 				9D3A59B91F87D738009023CA /* UploadViewController.swift */,
 				9D366AE91F7C0AEA00BB5A26 /* HelpViewController.swift */,
 				9D3A59B31F862FAF009023CA /* ProgressViewController.swift */,
-				9D55AF7B1F65EBEF002B8431 /* BaseViewController.swift */,
 			);
-			name = Controller;
+			name = ViewController;
 			sourceTree = "<group>";
 		};
 		9D55AF7A1F65D9EF002B8431 /* Bluetooth */ = {
@@ -192,7 +193,7 @@
 				9D55AF811F661022002B8431 /* Styles.swift */,
 				9D6404491F2E49C3005B54A9 /* LaunchScreen.storyboard */,
 				9D6404401F2E49C3005B54A9 /* AppDelegate.swift */,
-				9D55AF791F65D9AF002B8431 /* Controller */,
+				9D55AF791F65D9AF002B8431 /* ViewController */,
 				9DA818971F7A879D00093031 /* Components */,
 				9D55AF7A1F65D9EF002B8431 /* Bluetooth */,
 				9DAC99FD1F942B20007C1B42 /* Microbit.swift */,
@@ -215,6 +216,8 @@
 			children = (
 				D49A2B5721FA5D0B0093F2E3 /* TextFieldView.swift */,
 				9DAC99FB1F93E14E007C1B42 /* MatrixView.swift */,
+				D4E1120021FDC174004F9003 /* HelpButtonProtocol.swift */,
+				D4E1120221FDC61F004F9003 /* CancelButtonProtocol.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -425,10 +428,10 @@
 				9D55AF821F661022002B8431 /* Styles.swift in Sources */,
 				9DBA2BB71F60563000DCEC96 /* BluetoothReboot.swift in Sources */,
 				9DBA2BB31F6033D600DCEC96 /* BluetoothScan.swift in Sources */,
+				D4E1120121FDC174004F9003 /* HelpButtonProtocol.swift in Sources */,
 				9D1790B51F61552900CDF964 /* Editors.swift in Sources */,
 				9DFA2DD61F59FC5700DD1A10 /* HexParser.swift in Sources */,
 				9D02A0181F31DE59004113B1 /* Global.swift in Sources */,
-				9D55AF7C1F65EBEF002B8431 /* BaseViewController.swift in Sources */,
 				D49A2B5821FA5D0B0093F2E3 /* TextFieldView.swift in Sources */,
 				9D3A59B41F862FAF009023CA /* ProgressViewController.swift in Sources */,
 				9DBA2BB91F6078B800DCEC96 /* HistoryViewController.swift in Sources */,
@@ -453,6 +456,7 @@
 				9D1F04A41F7AA7E900192712 /* ExtURL.swift in Sources */,
 				9DD46B951F3395F400123EF0 /* Constants.swift in Sources */,
 				9D366AEA1F7C0AEA00BB5A26 /* HelpViewController.swift in Sources */,
+				D4E1120321FDC61F004F9003 /* CancelButtonProtocol.swift in Sources */,
 				9D6404431F2E49C3005B54A9 /* MainViewController.swift in Sources */,
 				9D564BE81F64ACE9003CACD3 /* ExtViewController.swift in Sources */,
 				9DFA2DDA1F5A1F2D00DD1A10 /* ExtString.swift in Sources */,
