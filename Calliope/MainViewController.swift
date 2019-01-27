@@ -117,9 +117,10 @@ final class MainViewController: UIViewController {
         
         viewLogo.snp.makeConstraints { make in
             make.centerX.equalTo(superview)
+            make.top.greaterThanOrEqualToSuperview()
             make.top.lessThanOrEqualTo(superview).offset(spaceY)
             make.width.equalTo(superview).multipliedBy(0.35)
-            make.height.equalTo(viewLogo.snp.width).multipliedBy(imageRatio)
+            make.height.lessThanOrEqualTo(viewLogo.snp.width).multipliedBy(imageRatio)
         }
         
         labelWelcome.snp.makeConstraints { make in
