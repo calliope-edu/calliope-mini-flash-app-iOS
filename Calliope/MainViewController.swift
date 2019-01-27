@@ -32,7 +32,7 @@ final class MainViewController: UIViewController {
         viewImageR.image = UIImage(named: "DotsR") ?? UIImage()
         viewImageR.contentMode = .scaleAspectFit
         view.addSubview(viewImageR)
-        
+        labelWelcome.setContentCompressionResistancePriority(.required, for: .vertical)
         labelWelcome.text = "main.text.none".localized
         labelWelcome.numberOfLines = 0
         labelWelcome.textAlignment = .center
@@ -117,14 +117,14 @@ final class MainViewController: UIViewController {
         
         viewLogo.snp.makeConstraints { make in
             make.centerX.equalTo(superview)
-            make.top.equalTo(superview).offset(spaceY)
+            make.top.lessThanOrEqualTo(superview).offset(spaceY)
             make.width.equalTo(superview).multipliedBy(0.35)
             make.height.equalTo(viewLogo.snp.width).multipliedBy(imageRatio)
         }
         
         labelWelcome.snp.makeConstraints { make in
             make.centerX.equalTo(superview)
-            make.top.equalTo(viewLogo.snp.bottom).offset(spaceY)
+            make.top.lessThanOrEqualTo(viewLogo.snp.bottom).offset(spaceY)
             make.width.equalTo(superview).multipliedBy(0.6)
         }
         
