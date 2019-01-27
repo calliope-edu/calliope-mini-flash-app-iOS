@@ -100,7 +100,7 @@ final class ScannerViewController: UIViewController {
             make.centerX.equalTo(labelText)
             make.width.equalTo(labelText).multipliedBy(0.5)
         }
-
+        labelText.setContentCompressionResistancePriority(.required, for: .vertical)
         labelText.snp.makeConstraints { make in
             make.top.equalTo(viewImage.snp.bottom).offset(spacingY)
             make.left.equalTo(superview).offset(marginX)
