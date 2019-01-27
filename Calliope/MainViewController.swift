@@ -68,7 +68,6 @@ final class MainViewController: UIViewController {
     }
     
     // MARK: - Setup
-    
     private func setupNavigationBar() {
         let settingsBarItem = UIBarButtonItem(title: "main.settings".localized,
                                               style: .done,
@@ -95,6 +94,16 @@ final class MainViewController: UIViewController {
         button.contentEdgeInsets = UIEdgeInsets.init(top: 0.0, left: left, bottom: 0.0, right: 0.0)
         button.backgroundColor = color
         button.sizeToFit()
+        
+        // TODO: Fix me in future. This is not the nicest way to solve it.
+        // This code fixes the iPad landscape layout bug
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            button.imageView?.snp.remakeConstraints({ (make) in
+                make.centerY.equalToSuperview()
+                make.height.equalToSuperview().multipliedBy(0.5)
+                make.right.equalTo(button.titleLabel!.snp.left)
+            })
+        }
     }
     
     func layout() {
