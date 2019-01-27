@@ -3,7 +3,6 @@ import UIKit
 final class MatrixView: UIView {
 
     public var onChange: (([[Bool]])->())? = nil
-
     var matrix = [
         [ false, false, false, false, false ],
         [ false, false, false, false, false ],

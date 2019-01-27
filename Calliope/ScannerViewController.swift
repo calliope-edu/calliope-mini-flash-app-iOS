@@ -3,20 +3,21 @@ import SnapKit
 
 final class ScannerViewController: UIViewController {
 
+    // MARK: - UIElements
     private let viewImage = UIImageView()
     private let labelText = UILabel()
-    private let viewMatrix = MatrixView()
     private let buttonPair = UIButton()
 
+    // MARK: - Vars
+    private let viewMatrix = MatrixView()
     private var process: BluetoothScan?
-
     private var discoveries: [BluetoothDiscovery] = []
     private var friendly: String? = nil
     private var action: (()->())? = nil
 
+    // MARK: - Lifecyle
     override func viewDidLoad() {
         super.viewDidLoad()
-
         unowned let me = self
 
         navigationItem.title = "scanner.title".localized
@@ -77,7 +78,13 @@ final class ScannerViewController: UIViewController {
         })
         process = scanner
     }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        layout()
+    }
 
+    // MARK: - Stuff
     func layout() {
         let superview = view!
 
@@ -87,13 +94,11 @@ final class ScannerViewController: UIViewController {
         let height = range(70...170)
 
         guard let image = viewImage.animationImages?.first else { return }
-        let imageRatio = image.size.height/image.size.width
-
+        
         viewImage.snp.makeConstraints { make in
             make.top.equalTo(superview).offset(marginY)
             make.centerX.equalTo(labelText)
             make.width.equalTo(labelText).multipliedBy(0.5)
-            make.height.equalTo(viewImage.snp.width).multipliedBy(imageRatio)
         }
 
         labelText.snp.makeConstraints { make in
@@ -104,7 +109,12 @@ final class ScannerViewController: UIViewController {
 
         viewMatrix.snp.makeConstraints { make in
             make.top.equalTo(labelText.snp.bottom).offset(spacingY)
-            make.left.right.equalTo(labelText)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(viewMatrix.snp.height)
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                make.left.lessThanOrEqualToSuperview().offset(20)
+                make.right.lessThanOrEqualToSuperview().offset(-20)
+            }
         }
 
         buttonPair.snp.makeConstraints { make in

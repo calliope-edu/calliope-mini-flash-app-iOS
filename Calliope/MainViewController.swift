@@ -64,7 +64,6 @@ final class MainViewController: UIViewController {
               color: Styles.colorBlue)
         buttonHistory.addAction(for: .touchUpInside, actionHistory)
         view.addSubview(buttonHistory)
-        
         layout()
     }
     
