@@ -68,15 +68,16 @@ class TextFieldView: UIView {
         topLayoutView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
-            make.left.equalToSuperview().offset(range(8...24))
-            make.right.greaterThanOrEqualToSuperview().offset(range(-8, -24))
+            make.left.equalToSuperview().offset(range(20...40))
+            make.right.greaterThanOrEqualToSuperview().offset(range(-20, -40))
         }
         // Separator
         addSubview(separatorView)
         separatorView.snp.makeConstraints { (make) in
             make.centerX.centerY.equalToSuperview()
             make.height.equalTo(1)
-            make.width.equalToSuperview().multipliedBy(0.9)
+            make.left.equalToSuperview().offset(range(20...40))
+            make.right.greaterThanOrEqualToSuperview().offset(range(-20, -40))
         }
         // BottomView
         addSubview(bottomLayoutView)
@@ -87,7 +88,8 @@ class TextFieldView: UIView {
         bottomLayoutView.addSubview(textField)
         textField.snp.makeConstraints { (make) in
             make.centerX.centerY.equalToSuperview()
-            make.width.equalToSuperview().multipliedBy(0.85)
+            make.left.equalToSuperview().offset(range(20...40))
+            make.right.greaterThanOrEqualToSuperview().offset(range(-20, -40))
         }
     }
     

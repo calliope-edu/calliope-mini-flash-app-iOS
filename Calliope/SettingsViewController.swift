@@ -65,11 +65,11 @@ class SettingsViewController: UIViewController {
         }
         //SCrollView
         view.addSubview(scrollView)
-        scrollView.snp.makeConstraints { (make) in
+        scrollView.snp.remakeConstraints { (make) in
             make.top.right.bottom.left.equalToSuperview()
         }
         scrollView.addSubview(scrollContentView)
-        scrollContentView.snp.makeConstraints { (make) in
+        scrollContentView.snp.remakeConstraints { (make) in
             make.top.right.bottom.left.equalToSuperview()
             make.width.equalTo(view)
             make.height.equalTo(height)
@@ -82,7 +82,7 @@ class SettingsViewController: UIViewController {
         }
         scrollContentView.addSubview(robertaView)
         
-        robertaView.snp.makeConstraints { (make) in
+        robertaView.snp.remakeConstraints { (make) in
             make.bottom.equalToSuperview().offset(range(-8, -32))
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().multipliedBy(0.9)
@@ -95,7 +95,7 @@ class SettingsViewController: UIViewController {
                                             self?.editedMakeCodeUrl = text
         }
         scrollContentView.addSubview(makeCodeView)
-        makeCodeView.snp.makeConstraints { (make) in
+        makeCodeView.snp.remakeConstraints { (make) in
             make.bottom.equalTo(robertaView.snp.top).offset(range(-8, -32))
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().multipliedBy(0.9)
@@ -108,7 +108,7 @@ class SettingsViewController: UIViewController {
                                     self?.editedCalliopeUrl = text
         }
         scrollContentView.addSubview(calliopeView)
-        calliopeView.snp.makeConstraints { (make) in
+        calliopeView.snp.remakeConstraints { (make) in
             make.bottom.equalTo(makeCodeView.snp.top).offset(range(-8, -32))
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().multipliedBy(0.9)
