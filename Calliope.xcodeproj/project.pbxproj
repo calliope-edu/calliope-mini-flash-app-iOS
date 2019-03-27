@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		37B118FCB72BC6B824BBDDCA /* Pods_Calliope.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3088E08C1CD5B315657F45A /* Pods_Calliope.framework */; };
+		80181B4A224392D8002DD88D /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 804D4CA62201A9AE00046B9A /* SnapKit.framework */; };
+		804D4CA92201A9DC00046B9A /* iOSDFULibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 804D4CA82201A9DC00046B9A /* iOSDFULibrary.framework */; };
+		804D4CAB2201AA1100046B9A /* TPKeyboardAvoiding.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 804D4CAA2201AA1100046B9A /* TPKeyboardAvoiding.framework */; };
+		804D4CAD2201AA1B00046B9A /* Zip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 804D4CAC2201AA1B00046B9A /* Zip.framework */; };
 		9D02A0181F31DE59004113B1 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D02A0171F31DE59004113B1 /* Global.swift */; };
 		9D02A01E1F322847004113B1 /* ExtBluetooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D02A01D1F322847004113B1 /* ExtBluetooth.swift */; };
 		9D1461121F5577F5000DD8B8 /* Checksum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1461111F5577F5000DD8B8 /* Checksum.swift */; };
@@ -63,6 +66,11 @@
 
 /* Begin PBXFileReference section */
 		187D027987EA3CD6BF52AE2C /* Pods-Calliope.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope.release.xcconfig"; path = "Pods/Target Support Files/Pods-Calliope/Pods-Calliope.release.xcconfig"; sourceTree = "<group>"; };
+		80181B472243917F002DD88D /* SnapKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SnapKit; path = Pods/SnapKit; sourceTree = "<group>"; };
+		804D4CA62201A9AE00046B9A /* SnapKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SnapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		804D4CA82201A9DC00046B9A /* iOSDFULibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = iOSDFULibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		804D4CAA2201AA1100046B9A /* TPKeyboardAvoiding.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TPKeyboardAvoiding.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		804D4CAC2201AA1B00046B9A /* Zip.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Zip.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D02A0171F31DE59004113B1 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		9D02A01D1F322847004113B1 /* ExtBluetooth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtBluetooth.swift; sourceTree = "<group>"; };
 		9D1461111F5577F5000DD8B8 /* Checksum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checksum.swift; sourceTree = "<group>"; };
@@ -127,8 +135,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80181B4A224392D8002DD88D /* SnapKit.framework in Frameworks */,
+				804D4CAD2201AA1B00046B9A /* Zip.framework in Frameworks */,
+				804D4CAB2201AA1100046B9A /* TPKeyboardAvoiding.framework in Frameworks */,
+				804D4CA92201A9DC00046B9A /* iOSDFULibrary.framework in Frameworks */,
 				9DCE159F1F5B049700264A99 /* WebKit.framework in Frameworks */,
-				37B118FCB72BC6B824BBDDCA /* Pods_Calliope.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,6 +266,11 @@
 		A1B1893D442746968434E1CB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				80181B472243917F002DD88D /* SnapKit */,
+				804D4CAC2201AA1B00046B9A /* Zip.framework */,
+				804D4CAA2201AA1100046B9A /* TPKeyboardAvoiding.framework */,
+				804D4CA82201A9DC00046B9A /* iOSDFULibrary.framework */,
+				804D4CA62201A9AE00046B9A /* SnapKit.framework */,
 				9DCE159E1F5B049700264A99 /* WebKit.framework */,
 				B3088E08C1CD5B315657F45A /* Pods_Calliope.framework */,
 			);
@@ -304,7 +320,7 @@
 				TargetAttributes = {
 					9D64043C1F2E49C3005B54A9 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = KW752MR3Z2;
+						DevelopmentTeam = GKA87N33H4;
 						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 					};
@@ -607,10 +623,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = KW752MR3Z2;
+				DEVELOPMENT_TEAM = GKA87N33H4;
 				INFOPLIST_FILE = Calliope/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = benediktSpohr.calliope;
+				PRODUCT_BUNDLE_IDENTIFIER = cc.calliope.ios.flash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -628,10 +644,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = KW752MR3Z2;
+				DEVELOPMENT_TEAM = GKA87N33H4;
 				INFOPLIST_FILE = Calliope/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = benediktSpohr.calliope;
+				PRODUCT_BUNDLE_IDENTIFIER = cc.calliope.ios.flash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

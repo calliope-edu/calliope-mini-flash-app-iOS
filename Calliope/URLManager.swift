@@ -11,7 +11,7 @@ import Foundation
 class URLManager {
     
     private static let calliopeDefault = "https://miniedit.calliope.cc"
-    private static let makeCodeDefault = "https://makecode.calliope.cc/"
+    private static let makeCodeDefault = "https://makecode.calliope.cc/#pub:37488-72365-81034-60948"
     private static let robertaDefault = "https://lab.open-roberta.org/#loadSystem&&calliope2017"
     
     /// Url for the Calliope mini editor
