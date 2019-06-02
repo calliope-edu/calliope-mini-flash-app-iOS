@@ -14,7 +14,7 @@ final class Device: NSObject, NSCoding {
 
     required init(coder decoder: NSCoder) {
         self.name = decoder.decodeObject(forKey: "name") as? String ?? ""
-        self.identifier = (decoder.decodeObject(forKey: "identifier") as! NSUUID!)! as UUID
+		self.identifier = (decoder.decodeObject(forKey: "identifier") as! NSUUID?)! as UUID
     }
 
     func encode(with coder: NSCoder) {

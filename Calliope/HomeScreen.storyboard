@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9eT-f2-X1q">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Home-->
+        <scene sceneID="bhu-hj-7In">
+            <objects>
+                <viewController title="Home" id="9eT-f2-X1q" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sWw-Z8-r8p">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F5a-D8-qKD">
+                                <rect key="frame" x="0.0" y="120" width="375" height="498"/>
+                                <connections>
+                                    <segue destination="OrW-0H-k5N" kind="embed" id="h3u-K4-vJc"/>
+                                </connections>
+                            </containerView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pur-Pz-EQX">
+                                <rect key="frame" x="0.0" y="20" width="375" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="BSS-c1-2iF"/>
+                                </constraints>
+                                <state key="normal" title="Introduction"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="F5a-D8-qKD" firstAttribute="trailing" secondItem="EZz-7t-xZZ" secondAttribute="trailing" id="9aO-9f-Kp0"/>
+                            <constraint firstItem="pur-Pz-EQX" firstAttribute="leading" secondItem="EZz-7t-xZZ" secondAttribute="leading" id="EZr-4c-3im"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="F5a-D8-qKD" secondAttribute="bottom" id="MnC-MY-TXV"/>
+                            <constraint firstItem="F5a-D8-qKD" firstAttribute="top" secondItem="pur-Pz-EQX" secondAttribute="bottom" id="SWh-aF-MEY"/>
+                            <constraint firstItem="EZz-7t-xZZ" firstAttribute="trailing" secondItem="pur-Pz-EQX" secondAttribute="trailing" id="Y68-b1-1dd"/>
+                            <constraint firstItem="pur-Pz-EQX" firstAttribute="top" secondItem="EZz-7t-xZZ" secondAttribute="top" id="oKx-T1-Us1"/>
+                            <constraint firstItem="F5a-D8-qKD" firstAttribute="leading" secondItem="EZz-7t-xZZ" secondAttribute="leading" id="qt0-Qf-pag"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="EZz-7t-xZZ"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Home" id="fxY-KR-WSy"/>
+                    <navigationItem key="navigationItem" title="Home" id="w16-hI-VJ6"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xQY-Z1-230" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1216.8" y="-251.42428785607197"/>
+        </scene>
+        <!--Featured-->
+        <scene sceneID="XkB-Oj-IrX">
+            <objects>
+                <viewController title="Featured" id="OrW-0H-k5N" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zv5-M4-t6Z">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="498"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="b0T-PM-eb9"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sFn-Oi-a2p" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2076" y="-175"/>
+        </scene>
+    </scenes>
+</document>
