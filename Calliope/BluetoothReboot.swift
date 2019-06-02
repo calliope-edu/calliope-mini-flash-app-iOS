@@ -50,7 +50,7 @@ final class BluetoothReboot: NSObject, CBCentralManagerDelegate, CBPeripheralDel
             block("bluetooth unauthorized", central, nil)
         case .unsupported:
             block("bluetooth unsupported", central, nil)
-        case .unknown:
+		default:
             block("bluetooth state unknown", central, nil)
         }
     }
