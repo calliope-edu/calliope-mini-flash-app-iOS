@@ -5,3 +5,4 @@ DerivedData/
 *.dSYM.zip
 *.dSYM
 Pods/
+Calliope.xcworkspace/xcuserdata
