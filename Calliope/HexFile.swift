@@ -4,7 +4,20 @@ import iOSDFULibrary
 struct HexFile {
 
     let url: URL
-    let name: String
+	var name: String {
+		didSet {
+			let lastURLPart = url.lastPathComponent.dropLast(4)
+			if lastURLPart != name {
+				do {
+					try HexFileManager.rename(file: self)
+				} catch {
+					//reset name
+					name = String(lastURLPart)
+					//FIXME: display to user
+				}
+			}
+		}
+	}
     let date: Date
 
     func bin() -> Data {
@@ -84,7 +97,7 @@ final class HexFileManager {
             return url.absoluteString.hasSuffix(".hex")
         })
         .map { url -> HexFile in
-            let name = url.lastPathComponent
+            let name = String(url.lastPathComponent.dropLast(4))
             let date = try dateFor(url:url)
             return HexFile(url: url, name: name, date: date)
         }.sorted(by: { (a,b) -> Bool in
@@ -113,5 +126,10 @@ final class HexFileManager {
         LOG("deleting file \(file)")
         try FileManager.default.removeItem(at: file.url)
     }
+
+	public static func rename(file: HexFile) throws {
+		LOG("renaming file \(file)")
+		try FileManager.default.moveItem(at: file.url, to: file.url.deletingLastPathComponent().appendingPathComponent(file.name + ".hex"))
+	}
 
 }

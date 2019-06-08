@@ -1,7 +1,7 @@
 import UIKit
 import WebKit
 
-final class EditorViewController: BaseViewController, WKNavigationDelegate, WKUIDelegate {
+final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
 
     public var editor: Editor!
 
@@ -12,9 +12,6 @@ final class EditorViewController: BaseViewController, WKNavigationDelegate, WKUI
 
         navigationItem.title = editor.name
         view.backgroundColor = Styles.colorWhite
-
-        let buttonHelp = createHelpButton()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView:buttonHelp)
 
         let controller = WKUserContentController()
         let configuration = WKWebViewConfiguration()
@@ -39,67 +36,21 @@ final class EditorViewController: BaseViewController, WKNavigationDelegate, WKUI
         }
     }
 
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		self.navigationController?.setNavigationBarHidden(false, animated: animated)
+	}
+
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         LOG("policy for action \(navigationAction.request.url?.absoluteString.truncate(length: 100) ?? "")")
 
         if let download = editor.download(navigationAction.request) {
-
             decisionHandler(.cancel)
-
-            guard let device = Device.current else {
-
-                LOG("no target device selected")
-
-                let alert = UIAlertController(
-                    title: "No Device",
-                    message: "Please connect a device first",
-                    preferredStyle: UIAlertController.Style.alert)
-                alert.addAction(UIAlertAction(
-                    title: "OK",
-                    style: UIAlertAction.Style.default,
-                    handler: nil))
-                present(alert, animated: true, completion: nil)
-
-                return
-            }
-
-            DispatchQueue.global().async {
-                do {
-                    LOG("downloaded: start - \(download.url.absoluteString.truncate(length: 60))")
-                    let data = try Data(contentsOf: download.url)
-                    LOG("downloaded: stop \(data.count)")
-
-                    let file = try HexFileManager.store(name: download.name, data: data)
-
-                    DispatchQueue.main.async {
-
-                        let vc = UploadViewConroller()
-                        vc.file = file
-                        vc.uuid = device.identifier
-                        vc.buttonPressAction = { state in
-
-                            switch(state) {
-                            case .progress:
-                                print("aborted")
-                            case .success:
-                                print("success")
-                            case .error:
-                                print("error")
-                            }
-
-                        }
-                        let nc = UINavigationController(rootViewController: vc)
-                        nc.modalTransitionStyle = .coverVertical
-                        self.present(nc, animated: true)
-
-                    }
-
-                } catch {
-                    ERR(error)
-                }
-            }
-
-        } else {
+			upload(result: download)
+        } else if navigationAction.request.url?.absoluteString == "https://calliope.cc/" {
+			decisionHandler(.cancel)
+			self.navigationController?.popViewController(animated: true)
+		} else {
             decisionHandler(.allow)
         }
     }
@@ -177,6 +128,63 @@ final class EditorViewController: BaseViewController, WKNavigationDelegate, WKUI
 
         present(alertController, animated: true, completion: nil)
     }
+
+	//MARK: uploading
+
+	private func upload(result download: EditorDownload) {
+		guard let device = Device.current else {
+
+			LOG("no target device selected")
+
+			let alert = UIAlertController(
+				title: "No Device",
+				message: "Please connect a device first",
+				preferredStyle: UIAlertController.Style.alert)
+			alert.addAction(UIAlertAction(
+				title: "OK",
+				style: UIAlertAction.Style.default,
+				handler: nil))
+			present(alert, animated: true, completion: nil)
+
+			return
+		}
+
+		DispatchQueue.global().async {
+			do {
+				LOG("downloaded: start - \(download.url.absoluteString.truncate(length: 60))")
+				let data = try Data(contentsOf: download.url)
+				LOG("downloaded: stop \(data.count)")
+
+				let file = try HexFileManager.store(name: download.name, data: data)
+
+				DispatchQueue.main.async {
+
+					let vc = UploadViewConroller()
+					vc.file = file
+					vc.uuid = device.identifier
+					vc.buttonPressAction = { state in
+
+						switch(state) {
+						case .progress:
+							print("aborted")
+						case .success:
+							print("success")
+						case .error:
+							print("error")
+						}
+
+					}
+					let nc = UINavigationController(rootViewController: vc)
+					nc.modalTransitionStyle = .coverVertical
+					self.present(nc, animated: true)
+
+				}
+
+			} catch {
+				ERR(error)
+			}
+		}
+	}
 
 }
 

@@ -32,6 +32,10 @@
 		2F2915C622A40C17004B491F /* ConnectionViewCollapseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2915BE22A40C17004B491F /* ConnectionViewCollapseButton.swift */; };
 		2F2915C722A40C17004B491F /* MatrixConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2915BF22A40C17004B491F /* MatrixConnectionViewController.swift */; };
 		2F2915CB22A4105B004B491F /* MainContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2915CA22A4105B004B491F /* MainContainerViewController.swift */; };
+		2F313F3722ABF3E200D42BF3 /* EditorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F313F3622ABF3E200D42BF3 /* EditorCollectionViewCell.swift */; };
+		2F313F3922ABFABA00D42BF3 /* PlaygroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F313F3822ABFABA00D42BF3 /* PlaygroundViewController.swift */; };
+		2F313F3B22ABFB0800D42BF3 /* LocalEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F313F3A22ABFB0800D42BF3 /* LocalEditorViewController.swift */; };
+		2F313F3D22AC1BA600D42BF3 /* ProgramCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F313F3C22AC1BA600D42BF3 /* ProgramCollectionViewCell.swift */; };
 		2F90F424229197610070DB55 /* CalliopeApp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F90F423229197610070DB55 /* CalliopeApp.storyboard */; };
 		2F90F4312291E9860070DB55 /* OLEContainerScrollView+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F90F4282291E9860070DB55 /* OLEContainerScrollView+Swizzling.m */; };
 		2F90F4322291E9860070DB55 /* OLESwizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F90F4292291E9860070DB55 /* OLESwizzling.m */; };
@@ -118,6 +122,10 @@
 		2F2915BE22A40C17004B491F /* ConnectionViewCollapseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionViewCollapseButton.swift; sourceTree = "<group>"; };
 		2F2915BF22A40C17004B491F /* MatrixConnectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatrixConnectionViewController.swift; sourceTree = "<group>"; };
 		2F2915CA22A4105B004B491F /* MainContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerViewController.swift; sourceTree = "<group>"; };
+		2F313F3622ABF3E200D42BF3 /* EditorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorCollectionViewCell.swift; sourceTree = "<group>"; };
+		2F313F3822ABFABA00D42BF3 /* PlaygroundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundViewController.swift; sourceTree = "<group>"; };
+		2F313F3A22ABFB0800D42BF3 /* LocalEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalEditorViewController.swift; sourceTree = "<group>"; };
+		2F313F3C22AC1BA600D42BF3 /* ProgramCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramCollectionViewCell.swift; sourceTree = "<group>"; };
 		2F90F423229197610070DB55 /* CalliopeApp.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CalliopeApp.storyboard; sourceTree = "<group>"; };
 		2F90F4282291E9860070DB55 /* OLEContainerScrollView+Swizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OLEContainerScrollView+Swizzling.m"; sourceTree = "<group>"; };
 		2F90F4292291E9860070DB55 /* OLESwizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLESwizzling.m; sourceTree = "<group>"; };
@@ -266,8 +274,13 @@
 		2F2915C922A41029004B491F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9D55AF831F668AAE002B8431 /* EditorViewController.swift */,
 				2F2915CA22A4105B004B491F /* MainContainerViewController.swift */,
 				2FC87EE322A42BB400BB7DDF /* EditorsAndProgramsCollectionViewController.swift */,
+				2F313F3622ABF3E200D42BF3 /* EditorCollectionViewCell.swift */,
+				2F313F3822ABFABA00D42BF3 /* PlaygroundViewController.swift */,
+				2F313F3A22ABFB0800D42BF3 /* LocalEditorViewController.swift */,
+				2F313F3C22AC1BA600D42BF3 /* ProgramCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -294,7 +307,6 @@
 				9D6404421F2E49C3005B54A9 /* MainViewController.swift */,
 				9DBD88871F4B615300D0F83A /* ScannerViewController.swift */,
 				9D85C9081F7E8DBF005B808F /* EditorsViewController.swift */,
-				9D55AF831F668AAE002B8431 /* EditorViewController.swift */,
 				9DBA2BB81F6078B800DCEC96 /* HistoryViewController.swift */,
 				9D3A59B71F87D703009023CA /* ConnectViewController.swift */,
 				9D3A59B91F87D738009023CA /* UploadViewController.swift */,
@@ -584,6 +596,7 @@
 				2F2915AB22A4069F004B491F /* Ext.swift in Sources */,
 				9D1790B51F61552900CDF964 /* Editors.swift in Sources */,
 				2F2915C722A40C17004B491F /* MatrixConnectionViewController.swift in Sources */,
+				2F313F3B22ABFB0800D42BF3 /* LocalEditorViewController.swift in Sources */,
 				9DFA2DD61F59FC5700DD1A10 /* HexParser.swift in Sources */,
 				9D02A0181F31DE59004113B1 /* Global.swift in Sources */,
 				9D55AF7C1F65EBEF002B8431 /* BaseViewController.swift in Sources */,
@@ -628,6 +641,7 @@
 				2F90F4312291E9860070DB55 /* OLEContainerScrollView+Swizzling.m in Sources */,
 				9D564BE81F64ACE9003CACD3 /* ExtViewController.swift in Sources */,
 				2F2915C622A40C17004B491F /* ConnectionViewCollapseButton.swift in Sources */,
+				2F313F3722ABF3E200D42BF3 /* EditorCollectionViewCell.swift in Sources */,
 				2F2915A322A2962B004B491F /* ProgrammableCalliope.swift in Sources */,
 				2F29159E22A2962B004B491F /* Extension_CBUUID.swift in Sources */,
 				9DFA2DDA1F5A1F2D00DD1A10 /* ExtString.swift in Sources */,
@@ -637,9 +651,11 @@
 				9DBA2BB51F60342300DCEC96 /* BluetoothUpload.swift in Sources */,
 				9D6404411F2E49C3005B54A9 /* AppDelegate.swift in Sources */,
 				2F2915AD22A4069F004B491F /* LogNotify.swift in Sources */,
+				2F313F3D22AC1BA600D42BF3 /* ProgramCollectionViewCell.swift in Sources */,
 				9DCE159D1F5AECD600264A99 /* ExtObject.swift in Sources */,
 				9D55AF841F668AAE002B8431 /* EditorViewController.swift in Sources */,
 				2F29159F22A2962B004B491F /* BLEDataTypes.swift in Sources */,
+				2F313F3922ABFABA00D42BF3 /* PlaygroundViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
