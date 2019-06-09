@@ -11,7 +11,7 @@ extension Array where Element: Equatable {
 
 	// Remove first collection element that is equal to the given `object`:
 	mutating func remove(object: Element) -> Element? {
-		if let index = index(of: object) {
+		if let index = firstIndex(of: object) {
 			return remove(at: index)
 		}
 		return nil
@@ -32,6 +32,12 @@ extension String {
 	/*public var localized: String {
 		return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
 	}*/
+}
+
+public extension String.StringInterpolation {
+	mutating func appendInterpolation(_ value: Date, _ formatter: DateFormatter) {
+		appendLiteral(formatter.string(from: value))
+	}
 }
 
 extension UIColor {

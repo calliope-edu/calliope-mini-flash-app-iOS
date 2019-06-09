@@ -3,22 +3,33 @@ import iOSDFULibrary
 
 struct HexFile {
 
-    let url: URL
+    private(set) var url: URL
 	var name: String {
 		didSet {
-			let lastURLPart = url.lastPathComponent.dropLast(4)
+			let lastURLPart = String(url.lastPathComponent.dropLast(4))
 			if lastURLPart != name {
+				if name == "" {
+					name = lastURLPart
+					return
+				}
 				do {
-					try HexFileManager.rename(file: self)
+					try url = HexFileManager.rename(file: self)
 				} catch {
 					//reset name
-					name = String(lastURLPart)
-					//FIXME: display to user
+					name = lastURLPart
 				}
 			}
 		}
 	}
     let date: Date
+	var descriptionText: String {
+		didSet {
+			//TODO: save new description
+		}
+	}
+	var dateString: String {
+		get { return HexFileManager.dateFormatter.string(from: date) }
+	}
 
     func bin() -> Data {
 
@@ -57,6 +68,14 @@ struct HexFile {
 
 final class HexFileManager {
 
+	fileprivate static let dateFormatter: DateFormatter = {
+		let formatter = DateFormatter()
+		formatter.locale = Locale.current
+		formatter.dateStyle = .medium
+		formatter.timeStyle = .none
+		return formatter
+	}()
+
     private static let keep = 5
 
     private static func dir() throws -> URL {
@@ -83,7 +102,8 @@ final class HexFileManager {
                 throw "invalid url"
             }
             let date = try dateFor(url:url)
-            return HexFile(url: url, name: name, date: date)
+			//TODO: load description from file somehow
+			return HexFile(url: url, name: name, date: date, descriptionText: "\(date, dateFormatter)")
         })
     }
 
@@ -99,7 +119,8 @@ final class HexFileManager {
         .map { url -> HexFile in
             let name = String(url.lastPathComponent.dropLast(4))
             let date = try dateFor(url:url)
-            return HexFile(url: url, name: name, date: date)
+			//TODO: load description from file somehow
+			return HexFile(url: url, name: name, date: date, descriptionText: "\(date, dateFormatter)")
         }.sorted(by: { (a,b) -> Bool in
             return a.date > b.date
         })
@@ -119,7 +140,8 @@ final class HexFileManager {
             try delete(file: file)
         }
 
-        return HexFile(url: file, name: name, date:Date())
+		let date = Date()
+        return HexFile(url: file, name: name, date: date, descriptionText: "\(date)")
     }
 
     public static func delete(file: HexFile) throws {
@@ -127,9 +149,11 @@ final class HexFileManager {
         try FileManager.default.removeItem(at: file.url)
     }
 
-	public static func rename(file: HexFile) throws {
+	public static func rename(file: HexFile) throws -> URL {
 		LOG("renaming file \(file)")
-		try FileManager.default.moveItem(at: file.url, to: file.url.deletingLastPathComponent().appendingPathComponent(file.name + ".hex"))
+		let newURL = file.url.deletingLastPathComponent().appendingPathComponent(file.name + ".hex")
+		try FileManager.default.moveItem(at: file.url, to: newURL)
+		return newURL
 	}
 
 }

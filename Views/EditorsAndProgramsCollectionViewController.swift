@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EditorsAndProgramsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, ProgramShareDelegate {
+class EditorsAndProgramsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, ProgramCellDelegate {
 
 	private let reuseIdentifierWebEditor = "webEditorCell"
 	private let reuseIdentifierOfflineEditor = "localEditorCell"
@@ -33,6 +33,7 @@ class EditorsAndProgramsCollectionViewController: UICollectionViewController, UI
 
     override func viewDidLoad() {
         super.viewDidLoad()
+		(collectionViewLayout as! UICollectionViewFlowLayout).estimatedItemSize = UICollectionViewFlowLayout.automaticSize
     }
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -41,7 +42,23 @@ class EditorsAndProgramsCollectionViewController: UICollectionViewController, UI
 	}
 
 	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-		self.collectionViewLayout.invalidateLayout()
+		let cells = collectionView.visibleCells.filter { ($0 as? ProgramCollectionViewCell) != nil } as! [ProgramCollectionViewCell]
+		for cell in cells {
+			self.recalculateProgramCellSize(size, cell)
+		}
+		coordinator.animate(alongsideTransition: {_ in
+			for cell in cells {
+				cell.changeTextExclusion()
+			}
+			self.collectionView.performBatchUpdates({}, completion: nil)
+		}, completion: nil)
+	}
+
+	private func recalculateProgramCellSize(_ size: CGSize, _ cell: ProgramCollectionViewCell) {
+		let width = size.width - spacing
+		let maxNumCells = ceil(width / programWidthThreshold)
+		let calculatedWidth = width / maxNumCells - spacing
+		cell.widthConstraint.constant = calculatedWidth
 	}
 
     // MARK: UICollectionViewDataSource
@@ -80,9 +97,16 @@ class EditorsAndProgramsCollectionViewController: UICollectionViewController, UI
 			default:
 				fatalError("The program editor collection view features only 4 editors. numberOfItemsInSection must be set to 4.")
 			}
+
+			(cell as! EditorCollectionViewCell).heightConstraint.constant = editorButtonSize
+			(cell as! EditorCollectionViewCell).widthConstraint.constant = editorButtonSize
 		} else {
 			//TODO: Configure the cell
 			cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierProgram, for: indexPath)
+
+			recalculateProgramCellSize(collectionView.frame.size, cell as! ProgramCollectionViewCell)
+			(cell as! ProgramCollectionViewCell).changeTextExclusion()
+
 			(cell as! ProgramCollectionViewCell).program = hexFiles[indexPath.row]
 			(cell as! ProgramCollectionViewCell).delegate = self
 		}
@@ -134,21 +158,9 @@ class EditorsAndProgramsCollectionViewController: UICollectionViewController, UI
 	// MARK: UICollectionViewDelegateFlowLayout
 
 	let editorButtonSize: CGFloat = 180
-	let programWidthThreshold = 500
+	let programWidthThreshold: CGFloat = 500
+	let defaultProgramHeight: CGFloat = 100
 	let spacing: CGFloat = 10
-
-	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		if indexPath.section == 0 {
-			return CGSize(width: 180, height: 180)
-		} else {
-			let width = collectionView.frame.size.width
-			if width > 500 {
-				return CGSize(width: width / 2.0 - 15, height: 100)
-			} else {
-				return CGSize(width: width - 20, height: 100)
-			}
-		}
-	}
 
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
 		if section == 0 {
@@ -181,18 +193,37 @@ class EditorsAndProgramsCollectionViewController: UICollectionViewController, UI
 		// Pass the selected object to the new view controller.
 	}
 
-	// MARK: ProgramShareDelegate
+	// MARK: ProgramCellDelegate
 
 	func share(cell: ProgramCollectionViewCell) {
 		let program = cell.program!
-		let activityItems = [program, program.name, program.date, program.url, program.bin()] as [Any]
+		let activityItems = [program, program.name, program.descriptionText, program.url] as [Any]
 
 		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
 		activityViewController.modalTransitionStyle = UIModalTransitionStyle.coverVertical
 
-		activityViewController.popoverPresentationController?.sourceRect = cell.shareButton.frame
-		activityViewController.popoverPresentationController?.sourceView = cell
+		activityViewController.popoverPresentationController?.sourceRect = cell.frame
+		activityViewController.popoverPresentationController?.sourceView = self.view
 
 		self.present(activityViewController, animated: true, completion: nil)
+	}
+
+	func renameFailed(_ cell: ProgramCollectionViewCell, to newName: String) {
+		let alertViewController = UIAlertController(title: "Could not rename \(cell.program.name)", message: "The name \(newName) could not be given to \(cell.program.name). The name for a program must be unique and not empty.", preferredStyle: .alert)
+		alertViewController.addAction(UIAlertAction(title: "OK", style: .default)
+		{ _ in self.dismiss(animated: true, completion: nil) })
+
+		alertViewController.popoverPresentationController?.sourceView = cell
+		alertViewController.popoverPresentationController?.sourceRect = cell.name.frame
+
+		self.present(alertViewController, animated: true, completion: nil)
+	}
+
+	func programCellSizeDidChange(_ cell: ProgramCollectionViewCell) {
+		collectionView.performBatchUpdates({}, completion: nil)
+	}
+
+	func uploadProgram(of cell: ProgramCollectionViewCell) {
+		//TODO upload
 	}
 }

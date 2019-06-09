@@ -20,20 +20,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" name="calliope-brightturquoise"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="YhJ-HC-yG4">
-                            <size key="itemSize" width="300" height="100"/>
+                            <size key="itemSize" width="300" height="80"/>
                             <size key="headerReferenceSize" width="50" height="150"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" reuseIdentifier="webEditorCell" id="guU-DI-JNC" customClass="EditorCollectionViewCell" customModule="Calliope" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="webEditorCell" id="guU-DI-JNC" customClass="EditorCollectionViewCell" customModule="Calliope" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="150" width="180" height="180"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                     <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YGD-YL-Jl6">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YGD-YL-Jl6">
                                             <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
                                             <state key="normal" title="MakeCode"/>
                                             <connections>
@@ -54,14 +54,14 @@
                                     <outlet property="button" destination="YGD-YL-Jl6" id="iMa-sS-7tr"/>
                                 </connections>
                             </collectionViewCell>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" reuseIdentifier="playgroundCell" id="keC-V5-M2d" customClass="EditorCollectionViewCell" customModule="Calliope" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="playgroundCell" id="keC-V5-M2d" customClass="EditorCollectionViewCell" customModule="Calliope" customModuleProvider="target">
                                 <rect key="frame" x="195" y="150" width="180" height="180"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                     <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0eT-MG-Lyw">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0eT-MG-Lyw">
                                             <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
                                             <state key="normal" title="Playground"/>
                                             <connections>
@@ -79,14 +79,14 @@
                                 </constraints>
                                 <size key="customSize" width="180" height="180"/>
                             </collectionViewCell>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" reuseIdentifier="localEditorCell" id="Yk4-ZL-sgC" customClass="EditorCollectionViewCell" customModule="Calliope" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="localEditorCell" id="Yk4-ZL-sgC" customClass="EditorCollectionViewCell" customModule="Calliope" customModuleProvider="target">
                                 <rect key="frame" x="97.5" y="340" width="180" height="180"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                     <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e3d-eT-fTM">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e3d-eT-fTM">
                                             <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
                                             <state key="normal" title="Editor"/>
                                             <connections>
@@ -104,81 +104,126 @@
                                 </constraints>
                                 <size key="customSize" width="180" height="180"/>
                             </collectionViewCell>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" reuseIdentifier="editableProgramCell" id="3mg-YL-G9B" customClass="ProgramCollectionViewCell" customModule="Calliope" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="530" width="300" height="160"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="editableProgramCell" id="3mg-YL-G9B" customClass="ProgramCollectionViewCell" customModule="Calliope" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="530" width="300" height="76"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                    <rect key="frame" x="0.0" y="0.0" width="300" height="160"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="76"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="740" scrollEnabled="NO" editable="NO" textAlignment="justified" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pTi-VL-iyl">
-                                            <rect key="frame" x="8" y="82" width="245" height="174"/>
-                                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="240" verticalCompressionResistancePriority="740" scrollEnabled="NO" editable="NO" text="program description" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pTi-VL-iyl" userLabel="programDescription">
+                                            <rect key="frame" x="8" y="41" width="284" height="27"/>
+                                            <accessibility key="accessibilityConfiguration" identifier="programDescription"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         </textView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="240" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6EZ-19-iHe">
-                                            <rect key="frame" x="68" y="55.5" width="155" height="20.5"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <textField hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="240" verticalHuggingPriority="260" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wfn-Uf-xDF">
-                                            <rect key="frame" x="68" y="52" width="155" height="30"/>
-                                            <nil key="textColor"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits"/>
-                                        </textField>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IconCode" translatesAutoresizingMaskIntoConstraints="NO" id="8OA-UR-bMg">
-                                            <rect key="frame" x="8" y="52" width="60" height="60"/>
+                                        <view contentMode="scaleToFill" horizontalCompressionResistancePriority="740" translatesAutoresizingMaskIntoConstraints="NO" id="cak-2P-BZa" userLabel="programLabelContainer">
+                                            <rect key="frame" x="68" y="8" width="176" height="30"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="240" verticalHuggingPriority="251" horizontalCompressionResistancePriority="740" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6EZ-19-iHe">
+                                                    <rect key="frame" x="8" y="4.5" width="168" height="21"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="programLabel"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <textField hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="240" verticalHuggingPriority="260" horizontalCompressionResistancePriority="740" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wfn-Uf-xDF">
+                                                    <rect key="frame" x="0.0" y="0.0" width="176" height="30"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="programNameEditField"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                            <accessibility key="accessibilityConfiguration" identifier="programLabelContainer"/>
+                                            <constraints>
+                                                <constraint firstItem="6EZ-19-iHe" firstAttribute="leading" secondItem="wfn-Uf-xDF" secondAttribute="leading" constant="8" id="1B0-Sw-FoT"/>
+                                                <constraint firstAttribute="trailing" secondItem="wfn-Uf-xDF" secondAttribute="trailing" id="3iZ-j8-CII"/>
+                                                <constraint firstItem="wfn-Uf-xDF" firstAttribute="leading" secondItem="cak-2P-BZa" secondAttribute="leading" id="Fj1-iC-24p"/>
+                                                <constraint firstItem="6EZ-19-iHe" firstAttribute="trailing" secondItem="wfn-Uf-xDF" secondAttribute="trailing" id="HV2-Hn-Z6j"/>
+                                                <constraint firstItem="wfn-Uf-xDF" firstAttribute="top" secondItem="cak-2P-BZa" secondAttribute="top" id="LY3-PF-lDW"/>
+                                                <constraint firstAttribute="bottom" secondItem="wfn-Uf-xDF" secondAttribute="bottom" id="eE2-vX-mpB"/>
+                                                <constraint firstItem="wfn-Uf-xDF" firstAttribute="firstBaseline" secondItem="6EZ-19-iHe" secondAttribute="firstBaseline" id="qQj-hv-cHb"/>
+                                            </constraints>
+                                        </view>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IconDevice" translatesAutoresizingMaskIntoConstraints="NO" id="8OA-UR-bMg" userLabel="programImage">
+                                            <rect key="frame" x="8" y="8" width="60" height="60"/>
+                                            <color key="backgroundColor" name="calliope-darkgreen"/>
+                                            <accessibility key="accessibilityConfiguration" identifier="programImage"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="60" id="Nig-Z8-D4R"/>
                                                 <constraint firstAttribute="width" constant="60" id="c2K-hb-pxl"/>
                                             </constraints>
                                         </imageView>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Md0-6n-vN4">
-                                            <rect key="frame" x="213" y="82" width="40" height="30"/>
-                                            <state key="normal" title="Share"/>
+                                        <view contentMode="scaleToFill" horizontalHuggingPriority="255" translatesAutoresizingMaskIntoConstraints="NO" id="J9s-yA-pzc" userLabel="buttonContainer">
+                                            <rect key="frame" x="252" y="8" width="40" height="60"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Md0-6n-vN4" userLabel="shareButton">
+                                                    <rect key="frame" x="0.0" y="30" width="40" height="30"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="shareButton"/>
+                                                    <state key="normal" title="Share"/>
+                                                    <connections>
+                                                        <action selector="shareButtonClicked:" destination="3mg-YL-G9B" eventType="touchUpInside" id="eHT-b2-jeQ"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Cx-H7-sFl" userLabel="editButton">
+                                                    <rect key="frame" x="0.0" y="0.0" width="40" height="30"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="editButton"/>
+                                                    <state key="normal" title="Edit"/>
+                                                    <connections>
+                                                        <action selector="editButtonClicked:" destination="3mg-YL-G9B" eventType="touchUpInside" id="fYL-p7-ssC"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <accessibility key="accessibilityConfiguration" identifier="buttonContainer"/>
+                                            <constraints>
+                                                <constraint firstItem="8Cx-H7-sFl" firstAttribute="leading" secondItem="J9s-yA-pzc" secondAttribute="leading" id="AoI-gq-QR7"/>
+                                                <constraint firstItem="Md0-6n-vN4" firstAttribute="leading" secondItem="J9s-yA-pzc" secondAttribute="leading" id="E3A-qi-s4q"/>
+                                                <constraint firstAttribute="trailing" secondItem="8Cx-H7-sFl" secondAttribute="trailing" id="NGX-gZ-rSE"/>
+                                                <constraint firstItem="Md0-6n-vN4" firstAttribute="top" secondItem="8Cx-H7-sFl" secondAttribute="bottom" id="Xn4-SJ-RgC"/>
+                                                <constraint firstItem="8Cx-H7-sFl" firstAttribute="top" secondItem="J9s-yA-pzc" secondAttribute="top" id="ejp-cQ-rL7"/>
+                                                <constraint firstAttribute="bottom" secondItem="Md0-6n-vN4" secondAttribute="bottom" id="sTz-ca-ldr"/>
+                                                <constraint firstAttribute="trailing" secondItem="Md0-6n-vN4" secondAttribute="trailing" id="vV2-k9-uRW"/>
+                                            </constraints>
+                                        </view>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mlC-kV-m4c">
+                                            <rect key="frame" x="8" y="8" width="60" height="60"/>
+                                            <state key="normal" image="IconDevice"/>
                                             <connections>
-                                                <action selector="shareButtonClicked:" destination="3mg-YL-G9B" eventType="touchUpInside" id="eHT-b2-jeQ"/>
-                                            </connections>
-                                        </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Cx-H7-sFl">
-                                            <rect key="frame" x="223" y="52" width="30" height="30"/>
-                                            <state key="normal" title="Edit"/>
-                                            <connections>
-                                                <action selector="editButtonClicked:" destination="3mg-YL-G9B" eventType="touchUpInside" id="fYL-p7-ssC"/>
+                                                <action selector="uploadButtonClicked:" destination="3mg-YL-G9B" eventType="touchUpInside" id="2cg-Kf-6Ir"/>
                                             </connections>
                                         </button>
                                     </subviews>
                                 </view>
                                 <color key="backgroundColor" name="calliope-green"/>
                                 <constraints>
-                                    <constraint firstItem="pTi-VL-iyl" firstAttribute="top" secondItem="wfn-Uf-xDF" secondAttribute="bottom" id="1VR-v9-wRm"/>
-                                    <constraint firstAttribute="trailingMargin" secondItem="8Cx-H7-sFl" secondAttribute="trailing" id="2rw-Wu-aVC"/>
-                                    <constraint firstItem="8OA-UR-bMg" firstAttribute="top" secondItem="3mg-YL-G9B" secondAttribute="topMargin" id="4hr-aW-OCu"/>
-                                    <constraint firstItem="8Cx-H7-sFl" firstAttribute="leading" secondItem="wfn-Uf-xDF" secondAttribute="trailing" id="7Fz-DZ-PHu"/>
-                                    <constraint firstItem="Md0-6n-vN4" firstAttribute="top" secondItem="8Cx-H7-sFl" secondAttribute="bottom" id="8Dd-mO-DH9"/>
-                                    <constraint firstAttribute="trailingMargin" secondItem="Md0-6n-vN4" secondAttribute="trailing" id="ENM-qr-H9O"/>
-                                    <constraint firstItem="wfn-Uf-xDF" firstAttribute="top" secondItem="3mg-YL-G9B" secondAttribute="topMargin" id="KKi-cE-PC8"/>
-                                    <constraint firstItem="6EZ-19-iHe" firstAttribute="leading" secondItem="wfn-Uf-xDF" secondAttribute="leading" id="MwQ-Sg-Z1q"/>
-                                    <constraint firstItem="6EZ-19-iHe" firstAttribute="trailing" secondItem="wfn-Uf-xDF" secondAttribute="trailing" id="Na5-fG-Ng1"/>
+                                    <constraint firstItem="8OA-UR-bMg" firstAttribute="top" secondItem="3mg-YL-G9B" secondAttribute="top" constant="8" id="4hr-aW-OCu"/>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="8OA-UR-bMg" secondAttribute="bottom" constant="8" id="6YD-Op-ct8"/>
+                                    <constraint firstItem="pTi-VL-iyl" firstAttribute="top" secondItem="cak-2P-BZa" secondAttribute="bottom" constant="3" id="6xv-9N-6PU"/>
+                                    <constraint firstItem="mlC-kV-m4c" firstAttribute="width" secondItem="8OA-UR-bMg" secondAttribute="width" id="9zC-gb-Xpg"/>
+                                    <constraint firstItem="mlC-kV-m4c" firstAttribute="centerY" secondItem="8OA-UR-bMg" secondAttribute="centerY" id="KKj-QT-GRD"/>
+                                    <constraint firstItem="cak-2P-BZa" firstAttribute="top" secondItem="3mg-YL-G9B" secondAttribute="top" constant="8" id="LGU-0E-MKf"/>
                                     <constraint firstItem="pTi-VL-iyl" firstAttribute="leading" secondItem="3mg-YL-G9B" secondAttribute="leadingMargin" id="PhZ-v9-hQS"/>
-                                    <constraint firstItem="8OA-UR-bMg" firstAttribute="leading" secondItem="3mg-YL-G9B" secondAttribute="leadingMargin" id="c8t-yo-THJ"/>
-                                    <constraint firstItem="pTi-VL-iyl" firstAttribute="trailing" secondItem="3mg-YL-G9B" secondAttribute="trailingMargin" id="p9V-99-7Fz"/>
-                                    <constraint firstAttribute="bottomMargin" secondItem="pTi-VL-iyl" secondAttribute="bottom" id="qMN-MC-Tro"/>
-                                    <constraint firstItem="6EZ-19-iHe" firstAttribute="baseline" secondItem="wfn-Uf-xDF" secondAttribute="baseline" id="sUG-kx-Pjd"/>
-                                    <constraint firstItem="wfn-Uf-xDF" firstAttribute="leading" secondItem="8OA-UR-bMg" secondAttribute="trailing" id="v3W-qV-AW1"/>
-                                    <constraint firstItem="8Cx-H7-sFl" firstAttribute="top" secondItem="3mg-YL-G9B" secondAttribute="topMargin" id="wOG-7S-Iyr"/>
+                                    <constraint firstItem="mlC-kV-m4c" firstAttribute="centerX" secondItem="8OA-UR-bMg" secondAttribute="centerX" id="Rin-I6-ysM"/>
+                                    <constraint firstAttribute="trailing" secondItem="J9s-yA-pzc" secondAttribute="trailing" constant="8" id="SDC-ev-d3T"/>
+                                    <constraint firstItem="J9s-yA-pzc" firstAttribute="leading" secondItem="cak-2P-BZa" secondAttribute="trailing" constant="8" id="Z27-wn-MLK"/>
+                                    <constraint firstItem="J9s-yA-pzc" firstAttribute="top" secondItem="3mg-YL-G9B" secondAttribute="top" constant="8" id="baZ-nS-FHU"/>
+                                    <constraint firstItem="8OA-UR-bMg" firstAttribute="leading" secondItem="3mg-YL-G9B" secondAttribute="leading" constant="8" id="c8t-yo-THJ"/>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="J9s-yA-pzc" secondAttribute="bottom" constant="8" id="oGT-fz-gwy"/>
+                                    <constraint firstAttribute="trailing" secondItem="pTi-VL-iyl" secondAttribute="trailing" constant="8" id="p9V-99-7Fz"/>
+                                    <constraint firstAttribute="bottom" secondItem="pTi-VL-iyl" secondAttribute="bottom" constant="8" id="qMN-MC-Tro"/>
+                                    <constraint firstItem="mlC-kV-m4c" firstAttribute="height" secondItem="8OA-UR-bMg" secondAttribute="height" id="s0K-UB-TPa"/>
+                                    <constraint firstItem="cak-2P-BZa" firstAttribute="leading" secondItem="8OA-UR-bMg" secondAttribute="trailing" id="uQc-ku-vuB"/>
                                 </constraints>
-                                <size key="customSize" width="300" height="160"/>
+                                <size key="customSize" width="300" height="76"/>
                                 <connections>
+                                    <outlet property="buttonContainer" destination="J9s-yA-pzc" id="XHV-am-e7I"/>
+                                    <outlet property="descriptionText" destination="pTi-VL-iyl" id="tKZ-cQ-nVF"/>
                                     <outlet property="editButton" destination="8Cx-H7-sFl" id="Ivg-XN-Rf5"/>
                                     <outlet property="image" destination="8OA-UR-bMg" id="BkV-cs-iSq"/>
                                     <outlet property="name" destination="6EZ-19-iHe" id="qOk-mS-5YE"/>
                                     <outlet property="nameEditField" destination="wfn-Uf-xDF" id="130-zf-2Rd"/>
                                     <outlet property="shareButton" destination="Md0-6n-vN4" id="CuL-JX-Tp1"/>
-                                    <outlet property="text" destination="pTi-VL-iyl" id="4JT-Eg-Mcu"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -370,9 +415,12 @@
     </scenes>
     <resources>
         <image name="IconBluetooth" width="162" height="150"/>
-        <image name="IconCode" width="162" height="150"/>
+        <image name="IconDevice" width="162" height="150"/>
         <namedColor name="calliope-brightturquoise">
             <color red="0.40799999237060547" green="0.83099997043609619" blue="0.83099997043609619" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="calliope-darkgreen">
+            <color red="0.24699999392032623" green="0.7839999794960022" blue="0.3880000114440918" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="calliope-green">
             <color red="0.29800000786781311" green="0.85100001096725464" blue="0.3919999897480011" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

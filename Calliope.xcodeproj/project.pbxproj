@@ -274,6 +274,7 @@
 		2F2915C922A41029004B491F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2F2915B522A40C17004B491F /* CollapsingConfigurationViews */,
 				9D55AF831F668AAE002B8431 /* EditorViewController.swift */,
 				2F2915CA22A4105B004B491F /* MainContainerViewController.swift */,
 				2FC87EE322A42BB400BB7DDF /* EditorsAndProgramsCollectionViewController.swift */,
@@ -299,6 +300,15 @@
 				2F90F4302291E9860070DB55 /* OLEContainerScrollView.m */,
 			);
 			path = OLEContainerScrollView;
+			sourceTree = "<group>";
+		};
+		2FD1824B22AC52DD004A0A5C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9DFA2DD51F59FC5600DD1A10 /* HexParser.swift */,
+				9DFA2DC61F584D7100DD1A10 /* HexFile.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		9D55AF791F65D9AF002B8431 /* Controller */ = {
@@ -331,10 +341,10 @@
 		9D6404341F2E49C3005B54A9 = {
 			isa = PBXGroup;
 			children = (
+				2FD1824B22AC52DD004A0A5C /* Model */,
 				9D64043F1F2E49C3005B54A9 /* Calliope */,
 				2F2915C922A41029004B491F /* Views */,
 				2F2915C822A40D4D004B491F /* Storyboards */,
-				2F2915B522A40C17004B491F /* CollapsingConfigurationViews */,
 				2F29159322A2962B004B491F /* Bluetooth */,
 				2F2915A422A4069F004B491F /* GeneralUtilities */,
 				9D64043E1F2E49C3005B54A9 /* Products */,
@@ -373,9 +383,7 @@
 				9DAC99FD1F942B20007C1B42 /* Microbit.swift */,
 				9D1790B41F61552900CDF964 /* Editors.swift */,
 				9D1790B21F614F3100CDF964 /* Device.swift */,
-				9DFA2DD51F59FC5600DD1A10 /* HexParser.swift */,
 				9D1461111F5577F5000DD8B8 /* Checksum.swift */,
-				9DFA2DC61F584D7100DD1A10 /* HexFile.swift */,
 				9DFA2DD21F598F4C00DD1A10 /* Binary.swift */,
 				2FC6BFDF22A43EA000E36A59 /* SettingsViewController.swift */,
 				9DFA2DD71F5A16AC00DD1A10 /* StreamReader.swift */,
