@@ -11,19 +11,15 @@ import CoreBluetooth
 class ProgrammableCalliope: CalliopeBLEDevice {
 
 	static let programmingServices: Set<CalliopeService> =
-		[.interpreter]
-
-	static let programmingServicesLegacy: Set<CalliopeService> =
 		[.notify, .program]
 
 
 	override var requiredServices: Set<CalliopeService> {
-		return ProgrammableCalliope.programmingServicesLegacy
+		return ProgrammableCalliope.programmingServices
 	}
 
 	override func handleStateUpdate() {
-		super.handleStateUpdate()
-		if state == .playgroundReady {
+		if state == .usageReady {
 			LogNotify.log("starting sensor readings")
 			do { try readSensors(true) }
 			catch { LogNotify.log("cannot start sensor readings (\(error))") }
@@ -37,18 +33,6 @@ class ProgrammableCalliope: CalliopeBLEDevice {
 		} else {
 			LogNotify.log("programmable calliope received value for characteristic other than notify:\n \(characteristic), \(value)")
 			return
-		}
-	}
-
-	func getCBCharacteristic(programOrNotify characteristic: CalliopeCharacteristic) -> CBCharacteristic? {
-		if requiredServices == ProgrammableCalliope.programmingServicesLegacy {
-			return getCBCharacteristic(
-				characteristic == .program
-					? CalliopeService.program.uuid
-					: CalliopeService.notify.uuid,
-				characteristic.uuid)
-		} else {
-			return getCBCharacteristic(CalliopeService.interpreter.uuid, characteristic.uuid)
 		}
 	}
 }
@@ -117,10 +101,10 @@ extension ProgrammableCalliope {
 	// MARK: Receiving sensor values via notify characteristic
 
 	func readSensors(_ enabled: Bool) throws {
-		guard state == .playgroundReady else { throw "Not ready to read sensor values" }
+		guard state == .usageReady else { throw "Not ready to read sensor values" }
 		//never throws because we made sure we are ready for the playground, i.e. we have all required services
 
-		guard let cbCharacteristic = getCBCharacteristic(programOrNotify: .notify) else { throw "Notify characteristic not available" }
+		guard let cbCharacteristic = getCBCharacteristic(.notify) else { throw "Notify characteristic not available" }
 
 		peripheral.setNotifyValue(enabled, for: cbCharacteristic)
 	}

@@ -132,58 +132,41 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
 	//MARK: uploading
 
 	private func upload(result download: EditorDownload) {
-		guard let device = Device.current else {
-
-			LOG("no target device selected")
-
-			let alert = UIAlertController(
-				title: "No Device",
-				message: "Please connect a device first",
-				preferredStyle: UIAlertController.Style.alert)
-			alert.addAction(UIAlertAction(
-				title: "OK",
-				style: UIAlertAction.Style.default,
-				handler: nil))
-			present(alert, animated: true, completion: nil)
-
-			return
-		}
-
 		DispatchQueue.global().async {
 			do {
 				LOG("downloaded: start - \(download.url.absoluteString.truncate(length: 60))")
 				let data = try Data(contentsOf: download.url)
 				LOG("downloaded: stop \(data.count)")
 
-				let file = try HexFileManager.store(name: download.name, data: data)
-
 				DispatchQueue.main.async {
+					do {
+						let file = try HexFileManager.store(name: download.name, data: data)
 
-					let vc = UploadViewConroller()
-					vc.file = file
-					vc.uuid = device.identifier
-					vc.buttonPressAction = { state in
+						let controller = UIAlertController(title: "Downloaded Program", message: nil, preferredStyle: .alert)
+						controller.addAction(UIAlertAction(title: "Upload", style: .default, handler: { (_) in
+							let uploader = FirmwareUpload()
+							self.present(uploader.alertView, animated: true) {
+								uploader.upload(file: file) {
+									self.dismiss(animated: true, completion: nil)
+								}
+							}
+						}))
+						controller.addAction(UIAlertAction(title: "Cancel", style: .cancel))
 
-						switch(state) {
-						case .progress:
-							print("aborted")
-						case .success:
-							print("success")
-						case .error:
-							print("error")
+						DispatchQueue.main.async {
+							self.present(controller, animated: true, completion: nil)
 						}
-
 					}
-					let nc = UINavigationController(rootViewController: vc)
-					nc.modalTransitionStyle = .coverVertical
-					self.present(nc, animated: true)
-
+					catch {
+						ERR(error)
+					}
 				}
-
-			} catch {
+			}
+			catch {
 				ERR(error)
 			}
 		}
+
 	}
 
 }

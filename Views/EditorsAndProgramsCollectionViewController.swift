@@ -158,7 +158,7 @@ class EditorsAndProgramsCollectionViewController: UICollectionViewController, UI
 	// MARK: UICollectionViewDelegateFlowLayout
 
 	let editorButtonSize: CGFloat = 180
-	let programWidthThreshold: CGFloat = 500
+	let programWidthThreshold: CGFloat = 650
 	let defaultProgramHeight: CGFloat = 100
 	let spacing: CGFloat = 10
 

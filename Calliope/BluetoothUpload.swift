@@ -12,24 +12,22 @@ enum BluetoothUploadState {
     case error(Error)
 }
 
-typealias UploadBlock = (BluetoothUploadState) -> Void
-
 final class BluetoothUpload: NSObject, LoggerDelegate, DFUServiceDelegate, DFUProgressDelegate {
 
     private let bin: Data
     private let dat: Data
     private let uuid: UUID
-    private let block: UploadBlock
+    private let uploadCallback: (BluetoothUploadState) -> Void
 
     private var rebooting: BluetoothReboot?
     private var uploading: DFUServiceController?
 
-    init(bin: Data, dat: Data, uuid: UUID, _ uploadBlock: @escaping UploadBlock) {
+    init(bin: Data, dat: Data, uuid: UUID, _ uploadCallback: @escaping (BluetoothUploadState) -> Void) {
         self.bin = bin
         self.dat = dat
         self.uuid = uuid
-        self.block = uploadBlock
-        uploadBlock(.ready)
+        self.uploadCallback = uploadCallback
+        uploadCallback(.ready)
     }
 
     func start() {
@@ -37,17 +35,18 @@ final class BluetoothUpload: NSObject, LoggerDelegate, DFUServiceDelegate, DFUPr
         guard uploading == nil else { return }
 
         guard let firmware = DFUFirmware(binFile:bin, datFile:dat, type: .application) else {
-            block(.error("failed to create firmware"))
+            uploadCallback(.error("failed to create firmware"))
             return
         }
 
-        unowned let me = self
+        uploadCallback(.retrieving(uuid: uuid))
 
-        block(.retrieving(uuid: uuid))
+		rebooting = BluetoothReboot(identifier: uuid, { [weak self] error, central, peripheral in
 
-        rebooting = BluetoothReboot(identifier: uuid, { error, central, peripheral in
-            if let error = error {
-                me.block(.error(error))
+			guard let me = self else { return }
+
+			if let error = error {
+				me.uploadCallback(.error(error))
                 return
             }
 
@@ -55,18 +54,18 @@ final class BluetoothUpload: NSObject, LoggerDelegate, DFUServiceDelegate, DFUPr
 
                 LOG("uploader found peripheral \(peripheral.identifier)")
 
-                me.block(.rebooted(peripheral: peripheral))
+				me.uploadCallback(.rebooted(peripheral: peripheral))
 
-                let initiator = DFUServiceInitiator(centralManager: central, target: peripheral).with(firmware: firmware)
+                let initiator = DFUServiceInitiator().with(firmware: firmware)
                 initiator.logger = me
                 initiator.delegate = me
                 initiator.progressDelegate = me
-                me.uploading = initiator.start()
+                me.uploading = initiator.start(target: peripheral)
             } else {
 
-                ERR("uploader failed ot find peripheral \(me.uuid)")
+                ERR("uploader failed to find peripheral \(me.uuid)")
 
-                me.block(.missing(uuid:me.uuid))
+                me.uploadCallback(.missing(uuid:me.uuid))
             }
         })
     }
@@ -80,7 +79,7 @@ final class BluetoothUpload: NSObject, LoggerDelegate, DFUServiceDelegate, DFUPr
         rebooting = nil
         uploading = nil
 
-        block(.ready)
+        uploadCallback(.ready)
     }
 
 
@@ -89,12 +88,12 @@ final class BluetoothUpload: NSObject, LoggerDelegate, DFUServiceDelegate, DFUPr
     }
 
     func dfuStateDidChange(to state: DFUState) {
-        LOG("state: \(state.description)")
+		LOG("state: \(String(describing: state.description))")
         switch(state) {
         case .aborted:
             break
         case .completed:
-            block(.success)
+            uploadCallback(.success)
             break
         case .connecting:
             break
@@ -103,7 +102,7 @@ final class BluetoothUpload: NSObject, LoggerDelegate, DFUServiceDelegate, DFUPr
         case .enablingDfuMode:
             break
         case .starting:
-            block(.uploading(progress:0.0))
+            uploadCallback(.uploading(progress:0.0))
             break
         case .uploading:
             break
@@ -113,14 +112,14 @@ final class BluetoothUpload: NSObject, LoggerDelegate, DFUServiceDelegate, DFUPr
     }
 
     func dfuError(_ error: DFUError, didOccurWithMessage message: String) {
-        block(.error(message))
+        uploadCallback(.error(message))
         rebooting = nil
         uploading = nil
     }
 
     func dfuProgressDidChange(for part: Int, outOf totalParts: Int, to progress: Int, currentSpeedBytesPerSecond: Double, avgSpeedBytesPerSecond: Double) {
         // print("\(part)/\(totalParts) \(progress)")
-        block(.uploading(progress:Float(progress)/100.0))
+        uploadCallback(.uploading(progress:Float(progress)/100.0))
     }
 
     deinit {

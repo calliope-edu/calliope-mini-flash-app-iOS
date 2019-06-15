@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import CoreBluetooth
 
 class MatrixConnectionViewController: UIViewController, CollapsingViewControllerProtocol {
+
+	public static var instance: MatrixConnectionViewController!
 
 	/// button to toggle whether connection view is open or not
 	@IBOutlet var collapseButton: ConnectionViewCollapseButton!
@@ -36,27 +39,44 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 
 	private let queue = DispatchQueue(label: "bluetooth")
 
-	private let connector = CalliopeBLEDiscovery<ApiCalliope>()
+	private var connector: CalliopeBLEDiscovery = CalliopeBLEDiscovery({ peripheral, name in
+		DFUCalliope(peripheral: peripheral, name: name) }) {
+		didSet {
+			self.changedConnector(oldValue)
+		}
+	}
 
-	public var calliopeWithCurrentMatrix: ApiCalliope? {
+	public var calliopeWithCurrentMatrix: CalliopeBLEDevice? {
 		return connector.discoveredCalliopes[Matrix.matrix2friendly(matrixView.matrix) ?? ""]
 	}
 
-	public var usageReadyCalliope: ApiCalliope? {
+	public var usageReadyCalliope: CalliopeBLEDevice? {
 		guard let calliope = connector.connectedCalliope,
-			calliope.state == .playgroundReady
+			calliope.state == .usageReady
 			else { return nil }
 		return calliope
 	}
 
-	override public func viewDidLoad() {
-		super.viewDidLoad()
+	public func changeCalliopeType(_ calliopeBuilder: @escaping (_ peripheral: CBPeripheral, _ name: String) -> CalliopeBLEDevice) {
+		connector = CalliopeBLEDiscovery(calliopeBuilder)
+	}
+
+	private func changedConnector(_ oldValue: CalliopeBLEDiscovery) {
+		oldValue.updateBlock = {}
+		oldValue.stopCalliopeDiscovery()
+		oldValue.disconnectFromCalliope()
 		connector.updateBlock = updateDiscoveryState
 		matrixView.updateBlock = {
 			//matrix has been changed manually, this always triggers a disconnect
 			self.connector.disconnectFromCalliope()
 			self.updateDiscoveryState()
 		}
+	}
+
+	override public func viewDidLoad() {
+		super.viewDidLoad()
+		MatrixConnectionViewController.instance = self
+		changedConnector(connector)
 		connectButton.imageView?.contentMode = .scaleAspectFit
 		animate(expand: false)
 	}
@@ -87,7 +107,6 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 			connector.startCalliopeDiscovery()
 		} else if let calliope = self.calliopeWithCurrentMatrix {
 			if calliope.state == .discovered || calliope.state == .willReset {
-				connector.stopCalliopeDiscovery()
 				calliope.updateBlock = updateDiscoveryState
 				LogNotify.log("Matrix view connecting to \(calliope)")
 				connector.connectToCalliope(calliope)
@@ -144,11 +163,11 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 		}
 	}
 
-	private func evaluateCalliopeState(_ calliope: ApiCalliope) {
+	private func evaluateCalliopeState(_ calliope: CalliopeBLEDevice) {
 
 		if calliope.state == .notPlaygroundReady || calliope.state == .discovered {
 			self.collapseButton.connectionState = attemptReconnect || reconnecting ? .connecting : .disconnected
-		} else if calliope.state == .playgroundReady {
+		} else if calliope.state == .usageReady {
 			self.collapseButton.connectionState = .connected
 		} else {
 			self.collapseButton.connectionState = .connecting
@@ -174,7 +193,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 		case .evaluateMode:
 			matrixView.isUserInteractionEnabled = false
 			connectButton.connectionState = .testingMode
-		case .playgroundReady:
+		case .usageReady:
 			matrixView.isUserInteractionEnabled = true
 			connectButton.connectionState = .readyToPlay
 		case .notPlaygroundReady:
@@ -187,32 +206,3 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 		}
 	}
 }
-
-//MARK: calliope communications
-
-/* TODO
-extension MatrixConnectionViewController where C == ProgrammableCalliope {
-	func uploadProgram(program: ProgramBuildResult) -> Worker<String>  {
-		return Worker { [weak self] resolve in
-			guard let queue = self?.queue else { return }
-			guard let device = self?.usageReadyCalliope else {
-				resolve(Result("result.upload.missing".localized, false))
-				return
-			}
-			queue.async {
-				do {
-					LogNotify.log("trying to upload \(program.length()) bytes")
-					try device.upload(program:program)
-					DispatchQueue.main.async {
-						resolve(Result("result.upload.success".localized, true))
-					}
-				} catch {
-					DispatchQueue.main.async {
-						resolve(Result("result.upload.failed".localized, false))
-					}
-				}
-			}
-		}
-	}
-}
-*/

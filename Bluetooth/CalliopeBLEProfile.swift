@@ -11,13 +11,13 @@ import CoreBluetooth
 
 enum CalliopeService: String {
 
+	//MARK: DFU-Services
+
+	case dfu = "E95D93B0-251D-470A-A062-FA1922DFA9A8"
+
 	//MARK: master service
 
 	case master = "CA11FF01-251D-470A-A062-FA1922DFA9A8"
-
-	//MARK: service for interpreter
-
-	case interpreter = "FF44DDEE-251D-470A-A062-FA1922DFA9A8"
 
 	//MARK: services for interpreter (legacy)
 
@@ -83,6 +83,10 @@ enum CalliopeService: String {
 
 
 enum CalliopeCharacteristic: String, CaseIterable {
+
+	//MARK: dfu-related characteristics
+
+	case dfuControl = "E95D93B1-251D-470A-A062-FA1922DFA9A8"
 
 	//MARK: master service characteristic
 
@@ -233,8 +237,6 @@ extension CalliopeService {
 
 	var bitPattern: UInt32 {
 		switch self {
-		case .interpreter:
-			return 1 << 28
 		case .notify:
 			return 1 << 30
 		case .program:
@@ -278,9 +280,6 @@ struct CalliopeBLEProfile {
 		.master : [.services],
 
 		//interpreter
-		.interpreter : [.program, .notify],
-
-		//interpreter legacy
 		.notify : [.notify],
 		.program: [.program],
 
@@ -300,7 +299,8 @@ struct CalliopeBLEProfile {
 		.led: [.ledMatrixState, .ledText, .scrollingDelay],
 		.event: [.microBitRequirements, .microBitEvent, .clientRequirements, .clientEvent],
 		.temperature: [.temperature, .temperaturePeriod],
-		.uart: [.txCharacteristic, .rxCharacteristic]
+		.uart: [.txCharacteristic, .rxCharacteristic],
+		.dfu: [.dfuControl]
 	]
 
 	///inverted map of characteristics and corresponding services (there are some ambiguities, which we ignore)

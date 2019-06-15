@@ -19,7 +19,7 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 		case discovered //discovered and ready to connect, not connected yet
 		case connected //connected, but services and characteristics have not (yet) been found
 		case evaluateMode //connected, looking for services and characteristics
-		case playgroundReady //all required services and characteristics have been found, calliope ready to be programmed
+		case usageReady //all required services and characteristics have been found, calliope ready to be programmed
 		case notPlaygroundReady //required services and characteristics not available, put into right mode
 		case willReset //when a reset is done to enable or disable services
 	}
@@ -27,11 +27,16 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 	private(set) var state : CalliopeBLEDeviceState = .discovered {
 		didSet {
 			LogNotify.log("calliope state: \(state)")
+			handleStateUpdateInternal()
 			handleStateUpdate()
 		}
 	}
 
 	func handleStateUpdate() {
+		//default implementation does nothing
+	}
+
+	private func handleStateUpdateInternal() {
 		updateQueue.async { self.updateBlock() }
 		if state == .discovered {
 			//services get invalidated, undiscovered characteristics are thus restored (need to re-discover)
@@ -117,7 +122,13 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 	}
 
 	private func resetForRequiredServices() {
-		do { try write((requiredServices.reduce(0, { $0 | $1 }) | 1 << 31).littleEndianData, for: .services) }
+		guard requiredServices.reduce(true, { $0 && ($1.bitPattern != 0) }) else {
+			LogNotify.log("services \(requiredServices) cannot be enabled through master service")
+			state = .notPlaygroundReady
+			return
+		}
+		let flags = (requiredServices.reduce(0, { $0 | $1 }) | 1 << 31).littleEndianData
+		do { try write(flags, for: .services) }
 		catch {
 			if state == .evaluateMode {
 				state = .notPlaygroundReady
@@ -154,12 +165,12 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 		}
 
 		if servicesWithUndiscoveredCharacteristics.isEmpty {
-			state = .playgroundReady
+			state = .usageReady
 		}
 	}
 
 	func getCBCharacteristic(_ characteristic: CalliopeCharacteristic) -> CBCharacteristic? {
-		guard state == .playgroundReady || characteristic == .services,
+		guard state == .usageReady || characteristic == .services,
 			let serviceUuid = CalliopeBLEProfile.characteristicServiceMap[characteristic]?.uuid
 			else { return nil }
 		let uuid = characteristic.uuid
@@ -189,7 +200,7 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 	var readValue : Data? = nil
 
 	func write (_ data: Data, for characteristic: CalliopeCharacteristic) throws {
-		guard state == .playgroundReady || characteristic == .services
+		guard state == .usageReady || characteristic == .services
 			else { throw "Not ready to write to characteristic \(characteristic)" }
 		guard let cbCharacteristic = getCBCharacteristic(characteristic) else { throw "characteristic \(characteristic) not available" }
 
@@ -224,7 +235,7 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 	}
 
 	func read(characteristic: CalliopeCharacteristic) throws -> Data? {
-		guard state == .playgroundReady
+		guard state == .usageReady
 			else { throw "Not ready to read characteristic \(characteristic)" }
 		guard let cbCharacteristic = getCBCharacteristic(characteristic)
 			else { throw "no service that contains characteristic \(characteristic)" }
@@ -289,10 +300,15 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 				return
 		}
 
+		handleValueUpdateInternal(calliopeCharacteristic, value)
 		handleValueUpdate(calliopeCharacteristic, value)
 	}
 
 	func handleValueUpdate(_ characteristic: CalliopeCharacteristic, _ value: Data) {
+		LogNotify.log("value for \(characteristic) updated (\(value.hexEncodedString()))")
+	}
+
+	private func handleValueUpdateInternal(_ characteristic: CalliopeCharacteristic, _ value: Data) {
 		LogNotify.log("value for \(characteristic) updated (\(value.hexEncodedString()))")
 	}
 
@@ -321,29 +337,6 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 		}
 		readWriteGroup?.leave()
 	}
-}
-
-
-//MARK: notifications for ui updates
-
-extension CalliopeBLEDevice {
-	/* TODO
-	func postButtonANotification(_ value: Int) {
-		postSensorUpdateNotification(DashboardItemType.ButtonA, value)
-	}
-
-	func postButtonBNotification(_ value: Int) {
-		postSensorUpdateNotification(DashboardItemType.ButtonB, value)
-	}
-
-	func postThermometerNotification(_ value: Int) {
-		postSensorUpdateNotification(DashboardItemType.Thermometer, value)
-	}
-
-	func postSensorUpdateNotification(_ type: DashboardItemType, _ value: Int) {
-		NotificationCenter.default.post(name:UIView_DashboardItem.ValueUpdateNotification, object: nil, userInfo:["type": type.rawValue, "value": value])
-	}
-	*/
 }
 
 //MARK: Equatable (conformance inherited default implementation by NSObject)

@@ -41,6 +41,8 @@
 		2F90F4322291E9860070DB55 /* OLESwizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F90F4292291E9860070DB55 /* OLESwizzling.m */; };
 		2F90F4332291E9860070DB55 /* OLEContainerScrollViewContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F90F42F2291E9860070DB55 /* OLEContainerScrollViewContentView.m */; };
 		2F90F4342291E9860070DB55 /* OLEContainerScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F90F4302291E9860070DB55 /* OLEContainerScrollView.m */; };
+		2FC167AF22B521A4004E9761 /* DFUCalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC167AE22B521A4004E9761 /* DFUCalliope.swift */; };
+		2FC167B122B55879004E9761 /* FirmwareUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC167B022B55879004E9761 /* FirmwareUpload.swift */; };
 		2FC6BFDE22A43E8900E36A59 /* URLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6BFDD22A43E8900E36A59 /* URLManager.swift */; };
 		2FC6BFE022A43EA000E36A59 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6BFDF22A43EA000E36A59 /* SettingsViewController.swift */; };
 		2FC6BFE222A43ECC00E36A59 /* TextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6BFE122A43ECC00E36A59 /* TextFieldView.swift */; };
@@ -136,6 +138,8 @@
 		2F90F42E2291E9860070DB55 /* OLESwizzling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLESwizzling.h; sourceTree = "<group>"; };
 		2F90F42F2291E9860070DB55 /* OLEContainerScrollViewContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLEContainerScrollViewContentView.m; sourceTree = "<group>"; };
 		2F90F4302291E9860070DB55 /* OLEContainerScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLEContainerScrollView.m; sourceTree = "<group>"; };
+		2FC167AE22B521A4004E9761 /* DFUCalliope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUCalliope.swift; sourceTree = "<group>"; };
+		2FC167B022B55879004E9761 /* FirmwareUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirmwareUpload.swift; sourceTree = "<group>"; };
 		2FC6BFDD22A43E8900E36A59 /* URLManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLManager.swift; sourceTree = "<group>"; };
 		2FC6BFDF22A43EA000E36A59 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		2FC6BFE122A43ECC00E36A59 /* TextFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldView.swift; sourceTree = "<group>"; };
@@ -219,6 +223,7 @@
 				2F29159922A2962B004B491F /* ApiCalliope.swift */,
 				2F29159A22A2962B004B491F /* CalliopeBLEDevice.swift */,
 				2F29159B22A2962B004B491F /* ProgrammableCalliope.swift */,
+				2FC167AE22B521A4004E9761 /* DFUCalliope.swift */,
 			);
 			path = Bluetooth;
 			sourceTree = "<group>";
@@ -282,6 +287,7 @@
 				2F313F3822ABFABA00D42BF3 /* PlaygroundViewController.swift */,
 				2F313F3A22ABFB0800D42BF3 /* LocalEditorViewController.swift */,
 				2F313F3C22AC1BA600D42BF3 /* ProgramCollectionViewCell.swift */,
+				2FC167B022B55879004E9761 /* FirmwareUpload.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -633,10 +639,12 @@
 				2FC6BFE022A43EA000E36A59 /* SettingsViewController.swift in Sources */,
 				9D1461121F5577F5000DD8B8 /* Checksum.swift in Sources */,
 				9DFA61B11F4DB5F000E0CDAF /* ExtButtons.swift in Sources */,
+				2FC167B122B55879004E9761 /* FirmwareUpload.swift in Sources */,
 				9D02A01E1F322847004113B1 /* ExtBluetooth.swift in Sources */,
 				2F2915C022A40C17004B491F /* CollapsingViewControllerProtocol.swift in Sources */,
 				9D63E1C31F8FCD5100D35167 /* ExtImagePdf.swift in Sources */,
 				9D8B5B241F979A470023DC09 /* Application.swift in Sources */,
+				2FC167AF22B521A4004E9761 /* DFUCalliope.swift in Sources */,
 				2F2915A222A2962B004B491F /* CalliopeBLEDevice.swift in Sources */,
 				9D2CC1501F9664600025E84F /* ExtLabel.swift in Sources */,
 				2F2915A122A2962B004B491F /* ApiCalliope.swift in Sources */,

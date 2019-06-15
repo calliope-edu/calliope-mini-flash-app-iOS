@@ -10,8 +10,8 @@ import Foundation
 struct BluetoothConstants {
 	static let discoveryTimeout = 20.0
 	static let connectTimeout = 5.0
-	static let readTimeout = 2.0
-	static let writeTimeout = 2.0
+	static let readTimeout = 10.0
+	static let writeTimeout = 10.0
 
 	//set this to 0 of coupling is not necessary
 	static let couplingDelay = 0.0
