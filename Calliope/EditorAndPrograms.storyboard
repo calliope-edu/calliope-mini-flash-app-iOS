@@ -111,119 +111,123 @@
                                     <rect key="frame" x="0.0" y="0.0" width="300" height="76"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="240" verticalCompressionResistancePriority="740" scrollEnabled="NO" editable="NO" text="program description" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pTi-VL-iyl" userLabel="programDescription">
-                                            <rect key="frame" x="8" y="41" width="284" height="27"/>
-                                            <accessibility key="accessibilityConfiguration" identifier="programDescription"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
-                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                        </textView>
-                                        <view contentMode="scaleToFill" horizontalCompressionResistancePriority="740" translatesAutoresizingMaskIntoConstraints="NO" id="cak-2P-BZa" userLabel="programLabelContainer">
-                                            <rect key="frame" x="68" y="8" width="176" height="30"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qaG-4M-WaC">
+                                            <rect key="frame" x="0.0" y="0.0" width="300" height="76"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="240" verticalHuggingPriority="251" horizontalCompressionResistancePriority="740" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6EZ-19-iHe">
-                                                    <rect key="frame" x="8" y="4.5" width="168" height="21"/>
-                                                    <accessibility key="accessibilityConfiguration" identifier="programLabel"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <textField hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="240" verticalHuggingPriority="260" horizontalCompressionResistancePriority="740" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wfn-Uf-xDF">
-                                                    <rect key="frame" x="0.0" y="0.0" width="176" height="30"/>
-                                                    <accessibility key="accessibilityConfiguration" identifier="programNameEditField"/>
-                                                    <nil key="textColor"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                            </subviews>
-                                            <accessibility key="accessibilityConfiguration" identifier="programLabelContainer"/>
-                                            <constraints>
-                                                <constraint firstItem="6EZ-19-iHe" firstAttribute="leading" secondItem="wfn-Uf-xDF" secondAttribute="leading" constant="8" id="1B0-Sw-FoT"/>
-                                                <constraint firstAttribute="trailing" secondItem="wfn-Uf-xDF" secondAttribute="trailing" id="3iZ-j8-CII"/>
-                                                <constraint firstItem="wfn-Uf-xDF" firstAttribute="leading" secondItem="cak-2P-BZa" secondAttribute="leading" id="Fj1-iC-24p"/>
-                                                <constraint firstItem="6EZ-19-iHe" firstAttribute="trailing" secondItem="wfn-Uf-xDF" secondAttribute="trailing" id="HV2-Hn-Z6j"/>
-                                                <constraint firstItem="wfn-Uf-xDF" firstAttribute="top" secondItem="cak-2P-BZa" secondAttribute="top" id="LY3-PF-lDW"/>
-                                                <constraint firstAttribute="bottom" secondItem="wfn-Uf-xDF" secondAttribute="bottom" id="eE2-vX-mpB"/>
-                                                <constraint firstItem="wfn-Uf-xDF" firstAttribute="firstBaseline" secondItem="6EZ-19-iHe" secondAttribute="firstBaseline" id="qQj-hv-cHb"/>
-                                            </constraints>
-                                        </view>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IconDevice" translatesAutoresizingMaskIntoConstraints="NO" id="8OA-UR-bMg" userLabel="programImage">
-                                            <rect key="frame" x="8" y="8" width="60" height="60"/>
-                                            <color key="backgroundColor" name="calliope-darkgreen"/>
-                                            <accessibility key="accessibilityConfiguration" identifier="programImage"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="60" id="Nig-Z8-D4R"/>
-                                                <constraint firstAttribute="width" constant="60" id="c2K-hb-pxl"/>
-                                            </constraints>
-                                        </imageView>
-                                        <view contentMode="scaleToFill" horizontalHuggingPriority="255" translatesAutoresizingMaskIntoConstraints="NO" id="J9s-yA-pzc" userLabel="buttonContainer">
-                                            <rect key="frame" x="252" y="8" width="40" height="60"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Md0-6n-vN4" userLabel="shareButton">
-                                                    <rect key="frame" x="0.0" y="30" width="40" height="30"/>
-                                                    <accessibility key="accessibilityConfiguration" identifier="shareButton"/>
-                                                    <state key="normal" title="Share"/>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="240" verticalHuggingPriority="240" horizontalCompressionResistancePriority="600" verticalCompressionResistancePriority="600" scrollEnabled="NO" editable="NO" text="program description" textAlignment="justified" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pTi-VL-iyl" userLabel="programDescription">
+                                                    <rect key="frame" x="8" y="41" width="284" height="27"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="programDescription"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                                <view contentMode="scaleToFill" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="cak-2P-BZa" userLabel="programLabelContainer">
+                                                    <rect key="frame" x="68" y="8" width="184" height="30"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="200" verticalHuggingPriority="251" horizontalCompressionResistancePriority="740" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6EZ-19-iHe">
+                                                            <rect key="frame" x="8" y="4.5" width="168" height="20.5"/>
+                                                            <accessibility key="accessibilityConfiguration" identifier="programLabel"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <textField hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="240" verticalHuggingPriority="260" horizontalCompressionResistancePriority="700" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wfn-Uf-xDF">
+                                                            <rect key="frame" x="0.0" y="0.0" width="184" height="30"/>
+                                                            <accessibility key="accessibilityConfiguration" identifier="programNameEditField"/>
+                                                            <nil key="textColor"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                            <textInputTraits key="textInputTraits"/>
+                                                        </textField>
+                                                    </subviews>
+                                                    <accessibility key="accessibilityConfiguration" identifier="programLabelContainer"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="wfn-Uf-xDF" secondAttribute="trailing" id="3iZ-j8-CII"/>
+                                                        <constraint firstItem="wfn-Uf-xDF" firstAttribute="leading" secondItem="cak-2P-BZa" secondAttribute="leading" id="Fj1-iC-24p"/>
+                                                        <constraint firstItem="6EZ-19-iHe" firstAttribute="leading" secondItem="cak-2P-BZa" secondAttribute="leading" constant="8" id="L33-on-LaX"/>
+                                                        <constraint firstItem="wfn-Uf-xDF" firstAttribute="top" secondItem="cak-2P-BZa" secondAttribute="top" id="LY3-PF-lDW"/>
+                                                        <constraint firstAttribute="trailing" secondItem="6EZ-19-iHe" secondAttribute="trailing" constant="8" id="cgh-CH-8wE"/>
+                                                        <constraint firstAttribute="bottom" secondItem="wfn-Uf-xDF" secondAttribute="bottom" id="eE2-vX-mpB"/>
+                                                        <constraint firstItem="wfn-Uf-xDF" firstAttribute="firstBaseline" secondItem="6EZ-19-iHe" secondAttribute="firstBaseline" id="qQj-hv-cHb"/>
+                                                    </constraints>
+                                                </view>
+                                                <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="290" verticalHuggingPriority="290" horizontalCompressionResistancePriority="800" verticalCompressionResistancePriority="800" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="pl9-Zp-P2S">
+                                                    <rect key="frame" x="252" y="8" width="40" height="60"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Cx-H7-sFl" userLabel="editButton">
+                                                            <rect key="frame" x="0.0" y="0.0" width="40" height="30"/>
+                                                            <accessibility key="accessibilityConfiguration" identifier="editButton"/>
+                                                            <state key="normal" title="Edit"/>
+                                                            <connections>
+                                                                <action selector="editButtonClicked:" destination="3mg-YL-G9B" eventType="touchUpInside" id="fYL-p7-ssC"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Md0-6n-vN4" userLabel="shareButton">
+                                                            <rect key="frame" x="0.0" y="30" width="40" height="30"/>
+                                                            <accessibility key="accessibilityConfiguration" identifier="shareButton"/>
+                                                            <state key="normal" title="Share"/>
+                                                            <connections>
+                                                                <action selector="shareButtonClicked:" destination="3mg-YL-G9B" eventType="touchUpInside" id="eHT-b2-jeQ"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                </stackView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="300" verticalHuggingPriority="300" horizontalCompressionResistancePriority="900" verticalCompressionResistancePriority="900" image="IconDevice" translatesAutoresizingMaskIntoConstraints="NO" id="8OA-UR-bMg" userLabel="programImage">
+                                                    <rect key="frame" x="8" y="8" width="60" height="60"/>
+                                                    <color key="backgroundColor" name="calliope-darkgreen"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="programImage"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="60" id="Nig-Z8-D4R"/>
+                                                        <constraint firstAttribute="width" constant="60" id="c2K-hb-pxl"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mlC-kV-m4c">
+                                                    <rect key="frame" x="8" y="8" width="60" height="60"/>
+                                                    <state key="normal" image="IconDevice"/>
                                                     <connections>
-                                                        <action selector="shareButtonClicked:" destination="3mg-YL-G9B" eventType="touchUpInside" id="eHT-b2-jeQ"/>
+                                                        <action selector="uploadButtonClicked:" destination="3mg-YL-G9B" eventType="touchUpInside" id="2cg-Kf-6Ir"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Cx-H7-sFl" userLabel="editButton">
-                                                    <rect key="frame" x="0.0" y="0.0" width="40" height="30"/>
-                                                    <accessibility key="accessibilityConfiguration" identifier="editButton"/>
-                                                    <state key="normal" title="Edit"/>
-                                                    <connections>
-                                                        <action selector="editButtonClicked:" destination="3mg-YL-G9B" eventType="touchUpInside" id="fYL-p7-ssC"/>
-                                                    </connections>
-                                                </button>
                                             </subviews>
-                                            <accessibility key="accessibilityConfiguration" identifier="buttonContainer"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstItem="8Cx-H7-sFl" firstAttribute="leading" secondItem="J9s-yA-pzc" secondAttribute="leading" id="AoI-gq-QR7"/>
-                                                <constraint firstItem="Md0-6n-vN4" firstAttribute="leading" secondItem="J9s-yA-pzc" secondAttribute="leading" id="E3A-qi-s4q"/>
-                                                <constraint firstAttribute="trailing" secondItem="8Cx-H7-sFl" secondAttribute="trailing" id="NGX-gZ-rSE"/>
-                                                <constraint firstItem="Md0-6n-vN4" firstAttribute="top" secondItem="8Cx-H7-sFl" secondAttribute="bottom" id="Xn4-SJ-RgC"/>
-                                                <constraint firstItem="8Cx-H7-sFl" firstAttribute="top" secondItem="J9s-yA-pzc" secondAttribute="top" id="ejp-cQ-rL7"/>
-                                                <constraint firstAttribute="bottom" secondItem="Md0-6n-vN4" secondAttribute="bottom" id="sTz-ca-ldr"/>
-                                                <constraint firstAttribute="trailing" secondItem="Md0-6n-vN4" secondAttribute="trailing" id="vV2-k9-uRW"/>
+                                                <constraint firstItem="pl9-Zp-P2S" firstAttribute="top" secondItem="qaG-4M-WaC" secondAttribute="top" constant="8" id="0Iw-G7-k8W"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="pl9-Zp-P2S" secondAttribute="bottom" constant="8" id="4To-n6-2dZ"/>
+                                                <constraint firstAttribute="bottom" secondItem="pTi-VL-iyl" secondAttribute="bottom" constant="8" id="708-Nk-ORG"/>
+                                                <constraint firstItem="pl9-Zp-P2S" firstAttribute="leading" secondItem="cak-2P-BZa" secondAttribute="trailing" id="8ok-Gr-8Xg"/>
+                                                <constraint firstItem="8OA-UR-bMg" firstAttribute="top" secondItem="qaG-4M-WaC" secondAttribute="top" constant="8" id="9Hv-k6-oPm"/>
+                                                <constraint firstAttribute="trailing" secondItem="pl9-Zp-P2S" secondAttribute="trailing" constant="8" id="9ZG-Gm-uYd"/>
+                                                <constraint firstAttribute="width" priority="999" constant="300" id="9n4-gR-Ssc"/>
+                                                <constraint firstItem="mlC-kV-m4c" firstAttribute="height" secondItem="8OA-UR-bMg" secondAttribute="height" id="A61-eW-V77"/>
+                                                <constraint firstItem="pTi-VL-iyl" firstAttribute="leading" secondItem="qaG-4M-WaC" secondAttribute="leading" constant="8" id="Bz7-o9-9LO"/>
+                                                <constraint firstAttribute="trailing" secondItem="pTi-VL-iyl" secondAttribute="trailing" constant="8" id="CgV-iJ-RCe"/>
+                                                <constraint firstItem="cak-2P-BZa" firstAttribute="top" secondItem="qaG-4M-WaC" secondAttribute="top" constant="8" id="IdY-zV-2yi"/>
+                                                <constraint firstItem="mlC-kV-m4c" firstAttribute="width" secondItem="8OA-UR-bMg" secondAttribute="width" id="brv-jh-V35"/>
+                                                <constraint firstItem="cak-2P-BZa" firstAttribute="leading" secondItem="8OA-UR-bMg" secondAttribute="trailing" id="f1O-cr-Ljd"/>
+                                                <constraint firstItem="pTi-VL-iyl" firstAttribute="top" secondItem="cak-2P-BZa" secondAttribute="bottom" constant="3" id="gDs-tn-8Au"/>
+                                                <constraint firstItem="mlC-kV-m4c" firstAttribute="centerX" secondItem="8OA-UR-bMg" secondAttribute="centerX" id="i0q-Kw-KIN"/>
+                                                <constraint firstItem="mlC-kV-m4c" firstAttribute="centerY" secondItem="8OA-UR-bMg" secondAttribute="centerY" id="jp2-NN-SRz"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="8OA-UR-bMg" secondAttribute="bottom" constant="8" id="oyV-Gy-Bhw"/>
+                                                <constraint firstItem="8OA-UR-bMg" firstAttribute="leading" secondItem="qaG-4M-WaC" secondAttribute="leading" constant="8" id="vGn-Jp-Dg3"/>
                                             </constraints>
                                         </view>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mlC-kV-m4c">
-                                            <rect key="frame" x="8" y="8" width="60" height="60"/>
-                                            <state key="normal" image="IconDevice"/>
-                                            <connections>
-                                                <action selector="uploadButtonClicked:" destination="3mg-YL-G9B" eventType="touchUpInside" id="2cg-Kf-6Ir"/>
-                                            </connections>
-                                        </button>
                                     </subviews>
                                 </view>
                                 <color key="backgroundColor" name="calliope-green"/>
                                 <constraints>
-                                    <constraint firstItem="8OA-UR-bMg" firstAttribute="top" secondItem="3mg-YL-G9B" secondAttribute="top" constant="8" id="4hr-aW-OCu"/>
-                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="8OA-UR-bMg" secondAttribute="bottom" constant="8" id="6YD-Op-ct8"/>
-                                    <constraint firstItem="pTi-VL-iyl" firstAttribute="top" secondItem="cak-2P-BZa" secondAttribute="bottom" constant="3" id="6xv-9N-6PU"/>
-                                    <constraint firstItem="mlC-kV-m4c" firstAttribute="width" secondItem="8OA-UR-bMg" secondAttribute="width" id="9zC-gb-Xpg"/>
-                                    <constraint firstItem="mlC-kV-m4c" firstAttribute="centerY" secondItem="8OA-UR-bMg" secondAttribute="centerY" id="KKj-QT-GRD"/>
-                                    <constraint firstItem="cak-2P-BZa" firstAttribute="top" secondItem="3mg-YL-G9B" secondAttribute="top" constant="8" id="LGU-0E-MKf"/>
-                                    <constraint firstItem="pTi-VL-iyl" firstAttribute="leading" secondItem="3mg-YL-G9B" secondAttribute="leadingMargin" id="PhZ-v9-hQS"/>
-                                    <constraint firstItem="mlC-kV-m4c" firstAttribute="centerX" secondItem="8OA-UR-bMg" secondAttribute="centerX" id="Rin-I6-ysM"/>
-                                    <constraint firstAttribute="trailing" secondItem="J9s-yA-pzc" secondAttribute="trailing" constant="8" id="SDC-ev-d3T"/>
-                                    <constraint firstItem="J9s-yA-pzc" firstAttribute="leading" secondItem="cak-2P-BZa" secondAttribute="trailing" constant="8" id="Z27-wn-MLK"/>
-                                    <constraint firstItem="J9s-yA-pzc" firstAttribute="top" secondItem="3mg-YL-G9B" secondAttribute="top" constant="8" id="baZ-nS-FHU"/>
-                                    <constraint firstItem="8OA-UR-bMg" firstAttribute="leading" secondItem="3mg-YL-G9B" secondAttribute="leading" constant="8" id="c8t-yo-THJ"/>
-                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="J9s-yA-pzc" secondAttribute="bottom" constant="8" id="oGT-fz-gwy"/>
-                                    <constraint firstAttribute="trailing" secondItem="pTi-VL-iyl" secondAttribute="trailing" constant="8" id="p9V-99-7Fz"/>
-                                    <constraint firstAttribute="bottom" secondItem="pTi-VL-iyl" secondAttribute="bottom" constant="8" id="qMN-MC-Tro"/>
-                                    <constraint firstItem="mlC-kV-m4c" firstAttribute="height" secondItem="8OA-UR-bMg" secondAttribute="height" id="s0K-UB-TPa"/>
-                                    <constraint firstItem="cak-2P-BZa" firstAttribute="leading" secondItem="8OA-UR-bMg" secondAttribute="trailing" id="uQc-ku-vuB"/>
+                                    <constraint firstAttribute="bottom" secondItem="qaG-4M-WaC" secondAttribute="bottom" id="7Yq-0n-0W1"/>
+                                    <constraint firstItem="qaG-4M-WaC" firstAttribute="top" secondItem="3mg-YL-G9B" secondAttribute="top" id="Fa6-a3-TMh"/>
+                                    <constraint firstItem="qaG-4M-WaC" firstAttribute="leading" secondItem="3mg-YL-G9B" secondAttribute="leading" id="aWp-g0-Izy"/>
+                                    <constraint firstAttribute="trailing" secondItem="qaG-4M-WaC" secondAttribute="trailing" id="cGx-N0-igb"/>
                                 </constraints>
                                 <size key="customSize" width="300" height="76"/>
                                 <connections>
-                                    <outlet property="buttonContainer" destination="J9s-yA-pzc" id="XHV-am-e7I"/>
+                                    <outlet property="buttonContainer" destination="pl9-Zp-P2S" id="gaZ-Pf-0Pq"/>
                                     <outlet property="descriptionText" destination="pTi-VL-iyl" id="tKZ-cQ-nVF"/>
                                     <outlet property="editButton" destination="8Cx-H7-sFl" id="Ivg-XN-Rf5"/>
                                     <outlet property="image" destination="8OA-UR-bMg" id="BkV-cs-iSq"/>
                                     <outlet property="name" destination="6EZ-19-iHe" id="qOk-mS-5YE"/>
                                     <outlet property="nameEditField" destination="wfn-Uf-xDF" id="130-zf-2Rd"/>
                                     <outlet property="shareButton" destination="Md0-6n-vN4" id="CuL-JX-Tp1"/>
+                                    <outlet property="widthConstraint" destination="9n4-gR-Ssc" id="Bfq-8K-PxW"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>

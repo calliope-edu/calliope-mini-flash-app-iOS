@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import DeepDiff
 
 class EditorsAndProgramsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, ProgramCellDelegate {
 
@@ -21,19 +22,21 @@ class EditorsAndProgramsCollectionViewController: UICollectionViewController, UI
 	private var playgroundCell: EditorCollectionViewCell?
 	private var offlineEditorCell: EditorCollectionViewCell?
 
-	private lazy var hexFiles = { () -> [HexFile] in
-		do {
-			return try HexFileManager.stored()
-		}
-		catch {
-			LOG(error)
-			fatalError("could not load files")
-		}
+	private lazy var hexFiles: [HexFile] = { () -> [HexFile] in
+		do { return try HexFileManager.stored() }
+		catch { fatalError("could not load files \(error)") }
 	}()
+
+	private var subscription: NSObjectProtocol!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 		(collectionViewLayout as! UICollectionViewFlowLayout).estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+		subscription = NotificationCenter.default.addObserver(
+			forName: NotificationConstants.hexFileChanged, object: nil, queue: nil,
+			using: { [weak self] (_) in
+				self?.animateFileChange()
+		})
     }
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -66,7 +69,6 @@ class EditorsAndProgramsCollectionViewController: UICollectionViewController, UI
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2
     }
-
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		if section == 0 {
@@ -110,7 +112,7 @@ class EditorsAndProgramsCollectionViewController: UICollectionViewController, UI
 			(cell as! ProgramCollectionViewCell).program = hexFiles[indexPath.row]
 			(cell as! ProgramCollectionViewCell).delegate = self
 		}
-    
+		
         return cell
     }
 
@@ -122,6 +124,15 @@ class EditorsAndProgramsCollectionViewController: UICollectionViewController, UI
 		} else {
 			fatalError("The collection view only has headers, not \(kind)s")
 		}
+	}
+
+	private func animateFileChange() {
+		let oldItems = hexFiles
+		let newItems = (try? HexFileManager.stored()) ?? []
+		let changes = diff(old: oldItems, new: newItems)
+		collectionView.reload(changes: changes, section: 1, updateData: {
+			self.hexFiles = newItems
+		})
 	}
 
     // MARK: UICollectionViewDelegate
@@ -140,25 +151,34 @@ class EditorsAndProgramsCollectionViewController: UICollectionViewController, UI
     }
     */
 
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
+    // menu
+
+	override var canBecomeFirstResponder: Bool {
+		return true
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
+        return true
     }
 
     override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
+		return indexPath.section == 1 && action == #selector(delete(_:))
     }
 
     override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
+		if action == #selector(delete(_:)) {
+			guard let cell = self.collectionView.cellForItem(at: indexPath) as? ProgramCollectionViewCell else { fatalError("delete called not on program cell") }
+			deleteProgram(of: cell)
+		}
     }
-    */
+
+	//dummy method for having some selector
+	@objc func deleteSelectedProgram(sender: Any) {}
 
 	// MARK: UICollectionViewDelegateFlowLayout
 
 	let editorButtonSize: CGFloat = 180
-	let programWidthThreshold: CGFloat = 650
+	let programWidthThreshold: CGFloat = 500
 	let defaultProgramHeight: CGFloat = 100
 	let spacing: CGFloat = 10
 
@@ -224,6 +244,36 @@ class EditorsAndProgramsCollectionViewController: UICollectionViewController, UI
 	}
 
 	func uploadProgram(of cell: ProgramCollectionViewCell) {
-		//TODO upload
+		let alert = UIAlertController(title: "Upload?", message: "Do you want to upload \(cell.program.name) to your calliope?", preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: "Upload", style: .default) { _ in
+			let uploader = FirmwareUpload()
+			self.present(uploader.alertView, animated: true) {
+				uploader.upload(file: cell.program) {
+					self.dismiss(animated: true, completion: nil)
+				}
+			}
+		})
+		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+		self.present(alert, animated: true)
+	}
+
+	func deleteProgram(of cell: ProgramCollectionViewCell) {
+		let alert = UIAlertController(title: "Delete?", message: "Do you want to delete \(cell.program.name)?", preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: "Delete", style: .destructive) { _ in
+			do {
+				try HexFileManager.delete(file: cell.program)
+				self.animateFileChange()
+			} catch {
+				let alert = UIAlertController(title: "Delete failed", message: "Could not delete \(cell.program.name)\n\(error.localizedDescription)", preferredStyle: .alert)
+				alert.addAction(UIAlertAction(title: "OK", style: .default))
+				self.present(alert, animated: true)
+			}
+		})
+		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+		self.present(alert, animated: true)
+	}
+
+	deinit {
+		NotificationCenter.default.removeObserver(subscription!)
 	}
 }

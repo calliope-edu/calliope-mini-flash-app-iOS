@@ -1,8 +1,8 @@
 import UIKit
 import iOSDFULibrary
+import DeepDiff
 
-struct HexFile {
-
+struct HexFile: Equatable {
     private(set) var url: URL
 	var name: String {
 		didSet {
@@ -64,6 +64,18 @@ struct HexFile {
 
         return d
     }
+
+	static func == (lhs: HexFile, rhs: HexFile) -> Bool {
+		return lhs.url == rhs.url && lhs.name == rhs.name && lhs.descriptionText == rhs.descriptionText
+	}
+}
+
+extension HexFile: DiffAware {
+	typealias DiffId = URL
+	var diffId: DiffId { return url }
+	static func compareContent(_ a: HexFile, _ b: HexFile) -> Bool {
+		return a == b
+	}
 }
 
 final class HexFileManager {
@@ -75,8 +87,6 @@ final class HexFileManager {
 		formatter.timeStyle = .none
 		return formatter
 	}()
-
-    private static let keep = 5
 
     private static func dir() throws -> URL {
         return try FileManager.default.url(
@@ -131,29 +141,37 @@ final class HexFileManager {
         let file = dir.appendingPathComponent(name + ".hex")
         LOG("writing file \(file)")
         try data.write(to: file)
-
-        let files = try stored()
-        let filesKeep = files.prefix(keep)
-        let filesRemove = files.suffix(files.count - filesKeep.count)
-
-        for file in filesRemove {
-            try delete(file: file)
-        }
-
 		let date = Date()
-        return HexFile(url: file, name: name, date: date, descriptionText: "\(date)")
+		let hexFile = HexFile(url: file, name: name, date: date, descriptionText: "\(date)")
+		notifyChange()
+        return hexFile
     }
 
     public static func delete(file: HexFile) throws {
         LOG("deleting file \(file)")
         try FileManager.default.removeItem(at: file.url)
+		notifyChange()
     }
 
 	public static func rename(file: HexFile) throws -> URL {
 		LOG("renaming file \(file)")
 		let newURL = file.url.deletingLastPathComponent().appendingPathComponent(file.name + ".hex")
 		try FileManager.default.moveItem(at: file.url, to: newURL)
+		notifyChange()
 		return newURL
 	}
 
+	public static var bulkChange = false {
+		didSet {
+			if oldValue == true && bulkChange == false {
+				notifyChange()
+			}
+		}
+	}
+
+	private static func notifyChange() {
+		if !bulkChange {
+			NotificationCenter.default.post(name: NotificationConstants.hexFileChanged, object: self)
+		}
+	}
 }

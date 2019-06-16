@@ -27,11 +27,7 @@ class EditorCollectionViewCell: UICollectionViewCell {
 
 		contentView.translatesAutoresizingMaskIntoConstraints = false
 
-		NSLayoutConstraint.activate([
-			contentView.leftAnchor.constraint(equalTo: leftAnchor),
-			contentView.rightAnchor.constraint(equalTo: rightAnchor),
-			contentView.topAnchor.constraint(equalTo: topAnchor),
-			contentView.bottomAnchor.constraint(equalTo: bottomAnchor)
-			])
+		self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[contentView]|", options: [], metrics: nil, views: ["contentView" : self.contentView]))
+		self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[contentView]|", options: [], metrics: nil, views: ["contentView" : self.contentView]))
 	}
 }

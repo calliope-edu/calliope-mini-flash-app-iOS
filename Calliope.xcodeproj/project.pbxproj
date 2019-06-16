@@ -47,6 +47,7 @@
 		2FC6BFE022A43EA000E36A59 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6BFDF22A43EA000E36A59 /* SettingsViewController.swift */; };
 		2FC6BFE222A43ECC00E36A59 /* TextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6BFE122A43ECC00E36A59 /* TextFieldView.swift */; };
 		2FC87EE422A42BB400BB7DDF /* EditorsAndProgramsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC87EE322A42BB400BB7DDF /* EditorsAndProgramsCollectionViewController.swift */; };
+		2FDF5C5D22B68DD7006A65F5 /* NotificationConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDF5C5C22B68DD7006A65F5 /* NotificationConstants.swift */; };
 		7BFB03BA3FAF699F9D9BB2A3 /* Pods_Calliope.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37441412D6ED3918E1A64243 /* Pods_Calliope.framework */; };
 		9D02A0181F31DE59004113B1 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D02A0171F31DE59004113B1 /* Global.swift */; };
 		9D02A01E1F322847004113B1 /* ExtBluetooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D02A01D1F322847004113B1 /* ExtBluetooth.swift */; };
@@ -144,6 +145,7 @@
 		2FC6BFDF22A43EA000E36A59 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		2FC6BFE122A43ECC00E36A59 /* TextFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldView.swift; sourceTree = "<group>"; };
 		2FC87EE322A42BB400BB7DDF /* EditorsAndProgramsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorsAndProgramsCollectionViewController.swift; sourceTree = "<group>"; };
+		2FDF5C5C22B68DD7006A65F5 /* NotificationConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationConstants.swift; sourceTree = "<group>"; };
 		37441412D6ED3918E1A64243 /* Pods_Calliope.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Calliope.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D02A0171F31DE59004113B1 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		9D02A01D1F322847004113B1 /* ExtBluetooth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtBluetooth.swift; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 				2F2915A722A4069F004B491F /* LogNotify.swift */,
 				2F2915A822A4069F004B491F /* Async.swift */,
 				2F2915A922A4069F004B491F /* Extension_Data.swift */,
+				2FDF5C5C22B68DD7006A65F5 /* NotificationConstants.swift */,
 			);
 			path = GeneralUtilities;
 			sourceTree = "<group>";
@@ -575,15 +578,19 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Calliope/Pods-Calliope-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/DeepDiff/DeepDiff.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/TPKeyboardAvoiding/TPKeyboardAvoiding.framework",
+				"${BUILT_PRODUCTS_DIR}/UICircularProgressRing/UICircularProgressRing.framework",
 				"${BUILT_PRODUCTS_DIR}/ZIPFoundation/ZIPFoundation.framework",
 				"${BUILT_PRODUCTS_DIR}/iOSDFULibrary/iOSDFULibrary.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DeepDiff.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPKeyboardAvoiding.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UICircularProgressRing.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZIPFoundation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSDFULibrary.framework",
 			);
@@ -645,6 +652,7 @@
 				9D63E1C31F8FCD5100D35167 /* ExtImagePdf.swift in Sources */,
 				9D8B5B241F979A470023DC09 /* Application.swift in Sources */,
 				2FC167AF22B521A4004E9761 /* DFUCalliope.swift in Sources */,
+				2FDF5C5D22B68DD7006A65F5 /* NotificationConstants.swift in Sources */,
 				2F2915A222A2962B004B491F /* CalliopeBLEDevice.swift in Sources */,
 				9D2CC1501F9664600025E84F /* ExtLabel.swift in Sources */,
 				2F2915A122A2962B004B491F /* ApiCalliope.swift in Sources */,

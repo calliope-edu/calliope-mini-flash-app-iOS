@@ -4,5 +4,7 @@ use_frameworks!
 pod 'TPKeyboardAvoiding'
 pod 'SnapKit', '~> 5.0.0'
 pod 'iOSDFULibrary', '~> 4.4.2'
+pod 'UICircularProgressRing'
+pod 'DeepDiff'
 
 target 'Calliope'

@@ -31,10 +31,10 @@ final class MicrobitEditor: Editor {
     public let url = URL(string: URLManager.makeCodeUrl ?? "")
 
     func download(_ request: URLRequest) -> EditorDownload? {
-        guard let s = request.url?.absoluteString else { return nil }
-        let matches = s.matches(regex: "^data:application/x-calliope-hex")
-        guard matches.count == 1 else { return nil }
-        guard let url = URL(string:s) else { return nil }
+        guard
+			let s = request.url?.absoluteString,
+			s.matches(regex: "^data:application/x-calliope-hex").count == 1,
+			let url = URL(string:s) else { return nil }
         return EditorDownload(name: "makecode-" + UUID().uuidString, url: url)
     }
 }

@@ -12,6 +12,7 @@ protocol ProgramCellDelegate {
 	func renameFailed(_ cell: ProgramCollectionViewCell, to newName: String)
 	func programCellSizeDidChange(_ cell: ProgramCollectionViewCell)
 	func uploadProgram(of cell: ProgramCollectionViewCell)
+	func deleteProgram(of cell: ProgramCollectionViewCell)
 }
 
 class ProgramCollectionViewCell: UICollectionViewCell, UITextViewDelegate {
@@ -29,12 +30,16 @@ class ProgramCollectionViewCell: UICollectionViewCell, UITextViewDelegate {
 
 	var observations: [NSKeyValueObservation] = []
 
+	@IBOutlet weak var widthConstraint: NSLayoutConstraint!
+	
+
+	/*
 	lazy var widthConstraint: NSLayoutConstraint = {
 		let c = NSLayoutConstraint(item: self.contentView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 300)
 		c.priority = UILayoutPriority(rawValue: 999)
 		self.addConstraint(c)
 		return c
-	}()
+	}()*/
 
 	public var program: HexFile! {
 		didSet {
@@ -75,12 +80,8 @@ class ProgramCollectionViewCell: UICollectionViewCell, UITextViewDelegate {
 
 		contentView.translatesAutoresizingMaskIntoConstraints = false
 
-		NSLayoutConstraint.activate([
-			contentView.leftAnchor.constraint(equalTo: leftAnchor),
-			contentView.rightAnchor.constraint(equalTo: rightAnchor),
-			contentView.topAnchor.constraint(equalTo: topAnchor),
-			contentView.bottomAnchor.constraint(equalTo: bottomAnchor)
-			])
+		self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[contentView]|", options: [], metrics: nil, views: ["contentView" : self.contentView]))
+		self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[contentView]|", options: [], metrics: nil, views: ["contentView" : self.contentView]))
 	}
 
 	override func layoutSubviews() {
@@ -120,6 +121,10 @@ class ProgramCollectionViewCell: UICollectionViewCell, UITextViewDelegate {
 
 	@IBAction func uploadButtonClicked(_ sender: Any) {
 		delegate.uploadProgram(of: self)
+	}
+
+	override func delete(_ sender: Any?) {
+		delegate.deleteProgram(of: self)
 	}
 
 	// MARK: UITextViewDelegate
