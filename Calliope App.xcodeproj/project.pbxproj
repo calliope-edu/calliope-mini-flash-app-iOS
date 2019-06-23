@@ -1,0 +1,689 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2F351859281E788C6C812C7F /* Pods_Calliope_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5903FA54473EF3F75116DEB /* Pods_Calliope_App.framework */; };
+		2F61451022BF75DE001C2734 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61450F22BF75DE001C2734 /* AppDelegate.swift */; };
+		2F61451C22BF75DF001C2734 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F61451A22BF75DF001C2734 /* LaunchScreen.storyboard */; };
+		2F61456622BF761F001C2734 /* mini-smile.hex in Resources */ = {isa = PBXBuildFile; fileRef = 2F61452422BF761F001C2734 /* mini-smile.hex */; };
+		2F61456722BF761F001C2734 /* Calliope-mini-Start.hex in Resources */ = {isa = PBXBuildFile; fileRef = 2F61452522BF761F001C2734 /* Calliope-mini-Start.hex */; };
+		2F61456922BF761F001C2734 /* CalliopeApp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F61452822BF761F001C2734 /* CalliopeApp.storyboard */; };
+		2F61456A22BF761F001C2734 /* EditorAndPrograms.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F61452922BF761F001C2734 /* EditorAndPrograms.storyboard */; };
+		2F61456B22BF761F001C2734 /* HomeScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F61452A22BF761F001C2734 /* HomeScreen.storyboard */; };
+		2F61456C22BF761F001C2734 /* CarRemote.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F61452B22BF761F001C2734 /* CarRemote.storyboard */; };
+		2F61456D22BF761F001C2734 /* ConnectionView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F61452C22BF761F001C2734 /* ConnectionView.storyboard */; };
+		2F61456E22BF761F001C2734 /* CalliopeBLEProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61452E22BF761F001C2734 /* CalliopeBLEProfile.swift */; };
+		2F61456F22BF761F001C2734 /* CalliopeBLEDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61452F22BF761F001C2734 /* CalliopeBLEDiscovery.swift */; };
+		2F61457022BF761F001C2734 /* Extension_CBUUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453022BF761F001C2734 /* Extension_CBUUID.swift */; };
+		2F61457122BF761F001C2734 /* DFUCalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453122BF761F001C2734 /* DFUCalliope.swift */; };
+		2F61457222BF761F001C2734 /* BLEDataTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453222BF761F001C2734 /* BLEDataTypes.swift */; };
+		2F61457322BF761F001C2734 /* BluetoothConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453322BF761F001C2734 /* BluetoothConstants.swift */; };
+		2F61457422BF761F001C2734 /* ApiCalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453422BF761F001C2734 /* ApiCalliope.swift */; };
+		2F61457522BF761F001C2734 /* CalliopeBLEDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453522BF761F001C2734 /* CalliopeBLEDevice.swift */; };
+		2F61457622BF761F001C2734 /* ProgrammableCalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453622BF761F001C2734 /* ProgrammableCalliope.swift */; };
+		2F61457722BF761F001C2734 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453822BF761F001C2734 /* Styles.swift */; };
+		2F61457822BF761F001C2734 /* ExtString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453922BF761F001C2734 /* ExtString.swift */; };
+		2F61457922BF761F001C2734 /* Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453A22BF761F001C2734 /* Ext.swift */; };
+		2F61457A22BF761F001C2734 /* ExtURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453B22BF761F001C2734 /* ExtURL.swift */; };
+		2F61457B22BF761F001C2734 /* ValueLocalizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453C22BF761F001C2734 /* ValueLocalizer.swift */; };
+		2F61457C22BF761F001C2734 /* ExtColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453D22BF761F001C2734 /* ExtColor.swift */; };
+		2F61457D22BF761F001C2734 /* LogNotify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453E22BF761F001C2734 /* LogNotify.swift */; };
+		2F61457E22BF761F001C2734 /* URLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453F22BF761F001C2734 /* URLManager.swift */; };
+		2F61457F22BF761F001C2734 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61454022BF761F001C2734 /* Async.swift */; };
+		2F61458022BF761F001C2734 /* NotificationConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61454122BF761F001C2734 /* NotificationConstants.swift */; };
+		2F61458122BF761F001C2734 /* Binary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61454222BF761F001C2734 /* Binary.swift */; };
+		2F61458222BF761F001C2734 /* Checksum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61454322BF761F001C2734 /* Checksum.swift */; };
+		2F61458322BF761F001C2734 /* OLEContainerScrollView+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F61454522BF761F001C2734 /* OLEContainerScrollView+Swizzling.m */; };
+		2F61458422BF761F001C2734 /* OLESwizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F61454622BF761F001C2734 /* OLESwizzling.m */; };
+		2F61458522BF761F001C2734 /* OLEContainerScrollViewContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F61454C22BF761F001C2734 /* OLEContainerScrollViewContentView.m */; };
+		2F61458622BF761F001C2734 /* OLEContainerScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F61454D22BF761F001C2734 /* OLEContainerScrollView.m */; };
+		2F61458722BF761F001C2734 /* Extension_Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61454E22BF761F001C2734 /* Extension_Data.swift */; };
+		2F61458822BF761F001C2734 /* EditorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61455022BF761F001C2734 /* EditorCollectionViewCell.swift */; };
+		2F61458922BF761F001C2734 /* CollapsingViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61455222BF761F001C2734 /* CollapsingViewControllerProtocol.swift */; };
+		2F61458A22BF761F001C2734 /* CollapseButtonProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61455322BF761F001C2734 /* CollapseButtonProtocol.swift */; };
+		2F61458B22BF761F001C2734 /* MatrixView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61455522BF761F001C2734 /* MatrixView.swift */; };
+		2F61458C22BF761F001C2734 /* ConnectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61455622BF761F001C2734 /* ConnectionButton.swift */; };
+		2F61458D22BF761F001C2734 /* ConnectionViewCollapseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61455722BF761F001C2734 /* ConnectionViewCollapseButton.swift */; };
+		2F61458E22BF761F001C2734 /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61455822BF761F001C2734 /* Matrix.swift */; };
+		2F61458F22BF761F001C2734 /* MatrixConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61455922BF761F001C2734 /* MatrixConnectionViewController.swift */; };
+		2F61459022BF761F001C2734 /* MainContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61455A22BF761F001C2734 /* MainContainerViewController.swift */; };
+		2F61459122BF761F001C2734 /* FirmwareUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61455B22BF761F001C2734 /* FirmwareUpload.swift */; };
+		2F61459222BF761F001C2734 /* EditorsAndProgramsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61455C22BF761F001C2734 /* EditorsAndProgramsCollectionViewController.swift */; };
+		2F61459322BF761F001C2734 /* PlaygroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61455D22BF761F001C2734 /* PlaygroundViewController.swift */; };
+		2F61459422BF761F001C2734 /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61455E22BF761F001C2734 /* EditorViewController.swift */; };
+		2F61459522BF761F001C2734 /* ProgramCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61455F22BF761F001C2734 /* ProgramCollectionViewCell.swift */; };
+		2F61459622BF761F001C2734 /* LocalEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61456022BF761F001C2734 /* LocalEditorViewController.swift */; };
+		2F61459722BF761F001C2734 /* Editors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61456222BF761F001C2734 /* Editors.swift */; };
+		2F61459822BF761F001C2734 /* StreamReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61456322BF761F001C2734 /* StreamReader.swift */; };
+		2F61459922BF761F001C2734 /* HexFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61456422BF761F001C2734 /* HexFile.swift */; };
+		2F61459A22BF761F001C2734 /* HexParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61456522BF761F001C2734 /* HexParser.swift */; };
+		2F61459C22BF9D26001C2734 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2F61459B22BF9D26001C2734 /* Settings.bundle */; };
+		2F61459E22BFE607001C2734 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F61459D22BFE607001C2734 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2F61450C22BF75DE001C2734 /* Calliope App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Calliope App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2F61450F22BF75DE001C2734 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		2F61451B22BF75DF001C2734 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		2F61451D22BF75DF001C2734 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2F61452422BF761F001C2734 /* mini-smile.hex */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "mini-smile.hex"; sourceTree = "<group>"; };
+		2F61452522BF761F001C2734 /* Calliope-mini-Start.hex */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Calliope-mini-Start.hex"; sourceTree = "<group>"; };
+		2F61452822BF761F001C2734 /* CalliopeApp.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CalliopeApp.storyboard; sourceTree = "<group>"; };
+		2F61452922BF761F001C2734 /* EditorAndPrograms.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = EditorAndPrograms.storyboard; sourceTree = "<group>"; };
+		2F61452A22BF761F001C2734 /* HomeScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HomeScreen.storyboard; sourceTree = "<group>"; };
+		2F61452B22BF761F001C2734 /* CarRemote.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CarRemote.storyboard; sourceTree = "<group>"; };
+		2F61452C22BF761F001C2734 /* ConnectionView.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ConnectionView.storyboard; sourceTree = "<group>"; };
+		2F61452E22BF761F001C2734 /* CalliopeBLEProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalliopeBLEProfile.swift; sourceTree = "<group>"; };
+		2F61452F22BF761F001C2734 /* CalliopeBLEDiscovery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalliopeBLEDiscovery.swift; sourceTree = "<group>"; };
+		2F61453022BF761F001C2734 /* Extension_CBUUID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension_CBUUID.swift; sourceTree = "<group>"; };
+		2F61453122BF761F001C2734 /* DFUCalliope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DFUCalliope.swift; sourceTree = "<group>"; };
+		2F61453222BF761F001C2734 /* BLEDataTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEDataTypes.swift; sourceTree = "<group>"; };
+		2F61453322BF761F001C2734 /* BluetoothConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothConstants.swift; sourceTree = "<group>"; };
+		2F61453422BF761F001C2734 /* ApiCalliope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiCalliope.swift; sourceTree = "<group>"; };
+		2F61453522BF761F001C2734 /* CalliopeBLEDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalliopeBLEDevice.swift; sourceTree = "<group>"; };
+		2F61453622BF761F001C2734 /* ProgrammableCalliope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgrammableCalliope.swift; sourceTree = "<group>"; };
+		2F61453822BF761F001C2734 /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
+		2F61453922BF761F001C2734 /* ExtString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtString.swift; sourceTree = "<group>"; };
+		2F61453A22BF761F001C2734 /* Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext.swift; sourceTree = "<group>"; };
+		2F61453B22BF761F001C2734 /* ExtURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtURL.swift; sourceTree = "<group>"; };
+		2F61453C22BF761F001C2734 /* ValueLocalizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueLocalizer.swift; sourceTree = "<group>"; };
+		2F61453D22BF761F001C2734 /* ExtColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtColor.swift; sourceTree = "<group>"; };
+		2F61453E22BF761F001C2734 /* LogNotify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogNotify.swift; sourceTree = "<group>"; };
+		2F61453F22BF761F001C2734 /* URLManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLManager.swift; sourceTree = "<group>"; };
+		2F61454022BF761F001C2734 /* Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Async.swift; sourceTree = "<group>"; };
+		2F61454122BF761F001C2734 /* NotificationConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationConstants.swift; sourceTree = "<group>"; };
+		2F61454222BF761F001C2734 /* Binary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Binary.swift; sourceTree = "<group>"; };
+		2F61454322BF761F001C2734 /* Checksum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checksum.swift; sourceTree = "<group>"; };
+		2F61454522BF761F001C2734 /* OLEContainerScrollView+Swizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OLEContainerScrollView+Swizzling.m"; sourceTree = "<group>"; };
+		2F61454622BF761F001C2734 /* OLESwizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLESwizzling.m; sourceTree = "<group>"; };
+		2F61454722BF761F001C2734 /* OLEContainerScrollViewContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLEContainerScrollViewContentView.h; sourceTree = "<group>"; };
+		2F61454822BF761F001C2734 /* OLEContainerScrollView_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLEContainerScrollView_Private.h; sourceTree = "<group>"; };
+		2F61454922BF761F001C2734 /* OLEContainerScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLEContainerScrollView.h; sourceTree = "<group>"; };
+		2F61454A22BF761F001C2734 /* OLEContainerScrollView+Swizzling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OLEContainerScrollView+Swizzling.h"; sourceTree = "<group>"; };
+		2F61454B22BF761F001C2734 /* OLESwizzling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLESwizzling.h; sourceTree = "<group>"; };
+		2F61454C22BF761F001C2734 /* OLEContainerScrollViewContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLEContainerScrollViewContentView.m; sourceTree = "<group>"; };
+		2F61454D22BF761F001C2734 /* OLEContainerScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLEContainerScrollView.m; sourceTree = "<group>"; };
+		2F61454E22BF761F001C2734 /* Extension_Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension_Data.swift; sourceTree = "<group>"; };
+		2F61455022BF761F001C2734 /* EditorCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorCollectionViewCell.swift; sourceTree = "<group>"; };
+		2F61455222BF761F001C2734 /* CollapsingViewControllerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollapsingViewControllerProtocol.swift; sourceTree = "<group>"; };
+		2F61455322BF761F001C2734 /* CollapseButtonProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollapseButtonProtocol.swift; sourceTree = "<group>"; };
+		2F61455522BF761F001C2734 /* MatrixView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatrixView.swift; sourceTree = "<group>"; };
+		2F61455622BF761F001C2734 /* ConnectionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionButton.swift; sourceTree = "<group>"; };
+		2F61455722BF761F001C2734 /* ConnectionViewCollapseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionViewCollapseButton.swift; sourceTree = "<group>"; };
+		2F61455822BF761F001C2734 /* Matrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
+		2F61455922BF761F001C2734 /* MatrixConnectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatrixConnectionViewController.swift; sourceTree = "<group>"; };
+		2F61455A22BF761F001C2734 /* MainContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContainerViewController.swift; sourceTree = "<group>"; };
+		2F61455B22BF761F001C2734 /* FirmwareUpload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirmwareUpload.swift; sourceTree = "<group>"; };
+		2F61455C22BF761F001C2734 /* EditorsAndProgramsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorsAndProgramsCollectionViewController.swift; sourceTree = "<group>"; };
+		2F61455D22BF761F001C2734 /* PlaygroundViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaygroundViewController.swift; sourceTree = "<group>"; };
+		2F61455E22BF761F001C2734 /* EditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorViewController.swift; sourceTree = "<group>"; };
+		2F61455F22BF761F001C2734 /* ProgramCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgramCollectionViewCell.swift; sourceTree = "<group>"; };
+		2F61456022BF761F001C2734 /* LocalEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalEditorViewController.swift; sourceTree = "<group>"; };
+		2F61456222BF761F001C2734 /* Editors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Editors.swift; sourceTree = "<group>"; };
+		2F61456322BF761F001C2734 /* StreamReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamReader.swift; sourceTree = "<group>"; };
+		2F61456422BF761F001C2734 /* HexFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexFile.swift; sourceTree = "<group>"; };
+		2F61456522BF761F001C2734 /* HexParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexParser.swift; sourceTree = "<group>"; };
+		2F61459B22BF9D26001C2734 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		2F61459D22BFE607001C2734 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B5903FA54473EF3F75116DEB /* Pods_Calliope_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Calliope_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C883E6500EB6D3EFDB9AC8F8 /* Pods-Calliope App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.debug.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.debug.xcconfig"; sourceTree = "<group>"; };
+		FBC76793314973A51432DC8D /* Pods-Calliope App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.release.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2F61450922BF75DE001C2734 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2F351859281E788C6C812C7F /* Pods_Calliope_App.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2F61450322BF75DE001C2734 = {
+			isa = PBXGroup;
+			children = (
+				2F61450E22BF75DE001C2734 /* Calliope App */,
+				2F61450D22BF75DE001C2734 /* Products */,
+				5764819361F6510AB656C448 /* Pods */,
+				EA8F631E4E989A3344FCB13A /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		2F61450D22BF75DE001C2734 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2F61450C22BF75DE001C2734 /* Calliope App.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2F61450E22BF75DE001C2734 /* Calliope App */ = {
+			isa = PBXGroup;
+			children = (
+				2F61459D22BFE607001C2734 /* Assets.xcassets */,
+				2F61452D22BF761F001C2734 /* Bluetooth */,
+				2F61452322BF761F001C2734 /* Firmware */,
+				2F61453722BF761F001C2734 /* GeneralUtilities */,
+				2F61456122BF761F001C2734 /* Model */,
+				2F61452722BF761F001C2734 /* Storyboards */,
+				2F61454F22BF761F001C2734 /* ViewControllers */,
+				2F61450F22BF75DE001C2734 /* AppDelegate.swift */,
+				2F61451A22BF75DF001C2734 /* LaunchScreen.storyboard */,
+				2F61451D22BF75DF001C2734 /* Info.plist */,
+				2F61459B22BF9D26001C2734 /* Settings.bundle */,
+			);
+			path = "Calliope App";
+			sourceTree = "<group>";
+		};
+		2F61452322BF761F001C2734 /* Firmware */ = {
+			isa = PBXGroup;
+			children = (
+				2F61452422BF761F001C2734 /* mini-smile.hex */,
+				2F61452522BF761F001C2734 /* Calliope-mini-Start.hex */,
+			);
+			path = Firmware;
+			sourceTree = "<group>";
+		};
+		2F61452722BF761F001C2734 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				2F61452822BF761F001C2734 /* CalliopeApp.storyboard */,
+				2F61452922BF761F001C2734 /* EditorAndPrograms.storyboard */,
+				2F61452A22BF761F001C2734 /* HomeScreen.storyboard */,
+				2F61452B22BF761F001C2734 /* CarRemote.storyboard */,
+				2F61452C22BF761F001C2734 /* ConnectionView.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		2F61452D22BF761F001C2734 /* Bluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				2F61452E22BF761F001C2734 /* CalliopeBLEProfile.swift */,
+				2F61452F22BF761F001C2734 /* CalliopeBLEDiscovery.swift */,
+				2F61453022BF761F001C2734 /* Extension_CBUUID.swift */,
+				2F61453122BF761F001C2734 /* DFUCalliope.swift */,
+				2F61453222BF761F001C2734 /* BLEDataTypes.swift */,
+				2F61453322BF761F001C2734 /* BluetoothConstants.swift */,
+				2F61453422BF761F001C2734 /* ApiCalliope.swift */,
+				2F61453522BF761F001C2734 /* CalliopeBLEDevice.swift */,
+				2F61453622BF761F001C2734 /* ProgrammableCalliope.swift */,
+			);
+			path = Bluetooth;
+			sourceTree = "<group>";
+		};
+		2F61453722BF761F001C2734 /* GeneralUtilities */ = {
+			isa = PBXGroup;
+			children = (
+				2F61453822BF761F001C2734 /* Styles.swift */,
+				2F61453922BF761F001C2734 /* ExtString.swift */,
+				2F61453A22BF761F001C2734 /* Ext.swift */,
+				2F61453B22BF761F001C2734 /* ExtURL.swift */,
+				2F61453C22BF761F001C2734 /* ValueLocalizer.swift */,
+				2F61453D22BF761F001C2734 /* ExtColor.swift */,
+				2F61453E22BF761F001C2734 /* LogNotify.swift */,
+				2F61453F22BF761F001C2734 /* URLManager.swift */,
+				2F61454022BF761F001C2734 /* Async.swift */,
+				2F61454122BF761F001C2734 /* NotificationConstants.swift */,
+				2F61454222BF761F001C2734 /* Binary.swift */,
+				2F61454322BF761F001C2734 /* Checksum.swift */,
+				2F61454422BF761F001C2734 /* OLEContainerScrollView */,
+				2F61454E22BF761F001C2734 /* Extension_Data.swift */,
+			);
+			path = GeneralUtilities;
+			sourceTree = "<group>";
+		};
+		2F61454422BF761F001C2734 /* OLEContainerScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				2F61454522BF761F001C2734 /* OLEContainerScrollView+Swizzling.m */,
+				2F61454622BF761F001C2734 /* OLESwizzling.m */,
+				2F61454722BF761F001C2734 /* OLEContainerScrollViewContentView.h */,
+				2F61454822BF761F001C2734 /* OLEContainerScrollView_Private.h */,
+				2F61454922BF761F001C2734 /* OLEContainerScrollView.h */,
+				2F61454A22BF761F001C2734 /* OLEContainerScrollView+Swizzling.h */,
+				2F61454B22BF761F001C2734 /* OLESwizzling.h */,
+				2F61454C22BF761F001C2734 /* OLEContainerScrollViewContentView.m */,
+				2F61454D22BF761F001C2734 /* OLEContainerScrollView.m */,
+			);
+			path = OLEContainerScrollView;
+			sourceTree = "<group>";
+		};
+		2F61454F22BF761F001C2734 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				2F61455022BF761F001C2734 /* EditorCollectionViewCell.swift */,
+				2F61455122BF761F001C2734 /* CollapsingConfigurationViews */,
+				2F61455A22BF761F001C2734 /* MainContainerViewController.swift */,
+				2F61455B22BF761F001C2734 /* FirmwareUpload.swift */,
+				2F61455C22BF761F001C2734 /* EditorsAndProgramsCollectionViewController.swift */,
+				2F61455D22BF761F001C2734 /* PlaygroundViewController.swift */,
+				2F61455E22BF761F001C2734 /* EditorViewController.swift */,
+				2F61455F22BF761F001C2734 /* ProgramCollectionViewCell.swift */,
+				2F61456022BF761F001C2734 /* LocalEditorViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		2F61455122BF761F001C2734 /* CollapsingConfigurationViews */ = {
+			isa = PBXGroup;
+			children = (
+				2F61455222BF761F001C2734 /* CollapsingViewControllerProtocol.swift */,
+				2F61455322BF761F001C2734 /* CollapseButtonProtocol.swift */,
+				2F61455422BF761F001C2734 /* ConnectionView */,
+			);
+			path = CollapsingConfigurationViews;
+			sourceTree = "<group>";
+		};
+		2F61455422BF761F001C2734 /* ConnectionView */ = {
+			isa = PBXGroup;
+			children = (
+				2F61455522BF761F001C2734 /* MatrixView.swift */,
+				2F61455622BF761F001C2734 /* ConnectionButton.swift */,
+				2F61455722BF761F001C2734 /* ConnectionViewCollapseButton.swift */,
+				2F61455822BF761F001C2734 /* Matrix.swift */,
+				2F61455922BF761F001C2734 /* MatrixConnectionViewController.swift */,
+			);
+			path = ConnectionView;
+			sourceTree = "<group>";
+		};
+		2F61456122BF761F001C2734 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2F61456222BF761F001C2734 /* Editors.swift */,
+				2F61456322BF761F001C2734 /* StreamReader.swift */,
+				2F61456422BF761F001C2734 /* HexFile.swift */,
+				2F61456522BF761F001C2734 /* HexParser.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5764819361F6510AB656C448 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C883E6500EB6D3EFDB9AC8F8 /* Pods-Calliope App.debug.xcconfig */,
+				FBC76793314973A51432DC8D /* Pods-Calliope App.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		EA8F631E4E989A3344FCB13A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B5903FA54473EF3F75116DEB /* Pods_Calliope_App.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2F61450B22BF75DE001C2734 /* Calliope App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2F61452022BF75DF001C2734 /* Build configuration list for PBXNativeTarget "Calliope App" */;
+			buildPhases = (
+				7D20D1E57577FF8181FC225E /* [CP] Check Pods Manifest.lock */,
+				2F61450822BF75DE001C2734 /* Sources */,
+				2F61450922BF75DE001C2734 /* Frameworks */,
+				2F61450A22BF75DE001C2734 /* Resources */,
+				19EC042789F4B9801195EFA7 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Calliope App";
+			productName = "Calliope App";
+			productReference = 2F61450C22BF75DE001C2734 /* Calliope App.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2F61450422BF75DE001C2734 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1020;
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = calliope;
+				TargetAttributes = {
+					2F61450B22BF75DE001C2734 = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
+				};
+			};
+			buildConfigurationList = 2F61450722BF75DE001C2734 /* Build configuration list for PBXProject "Calliope App" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2F61450322BF75DE001C2734;
+			productRefGroup = 2F61450D22BF75DE001C2734 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2F61450B22BF75DE001C2734 /* Calliope App */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2F61450A22BF75DE001C2734 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2F61456A22BF761F001C2734 /* EditorAndPrograms.storyboard in Resources */,
+				2F61451C22BF75DF001C2734 /* LaunchScreen.storyboard in Resources */,
+				2F61459C22BF9D26001C2734 /* Settings.bundle in Resources */,
+				2F61456622BF761F001C2734 /* mini-smile.hex in Resources */,
+				2F61459E22BFE607001C2734 /* Assets.xcassets in Resources */,
+				2F61456722BF761F001C2734 /* Calliope-mini-Start.hex in Resources */,
+				2F61456C22BF761F001C2734 /* CarRemote.storyboard in Resources */,
+				2F61456B22BF761F001C2734 /* HomeScreen.storyboard in Resources */,
+				2F61456922BF761F001C2734 /* CalliopeApp.storyboard in Resources */,
+				2F61456D22BF761F001C2734 /* ConnectionView.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		19EC042789F4B9801195EFA7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Calliope App/Pods-Calliope App-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Calliope App/Pods-Calliope App-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Calliope App/Pods-Calliope App-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7D20D1E57577FF8181FC225E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Calliope App-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2F61450822BF75DE001C2734 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2F61457B22BF761F001C2734 /* ValueLocalizer.swift in Sources */,
+				2F61456E22BF761F001C2734 /* CalliopeBLEProfile.swift in Sources */,
+				2F61457422BF761F001C2734 /* ApiCalliope.swift in Sources */,
+				2F61458F22BF761F001C2734 /* MatrixConnectionViewController.swift in Sources */,
+				2F61459822BF761F001C2734 /* StreamReader.swift in Sources */,
+				2F61457722BF761F001C2734 /* Styles.swift in Sources */,
+				2F61458722BF761F001C2734 /* Extension_Data.swift in Sources */,
+				2F61458522BF761F001C2734 /* OLEContainerScrollViewContentView.m in Sources */,
+				2F61459022BF761F001C2734 /* MainContainerViewController.swift in Sources */,
+				2F61459722BF761F001C2734 /* Editors.swift in Sources */,
+				2F61458222BF761F001C2734 /* Checksum.swift in Sources */,
+				2F61458322BF761F001C2734 /* OLEContainerScrollView+Swizzling.m in Sources */,
+				2F61459A22BF761F001C2734 /* HexParser.swift in Sources */,
+				2F61456F22BF761F001C2734 /* CalliopeBLEDiscovery.swift in Sources */,
+				2F61458622BF761F001C2734 /* OLEContainerScrollView.m in Sources */,
+				2F61457822BF761F001C2734 /* ExtString.swift in Sources */,
+				2F61459422BF761F001C2734 /* EditorViewController.swift in Sources */,
+				2F61458B22BF761F001C2734 /* MatrixView.swift in Sources */,
+				2F61459322BF761F001C2734 /* PlaygroundViewController.swift in Sources */,
+				2F61459222BF761F001C2734 /* EditorsAndProgramsCollectionViewController.swift in Sources */,
+				2F61457022BF761F001C2734 /* Extension_CBUUID.swift in Sources */,
+				2F61457122BF761F001C2734 /* DFUCalliope.swift in Sources */,
+				2F61451022BF75DE001C2734 /* AppDelegate.swift in Sources */,
+				2F61457F22BF761F001C2734 /* Async.swift in Sources */,
+				2F61457622BF761F001C2734 /* ProgrammableCalliope.swift in Sources */,
+				2F61457C22BF761F001C2734 /* ExtColor.swift in Sources */,
+				2F61459922BF761F001C2734 /* HexFile.swift in Sources */,
+				2F61458E22BF761F001C2734 /* Matrix.swift in Sources */,
+				2F61458422BF761F001C2734 /* OLESwizzling.m in Sources */,
+				2F61457E22BF761F001C2734 /* URLManager.swift in Sources */,
+				2F61457A22BF761F001C2734 /* ExtURL.swift in Sources */,
+				2F61458C22BF761F001C2734 /* ConnectionButton.swift in Sources */,
+				2F61457522BF761F001C2734 /* CalliopeBLEDevice.swift in Sources */,
+				2F61458922BF761F001C2734 /* CollapsingViewControllerProtocol.swift in Sources */,
+				2F61458A22BF761F001C2734 /* CollapseButtonProtocol.swift in Sources */,
+				2F61459522BF761F001C2734 /* ProgramCollectionViewCell.swift in Sources */,
+				2F61458822BF761F001C2734 /* EditorCollectionViewCell.swift in Sources */,
+				2F61459622BF761F001C2734 /* LocalEditorViewController.swift in Sources */,
+				2F61457322BF761F001C2734 /* BluetoothConstants.swift in Sources */,
+				2F61458022BF761F001C2734 /* NotificationConstants.swift in Sources */,
+				2F61457222BF761F001C2734 /* BLEDataTypes.swift in Sources */,
+				2F61458D22BF761F001C2734 /* ConnectionViewCollapseButton.swift in Sources */,
+				2F61458122BF761F001C2734 /* Binary.swift in Sources */,
+				2F61459122BF761F001C2734 /* FirmwareUpload.swift in Sources */,
+				2F61457922BF761F001C2734 /* Ext.swift in Sources */,
+				2F61457D22BF761F001C2734 /* LogNotify.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		2F61451A22BF75DF001C2734 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2F61451B22BF75DF001C2734 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2F61451E22BF75DF001C2734 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		2F61451F22BF75DF001C2734 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2F61452122BF75DF001C2734 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C883E6500EB6D3EFDB9AC8F8 /* Pods-Calliope App.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GKA87N33H4;
+				INFOPLIST_FILE = "Calliope App/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "cc.calliope.Calliope-App";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2F61452222BF75DF001C2734 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FBC76793314973A51432DC8D /* Pods-Calliope App.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GKA87N33H4;
+				INFOPLIST_FILE = "Calliope App/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "cc.calliope.Calliope-App";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2F61450722BF75DE001C2734 /* Build configuration list for PBXProject "Calliope App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2F61451E22BF75DF001C2734 /* Debug */,
+				2F61451F22BF75DF001C2734 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2F61452022BF75DF001C2734 /* Build configuration list for PBXNativeTarget "Calliope App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2F61452122BF75DF001C2734 /* Debug */,
+				2F61452222BF75DF001C2734 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2F61450422BF75DE001C2734 /* Project object */;
+}

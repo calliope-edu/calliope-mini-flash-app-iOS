@@ -1,6 +1,0 @@
-framework module Pods_Calliope {
-  umbrella header "Pods-Calliope-umbrella.h"
-
-  export *
-  module * { export * }
-}

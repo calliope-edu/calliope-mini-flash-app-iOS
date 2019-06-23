@@ -7,4 +7,4 @@ pod 'iOSDFULibrary', '~> 4.4.2'
 pod 'UICircularProgressRing'
 pod 'DeepDiff'
 
-target 'Calliope'
+target 'Calliope App'
