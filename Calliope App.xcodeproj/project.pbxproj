@@ -60,13 +60,15 @@
 		2F61459622BF761F001C2734 /* LocalEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61456022BF761F001C2734 /* LocalEditorViewController.swift */; };
 		2F61459722BF761F001C2734 /* Editors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61456222BF761F001C2734 /* Editors.swift */; };
 		2F61459822BF761F001C2734 /* StreamReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61456322BF761F001C2734 /* StreamReader.swift */; };
-		2F61459922BF761F001C2734 /* HexFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61456422BF761F001C2734 /* HexFile.swift */; };
+		2F61459922BF761F001C2734 /* Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61456422BF761F001C2734 /* Hex.swift */; };
 		2F61459A22BF761F001C2734 /* HexParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61456522BF761F001C2734 /* HexParser.swift */; };
 		2F61459C22BF9D26001C2734 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2F61459B22BF9D26001C2734 /* Settings.bundle */; };
 		2F61459E22BFE607001C2734 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F61459D22BFE607001C2734 /* Assets.xcassets */; };
 		2F6145A222C7B3C2001C2734 /* NewsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6145A122C7B3C2001C2734 /* NewsCollectionViewController.swift */; };
 		2F6145A422C7BE3E001C2734 /* NewsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6145A322C7BE3E001C2734 /* NewsCollectionViewCell.swift */; };
-		2F6145A622C7D71B001C2734 /* SettingsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6145A522C7D71B001C2734 /* SettingsKeys.swift */; };
+		2F6145A622C7D71B001C2734 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6145A522C7D71B001C2734 /* Settings.swift */; };
+		2FC2A12922C8FA6F00675C2F /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC2A12822C8FA6F00675C2F /* News.swift */; };
+		2FC2A12B22C962D100675C2F /* NewsDetailWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC2A12A22C962D100675C2F /* NewsDetailWebViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -129,13 +131,15 @@
 		2F61456022BF761F001C2734 /* LocalEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalEditorViewController.swift; sourceTree = "<group>"; };
 		2F61456222BF761F001C2734 /* Editors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Editors.swift; sourceTree = "<group>"; };
 		2F61456322BF761F001C2734 /* StreamReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamReader.swift; sourceTree = "<group>"; };
-		2F61456422BF761F001C2734 /* HexFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexFile.swift; sourceTree = "<group>"; };
+		2F61456422BF761F001C2734 /* Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hex.swift; sourceTree = "<group>"; };
 		2F61456522BF761F001C2734 /* HexParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexParser.swift; sourceTree = "<group>"; };
 		2F61459B22BF9D26001C2734 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		2F61459D22BFE607001C2734 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2F6145A122C7B3C2001C2734 /* NewsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewController.swift; sourceTree = "<group>"; };
 		2F6145A322C7BE3E001C2734 /* NewsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewCell.swift; sourceTree = "<group>"; };
-		2F6145A522C7D71B001C2734 /* SettingsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsKeys.swift; sourceTree = "<group>"; };
+		2F6145A522C7D71B001C2734 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		2FC2A12822C8FA6F00675C2F /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
+		2FC2A12A22C962D100675C2F /* NewsDetailWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDetailWebViewController.swift; sourceTree = "<group>"; };
 		B5903FA54473EF3F75116DEB /* Pods_Calliope_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Calliope_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C883E6500EB6D3EFDB9AC8F8 /* Pods-Calliope App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.debug.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.debug.xcconfig"; sourceTree = "<group>"; };
 		FBC76793314973A51432DC8D /* Pods-Calliope App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.release.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.release.xcconfig"; sourceTree = "<group>"; };
@@ -277,6 +281,7 @@
 				2F61455F22BF761F001C2734 /* ProgramCollectionViewCell.swift */,
 				2F61456022BF761F001C2734 /* LocalEditorViewController.swift */,
 				2F6145A322C7BE3E001C2734 /* NewsCollectionViewCell.swift */,
+				2FC2A12A22C962D100675C2F /* NewsDetailWebViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -308,9 +313,10 @@
 			children = (
 				2F61456222BF761F001C2734 /* Editors.swift */,
 				2F61456322BF761F001C2734 /* StreamReader.swift */,
-				2F61456422BF761F001C2734 /* HexFile.swift */,
+				2F61456422BF761F001C2734 /* Hex.swift */,
 				2F61456522BF761F001C2734 /* HexParser.swift */,
-				2F6145A522C7D71B001C2734 /* SettingsKeys.swift */,
+				2F6145A522C7D71B001C2734 /* Settings.swift */,
+				2FC2A12822C8FA6F00675C2F /* News.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -455,6 +461,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F61457B22BF761F001C2734 /* ValueLocalizer.swift in Sources */,
+				2FC2A12922C8FA6F00675C2F /* News.swift in Sources */,
 				2F61456E22BF761F001C2734 /* CalliopeBLEProfile.swift in Sources */,
 				2F61457422BF761F001C2734 /* ApiCalliope.swift in Sources */,
 				2F61458F22BF761F001C2734 /* MatrixConnectionViewController.swift in Sources */,
@@ -474,14 +481,14 @@
 				2F61458B22BF761F001C2734 /* MatrixView.swift in Sources */,
 				2F61459322BF761F001C2734 /* PlaygroundViewController.swift in Sources */,
 				2F61459222BF761F001C2734 /* EditorsAndProgramsCollectionViewController.swift in Sources */,
-				2F6145A622C7D71B001C2734 /* SettingsKeys.swift in Sources */,
+				2F6145A622C7D71B001C2734 /* Settings.swift in Sources */,
 				2F61457022BF761F001C2734 /* Extension_CBUUID.swift in Sources */,
 				2F61457122BF761F001C2734 /* DFUCalliope.swift in Sources */,
 				2F61451022BF75DE001C2734 /* AppDelegate.swift in Sources */,
 				2F61457F22BF761F001C2734 /* Async.swift in Sources */,
 				2F61457622BF761F001C2734 /* ProgrammableCalliope.swift in Sources */,
 				2F61457C22BF761F001C2734 /* ExtColor.swift in Sources */,
-				2F61459922BF761F001C2734 /* HexFile.swift in Sources */,
+				2F61459922BF761F001C2734 /* Hex.swift in Sources */,
 				2F61458E22BF761F001C2734 /* Matrix.swift in Sources */,
 				2F61458422BF761F001C2734 /* OLESwizzling.m in Sources */,
 				2F61457E22BF761F001C2734 /* URLManager.swift in Sources */,
@@ -490,6 +497,7 @@
 				2F61457522BF761F001C2734 /* CalliopeBLEDevice.swift in Sources */,
 				2F61458922BF761F001C2734 /* CollapsingViewControllerProtocol.swift in Sources */,
 				2F61458A22BF761F001C2734 /* CollapseButtonProtocol.swift in Sources */,
+				2FC2A12B22C962D100675C2F /* NewsDetailWebViewController.swift in Sources */,
 				2F61459522BF761F001C2734 /* ProgramCollectionViewCell.swift in Sources */,
 				2F61458822BF761F001C2734 /* EditorCollectionViewCell.swift in Sources */,
 				2F61459622BF761F001C2734 /* LocalEditorViewController.swift in Sources */,

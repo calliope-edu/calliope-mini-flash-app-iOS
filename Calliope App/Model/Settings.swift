@@ -28,6 +28,12 @@ public struct Settings {
 				defaultValue = "https://lab.open-roberta.org/#loadSystem&&calliope2017"
 			case .appVersion:
 				defaultValue = "1.0"
+			case .newsURL:
+				#if DEBUG
+				defaultValue = "http://127.0.0.1:8000/news_json/news.json"
+				#else
+				defaultValue = "NOT GIVEN YET"
+				#endif
 			}
 			defaultSettings[key.rawValue] = defaultValue
 		}
@@ -45,4 +51,6 @@ public enum SettingsKey: String, CaseIterable {
 	case robertaUrl = "robertaUrlPreference"
 
 	case appVersion = "appVersionInformationPreference"
+
+	case newsURL = "calliopeNewsUrlPreference"
 }

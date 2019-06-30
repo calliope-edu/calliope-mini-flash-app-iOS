@@ -8,61 +8,71 @@
 
 import UIKit
 
-private let reuseIdentifier = "Cell"
+private let reuseIdentifierNewsCell = "newsCell"
 
 class NewsCollectionViewController: UICollectionViewController {
+
+	var news: [NewsItem] = [] {
+		didSet {
+			DispatchQueue.main.async {
+				self.collectionView.reloadData()
+			}
+		}
+	}
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
-        // Do any additional setup after loading the view.
+		NewsManager.getNews { [weak self] result in
+			switch result {
+			case .success(let news):
+				self?.news = news
+			case .failure(let error):
+				//TODO: set default news
+				//TODO: show offline status or restart news discovery
+				break
+			}
+		}
     }
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+		let selectedUrl = news[self.collectionView.indexPathsForSelectedItems![0].row].url
+		let detailWebViewController = segue.destination as! NewsDetailWebViewController
+		detailWebViewController.url = selectedUrl
     }
-    */
 
     // MARK: UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return 0
+		return news.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-    
-        // Configure the cell
-    
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierNewsCell, for: indexPath) as! NewsCollectionViewCell
+
+		cell.news = news[indexPath.row]
+
         return cell
     }
 
     // MARK: UICollectionViewDelegate
 
-    /*
     // Uncomment this method to specify if the specified item should be highlighted during tracking
     override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
+        return news.count > 1
     }
-    */
+
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		self.performSegue(withIdentifier: "showNewsUrlSegue", sender: self)
+	}
 
     /*
     // Uncomment this method to specify if the specified item should be selected

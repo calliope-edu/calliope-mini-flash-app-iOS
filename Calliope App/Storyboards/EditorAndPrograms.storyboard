@@ -111,8 +111,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="300" height="76"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qaG-4M-WaC">
-                                            <rect key="frame" x="0.0" y="0.0" width="300" height="76"/>
+                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qaG-4M-WaC">
+                                            <rect key="frame" x="0.0" y="0.0" width="260" height="180"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="240" verticalHuggingPriority="240" horizontalCompressionResistancePriority="600" verticalCompressionResistancePriority="600" scrollEnabled="NO" editable="NO" text="program description" textAlignment="justified" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pTi-VL-iyl" userLabel="programDescription">
                                                     <rect key="frame" x="8" y="41" width="284" height="27"/>
