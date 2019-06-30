@@ -25,10 +25,11 @@ final class MiniEditor: Editor {
     }
 }
 
-// https://pxt.calliope.cc/
-final class MicrobitEditor: Editor {
+final class MakeCode: Editor {
     public let name = "MakeCode"
-    public let url = URL(string: URLManager.makeCodeUrl ?? "")
+	public lazy var url: URL? = {
+		return URL(string: UserDefaults.standard.string(forKey: SettingsKey.makecodeUrl.rawValue)!)
+	}()
 
     func download(_ request: URLRequest) -> EditorDownload? {
         guard
@@ -42,8 +43,9 @@ final class MicrobitEditor: Editor {
 // https://lab.open-roberta.org/c0d66d4c-5cc9-4ed9-9b7d-6940aa291f4a
 final class RobertaEditor: Editor {
     public let name = "Open Roberta NEPO®"
-    public let url = URL(string: URLManager.robertaUrl ?? "")
-
+	public lazy var url: URL? = {
+		return URL(string: UserDefaults.standard.string(forKey: SettingsKey.robertaUrl.rawValue)!)
+	}()
 
     func download(_ request: URLRequest) -> EditorDownload? {
         guard let url = request.url else { return nil }

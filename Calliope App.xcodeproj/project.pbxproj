@@ -64,6 +64,9 @@
 		2F61459A22BF761F001C2734 /* HexParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61456522BF761F001C2734 /* HexParser.swift */; };
 		2F61459C22BF9D26001C2734 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2F61459B22BF9D26001C2734 /* Settings.bundle */; };
 		2F61459E22BFE607001C2734 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F61459D22BFE607001C2734 /* Assets.xcassets */; };
+		2F6145A222C7B3C2001C2734 /* NewsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6145A122C7B3C2001C2734 /* NewsCollectionViewController.swift */; };
+		2F6145A422C7BE3E001C2734 /* NewsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6145A322C7BE3E001C2734 /* NewsCollectionViewCell.swift */; };
+		2F6145A622C7D71B001C2734 /* SettingsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6145A522C7D71B001C2734 /* SettingsKeys.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -130,6 +133,9 @@
 		2F61456522BF761F001C2734 /* HexParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexParser.swift; sourceTree = "<group>"; };
 		2F61459B22BF9D26001C2734 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		2F61459D22BFE607001C2734 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2F6145A122C7B3C2001C2734 /* NewsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewController.swift; sourceTree = "<group>"; };
+		2F6145A322C7BE3E001C2734 /* NewsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewCell.swift; sourceTree = "<group>"; };
+		2F6145A522C7D71B001C2734 /* SettingsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsKeys.swift; sourceTree = "<group>"; };
 		B5903FA54473EF3F75116DEB /* Pods_Calliope_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Calliope_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C883E6500EB6D3EFDB9AC8F8 /* Pods-Calliope App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.debug.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.debug.xcconfig"; sourceTree = "<group>"; };
 		FBC76793314973A51432DC8D /* Pods-Calliope App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.release.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.release.xcconfig"; sourceTree = "<group>"; };
@@ -260,6 +266,7 @@
 		2F61454F22BF761F001C2734 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				2F6145A122C7B3C2001C2734 /* NewsCollectionViewController.swift */,
 				2F61455022BF761F001C2734 /* EditorCollectionViewCell.swift */,
 				2F61455122BF761F001C2734 /* CollapsingConfigurationViews */,
 				2F61455A22BF761F001C2734 /* MainContainerViewController.swift */,
@@ -269,6 +276,7 @@
 				2F61455E22BF761F001C2734 /* EditorViewController.swift */,
 				2F61455F22BF761F001C2734 /* ProgramCollectionViewCell.swift */,
 				2F61456022BF761F001C2734 /* LocalEditorViewController.swift */,
+				2F6145A322C7BE3E001C2734 /* NewsCollectionViewCell.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -302,6 +310,7 @@
 				2F61456322BF761F001C2734 /* StreamReader.swift */,
 				2F61456422BF761F001C2734 /* HexFile.swift */,
 				2F61456522BF761F001C2734 /* HexParser.swift */,
+				2F6145A522C7D71B001C2734 /* SettingsKeys.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -465,6 +474,7 @@
 				2F61458B22BF761F001C2734 /* MatrixView.swift in Sources */,
 				2F61459322BF761F001C2734 /* PlaygroundViewController.swift in Sources */,
 				2F61459222BF761F001C2734 /* EditorsAndProgramsCollectionViewController.swift in Sources */,
+				2F6145A622C7D71B001C2734 /* SettingsKeys.swift in Sources */,
 				2F61457022BF761F001C2734 /* Extension_CBUUID.swift in Sources */,
 				2F61457122BF761F001C2734 /* DFUCalliope.swift in Sources */,
 				2F61451022BF75DE001C2734 /* AppDelegate.swift in Sources */,
@@ -484,9 +494,11 @@
 				2F61458822BF761F001C2734 /* EditorCollectionViewCell.swift in Sources */,
 				2F61459622BF761F001C2734 /* LocalEditorViewController.swift in Sources */,
 				2F61457322BF761F001C2734 /* BluetoothConstants.swift in Sources */,
+				2F6145A222C7B3C2001C2734 /* NewsCollectionViewController.swift in Sources */,
 				2F61458022BF761F001C2734 /* NotificationConstants.swift in Sources */,
 				2F61457222BF761F001C2734 /* BLEDataTypes.swift in Sources */,
 				2F61458D22BF761F001C2734 /* ConnectionViewCollapseButton.swift in Sources */,
+				2F6145A422C7BE3E001C2734 /* NewsCollectionViewCell.swift in Sources */,
 				2F61458122BF761F001C2734 /* Binary.swift in Sources */,
 				2F61459122BF761F001C2734 /* FirmwareUpload.swift in Sources */,
 				2F61457922BF761F001C2734 /* Ext.swift in Sources */,

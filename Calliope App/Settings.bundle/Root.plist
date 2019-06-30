@@ -10,7 +10,39 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
-			<string>Nepo</string>
+			<string>Local editor</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Enabled</string>
+			<key>Key</key>
+			<string>localEditorOnPreference</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Playgrounds</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Enabled</string>
+			<key>Key</key>
+			<string>playgroundsOnPreference</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Roberta</string>
 		</dict>
 		<dict>
 			<key>Type</key>
@@ -18,7 +50,7 @@
 			<key>Title</key>
 			<string>URL</string>
 			<key>Key</key>
-			<string>nepo_url_preference</string>
+			<string>robertaUrlPreference</string>
 			<key>DefaultValue</key>
 			<string>https://lab.open-roberta.org/#loadSystem&amp;&amp;calliope2017</string>
 			<key>IsSecure</key>
@@ -36,7 +68,7 @@
 			<key>Title</key>
 			<string>Enabled</string>
 			<key>Key</key>
-			<string>nepo_on_preference</string>
+			<string>robertaOnPreference</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
@@ -52,9 +84,9 @@
 			<key>Title</key>
 			<string>URL</string>
 			<key>Key</key>
-			<string>makecode_url_preference</string>
+			<string>makecodeUrlPreference</string>
 			<key>DefaultValue</key>
-			<string>makecode.calliope.cc</string>
+			<string>https://makecode.calliope.cc</string>
 			<key>IsSecure</key>
 			<false/>
 			<key>KeyboardType</key>
@@ -70,9 +102,25 @@
 			<key>Title</key>
 			<string>Enabled</string>
 			<key>Key</key>
-			<string>makecode_on_preference</string>
+			<string>makecodeOnPreference</string>
 			<key>DefaultValue</key>
 			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Information</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTitleValueSpecifier</string>
+			<key>DefaultValue</key>
+			<string>Replace with version from code</string>
+			<key>Title</key>
+			<string>App Version</string>
+			<key>Key</key>
+			<string>appVersionInformationPreference</string>
 		</dict>
 	</array>
 </dict>

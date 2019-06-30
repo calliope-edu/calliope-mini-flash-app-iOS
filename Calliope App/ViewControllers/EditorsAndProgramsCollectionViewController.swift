@@ -22,6 +22,24 @@ class EditorsAndProgramsCollectionViewController: UICollectionViewController, UI
 	private var playgroundCell: EditorCollectionViewCell?
 	private var offlineEditorCell: EditorCollectionViewCell?
 
+	private lazy var activatedEditors: [SettingsKey] = {
+		var keys: [SettingsKey] = []
+		let settings = UserDefaults.standard
+		if settings.bool(forKey: SettingsKey.localEditorOn.rawValue) {
+			keys.append(.localEditorOn)
+		}
+		if settings.bool(forKey: SettingsKey.robertaOn.rawValue) {
+			keys.append(.robertaOn)
+		}
+		if settings.bool(forKey: SettingsKey.makeCodeOn.rawValue) {
+			keys.append(.makeCodeOn)
+		}
+		if settings.bool(forKey: SettingsKey.playgroundsOn.rawValue) {
+			keys.append(.playgroundsOn)
+		}
+		return keys
+	}()
+
 	private lazy var hexFiles: [HexFile] = { () -> [HexFile] in
 		do { return try HexFileManager.stored() }
 		catch { fatalError("could not load files \(error)") }
@@ -31,12 +49,15 @@ class EditorsAndProgramsCollectionViewController: UICollectionViewController, UI
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
 		(collectionViewLayout as! UICollectionViewFlowLayout).estimatedItemSize = UICollectionViewFlowLayout.automaticSize
 		subscription = NotificationCenter.default.addObserver(
 			forName: NotificationConstants.hexFileChanged, object: nil, queue: nil,
 			using: { [weak self] (_) in
 				self?.animateFileChange()
 		})
+
+
     }
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -72,7 +93,7 @@ class EditorsAndProgramsCollectionViewController: UICollectionViewController, UI
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		if section == 0 {
-			return 4
+			return activatedEditors.count
 		} else {
 			return hexFiles.count
 		}
@@ -81,23 +102,27 @@ class EditorsAndProgramsCollectionViewController: UICollectionViewController, UI
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let cell: UICollectionViewCell
 		if indexPath.first == 0 {
-			switch indexPath.row {
-			case 0:
+			guard indexPath.row < activatedEditors.count else {
+				fatalError("The program editor collection view features only \(activatedEditors.count) editors. numberOfItemsInSection must be set to that value.")
+			}
+			let editorKey = activatedEditors[indexPath.row]
+			switch editorKey {
+			case .robertaOn:
 				cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierWebEditor, for: indexPath)
 				robertaCell = cell as? EditorCollectionViewCell
 				robertaCell?.button.setTitle("Roberta", for: UIControl.State.normal)
-			case 1:
+			case .makeCodeOn:
 				cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierWebEditor, for: indexPath)
 					makeCodeCell = cell as? EditorCollectionViewCell
 					makeCodeCell?.button.setTitle("MakeCode", for: UIControl.State.normal)
-			case 2:
+			case .playgroundsOn:
 				cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierPlayground, for: indexPath)
 				playgroundCell = cell as? EditorCollectionViewCell
-			case 3:
+			case .localEditorOn:
 				cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierOfflineEditor, for: indexPath)
 				offlineEditorCell = cell as? EditorCollectionViewCell
 			default:
-				fatalError("The program editor collection view features only 4 editors. numberOfItemsInSection must be set to 4.")
+				fatalError("invalid key found in active editors array")
 			}
 
 			(cell as! EditorCollectionViewCell).heightConstraint.constant = editorButtonSize
@@ -186,13 +211,15 @@ class EditorsAndProgramsCollectionViewController: UICollectionViewController, UI
 		if section == 0 {
 			let width = collectionView.frame.size.width
 			let maxItems = width / (editorButtonSize + spacing)
-			if maxItems < 2 {
+			let numEditors = CGFloat(activatedEditors.count)
+			if maxItems <= 2 {
+				// flowlayout centers single cells
 				return UIEdgeInsets.zero
-			} else if maxItems < 4 {
+			} else if maxItems < numEditors {
 				let remainingSpace = width - 2 * editorButtonSize - spacing
 				return UIEdgeInsets(top: 0, left: remainingSpace / 2, bottom: 0, right: remainingSpace / 2)
 			} else {
-				let remainingSpace = width - 4 * editorButtonSize - 3 * spacing
+				let remainingSpace = width - numEditors * editorButtonSize - (numEditors - 1) * spacing
 				return UIEdgeInsets(top: 0, left: remainingSpace / 2, bottom: 0, right: remainingSpace / 2)
 			}
 		} else {
@@ -205,7 +232,7 @@ class EditorsAndProgramsCollectionViewController: UICollectionViewController, UI
 	// In a storyboard-based application, you will often want to do a little preparation before navigation
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if sender as? UIButton == makeCodeCell?.button {
-			(segue.destination as? EditorViewController)?.editor = MicrobitEditor()
+			(segue.destination as? EditorViewController)?.editor = MakeCode()
 		} else if sender as? UIButton == robertaCell?.button {
 			(segue.destination as? EditorViewController)?.editor = RobertaEditor()
 		}
