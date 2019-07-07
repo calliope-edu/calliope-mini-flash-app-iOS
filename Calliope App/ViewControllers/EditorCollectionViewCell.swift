@@ -12,12 +12,14 @@ class EditorCollectionViewCell: UICollectionViewCell {
 
 	lazy var widthConstraint: NSLayoutConstraint = {
 		let c = NSLayoutConstraint(item: self.contentView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 180)
+        c.priority = UILayoutPriority(rawValue: 999)
 		self.addConstraint(c)
 		return c
 	}()
 
 	lazy var heightConstraint: NSLayoutConstraint = {
 		let c = NSLayoutConstraint(item: self.contentView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 180)
+        c.priority = UILayoutPriority(rawValue: 999)
 		self.addConstraint(c)
 		return c
 	}()

@@ -10,7 +10,7 @@ import UIKit
 
 private let reuseIdentifierNewsCell = "newsCell"
 
-class NewsCollectionViewController: UICollectionViewController {
+class NewsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
 	var news: [NewsItem] = [] {
 		didSet {
@@ -28,12 +28,18 @@ class NewsCollectionViewController: UICollectionViewController {
 			case .success(let news):
 				self?.news = news
 			case .failure(let error):
-				//TODO: set default news
+				self?.news = NewsManager.getDefaultNews()
 				//TODO: show offline status or restart news discovery
 				break
 			}
 		}
     }
+
+	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+		coordinator.animate(alongsideTransition: { (_) in
+			self.collectionView.performBatchUpdates({ }, completion: { (_) in })
+		}, completion: nil)
+	}
 
     // MARK: - Navigation
 
@@ -73,6 +79,32 @@ class NewsCollectionViewController: UICollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		self.performSegue(withIdentifier: "showNewsUrlSegue", sender: self)
 	}
+
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+		let frameHeight = self.collectionView.frame.size.height;
+		let frameWidth = self.collectionView.frame.size.width;
+        
+        let spacing: CGFloat = 10
+        let widthRatio: CGFloat = 1.2
+
+		if (frameHeight < 500) {
+            let height = frameHeight
+            let width = min(height * widthRatio, frameWidth - spacing)
+			return CGSize(width: width, height: height)
+		} else if (frameWidth < 600) {
+            let width = frameWidth - spacing
+            let height = min(width / widthRatio, frameHeight)
+			return CGSize(width: width, height: height)
+		} else {
+			let height = max(frameHeight / 2 - spacing, 250)
+			let width = min(height * widthRatio, frameWidth)
+			return CGSize(width: width, height: height)
+		}
+	}
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+    }
 
     /*
     // Uncomment this method to specify if the specified item should be selected

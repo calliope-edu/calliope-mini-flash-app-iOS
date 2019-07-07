@@ -44,10 +44,10 @@
                                 </view>
                                 <color key="backgroundColor" name="calliope-red"/>
                                 <constraints>
-                                    <constraint firstItem="YGD-YL-Jl6" firstAttribute="top" secondItem="guU-DI-JNC" secondAttribute="top" id="6fK-zu-UL1"/>
-                                    <constraint firstAttribute="bottom" secondItem="YGD-YL-Jl6" secondAttribute="bottom" id="N53-FD-1H7"/>
-                                    <constraint firstAttribute="trailing" secondItem="YGD-YL-Jl6" secondAttribute="trailing" id="bqZ-fU-6oR"/>
-                                    <constraint firstItem="YGD-YL-Jl6" firstAttribute="leading" secondItem="guU-DI-JNC" secondAttribute="leading" id="ykS-NF-N01"/>
+                                    <constraint firstItem="YGD-YL-Jl6" firstAttribute="top" secondItem="guU-DI-JNC" secondAttribute="top" priority="999" id="6fK-zu-UL1"/>
+                                    <constraint firstAttribute="bottom" secondItem="YGD-YL-Jl6" secondAttribute="bottom" priority="999" id="N53-FD-1H7"/>
+                                    <constraint firstAttribute="trailing" secondItem="YGD-YL-Jl6" secondAttribute="trailing" priority="999" id="bqZ-fU-6oR"/>
+                                    <constraint firstItem="YGD-YL-Jl6" firstAttribute="leading" secondItem="guU-DI-JNC" secondAttribute="leading" priority="999" id="ykS-NF-N01"/>
                                 </constraints>
                                 <size key="customSize" width="180" height="180"/>
                                 <connections>
@@ -72,10 +72,10 @@
                                 </view>
                                 <color key="backgroundColor" name="calliope-yellow"/>
                                 <constraints>
-                                    <constraint firstItem="0eT-MG-Lyw" firstAttribute="leading" secondItem="keC-V5-M2d" secondAttribute="leading" id="1lh-O3-3tc"/>
-                                    <constraint firstAttribute="bottom" secondItem="0eT-MG-Lyw" secondAttribute="bottom" id="KbE-WP-A1V"/>
-                                    <constraint firstItem="0eT-MG-Lyw" firstAttribute="top" secondItem="keC-V5-M2d" secondAttribute="top" id="rIY-sZ-ZEb"/>
-                                    <constraint firstAttribute="trailing" secondItem="0eT-MG-Lyw" secondAttribute="trailing" id="xh1-28-U9r"/>
+                                    <constraint firstItem="0eT-MG-Lyw" firstAttribute="leading" secondItem="keC-V5-M2d" secondAttribute="leading" priority="999" id="1lh-O3-3tc"/>
+                                    <constraint firstAttribute="bottom" secondItem="0eT-MG-Lyw" secondAttribute="bottom" priority="999" id="KbE-WP-A1V"/>
+                                    <constraint firstItem="0eT-MG-Lyw" firstAttribute="top" secondItem="keC-V5-M2d" secondAttribute="top" priority="999" id="rIY-sZ-ZEb"/>
+                                    <constraint firstAttribute="trailing" secondItem="0eT-MG-Lyw" secondAttribute="trailing" priority="999" id="xh1-28-U9r"/>
                                 </constraints>
                                 <size key="customSize" width="180" height="180"/>
                             </collectionViewCell>
@@ -97,10 +97,10 @@
                                 </view>
                                 <color key="backgroundColor" name="calliope-purple"/>
                                 <constraints>
-                                    <constraint firstItem="e3d-eT-fTM" firstAttribute="top" secondItem="Yk4-ZL-sgC" secondAttribute="top" id="1US-a9-dKi"/>
-                                    <constraint firstItem="e3d-eT-fTM" firstAttribute="leading" secondItem="Yk4-ZL-sgC" secondAttribute="leading" id="2K2-wt-2Qh"/>
-                                    <constraint firstAttribute="bottom" secondItem="e3d-eT-fTM" secondAttribute="bottom" id="GCq-ZZ-QZU"/>
-                                    <constraint firstAttribute="trailing" secondItem="e3d-eT-fTM" secondAttribute="trailing" id="zwG-zR-gTy"/>
+                                    <constraint firstItem="e3d-eT-fTM" firstAttribute="top" secondItem="Yk4-ZL-sgC" secondAttribute="top" priority="999" id="1US-a9-dKi"/>
+                                    <constraint firstItem="e3d-eT-fTM" firstAttribute="leading" secondItem="Yk4-ZL-sgC" secondAttribute="leading" priority="999" id="2K2-wt-2Qh"/>
+                                    <constraint firstAttribute="bottom" secondItem="e3d-eT-fTM" secondAttribute="bottom" priority="999" id="GCq-ZZ-QZU"/>
+                                    <constraint firstAttribute="trailing" secondItem="e3d-eT-fTM" secondAttribute="trailing" priority="999" id="zwG-zR-gTy"/>
                                 </constraints>
                                 <size key="customSize" width="180" height="180"/>
                             </collectionViewCell>
@@ -111,8 +111,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="300" height="76"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qaG-4M-WaC">
-                                            <rect key="frame" x="0.0" y="0.0" width="260" height="180"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qaG-4M-WaC">
+                                            <rect key="frame" x="0.0" y="0.0" width="300" height="76"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="240" verticalHuggingPriority="240" horizontalCompressionResistancePriority="600" verticalCompressionResistancePriority="600" scrollEnabled="NO" editable="NO" text="program description" textAlignment="justified" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pTi-VL-iyl" userLabel="programDescription">
                                                     <rect key="frame" x="8" y="41" width="284" height="27"/>
@@ -190,7 +190,7 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="pl9-Zp-P2S" firstAttribute="top" secondItem="qaG-4M-WaC" secondAttribute="top" constant="8" id="0Iw-G7-k8W"/>
-                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="pl9-Zp-P2S" secondAttribute="bottom" constant="8" id="4To-n6-2dZ"/>
+                                                <constraint firstAttribute="bottom" secondItem="pl9-Zp-P2S" secondAttribute="bottom" constant="8" id="4To-n6-2dZ"/>
                                                 <constraint firstAttribute="bottom" secondItem="pTi-VL-iyl" secondAttribute="bottom" constant="8" id="708-Nk-ORG"/>
                                                 <constraint firstItem="pl9-Zp-P2S" firstAttribute="leading" secondItem="cak-2P-BZa" secondAttribute="trailing" id="8ok-Gr-8Xg"/>
                                                 <constraint firstItem="8OA-UR-bMg" firstAttribute="top" secondItem="qaG-4M-WaC" secondAttribute="top" constant="8" id="9Hv-k6-oPm"/>
@@ -213,14 +213,15 @@
                                 </view>
                                 <color key="backgroundColor" name="calliope-green"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="qaG-4M-WaC" secondAttribute="bottom" id="7Yq-0n-0W1"/>
-                                    <constraint firstItem="qaG-4M-WaC" firstAttribute="top" secondItem="3mg-YL-G9B" secondAttribute="top" id="Fa6-a3-TMh"/>
-                                    <constraint firstItem="qaG-4M-WaC" firstAttribute="leading" secondItem="3mg-YL-G9B" secondAttribute="leading" id="aWp-g0-Izy"/>
-                                    <constraint firstAttribute="trailing" secondItem="qaG-4M-WaC" secondAttribute="trailing" id="cGx-N0-igb"/>
+                                    <constraint firstAttribute="bottom" secondItem="qaG-4M-WaC" secondAttribute="bottom" priority="999" id="7Yq-0n-0W1"/>
+                                    <constraint firstItem="qaG-4M-WaC" firstAttribute="top" secondItem="3mg-YL-G9B" secondAttribute="top" priority="999" id="Fa6-a3-TMh"/>
+                                    <constraint firstItem="qaG-4M-WaC" firstAttribute="leading" secondItem="3mg-YL-G9B" secondAttribute="leading" priority="999" id="aWp-g0-Izy"/>
+                                    <constraint firstAttribute="trailing" secondItem="qaG-4M-WaC" secondAttribute="trailing" priority="999" id="cGx-N0-igb"/>
                                 </constraints>
                                 <size key="customSize" width="300" height="76"/>
                                 <connections>
                                     <outlet property="buttonContainer" destination="pl9-Zp-P2S" id="gaZ-Pf-0Pq"/>
+                                    <outlet property="containerView" destination="qaG-4M-WaC" id="2HR-CD-LV9"/>
                                     <outlet property="descriptionText" destination="pTi-VL-iyl" id="tKZ-cQ-nVF"/>
                                     <outlet property="editButton" destination="8Cx-H7-sFl" id="Ivg-XN-Rf5"/>
                                     <outlet property="image" destination="8OA-UR-bMg" id="BkV-cs-iSq"/>

@@ -270,7 +270,6 @@
 		2F61454F22BF761F001C2734 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				2F6145A122C7B3C2001C2734 /* NewsCollectionViewController.swift */,
 				2F61455022BF761F001C2734 /* EditorCollectionViewCell.swift */,
 				2F61455122BF761F001C2734 /* CollapsingConfigurationViews */,
 				2F61455A22BF761F001C2734 /* MainContainerViewController.swift */,
@@ -280,6 +279,7 @@
 				2F61455E22BF761F001C2734 /* EditorViewController.swift */,
 				2F61455F22BF761F001C2734 /* ProgramCollectionViewCell.swift */,
 				2F61456022BF761F001C2734 /* LocalEditorViewController.swift */,
+				2F6145A122C7B3C2001C2734 /* NewsCollectionViewController.swift */,
 				2F6145A322C7BE3E001C2734 /* NewsCollectionViewCell.swift */,
 				2FC2A12A22C962D100675C2F /* NewsDetailWebViewController.swift */,
 			);

@@ -23,7 +23,7 @@ public struct Settings {
 			case .playgroundsOn:
 				defaultValue = true
 			case .makecodeUrl:
-				defaultValue = "makecode.calliope.cc"
+                defaultValue = "https://makecode.calliope.cc"
 			case .robertaUrl:
 				defaultValue = "https://lab.open-roberta.org/#loadSystem&&calliope2017"
 			case .appVersion:

@@ -28,8 +28,8 @@ class ProgramCollectionViewCell: UICollectionViewCell, UITextViewDelegate {
 	@IBOutlet weak var editButton: UIButton!
 	@IBOutlet weak var shareButton: UIButton!
 
-	var observations: [NSKeyValueObservation] = []
-
+    @IBOutlet weak var containerView: UIView!
+    
 	@IBOutlet weak var widthConstraint: NSLayoutConstraint!
 	
 
@@ -83,7 +83,7 @@ class ProgramCollectionViewCell: UICollectionViewCell, UITextViewDelegate {
 		self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[contentView]|", options: [], metrics: nil, views: ["contentView" : self.contentView]))
 		self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[contentView]|", options: [], metrics: nil, views: ["contentView" : self.contentView]))
 	}
-
+    
 	override func layoutSubviews() {
 		super.layoutSubviews()
 		descriptionText.textContainerInset = UIEdgeInsets.zero
@@ -107,8 +107,8 @@ class ProgramCollectionViewCell: UICollectionViewCell, UITextViewDelegate {
 
 	func changeTextExclusion() {
 		descriptionText.textContainer.exclusionPaths = [
-			UIBezierPath(rect: self.convert(image.frame.intersection(descriptionText.frame), to: descriptionText)),
-			UIBezierPath(rect: self.convert(buttonContainer.frame.intersection(descriptionText.frame), to: descriptionText))]
+			UIBezierPath(rect: containerView.convert(image.frame.intersection(descriptionText.frame), to: descriptionText)),
+			UIBezierPath(rect: containerView.convert(buttonContainer.frame.intersection(descriptionText.frame), to: descriptionText))]
 	}
 
 	@IBAction func editButtonClicked(_ sender: Any) {

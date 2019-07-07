@@ -66,15 +66,15 @@ class EditorsAndProgramsCollectionViewController: UICollectionViewController, UI
 	}
 
 	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-		let cells = collectionView.visibleCells.filter { ($0 as? ProgramCollectionViewCell) != nil } as! [ProgramCollectionViewCell]
-		for cell in cells {
-			self.recalculateProgramCellSize(size, cell)
-		}
+		super.viewWillTransition(to: size, with: coordinator)
+		
+        let cells = self.collectionView.visibleCells.compactMap { $0 as? ProgramCollectionViewCell }
+        for cell in cells {
+            self.recalculateProgramCellSize(size, cell)
+        }
+        
 		coordinator.animate(alongsideTransition: {_ in
-			for cell in cells {
-				cell.changeTextExclusion()
-			}
-			self.collectionView.performBatchUpdates({}, completion: nil)
+			self.collectionView.performBatchUpdates(nil, completion: nil)
 		}, completion: nil)
 	}
 
@@ -102,42 +102,57 @@ class EditorsAndProgramsCollectionViewController: UICollectionViewController, UI
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let cell: UICollectionViewCell
 		if indexPath.first == 0 {
-			guard indexPath.row < activatedEditors.count else {
-				fatalError("The program editor collection view features only \(activatedEditors.count) editors. numberOfItemsInSection must be set to that value.")
-			}
-			let editorKey = activatedEditors[indexPath.row]
-			switch editorKey {
-			case .robertaOn:
-				cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierWebEditor, for: indexPath)
-				robertaCell = cell as? EditorCollectionViewCell
-				robertaCell?.button.setTitle("Roberta", for: UIControl.State.normal)
-			case .makeCodeOn:
-				cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierWebEditor, for: indexPath)
-					makeCodeCell = cell as? EditorCollectionViewCell
-					makeCodeCell?.button.setTitle("MakeCode", for: UIControl.State.normal)
-			case .playgroundsOn:
-				cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierPlayground, for: indexPath)
-				playgroundCell = cell as? EditorCollectionViewCell
-			case .localEditorOn:
-				cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierOfflineEditor, for: indexPath)
-				offlineEditorCell = cell as? EditorCollectionViewCell
-			default:
-				fatalError("invalid key found in active editors array")
-			}
-
-			(cell as! EditorCollectionViewCell).heightConstraint.constant = editorButtonSize
-			(cell as! EditorCollectionViewCell).widthConstraint.constant = editorButtonSize
+            cell = createEditorCell(indexPath, collectionView)
 		} else {
-			//TODO: Configure the cell
-			cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierProgram, for: indexPath)
-
-			recalculateProgramCellSize(collectionView.frame.size, cell as! ProgramCollectionViewCell)
-			(cell as! ProgramCollectionViewCell).changeTextExclusion()
-
-			(cell as! ProgramCollectionViewCell).program = hexFiles[indexPath.row]
-			(cell as! ProgramCollectionViewCell).delegate = self
+            cell = createProgramCell(collectionView, indexPath)
 		}
 		
+        return cell
+    }
+    
+    private func createProgramCell(_ collectionView: UICollectionView, _ indexPath: IndexPath) -> UICollectionViewCell {
+        let cell: ProgramCollectionViewCell
+        
+        //TODO: Configure the cell
+        cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierProgram, for: indexPath) as! ProgramCollectionViewCell
+        
+        recalculateProgramCellSize(collectionView.frame.size, cell)
+        
+        cell.program = hexFiles[indexPath.row]
+        cell.delegate = self
+        
+        return cell
+    }
+    
+    private func createEditorCell(_ indexPath: IndexPath, _ collectionView: UICollectionView) -> UICollectionViewCell {
+        guard indexPath.row < activatedEditors.count else {
+            fatalError("The program editor collection view features only \(activatedEditors.count) editors. numberOfItemsInSection must be set to that value.")
+        }
+        
+        let cell: UICollectionViewCell
+        let editorKey = activatedEditors[indexPath.row]
+        
+        switch editorKey {
+        case .robertaOn:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierWebEditor, for: indexPath)
+            robertaCell = cell as? EditorCollectionViewCell
+            robertaCell?.button.setTitle("Roberta", for: UIControl.State.normal)
+        case .makeCodeOn:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierWebEditor, for: indexPath)
+            makeCodeCell = cell as? EditorCollectionViewCell
+            makeCodeCell?.button.setTitle("MakeCode", for: UIControl.State.normal)
+        case .playgroundsOn:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierPlayground, for: indexPath)
+            playgroundCell = cell as? EditorCollectionViewCell
+        case .localEditorOn:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierOfflineEditor, for: indexPath)
+            offlineEditorCell = cell as? EditorCollectionViewCell
+        default:
+            fatalError("invalid key found in active editors array")
+        }
+        
+        (cell as! EditorCollectionViewCell).heightConstraint.constant = editorButtonSize
+        (cell as! EditorCollectionViewCell).widthConstraint.constant = editorButtonSize
         return cell
     }
 
