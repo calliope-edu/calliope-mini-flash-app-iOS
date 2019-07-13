@@ -34,12 +34,29 @@ class NewsCollectionViewController: UICollectionViewController, UICollectionView
 			}
 		}
     }
-
+    
 	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
 		coordinator.animate(alongsideTransition: { (_) in
-			self.collectionView.performBatchUpdates({ }, completion: { (_) in })
-		}, completion: nil)
+            self.collectionViewLayout.invalidateLayout()
+		}, completion: { _ in
+            self.layoutDirty = self.view.bounds.size != size
+        })
 	}
+    
+    
+    //layoutDirty is a little hack, since an offscreen size change is not reflected in the view bounds.
+    //even in viewWillAppear, the bounds are not the correct size yet. So we need to invalidate the
+    //collection view layout once more after the bounds update,
+    //to make it request new item sizes from its delegate (which is self), that can then use correct bounds.
+    var layoutDirty = false
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if (layoutDirty) {
+            self.collectionViewLayout.invalidateLayout()
+            layoutDirty = false
+        }
+    }
 
     // MARK: - Navigation
 

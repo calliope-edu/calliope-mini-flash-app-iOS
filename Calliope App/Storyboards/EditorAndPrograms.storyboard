@@ -26,7 +26,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="webEditorCell" id="guU-DI-JNC" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" reuseIdentifier="webEditorCell" id="guU-DI-JNC" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="150" width="180" height="180"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -34,7 +34,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YGD-YL-Jl6">
-                                            <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="141" height="284"/>
                                             <state key="normal" title="MakeCode"/>
                                             <connections>
                                                 <segue destination="DFA-HS-zMn" kind="show" identifier="" id="A1C-Po-90T"/>
@@ -54,7 +54,7 @@
                                     <outlet property="button" destination="YGD-YL-Jl6" id="iMa-sS-7tr"/>
                                 </connections>
                             </collectionViewCell>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="playgroundCell" id="keC-V5-M2d" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" reuseIdentifier="playgroundCell" id="keC-V5-M2d" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
                                 <rect key="frame" x="195" y="150" width="180" height="180"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -62,7 +62,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0eT-MG-Lyw">
-                                            <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="141" height="284"/>
                                             <state key="normal" title="Playground"/>
                                             <connections>
                                                 <segue destination="h2Q-A3-4tS" kind="show" identifier="" id="2bO-mz-0ZY"/>
@@ -79,7 +79,7 @@
                                 </constraints>
                                 <size key="customSize" width="180" height="180"/>
                             </collectionViewCell>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="localEditorCell" id="Yk4-ZL-sgC" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" reuseIdentifier="localEditorCell" id="Yk4-ZL-sgC" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
                                 <rect key="frame" x="97.5" y="340" width="180" height="180"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -87,7 +87,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e3d-eT-fTM">
-                                            <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="141" height="284"/>
                                             <state key="normal" title="Editor"/>
                                             <connections>
                                                 <segue destination="4jP-u1-BeC" kind="show" identifier="" id="Eso-sy-iYY"/>

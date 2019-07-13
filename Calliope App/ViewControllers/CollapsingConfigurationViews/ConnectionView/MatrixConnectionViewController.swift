@@ -10,6 +10,8 @@ import CoreBluetooth
 
 class MatrixConnectionViewController: UIViewController, CollapsingViewControllerProtocol {
 
+    @IBOutlet weak var connectionDescriptionLabel: UILabel!
+    
 	public static var instance: MatrixConnectionViewController!
 
 	/// button to toggle whether connection view is open or not
@@ -39,12 +41,16 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 
 	private let queue = DispatchQueue(label: "bluetooth")
 
-	private var connector: CalliopeBLEDiscovery = CalliopeBLEDiscovery({ peripheral, name in
+	public var connector: CalliopeBLEDiscovery = CalliopeBLEDiscovery({ peripheral, name in
 		DFUCalliope(peripheral: peripheral, name: name) }) {
 		didSet {
 			self.changedConnector(oldValue)
 		}
 	}
+    
+    public var connectionDescriptionText: String = "1. Programm 5 starten\n2. Schütteln\n3. LED-Muster eingeben" {
+        didSet { connectionDescriptionLabel.text = connectionDescriptionText }
+    }
 
 	public var calliopeWithCurrentMatrix: CalliopeBLEDevice? {
 		return connector.discoveredCalliopes[Matrix.matrix2friendly(matrixView.matrix) ?? ""]
