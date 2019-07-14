@@ -69,8 +69,11 @@
 		2F6145A222C7B3C2001C2734 /* NewsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6145A122C7B3C2001C2734 /* NewsCollectionViewController.swift */; };
 		2F6145A422C7BE3E001C2734 /* NewsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6145A322C7BE3E001C2734 /* NewsCollectionViewCell.swift */; };
 		2F6145A622C7D71B001C2734 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6145A522C7D71B001C2734 /* Settings.swift */; };
+		2FAA2D0422DB3BBB00BC1A5F /* OnboardingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAA2D0322DB3BBB00BC1A5F /* OnboardingPage.swift */; };
 		2FC2A12922C8FA6F00675C2F /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC2A12822C8FA6F00675C2F /* News.swift */; };
 		2FC2A12B22C962D100675C2F /* NewsDetailWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC2A12A22C962D100675C2F /* NewsDetailWebViewController.swift */; };
+		2FFE865E22DB3DDF00728E7C /* TutorialPageConnect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE865D22DB3DDF00728E7C /* TutorialPageConnect.swift */; };
+		2FFE866022DB6A5600728E7C /* TutorialPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE865F22DB6A5600728E7C /* TutorialPageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -142,8 +145,11 @@
 		2F6145A122C7B3C2001C2734 /* NewsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewController.swift; sourceTree = "<group>"; };
 		2F6145A322C7BE3E001C2734 /* NewsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewCell.swift; sourceTree = "<group>"; };
 		2F6145A522C7D71B001C2734 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		2FAA2D0322DB3BBB00BC1A5F /* OnboardingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPage.swift; sourceTree = "<group>"; };
 		2FC2A12822C8FA6F00675C2F /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
 		2FC2A12A22C962D100675C2F /* NewsDetailWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDetailWebViewController.swift; sourceTree = "<group>"; };
+		2FFE865D22DB3DDF00728E7C /* TutorialPageConnect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPageConnect.swift; sourceTree = "<group>"; };
+		2FFE865F22DB6A5600728E7C /* TutorialPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPageViewController.swift; sourceTree = "<group>"; };
 		B5903FA54473EF3F75116DEB /* Pods_Calliope_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Calliope_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C883E6500EB6D3EFDB9AC8F8 /* Pods-Calliope App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.debug.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.debug.xcconfig"; sourceTree = "<group>"; };
 		FBC76793314973A51432DC8D /* Pods-Calliope App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.release.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.release.xcconfig"; sourceTree = "<group>"; };
@@ -182,15 +188,14 @@
 		2F61450E22BF75DE001C2734 /* Calliope App */ = {
 			isa = PBXGroup;
 			children = (
+				2F61450F22BF75DE001C2734 /* AppDelegate.swift */,
+				2F61451A22BF75DF001C2734 /* LaunchScreen.storyboard */,
 				2F61459D22BFE607001C2734 /* Assets.xcassets */,
 				2F61452D22BF761F001C2734 /* Bluetooth */,
 				2F61452322BF761F001C2734 /* Firmware */,
 				2F61453722BF761F001C2734 /* GeneralUtilities */,
 				2F61456122BF761F001C2734 /* Model */,
-				2F61452722BF761F001C2734 /* Storyboards */,
-				2F61454F22BF761F001C2734 /* ViewControllers */,
-				2F61450F22BF75DE001C2734 /* AppDelegate.swift */,
-				2F61451A22BF75DF001C2734 /* LaunchScreen.storyboard */,
+				2F61454F22BF761F001C2734 /* ViewsAndControllers */,
 				2F61451D22BF75DF001C2734 /* Info.plist */,
 				2F61459B22BF9D26001C2734 /* Settings.bundle */,
 			);
@@ -204,18 +209,6 @@
 				2F61452522BF761F001C2734 /* Calliope-mini-Start.hex */,
 			);
 			path = Firmware;
-			sourceTree = "<group>";
-		};
-		2F61452722BF761F001C2734 /* Storyboards */ = {
-			isa = PBXGroup;
-			children = (
-				2F61452822BF761F001C2734 /* CalliopeApp.storyboard */,
-				2F61452922BF761F001C2734 /* EditorAndPrograms.storyboard */,
-				2F61452A22BF761F001C2734 /* HomeScreen.storyboard */,
-				2F61452B22BF761F001C2734 /* CarRemote.storyboard */,
-				2F61452C22BF761F001C2734 /* ConnectionView.storyboard */,
-			);
-			path = Storyboards;
 			sourceTree = "<group>";
 		};
 		2F61452D22BF761F001C2734 /* Bluetooth */ = {
@@ -271,35 +264,28 @@
 			path = OLEContainerScrollView;
 			sourceTree = "<group>";
 		};
-		2F61454F22BF761F001C2734 /* ViewControllers */ = {
+		2F61454F22BF761F001C2734 /* ViewsAndControllers */ = {
 			isa = PBXGroup;
 			children = (
-				2F61455022BF761F001C2734 /* EditorCollectionViewCell.swift */,
-				2F61455122BF761F001C2734 /* CollapsingConfigurationViews */,
+				2F61452822BF761F001C2734 /* CalliopeApp.storyboard */,
 				2F61455A22BF761F001C2734 /* MainContainerViewController.swift */,
-				2F61455B22BF761F001C2734 /* FirmwareUpload.swift */,
-				2F61455C22BF761F001C2734 /* EditorsAndProgramsCollectionViewController.swift */,
-				2F61455D22BF761F001C2734 /* PlaygroundViewController.swift */,
-				2F61455E22BF761F001C2734 /* EditorViewController.swift */,
-				2F61455F22BF761F001C2734 /* ProgramCollectionViewCell.swift */,
-				2F61456022BF761F001C2734 /* LocalEditorViewController.swift */,
-				2F6145A122C7B3C2001C2734 /* NewsCollectionViewController.swift */,
-				2F6145A322C7BE3E001C2734 /* NewsCollectionViewCell.swift */,
-				2FC2A12A22C962D100675C2F /* NewsDetailWebViewController.swift */,
-				2F00EAB722DA195A000B5FDE /* HomeScreenViewController.swift */,
-				2F00EAB922DA3D11000B5FDE /* OnboardingViewController.swift */,
+				2FAA2D0A22DB3CCB00BC1A5F /* CarRemote */,
+				2F61455122BF761F001C2734 /* CollapsingConnectionView */,
+				2FAA2D0922DB3C4D00BC1A5F /* EditorsAndPrograms */,
+				2FAA2D0822DB3C2500BC1A5F /* Home */,
 			);
-			path = ViewControllers;
+			path = ViewsAndControllers;
 			sourceTree = "<group>";
 		};
-		2F61455122BF761F001C2734 /* CollapsingConfigurationViews */ = {
+		2F61455122BF761F001C2734 /* CollapsingConnectionView */ = {
 			isa = PBXGroup;
 			children = (
+				2F61452C22BF761F001C2734 /* ConnectionView.storyboard */,
 				2F61455222BF761F001C2734 /* CollapsingViewControllerProtocol.swift */,
 				2F61455322BF761F001C2734 /* CollapseButtonProtocol.swift */,
 				2F61455422BF761F001C2734 /* ConnectionView */,
 			);
-			path = CollapsingConfigurationViews;
+			path = CollapsingConnectionView;
 			sourceTree = "<group>";
 		};
 		2F61455422BF761F001C2734 /* ConnectionView */ = {
@@ -325,6 +311,61 @@
 				2FC2A12822C8FA6F00675C2F /* News.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		2FAA2D0522DB3BFB00BC1A5F /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				2F00EAB922DA3D11000B5FDE /* OnboardingViewController.swift */,
+				2FAA2D0322DB3BBB00BC1A5F /* OnboardingPage.swift */,
+				2FFE865F22DB6A5600728E7C /* TutorialPageViewController.swift */,
+				2FFE865D22DB3DDF00728E7C /* TutorialPageConnect.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		2FAA2D0622DB3C0B00BC1A5F /* News */ = {
+			isa = PBXGroup;
+			children = (
+				2F6145A122C7B3C2001C2734 /* NewsCollectionViewController.swift */,
+				2F6145A322C7BE3E001C2734 /* NewsCollectionViewCell.swift */,
+				2FC2A12A22C962D100675C2F /* NewsDetailWebViewController.swift */,
+			);
+			path = News;
+			sourceTree = "<group>";
+		};
+		2FAA2D0822DB3C2500BC1A5F /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				2F61452A22BF761F001C2734 /* HomeScreen.storyboard */,
+				2F00EAB722DA195A000B5FDE /* HomeScreenViewController.swift */,
+				2FAA2D0622DB3C0B00BC1A5F /* News */,
+				2FAA2D0522DB3BFB00BC1A5F /* Onboarding */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		2FAA2D0922DB3C4D00BC1A5F /* EditorsAndPrograms */ = {
+			isa = PBXGroup;
+			children = (
+				2F61452922BF761F001C2734 /* EditorAndPrograms.storyboard */,
+				2F61455B22BF761F001C2734 /* FirmwareUpload.swift */,
+				2F61455C22BF761F001C2734 /* EditorsAndProgramsCollectionViewController.swift */,
+				2F61455D22BF761F001C2734 /* PlaygroundViewController.swift */,
+				2F61455E22BF761F001C2734 /* EditorViewController.swift */,
+				2F61455F22BF761F001C2734 /* ProgramCollectionViewCell.swift */,
+				2F61456022BF761F001C2734 /* LocalEditorViewController.swift */,
+				2F61455022BF761F001C2734 /* EditorCollectionViewCell.swift */,
+			);
+			path = EditorsAndPrograms;
+			sourceTree = "<group>";
+		};
+		2FAA2D0A22DB3CCB00BC1A5F /* CarRemote */ = {
+			isa = PBXGroup;
+			children = (
+				2F61452B22BF761F001C2734 /* CarRemote.storyboard */,
+			);
+			path = CarRemote;
 			sourceTree = "<group>";
 		};
 		5764819361F6510AB656C448 /* Pods */ = {
@@ -509,11 +550,14 @@
 				2F00EAB822DA195A000B5FDE /* HomeScreenViewController.swift in Sources */,
 				2F61459622BF761F001C2734 /* LocalEditorViewController.swift in Sources */,
 				2F00EABA22DA3D11000B5FDE /* OnboardingViewController.swift in Sources */,
+				2FFE865E22DB3DDF00728E7C /* TutorialPageConnect.swift in Sources */,
 				2F61457322BF761F001C2734 /* BluetoothConstants.swift in Sources */,
 				2F6145A222C7B3C2001C2734 /* NewsCollectionViewController.swift in Sources */,
 				2F61458022BF761F001C2734 /* NotificationConstants.swift in Sources */,
 				2F61457222BF761F001C2734 /* BLEDataTypes.swift in Sources */,
+				2FAA2D0422DB3BBB00BC1A5F /* OnboardingPage.swift in Sources */,
 				2F61458D22BF761F001C2734 /* ConnectionViewCollapseButton.swift in Sources */,
+				2FFE866022DB6A5600728E7C /* TutorialPageViewController.swift in Sources */,
 				2F6145A422C7BE3E001C2734 /* NewsCollectionViewCell.swift in Sources */,
 				2F61458122BF761F001C2734 /* Binary.swift in Sources */,
 				2F61459122BF761F001C2734 /* FirmwareUpload.swift in Sources */,

@@ -133,34 +133,56 @@
             </objects>
             <point key="canvasLocation" x="2747" y="-252"/>
         </scene>
-        <!--View Controller-->
+        <!--Tutorial Page Connect-->
         <scene sceneID="75U-4r-EUm">
             <objects>
-                <viewController storyboardIdentifier="tutorial1" id="NBI-xe-pQG" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="tutorial1" id="NBI-xe-pQG" customClass="TutorialPageConnect" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hXJ-qd-rqr">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connect" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rMY-Qf-bUT">
-                                <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Push the button and follow the instructions for connecting to your Calliope" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rMY-Qf-bUT">
+                                <rect key="frame" x="100.5" y="512" width="567" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrows/arrow-top-left" translatesAutoresizingMaskIntoConstraints="NO" id="OHd-jl-vfF">
+                                <rect key="frame" x="727" y="50" width="16" height="16"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TJB-DI-0CR">
+                                <rect key="frame" x="0.0" y="974" width="768" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="hcI-wO-26s"/>
+                                </constraints>
+                                <state key="normal" title="Continue"/>
+                                <connections>
+                                    <action selector="nextPage:" destination="NBI-xe-pQG" eventType="touchUpInside" id="Uea-sG-yIQ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="rMY-Qf-bUT" firstAttribute="top" secondItem="Lu2-AP-LVL" secondAttribute="top" id="6C1-iV-9zq"/>
-                            <constraint firstItem="rMY-Qf-bUT" firstAttribute="leading" secondItem="Lu2-AP-LVL" secondAttribute="leading" id="GQZ-Me-XRf"/>
-                            <constraint firstItem="Lu2-AP-LVL" firstAttribute="bottom" secondItem="rMY-Qf-bUT" secondAttribute="bottom" id="Q3c-Sa-NV8"/>
-                            <constraint firstItem="Lu2-AP-LVL" firstAttribute="trailing" secondItem="rMY-Qf-bUT" secondAttribute="trailing" id="Vv8-A6-av9"/>
+                            <constraint firstItem="OHd-jl-vfF" firstAttribute="top" secondItem="Lu2-AP-LVL" secondAttribute="top" constant="30" id="1pf-Ur-6QP"/>
+                            <constraint firstItem="TJB-DI-0CR" firstAttribute="bottom" secondItem="Lu2-AP-LVL" secondAttribute="bottom" id="7OM-fJ-3Pb"/>
+                            <constraint firstItem="rMY-Qf-bUT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Lu2-AP-LVL" secondAttribute="leading" id="NDN-cg-IDd"/>
+                            <constraint firstItem="rMY-Qf-bUT" firstAttribute="centerX" secondItem="Lu2-AP-LVL" secondAttribute="centerX" id="NNm-IK-M0b"/>
+                            <constraint firstItem="rMY-Qf-bUT" firstAttribute="centerY" secondItem="Lu2-AP-LVL" secondAttribute="centerY" id="YIs-vq-xTA"/>
+                            <constraint firstItem="TJB-DI-0CR" firstAttribute="leading" secondItem="Lu2-AP-LVL" secondAttribute="leading" id="aWH-dk-fmx"/>
+                            <constraint firstItem="Lu2-AP-LVL" firstAttribute="trailing" secondItem="OHd-jl-vfF" secondAttribute="trailing" constant="25" id="ltQ-1Y-SDU"/>
+                            <constraint firstItem="Lu2-AP-LVL" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="rMY-Qf-bUT" secondAttribute="trailing" id="mI9-Ed-Z9k"/>
+                            <constraint firstItem="TJB-DI-0CR" firstAttribute="trailing" secondItem="Lu2-AP-LVL" secondAttribute="trailing" id="ncM-r1-one"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Lu2-AP-LVL"/>
                     </view>
+                    <connections>
+                        <outlet property="arrowImageView" destination="OHd-jl-vfF" id="ioi-mI-wiv"/>
+                        <outlet property="instructionLabel" destination="rMY-Qf-bUT" id="haU-2V-zGQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pcu-oD-gwc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3494" y="-252"/>
+            <point key="canvasLocation" x="3493.75" y="-252.53906249999997"/>
         </scene>
         <!--News Detail Web View Controller-->
         <scene sceneID="qDv-kB-uBH">
@@ -215,10 +237,10 @@
             </objects>
             <point key="canvasLocation" x="1214.0625" y="-251.95312499999997"/>
         </scene>
-        <!--View Controller-->
+        <!--Tutorial Page View Controller-->
         <scene sceneID="3gl-6J-xMr">
             <objects>
-                <viewController storyboardIdentifier="tutorial2" id="81h-0e-Sjn" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="tutorial2" id="81h-0e-Sjn" customClass="TutorialPageViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TPm-Ey-qUP">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -244,10 +266,10 @@
             </objects>
             <point key="canvasLocation" x="4186" y="-253"/>
         </scene>
-        <!--View Controller-->
+        <!--Tutorial Page View Controller-->
         <scene sceneID="aqg-R3-qDA">
             <objects>
-                <viewController storyboardIdentifier="tutorial3" id="EJn-g7-sOJ" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="tutorial3" id="EJn-g7-sOJ" customClass="TutorialPageViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VD7-NK-Iab">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -275,6 +297,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrows/arrow-top-left" width="39" height="42"/>
         <namedColor name="calliope-turqoise">
             <color red="0.25900000333786011" green="0.78799998760223389" blue="0.78799998760223389" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
