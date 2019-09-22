@@ -3,6 +3,8 @@ import WebKit
 
 final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
 
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    
     public var editor: Editor!
 
     private var webview: WKWebView?
@@ -20,7 +22,7 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
         webView.navigationDelegate = self
         webView.uiDelegate = self
         webView.backgroundColor = Styles.colorWhite
-        self.view.addSubview(webView)
+        self.view.insertSubview(webView, at: 0)
         self.webview = webView
 
         guard let url = editor.url else {
@@ -29,6 +31,7 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
         }
         LogNotify.log("loading \(url)")
 
+        loadingIndicator.startAnimating()
         webView.load(URLRequest(url: url))
 
         webView.snp.makeConstraints { make in
@@ -61,10 +64,12 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation) {
+        loadingIndicator.stopAnimating()
         // LOG("finish")
     }
 
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        loadingIndicator.stopAnimating()
         LogNotify.log("\(error)")
     }
 

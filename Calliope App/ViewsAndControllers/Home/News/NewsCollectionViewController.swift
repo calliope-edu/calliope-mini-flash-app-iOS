@@ -60,7 +60,6 @@ class NewsCollectionViewController: UICollectionViewController, UICollectionView
 
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		let selectedUrl = news[self.collectionView.indexPathsForSelectedItems![0].row].url
 		let detailWebViewController = segue.destination as! NewsDetailWebViewController
@@ -95,32 +94,44 @@ class NewsCollectionViewController: UICollectionViewController, UICollectionView
 
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		self.performSegue(withIdentifier: "showNewsUrlSegue", sender: self)
-	}
-
-	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		let frameHeight = self.collectionView.frame.size.height;
-		let frameWidth = self.collectionView.frame.size.width;
+    }
+    
+    fileprivate func calculateItemSize() -> CGSize {
+        let frameHeight = self.collectionView.frame.size.height;
+        let frameWidth = self.collectionView.frame.size.width;
         
-        let spacing: CGFloat = 10
+        let spacing: CGFloat = (self.collectionViewLayout as! UICollectionViewFlowLayout).minimumInteritemSpacing
         let widthRatio: CGFloat = 1.2
-
-		if (frameHeight < 500) {
+        
+        if (frameHeight < 500) {
             let height = frameHeight
             let width = min(height * widthRatio, frameWidth - spacing)
-			return CGSize(width: width, height: height)
-		} else if (frameWidth < 600) {
+            return CGSize(width: width, height: height)
+        } else if (frameWidth < 600) {
             let width = frameWidth - spacing
             let height = min(width / widthRatio, frameHeight)
-			return CGSize(width: width, height: height)
-		} else {
-			let height = max(frameHeight / 2 - spacing, 250)
-			let width = min(height * widthRatio, frameWidth)
-			return CGSize(width: width, height: height)
-		}
-	}
+            return CGSize(width: width, height: height)
+        } else {
+            let height = max(frameHeight / 2 - spacing, 250)
+            let width = min(height * widthRatio, frameWidth)
+            return CGSize(width: width, height: height)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return calculateItemSize()
+    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+        let frameWidth = collectionView.frame.size.width
+        let spacing = (self.collectionViewLayout as! UICollectionViewFlowLayout).minimumInteritemSpacing
+        let widthPerItem = calculateItemSize().width + spacing
+        
+        let freeSpace = frameWidth - widthPerItem * CGFloat(news.count)
+            + spacing //compensate trailing spacing
+        let margin = max(freeSpace / 2.0, spacing / 2.0)
+        return UIEdgeInsets(top: 0, left: margin, bottom: 0, right: margin)
+        
     }
 
     /*

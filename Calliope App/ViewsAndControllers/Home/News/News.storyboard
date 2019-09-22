@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="K0t-fe-o83">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--News Collection View Controller-->
+        <scene sceneID="E1C-yG-jVp">
+            <objects>
+                <collectionViewController id="K0t-fe-o83" customClass="NewsCollectionViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" id="Wiu-Ye-I7W">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="w9S-na-2Jr">
+                            <size key="itemSize" width="290" height="260"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="newsCell" id="tvy-v3-k7G" customClass="NewsCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="290" height="260"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                    <rect key="frame" x="0.0" y="0.0" width="290" height="260"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NlZ-1d-IaO">
+                                            <rect key="frame" x="0.0" y="0.0" width="290" height="193.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="NlZ-1d-IaO" secondAttribute="height" multiplier="3:2" id="oIJ-bE-aXt"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There is veeery long text which could end up in two lines" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="6" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uGQ-ja-syg">
+                                            <rect key="frame" x="8" y="201.5" width="274" height="50.5"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </view>
+                                <color key="backgroundColor" name="calliope-turqoise"/>
+                                <constraints>
+                                    <constraint firstItem="NlZ-1d-IaO" firstAttribute="width" secondItem="tvy-v3-k7G" secondAttribute="width" id="1JS-wG-clp"/>
+                                    <constraint firstItem="NlZ-1d-IaO" firstAttribute="leading" secondItem="tvy-v3-k7G" secondAttribute="leading" id="1V2-l2-GDG"/>
+                                    <constraint firstItem="NlZ-1d-IaO" firstAttribute="top" secondItem="tvy-v3-k7G" secondAttribute="top" id="DVP-34-wSu"/>
+                                    <constraint firstItem="uGQ-ja-syg" firstAttribute="top" secondItem="NlZ-1d-IaO" secondAttribute="bottom" constant="8" id="HgY-f4-oDH"/>
+                                    <constraint firstAttribute="bottom" secondItem="uGQ-ja-syg" secondAttribute="bottom" priority="999" constant="8" id="Mgz-Jt-Ui4"/>
+                                    <constraint firstItem="uGQ-ja-syg" firstAttribute="leading" secondItem="tvy-v3-k7G" secondAttribute="leading" constant="8" id="Ooi-60-faT"/>
+                                    <constraint firstAttribute="trailing" secondItem="uGQ-ja-syg" secondAttribute="trailing" priority="999" constant="8" id="SeY-KH-GOM"/>
+                                    <constraint firstAttribute="trailing" secondItem="NlZ-1d-IaO" secondAttribute="trailing" priority="999" id="T7T-jw-CW3"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="newsImageView" destination="NlZ-1d-IaO" id="LCU-EM-h4P"/>
+                                    <outlet property="newsTitle" destination="uGQ-ja-syg" id="lyN-H3-t36"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="K0t-fe-o83" id="NG9-wb-g5r"/>
+                            <outlet property="delegate" destination="K0t-fe-o83" id="Iji-oG-Fic"/>
+                        </connections>
+                    </collectionView>
+                    <connections>
+                        <segue destination="ysE-xj-4TL" kind="show" identifier="showNewsUrlSegue" id="fKK-6f-pRO"/>
+                    </connections>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tWA-pU-LKy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1980" y="268"/>
+        </scene>
+        <!--News Detail Web View Controller-->
+        <scene sceneID="qDv-kB-uBH">
+            <objects>
+                <viewController id="ysE-xj-4TL" customClass="NewsDetailWebViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qiO-r8-qNi">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ASw-yg-UeU">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="ASw-yg-UeU" firstAttribute="leading" secondItem="7cE-Uk-tfP" secondAttribute="leading" id="DvB-ls-3TJ"/>
+                            <constraint firstItem="7cE-Uk-tfP" firstAttribute="bottom" secondItem="ASw-yg-UeU" secondAttribute="bottom" id="QUz-aY-7l4"/>
+                            <constraint firstItem="ASw-yg-UeU" firstAttribute="top" secondItem="7cE-Uk-tfP" secondAttribute="top" id="Tgc-wY-osL"/>
+                            <constraint firstItem="7cE-Uk-tfP" firstAttribute="trailing" secondItem="ASw-yg-UeU" secondAttribute="trailing" id="fyN-fN-FUS"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="7cE-Uk-tfP"/>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="ASw-yg-UeU" id="CaG-dj-D4j"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tlm-ct-XRc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2747" y="268"/>
+        </scene>
+    </scenes>
+    <resources>
+        <namedColor name="calliope-turqoise">
+            <color red="0.25900000333786011" green="0.78799998760223389" blue="0.78799998760223389" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

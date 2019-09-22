@@ -30,7 +30,8 @@ struct NewsManager {
 	}
 
 	static func getDefaultNews() -> [NewsItem] {
-		return [NewsItem(image: nil, text: "Happy Coding", url: URL(string: "http://calliope.cc")!, color: #colorLiteral(red: 0.5019999743, green: 0.451000005, blue: 0.8980000019, alpha: 1).hex)]
+		return [NewsItem(image: nil, text: "Happy Coding", url: URL(string: "http://calliope.cc")!, color: #colorLiteral(red: 0.5019999743, green: 0.451000005, blue: 0.8980000019, alpha: 1).hex, textcolor: #colorLiteral(red: 0.4079999924, green: 0.8309999704, blue: 0.8309999704, alpha: 1).hex)]
+        //color: #colorLiteral(red: 0.5019999743, green: 0.451000005, blue: 0.8980000019, alpha: 1).hex, textcolor: #colorLiteral(red: 0.4079999924, green: 0.8309999704, blue: 0.8309999704, alpha: 1).hex
 	}
 }
 
@@ -39,6 +40,7 @@ struct NewsItem: Codable {
 	var text: String
 	var url: URL
 	var color: String
+    var textcolor: String?
 
 	func loadImage(_ completion: @escaping (Result<UIImage, Error>) -> ()) {
 		guard let imageUrl = image else {

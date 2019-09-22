@@ -158,8 +158,14 @@ class EditorsAndProgramsCollectionViewController: UICollectionViewController, UI
 
 	override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 		if kind == UICollectionView.elementKindSectionHeader {
-			let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifierHeader, for: indexPath)
-			//TODO: Configure the view
+			let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifierHeader, for: indexPath) as! EditorAndProgramsSectionHeader
+            if indexPath.section == 0 {
+                view.titleText = "Editors for creating great programs"
+                view.buttonHidden = true
+            } else {
+                view.titleText = "The programs that you already made"
+                view.buttonHidden = false
+            }
 			return view
 		} else {
 			fatalError("The collection view only has headers, not \(kind)s")

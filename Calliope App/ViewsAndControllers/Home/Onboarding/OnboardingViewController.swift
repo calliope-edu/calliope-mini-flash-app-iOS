@@ -13,7 +13,7 @@ class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSo
     
     typealias OnboardingController = UIViewController & OnboardingPage
 
-    var pages = ["tutorial1", "tutorial2", "tutorial3"]
+    var pages = ["tutorial_connect_battery", "tutorial_connect_bluetooth", "tutorial2", "tutorial3"]
     var loadedControllers: [OnboardingController] = []
 
     override func viewDidLoad() {
@@ -69,7 +69,7 @@ class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSo
     }
 
     private func loadController(_ index: Int) -> OnboardingController {
-        guard var controller = UIStoryboard(name: "HomeScreen", bundle: nil).instantiateViewController(withIdentifier: pages[index]) as? OnboardingController else {
+        guard var controller = UIStoryboard(name: "Onboarding", bundle: nil).instantiateViewController(withIdentifier: pages[index]) as? OnboardingController else {
             fatalError("Only ViewControllers conforming to OnboardingPage allowed as pages of Onboarding ViewController")
         }
         controller.delegate = self
