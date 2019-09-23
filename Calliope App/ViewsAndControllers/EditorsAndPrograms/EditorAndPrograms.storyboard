@@ -105,7 +105,7 @@
                                 <size key="customSize" width="180" height="180"/>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="editableProgramCell" id="3mg-YL-G9B" customClass="ProgramCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="550" width="300" height="76"/>
+                                <rect key="frame" x="37.5" y="550" width="300" height="76"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                     <rect key="frame" x="0.0" y="0.0" width="300" height="76"/>
@@ -179,7 +179,7 @@
                                                         <constraint firstAttribute="width" constant="60" id="c2K-hb-pxl"/>
                                                     </constraints>
                                                 </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mlC-kV-m4c">
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mlC-kV-m4c">
                                                     <rect key="frame" x="8" y="8" width="60" height="60"/>
                                                     <state key="normal" image="IconDevice"/>
                                                     <connections>
@@ -231,13 +231,79 @@
                                     <outlet property="widthConstraint" destination="9n4-gR-Ssc" id="Bfq-8K-PxW"/>
                                 </connections>
                             </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="simpleProgramCell" id="hCr-K2-EnB" customClass="ProgramCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="636" width="300" height="76"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="76"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="240" verticalHuggingPriority="240" horizontalCompressionResistancePriority="600" verticalCompressionResistancePriority="600" scrollEnabled="NO" editable="NO" text="program description" textAlignment="justified" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8u4-oa-moX" userLabel="programDescription">
+                                            <rect key="frame" x="8" y="41" width="284" height="27"/>
+                                            <accessibility key="accessibilityConfiguration" identifier="programDescription"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
+                                        <view contentMode="scaleToFill" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="hCX-Mj-muq" userLabel="programLabelContainer">
+                                            <rect key="frame" x="8" y="8" width="284" height="30"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="200" verticalHuggingPriority="251" horizontalCompressionResistancePriority="740" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7mt-8u-OJb">
+                                                    <rect key="frame" x="8" y="4.5" width="268" height="20.5"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="programLabel"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <textField hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="240" verticalHuggingPriority="260" horizontalCompressionResistancePriority="700" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6CU-Eu-HBY">
+                                                    <rect key="frame" x="0.0" y="0.0" width="284" height="30"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="programNameEditField"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <action selector="editButtonClicked:" destination="hCr-K2-EnB" eventType="editingDidEndOnExit" id="7Kd-UI-H8K"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <accessibility key="accessibilityConfiguration" identifier="programLabelContainer"/>
+                                            <constraints>
+                                                <constraint firstItem="6CU-Eu-HBY" firstAttribute="top" secondItem="hCX-Mj-muq" secondAttribute="top" id="9eI-10-bKP"/>
+                                                <constraint firstItem="6CU-Eu-HBY" firstAttribute="firstBaseline" secondItem="7mt-8u-OJb" secondAttribute="firstBaseline" id="9sw-m1-ncR"/>
+                                                <constraint firstAttribute="width" priority="999" constant="284" id="FLu-If-7m0"/>
+                                                <constraint firstAttribute="trailing" secondItem="7mt-8u-OJb" secondAttribute="trailing" constant="8" id="I9A-sw-i3a"/>
+                                                <constraint firstItem="6CU-Eu-HBY" firstAttribute="leading" secondItem="hCX-Mj-muq" secondAttribute="leading" id="K7j-rc-bu8"/>
+                                                <constraint firstItem="7mt-8u-OJb" firstAttribute="leading" secondItem="hCX-Mj-muq" secondAttribute="leading" constant="8" id="Ksq-oi-YXm"/>
+                                                <constraint firstAttribute="bottom" secondItem="6CU-Eu-HBY" secondAttribute="bottom" id="SC6-mk-9Vv"/>
+                                                <constraint firstAttribute="trailing" secondItem="6CU-Eu-HBY" secondAttribute="trailing" id="Wmx-iE-aYW"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                </view>
+                                <color key="backgroundColor" name="calliope-green"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="8u4-oa-moX" secondAttribute="bottom" constant="8" id="3Mz-YB-5qF"/>
+                                    <constraint firstItem="hCX-Mj-muq" firstAttribute="top" secondItem="hCr-K2-EnB" secondAttribute="top" constant="8" id="8hL-9W-Clk"/>
+                                    <constraint firstAttribute="trailing" secondItem="hCX-Mj-muq" secondAttribute="trailing" constant="8" id="PvM-YL-rkc"/>
+                                    <constraint firstItem="8u4-oa-moX" firstAttribute="trailing" secondItem="hCX-Mj-muq" secondAttribute="trailing" id="RFh-gM-I1K"/>
+                                    <constraint firstItem="hCX-Mj-muq" firstAttribute="leading" secondItem="hCr-K2-EnB" secondAttribute="leading" constant="8" id="hL3-jG-ZzV"/>
+                                    <constraint firstItem="8u4-oa-moX" firstAttribute="leading" secondItem="hCX-Mj-muq" secondAttribute="leading" id="kot-Gb-PDH"/>
+                                    <constraint firstItem="8u4-oa-moX" firstAttribute="top" secondItem="hCX-Mj-muq" secondAttribute="bottom" constant="3" id="xf7-rq-U0X"/>
+                                </constraints>
+                                <size key="customSize" width="300" height="76"/>
+                                <connections>
+                                    <outlet property="descriptionText" destination="8u4-oa-moX" id="Wlq-6x-R2y"/>
+                                    <outlet property="name" destination="7mt-8u-OJb" id="mHn-Cd-QKZ"/>
+                                    <outlet property="nameEditField" destination="6CU-Eu-HBY" id="drO-V6-4oi"/>
+                                    <outlet property="widthConstraint" destination="FLu-If-7m0" id="1qv-A1-fP8"/>
+                                </connections>
+                            </collectionViewCell>
                         </cells>
                         <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="headerWithButton" id="fC6-eu-NAq" customClass="EditorAndProgramsSectionHeader" customModule="Calliope_App" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="170"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="745" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NU1-Ij-Thj">
-                                    <rect key="frame" x="0.0" y="107.5" width="375" height="34.5"/>
+                                    <rect key="frame" x="0.0" y="107.5" width="375" height="54.5"/>
                                     <constraints>
                                         <constraint firstAttribute="height" id="agh-LZ-hVV"/>
                                     </constraints>

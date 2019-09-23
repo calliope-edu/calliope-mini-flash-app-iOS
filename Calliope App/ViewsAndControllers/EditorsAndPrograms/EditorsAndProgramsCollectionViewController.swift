@@ -13,7 +13,7 @@ class EditorsAndProgramsCollectionViewController: UICollectionViewController, UI
 	private let reuseIdentifierWebEditor = "webEditorCell"
 	private let reuseIdentifierOfflineEditor = "localEditorCell"
 	private let reuseIdentifierPlayground = "playgroundCell"
-	private let reuseIdentifierProgram = "editableProgramCell"
+	private let reuseIdentifierProgram = "simpleProgramCell"
 
 	private let reuseIdentifierHeader = "headerWithButton"
 
@@ -59,25 +59,33 @@ class EditorsAndProgramsCollectionViewController: UICollectionViewController, UI
 
 
     }
-
-	override func viewWillAppear(_ animated: Bool) {
+    
+    override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		self.navigationController?.setNavigationBarHidden(true, animated: animated)
 	}
+    
+    override func viewDidAppear(_ animated: Bool) {
+        collectionView.performBatchUpdates({}, completion: nil)
+    }
 
 	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
 		super.viewWillTransition(to: size, with: coordinator)
 		
-        let cells = self.collectionView.visibleCells.compactMap { $0 as? ProgramCollectionViewCell }
-        for cell in cells {
-            self.recalculateProgramCellSize(size, cell)
-        }
+        recalculateSizeOfAllCells(size)
         
 		coordinator.animate(alongsideTransition: {_ in
 			self.collectionView.performBatchUpdates(nil, completion: nil)
 		}, completion: nil)
 	}
-
+    
+    private func recalculateSizeOfAllCells(_ size: CGSize) {
+        let cells = self.collectionView.visibleCells.compactMap { $0 as? ProgramCollectionViewCell }
+        for cell in cells {
+            self.recalculateProgramCellSize(size, cell)
+        }
+    }
+    
 	private func recalculateProgramCellSize(_ size: CGSize, _ cell: ProgramCollectionViewCell) {
 		let width = size.width - spacing
 		let maxNumCells = ceil(width / programWidthThreshold)
@@ -190,12 +198,14 @@ class EditorsAndProgramsCollectionViewController: UICollectionViewController, UI
     }
     */
 
-    /*
     // Uncomment this method to specify if the specified item should be selected
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
+        return indexPath.section == 1
     }
-    */
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        uploadProgram(of: collectionView.cellForItem(at: indexPath) as! ProgramCollectionViewCell)
+    }
 
     // menu
 
@@ -204,18 +214,21 @@ class EditorsAndProgramsCollectionViewController: UICollectionViewController, UI
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
+        if indexPath.section == 1 {
+            UIMenuController.shared.menuItems = [
+                UIMenuItem(title: "Edit", action: Selector(("edit"))),
+                UIMenuItem(title: "Share", action: Selector(("share")))
+            ]
+        }
         return true
     }
 
     override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-		return indexPath.section == 1 && action == #selector(delete(_:))
+		return indexPath.section == 1
+            && (action == #selector(delete(_:)) || action == Selector(("edit")) || action == Selector(("share")))
     }
 
     override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-		if action == #selector(delete(_:)) {
-			guard let cell = self.collectionView.cellForItem(at: indexPath) as? ProgramCollectionViewCell else { fatalError("delete called not on program cell") }
-			deleteProgram(of: cell)
-		}
     }
 
 	//dummy method for having some selector
@@ -265,7 +278,7 @@ class EditorsAndProgramsCollectionViewController: UICollectionViewController, UI
 
 	func share(cell: ProgramCollectionViewCell) {
 		let program = cell.program!
-		let activityItems = [program, program.name, program.descriptionText, program.url] as [Any]
+		let activityItems = [/*program, program.name, program.descriptionText,*/ program.url] as [Any]
 
 		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
 		activityViewController.modalTransitionStyle = UIModalTransitionStyle.coverVertical

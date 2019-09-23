@@ -16,7 +16,7 @@ protocol ProgramCellDelegate {
 }
 
 class ProgramCollectionViewCell: UICollectionViewCell, UITextViewDelegate {
-	@IBOutlet weak var image: UIImageView!
+	@IBOutlet weak var image: UIImageView?
 	@IBOutlet weak var descriptionText: UITextView! {
 		didSet {
 			descriptionText.delegate = self
@@ -24,22 +24,17 @@ class ProgramCollectionViewCell: UICollectionViewCell, UITextViewDelegate {
 	}
 	@IBOutlet weak var name: UILabel!
 	@IBOutlet weak var nameEditField: UITextField!
-	@IBOutlet weak var buttonContainer: UIView!
-	@IBOutlet weak var editButton: UIButton!
-	@IBOutlet weak var shareButton: UIButton!
+	@IBOutlet weak var buttonContainer: UIView?
+	@IBOutlet weak var editButton: UIButton?
+	@IBOutlet weak var shareButton: UIButton?
 
-    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var containerView: UIView?
     
 	@IBOutlet weak var widthConstraint: NSLayoutConstraint!
-	
-
-	/*
-	lazy var widthConstraint: NSLayoutConstraint = {
-		let c = NSLayoutConstraint(item: self.contentView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 300)
-		c.priority = UILayoutPriority(rawValue: 999)
-		self.addConstraint(c)
-		return c
-	}()*/
+    
+    var simpleCell: Bool {
+        return buttonContainer == nil
+    }
 
 	public var program: HexFile! {
 		didSet {
@@ -61,17 +56,17 @@ class ProgramCollectionViewCell: UICollectionViewCell, UITextViewDelegate {
 				setProgramDescription(newDescription)
 			}
 
-			if (!editing) {
-				editButton.setTitle("Edit", for: .normal)
-				descriptionText.backgroundColor = nil
-			} else {
-				editButton.setTitle("Finished", for: .normal)
-				descriptionText.backgroundColor = UIColor.white
-			}
-			descriptionText.isEditable = editing
+            if !editing {
+                editButton?.setTitle("Edit", for: .normal)
+            } else {
+                editButton?.setTitle("Finished", for: .normal)
+            }
+            
+			descriptionText.isEditable = editing && !simpleCell
+            descriptionText.backgroundColor = editing && !simpleCell ? UIColor.white : nil
 			name.isHidden = editing
-			shareButton.isHidden = editing
-			nameEditField.isHidden = !editing
+            nameEditField.isHidden = !editing
+            shareButton?.isHidden = editing
 		}
 	}
 
@@ -106,13 +101,19 @@ class ProgramCollectionViewCell: UICollectionViewCell, UITextViewDelegate {
 	}
 
 	func changeTextExclusion() {
+        guard let containerView = containerView, let buttonContainer = buttonContainer, let image = image else { return }
 		descriptionText.textContainer.exclusionPaths = [
 			UIBezierPath(rect: containerView.convert(image.frame.intersection(descriptionText.frame), to: descriptionText)),
 			UIBezierPath(rect: containerView.convert(buttonContainer.frame.intersection(descriptionText.frame), to: descriptionText))]
 	}
+    
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        return action == Selector(("edit")) || action == Selector(("share")) || action == #selector(delete(_:))
+    }
 
 	@IBAction func editButtonClicked(_ sender: Any) {
 		editing = !editing
+        delegate.programCellSizeDidChange(self)
 	}
 
 	@IBAction func shareButtonClicked(_ sender: Any) {
@@ -126,6 +127,14 @@ class ProgramCollectionViewCell: UICollectionViewCell, UITextViewDelegate {
 	override func delete(_ sender: Any?) {
 		delegate.deleteProgram(of: self)
 	}
+    
+    @objc func edit() {
+        editing = true
+    }
+    
+    @objc func share() {
+        delegate.share(cell: self)
+    }
 
 	// MARK: UITextViewDelegate
 
