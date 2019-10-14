@@ -17,12 +17,13 @@ protocol ProgramCellDelegate {
 
 class ProgramCollectionViewCell: UICollectionViewCell, UITextViewDelegate {
 	@IBOutlet weak var image: UIImageView?
-	@IBOutlet weak var descriptionText: UITextView! {
+	@IBOutlet weak var descriptionText: UITextView? {
 		didSet {
-			descriptionText.delegate = self
+			descriptionText?.delegate = self
 		}
 	}
 	@IBOutlet weak var name: UILabel!
+    @IBOutlet weak var dateLabel: UILabel?
 	@IBOutlet weak var nameEditField: UITextField!
 	@IBOutlet weak var buttonContainer: UIView?
 	@IBOutlet weak var editButton: UIButton?
@@ -40,7 +41,8 @@ class ProgramCollectionViewCell: UICollectionViewCell, UITextViewDelegate {
 		didSet {
 			name.text = program.name
 			nameEditField.text = program.name
-			descriptionText.text = program.descriptionText
+            descriptionText?.text = program.descriptionText
+            dateLabel?.text = program.descriptionText
 		}
 	}
 
@@ -50,7 +52,7 @@ class ProgramCollectionViewCell: UICollectionViewCell, UITextViewDelegate {
 		didSet {
 			//changed from editing to not editing
 			if oldValue && !editing {
-				let newDescription = (descriptionText.text != nil && descriptionText.text != "") ? descriptionText.text! : program.dateString
+				let newDescription = (descriptionText?.text != nil && descriptionText?.text != "") ? descriptionText!.text! : program.dateString
 				let newName = nameEditField.text ?? ""
 				setProgramName(newName)
 				setProgramDescription(newDescription)
@@ -62,8 +64,8 @@ class ProgramCollectionViewCell: UICollectionViewCell, UITextViewDelegate {
                 editButton?.setTitle("Finished", for: .normal)
             }
             
-			descriptionText.isEditable = editing && !simpleCell
-            descriptionText.backgroundColor = editing && !simpleCell ? UIColor.white : nil
+			descriptionText?.isEditable = editing && !simpleCell
+            descriptionText?.backgroundColor = editing && !simpleCell ? UIColor.white : nil
 			name.isHidden = editing
             nameEditField.isHidden = !editing
             shareButton?.isHidden = editing
@@ -81,7 +83,7 @@ class ProgramCollectionViewCell: UICollectionViewCell, UITextViewDelegate {
     
 	override func layoutSubviews() {
 		super.layoutSubviews()
-		descriptionText.textContainerInset = UIEdgeInsets.zero
+		descriptionText?.textContainerInset = UIEdgeInsets.zero
 		self.changeTextExclusion()
 	}
 
@@ -91,17 +93,14 @@ class ProgramCollectionViewCell: UICollectionViewCell, UITextViewDelegate {
 			//rename was not successful
 			delegate.renameFailed(self, to: newName)
 		}
-		name.text = program.name
-		nameEditField.text = program.name
 	}
 
 	private func setProgramDescription(_ newDescription: String) {
 		program.descriptionText = newDescription
-		descriptionText.text = program.descriptionText
 	}
 
 	func changeTextExclusion() {
-        guard let containerView = containerView, let buttonContainer = buttonContainer, let image = image else { return }
+        guard  let descriptionText = descriptionText, let containerView = containerView, let buttonContainer = buttonContainer, let image = image else { return }
 		descriptionText.textContainer.exclusionPaths = [
 			UIBezierPath(rect: containerView.convert(image.frame.intersection(descriptionText.frame), to: descriptionText)),
 			UIBezierPath(rect: containerView.convert(buttonContainer.frame.intersection(descriptionText.frame), to: descriptionText))]

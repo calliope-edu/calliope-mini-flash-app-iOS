@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="1200"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentInsetAdjustmentBehavior="always" translatesAutoresizingMaskIntoConstraints="NO" id="g5r-Xk-lED" customClass="TPKeyboardAvoidingScrollView">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentInsetAdjustmentBehavior="always" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="g5r-Xk-lED" customClass="TPKeyboardAvoidingScrollView">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="1117"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZAw-Ve-3Pb">
@@ -518,12 +518,6 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gfr-AG-BLO">
                                             <rect key="frame" x="0.0" y="0.0" width="300" height="86"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="240" verticalHuggingPriority="240" horizontalCompressionResistancePriority="600" verticalCompressionResistancePriority="600" scrollEnabled="NO" editable="NO" text="program description" textAlignment="justified" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7RR-5g-I4C" userLabel="programDescription">
-                                                    <rect key="frame" x="8" y="45" width="284" height="33"/>
-                                                    <accessibility key="accessibilityConfiguration" identifier="programDescription"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                </textView>
                                                 <view contentMode="scaleToFill" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="hYR-gT-GbZ" userLabel="programLabelContainer">
                                                     <rect key="frame" x="8" y="8" width="284" height="34"/>
                                                     <subviews>
@@ -556,17 +550,23 @@
                                                         <constraint firstItem="GeS-nX-DHb" firstAttribute="top" secondItem="hYR-gT-GbZ" secondAttribute="top" id="rZ3-s1-hoo"/>
                                                     </constraints>
                                                 </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Taj-Yh-jjQ">
+                                                    <rect key="frame" x="16" y="45" width="33" height="25"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="7RR-5g-I4C" secondAttribute="bottom" constant="8" id="6Nb-pj-efk"/>
-                                                <constraint firstItem="7RR-5g-I4C" firstAttribute="top" secondItem="hYR-gT-GbZ" secondAttribute="bottom" constant="3" id="CvL-jq-9DU"/>
                                                 <constraint firstAttribute="trailing" secondItem="hYR-gT-GbZ" secondAttribute="trailing" constant="8" id="KTj-Uz-KjQ"/>
                                                 <constraint firstItem="hYR-gT-GbZ" firstAttribute="top" secondItem="gfr-AG-BLO" secondAttribute="top" constant="8" id="Kfw-HT-key"/>
+                                                <constraint firstItem="Taj-Yh-jjQ" firstAttribute="leading" secondItem="X8Y-8O-g6O" secondAttribute="leading" id="cgw-Ih-RmW"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Taj-Yh-jjQ" secondAttribute="trailing" constant="16" id="cn9-fb-EfO"/>
                                                 <constraint firstItem="hYR-gT-GbZ" firstAttribute="leading" secondItem="gfr-AG-BLO" secondAttribute="leading" constant="8" id="euX-hJ-u0t"/>
-                                                <constraint firstItem="7RR-5g-I4C" firstAttribute="leading" secondItem="hYR-gT-GbZ" secondAttribute="leading" id="jRC-Pr-BUE"/>
+                                                <constraint firstItem="Taj-Yh-jjQ" firstAttribute="top" secondItem="hYR-gT-GbZ" secondAttribute="bottom" constant="3" id="pOd-Bf-61W"/>
                                                 <constraint firstAttribute="width" priority="999" constant="300" id="q8W-7z-laF"/>
-                                                <constraint firstItem="7RR-5g-I4C" firstAttribute="trailing" secondItem="hYR-gT-GbZ" secondAttribute="trailing" id="znP-dt-suZ"/>
+                                                <constraint firstAttribute="bottom" secondItem="Taj-Yh-jjQ" secondAttribute="bottom" constant="16" id="vB2-xo-yEv"/>
                                             </constraints>
                                         </view>
                                     </subviews>
@@ -581,7 +581,7 @@
                                 <size key="customSize" width="300" height="86"/>
                                 <connections>
                                     <outlet property="containerView" destination="gfr-AG-BLO" id="tzn-w3-qCB"/>
-                                    <outlet property="descriptionText" destination="7RR-5g-I4C" id="Fee-zN-2hV"/>
+                                    <outlet property="dateLabel" destination="Taj-Yh-jjQ" id="B19-n5-X1t"/>
                                     <outlet property="name" destination="X8Y-8O-g6O" id="Gcf-1A-NvH"/>
                                     <outlet property="nameEditField" destination="GeS-nX-DHb" id="TDp-d4-6te"/>
                                     <outlet property="widthConstraint" destination="q8W-7z-laF" id="m02-kX-xRm"/>

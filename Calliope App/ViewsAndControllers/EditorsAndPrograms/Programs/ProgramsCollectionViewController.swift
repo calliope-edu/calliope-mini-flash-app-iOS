@@ -37,7 +37,7 @@ class ProgramsCollectionViewController: UICollectionViewController, UICollection
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         viewSize = collectionView.frame.size
-        collectionView.performBatchUpdates({}, completion: nil)
+        //collectionView.performBatchUpdates({}, completion: nil)
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
