@@ -11,9 +11,49 @@ struct Styles {
     static let colorRed = UIColor(hex:0xE5006A)
     static let colorBlue = UIColor(hex:0x00C8C6)
     static let colorWhite = UIColor(hex:0xFFFFFF)
+    
+    static let regularFontName = "RobotoMono-Regular"
+    static let mediumFontName = "RobotoMono-Medium"
+    static let lightFontName = "RobotoMono-Light"
+    static let italicFontName = "RobotoMono-Italic"
+    static let boldFontName = "RobotoMono-Bold"
+    
+    static func defaultBoldFont(size: CGFloat) -> UIFont {
+        return UIFont(name: boldFontName, size: size) ?? UIFont.systemFont(ofSize: size, weight: .bold)
+    }
+    
+    static func defaultRegularFont(size: CGFloat) -> UIFont {
+        return UIFont(name: regularFontName, size: size) ?? UIFont.systemFont(ofSize: size)
+    }
+    
+    static func setupGlobalFont() {
+        //global Appearance settings
+        UIBarButtonItem.appearance().setTitleTextAttributes([.font: defaultBoldFont(size: 17)], for: .normal)
+        UINavigationBar.appearance().titleTextAttributes = [.font: defaultBoldFont(size: 17)]
+        UITextField.appearance().substituteFontName = regularFontName
+        UILabel.appearance().substituteFontName = regularFontName
+        UILabel.appearance().substituteFontNameBold = boldFontName
+        UILabel.appearance().adjustsFontForContentSizeCategory = true
+    }
+}
 
-
-    static func defaultFont(size:CGFloat) -> UIFont {
-        return UIFont(name: "RobotoMono-Bold", size: size) ?? UIFont.systemFont(ofSize: size)
+extension UILabel {
+    @objc var isBoldFont: Bool {
+        get { let fontName = self.font!.fontName
+            return fontName.contains("-Bd") || fontName.contains("Medium") || fontName.contains("Bold") }
+    }
+    @objc var substituteFontName : String {
+        get { return self.font.fontName }
+        set { if !isBoldFont { self.font = UIFont(name: newValue, size: self.font!.pointSize) } }
+    }
+    @objc var substituteFontNameBold : String {
+        get { return self.font.fontName }
+        set { if isBoldFont { self.font = UIFont(name: newValue, size: self.font!.pointSize) } }
+    }
+}
+extension UITextField {
+    @objc var substituteFontName : String {
+        get { return self.font!.fontName }
+        set { self.font = UIFont(name: newValue, size: self.font!.pointSize) }
     }
 }

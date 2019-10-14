@@ -15,7 +15,8 @@
     "image": "https://calliope.cc/media/pages/home/-875033869-1558478075/logo_editor_playground.gif",
     "text": "Test 1",
     "url": "https://calliope.cc",
-    "color": "#00FFFF"
+    "color": "#00FFFF",
+    "textcolor": "#0000FF"
   },
   {
     "image": "https://calliope.cc/media/pages/home/1183085795-1558478071/calliope_website_mooc_bild.jpg",

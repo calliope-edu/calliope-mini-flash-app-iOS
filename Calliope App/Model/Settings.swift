@@ -14,13 +14,13 @@ public struct Settings {
 		for key in SettingsKey.allCases {
 			let defaultValue: Any
 			switch key {
-			case .localEditorOn:
+			case .localEditor:
 				defaultValue = false
-			case .makeCodeOn:
+			case .makeCode:
 				defaultValue = true
-			case .robertaOn:
+			case .roberta:
 				defaultValue = true
-			case .playgroundsOn:
+			case .playgrounds:
 				defaultValue = true
 			case .makecodeUrl:
                 defaultValue = "https://makecode.calliope.cc"
@@ -39,13 +39,17 @@ public struct Settings {
 		}
 		UserDefaults.standard.register(defaults: defaultSettings)
 	}
+    
+    static func updateAppVersion() {
+        UserDefaults.standard.set(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String, forKey: SettingsKey.appVersion.rawValue)
+    }
 }
 
 public enum SettingsKey: String, CaseIterable {
-	case localEditorOn = "localEditorOnPreference"
-	case makeCodeOn = "makecodeOnPreference"
-	case robertaOn = "robertaOnPreference"
-	case playgroundsOn = "playgroundsOnPreference"
+	case localEditor = "localEditorOnPreference"
+	case makeCode = "makecodeOnPreference"
+	case roberta = "robertaOnPreference"
+	case playgrounds = "playgroundsOnPreference"
 
 	case makecodeUrl = "makecodeUrlPreference"
 	case robertaUrl = "robertaUrlPreference"

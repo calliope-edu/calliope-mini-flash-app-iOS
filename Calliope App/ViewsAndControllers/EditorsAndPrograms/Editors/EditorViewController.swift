@@ -5,10 +5,19 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
 
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
-    public var editor: Editor!
+    let editor: Editor!
 
     private var webview: WKWebView?
 
+    init?(coder: NSCoder, editor: Editor) {
+        self.editor = editor
+        super.init(coder: coder)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("initWithCoder is not implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

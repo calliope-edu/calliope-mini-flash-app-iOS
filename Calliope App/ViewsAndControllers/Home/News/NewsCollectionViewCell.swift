@@ -22,8 +22,8 @@ class NewsCollectionViewCell: UICollectionViewCell {
 		DispatchQueue.main.async {
 			UIView.animate(withDuration: 0.2) {
 				self.newsTitle.text = self.news?.text
-                self.newsTitle.textColor = self.news?.textcolor != nil ? UIColor(hex: self.news!.textcolor!) : UIColor.black
-				self.backgroundColor = self.news?.color != nil ? UIColor(hex: self.news!.color) : UIColor.white
+                self.newsTitle.textColor = self.news?.textcolor != nil ? UIColor(hex: self.news!.textcolor!) : UIColor.white
+				self.backgroundColor = self.news?.color != nil ? UIColor(hex: self.news!.color!) : UIColor.black
 			}
 		}
 		news?.loadImage({ [weak self] result in

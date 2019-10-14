@@ -39,7 +39,7 @@ struct NewsItem: Codable {
 	var image: URL?
 	var text: String
 	var url: URL
-	var color: String
+	var color: String?
     var textcolor: String?
 
 	func loadImage(_ completion: @escaping (Result<UIImage, Error>) -> ()) {
