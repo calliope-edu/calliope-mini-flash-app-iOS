@@ -205,7 +205,7 @@
                                 <connections>
                                     <outlet property="logo" destination="iI5-8F-WS6" id="okw-Mu-yCX"/>
                                     <outlet property="name" destination="KGR-ef-bqG" id="eQd-cQ-PaQ"/>
-                                    <segue destination="eeY-2x-OZY" kind="show" destinationCreationSelector="createMakecodeEditorWithCoder:sender:" id="pQc-nr-8N0"/>
+                                    <segue destination="eeY-2x-OZY" kind="show" identifier="openMakecode" destinationCreationSelector="createMakecodeEditorWithCoder:sender:" id="pQc-nr-8N0"/>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="nepoEditorCell" id="ucV-gN-En2" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
@@ -242,7 +242,7 @@
                                 <connections>
                                     <outlet property="logo" destination="1Ks-qN-EOY" id="kXE-HC-nk0"/>
                                     <outlet property="name" destination="pm2-Za-VcF" id="1Db-4L-thF"/>
-                                    <segue destination="eeY-2x-OZY" kind="show" destinationCreationSelector="createNepoEditorWithCoder:sender:" id="yKh-rV-xrX"/>
+                                    <segue destination="eeY-2x-OZY" kind="show" identifier="openNepo" destinationCreationSelector="createNepoEditorWithCoder:sender:" id="yKh-rV-xrX"/>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="playgroundCell" id="X1H-Rl-bCL" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">

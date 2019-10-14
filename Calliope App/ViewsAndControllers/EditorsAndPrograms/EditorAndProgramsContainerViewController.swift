@@ -72,4 +72,16 @@ class EditorAndProgramsContainerViewController: UIViewController {
         programsKvo = nil
         bottomInsetKvo = nil
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        //we use segue initialization for ios13.
+        // When ios11 compatibility is dropped, this method can be deleted.
+        if #available(iOS 13.0, *) { return }
+        
+        if segue.identifier == "embedEditors" {
+            editorsCollectionViewController = segue.destination as? EditorsCollectionViewController
+        } else if segue.identifier == "embedPrograms" {
+            programsCollectionViewController = segue.destination as? ProgramsCollectionViewController
+        }
+    }
 }

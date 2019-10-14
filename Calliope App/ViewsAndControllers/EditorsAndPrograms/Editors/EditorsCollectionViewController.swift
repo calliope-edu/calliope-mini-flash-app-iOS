@@ -131,4 +131,17 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
     func createNepoEditor(coder: NSCoder, sender: Any?) -> EditorViewController? {
         EditorViewController(coder: coder, editor: RobertaEditor())
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        //we use segue initialization for ios13.
+        // When ios11 compatibility is dropped, this method can be deleted.
+        if #available(iOS 13.0, *) { return }
+        
+        if segue.identifier == "openMakecode" {
+            (segue.destination as! EditorViewController).editor = MakeCode()
+        } else if segue.identifier == "openNepo" {
+            (segue.destination as! EditorViewController).editor = RobertaEditor()
+        }
+        
+    }
 }

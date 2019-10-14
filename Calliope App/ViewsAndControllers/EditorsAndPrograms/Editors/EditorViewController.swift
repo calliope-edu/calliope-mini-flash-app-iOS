@@ -5,7 +5,8 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
 
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
-    let editor: Editor!
+    //TODO: after ios11 is dropped, make this a LET constant and remove the exclamation mark
+    var editor: Editor!
 
     private var webview: WKWebView?
 
@@ -15,7 +16,10 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
     }
     
     required init?(coder: NSCoder) {
-        fatalError("initWithCoder is not implemented")
+        if #available(iOS 13.0, *) {
+            fatalError("initWithCoder is not implemented")
+        }
+        super.init(coder: coder)
     }
     
     override func viewDidLoad() {
