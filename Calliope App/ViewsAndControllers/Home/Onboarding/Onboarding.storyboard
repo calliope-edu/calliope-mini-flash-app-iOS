@@ -1,22 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hlE-Hx-CQk">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WZ3-mX-9ax">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Page Indicator Containing View Controller-->
+        <scene sceneID="tIN-M6-Qnk">
+            <objects>
+                <viewController id="WZ3-mX-9ax" customClass="PageIndicatorContainingViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8mO-h9-MU2">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yfA-bW-mH7">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="846"/>
+                                <connections>
+                                    <segue destination="hlE-Hx-CQk" kind="embed" identifier="embedPageVC" destinationCreationSelector="makeOnboardingPageViewController:" id="2ub-JL-2f5"/>
+                                </connections>
+                            </containerView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="paging_01" translatesAutoresizingMaskIntoConstraints="NO" id="k10-4o-Y2a">
+                                <rect key="frame" x="0.0" y="846" width="414" height="10"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="10" id="2qc-As-9Nv"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottomMargin" secondItem="yfA-bW-mH7" secondAttribute="bottom" constant="16" id="Q1F-bT-erO"/>
+                            <constraint firstAttribute="trailing" secondItem="yfA-bW-mH7" secondAttribute="trailing" id="Xap-wA-lVz"/>
+                            <constraint firstItem="w4R-1E-AIA" firstAttribute="bottom" secondItem="k10-4o-Y2a" secondAttribute="bottom" constant="6" id="Yxf-6c-wAf"/>
+                            <constraint firstItem="yfA-bW-mH7" firstAttribute="leading" secondItem="8mO-h9-MU2" secondAttribute="leading" id="iyC-1k-vtK"/>
+                            <constraint firstItem="yfA-bW-mH7" firstAttribute="top" secondItem="8mO-h9-MU2" secondAttribute="top" id="mkM-m4-3dO"/>
+                            <constraint firstItem="k10-4o-Y2a" firstAttribute="leading" secondItem="w4R-1E-AIA" secondAttribute="leading" id="r4E-bC-Tmh"/>
+                            <constraint firstItem="w4R-1E-AIA" firstAttribute="trailing" secondItem="k10-4o-Y2a" secondAttribute="trailing" id="vgo-eJ-UWk"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="w4R-1E-AIA"/>
+                    </view>
+                    <connections>
+                        <outlet property="pageIndicator" destination="k10-4o-Y2a" id="1TO-pQ-E4O"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9Uw-cc-NHP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1990" y="-241"/>
+        </scene>
         <!--Onboarding View Controller-->
         <scene sceneID="oXx-Kc-5Vv">
             <objects>
                 <pageViewController storyboardIdentifier="OnboardingPageVC" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="hlE-Hx-CQk" customClass="OnboardingViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8ZQ-YA-X6c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2757" y="-252"/>
+            <point key="canvasLocation" x="2759" y="-241"/>
         </scene>
         <!--Tutorial Page Connect-->
         <scene sceneID="75U-4r-EUm">
@@ -27,16 +66,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Push the button and follow the instructions for connecting to your Calliope" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rMY-Qf-bUT">
-                                <rect key="frame" x="28" y="432.5" width="358" height="41"/>
+                                <rect key="frame" x="28" y="427.5" width="358" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrows/arrow-top-left" translatesAutoresizingMaskIntoConstraints="NO" id="OHd-jl-vfF">
-                                <rect key="frame" x="350" y="74" width="39" height="42"/>
+                                <rect key="frame" x="350" y="30" width="39" height="42"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TJB-DI-0CR">
-                                <rect key="frame" x="0.0" y="812" width="414" height="50"/>
+                                <rect key="frame" x="0.0" y="846" width="414" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="hcI-wO-26s"/>
                                 </constraints>
@@ -48,17 +87,16 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="OHd-jl-vfF" firstAttribute="top" secondItem="Lu2-AP-LVL" secondAttribute="top" constant="30" id="1pf-Ur-6QP"/>
-                            <constraint firstItem="TJB-DI-0CR" firstAttribute="bottom" secondItem="Lu2-AP-LVL" secondAttribute="bottom" id="7OM-fJ-3Pb"/>
-                            <constraint firstItem="rMY-Qf-bUT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Lu2-AP-LVL" secondAttribute="leading" id="NDN-cg-IDd"/>
-                            <constraint firstItem="rMY-Qf-bUT" firstAttribute="centerX" secondItem="Lu2-AP-LVL" secondAttribute="centerX" id="NNm-IK-M0b"/>
-                            <constraint firstItem="rMY-Qf-bUT" firstAttribute="centerY" secondItem="Lu2-AP-LVL" secondAttribute="centerY" id="YIs-vq-xTA"/>
-                            <constraint firstItem="TJB-DI-0CR" firstAttribute="leading" secondItem="Lu2-AP-LVL" secondAttribute="leading" id="aWH-dk-fmx"/>
-                            <constraint firstItem="Lu2-AP-LVL" firstAttribute="trailing" secondItem="OHd-jl-vfF" secondAttribute="trailing" constant="25" id="ltQ-1Y-SDU"/>
-                            <constraint firstItem="Lu2-AP-LVL" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="rMY-Qf-bUT" secondAttribute="trailing" id="mI9-Ed-Z9k"/>
-                            <constraint firstItem="TJB-DI-0CR" firstAttribute="trailing" secondItem="Lu2-AP-LVL" secondAttribute="trailing" id="ncM-r1-one"/>
+                            <constraint firstItem="OHd-jl-vfF" firstAttribute="top" secondItem="hXJ-qd-rqr" secondAttribute="top" constant="30" id="1pf-Ur-6QP"/>
+                            <constraint firstItem="TJB-DI-0CR" firstAttribute="bottom" secondItem="hXJ-qd-rqr" secondAttribute="bottom" id="7OM-fJ-3Pb"/>
+                            <constraint firstItem="rMY-Qf-bUT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hXJ-qd-rqr" secondAttribute="leading" id="NDN-cg-IDd"/>
+                            <constraint firstItem="rMY-Qf-bUT" firstAttribute="centerX" secondItem="hXJ-qd-rqr" secondAttribute="centerX" id="NNm-IK-M0b"/>
+                            <constraint firstItem="rMY-Qf-bUT" firstAttribute="centerY" secondItem="hXJ-qd-rqr" secondAttribute="centerY" id="YIs-vq-xTA"/>
+                            <constraint firstItem="TJB-DI-0CR" firstAttribute="leading" secondItem="hXJ-qd-rqr" secondAttribute="leading" id="aWH-dk-fmx"/>
+                            <constraint firstAttribute="trailing" secondItem="OHd-jl-vfF" secondAttribute="trailing" constant="25" id="ltQ-1Y-SDU"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="rMY-Qf-bUT" secondAttribute="trailing" id="mI9-Ed-Z9k"/>
+                            <constraint firstItem="TJB-DI-0CR" firstAttribute="trailing" secondItem="hXJ-qd-rqr" secondAttribute="trailing" id="ncM-r1-one"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="Lu2-AP-LVL"/>
                     </view>
                     <connections>
                         <outlet property="arrowImageView" destination="OHd-jl-vfF" id="ioi-mI-wiv"/>
@@ -78,7 +116,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="First intro" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="65C-Sy-nnP">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -86,12 +124,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="65C-Sy-nnP" firstAttribute="trailing" secondItem="d3A-Nr-qf5" secondAttribute="trailing" id="1Lx-iH-2eK"/>
-                            <constraint firstItem="65C-Sy-nnP" firstAttribute="bottom" secondItem="d3A-Nr-qf5" secondAttribute="bottom" id="5RA-2P-5Vh"/>
-                            <constraint firstItem="65C-Sy-nnP" firstAttribute="top" secondItem="d3A-Nr-qf5" secondAttribute="top" id="Bs6-Gx-3Z6"/>
-                            <constraint firstItem="65C-Sy-nnP" firstAttribute="leading" secondItem="d3A-Nr-qf5" secondAttribute="leading" id="tIu-1U-IF8"/>
+                            <constraint firstItem="65C-Sy-nnP" firstAttribute="trailing" secondItem="TPm-Ey-qUP" secondAttribute="trailing" id="1Lx-iH-2eK"/>
+                            <constraint firstItem="65C-Sy-nnP" firstAttribute="bottom" secondItem="TPm-Ey-qUP" secondAttribute="bottom" id="5RA-2P-5Vh"/>
+                            <constraint firstItem="65C-Sy-nnP" firstAttribute="top" secondItem="TPm-Ey-qUP" secondAttribute="top" id="Bs6-Gx-3Z6"/>
+                            <constraint firstItem="65C-Sy-nnP" firstAttribute="leading" secondItem="TPm-Ey-qUP" secondAttribute="leading" id="tIu-1U-IF8"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="d3A-Nr-qf5"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="89H-sX-sSM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -107,7 +144,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Second intro" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QF8-Ta-78K">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -116,48 +153,61 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="QF8-Ta-78K" firstAttribute="leading" secondItem="VD7-NK-Iab" secondAttribute="leading" id="HPb-4a-Pxr"/>
-                            <constraint firstItem="CQp-Ob-olE" firstAttribute="bottom" secondItem="QF8-Ta-78K" secondAttribute="bottom" id="I6B-8p-LXq"/>
+                            <constraint firstAttribute="bottom" secondItem="QF8-Ta-78K" secondAttribute="bottom" id="I6B-8p-LXq"/>
                             <constraint firstItem="QF8-Ta-78K" firstAttribute="top" secondItem="VD7-NK-Iab" secondAttribute="top" id="Q47-du-Jzf"/>
-                            <constraint firstItem="CQp-Ob-olE" firstAttribute="trailing" secondItem="QF8-Ta-78K" secondAttribute="trailing" id="kXJ-3T-Rxg"/>
+                            <constraint firstAttribute="trailing" secondItem="QF8-Ta-78K" secondAttribute="trailing" id="kXJ-3T-Rxg"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="CQp-Ob-olE"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="147-yY-Bih" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5588" y="-252"/>
         </scene>
-        <!--Tutorial Page View Controller-->
+        <!--Tutorial Page Battery-->
         <scene sceneID="bDn-K7-wtW">
             <objects>
-                <viewController storyboardIdentifier="tutorial_connect_battery" id="gJR-c5-Vt7" customClass="TutorialPageViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="tutorial_connect_battery" id="gJR-c5-Vt7" customClass="TutorialPageBattery" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="uX9-Qv-eIi">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connect your calliope to the battery" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zt7-d1-KAQ">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="insert_battery_00" translatesAutoresizingMaskIntoConstraints="NO" id="Cas-Dr-e73">
+                                <rect key="frame" x="20" y="44" width="374" height="760"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SMo-Wh-StA">
+                                <rect key="frame" x="20" y="812" width="374" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="tWG-uO-Dro"/>
+                                </constraints>
+                                <state key="normal" title="Continue"/>
+                                <connections>
+                                    <action selector="nextPage:" destination="gJR-c5-Vt7" eventType="touchUpInside" id="Swn-MW-kGz"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Zt7-d1-KAQ" firstAttribute="bottom" secondItem="1QJ-bj-dLw" secondAttribute="bottom" id="Svp-GF-ee6"/>
-                            <constraint firstItem="Zt7-d1-KAQ" firstAttribute="trailing" secondItem="1QJ-bj-dLw" secondAttribute="trailing" id="Y1c-3n-oqo"/>
-                            <constraint firstItem="Zt7-d1-KAQ" firstAttribute="leading" secondItem="1QJ-bj-dLw" secondAttribute="leading" id="YsC-0k-keX"/>
-                            <constraint firstItem="Zt7-d1-KAQ" firstAttribute="top" secondItem="1QJ-bj-dLw" secondAttribute="top" id="tcO-E4-X9R"/>
+                            <constraint firstItem="Cas-Dr-e73" firstAttribute="leading" secondItem="uX9-Qv-eIi" secondAttribute="leadingMargin" id="06U-eP-A5n"/>
+                            <constraint firstItem="SMo-Wh-StA" firstAttribute="bottom" secondItem="uX9-Qv-eIi" secondAttribute="bottomMargin" id="M9j-fj-bTE"/>
+                            <constraint firstItem="SMo-Wh-StA" firstAttribute="top" secondItem="Cas-Dr-e73" secondAttribute="bottom" constant="8" id="OJ6-uw-ZzL"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="SMo-Wh-StA" secondAttribute="trailing" id="ORx-es-7AF"/>
+                            <constraint firstItem="Cas-Dr-e73" firstAttribute="top" secondItem="uX9-Qv-eIi" secondAttribute="topMargin" id="Ud8-Wz-gMD"/>
+                            <constraint firstItem="SMo-Wh-StA" firstAttribute="leading" secondItem="uX9-Qv-eIi" secondAttribute="leadingMargin" id="izN-pK-qVc"/>
+                            <constraint firstItem="Cas-Dr-e73" firstAttribute="trailing" secondItem="uX9-Qv-eIi" secondAttribute="trailingMargin" id="vQ1-Su-jNE"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="1QJ-bj-dLw"/>
                     </view>
+                    <connections>
+                        <outlet property="instructionSlideshowImage" destination="Cas-Dr-e73" id="jZB-2O-xdQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="63d-cU-k1k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3470" y="-252"/>
+            <point key="canvasLocation" x="3469.5652173913045" y="-252.45535714285714"/>
         </scene>
     </scenes>
     <resources>
         <image name="arrows/arrow-top-left" width="39" height="42"/>
+        <image name="insert_battery_00" width="378" height="268"/>
+        <image name="paging_01" width="60" height="9"/>
     </resources>
 </document>

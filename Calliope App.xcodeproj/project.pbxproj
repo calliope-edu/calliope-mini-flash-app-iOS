@@ -12,6 +12,8 @@
 		2F08A0E1234AC7400088A8D6 /* EditorAndProgramsContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F08A0E0234AC7400088A8D6 /* EditorAndProgramsContainerViewController.swift */; };
 		2F08A0E3234AD4320088A8D6 /* EditorsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F08A0E2234AD4320088A8D6 /* EditorsCollectionViewController.swift */; };
 		2F08A0E5234B11890088A8D6 /* ProgramsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F08A0E4234B11890088A8D6 /* ProgramsCollectionViewController.swift */; };
+		2F2B443623559A95008B957E /* TutorialPageBattery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2B443523559A95008B957E /* TutorialPageBattery.swift */; };
+		2F2B44382355A018008B957E /* PageIndicatorContainingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2B44372355A018008B957E /* PageIndicatorContainingViewController.swift */; };
 		2F321A4E2349A9B300C1DDA4 /* EditorAndPrograms.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F321A4D2349A9B300C1DDA4 /* EditorAndPrograms.storyboard */; };
 		2F351859281E788C6C812C7F /* Pods_Calliope_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5903FA54473EF3F75116DEB /* Pods_Calliope_App.framework */; };
 		2F61451022BF75DE001C2734 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61450F22BF75DE001C2734 /* AppDelegate.swift */; };
@@ -108,6 +110,8 @@
 		2F08A0E0234AC7400088A8D6 /* EditorAndProgramsContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorAndProgramsContainerViewController.swift; sourceTree = "<group>"; };
 		2F08A0E2234AD4320088A8D6 /* EditorsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorsCollectionViewController.swift; sourceTree = "<group>"; };
 		2F08A0E4234B11890088A8D6 /* ProgramsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramsCollectionViewController.swift; sourceTree = "<group>"; };
+		2F2B443523559A95008B957E /* TutorialPageBattery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPageBattery.swift; sourceTree = "<group>"; };
+		2F2B44372355A018008B957E /* PageIndicatorContainingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageIndicatorContainingViewController.swift; sourceTree = "<group>"; };
 		2F321A4D2349A9B300C1DDA4 /* EditorAndPrograms.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EditorAndPrograms.storyboard; sourceTree = "<group>"; };
 		2F61450C22BF75DE001C2734 /* Calliope App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Calliope App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F61450F22BF75DE001C2734 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -440,9 +444,11 @@
 			isa = PBXGroup;
 			children = (
 				2FA10F362336F67A0058E2F6 /* Onboarding.storyboard */,
+				2F2B44372355A018008B957E /* PageIndicatorContainingViewController.swift */,
 				2F00EAB922DA3D11000B5FDE /* OnboardingViewController.swift */,
 				2FAA2D0322DB3BBB00BC1A5F /* OnboardingPage.swift */,
 				2FFE865F22DB6A5600728E7C /* TutorialPageViewController.swift */,
+				2F2B443523559A95008B957E /* TutorialPageBattery.swift */,
 				2FFE865D22DB3DDF00728E7C /* TutorialPageConnect.swift */,
 			);
 			path = Onboarding;
@@ -670,6 +676,7 @@
 				2F61459A22BF761F001C2734 /* HexParser.swift in Sources */,
 				2F61456F22BF761F001C2734 /* CalliopeBLEDiscovery.swift in Sources */,
 				2F61458622BF761F001C2734 /* OLEContainerScrollView.m in Sources */,
+				2F2B44382355A018008B957E /* PageIndicatorContainingViewController.swift in Sources */,
 				2F61457822BF761F001C2734 /* ExtString.swift in Sources */,
 				2F61459422BF761F001C2734 /* EditorViewController.swift in Sources */,
 				2F61458B22BF761F001C2734 /* MatrixView.swift in Sources */,
@@ -707,6 +714,7 @@
 				2F61458D22BF761F001C2734 /* ConnectionViewCollapseButton.swift in Sources */,
 				2FFE866022DB6A5600728E7C /* TutorialPageViewController.swift in Sources */,
 				2F6145A422C7BE3E001C2734 /* NewsCollectionViewCell.swift in Sources */,
+				2F2B443623559A95008B957E /* TutorialPageBattery.swift in Sources */,
 				2F61458122BF761F001C2734 /* Binary.swift in Sources */,
 				2F61459122BF761F001C2734 /* FirmwareUpload.swift in Sources */,
 				2F61457922BF761F001C2734 /* Ext.swift in Sources */,

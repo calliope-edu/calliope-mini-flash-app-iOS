@@ -6,7 +6,7 @@
 //  Copyright © 2019 calliope. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol OnboardingPage {
     var delegate: OnboardingPageDelegate? { get set }
@@ -16,5 +16,5 @@ protocol OnboardingPage {
 
 protocol OnboardingPageDelegate {
     //tells the delegate to proceed and whether or not the task was completed
-    func proceed(from page: OnboardingPage, completed: Bool)
+    func proceed(from page: UIViewController & OnboardingPage, completed: Bool)
 }
