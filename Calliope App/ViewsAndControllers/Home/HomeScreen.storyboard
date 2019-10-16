@@ -18,13 +18,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="S6w-BL-I6E">
-                                <rect key="frame" x="0.0" y="60" width="768" height="904"/>
+                                <rect key="frame" x="0.0" y="60" width="768" height="954"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SnU-wp-0LY">
-                                        <rect key="frame" x="0.0" y="0.0" width="768" height="447"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="768" height="472"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pur-Pz-EQX">
-                                                <rect key="frame" x="10" y="0.0" width="748" height="447"/>
+                                                <rect key="frame" x="10" y="0.0" width="748" height="472"/>
                                                 <color key="backgroundColor" name="calliope-darkgray"/>
                                                 <state key="normal" title="Get Started!"/>
                                                 <userDefinedRuntimeAttributes>
@@ -46,7 +46,7 @@
                                         </constraints>
                                     </view>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F5a-D8-qKD">
-                                        <rect key="frame" x="0.0" y="457" width="768" height="447"/>
+                                        <rect key="frame" x="0.0" y="482" width="768" height="472"/>
                                         <connections>
                                             <segue destination="vPD-fA-vi3" kind="embed" identifier="embedNews" id="QTe-hZ-46c"/>
                                         </connections>
@@ -64,7 +64,6 @@
                         <viewLayoutGuide key="safeArea" id="EZz-7t-xZZ"/>
                     </view>
                     <navigationItem key="navigationItem" title="Home" id="w16-hI-VJ6"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xQY-Z1-230" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -98,22 +97,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="04G-h8-IRT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2487" y="-253"/>
-        </scene>
-        <!--tutorial2-->
-        <scene sceneID="Sab-sX-b30">
-            <objects>
-                <viewControllerPlaceholder storyboardIdentifier="tutorial2" storyboardName="Onboarding" referencedIdentifier="tutorial2" id="qhy-i2-Bpy" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="yFQ-Pl-sLX" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4186" y="-253"/>
-        </scene>
-        <!--tutorial3-->
-        <scene sceneID="Vvv-FD-UZg">
-            <objects>
-                <viewControllerPlaceholder storyboardIdentifier="tutorial3" storyboardName="Onboarding" referencedIdentifier="tutorial3" id="TXV-sk-sLF" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="lEF-eB-hpf" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4907" y="-253"/>
         </scene>
         <!--News-->
         <scene sceneID="DgN-bL-6gZ">

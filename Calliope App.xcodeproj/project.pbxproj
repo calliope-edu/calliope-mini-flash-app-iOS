@@ -95,6 +95,8 @@
 		2F9B2A1C233F045D009496DD /* RobotoMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F9B2A11233F045D009496DD /* RobotoMono-Bold.ttf */; };
 		2F9B2A1E233F045D009496DD /* RobotoMono-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F9B2A13233F045D009496DD /* RobotoMono-Italic.ttf */; };
 		2F9B2A1F233F045D009496DD /* RobotoMono-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F9B2A14233F045D009496DD /* RobotoMono-Thin.ttf */; };
+		2F9B5CAB2357127A00728546 /* TutorialPageMiniDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9B5CAA2357127A00728546 /* TutorialPageMiniDemo.swift */; };
+		2F9B5CAD23571E7100728546 /* OnboardingMiniDemoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9B5CAC23571E7100728546 /* OnboardingMiniDemoCollectionViewCell.swift */; };
 		2FA10F372336F67A0058E2F6 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FA10F362336F67A0058E2F6 /* Onboarding.storyboard */; };
 		2FA10F392336FC6E0058E2F6 /* News.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FA10F382336FC6E0058E2F6 /* News.storyboard */; };
 		2FAA2D0422DB3BBB00BC1A5F /* OnboardingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAA2D0322DB3BBB00BC1A5F /* OnboardingPage.swift */; };
@@ -201,6 +203,8 @@
 		2F9B2A12233F045D009496DD /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		2F9B2A13233F045D009496DD /* RobotoMono-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoMono-Italic.ttf"; sourceTree = "<group>"; };
 		2F9B2A14233F045D009496DD /* RobotoMono-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoMono-Thin.ttf"; sourceTree = "<group>"; };
+		2F9B5CAA2357127A00728546 /* TutorialPageMiniDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPageMiniDemo.swift; sourceTree = "<group>"; };
+		2F9B5CAC23571E7100728546 /* OnboardingMiniDemoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingMiniDemoCollectionViewCell.swift; sourceTree = "<group>"; };
 		2FA10F362336F67A0058E2F6 /* Onboarding.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
 		2FA10F382336FC6E0058E2F6 /* News.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = News.storyboard; sourceTree = "<group>"; };
 		2FAA2D0322DB3BBB00BC1A5F /* OnboardingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPage.swift; sourceTree = "<group>"; };
@@ -450,6 +454,8 @@
 				2FFE865F22DB6A5600728E7C /* TutorialPageViewController.swift */,
 				2F2B443523559A95008B957E /* TutorialPageBattery.swift */,
 				2FFE865D22DB3DDF00728E7C /* TutorialPageConnect.swift */,
+				2F9B5CAA2357127A00728546 /* TutorialPageMiniDemo.swift */,
+				2F9B5CAC23571E7100728546 /* OnboardingMiniDemoCollectionViewCell.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -682,6 +688,7 @@
 				2F61458B22BF761F001C2734 /* MatrixView.swift in Sources */,
 				2F61459322BF761F001C2734 /* PlaygroundViewController.swift in Sources */,
 				2F08A0E1234AC7400088A8D6 /* EditorAndProgramsContainerViewController.swift in Sources */,
+				2F9B5CAD23571E7100728546 /* OnboardingMiniDemoCollectionViewCell.swift in Sources */,
 				2F91665B235405AA0065AD81 /* EditorCollectionViewCell.swift in Sources */,
 				2F6145A622C7D71B001C2734 /* Settings.swift in Sources */,
 				2F61457022BF761F001C2734 /* Extension_CBUUID.swift in Sources */,
@@ -698,6 +705,7 @@
 				2F61458C22BF761F001C2734 /* ConnectionButton.swift in Sources */,
 				2F61457522BF761F001C2734 /* CalliopeBLEDevice.swift in Sources */,
 				2F61458922BF761F001C2734 /* CollapsingViewControllerProtocol.swift in Sources */,
+				2F9B5CAB2357127A00728546 /* TutorialPageMiniDemo.swift in Sources */,
 				2F61458A22BF761F001C2734 /* CollapseButtonProtocol.swift in Sources */,
 				2FC2A12B22C962D100675C2F /* NewsDetailWebViewController.swift in Sources */,
 				2F61459522BF761F001C2734 /* ProgramCollectionViewCell.swift in Sources */,

@@ -41,7 +41,7 @@ class TutorialPageConnect: TutorialPageViewController {
     }
     
     
-    @IBAction func nextPage(_ sender: Any) {
+    @IBAction override func nextPage(_ sender: Any) {
         setText()
         if hasConnected {
             delay(time: 0.8) {

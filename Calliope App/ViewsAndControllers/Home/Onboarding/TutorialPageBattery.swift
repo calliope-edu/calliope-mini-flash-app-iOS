@@ -43,8 +43,4 @@ class TutorialPageBattery: TutorialPageViewController {
             }
         }
     }
-    
-    @IBAction func nextPage(_ sender: Any) {
-        self.delegate?.proceed(from: self, completed: true)
-    }
 }

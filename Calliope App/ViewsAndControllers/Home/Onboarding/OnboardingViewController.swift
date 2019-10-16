@@ -12,7 +12,7 @@ class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSo
     
     typealias OnboardingController = UIViewController & OnboardingPage
 
-    var pages = ["tutorial_connect_battery", "tutorial2", "tutorial_connect_bluetooth", "tutorial3"]
+    var pages = ["tutorial_connect_battery", "tutorial_mini_demo", "tutorial_connect_bluetooth", "tutorial3"]
     var pageIndicatorImages = [#imageLiteral(resourceName: "paging_01.pdf"), #imageLiteral(resourceName: "paging_02.pdf"), #imageLiteral(resourceName: "paging_03.pdf"), #imageLiteral(resourceName: "paging_04.pdf"), #imageLiteral(resourceName: "paging_05.pdf")]
     
     var loadedControllers: [OnboardingController] = []
