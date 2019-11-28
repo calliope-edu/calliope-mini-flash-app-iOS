@@ -14,8 +14,12 @@ protocol Editor {
 // https://miniedit.calliope.cc/86184610-93de-11e7-a0b1-cd0ef2962ca5
 final class MiniEditor: Editor {
     public let name = "Calliope mini Editor"
-    public let url = URL(string: URLManager.calliopeUrl ?? "")
+    public let url = URL(string: "/") //TODO: if used again, have URL in defaults
 
+    init() {
+        fatalError("MiniEditor not implemented currently")
+    }
+    
     func download(_ request: URLRequest) -> EditorDownload? {
         guard let url = request.url else { return nil }
         let s = url.absoluteString

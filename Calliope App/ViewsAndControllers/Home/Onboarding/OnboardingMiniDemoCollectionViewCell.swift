@@ -9,9 +9,9 @@
 import UIKit
 
 class OnboardingMiniDemoCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var number: UIImageView!
-    @IBOutlet weak var title: UILabel!
-    @IBOutlet weak var mainImage: UIImageView!
-    @IBOutlet weak var secondaryImage: UIImageView!
-    @IBOutlet weak var secondaryImageHeight: NSLayoutConstraint!
+    @IBOutlet weak var number: UIImageView?
+    @IBOutlet weak var title: UILabel?
+    @IBOutlet weak var mainImage: UIImageView?
+    @IBOutlet weak var secondaryImage: UIImageView?
+    @IBOutlet weak var secondaryImageHeight: NSLayoutConstraint?
 }

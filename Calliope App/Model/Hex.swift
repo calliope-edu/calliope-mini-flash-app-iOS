@@ -2,9 +2,46 @@ import UIKit
 import iOSDFULibrary
 import DeepDiff
 
-struct HexFile: Equatable {
+protocol Hex {
+    var name: String { get }
+    var date: Date { get }
+    var dateString: String { get }
+    var bin: Data { get }
+}
+
+extension Hex {
+    
+    var dateString: String {
+        get { return HexFileManager.dateFormatter.string(from: date) }
+    }
+    
+    static func dat(_ data: Data) -> Data {
+        
+        let deviceType: UInt16 = 0xffff
+        let deviceRevision: UInt16 = 0xffff
+        let applicationVersion: UInt32 = 0xffffffff
+        let softdevicesCount: UInt16 = 0x0001
+        let softdevice: UInt16 = 0x0064
+        let checksum = Checksum.crc16([UInt8](data))
+        
+        let d = Binary.pack(format:"<HHLHHH", values:[
+            deviceType,
+            deviceRevision,
+            applicationVersion,
+            softdevicesCount,
+            softdevice,
+            checksum
+        ])
+        
+        return d
+    }
+}
+
+struct HexFile: Hex, Equatable {
+    
     private(set) var url: URL
-	var name: String {
+	
+    var name: String {
 		didSet {
 			let lastURLPart = String(url.lastPathComponent.dropLast(4))
 			if lastURLPart != name {
@@ -21,52 +58,25 @@ struct HexFile: Equatable {
 			}
 		}
 	}
+    
     let date: Date
-	var descriptionText: String {
-		didSet {
-			//TODO: save new description
-		}
-	}
-	var dateString: String {
-		get { return HexFileManager.dateFormatter.string(from: date) }
-	}
 
-    func bin() -> Data {
-
-        let parser = HexParser(url:url)
-        var bin = Data()
-        parser.parse { (address, data) in
-            if address >= 0x18000 && address < 0x40000 {
-                bin.append(data)
+    var bin: Data {
+        get {
+            let parser = HexParser(url:url)
+            var bin = Data()
+            parser.parse { (address, data) in
+                if address >= 0x18000 && address < 0x40000 {
+                    bin.append(data)
+                }
             }
+            
+            return bin
         }
-
-        return bin
-    }
-
-    static func dat(_ data: Data) -> Data {
-
-        let deviceType: UInt16 = 0xffff
-        let deviceRevision: UInt16 = 0xffff
-        let applicationVersion: UInt32 = 0xffffffff
-        let softdevicesCount: UInt16 = 0x0001
-        let softdevice: UInt16 = 0x0064
-        let checksum = Checksum.crc16([UInt8](data))
-
-        let d = Binary.pack(format:"<HHLHHH", values:[
-            deviceType,
-            deviceRevision,
-            applicationVersion,
-            softdevicesCount,
-            softdevice,
-            checksum
-        ])
-
-        return d
     }
 
 	static func == (lhs: HexFile, rhs: HexFile) -> Bool {
-		return lhs.url == rhs.url && lhs.name == rhs.name && lhs.descriptionText == rhs.descriptionText
+		return lhs.url == rhs.url && lhs.name == rhs.name
 	}
 }
 
@@ -113,7 +123,7 @@ final class HexFileManager {
             }
             let date = try dateFor(url:url)
 			//TODO: load description from file somehow
-			return HexFile(url: url, name: name, date: date, descriptionText: "\(date, dateFormatter)")
+			return HexFile(url: url, name: name, date: date)
         })
     }
 
@@ -130,7 +140,7 @@ final class HexFileManager {
             let name = String(url.lastPathComponent.dropLast(4))
             let date = try dateFor(url:url)
 			//TODO: load description from file somehow
-			return HexFile(url: url, name: name, date: date, descriptionText: "\(date, dateFormatter)")
+			return HexFile(url: url, name: name, date: date)
         }.sorted(by: { (a,b) -> Bool in
             return a.date > b.date
         })
@@ -142,7 +152,7 @@ final class HexFileManager {
         LogNotify.log("writing file \(file)")
         try data.write(to: file)
 		let date = Date()
-		let hexFile = HexFile(url: file, name: name, date: date, descriptionText: "\(date)")
+		let hexFile = HexFile(url: file, name: name, date: date)
 		notifyChange()
         return hexFile
     }

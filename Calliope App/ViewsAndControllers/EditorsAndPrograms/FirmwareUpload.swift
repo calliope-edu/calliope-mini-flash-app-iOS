@@ -11,6 +11,21 @@ import iOSDFULibrary
 
 class FirmwareUpload {
 
+    public static func showUploadUI(controller: UIViewController, program: Hex, name: String = "the program", completion: (() -> ())? = nil) {
+        let alert = UIAlertController(title: "Upload?", message: "Do you want to upload \(name) to your calliope?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Upload", style: .default) { _ in
+            let uploader = FirmwareUpload()
+            controller.present(uploader.alertView, animated: true) {
+                uploader.upload(file: program) {
+                    controller.dismiss(animated: true, completion: nil)
+                    completion?()
+                }
+            }
+        })
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        controller.present(alert, animated: true)
+    }
+    
 	//keep last upload, so it cannot be de-inited prematurely
 	private static var uploadingInstance: FirmwareUpload? = nil {
 		didSet { _ = oldValue?.calliope?.cancelUpload() }
@@ -61,18 +76,17 @@ class FirmwareUpload {
 
 	private var calliope = MatrixConnectionViewController.instance.usageReadyCalliope as? DFUCalliope
 
-	func upload(file: HexFile, finished: @escaping () -> ()) {
+	func upload(file: Hex, finished: @escaping () -> ()) {
 		FirmwareUpload.uploadingInstance = self
 
 		self.finished = {
 			FirmwareUpload.uploadingInstance = nil
 			DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.0) {
-				//MatrixConnectionViewController.instance.connect()
 				finished()
 			}
 		}
 
-		let bin = file.bin()
+		let bin = file.bin
 		do {
 			try calliope?.upload(bin: bin, dat: HexFile.dat(bin), progressReceiver: self)
 		}

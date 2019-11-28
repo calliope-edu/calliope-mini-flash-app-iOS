@@ -40,13 +40,8 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 	let expandedHeight: CGFloat = 430
 
 	private let queue = DispatchQueue(label: "bluetooth")
-
-	public var connector: CalliopeBLEDiscovery = CalliopeBLEDiscovery({ peripheral, name in
-		DFUCalliope(peripheral: peripheral, name: name) }) {
-		didSet {
-			self.changedConnector(oldValue)
-		}
-	}
+    
+    public private(set) var calliopeTypeLastChangedBy: AnyObject?
     
     public var connectionDescriptionText: String = "1. Programm 5 starten\n2. Schütteln\n3. LED-Muster eingeben" {
         didSet { connectionDescriptionLabel.text = connectionDescriptionText }
@@ -62,16 +57,28 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 			else { return nil }
 		return calliope
 	}
-
-	public func changeCalliopeType(_ calliopeBuilder: @escaping (_ peripheral: CBPeripheral, _ name: String) -> CalliopeBLEDevice) {
-		connector = CalliopeBLEDiscovery(calliopeBuilder)
-	}
+    
+    public func changeCalliopeType(sender: AnyObject, calliopeClass: CalliopeBLEDevice.Type) {
+        if let changer = calliopeTypeLastChangedBy, changer === sender {
+            return
+        }
+        calliopeTypeLastChangedBy = sender
+        let calliopeBuilder = { (_ peripheral: CBPeripheral, _ name: String) -> CalliopeBLEDevice in
+            return calliopeClass.init(peripheral: peripheral, name: name)
+        }
+        connector = CalliopeBLEDiscovery(calliopeBuilder)
+    }
+    
+    private var connector: CalliopeBLEDiscovery = CalliopeBLEDiscovery({ peripheral, name in
+        DFUCalliope(peripheral: peripheral, name: name) }) {
+        didSet {
+            self.changedConnector(oldValue)
+        }
+    }
 
 	private func changedConnector(_ oldValue: CalliopeBLEDiscovery) {
-		oldValue.updateBlock = {}
-		oldValue.stopCalliopeDiscovery()
-		oldValue.disconnectFromCalliope()
-		connector.updateBlock = updateDiscoveryState
+        oldValue.giveUpResponsibility()
+        connector.updateBlock = updateDiscoveryState
 		matrixView.updateBlock = {
 			//matrix has been changed manually, this always triggers a disconnect
 			self.connector.disconnectFromCalliope()

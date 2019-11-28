@@ -30,7 +30,9 @@ class ProgramsCollectionViewController: UICollectionViewController, UICollection
         programSubscription = NotificationCenter.default.addObserver(
             forName: NotificationConstants.hexFileChanged, object: nil, queue: nil,
             using: { [weak self] (_) in
-                self?.animateFileChange()
+                DispatchQueue.main.async {
+                    self?.animateFileChange()
+                }
         })
     }
     
@@ -188,17 +190,9 @@ class ProgramsCollectionViewController: UICollectionViewController, UICollection
     }
 
     func uploadProgram(of cell: ProgramCollectionViewCell) {
-        let alert = UIAlertController(title: "Upload?", message: "Do you want to upload \(cell.program.name) to your calliope?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Upload", style: .default) { _ in
-            let uploader = FirmwareUpload()
-            self.present(uploader.alertView, animated: true) {
-                uploader.upload(file: cell.program) {
-                    self.dismiss(animated: true, completion: nil)
-                }
-            }
-        })
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        self.present(alert, animated: true)
+        FirmwareUpload.showUploadUI(controller: self, program: cell.program, name: cell.program.name) {
+            MatrixConnectionViewController.instance.connect()
+        }
     }
 
     func deleteProgram(of cell: ProgramCollectionViewCell) {

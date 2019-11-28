@@ -53,9 +53,7 @@ class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSo
             fatalError("there must be at least as many page indicators as tutorial pages!")
         }
         
-        MatrixConnectionViewController.instance?.connectionDescriptionText = "ConnectionDescriptionText for tutorial"
-        MatrixConnectionViewController.instance?.connector = CalliopeBLEDiscovery({ (peripheral, name) -> CalliopeBLEDevice in
-            return ApiCalliope(peripheral: peripheral, name: name) })
+        
         
         let firstViewController = loadController(0)
         loadedControllers.append(firstViewController)
@@ -63,6 +61,12 @@ class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSo
         
         self.dataSource = self
         self.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        MatrixConnectionViewController.instance?.connectionDescriptionText = "ConnectionDescriptionText for tutorial"
+        MatrixConnectionViewController.instance?.changeCalliopeType(sender: self, calliopeClass: DFUCalliope.self)
     }
     
     //MARK: pageviewcontroller data source
@@ -73,10 +77,10 @@ class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSo
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let viewController = viewController as? UIViewController & OnboardingPage
             else { fatalError("viewcontrollers for this onboarding have to be of type onboardingPage!") }
-        let index = indexOf(loadedController: viewController as! UIViewController & OnboardingPage)
-        if currentIndex > 0 {
+        let index = indexOf(loadedController: viewController)
+        if index > 0 {
             navigatingBackwards = true
-            return loadedControllers[currentIndex - 1]
+            return loadedControllers[index - 1]
         } else {
             return nil
         }

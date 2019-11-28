@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TutorialPageConnect: TutorialPageViewController {
+class TutorialPageConnect: TutorialPageViewController, AnimatingTutorialViewController {
     
     let unconnectedText = "Push the button and follow the instructions for connecting to your Calliope"
     let succeededText = "You are connected to your Calliope, well done!"
@@ -20,6 +20,21 @@ class TutorialPageConnect: TutorialPageViewController {
     var hasConnected: Bool {
         return MatrixConnectionViewController.instance.usageReadyCalliope != nil
     }
+    
+    @IBOutlet weak var collectionView: UICollectionView?
+    
+    var cellIdentifier = "cell"
+    var secondaryImageDefaultHeight: CGFloat = 40
+    
+    var animationStep = 0
+    
+    var animationSpeed = 0.3
+    
+    var cellConfigurations: [(String?, UIImage?, [UIImage]?, [UIImage]?)]  =
+        [(nil, nil, [#imageLiteral(resourceName: "ble_00")], nil),
+         (nil, nil, [#imageLiteral(resourceName: "ble_01")], nil),
+         (nil, nil, [#imageLiteral(resourceName: "ble_02_00"), #imageLiteral(resourceName: "ble_02_01"), #imageLiteral(resourceName: "ble_02_02"), #imageLiteral(resourceName: "ble_02_03"), #imageLiteral(resourceName: "ble_02_04"), #imageLiteral(resourceName: "ble_02_05")], nil),
+         (nil, nil, [#imageLiteral(resourceName: "blr_03")], nil)]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +52,7 @@ class TutorialPageConnect: TutorialPageViewController {
         super.viewDidAppear(animated)
         delay(time: 0.5) {
             self.animateBounce()
+            self.animate()
         }
     }
     
@@ -83,5 +99,19 @@ class TutorialPageConnect: TutorialPageViewController {
                 self.instructionLabel.text = self.unconnectedText
             }
         }
+    }
+    
+    //MARK: proxy functions to settle UICollectionViewDataSource Objective C Interop problem
+    
+    @objc func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return proxyCollectionView(collectionView, numberOfItemsInSection: section)
+    }
+    
+    @objc func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        return proxyCollectionView(collectionView, cellForItemAt: indexPath)
+    }
+    
+    @objc func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return proxyCollectionView(collectionView, layout: collectionViewLayout, sizeForItemAt: indexPath)
     }
 }

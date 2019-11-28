@@ -16,6 +16,9 @@
 		2F2B44382355A018008B957E /* PageIndicatorContainingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2B44372355A018008B957E /* PageIndicatorContainingViewController.swift */; };
 		2F321A4E2349A9B300C1DDA4 /* EditorAndPrograms.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F321A4D2349A9B300C1DDA4 /* EditorAndPrograms.storyboard */; };
 		2F351859281E788C6C812C7F /* Pods_Calliope_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5903FA54473EF3F75116DEB /* Pods_Calliope_App.framework */; };
+		2F375AB9237E1179004ED8D7 /* TutorialPageUploadProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F375AB8237E1179004ED8D7 /* TutorialPageUploadProgram.swift */; };
+		2F375ABB237F28BC004ED8D7 /* DefaultProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F375ABA237F28BC004ED8D7 /* DefaultProgram.swift */; };
+		2F57C3B2239058B0008B0D69 /* AnimatingTutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3B1239058B0008B0D69 /* AnimatingTutorialViewController.swift */; };
 		2F61451022BF75DE001C2734 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61450F22BF75DE001C2734 /* AppDelegate.swift */; };
 		2F61451C22BF75DF001C2734 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F61451A22BF75DF001C2734 /* LaunchScreen.storyboard */; };
 		2F61456622BF761F001C2734 /* mini-smile.hex in Resources */ = {isa = PBXBuildFile; fileRef = 2F61452422BF761F001C2734 /* mini-smile.hex */; };
@@ -40,15 +43,10 @@
 		2F61457B22BF761F001C2734 /* ValueLocalizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453C22BF761F001C2734 /* ValueLocalizer.swift */; };
 		2F61457C22BF761F001C2734 /* ExtColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453D22BF761F001C2734 /* ExtColor.swift */; };
 		2F61457D22BF761F001C2734 /* LogNotify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453E22BF761F001C2734 /* LogNotify.swift */; };
-		2F61457E22BF761F001C2734 /* URLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453F22BF761F001C2734 /* URLManager.swift */; };
 		2F61457F22BF761F001C2734 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61454022BF761F001C2734 /* Async.swift */; };
 		2F61458022BF761F001C2734 /* NotificationConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61454122BF761F001C2734 /* NotificationConstants.swift */; };
 		2F61458122BF761F001C2734 /* Binary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61454222BF761F001C2734 /* Binary.swift */; };
 		2F61458222BF761F001C2734 /* Checksum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61454322BF761F001C2734 /* Checksum.swift */; };
-		2F61458322BF761F001C2734 /* OLEContainerScrollView+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F61454522BF761F001C2734 /* OLEContainerScrollView+Swizzling.m */; };
-		2F61458422BF761F001C2734 /* OLESwizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F61454622BF761F001C2734 /* OLESwizzling.m */; };
-		2F61458522BF761F001C2734 /* OLEContainerScrollViewContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F61454C22BF761F001C2734 /* OLEContainerScrollViewContentView.m */; };
-		2F61458622BF761F001C2734 /* OLEContainerScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F61454D22BF761F001C2734 /* OLEContainerScrollView.m */; };
 		2F61458722BF761F001C2734 /* Extension_Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61454E22BF761F001C2734 /* Extension_Data.swift */; };
 		2F61458922BF761F001C2734 /* CollapsingViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61455222BF761F001C2734 /* CollapsingViewControllerProtocol.swift */; };
 		2F61458A22BF761F001C2734 /* CollapseButtonProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61455322BF761F001C2734 /* CollapseButtonProtocol.swift */; };
@@ -115,6 +113,9 @@
 		2F2B443523559A95008B957E /* TutorialPageBattery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPageBattery.swift; sourceTree = "<group>"; };
 		2F2B44372355A018008B957E /* PageIndicatorContainingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageIndicatorContainingViewController.swift; sourceTree = "<group>"; };
 		2F321A4D2349A9B300C1DDA4 /* EditorAndPrograms.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EditorAndPrograms.storyboard; sourceTree = "<group>"; };
+		2F375AB8237E1179004ED8D7 /* TutorialPageUploadProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPageUploadProgram.swift; sourceTree = "<group>"; };
+		2F375ABA237F28BC004ED8D7 /* DefaultProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultProgram.swift; sourceTree = "<group>"; };
+		2F57C3B1239058B0008B0D69 /* AnimatingTutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingTutorialViewController.swift; sourceTree = "<group>"; };
 		2F61450C22BF75DE001C2734 /* Calliope App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Calliope App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F61450F22BF75DE001C2734 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2F61451B22BF75DF001C2734 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -141,20 +142,10 @@
 		2F61453C22BF761F001C2734 /* ValueLocalizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueLocalizer.swift; sourceTree = "<group>"; };
 		2F61453D22BF761F001C2734 /* ExtColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtColor.swift; sourceTree = "<group>"; };
 		2F61453E22BF761F001C2734 /* LogNotify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogNotify.swift; sourceTree = "<group>"; };
-		2F61453F22BF761F001C2734 /* URLManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLManager.swift; sourceTree = "<group>"; };
 		2F61454022BF761F001C2734 /* Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Async.swift; sourceTree = "<group>"; };
 		2F61454122BF761F001C2734 /* NotificationConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationConstants.swift; sourceTree = "<group>"; };
 		2F61454222BF761F001C2734 /* Binary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Binary.swift; sourceTree = "<group>"; };
 		2F61454322BF761F001C2734 /* Checksum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checksum.swift; sourceTree = "<group>"; };
-		2F61454522BF761F001C2734 /* OLEContainerScrollView+Swizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OLEContainerScrollView+Swizzling.m"; sourceTree = "<group>"; };
-		2F61454622BF761F001C2734 /* OLESwizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLESwizzling.m; sourceTree = "<group>"; };
-		2F61454722BF761F001C2734 /* OLEContainerScrollViewContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLEContainerScrollViewContentView.h; sourceTree = "<group>"; };
-		2F61454822BF761F001C2734 /* OLEContainerScrollView_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLEContainerScrollView_Private.h; sourceTree = "<group>"; };
-		2F61454922BF761F001C2734 /* OLEContainerScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLEContainerScrollView.h; sourceTree = "<group>"; };
-		2F61454A22BF761F001C2734 /* OLEContainerScrollView+Swizzling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OLEContainerScrollView+Swizzling.h"; sourceTree = "<group>"; };
-		2F61454B22BF761F001C2734 /* OLESwizzling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLESwizzling.h; sourceTree = "<group>"; };
-		2F61454C22BF761F001C2734 /* OLEContainerScrollViewContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLEContainerScrollViewContentView.m; sourceTree = "<group>"; };
-		2F61454D22BF761F001C2734 /* OLEContainerScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLEContainerScrollView.m; sourceTree = "<group>"; };
 		2F61454E22BF761F001C2734 /* Extension_Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension_Data.swift; sourceTree = "<group>"; };
 		2F61455222BF761F001C2734 /* CollapsingViewControllerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollapsingViewControllerProtocol.swift; sourceTree = "<group>"; };
 		2F61455322BF761F001C2734 /* CollapseButtonProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollapseButtonProtocol.swift; sourceTree = "<group>"; };
@@ -300,31 +291,13 @@
 				2F61453C22BF761F001C2734 /* ValueLocalizer.swift */,
 				2F61453D22BF761F001C2734 /* ExtColor.swift */,
 				2F61453E22BF761F001C2734 /* LogNotify.swift */,
-				2F61453F22BF761F001C2734 /* URLManager.swift */,
 				2F61454022BF761F001C2734 /* Async.swift */,
 				2F61454122BF761F001C2734 /* NotificationConstants.swift */,
 				2F61454222BF761F001C2734 /* Binary.swift */,
 				2F61454322BF761F001C2734 /* Checksum.swift */,
-				2F61454422BF761F001C2734 /* OLEContainerScrollView */,
 				2F61454E22BF761F001C2734 /* Extension_Data.swift */,
 			);
 			path = GeneralUtilities;
-			sourceTree = "<group>";
-		};
-		2F61454422BF761F001C2734 /* OLEContainerScrollView */ = {
-			isa = PBXGroup;
-			children = (
-				2F61454522BF761F001C2734 /* OLEContainerScrollView+Swizzling.m */,
-				2F61454622BF761F001C2734 /* OLESwizzling.m */,
-				2F61454722BF761F001C2734 /* OLEContainerScrollViewContentView.h */,
-				2F61454822BF761F001C2734 /* OLEContainerScrollView_Private.h */,
-				2F61454922BF761F001C2734 /* OLEContainerScrollView.h */,
-				2F61454A22BF761F001C2734 /* OLEContainerScrollView+Swizzling.h */,
-				2F61454B22BF761F001C2734 /* OLESwizzling.h */,
-				2F61454C22BF761F001C2734 /* OLEContainerScrollViewContentView.m */,
-				2F61454D22BF761F001C2734 /* OLEContainerScrollView.m */,
-			);
-			path = OLEContainerScrollView;
 			sourceTree = "<group>";
 		};
 		2F61454F22BF761F001C2734 /* ViewsAndControllers */ = {
@@ -372,6 +345,7 @@
 				2F61456522BF761F001C2734 /* HexParser.swift */,
 				2F6145A522C7D71B001C2734 /* Settings.swift */,
 				2FC2A12822C8FA6F00675C2F /* News.swift */,
+				2F375ABA237F28BC004ED8D7 /* DefaultProgram.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -456,6 +430,8 @@
 				2FFE865D22DB3DDF00728E7C /* TutorialPageConnect.swift */,
 				2F9B5CAA2357127A00728546 /* TutorialPageMiniDemo.swift */,
 				2F9B5CAC23571E7100728546 /* OnboardingMiniDemoCollectionViewCell.swift */,
+				2F375AB8237E1179004ED8D7 /* TutorialPageUploadProgram.swift */,
+				2F57C3B1239058B0008B0D69 /* AnimatingTutorialViewController.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -674,15 +650,14 @@
 				2F61459822BF761F001C2734 /* StreamReader.swift in Sources */,
 				2F61457722BF761F001C2734 /* Styles.swift in Sources */,
 				2F61458722BF761F001C2734 /* Extension_Data.swift in Sources */,
-				2F61458522BF761F001C2734 /* OLEContainerScrollViewContentView.m in Sources */,
 				2F61459022BF761F001C2734 /* MainContainerViewController.swift in Sources */,
 				2F61459722BF761F001C2734 /* Editors.swift in Sources */,
+				2F375ABB237F28BC004ED8D7 /* DefaultProgram.swift in Sources */,
 				2F61458222BF761F001C2734 /* Checksum.swift in Sources */,
-				2F61458322BF761F001C2734 /* OLEContainerScrollView+Swizzling.m in Sources */,
 				2F61459A22BF761F001C2734 /* HexParser.swift in Sources */,
 				2F61456F22BF761F001C2734 /* CalliopeBLEDiscovery.swift in Sources */,
-				2F61458622BF761F001C2734 /* OLEContainerScrollView.m in Sources */,
 				2F2B44382355A018008B957E /* PageIndicatorContainingViewController.swift in Sources */,
+				2F375AB9237E1179004ED8D7 /* TutorialPageUploadProgram.swift in Sources */,
 				2F61457822BF761F001C2734 /* ExtString.swift in Sources */,
 				2F61459422BF761F001C2734 /* EditorViewController.swift in Sources */,
 				2F61458B22BF761F001C2734 /* MatrixView.swift in Sources */,
@@ -699,14 +674,13 @@
 				2F61457C22BF761F001C2734 /* ExtColor.swift in Sources */,
 				2F61459922BF761F001C2734 /* Hex.swift in Sources */,
 				2F61458E22BF761F001C2734 /* Matrix.swift in Sources */,
-				2F61458422BF761F001C2734 /* OLESwizzling.m in Sources */,
-				2F61457E22BF761F001C2734 /* URLManager.swift in Sources */,
 				2F61457A22BF761F001C2734 /* ExtURL.swift in Sources */,
 				2F61458C22BF761F001C2734 /* ConnectionButton.swift in Sources */,
 				2F61457522BF761F001C2734 /* CalliopeBLEDevice.swift in Sources */,
 				2F61458922BF761F001C2734 /* CollapsingViewControllerProtocol.swift in Sources */,
 				2F9B5CAB2357127A00728546 /* TutorialPageMiniDemo.swift in Sources */,
 				2F61458A22BF761F001C2734 /* CollapseButtonProtocol.swift in Sources */,
+				2F57C3B2239058B0008B0D69 /* AnimatingTutorialViewController.swift in Sources */,
 				2FC2A12B22C962D100675C2F /* NewsDetailWebViewController.swift in Sources */,
 				2F61459522BF761F001C2734 /* ProgramCollectionViewCell.swift in Sources */,
 				2F00EAB822DA195A000B5FDE /* HomeScreenViewController.swift in Sources */,

@@ -159,21 +159,9 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
 				DispatchQueue.main.async {
 					do {
 						let file = try HexFileManager.store(name: download.name, data: data)
-
-						let controller = UIAlertController(title: "Downloaded Program", message: nil, preferredStyle: .alert)
-						controller.addAction(UIAlertAction(title: "Upload", style: .default, handler: { (_) in
-							let uploader = FirmwareUpload()
-							self.present(uploader.alertView, animated: true) {
-								uploader.upload(file: file) {
-									self.dismiss(animated: true, completion: nil)
-								}
-							}
-						}))
-						controller.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-
-						DispatchQueue.main.async {
-							self.present(controller, animated: true, completion: nil)
-						}
+                        FirmwareUpload.showUploadUI(controller: self, program: file) {
+                            MatrixConnectionViewController.instance.connect()
+                        }
 					}
 					catch {
 						LogNotify.log("\(error)")

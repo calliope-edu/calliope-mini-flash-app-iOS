@@ -34,7 +34,9 @@ public struct Settings {
 				#else
 				defaultValue = "NOT GIVEN YET"
 				#endif
-			}
+            case .defaultHexFileURL:
+                defaultValue = "https://calliope.cc/media/pages/ble/-903257399-1566558063/calliope-demo-combined-mit-dfu-20190820.hex"
+            }
 			defaultSettings[key.rawValue] = defaultValue
 		}
 		UserDefaults.standard.register(defaults: defaultSettings)
@@ -57,4 +59,6 @@ public enum SettingsKey: String, CaseIterable {
 	case appVersion = "appVersionInformationPreference"
 
 	case newsURL = "calliopeNewsUrlPreference"
+    
+    case defaultHexFileURL = "calliopeDefaultHexFilePreference"
 }

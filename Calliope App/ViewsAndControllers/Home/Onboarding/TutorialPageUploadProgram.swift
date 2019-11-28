@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TutorialPageUploadProgramViewController: TutorialPageViewController {
+class TutorialPageUploadProgram: TutorialPageViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

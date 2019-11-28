@@ -41,8 +41,8 @@ class ProgramCollectionViewCell: UICollectionViewCell, UITextViewDelegate {
 		didSet {
 			name.text = program.name
 			nameEditField.text = program.name
-            descriptionText?.text = program.descriptionText
-            dateLabel?.text = program.descriptionText
+            descriptionText?.text = program.dateString
+            dateLabel?.text = program.dateString
 		}
 	}
 
@@ -96,7 +96,7 @@ class ProgramCollectionViewCell: UICollectionViewCell, UITextViewDelegate {
 	}
 
 	private func setProgramDescription(_ newDescription: String) {
-		program.descriptionText = newDescription
+		//TODO: there is no description saved in a hex file yet
 	}
 
 	func changeTextExclusion() {

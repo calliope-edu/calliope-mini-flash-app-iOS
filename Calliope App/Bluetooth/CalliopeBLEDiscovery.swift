@@ -104,6 +104,9 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 	init(_ calliopeBuilder: @escaping (_ peripheral: CBPeripheral, _ name: String) -> CalliopeBLEDevice) {
 		self.calliopeBuilder = calliopeBuilder
 		super.init()
+        if centralManager.state == .poweredOn {
+            attemptReconnect()
+        }
 		centralManager.delegate = self
 	}
 
@@ -131,8 +134,22 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 		self.discoveredCalliopeUUIDNameMap.updateValue(lastConnectedName, forKey: lastCalliope.identifier)
 		//auto-reconnect
 		LogNotify.log("reconnect to: \(calliope)")
-		connectingCalliope = calliope
+        delay(time: 0) {
+            self.connectingCalliope = calliope
+        }
 	}
+    
+    
+    /// allows another CalliopeBLEDiscovery to use lastConnected variable to reconnect to the same calliope
+    public func giveUpResponsibility() {
+        self.updateBlock = {}
+        self.stopCalliopeDiscovery()
+        //we disconnect manually here after switching off delegate, since we don´t want to wipe lastconnected setting
+        centralManager.delegate = nil
+        if let connectedCalliope = self.connectedCalliope {
+            self.centralManager.cancelPeripheralConnection(connectedCalliope.peripheral)
+        }
+    }
 
 	// MARK: discovery
 
@@ -225,7 +242,7 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 		case .poweredOn:
 			startCalliopeDiscovery()
 			if lastConnected != nil {
-				attemptReconnect()
+                self.attemptReconnect()
 			}
 		case .unknown, .resetting, .unsupported, .unauthorized, .poweredOff:
 			//bluetooth is in a state where we cannot do anything
