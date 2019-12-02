@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WZ3-mX-9ax">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
@@ -14,17 +14,17 @@
             <objects>
                 <viewController id="WZ3-mX-9ax" customClass="PageIndicatorContainingViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8mO-h9-MU2">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yfA-bW-mH7">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="846"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="552"/>
                                 <connections>
                                     <segue destination="hlE-Hx-CQk" kind="embed" identifier="embedPageVC" destinationCreationSelector="makeOnboardingPageViewController:" id="2ub-JL-2f5"/>
                                 </connections>
                             </containerView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="paging_01" translatesAutoresizingMaskIntoConstraints="NO" id="k10-4o-Y2a">
-                                <rect key="frame" x="0.0" y="846" width="414" height="10"/>
+                                <rect key="frame" x="0.0" y="552" width="320" height="10"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="10" id="2qc-As-9Nv"/>
                                 </constraints>
@@ -63,43 +63,46 @@
             <objects>
                 <viewController storyboardIdentifier="tutorial_connect_bluetooth" id="NBI-xe-pQG" customClass="TutorialPageConnect" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hXJ-qd-rqr">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="zLb-XG-cBY">
-                                <rect key="frame" x="8" y="124" width="398" height="738"/>
+                                <rect key="frame" x="8" y="60" width="304" height="508"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Bluetooth Connection" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rqj-yf-1xH">
-                                        <rect key="frame" x="0.0" y="0.0" width="398" height="33.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Bluetooth Connection" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.29999999999999999" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rqj-yf-1xH">
+                                        <rect key="frame" x="0.0" y="0.0" width="304" height="31.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Connect to your calliope using its unique pattern signature" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="agm-gW-0YR">
-                                        <rect key="frame" x="0.0" y="49.5" width="398" height="38"/>
+                                        <rect key="frame" x="0.0" y="47.5" width="304" height="38"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="uNX-va-3eO">
-                                        <rect key="frame" x="0.0" y="103.5" width="398" height="430.5"/>
+                                        <rect key="frame" x="0.0" y="101.5" width="304" height="220"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="150" id="625-Cs-fYd"/>
+                                        </constraints>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Ykj-IZ-MyY">
-                                            <size key="itemSize" width="300" height="270"/>
+                                            <size key="itemSize" width="150" height="150"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="c6m-US-tJ5" customClass="OnboardingMiniDemoCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                                <rect key="frame" x="49" y="0.0" width="300" height="270"/>
+                                                <rect key="frame" x="77" y="0.0" width="150" height="150"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                                    <rect key="frame" x="0.0" y="0.0" width="300" height="270"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ble_01" translatesAutoresizingMaskIntoConstraints="NO" id="kar-RK-Doz">
-                                                            <rect key="frame" x="0.0" y="0.0" width="300" height="270"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="300" placeholder="YES" id="2t8-oi-RKj"/>
                                                                 <constraint firstAttribute="height" constant="180" placeholder="YES" id="nAG-2A-nQ8"/>
@@ -126,40 +129,45 @@
                                         </connections>
                                     </collectionView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Hp-9d-g8m">
-                                        <rect key="frame" x="0.0" y="550" width="398" height="122"/>
+                                        <rect key="frame" x="0.0" y="337.5" width="304" height="104.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oQQ-S9-Kx6">
-                                                <rect key="frame" x="13.5" y="20" width="371" height="82"/>
+                                                <rect key="frame" x="5" y="5" width="294" height="94.5"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Hint: Be sure to have Bluetooth switched on and connections allowed." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rMY-Qf-bUT">
+                                                        <rect key="frame" x="8" y="8" width="278" height="78.5"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
                                                 <color key="backgroundColor" name="calliope-purple"/>
+                                                <constraints>
+                                                    <constraint firstItem="rMY-Qf-bUT" firstAttribute="centerX" secondItem="oQQ-S9-Kx6" secondAttribute="centerX" id="5aY-hz-YX9"/>
+                                                    <constraint firstItem="rMY-Qf-bUT" firstAttribute="top" secondItem="oQQ-S9-Kx6" secondAttribute="topMargin" id="8rd-6Z-HoU"/>
+                                                    <constraint firstAttribute="trailingMargin" secondItem="rMY-Qf-bUT" secondAttribute="trailing" id="Fk5-hS-bug"/>
+                                                    <constraint firstItem="rMY-Qf-bUT" firstAttribute="centerY" secondItem="oQQ-S9-Kx6" secondAttribute="centerY" id="Mjx-U5-t9c"/>
+                                                    <constraint firstAttribute="bottomMargin" secondItem="rMY-Qf-bUT" secondAttribute="bottom" id="bZj-ws-1v0"/>
+                                                    <constraint firstItem="rMY-Qf-bUT" firstAttribute="leading" secondItem="oQQ-S9-Kx6" secondAttribute="leadingMargin" id="ewk-9E-4df"/>
+                                                </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                         <integer key="value" value="15"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Hint: Be sure to have Bluetooth switched on and connections allowed." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rMY-Qf-bUT">
-                                                <rect key="frame" x="21.5" y="39.5" width="355" height="42.5"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
-                                            <constraint firstItem="rMY-Qf-bUT" firstAttribute="width" secondItem="8Hp-9d-g8m" secondAttribute="width" constant="-43" id="9Sc-nA-v02"/>
+                                            <constraint firstItem="oQQ-S9-Kx6" firstAttribute="width" secondItem="8Hp-9d-g8m" secondAttribute="width" constant="-10" id="GaL-yW-PDr"/>
                                             <constraint firstItem="oQQ-S9-Kx6" firstAttribute="centerY" secondItem="8Hp-9d-g8m" secondAttribute="centerY" id="bBH-c9-zwi"/>
-                                            <constraint firstItem="oQQ-S9-Kx6" firstAttribute="width" relation="lessThanOrEqual" secondItem="8Hp-9d-g8m" secondAttribute="width" id="hiP-4t-5cE"/>
-                                            <constraint firstAttribute="bottom" secondItem="oQQ-S9-Kx6" secondAttribute="bottom" priority="100" constant="20" id="j4F-cb-PhG"/>
-                                            <constraint firstItem="oQQ-S9-Kx6" firstAttribute="leading" secondItem="8Hp-9d-g8m" secondAttribute="leading" priority="100" constant="13.5" id="kkM-Cv-Xod"/>
-                                            <constraint firstItem="oQQ-S9-Kx6" firstAttribute="height" relation="lessThanOrEqual" secondItem="8Hp-9d-g8m" secondAttribute="height" id="mYg-eC-amb"/>
-                                            <constraint firstItem="rMY-Qf-bUT" firstAttribute="centerX" secondItem="8Hp-9d-g8m" secondAttribute="centerX" id="naQ-gV-eoU"/>
+                                            <constraint firstItem="oQQ-S9-Kx6" firstAttribute="leading" secondItem="8Hp-9d-g8m" secondAttribute="leading" priority="100" constant="10" id="kkM-Cv-Xod"/>
                                             <constraint firstItem="oQQ-S9-Kx6" firstAttribute="centerX" secondItem="8Hp-9d-g8m" secondAttribute="centerX" id="owG-dH-EDD"/>
-                                            <constraint firstItem="rMY-Qf-bUT" firstAttribute="height" secondItem="8Hp-9d-g8m" secondAttribute="height" multiplier="0.512195" constant="-20" id="vdm-rv-9gB"/>
-                                            <constraint firstItem="rMY-Qf-bUT" firstAttribute="centerY" secondItem="8Hp-9d-g8m" secondAttribute="centerY" id="zrS-ap-FdB"/>
+                                            <constraint firstItem="oQQ-S9-Kx6" firstAttribute="height" secondItem="8Hp-9d-g8m" secondAttribute="height" constant="-10" id="ry0-fr-vu9"/>
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TJB-DI-0CR">
-                                        <rect key="frame" x="0.0" y="688" width="398" height="50"/>
+                                        <rect key="frame" x="0.0" y="458" width="304" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="hcI-wO-26s"/>
                                         </constraints>
@@ -171,9 +179,9 @@
                                 </subviews>
                             </stackView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alert_small" translatesAutoresizingMaskIntoConstraints="NO" id="OHd-jl-vfF">
-                                <rect key="frame" x="288" y="54" width="110" height="70"/>
+                                <rect key="frame" x="249" y="10" width="55" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="70" id="Qdf-mx-iTa"/>
+                                    <constraint firstAttribute="height" constant="50" id="Qdf-mx-iTa"/>
                                 </constraints>
                             </imageView>
                         </subviews>
@@ -191,38 +199,40 @@
                     <connections>
                         <outlet property="arrowImageView" destination="OHd-jl-vfF" id="ioi-mI-wiv"/>
                         <outlet property="collectionView" destination="uNX-va-3eO" id="1ty-FL-xSs"/>
+                        <outlet property="continueButton" destination="TJB-DI-0CR" id="9KO-tI-XiY"/>
+                        <outlet property="continueButtonHeightConstraint" destination="hcI-wO-26s" id="Swe-7j-BQm"/>
                         <outlet property="instructionLabel" destination="rMY-Qf-bUT" id="haU-2V-zGQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pcu-oD-gwc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4879.7101449275369" y="-252.45535714285714"/>
+            <point key="canvasLocation" x="5462" y="-252"/>
         </scene>
         <!--Tutorial Page Mini Demo-->
         <scene sceneID="3gl-6J-xMr">
             <objects>
                 <viewController storyboardIdentifier="tutorial_mini_demo" id="81h-0e-Sjn" customClass="TutorialPageMiniDemo" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TPm-Ey-qUP">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="EAZ-35-AvB">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Demosequence" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vxr-bB-gsd">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="33.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="31.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get to know your Calliope Mini" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ogi-fD-zPi">
-                                        <rect key="frame" x="0.0" y="48.5" width="414" height="18"/>
+                                        <rect key="frame" x="0.0" y="46.5" width="320" height="18"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Pew-ae-lhb">
-                                        <rect key="frame" x="0.0" y="81.5" width="414" height="671.5"/>
+                                        <rect key="frame" x="0.0" y="79.5" width="320" height="423.5"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="IEw-5W-X2X">
                                             <size key="itemSize" width="300" height="270"/>
@@ -232,7 +242,7 @@
                                         </collectionViewFlowLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="PdY-vZ-tpr" customClass="OnboardingMiniDemoCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                                <rect key="frame" x="57" y="0.0" width="300" height="270"/>
+                                                <rect key="frame" x="10" y="0.0" width="300" height="270"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                                     <rect key="frame" x="0.0" y="0.0" width="300" height="270"/>
@@ -295,7 +305,7 @@
                                         </connections>
                                     </collectionView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cod-lu-mjA">
-                                        <rect key="frame" x="0.0" y="768" width="414" height="50"/>
+                                        <rect key="frame" x="0.0" y="518" width="320" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="3Ba-UW-PMy"/>
                                         </constraints>
@@ -329,43 +339,96 @@
             <objects>
                 <viewController storyboardIdentifier="tutorial3" id="EJn-g7-sOJ" customClass="TutorialPageUploadProgram" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VD7-NK-Iab">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Second intro" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QF8-Ta-78K">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="pb7-ow-MVh">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Upload Program" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.30000001192092896" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fjc-AF-Uny">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="31.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f9R-2U-MF7">
+                                        <rect key="frame" x="0.0" y="47.5" width="320" height="58"/>
+                                        <string key="text">When connected with your calliope, you can easily upload programs.
+Check it out!</string>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hph-75-bF6">
+                                        <rect key="frame" x="0.0" y="121.5" width="320" height="320"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ani_heart_01" translatesAutoresizingMaskIntoConstraints="NO" id="UnV-tx-ClX">
+                                                <rect key="frame" x="10" y="10" width="300" height="300"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="UnV-tx-ClX" secondAttribute="height" multiplier="1:1" id="EzY-TA-LB5"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="UnV-tx-ClX" secondAttribute="trailing" constant="10" id="Ff5-VJ-G8s"/>
+                                            <constraint firstItem="UnV-tx-ClX" firstAttribute="leading" secondItem="Hph-75-bF6" secondAttribute="leading" constant="10" id="iNO-ER-SZt"/>
+                                            <constraint firstAttribute="bottom" secondItem="UnV-tx-ClX" secondAttribute="bottom" constant="10" id="jDn-mP-Jjy"/>
+                                            <constraint firstItem="UnV-tx-ClX" firstAttribute="top" secondItem="Hph-75-bF6" secondAttribute="top" constant="10" id="njP-wF-aEE"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sfp-KL-GAf">
+                                        <rect key="frame" x="0.0" y="457.5" width="320" height="110.5"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KZP-Ey-EXu">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="110.5"/>
+                                                <state key="normal" title="Blinking heart"/>
+                                                <connections>
+                                                    <action selector="uploadProgram:" destination="EJn-g7-sOJ" eventType="touchUpInside" id="BJN-dO-P30"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstItem="KZP-Ey-EXu" firstAttribute="top" secondItem="sfp-KL-GAf" secondAttribute="top" id="JFf-Wu-s8G"/>
+                                            <constraint firstAttribute="bottom" secondItem="KZP-Ey-EXu" secondAttribute="bottom" id="Yl3-2p-XW2"/>
+                                            <constraint firstItem="KZP-Ey-EXu" firstAttribute="leading" secondItem="sfp-KL-GAf" secondAttribute="leading" id="jgw-Ed-iIu"/>
+                                            <constraint firstAttribute="trailing" secondItem="KZP-Ey-EXu" secondAttribute="trailing" id="zKy-CX-gbT"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="QF8-Ta-78K" firstAttribute="leading" secondItem="VD7-NK-Iab" secondAttribute="leading" id="HPb-4a-Pxr"/>
-                            <constraint firstAttribute="bottom" secondItem="QF8-Ta-78K" secondAttribute="bottom" id="I6B-8p-LXq"/>
-                            <constraint firstItem="QF8-Ta-78K" firstAttribute="top" secondItem="VD7-NK-Iab" secondAttribute="top" id="Q47-du-Jzf"/>
-                            <constraint firstAttribute="trailing" secondItem="QF8-Ta-78K" secondAttribute="trailing" id="kXJ-3T-Rxg"/>
+                            <constraint firstItem="mGs-cE-wBj" firstAttribute="bottom" secondItem="pb7-ow-MVh" secondAttribute="bottom" id="8gA-ns-VAF"/>
+                            <constraint firstItem="pb7-ow-MVh" firstAttribute="leading" secondItem="mGs-cE-wBj" secondAttribute="leading" id="Ou9-KZ-OiV"/>
+                            <constraint firstAttribute="trailing" secondItem="pb7-ow-MVh" secondAttribute="trailing" id="XqR-uB-MUi"/>
+                            <constraint firstItem="pb7-ow-MVh" firstAttribute="top" secondItem="mGs-cE-wBj" secondAttribute="top" id="f4r-zc-F58"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="mGs-cE-wBj"/>
                     </view>
+                    <connections>
+                        <outlet property="blinkingHeart" destination="UnV-tx-ClX" id="QBU-ro-wmD"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="147-yY-Bih" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5588" y="-252"/>
+            <point key="canvasLocation" x="6171" y="-252"/>
         </scene>
         <!--Tutorial Page Battery-->
         <scene sceneID="bDn-K7-wtW">
             <objects>
                 <viewController storyboardIdentifier="tutorial_connect_battery" id="gJR-c5-Vt7" customClass="TutorialPageBattery" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="uX9-Qv-eIi">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="insert_battery_00" translatesAutoresizingMaskIntoConstraints="NO" id="Cas-Dr-e73">
-                                <rect key="frame" x="20" y="44" width="374" height="760"/>
+                                <rect key="frame" x="16" y="0.0" width="288" height="510"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SMo-Wh-StA">
-                                <rect key="frame" x="20" y="812" width="374" height="50"/>
+                                <rect key="frame" x="16" y="518" width="288" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="tWG-uO-Dro"/>
                                 </constraints>
@@ -398,6 +461,7 @@
     </scenes>
     <resources>
         <image name="alert_small" width="55" height="120"/>
+        <image name="ani_heart_01" width="216" height="227"/>
         <image name="ble_01" width="100" height="100"/>
         <image name="demoa_01" width="167" height="51"/>
         <image name="insert_battery_00" width="378" height="268"/>

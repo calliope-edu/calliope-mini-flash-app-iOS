@@ -24,11 +24,17 @@ class TutorialPageConnect: TutorialPageViewController, AnimatingTutorialViewCont
     @IBOutlet weak var collectionView: UICollectionView?
     
     var cellIdentifier = "cell"
-    var secondaryImageDefaultHeight: CGFloat = 40
     
     var animationStep = 0
     
     var animationSpeed = 0.3
+    
+    var cellSize = CGSize(width: 150, height: 150)
+    
+    @IBOutlet weak var continueButtonHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var continueButton: UIButton!
+    
+    var readyCalliopeObservation: Any? = nil
     
     var cellConfigurations: [(String?, UIImage?, [UIImage]?, [UIImage]?)]  =
         [(nil, nil, [#imageLiteral(resourceName: "ble_00")], nil),
@@ -38,13 +44,17 @@ class TutorialPageConnect: TutorialPageViewController, AnimatingTutorialViewCont
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if traitCollection.layoutDirection == .rightToLeft {
-            arrowImageView.image = UIImage(named: "arrows/arrow-top")
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        checkHasConnected()
+        readyCalliopeObservation = NotificationCenter.default.addObserver(forName: CalliopeBLEDevice.usageReadyNotificationName, object: nil, queue: nil) { _ in
+            self.checkHasConnected()
+            UIView.animate(withDuration: 0.3) { [weak self] in
+                self?.view.layoutIfNeeded()
+            }
+        }
         setText()
     }
     
@@ -56,6 +66,10 @@ class TutorialPageConnect: TutorialPageViewController, AnimatingTutorialViewCont
         }
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(false)
+        NotificationCenter.default.removeObserver(readyCalliopeObservation!)
+    }
     
     @IBAction override func nextPage(_ sender: Any) {
         setText()
@@ -98,6 +112,15 @@ class TutorialPageConnect: TutorialPageViewController, AnimatingTutorialViewCont
             } else {
                 self.instructionLabel.text = self.unconnectedText
             }
+        }
+    }
+    
+    private func checkHasConnected() {
+        if hasConnected {
+            continueButtonHeightConstraint.constant = 40
+        } else {
+            continueButtonHeightConstraint.constant = 0
+            continueButton.isHidden = true
         }
     }
     

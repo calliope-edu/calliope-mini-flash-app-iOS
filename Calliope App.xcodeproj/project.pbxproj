@@ -19,6 +19,8 @@
 		2F375AB9237E1179004ED8D7 /* TutorialPageUploadProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F375AB8237E1179004ED8D7 /* TutorialPageUploadProgram.swift */; };
 		2F375ABB237F28BC004ED8D7 /* DefaultProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F375ABA237F28BC004ED8D7 /* DefaultProgram.swift */; };
 		2F57C3B2239058B0008B0D69 /* AnimatingTutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3B1239058B0008B0D69 /* AnimatingTutorialViewController.swift */; };
+		2F57C3B42394F78B008B0D69 /* DownloadableHexFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3B32394F78B008B0D69 /* DownloadableHexFile.swift */; };
+		2F57C3B62394F935008B0D69 /* BlinkingHeartProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3B52394F935008B0D69 /* BlinkingHeartProgram.swift */; };
 		2F61451022BF75DE001C2734 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61450F22BF75DE001C2734 /* AppDelegate.swift */; };
 		2F61451C22BF75DF001C2734 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F61451A22BF75DF001C2734 /* LaunchScreen.storyboard */; };
 		2F61456622BF761F001C2734 /* mini-smile.hex in Resources */ = {isa = PBXBuildFile; fileRef = 2F61452422BF761F001C2734 /* mini-smile.hex */; };
@@ -116,6 +118,8 @@
 		2F375AB8237E1179004ED8D7 /* TutorialPageUploadProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPageUploadProgram.swift; sourceTree = "<group>"; };
 		2F375ABA237F28BC004ED8D7 /* DefaultProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultProgram.swift; sourceTree = "<group>"; };
 		2F57C3B1239058B0008B0D69 /* AnimatingTutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingTutorialViewController.swift; sourceTree = "<group>"; };
+		2F57C3B32394F78B008B0D69 /* DownloadableHexFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadableHexFile.swift; sourceTree = "<group>"; };
+		2F57C3B52394F935008B0D69 /* BlinkingHeartProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkingHeartProgram.swift; sourceTree = "<group>"; };
 		2F61450C22BF75DE001C2734 /* Calliope App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Calliope App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F61450F22BF75DE001C2734 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2F61451B22BF75DF001C2734 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -345,7 +349,9 @@
 				2F61456522BF761F001C2734 /* HexParser.swift */,
 				2F6145A522C7D71B001C2734 /* Settings.swift */,
 				2FC2A12822C8FA6F00675C2F /* News.swift */,
+				2F57C3B32394F78B008B0D69 /* DownloadableHexFile.swift */,
 				2F375ABA237F28BC004ED8D7 /* DefaultProgram.swift */,
+				2F57C3B52394F935008B0D69 /* BlinkingHeartProgram.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -644,6 +650,7 @@
 				2F61457B22BF761F001C2734 /* ValueLocalizer.swift in Sources */,
 				2FC2A12922C8FA6F00675C2F /* News.swift in Sources */,
 				2F61456E22BF761F001C2734 /* CalliopeBLEProfile.swift in Sources */,
+				2F57C3B42394F78B008B0D69 /* DownloadableHexFile.swift in Sources */,
 				2F08A0E5234B11890088A8D6 /* ProgramsCollectionViewController.swift in Sources */,
 				2F61457422BF761F001C2734 /* ApiCalliope.swift in Sources */,
 				2F61458F22BF761F001C2734 /* MatrixConnectionViewController.swift in Sources */,
@@ -687,6 +694,7 @@
 				2F61459622BF761F001C2734 /* LocalEditorViewController.swift in Sources */,
 				2F00EABA22DA3D11000B5FDE /* OnboardingViewController.swift in Sources */,
 				2FFE865E22DB3DDF00728E7C /* TutorialPageConnect.swift in Sources */,
+				2F57C3B62394F935008B0D69 /* BlinkingHeartProgram.swift in Sources */,
 				2F61457322BF761F001C2734 /* BluetoothConstants.swift in Sources */,
 				2F6145A222C7B3C2001C2734 /* NewsCollectionViewController.swift in Sources */,
 				2F61458022BF761F001C2734 /* NotificationConstants.swift in Sources */,

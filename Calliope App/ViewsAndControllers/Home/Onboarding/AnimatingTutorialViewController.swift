@@ -8,11 +8,12 @@
 
 import UIKit
 
-protocol AnimatingTutorialViewController: AnyObject, UICollectionViewDataSource, UICollectionViewDelegate {
+protocol AnimatingTutorialViewController: AnyObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
     var collectionView: UICollectionView? { get }
     
     var cellIdentifier: String { get }
+    var cellSize: CGSize { get }
     var secondaryImageDefaultHeight: CGFloat { get }
     
     var animationSpeed: Double { get }
@@ -27,7 +28,8 @@ protocol AnimatingTutorialViewController: AnyObject, UICollectionViewDataSource,
 extension AnimatingTutorialViewController {
     
     var animationSpeed: Double { return 0.1 }
-    
+    var cellSize: CGSize { return CGSize(width: 300, height: 270) }
+    var secondaryImageDefaultHeight: CGFloat { return 40 }
     var cellDelay: Double { return 3.0 }
     
     func animate() {
@@ -44,6 +46,8 @@ extension AnimatingTutorialViewController {
             animationStep += 1
         }
     }
+    
+    //MARK: proxy methods for unimplementable objective-c protocol methods
     
     func proxyCollectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return min(animationStep, cellConfigurations.count)
@@ -70,7 +74,7 @@ extension AnimatingTutorialViewController {
     }
     
     func proxyCollectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 300, height: 270)
+        return cellSize
     }
     
     private func setCellData(_ cell: OnboardingMiniDemoCollectionViewCell, _ cellData: (String?, UIImage?, [UIImage]?, [UIImage]?)) {
