@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol AnimatingTutorialViewController: AnyObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+protocol AnimatingTutorialViewController: AnyObject, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     var collectionView: UICollectionView? { get }
     
@@ -20,9 +20,12 @@ protocol AnimatingTutorialViewController: AnyObject, UICollectionViewDataSource,
     
     var cellDelay: Double { get }
     
+    /// title, number, main image(s), secondary image(s)
     var cellConfigurations: [(String?, UIImage?, [UIImage]?, [UIImage]?)] { get }
     
     var animationStep: Int { get set }
+    
+    var finishedCallback: () -> () { get }
 }
 
 extension AnimatingTutorialViewController {
@@ -31,6 +34,7 @@ extension AnimatingTutorialViewController {
     var cellSize: CGSize { return CGSize(width: 300, height: 270) }
     var secondaryImageDefaultHeight: CGFloat { return 40 }
     var cellDelay: Double { return 3.0 }
+    var finishedCallback: () -> () { return { } }
     
     func animate() {
         if animationStep < cellConfigurations.count {
@@ -40,10 +44,11 @@ extension AnimatingTutorialViewController {
                 collectionView?.insertItems(at: [indexPath])
             }) { finished in
                 guard finished else { return }
-                self.collectionView?.scrollToItem(at: indexPath, at: .centeredVertically, animated: true) }
+                self.collectionView?.scrollToItem(at: indexPath, at: [.centeredVertically, .centeredHorizontally], animated: true) }
             delay(time: cellDelay, self.animate)
         } else {
             animationStep += 1
+            finishedCallback()
         }
     }
     
@@ -54,7 +59,7 @@ extension AnimatingTutorialViewController {
     }
     
     func proxyCollectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? OnboardingMiniDemoCollectionViewCell else {
+        guard let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? OnboardingCollectionViewCell else {
             fatalError("only miniDemo cells must be provided to miniDemo page!")
         }
         let cellData = cellConfigurations[indexPath.row]
@@ -77,7 +82,7 @@ extension AnimatingTutorialViewController {
         return cellSize
     }
     
-    private func setCellData(_ cell: OnboardingMiniDemoCollectionViewCell, _ cellData: (String?, UIImage?, [UIImage]?, [UIImage]?)) {
+    private func setCellData(_ cell: OnboardingCollectionViewCell, _ cellData: (String?, UIImage?, [UIImage]?, [UIImage]?)) {
         
         cell.title?.text = cellData.0
         cell.number?.image = cellData.1
@@ -109,7 +114,7 @@ extension AnimatingTutorialViewController {
         }
     }
     
-    private func cellFadeInAnimation(_ cell: OnboardingMiniDemoCollectionViewCell) {
+    private func cellFadeInAnimation(_ cell: OnboardingCollectionViewCell) {
         UIView.animate(withDuration: 0.5, animations: {
             cell.contentView.alpha = 1.0
         }) { (_) in
@@ -117,7 +122,7 @@ extension AnimatingTutorialViewController {
         }
     }
     
-    private func startCellImageAnimations(_ cell: OnboardingMiniDemoCollectionViewCell) {
+    private func startCellImageAnimations(_ cell: OnboardingCollectionViewCell) {
         if cell.mainImage?.animationImages != nil {
             cell.mainImage?.startAnimating()
         }

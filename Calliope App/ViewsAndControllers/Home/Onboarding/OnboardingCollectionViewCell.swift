@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OnboardingMiniDemoCollectionViewCell: UICollectionViewCell {
+class OnboardingCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var number: UIImageView?
     @IBOutlet weak var title: UILabel?
     @IBOutlet weak var mainImage: UIImageView?

@@ -6,6 +6,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -91,10 +92,10 @@
                                             <size key="itemSize" width="150" height="150"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                            <inset key="sectionInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
-                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="c6m-US-tJ5" customClass="OnboardingMiniDemoCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="c6m-US-tJ5" customClass="OnboardingCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
                                                 <rect key="frame" x="77" y="0.0" width="150" height="150"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -179,7 +180,7 @@
                                 </subviews>
                             </stackView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alert_small" translatesAutoresizingMaskIntoConstraints="NO" id="OHd-jl-vfF">
-                                <rect key="frame" x="249" y="10" width="55" height="50"/>
+                                <rect key="frame" x="194" y="10" width="110" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Qdf-mx-iTa"/>
                                 </constraints>
@@ -217,35 +218,35 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="EAZ-35-AvB">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="8" y="0.0" width="304" height="568"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Demosequence" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vxr-bB-gsd">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="31.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="304" height="31.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get to know your Calliope Mini" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ogi-fD-zPi">
-                                        <rect key="frame" x="0.0" y="46.5" width="320" height="18"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get to know your Calliope Mini" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ogi-fD-zPi">
+                                        <rect key="frame" x="0.0" y="46.5" width="304" height="18"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Pew-ae-lhb">
-                                        <rect key="frame" x="0.0" y="79.5" width="320" height="423.5"/>
+                                        <rect key="frame" x="0.0" y="79.5" width="304" height="423.5"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="IEw-5W-X2X">
-                                            <size key="itemSize" width="300" height="270"/>
+                                            <size key="itemSize" width="280" height="250"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
-                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="PdY-vZ-tpr" customClass="OnboardingMiniDemoCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                                <rect key="frame" x="10" y="0.0" width="300" height="270"/>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="PdY-vZ-tpr" customClass="OnboardingCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
+                                                <rect key="frame" x="12" y="0.0" width="280" height="250"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                                    <rect key="frame" x="0.0" y="0.0" width="300" height="270"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="280" height="250"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="num_01" translatesAutoresizingMaskIntoConstraints="NO" id="eq6-z0-fNn">
@@ -256,20 +257,20 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Greeting" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M6T-cO-epA">
-                                                            <rect key="frame" x="58" y="15" width="234" height="20.5"/>
+                                                            <rect key="frame" x="58" y="15" width="214" height="20.5"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="demoa_01" translatesAutoresizingMaskIntoConstraints="NO" id="1uK-rv-Alt">
-                                                            <rect key="frame" x="0.0" y="58" width="300" height="164"/>
+                                                            <rect key="frame" x="0.0" y="58" width="280" height="144"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="180" placeholder="YES" id="4bU-a6-EbP"/>
-                                                                <constraint firstAttribute="width" constant="300" placeholder="YES" id="ntJ-cj-u3t"/>
+                                                                <constraint firstAttribute="width" constant="280" placeholder="YES" id="ntJ-cj-u3t"/>
                                                             </constraints>
                                                         </imageView>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rgb_00" translatesAutoresizingMaskIntoConstraints="NO" id="fNq-U4-H85">
-                                                            <rect key="frame" x="0.0" y="230" width="300" height="40"/>
+                                                            <rect key="frame" x="0.0" y="210" width="280" height="40"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="40" id="ypw-jC-pTh"/>
                                                             </constraints>
@@ -305,7 +306,7 @@
                                         </connections>
                                     </collectionView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cod-lu-mjA">
-                                        <rect key="frame" x="0.0" y="518" width="320" height="50"/>
+                                        <rect key="frame" x="0.0" y="518" width="304" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="3Ba-UW-PMy"/>
                                         </constraints>
@@ -321,8 +322,8 @@
                         <constraints>
                             <constraint firstItem="KIv-st-QYv" firstAttribute="bottom" secondItem="EAZ-35-AvB" secondAttribute="bottom" id="CBE-w7-uGX"/>
                             <constraint firstItem="EAZ-35-AvB" firstAttribute="top" secondItem="KIv-st-QYv" secondAttribute="top" id="JyV-HW-0NB"/>
-                            <constraint firstItem="EAZ-35-AvB" firstAttribute="trailing" secondItem="KIv-st-QYv" secondAttribute="trailing" id="TE8-to-Nmc"/>
-                            <constraint firstItem="EAZ-35-AvB" firstAttribute="leading" secondItem="KIv-st-QYv" secondAttribute="leading" id="xVz-Ht-1eM"/>
+                            <constraint firstItem="KIv-st-QYv" firstAttribute="trailing" secondItem="EAZ-35-AvB" secondAttribute="trailing" constant="8" id="TE8-to-Nmc"/>
+                            <constraint firstItem="EAZ-35-AvB" firstAttribute="leading" secondItem="KIv-st-QYv" secondAttribute="leading" constant="8" id="xVz-Ht-1eM"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="KIv-st-QYv"/>
                     </view>
@@ -332,27 +333,121 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="89H-sX-sSM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4137.68115942029" y="-252.45535714285714"/>
+            <point key="canvasLocation" x="4136.25" y="-252.46478873239437"/>
+        </scene>
+        <!--Tutorial Page Mini Menu-->
+        <scene sceneID="G0v-Oe-he0">
+            <objects>
+                <viewController storyboardIdentifier="tutorial_menu" id="fxD-lK-Awt" customClass="TutorialPageMiniMenu" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0Ve-6F-vxG">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="UbU-cJ-iTB">
+                                <rect key="frame" x="8" y="0.0" width="304" height="568"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="990" verticalHuggingPriority="990" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" text="Programs Menu" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pnY-4s-lpT">
+                                        <rect key="frame" x="0.0" y="0.0" width="304" height="31.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IvI-Wa-q7h">
+                                        <rect key="frame" x="0.0" y="31.5" width="304" height="15"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="15" id="IEG-Te-NUj"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="990" verticalHuggingPriority="990" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" text="In the menu, you can navigate to 5 preinstalled programs" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xcv-pQ-1ax">
+                                        <rect key="frame" x="0.0" y="46.5" width="304" height="38"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" horizontalHuggingPriority="280" verticalHuggingPriority="280" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" translatesAutoresizingMaskIntoConstraints="NO" id="AeG-d1-83u">
+                                        <rect key="frame" x="0.0" y="84.5" width="304" height="0.0"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" priority="900" id="nLv-GV-T1U"/>
+                                        </constraints>
+                                    </view>
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wQM-h4-pwo">
+                                        <rect key="frame" x="0.0" y="84.5" width="304" height="220"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="220" id="Ehy-cF-Ps8"/>
+                                        </constraints>
+                                        <connections>
+                                            <segue destination="bDb-1n-Hi4" kind="embed" identifier="embedMenuNavigationCollectionController" destinationCreationSelector="initializeNavigationExplanation:" id="lfw-Nw-gfX"/>
+                                        </connections>
+                                    </containerView>
+                                    <view contentMode="scaleToFill" horizontalHuggingPriority="280" verticalHuggingPriority="280" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" translatesAutoresizingMaskIntoConstraints="NO" id="StZ-o9-lZt">
+                                        <rect key="frame" x="0.0" y="304.5" width="304" height="0.0"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                    </view>
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dJz-B4-mUN">
+                                        <rect key="frame" x="0.0" y="304.5" width="304" height="213.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="70" id="VST-0Y-CnD"/>
+                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="220" id="hVd-g9-oRp"/>
+                                        </constraints>
+                                        <connections>
+                                            <segue destination="gh2-S9-V1V" kind="embed" identifier="embedMenuItemsCollectionController" destinationCreationSelector="initializeItemExplanation:" id="4gV-G3-nye"/>
+                                        </connections>
+                                    </containerView>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="255" verticalHuggingPriority="255" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qXj-re-klm">
+                                        <rect key="frame" x="0.0" y="518" width="304" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="Jnd-9O-CQZ"/>
+                                        </constraints>
+                                        <state key="normal" title="Continue"/>
+                                        <connections>
+                                            <action selector="nextPage:" destination="fxD-lK-Awt" eventType="touchUpInside" id="uO9-rI-TKf"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="AeG-d1-83u" firstAttribute="height" secondItem="StZ-o9-lZt" secondAttribute="height" id="gLB-xl-Az1"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="paN-9X-3oC" firstAttribute="bottom" secondItem="UbU-cJ-iTB" secondAttribute="bottom" id="CpV-la-a9j"/>
+                            <constraint firstItem="paN-9X-3oC" firstAttribute="trailing" secondItem="UbU-cJ-iTB" secondAttribute="trailing" constant="8" id="FLS-i5-SIx"/>
+                            <constraint firstItem="UbU-cJ-iTB" firstAttribute="leading" secondItem="paN-9X-3oC" secondAttribute="leading" constant="8" id="lkn-Xl-U9T"/>
+                            <constraint firstItem="UbU-cJ-iTB" firstAttribute="top" secondItem="paN-9X-3oC" secondAttribute="top" id="mSi-Dx-kRb"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="paN-9X-3oC"/>
+                    </view>
+                    <connections>
+                        <outlet property="itemsExplanationView" destination="dJz-B4-mUN" id="JW8-T0-Xco"/>
+                        <outlet property="navigationExplanationView" destination="wQM-h4-pwo" id="ZXO-60-SCM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LfU-sk-qws" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4809.375" y="-252.46478873239437"/>
         </scene>
         <!--Tutorial Page Upload Program-->
         <scene sceneID="aqg-R3-qDA">
             <objects>
-                <viewController storyboardIdentifier="tutorial3" id="EJn-g7-sOJ" customClass="TutorialPageUploadProgram" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="tutorial_upload_program" id="EJn-g7-sOJ" customClass="TutorialPageUploadProgram" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VD7-NK-Iab">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="pb7-ow-MVh">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="8" y="0.0" width="304" height="568"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Upload Program" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.30000001192092896" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fjc-AF-Uny">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="31.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="304" height="31.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f9R-2U-MF7">
-                                        <rect key="frame" x="0.0" y="47.5" width="320" height="58"/>
+                                        <rect key="frame" x="0.0" y="47.5" width="304" height="58"/>
                                         <string key="text">When connected with your calliope, you can easily upload programs.
 Check it out!</string>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
@@ -360,10 +455,10 @@ Check it out!</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hph-75-bF6">
-                                        <rect key="frame" x="0.0" y="121.5" width="320" height="320"/>
+                                        <rect key="frame" x="0.0" y="121.5" width="304" height="304"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ani_heart_01" translatesAutoresizingMaskIntoConstraints="NO" id="UnV-tx-ClX">
-                                                <rect key="frame" x="10" y="10" width="300" height="300"/>
+                                                <rect key="frame" x="10" y="10" width="284" height="284"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="UnV-tx-ClX" secondAttribute="height" multiplier="1:1" id="EzY-TA-LB5"/>
                                                 </constraints>
@@ -378,11 +473,19 @@ Check it out!</string>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sfp-KL-GAf">
-                                        <rect key="frame" x="0.0" y="457.5" width="320" height="110.5"/>
+                                        <rect key="frame" x="0.0" y="441.5" width="304" height="126.5"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KZP-Ey-EXu">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="110.5"/>
-                                                <state key="normal" title="Blinking heart"/>
+                                            <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="KZP-Ey-EXu">
+                                                <rect key="frame" x="27" y="10" width="250" height="106.5"/>
+                                                <color key="backgroundColor" name="calliope-green"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="250" id="RMz-3T-hUE"/>
+                                                </constraints>
+                                                <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
+                                                <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="40" maxY="0.0"/>
+                                                <state key="normal" title="Upload Program Blinking Heart" image="upload_button">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
                                                 <connections>
                                                     <action selector="uploadProgram:" destination="EJn-g7-sOJ" eventType="touchUpInside" id="BJN-dO-P30"/>
                                                 </connections>
@@ -390,10 +493,9 @@ Check it out!</string>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
-                                            <constraint firstItem="KZP-Ey-EXu" firstAttribute="top" secondItem="sfp-KL-GAf" secondAttribute="top" id="JFf-Wu-s8G"/>
-                                            <constraint firstAttribute="bottom" secondItem="KZP-Ey-EXu" secondAttribute="bottom" id="Yl3-2p-XW2"/>
-                                            <constraint firstItem="KZP-Ey-EXu" firstAttribute="leading" secondItem="sfp-KL-GAf" secondAttribute="leading" id="jgw-Ed-iIu"/>
-                                            <constraint firstAttribute="trailing" secondItem="KZP-Ey-EXu" secondAttribute="trailing" id="zKy-CX-gbT"/>
+                                            <constraint firstItem="KZP-Ey-EXu" firstAttribute="top" secondItem="sfp-KL-GAf" secondAttribute="top" constant="10" id="JFf-Wu-s8G"/>
+                                            <constraint firstItem="KZP-Ey-EXu" firstAttribute="centerX" secondItem="sfp-KL-GAf" secondAttribute="centerX" id="SxP-VH-Bkd"/>
+                                            <constraint firstAttribute="bottom" secondItem="KZP-Ey-EXu" secondAttribute="bottom" constant="10" id="Yl3-2p-XW2"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -402,8 +504,8 @@ Check it out!</string>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="mGs-cE-wBj" firstAttribute="bottom" secondItem="pb7-ow-MVh" secondAttribute="bottom" id="8gA-ns-VAF"/>
-                            <constraint firstItem="pb7-ow-MVh" firstAttribute="leading" secondItem="mGs-cE-wBj" secondAttribute="leading" id="Ou9-KZ-OiV"/>
-                            <constraint firstAttribute="trailing" secondItem="pb7-ow-MVh" secondAttribute="trailing" id="XqR-uB-MUi"/>
+                            <constraint firstItem="pb7-ow-MVh" firstAttribute="leading" secondItem="mGs-cE-wBj" secondAttribute="leading" constant="8" id="Ou9-KZ-OiV"/>
+                            <constraint firstAttribute="trailing" secondItem="pb7-ow-MVh" secondAttribute="trailing" constant="8" id="XqR-uB-MUi"/>
                             <constraint firstItem="pb7-ow-MVh" firstAttribute="top" secondItem="mGs-cE-wBj" secondAttribute="top" id="f4r-zc-F58"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="mGs-cE-wBj"/>
@@ -424,9 +526,6 @@ Check it out!</string>
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="insert_battery_00" translatesAutoresizingMaskIntoConstraints="NO" id="Cas-Dr-e73">
-                                <rect key="frame" x="16" y="0.0" width="288" height="510"/>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SMo-Wh-StA">
                                 <rect key="frame" x="16" y="518" width="288" height="50"/>
                                 <constraints>
@@ -437,16 +536,36 @@ Check it out!</string>
                                     <action selector="nextPage:" destination="gJR-c5-Vt7" eventType="touchUpInside" id="rSb-QG-obf"/>
                                 </connections>
                             </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Qsp-2E-hnb">
+                                <rect key="frame" x="8" y="0.0" width="304" height="518"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="255" verticalHuggingPriority="255" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" text="Start" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4tg-pn-9If">
+                                        <rect key="frame" x="0.0" y="0.0" width="304" height="31.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="255" verticalHuggingPriority="255" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" text="Before you can begin, your Calliope needs energy!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F8L-Km-C5f">
+                                        <rect key="frame" x="0.0" y="31.5" width="304" height="38"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="insert_battery_00" translatesAutoresizingMaskIntoConstraints="NO" id="Cas-Dr-e73">
+                                        <rect key="frame" x="0.0" y="69.5" width="304" height="448.5"/>
+                                    </imageView>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Cas-Dr-e73" firstAttribute="leading" secondItem="uX9-Qv-eIi" secondAttribute="leadingMargin" id="06U-eP-A5n"/>
+                            <constraint firstAttribute="trailing" secondItem="Qsp-2E-hnb" secondAttribute="trailing" constant="8" id="KKs-ZB-ngH"/>
                             <constraint firstItem="SMo-Wh-StA" firstAttribute="bottom" secondItem="uX9-Qv-eIi" secondAttribute="bottomMargin" id="M9j-fj-bTE"/>
-                            <constraint firstItem="SMo-Wh-StA" firstAttribute="top" secondItem="Cas-Dr-e73" secondAttribute="bottom" constant="8" id="OJ6-uw-ZzL"/>
+                            <constraint firstItem="Qsp-2E-hnb" firstAttribute="leading" secondItem="uX9-Qv-eIi" secondAttribute="leading" constant="8" id="NeV-7K-e4Q"/>
                             <constraint firstAttribute="trailingMargin" secondItem="SMo-Wh-StA" secondAttribute="trailing" id="ORx-es-7AF"/>
-                            <constraint firstItem="Cas-Dr-e73" firstAttribute="top" secondItem="uX9-Qv-eIi" secondAttribute="topMargin" id="Ud8-Wz-gMD"/>
+                            <constraint firstItem="Qsp-2E-hnb" firstAttribute="top" secondItem="foR-mk-NGJ" secondAttribute="top" id="e9i-rJ-oQA"/>
                             <constraint firstItem="SMo-Wh-StA" firstAttribute="leading" secondItem="uX9-Qv-eIi" secondAttribute="leadingMargin" id="izN-pK-qVc"/>
-                            <constraint firstItem="Cas-Dr-e73" firstAttribute="trailing" secondItem="uX9-Qv-eIi" secondAttribute="trailingMargin" id="vQ1-Su-jNE"/>
+                            <constraint firstItem="SMo-Wh-StA" firstAttribute="top" secondItem="Qsp-2E-hnb" secondAttribute="bottom" id="q1a-Lw-cCH"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="foR-mk-NGJ"/>
                     </view>
@@ -458,6 +577,160 @@ Check it out!</string>
             </objects>
             <point key="canvasLocation" x="3469.5652173913045" y="-252.45535714285714"/>
         </scene>
+        <!--Menu Navigation Collection View Controller-->
+        <scene sceneID="A91-WI-4F1">
+            <objects>
+                <viewController id="bDb-1n-Hi4" customClass="MenuNavigationCollectionViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Fgy-Tq-pwb">
+                        <rect key="frame" x="0.0" y="0.0" width="304" height="230"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="vFr-6E-u2C">
+                                <rect key="frame" x="16" y="0.0" width="272" height="230"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="30" minimumInteritemSpacing="30" id="GuY-3A-O6o">
+                                    <size key="itemSize" width="200" height="200"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="XNQ-rN-9bj" customClass="OnboardingCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="5" width="220" height="220"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="lOG-5I-U3H">
+                                            <rect key="frame" x="0.0" y="0.0" width="220" height="220"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select the program by pressing one of the buttons buttons A and B" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Ws-hz-lPK">
+                                                    <rect key="frame" x="0.0" y="146.5" width="220" height="73.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KO6-rm-bTs">
+                                                    <rect key="frame" x="0.0" y="0.0" width="220" height="146.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="KO6-rm-bTs" secondAttribute="height" multiplier="3:2" id="V3Q-xq-R4v"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="KO6-rm-bTs" firstAttribute="leading" secondItem="lOG-5I-U3H" secondAttribute="leading" id="Ek2-Uk-0iS"/>
+                                                <constraint firstAttribute="bottom" secondItem="2Ws-hz-lPK" secondAttribute="bottom" id="NKh-wJ-023"/>
+                                                <constraint firstAttribute="trailing" secondItem="2Ws-hz-lPK" secondAttribute="trailing" id="NQ3-L6-r6m"/>
+                                                <constraint firstAttribute="trailing" secondItem="KO6-rm-bTs" secondAttribute="trailing" id="Pru-sz-auq"/>
+                                                <constraint firstItem="2Ws-hz-lPK" firstAttribute="top" secondItem="KO6-rm-bTs" secondAttribute="bottom" id="XZe-Op-MEQ"/>
+                                                <constraint firstItem="2Ws-hz-lPK" firstAttribute="leading" secondItem="lOG-5I-U3H" secondAttribute="leading" id="Zab-qf-iLq"/>
+                                                <constraint firstItem="KO6-rm-bTs" firstAttribute="top" secondItem="lOG-5I-U3H" secondAttribute="top" id="fta-Du-QCI"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="220" height="220"/>
+                                        <connections>
+                                            <outlet property="mainImage" destination="KO6-rm-bTs" id="ROW-6l-rm8"/>
+                                            <outlet property="title" destination="2Ws-hz-lPK" id="Tbl-B1-zfO"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="bDb-1n-Hi4" id="FGc-Fq-9c6"/>
+                                    <outlet property="delegate" destination="bDb-1n-Hi4" id="3Mt-rU-BCh"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottomMargin" secondItem="vFr-6E-u2C" secondAttribute="bottom" id="XRn-O9-scd"/>
+                            <constraint firstItem="vFr-6E-u2C" firstAttribute="leading" secondItem="Fgy-Tq-pwb" secondAttribute="leadingMargin" id="anG-v3-WiC"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="vFr-6E-u2C" secondAttribute="trailing" id="jHS-Po-kHf"/>
+                            <constraint firstItem="vFr-6E-u2C" firstAttribute="top" secondItem="Fgy-Tq-pwb" secondAttribute="topMargin" id="qQ2-C5-Wb0"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="collectionView" destination="vFr-6E-u2C" id="obb-B2-iQA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uZs-7k-LvU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4111.875" y="424.11971830985914"/>
+        </scene>
+        <!--Menu Items Collection View Controller-->
+        <scene sceneID="x2e-o6-DTp">
+            <objects>
+                <viewController id="gh2-S9-V1V" customClass="MenuItemsCollectionViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4ia-5C-zh3">
+                        <rect key="frame" x="0.0" y="0.0" width="304" height="173.5"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ndx-LY-IH3">
+                                <rect key="frame" x="16" y="0.0" width="272" height="173.5"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="zKC-xH-E8j">
+                                    <size key="itemSize" width="250" height="60"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="Iet-UU-t1W" customClass="OnboardingCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="250" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="zcS-tu-kOV">
+                                            <rect key="frame" x="0.0" y="0.0" width="250" height="60"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rock, Paper, Scissor and some longer" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q08-Ut-VtN">
+                                                    <rect key="frame" x="60" y="8" width="182" height="44"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="num_01" translatesAutoresizingMaskIntoConstraints="NO" id="vPa-W8-o5A">
+                                                    <rect key="frame" x="8" y="8" width="44" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="vPa-W8-o5A" secondAttribute="height" multiplier="1:1" id="ngP-1H-rMe"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="Q08-Ut-VtN" secondAttribute="trailing" constant="8" id="Bqq-rT-3cv"/>
+                                                <constraint firstItem="Q08-Ut-VtN" firstAttribute="leading" secondItem="vPa-W8-o5A" secondAttribute="trailing" constant="8" id="dMI-qA-VDK"/>
+                                                <constraint firstItem="vPa-W8-o5A" firstAttribute="leading" secondItem="zcS-tu-kOV" secondAttribute="leading" constant="8" id="kMp-sV-rC8"/>
+                                                <constraint firstItem="Q08-Ut-VtN" firstAttribute="top" secondItem="zcS-tu-kOV" secondAttribute="top" constant="8" id="ljV-fT-3Rr"/>
+                                                <constraint firstAttribute="bottom" secondItem="Q08-Ut-VtN" secondAttribute="bottom" constant="8" id="nLq-wR-lOl"/>
+                                                <constraint firstAttribute="bottom" secondItem="vPa-W8-o5A" secondAttribute="bottom" constant="8" id="nke-Ui-uOO"/>
+                                                <constraint firstItem="vPa-W8-o5A" firstAttribute="top" secondItem="zcS-tu-kOV" secondAttribute="top" constant="8" id="u8K-xZ-z9t"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="250" height="60"/>
+                                        <connections>
+                                            <outlet property="number" destination="vPa-W8-o5A" id="4JF-Ke-o5C"/>
+                                            <outlet property="title" destination="Q08-Ut-VtN" id="G8y-zA-Rx3"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="gh2-S9-V1V" id="mvt-py-Y4P"/>
+                                    <outlet property="delegate" destination="gh2-S9-V1V" id="Tjl-He-AJR"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottomMargin" secondItem="ndx-LY-IH3" secondAttribute="bottom" id="Ugz-TZ-QFh"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ndx-LY-IH3" secondAttribute="trailing" id="giG-Vg-YyO"/>
+                            <constraint firstItem="ndx-LY-IH3" firstAttribute="top" secondItem="4ia-5C-zh3" secondAttribute="topMargin" id="gka-ee-hHQ"/>
+                            <constraint firstItem="ndx-LY-IH3" firstAttribute="leading" secondItem="4ia-5C-zh3" secondAttribute="leadingMargin" id="wwr-QR-ymj"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="collectionView" destination="ndx-LY-IH3" id="a8b-o2-xmX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qkx-Pa-7Qs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4841.25" y="425.7042253521127"/>
+        </scene>
     </scenes>
     <resources>
         <image name="alert_small" width="55" height="120"/>
@@ -468,6 +741,10 @@ Check it out!</string>
         <image name="num_01" width="25" height="25"/>
         <image name="paging_01" width="60" height="9"/>
         <image name="rgb_00" width="20" height="20"/>
+        <image name="upload_button" width="33" height="43"/>
+        <namedColor name="calliope-green">
+            <color red="0.27500000596046448" green="0.875" blue="0.4309999942779541" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="calliope-purple">
             <color red="0.50199997425079346" green="0.45100000500679016" blue="0.89800000190734863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

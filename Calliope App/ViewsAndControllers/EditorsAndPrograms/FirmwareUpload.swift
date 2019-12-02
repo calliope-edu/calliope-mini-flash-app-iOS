@@ -10,6 +10,41 @@ import UICircularProgressRing
 import iOSDFULibrary
 
 class FirmwareUpload {
+    
+    public static func showUIForDownloadableProgram(controller: UIViewController, program: DownloadableHexFile, name: String = "the program", completion: (() -> ())? = nil) {
+        if (program.bin.count != 0) {
+            FirmwareUpload.showUploadUI(controller: controller, program: program) {
+                MatrixConnectionViewController.instance.connect()
+            }
+        } else {
+            let alertStart = UIAlertController(title: "Wait a little", message: "The program is being downloaded. Please wait a little.", preferredStyle: .alert)
+            alertStart.addAction(UIAlertAction(title: "Ok", style: .default))
+            
+            controller.present(alertStart, animated: true) {
+                program.load { error in
+                    let alert: UIAlertController
+                    
+                    if error == nil {
+                        let alertDone = UIAlertController(title: "Download finished", message: "The program is downloaded. Do you want to upload it now?", preferredStyle: .alert)
+                        alertDone.addAction(UIAlertAction(title: "Yes", style: .default) { _ in
+                            self.showUIForDownloadableProgram(controller: controller, program: program)
+                        })
+                        alertDone.addAction(UIAlertAction(title: "No", style: .cancel))
+                        alert = alertDone
+                    } else {
+                        let alertError = UIAlertController(title: "Program download failed", message: "The program is not ready. The reason is\n\(error!.localizedDescription)", preferredStyle: .alert)
+                        alertError.addAction(UIAlertAction(title: "Ok", style: .default))
+                        alert = alertError
+                    }
+                    DispatchQueue.main.async {
+                        alertStart.dismiss(animated: true) {
+                            controller.present(alert, animated: true)
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     public static func showUploadUI(controller: UIViewController, program: Hex, name: String = "the program", completion: (() -> ())? = nil) {
         let alert = UIAlertController(title: "Upload?", message: "Do you want to upload \(name) to your calliope?", preferredStyle: .alert)

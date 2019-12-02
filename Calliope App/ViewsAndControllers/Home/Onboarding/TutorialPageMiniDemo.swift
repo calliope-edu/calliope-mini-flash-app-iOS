@@ -12,6 +12,8 @@ class TutorialPageMiniDemo: TutorialPageViewController, AnimatingTutorialViewCon
     
     @IBOutlet weak var collectionView: UICollectionView?
     
+    var cellSize: CGSize = CGSize(width: 280, height: 250)
+    
     var cellIdentifier = "cell"
     var secondaryImageDefaultHeight: CGFloat = 40
     
