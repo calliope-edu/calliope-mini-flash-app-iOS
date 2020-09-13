@@ -9,11 +9,9 @@
 import UIKit
 import DeepDiff
 
-private let reuseIdentifier = "Cell"
-
 class ProgramsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, ProgramCellDelegate {
 
-    private let reuseIdentifierProgram = "simpleProgramCell"
+    private let reuseIdentifierProgram = "uploadProgramCell"
 
     private lazy var hexFiles: [HexFile] = { () -> [HexFile] in
         do { return try HexFileManager.stored() }
@@ -47,7 +45,7 @@ class ProgramsCollectionViewController: UICollectionViewController, UICollection
         
         viewSize = size
         
-        recalculateSizeOfAllCells(size)
+        //recalculateSizeOfAllCells(size) //commented out for uploadProgramCell only! comment in when other cell is used
         
         coordinator.animate(alongsideTransition: {_ in
             self.collectionView.performBatchUpdates(nil, completion: nil)
@@ -82,6 +80,11 @@ class ProgramsCollectionViewController: UICollectionViewController, UICollection
         let cell: UICollectionViewCell
         cell = createProgramCell(collectionView, indexPath)
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        //for uploadProgramCell only! delete method when other cell is used
+        return CGSize(width: collectionView.frame.size.width - 20, height: 70)
     }
     
     private func createProgramCell(_ collectionView: UICollectionView, _ indexPath: IndexPath) -> UICollectionViewCell {

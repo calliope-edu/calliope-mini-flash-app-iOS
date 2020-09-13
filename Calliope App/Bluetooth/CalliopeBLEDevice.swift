@@ -10,6 +10,8 @@ import CoreBluetooth
 
 class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 
+    public static let usageReadyNotificationName = NSNotification.Name("calliope_is_usage_ready")
+    
 	//the services required for the playground
 	var requiredServices : Set<CalliopeService> {
 		fatalError("The CalliopeBLEDevice Class is abstract! At least requiredServices variable must be overridden by subclass.")
@@ -46,7 +48,10 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 			DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + BluetoothConstants.couplingDelay) {
 				self.evaluateMode()
 			}
-		}
+        } else if state == .usageReady {
+            NotificationCenter.default.post(name: CalliopeBLEDevice.usageReadyNotificationName,
+                                            object: self, userInfo: nil)
+        }
 	}
 
 	var updateQueue = DispatchQueue.main

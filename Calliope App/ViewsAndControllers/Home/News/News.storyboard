@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="K0t-fe-o83">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="K0t-fe-o83">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -31,7 +31,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="290" height="260"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NlZ-1d-IaO">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NlZ-1d-IaO">
                                             <rect key="frame" x="0.0" y="0.0" width="290" height="193.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="NlZ-1d-IaO" secondAttribute="height" multiplier="3:2" id="oIJ-bE-aXt"/>
@@ -40,9 +40,16 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There is veeery long text which could end up in two lines" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="uGQ-ja-syg">
                                             <rect key="frame" x="8" y="201.5" width="274" height="50.5"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
-                                            <nil key="textColor"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b3c-so-xL7">
+                                            <rect key="frame" x="8" y="193.5" width="274" height="2"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="2" id="Lrd-sh-bo5"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                 </view>
                                 <color key="backgroundColor" name="calliope-turqoise"/>
@@ -50,15 +57,18 @@
                                     <constraint firstItem="NlZ-1d-IaO" firstAttribute="width" secondItem="tvy-v3-k7G" secondAttribute="width" id="1JS-wG-clp"/>
                                     <constraint firstItem="NlZ-1d-IaO" firstAttribute="leading" secondItem="tvy-v3-k7G" secondAttribute="leading" id="1V2-l2-GDG"/>
                                     <constraint firstItem="NlZ-1d-IaO" firstAttribute="top" secondItem="tvy-v3-k7G" secondAttribute="top" id="DVP-34-wSu"/>
+                                    <constraint firstItem="b3c-so-xL7" firstAttribute="leading" secondItem="tvy-v3-k7G" secondAttribute="leading" constant="8" id="GpG-E0-Ub4"/>
                                     <constraint firstItem="uGQ-ja-syg" firstAttribute="top" secondItem="NlZ-1d-IaO" secondAttribute="bottom" constant="8" id="HgY-f4-oDH"/>
                                     <constraint firstAttribute="bottom" secondItem="uGQ-ja-syg" secondAttribute="bottom" priority="999" constant="8" id="Mgz-Jt-Ui4"/>
+                                    <constraint firstAttribute="trailing" secondItem="b3c-so-xL7" secondAttribute="trailing" constant="8" id="NMY-bX-6Tn"/>
                                     <constraint firstItem="uGQ-ja-syg" firstAttribute="leading" secondItem="tvy-v3-k7G" secondAttribute="leading" constant="8" id="Ooi-60-faT"/>
                                     <constraint firstAttribute="trailing" secondItem="uGQ-ja-syg" secondAttribute="trailing" priority="999" constant="8" id="SeY-KH-GOM"/>
                                     <constraint firstAttribute="trailing" secondItem="NlZ-1d-IaO" secondAttribute="trailing" priority="999" id="T7T-jw-CW3"/>
+                                    <constraint firstItem="b3c-so-xL7" firstAttribute="top" secondItem="NlZ-1d-IaO" secondAttribute="bottom" id="rgY-WZ-JtL"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="15"/>
+                                        <integer key="value" value="7"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -78,7 +88,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tWA-pU-LKy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1980" y="268"/>
+            <point key="canvasLocation" x="1979.7101449275365" y="267.85714285714283"/>
         </scene>
         <!--News Detail Web View Controller-->
         <scene sceneID="qDv-kB-uBH">

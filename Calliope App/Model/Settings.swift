@@ -36,6 +36,8 @@ public struct Settings {
 				#endif
             case .defaultHexFileURL:
                 defaultValue = "https://calliope.cc/media/pages/ble/-903257399-1566558063/calliope-demo-combined-mit-dfu-20190820.hex"
+            case .blinkingHeartURL: //TODO: replace with correct URL
+                defaultValue = "https://calliope.cc/media/pages/ble/-903257399-1566558063/calliope-demo-combined-mit-dfu-20190820.hex"
             }
 			defaultSettings[key.rawValue] = defaultValue
 		}
@@ -61,4 +63,6 @@ public enum SettingsKey: String, CaseIterable {
 	case newsURL = "calliopeNewsUrlPreference"
     
     case defaultHexFileURL = "calliopeDefaultHexFilePreference"
+    
+    case blinkingHeartURL = "calliopeBlinkingHeartHexPreference"
 }

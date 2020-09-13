@@ -10,30 +10,55 @@ import UIKit
 
 class EditorAndProgramsContainerViewController: UIViewController {
     
-    @IBOutlet weak var editorContainerView: UIView!
-    @IBOutlet weak var programContainerView: UIView!
-    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var stackView: UIStackView?
     
-    @objc var editorsCollectionViewController: EditorsCollectionViewController!
-    var editorsHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var editorContainerView: UIView?
     
-    @objc var programsCollectionViewController: ProgramsCollectionViewController!
-    var programsHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var programContainerView: UIView?
+    
+    @objc var editorsCollectionViewController: EditorsCollectionViewController?
+    @IBOutlet var editorTopToSafeArea: NSLayoutConstraint?
+    @IBOutlet var editorBottomToSafeArea: NSLayoutConstraint?
+    var editorsHeightConstraint: NSLayoutConstraint?
+    
+    @objc var programsCollectionViewController: ProgramsCollectionViewController?
+    var programsHeightConstraint: NSLayoutConstraint?
     
     var editorsKvo: Any?
     var programsKvo: Any?
     var bottomInsetKvo: Any?
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate(alongsideTransition: { (_) in
+            self.configureLayout(size)
+        }, completion: { _ in
+            self.programsCollectionViewController?.collectionView.reloadData()
+            self.editorsCollectionViewController?.collectionView.reloadData()
+        })
+    }
+    
+    private func configureLayout(_ size: CGSize) {
+        let landscape = size.width > size.height
+        stackView?.distribution = landscape ? .fillEqually : .fill
+        stackView?.alignment = landscape ? .top : .fill
+        stackView?.axis = landscape ? .horizontal : .vertical
+        editorTopToSafeArea?.isActive = landscape
+        editorBottomToSafeArea?.isActive = landscape
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        editorContainerView.translatesAutoresizingMaskIntoConstraints = false
-        editorsHeightConstraint = editorContainerView.heightAnchor.constraint(equalToConstant: 10)
-        editorsHeightConstraint.isActive = true
+        editorContainerView?.translatesAutoresizingMaskIntoConstraints = false
+        editorsHeightConstraint = editorContainerView?.heightAnchor.constraint(equalToConstant: 10)
+        editorsHeightConstraint?.isActive = true
         
-        programContainerView.translatesAutoresizingMaskIntoConstraints = false
-        programsHeightConstraint = programContainerView.heightAnchor.constraint(equalToConstant: 10)
-        programsHeightConstraint.isActive = true
+        programContainerView?.translatesAutoresizingMaskIntoConstraints = false
+        programsHeightConstraint = programContainerView?.heightAnchor.constraint(equalToConstant: 10)
+        programsHeightConstraint?.isActive = true
+        
+        configureLayout(UIApplication.shared.keyWindow!.frame.size)
     }
     
     @IBSegueAction func initializeEditor(_ coder: NSCoder) -> EditorsCollectionViewController? {
@@ -50,14 +75,14 @@ class EditorAndProgramsContainerViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        editorsKvo = observe(\.editorsCollectionViewController.collectionView?.contentSize) { (containerVC, _) in
-            containerVC.editorsHeightConstraint.constant = containerVC.editorsCollectionViewController.collectionView.contentSize.height
-            containerVC.editorsCollectionViewController.collectionView.layoutIfNeeded()
+        editorsKvo = observe(\.editorsCollectionViewController?.collectionView.contentSize) { (containerVC, _) in
+            containerVC.editorsHeightConstraint!.constant = containerVC.editorsCollectionViewController!.collectionView.contentSize.height
+            containerVC.editorsCollectionViewController?.collectionView.layoutIfNeeded()
         }
         
-        programsKvo = observe(\.programsCollectionViewController.collectionView?.contentSize) { (containerVC, _) in
-            containerVC.programsHeightConstraint.constant = containerVC.programsCollectionViewController.collectionView.contentSize.height
-            containerVC.programsCollectionViewController.collectionView.layoutIfNeeded()
+        programsKvo = observe(\.programsCollectionViewController?.collectionView.contentSize) { (containerVC, _) in
+            containerVC.programsHeightConstraint!.constant = containerVC.programsCollectionViewController!.collectionView.contentSize.height
+            containerVC.programsCollectionViewController?.collectionView.layoutIfNeeded()
         }
         
         MatrixConnectionViewController.instance?.connectionDescriptionText = "ConnectionDescription for program upload"

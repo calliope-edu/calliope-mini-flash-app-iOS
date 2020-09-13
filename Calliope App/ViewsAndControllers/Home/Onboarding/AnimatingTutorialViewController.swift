@@ -23,6 +23,12 @@ protocol AnimatingTutorialViewController: AnyObject, UICollectionViewDataSource,
     /// title, number, main image(s), secondary image(s)
     var cellConfigurations: [(String?, UIImage?, [UIImage]?, [UIImage]?)] { get }
     
+    /// the section and item numbers for all items in cellConfigurations
+    func indexPathForItem(_ number: Int) -> IndexPath
+    
+    /// the inverse of indexPathForItem
+    func itemForIndexPath(_ indexPath: IndexPath) -> Int
+    
     var animationStep: Int { get set }
     
     var finishedCallback: () -> () { get }
@@ -33,12 +39,20 @@ extension AnimatingTutorialViewController {
     var animationSpeed: Double { return 0.1 }
     var cellSize: CGSize { return CGSize(width: 300, height: 270) }
     var secondaryImageDefaultHeight: CGFloat { return 40 }
-    var cellDelay: Double { return 3.0 }
+    var cellDelay: Double { return 2.0 }
     var finishedCallback: () -> () { return { } }
+    
+    func indexPathForItem(_ number: Int) -> IndexPath {
+        return IndexPath(item: number, section: 0)
+    }
+    
+    func itemForIndexPath(_ indexPath: IndexPath) -> Int {
+        return indexPath.item
+    }
     
     func animate() {
         if animationStep < cellConfigurations.count {
-            let indexPath = IndexPath(row: animationStep, section: 0)
+            let indexPath = indexPathForItem(animationStep)
             collectionView?.performBatchUpdates({
                 animationStep += 1
                 collectionView?.insertItems(at: [indexPath])
@@ -62,11 +76,12 @@ extension AnimatingTutorialViewController {
         guard let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? OnboardingCollectionViewCell else {
             fatalError("only miniDemo cells must be provided to miniDemo page!")
         }
-        let cellData = cellConfigurations[indexPath.row]
+        let itemNumber = itemForIndexPath(indexPath)
+        let cellData = cellConfigurations[itemNumber]
         
         setCellData(cell, cellData)
         
-        if (animationStep == indexPath.row + 1) {
+        if (animationStep == itemNumber + 1) {
             cell.contentView.alpha = 0
             delay(time: 0.3) {
                 self.cellFadeInAnimation(cell)

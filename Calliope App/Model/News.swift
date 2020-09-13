@@ -30,7 +30,7 @@ struct NewsManager {
 	}
 
 	static func getDefaultNews() -> [NewsItem] {
-		return [NewsItem(image: nil, text: "Happy Coding", url: URL(string: "http://calliope.cc")!, color: #colorLiteral(red: 0.5019999743, green: 0.451000005, blue: 0.8980000019, alpha: 1).hex, textcolor: #colorLiteral(red: 0.4079999924, green: 0.8309999704, blue: 0.8309999704, alpha: 1).hex)]
+		return [NewsItem(image: nil, text: "No Internet", url: URL(string: "http://calliope.cc")!, color: #colorLiteral(red: 0.5019999743, green: 0.451000005, blue: 0.8980000019, alpha: 1).hex, textcolor: #colorLiteral(red: 0.4079999924, green: 0.8309999704, blue: 0.8309999704, alpha: 1).hex)]
         //color: #colorLiteral(red: 0.5019999743, green: 0.451000005, blue: 0.8980000019, alpha: 1).hex, textcolor: #colorLiteral(red: 0.4079999924, green: 0.8309999704, blue: 0.8309999704, alpha: 1).hex
 	}
 }
@@ -44,7 +44,7 @@ struct NewsItem: Codable {
 
 	func loadImage(_ completion: @escaping (Result<UIImage, Error>) -> ()) {
 		guard let imageUrl = image else {
-			completion(.success(#imageLiteral(resourceName: "AnimSuccess/0018")))
+			completion(.success(#imageLiteral(resourceName: "teaser_noInternet.pdf")))
 			return
 		}
 		let task = URLSession.shared.dataTask(with: imageUrl) {data, response, error in

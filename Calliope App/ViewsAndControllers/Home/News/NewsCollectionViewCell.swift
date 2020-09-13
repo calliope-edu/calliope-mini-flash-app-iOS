@@ -27,16 +27,17 @@ class NewsCollectionViewCell: UICollectionViewCell {
 			}
 		}
 		news?.loadImage({ [weak self] result in
-			switch result {
-			case .success(let image):
-				DispatchQueue.main.async { UIView.animate(withDuration: 0.2) {
-					self?.newsImageView.image = image
-					}
-				}
-			case .failure(let error):
-				//TODO: handle error
-				break
-			}
-		})
+            switch result {
+            case .success(let image):
+                DispatchQueue.main.async {
+                    UIView.animate(withDuration: 0.2) {
+                        self?.newsImageView.image = image
+                    }
+                }
+            case .failure(let error):
+                //TODO: handle error
+                break
+            }
+        })
 	}
 }

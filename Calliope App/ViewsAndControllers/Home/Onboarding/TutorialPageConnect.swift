@@ -12,9 +12,7 @@ class TutorialPageConnect: TutorialPageViewController, AnimatingTutorialViewCont
     
     let unconnectedText = "Push the button and follow the instructions for connecting to your Calliope"
     let succeededText = "You are connected to your Calliope, well done!"
-    
-    @IBOutlet weak var arrowImageView: UIImageView!
-    
+        
     @IBOutlet weak var instructionLabel: UILabel!
     
     var hasConnected: Bool {
@@ -29,7 +27,7 @@ class TutorialPageConnect: TutorialPageViewController, AnimatingTutorialViewCont
     
     var animationSpeed = 0.3
     
-    var cellSize = CGSize(width: 150, height: 150)
+    var cellSize = CGSize(width: 100, height: 100)
     
     @IBOutlet weak var continueButtonHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var continueButton: UIButton!
@@ -95,11 +93,11 @@ class TutorialPageConnect: TutorialPageViewController, AnimatingTutorialViewCont
         
         let originalTransform = CGAffineTransform(a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0);
         UIView.animate(withDuration: 0.25, delay: 0.0, options: .curveEaseOut, animations: {
-            self.arrowImageView.transform = originalTransform.scaledBy(x: 1.5, y: 1.5)
+            //self.arrowImageView.transform = originalTransform.scaledBy(x: 1.5, y: 1.5)
             self.view.layoutIfNeeded()
         }) { _ in
             UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 0.4, initialSpringVelocity: 0.0, options: .curveEaseIn, animations: {
-                self.arrowImageView.transform = originalTransform
+                //self.arrowImageView.transform = originalTransform
                 self.view.layoutIfNeeded()
             }, completion: nil)
         }

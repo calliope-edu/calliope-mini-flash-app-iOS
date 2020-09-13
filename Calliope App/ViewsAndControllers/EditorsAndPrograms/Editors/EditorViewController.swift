@@ -8,11 +8,12 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
     //TODO: after ios11 is dropped, make this a LET constant and remove the exclamation mark
     var editor: Editor!
 
-    private var webview: WKWebView?
+    var webview: WKWebView! //webviews are buggy and cannot be placed via interface builder
 
     init?(coder: NSCoder, editor: Editor) {
         self.editor = editor
         super.init(coder: coder)
+         
     }
     
     required init?(coder: NSCoder) {
@@ -28,28 +29,38 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
         navigationItem.title = editor.name
         view.backgroundColor = Styles.colorWhite
 
-        let controller = WKUserContentController()
-        let configuration = WKWebViewConfiguration()
-        configuration.userContentController = controller;
-        let webView = WKWebView(frame:self.view.bounds, configuration: configuration)
-        webView.navigationDelegate = self
-        webView.uiDelegate = self
-        webView.backgroundColor = Styles.colorWhite
-        self.view.insertSubview(webView, at: 0)
-        self.webview = webView
-
         guard let url = editor.url else {
             LogNotify.log("URL is empty!)")
             return
         }
         LogNotify.log("loading \(url)")
+        
+        let controller = WKUserContentController()
+        let configuration = WKWebViewConfiguration()
+        configuration.userContentController = controller;
+        webview = WKWebView(frame:self.view.bounds, configuration: configuration)
+        webview.translatesAutoresizingMaskIntoConstraints = false
+        
+        webview.navigationDelegate = self
+        webview.uiDelegate = self
+        webview.backgroundColor = Styles.colorWhite
+        
+        self.view.insertSubview(webview, at: 0)
+        let bounds: UILayoutGuide = self.view.safeAreaLayoutGuide
+        webview.topAnchor.constraint(equalTo: bounds.topAnchor).isActive = true
+        webview.bottomAnchor.constraint(equalTo: bounds.bottomAnchor).isActive = true
+        webview.leftAnchor.constraint(equalTo: bounds.leftAnchor).isActive = true
+        webview.rightAnchor.constraint(equalTo: bounds.rightAnchor).isActive = true
+        
+        if #available(iOS 13.0, *), traitCollection.userInterfaceIdiom == .pad {
+            //TODO: turn this off when microsoft pxt and nepo can handle the new useragent of iOS13
+            // i.e. they check in a different way for the browser type,
+            // e.g. as suggested on https://51degrees.com/blog/missing-ipad-tablet-web-traffic
+            webview.customUserAgent = "Mozilla/5.0 (iPad; CPU OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.1 Mobile/15E148 Safari/604.1"
+        }
 
         loadingIndicator.startAnimating()
-        webView.load(URLRequest(url: url))
-
-        webView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
+        self.webview?.load(URLRequest(url: url))
     }
 
 	override func viewWillAppear(_ animated: Bool) {

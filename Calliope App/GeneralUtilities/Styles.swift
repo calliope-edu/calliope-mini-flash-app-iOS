@@ -12,11 +12,11 @@ struct Styles {
     static let colorBlue = UIColor(hex:0x00C8C6)
     static let colorWhite = UIColor(hex:0xFFFFFF)
     
-    static let regularFontName = "RobotoMono-Regular"
-    static let mediumFontName = "RobotoMono-Medium"
-    static let lightFontName = "RobotoMono-Light"
-    static let italicFontName = "RobotoMono-Italic"
-    static let boldFontName = "RobotoMono-Bold"
+    static let regularFontName = "Roboto-Regular"
+    static let mediumFontName = "Roboto-Medium"
+    static let lightFontName = "Roboto-Light"
+    static let italicFontName = "Roboto-Italic"
+    static let boldFontName = "Roboto-Bold"
     
     static func defaultBoldFont(size: CGFloat) -> UIFont {
         return UIFont(name: boldFontName, size: size) ?? UIFont.systemFont(ofSize: size, weight: .bold)

@@ -12,6 +12,8 @@ private let reuseIdentifierNewsCell = "newsCell"
 
 class NewsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
+    let widthRatio: CGFloat = 1.2
+    
 	var news: [NewsItem] = [] {
 		didSet {
 			DispatchQueue.main.async {
@@ -35,13 +37,23 @@ class NewsCollectionViewController: UICollectionViewController, UICollectionView
 		}
     }
     
-	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-		coordinator.animate(alongsideTransition: { (_) in
+    var intermediarySize: CGSize? = nil
+    
+    override func viewWillTransition(to size: CGSize, with coordinator:
+        UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        intermediarySize = CGSize(width: min(collectionView.frame.size.width, size.width), height: min(collectionView.frame.size.height, size.height))
+        collectionViewLayout.invalidateLayout()
+        
+        coordinator.animate(alongsideTransition: { context in
             self.collectionViewLayout.invalidateLayout()
-		}, completion: { _ in
-            self.layoutDirty = self.view.bounds.size != size
+        }, completion: { [weak self] _ in
+            self?.intermediarySize = nil
+            self?.collectionViewLayout.invalidateLayout()
+            self?.layoutDirty = self?.view.bounds.size != size
         })
-	}
+    }
     
     
     //layoutDirty is a little hack, since an offscreen size change is not reflected in the view bounds.
@@ -97,23 +109,20 @@ class NewsCollectionViewController: UICollectionViewController, UICollectionView
     }
     
     fileprivate func calculateItemSize() -> CGSize {
-        let frameHeight = self.collectionView.frame.size.height;
-        let frameWidth = self.collectionView.frame.size.width;
+        let size = intermediarySize ?? self.collectionView.frame.size
+        
+        let frameHeight = size.height
+        let frameWidth = size.width
         
         let spacing: CGFloat = (self.collectionViewLayout as! UICollectionViewFlowLayout).minimumInteritemSpacing
-        let widthRatio: CGFloat = 1.2
         
-        if (frameHeight < 500) {
+        if frameHeight * widthRatio < (frameWidth - spacing) {
             let height = frameHeight
-            let width = min(height * widthRatio, frameWidth - spacing)
-            return CGSize(width: width, height: height)
-        } else if (frameWidth < 600) {
-            let width = frameWidth - spacing
-            let height = min(width / widthRatio, frameHeight)
+            let width = height * widthRatio
             return CGSize(width: width, height: height)
         } else {
-            let height = max(frameHeight / 2 - spacing, 250)
-            let width = min(height * widthRatio, frameWidth)
+            let width = frameWidth - spacing
+            let height = width / widthRatio
             return CGSize(width: width, height: height)
         }
     }
@@ -123,37 +132,28 @@ class NewsCollectionViewController: UICollectionViewController, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        let frameWidth = collectionView.frame.size.width
+        
+        let size = intermediarySize ?? collectionView.frame.size
+        let scrollDir: UICollectionView.ScrollDirection = size.width > size.height * self.widthRatio ? .horizontal : .vertical
+
+        (self.collectionViewLayout as? UICollectionViewFlowLayout)?.scrollDirection = scrollDir
+
         let spacing = (self.collectionViewLayout as! UICollectionViewFlowLayout).minimumInteritemSpacing
-        let widthPerItem = calculateItemSize().width + spacing
-        
-        let freeSpace = frameWidth - widthPerItem * CGFloat(news.count)
-            + spacing //compensate trailing spacing
-        let margin = max(freeSpace / 2.0, spacing / 2.0)
-        return UIEdgeInsets(top: 0, left: margin, bottom: 0, right: margin)
-        
-    }
 
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
+        if scrollDir == .horizontal {
+            let widthPerItem = calculateItemSize().width + spacing
+             //item + trailing spacing
+            let freeSpace = size.width - widthPerItem * CGFloat(news.count)
+            + spacing
+            let margin = max(freeSpace / 2.0, spacing / 2.0)
+            return UIEdgeInsets(top: 0, left: margin, bottom: 0, right: margin)
+        } else {
+            //item + bottom spacing
+            let heightPerItem = calculateItemSize().height + spacing
+            let freeSpace = size.height - heightPerItem * CGFloat(news.count)
+            + spacing
+            let margin = max(freeSpace / 2.0, spacing / 2.0)
+            return UIEdgeInsets(top: margin, left: spacing / 2.0, bottom: margin, right: spacing / 2.0)
+        }
     }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
-    */
-
 }

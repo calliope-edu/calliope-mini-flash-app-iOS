@@ -10,21 +10,28 @@ import UIKit
 
 class HomeScreenViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    @IBOutlet weak var homeStackView: UIStackView!
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.rearrangeStackview(view.bounds.size)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        coordinator.animate(alongsideTransition: { (_) in
+            self.rearrangeStackview(size)
+        }, completion: nil)
     }
-    */
-
+    
+    private func rearrangeStackview(_ size: CGSize) {
+        let landscape: Bool = size.width > size.height
+        homeStackView.axis = landscape ? .horizontal : .vertical
+    }
+    
+    override func size(forChildContentContainer container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
+        let landscape: Bool = parentSize.width > parentSize.height
+        return CGSize(width: landscape ? parentSize.width / 2.0 : parentSize.width, height: landscape ? parentSize.height : parentSize.height / 2.0)
+    }
 }
