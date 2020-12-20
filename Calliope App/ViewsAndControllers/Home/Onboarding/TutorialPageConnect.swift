@@ -10,8 +10,8 @@ import UIKit
 
 class TutorialPageConnect: TutorialPageViewController, AnimatingTutorialViewController {
     
-    let unconnectedText = "Push the button and follow the instructions for connecting to your Calliope"
-    let succeededText = "You are connected to your Calliope, well done!"
+    let unconnectedText = "Push the button and follow the instructions for connecting to your Calliope".localized
+    let succeededText = "You are connected to your Calliope, well done!".localized
         
     @IBOutlet weak var instructionLabel: UILabel!
     

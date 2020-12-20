@@ -20,6 +20,6 @@ class TutorialPageUploadProgram: TutorialPageViewController {
     
     @IBAction func uploadProgram(_ sender: Any) {
         let program = BlinkingHeartProgram.blinkingHeartProgram
-        FirmwareUpload.showUIForDownloadableProgram(controller: self, program: program, name: "Blinking Heart")
+        FirmwareUpload.showUIForDownloadableProgram(controller: self, program: program, name: "Blinking Heart".localized)
     }
 }

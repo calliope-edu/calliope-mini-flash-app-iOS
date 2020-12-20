@@ -20,12 +20,12 @@ class TutorialPageMiniDemo: TutorialPageViewController, AnimatingTutorialViewCon
     var animationSpeed = 0.15
     
     var cellConfigurations: [(String?, UIImage?, [UIImage]?, [UIImage]?)] =
-        [("Greetings", #imageLiteral(resourceName: "num_01.pdf"), [#imageLiteral(resourceName: "demoa_01.pdf")], nil),
-         ("Button A", #imageLiteral(resourceName: "num_02.pdf"), [#imageLiteral(resourceName: "demoa_02.pdf")], nil),
-         ("Button B", #imageLiteral(resourceName: "num_03.pdf"), [#imageLiteral(resourceName: "demoa_03.pdf")], nil),
-         ("Button A and B", #imageLiteral(resourceName: "num_04.pdf"), [#imageLiteral(resourceName: "demoa_04.pdf")], nil),
-         ("Shake", #imageLiteral(resourceName: "num_05.pdf"), [#imageLiteral(resourceName: "demoa_05.pdf")], nil),
-         ("Ready!", #imageLiteral(resourceName: "num_06.pdf"),
+        [("Greetings".localized, #imageLiteral(resourceName: "num_01.pdf"), [#imageLiteral(resourceName: "demoa_01.pdf")], nil),
+         ("Button A".localized, #imageLiteral(resourceName: "num_02.pdf"), [#imageLiteral(resourceName: "demoa_02.pdf")], nil),
+         ("Button B".localized, #imageLiteral(resourceName: "num_03.pdf"), [#imageLiteral(resourceName: "demoa_03.pdf")], nil),
+         ("Button A and B".localized, #imageLiteral(resourceName: "num_04.pdf"), [#imageLiteral(resourceName: "demoa_04.pdf")], nil),
+         ("Shake".localized, #imageLiteral(resourceName: "num_05.pdf"), [#imageLiteral(resourceName: "demoa_05.pdf")], nil),
+         ("Ready!".localized, #imageLiteral(resourceName: "num_06.pdf"),
           [#imageLiteral(resourceName: "ani_done_00.pdf"), #imageLiteral(resourceName: "ani_done_01.pdf"), #imageLiteral(resourceName: "ani_done_02.pdf"), #imageLiteral(resourceName: "ani_done_03.pdf"),
            #imageLiteral(resourceName: "ani_done_04.pdf"), #imageLiteral(resourceName: "ani_done_06.pdf"), #imageLiteral(resourceName: "ani_done_07.pdf"), #imageLiteral(resourceName: "ani_done_08.pdf"),
            #imageLiteral(resourceName: "ani_done_09.pdf"), #imageLiteral(resourceName: "ani_done_10.pdf"), #imageLiteral(resourceName: "ani_done_11.pdf"), #imageLiteral(resourceName: "ani_done_12.pdf"),

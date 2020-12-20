@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="F4j-4J-3aW">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="F4j-4J-3aW">
     <device id="ipad9_7" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -40,7 +41,7 @@
                                             </imageView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d81-Rj-1Jm">
                                                 <rect key="frame" x="313.5" y="275" width="397" height="2"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="2" id="Nk8-Zm-e2Z"/>
                                                 </constraints>
@@ -61,7 +62,7 @@
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="d81-Rj-1Jm" firstAttribute="bottom" secondItem="Mc9-nL-hpA" secondAttribute="top" constant="-8" id="32T-1k-bkB"/>
                                             <constraint firstItem="d81-Rj-1Jm" firstAttribute="leading" secondItem="pur-Pz-EQX" secondAttribute="leading" constant="8" id="4rS-CS-tWg"/>
@@ -94,6 +95,7 @@
                                 </subviews>
                             </stackView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="EZz-7t-xZZ"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="EZz-7t-xZZ" firstAttribute="bottom" secondItem="S6w-BL-I6E" secondAttribute="bottom" constant="10" id="DUQ-Bi-u6U"/>
@@ -101,7 +103,6 @@
                             <constraint firstItem="S6w-BL-I6E" firstAttribute="top" secondItem="EZz-7t-xZZ" secondAttribute="top" constant="10" id="r4v-jb-Dn1"/>
                             <constraint firstItem="S6w-BL-I6E" firstAttribute="leading" secondItem="EZz-7t-xZZ" secondAttribute="leading" id="wRc-Lu-pIm"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="EZz-7t-xZZ"/>
                     </view>
                     <navigationItem key="navigationItem" title="Home" id="w16-hI-VJ6"/>
                     <connections>
@@ -155,5 +156,8 @@
         <namedColor name="calliope-pink">
             <color red="0.90200001001358032" green="0.0" blue="0.49000000953674316" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

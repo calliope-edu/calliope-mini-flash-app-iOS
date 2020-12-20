@@ -59,9 +59,9 @@ class ProgramCollectionViewCell: UICollectionViewCell, UITextViewDelegate {
 			}
 
             if !editing {
-                editButton?.setTitle("Edit", for: .normal)
+                editButton?.setTitle("Edit".localized, for: .normal)
             } else {
-                editButton?.setTitle("Finished", for: .normal)
+                editButton?.setTitle("Finished".localized, for: .normal)
             }
             
 			descriptionText?.isEditable = editing && !simpleCell
@@ -107,7 +107,7 @@ class ProgramCollectionViewCell: UICollectionViewCell, UITextViewDelegate {
 	}
     
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        return action == Selector(("edit")) || action == Selector(("share")) || action == #selector(delete(_:))
+        return action == #selector(self.edit) || action == #selector(self.share) || action == #selector(delete(_:))
     }
 
 	@IBAction func editButtonClicked(_ sender: Any) {

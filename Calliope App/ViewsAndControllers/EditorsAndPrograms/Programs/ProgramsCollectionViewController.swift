@@ -136,8 +136,8 @@ class ProgramsCollectionViewController: UICollectionViewController, UICollection
     
     override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
         UIMenuController.shared.menuItems = [
-            UIMenuItem(title: "Edit", action: Selector(("edit"))),
-            UIMenuItem(title: "Share", action: Selector(("share")))
+            UIMenuItem(title: "Edit".localized, action: Selector(("edit"))),
+            UIMenuItem(title: "Share".localized, action: Selector(("share")))
         ]
         return true
     }
@@ -178,8 +178,8 @@ class ProgramsCollectionViewController: UICollectionViewController, UICollection
     }
 
     func renameFailed(_ cell: ProgramCollectionViewCell, to newName: String) {
-        let alertViewController = UIAlertController(title: "Could not rename \(cell.program.name)", message: "The name \(newName) could not be given to \(cell.program.name). The name for a program must be unique and not empty.", preferredStyle: .alert)
-        alertViewController.addAction(UIAlertAction(title: "OK", style: .default)
+        let alertViewController = UIAlertController(title: String(format:"Could not rename %s".localized, cell.program.name), message: String(format:"The name %s could not be given to %s. The name for a program must be unique and not empty.".localized, newName, cell.program.name), preferredStyle: .alert)
+        alertViewController.addAction(UIAlertAction(title: "OK".localized, style: .default)
         { _ in self.dismiss(animated: true, completion: nil) })
 
         alertViewController.popoverPresentationController?.sourceView = cell
@@ -199,13 +199,13 @@ class ProgramsCollectionViewController: UICollectionViewController, UICollection
     }
 
     func deleteProgram(of cell: ProgramCollectionViewCell) {
-        let alert = UIAlertController(title: "Delete?", message: "Do you want to delete \(cell.program.name)?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Delete", style: .destructive) { _ in
+        let alert = UIAlertController(title: "Delete?".localized, message: String(format:"Do you want to delete %s?".localized, cell.program.name), preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Delete".localized, style: .destructive) { _ in
             do {
                 try HexFileManager.delete(file: cell.program)
                 self.animateFileChange()
             } catch {
-                let alert = UIAlertController(title: "Delete failed", message: "Could not delete \(cell.program.name)\n\(error.localizedDescription)", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Delete failed".localized, message: String(format:"Could not delete %s\n", cell.program.name) + error.localizedDescription, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default))
                 self.present(alert, animated: true)
             }

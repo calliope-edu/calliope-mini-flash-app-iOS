@@ -19,11 +19,11 @@ class MenuItemsCollectionViewController: UIViewController, AnimatingTutorialView
     var cellIdentifier: String = "cell"
     
     var cellConfigurations: [(String?, UIImage?, [UIImage]?, [UIImage]?)] =
-        [("Oracle", #imageLiteral(resourceName: "num_01.pdf"), nil, nil),
-         ("Paper, Rock, Scissor", #imageLiteral(resourceName: "num_02.pdf"), nil, nil),
-         ("Multiplication tables", #imageLiteral(resourceName: "num_03.pdf"), nil, nil),
-         ("Noise-o-meter", #imageLiteral(resourceName: "num_04.pdf"), nil, nil),
-         ("Bluetooth", #imageLiteral(resourceName: "num_05.pdf"), nil, nil)]
+        [("Oracle".localized, #imageLiteral(resourceName: "num_01.pdf"), nil, nil),
+         ("Paper, Rock, Scissor".localized, #imageLiteral(resourceName: "num_02.pdf"), nil, nil),
+         ("Multiplication tables".localized, #imageLiteral(resourceName: "num_03.pdf"), nil, nil),
+         ("Noise-o-meter".localized, #imageLiteral(resourceName: "num_04.pdf"), nil, nil),
+         ("Bluetooth".localized, #imageLiteral(resourceName: "num_05.pdf"), nil, nil)]
     
     var animationStep: Int = 0
     

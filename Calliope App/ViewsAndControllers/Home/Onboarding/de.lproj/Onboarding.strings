@@ -1,0 +1,48 @@
+
+/* Class = "UILabel"; text = "Select the program by pressing one of the buttons A and B"; ObjectID = "2Ws-hz-lPK"; */
+"2Ws-hz-lPK.text" = "Select the program by pressing one of the buttons A and B";
+
+/* Class = "UILabel"; text = "Start"; ObjectID = "4tg-pn-9If"; */
+"4tg-pn-9If.text" = "Start";
+
+/* Class = "UILabel"; text = "Now choose program 5"; ObjectID = "EcQ-ZK-Kap"; */
+"EcQ-ZK-Kap.text" = "Now choose program 5";
+
+/* Class = "UILabel"; text = "Before you can begin, your Calliope needs energy!"; ObjectID = "F8L-Km-C5f"; */
+"F8L-Km-C5f.text" = "Before you can begin, your Calliope needs energy!";
+
+/* Class = "UIButton"; normalTitle = "Upload Program Blinking Heart"; ObjectID = "KZP-Ey-EXu"; */
+"KZP-Ey-EXu.normalTitle" = "Upload Program Blinking Heart";
+
+/* Class = "UILabel"; text = "Greeting"; ObjectID = "M6T-cO-epA"; */
+"M6T-cO-epA.text" = "Greeting";
+
+/* Class = "UILabel"; text = "Rock, Paper, Scissor and some longer"; ObjectID = "O20-zt-E5c"; */
+"O20-zt-E5c.text" = "Rock, Paper, Scissor and some longer";
+
+/* Class = "UILabel"; text = "Connect to your calliope using its unique pattern signature"; ObjectID = "agm-gW-0YR"; */
+"agm-gW-0YR.text" = "Connect to your calliope using its unique pattern signature";
+
+/* Class = "UILabel"; text = "When connected with your calliope, you can easily upload programs.\nCheck it out!"; ObjectID = "f9R-2U-MF7"; */
+"f9R-2U-MF7.text" = "When connected with your calliope, you can easily upload programs.\nCheck it out!";
+
+/* Class = "UILabel"; text = "Upload Program"; ObjectID = "fjc-AF-Uny"; */
+"fjc-AF-Uny.text" = "Upload Program";
+
+/* Class = "UILabel"; text = "Get to know your Calliope Mini"; ObjectID = "ogi-fD-zPi"; */
+"ogi-fD-zPi.text" = "Get to know your Calliope Mini";
+
+/* Class = "UILabel"; text = "Programs Menu"; ObjectID = "pnY-4s-lpT"; */
+"pnY-4s-lpT.text" = "Programs Menu";
+
+/* Class = "UILabel"; text = "Hint: Be sure to have Bluetooth switched on and connections allowed."; ObjectID = "rMY-Qf-bUT"; */
+"rMY-Qf-bUT.text" = "Hint: Be sure to have Bluetooth switched on and connections allowed.";
+
+/* Class = "UILabel"; text = "Bluetooth Connection"; ObjectID = "rqj-yf-1xH"; */
+"rqj-yf-1xH.text" = "Bluetooth Connection";
+
+/* Class = "UILabel"; text = "Demosequence"; ObjectID = "vxr-bB-gsd"; */
+"vxr-bB-gsd.text" = "Demosequence";
+
+/* Class = "UILabel"; text = "In the menu, you can navigate to 5 preinstalled programs"; ObjectID = "xcv-pQ-1ax"; */
+"xcv-pQ-1ax.text" = "In the menu, you can navigate to 5 preinstalled programs";

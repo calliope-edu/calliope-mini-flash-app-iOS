@@ -43,7 +43,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     
     public private(set) var calliopeTypeLastChangedBy: AnyObject?
     
-    public var connectionDescriptionText: String = "1. Programm 5 starten\n2. Schütteln\n3. LED-Muster eingeben" {
+    public var connectionDescriptionText: String = "1. Programm 5 starten\n2. Schütteln\n3. LED-Muster eingeben".localized {
         didSet { connectionDescriptionLabel.text = connectionDescriptionText }
     }
 

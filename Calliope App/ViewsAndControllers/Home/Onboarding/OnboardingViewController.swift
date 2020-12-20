@@ -50,7 +50,7 @@ class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSo
         super.viewDidLoad()
         
         viewControllersObservation = observe(\.viewControllers, changeHandler: { [weak self] (_, _) in
-            NSLog("view controllers: \(self?.viewControllers)")
+            NSLog("view controllers: \(self?.viewControllers ?? [])")
         })
         
         if pages.count > pageIndicatorImages.count {
@@ -69,7 +69,7 @@ class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSo
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        MatrixConnectionViewController.instance?.connectionDescriptionText = "ConnectionDescriptionText for tutorial"
+        MatrixConnectionViewController.instance?.connectionDescriptionText = "Connect to a calliope to finish the tutorial".localized
         MatrixConnectionViewController.instance?.changeCalliopeType(sender: self, calliopeClass: DFUCalliope.self)
     }
     

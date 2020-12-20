@@ -1,0 +1,60 @@
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "DpH-x4-88I"; */
+"DpH-x4-88I.text" = "Label";
+
+/* Class = "UILabel"; text = "Editors. This text is very long and can span several lines. How will the view react to that? Seems ok, text is spread over multiple lines."; ObjectID = "Hqp-zE-kfc"; */
+"Hqp-zE-kfc.text" = "Editors. This text is very long and can span several lines. How will the view react to that? Seems ok, text is spread over multiple lines.";
+
+/* Class = "UILabel"; text = "Makecode"; ObjectID = "KGR-ef-bqG"; */
+"KGR-ef-bqG.text" = "Makecode";
+
+/* Class = "UILabel"; text = "Local editor"; ObjectID = "Ked-z3-CdC"; */
+"Ked-z3-CdC.text" = "Local editor";
+
+/* Class = "UILabel"; text = "Playground"; ObjectID = "NWk-nx-U7c"; */
+"NWk-nx-U7c.text" = "Playground";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "RAC-9e-mdr"; */
+"RAC-9e-mdr.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Taj-Yh-jjQ"; */
+"Taj-Yh-jjQ.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "X8Y-8O-g6O"; */
+"X8Y-8O-g6O.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Demo program"; ObjectID = "Z3u-48-3Mt"; */
+"Z3u-48-3Mt.normalTitle" = "Demo program";
+
+/* Class = "UITextView"; text = "program description"; ObjectID = "Zf4-FC-EzJ"; */
+"Zf4-FC-EzJ.text" = "program description";
+
+/* Class = "UIViewController"; title = "Editor"; ObjectID = "eeY-2x-OZY"; */
+"eeY-2x-OZY.title" = "Editor";
+
+/* Class = "UITabBarItem"; title = "Editors and Programs"; ObjectID = "fat-Jr-Mna"; */
+"fat-Jr-Mna.title" = "Editors and Programs";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "g6h-Vu-QEH"; */
+"g6h-Vu-QEH.text" = "Label";
+
+/* Class = "UILabel"; text = "Programs. This text is very long and can span several lines. How will the view react to that? Seems ok, text is spread over multiple lines."; ObjectID = "ips-vx-zky"; */
+"ips-vx-zky.text" = "Programs. This text is very long and can span several lines. How will the view react to that? Seems ok, text is spread over multiple lines.";
+
+/* Class = "UILabel"; text = "Demo program. This text is very long and can span several lines. How will the view react to that? Seems ok, text is spread over multiple lines."; ObjectID = "lYA-S0-b2D"; */
+"lYA-S0-b2D.text" = "Demo program. This text is very long and can span several lines. How will the view react to that? Seems ok, text is spread over multiple lines.";
+
+/* Class = "UILabel"; text = "Nepo"; ObjectID = "pm2-Za-VcF"; */
+"pm2-Za-VcF.text" = "Nepo";
+
+/* Class = "UIViewController"; title = "Programs and Editors"; ObjectID = "rb5-ni-SG8"; */
+"rb5-ni-SG8.title" = "Programs and Editors";
+
+/* Class = "UIButton"; normalTitle = "Share"; ObjectID = "uKy-QM-gk0"; */
+"uKy-QM-gk0.normalTitle" = "Share";
+
+/* Class = "UINavigationItem"; title = "Editors and Programs"; ObjectID = "uLO-aS-ZNS"; */
+"uLO-aS-ZNS.title" = "Editors and Programs";
+
+/* Class = "UIButton"; normalTitle = "Edit"; ObjectID = "xB5-VK-MPi"; */
+"xB5-VK-MPi.normalTitle" = "Edit";
