@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WZ3-mX-9ax">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="localizable" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WZ3-mX-9ax">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -87,10 +87,11 @@
                                         <rect key="frame" x="0.0" y="101.5" width="304" height="294"/>
                                         <subviews>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="uNX-va-3eO">
-                                                <rect key="frame" x="0.0" y="0.0" width="304" height="294"/>
+                                                <rect key="frame" x="0.0" y="-5" width="304" height="304"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="350" id="pmY-eG-Low"/>
+                                                    <constraint firstAttribute="width" secondItem="uNX-va-3eO" secondAttribute="height" multiplier="1:1" id="7GY-Kh-5bj"/>
+                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="pmY-eG-Low"/>
                                                 </constraints>
                                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Ykj-IZ-MyY">
                                                     <size key="itemSize" width="100" height="100"/>
@@ -100,14 +101,14 @@
                                                 </collectionViewFlowLayout>
                                                 <cells>
                                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="c6m-US-tJ5" customClass="OnboardingCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                                        <rect key="frame" x="10" y="0.0" width="110" height="110"/>
+                                                        <rect key="frame" x="10" y="0.0" width="100" height="100"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="3n9-an-LCu">
-                                                            <rect key="frame" x="0.0" y="0.0" width="110" height="110"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ble_01" translatesAutoresizingMaskIntoConstraints="NO" id="kar-RK-Doz">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="110" height="110"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                                                 </imageView>
                                                             </subviews>
                                                             <constraints>
@@ -119,7 +120,7 @@
                                                                 <constraint firstItem="kar-RK-Doz" firstAttribute="leading" secondItem="3n9-an-LCu" secondAttribute="leading" id="e21-nv-QNl"/>
                                                             </constraints>
                                                         </collectionViewCellContentView>
-                                                        <size key="customSize" width="110" height="110"/>
+                                                        <size key="customSize" width="100" height="100"/>
                                                         <connections>
                                                             <outlet property="mainImage" destination="kar-RK-Doz" id="meD-t6-R6K"/>
                                                         </connections>
@@ -133,9 +134,8 @@
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="uNX-va-3eO" secondAttribute="bottom" id="RKt-en-LaI"/>
+                                            <constraint firstItem="uNX-va-3eO" firstAttribute="centerY" secondItem="ZQX-CT-JXN" secondAttribute="centerY" id="U22-Vw-zbq"/>
                                             <constraint firstItem="uNX-va-3eO" firstAttribute="width" secondItem="ZQX-CT-JXN" secondAttribute="width" priority="900" id="Ybb-9Y-50W"/>
-                                            <constraint firstItem="uNX-va-3eO" firstAttribute="top" secondItem="ZQX-CT-JXN" secondAttribute="top" id="xWf-qq-BbJ"/>
                                             <constraint firstItem="uNX-va-3eO" firstAttribute="centerX" secondItem="ZQX-CT-JXN" secondAttribute="centerX" id="zAN-Fv-i7Y"/>
                                         </constraints>
                                     </view>
@@ -409,15 +409,27 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wQM-h4-pwo">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="10p-IB-I6a">
                                         <rect key="frame" x="0.0" y="101.5" width="304" height="400.5"/>
+                                        <subviews>
+                                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wQM-h4-pwo">
+                                                <rect key="frame" x="0.0" y="0.0" width="304" height="400.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="700" id="5RW-py-gHN"/>
+                                                </constraints>
+                                                <connections>
+                                                    <segue destination="bDb-1n-Hi4" kind="embed" identifier="embedMenuNavigationCollectionController" destinationCreationSelector="initializeNavigationExplanation:" id="lfw-Nw-gfX"/>
+                                                </connections>
+                                            </containerView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="700" id="5RW-py-gHN"/>
+                                            <constraint firstItem="wQM-h4-pwo" firstAttribute="leading" secondItem="10p-IB-I6a" secondAttribute="leading" priority="999" id="4fl-vv-Lo3"/>
+                                            <constraint firstAttribute="bottom" secondItem="wQM-h4-pwo" secondAttribute="bottom" id="RGZ-S3-SEq"/>
+                                            <constraint firstItem="wQM-h4-pwo" firstAttribute="top" secondItem="10p-IB-I6a" secondAttribute="top" id="WH3-dO-xQm"/>
+                                            <constraint firstItem="wQM-h4-pwo" firstAttribute="centerX" secondItem="10p-IB-I6a" secondAttribute="centerX" id="zO9-HK-cZx"/>
                                         </constraints>
-                                        <connections>
-                                            <segue destination="bDb-1n-Hi4" kind="embed" identifier="embedMenuNavigationCollectionController" destinationCreationSelector="initializeNavigationExplanation:" id="lfw-Nw-gfX"/>
-                                        </connections>
-                                    </containerView>
+                                    </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s67-jI-PhU">
                                         <rect key="frame" x="0.0" y="518" width="304" height="50"/>
                                         <subviews>
@@ -446,9 +458,6 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstItem="wQM-h4-pwo" firstAttribute="width" secondItem="UbU-cJ-iTB" secondAttribute="width" priority="900" id="YSb-Es-3hW"/>
-                                </constraints>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="paN-9X-3oC"/>

@@ -29,11 +29,7 @@ public struct Settings {
 			case .appVersion:
 				defaultValue = "1.0"
 			case .newsURL:
-				#if DEBUG
-				defaultValue = "http://127.0.0.1:8000/news_json/news.json"
-				#else
-				defaultValue = "NOT GIVEN YET"
-				#endif
+				defaultValue = "https://calliope.cc/forumassets/news.json"
             case .defaultHexFileURL:
                 defaultValue = "https://calliope.cc/media/pages/ble/-903257399-1566558063/calliope-demo-combined-mit-dfu-20190820.hex"
             case .blinkingHeartURL: //TODO: replace with correct URL

@@ -16,6 +16,7 @@
 		2F2B44382355A018008B957E /* PageIndicatorContainingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2B44372355A018008B957E /* PageIndicatorContainingViewController.swift */; };
 		2F375AB9237E1179004ED8D7 /* TutorialPageUploadProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F375AB8237E1179004ED8D7 /* TutorialPageUploadProgram.swift */; };
 		2F375ABB237F28BC004ED8D7 /* DefaultProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F375ABA237F28BC004ED8D7 /* DefaultProgram.swift */; };
+		2F4B8D8425978D950026B480 /* EditorAndPrograms.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F4B8D8225978D950026B480 /* EditorAndPrograms.storyboard */; };
 		2F57C3B2239058B0008B0D69 /* AnimatingTutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3B1239058B0008B0D69 /* AnimatingTutorialViewController.swift */; };
 		2F57C3B42394F78B008B0D69 /* DownloadableHexFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3B32394F78B008B0D69 /* DownloadableHexFile.swift */; };
 		2F57C3B62394F935008B0D69 /* BlinkingHeartProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3B52394F935008B0D69 /* BlinkingHeartProgram.swift */; };
@@ -73,7 +74,6 @@
 		2F6145A422C7BE3E001C2734 /* NewsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6145A322C7BE3E001C2734 /* NewsCollectionViewCell.swift */; };
 		2F6145A622C7D71B001C2734 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6145A522C7D71B001C2734 /* Settings.swift */; };
 		2F6C1B87258FC7C600F4B5AC /* ConnectionView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F6C1B89258FC7C600F4B5AC /* ConnectionView.storyboard */; };
-		2F6C1B90258FC86600F4B5AC /* EditorAndPrograms.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F6C1B92258FC86600F4B5AC /* EditorAndPrograms.storyboard */; };
 		2F6C1B98258FC90300F4B5AC /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F6C1B9A258FC90300F4B5AC /* Onboarding.storyboard */; };
 		2F91665B235405AA0065AD81 /* EditorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F91665A235405A90065AD81 /* EditorCollectionViewCell.swift */; };
 		2F9B29FC233F0456009496DD /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F9B29EF233F0456009496DD /* Roboto-Medium.ttf */; };
@@ -119,6 +119,11 @@
 		2F2B44372355A018008B957E /* PageIndicatorContainingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageIndicatorContainingViewController.swift; sourceTree = "<group>"; };
 		2F375AB8237E1179004ED8D7 /* TutorialPageUploadProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPageUploadProgram.swift; sourceTree = "<group>"; };
 		2F375ABA237F28BC004ED8D7 /* DefaultProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultProgram.swift; sourceTree = "<group>"; };
+		2F4B8D8D25978D9D0026B480 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/EditorAndPrograms.storyboard; sourceTree = "<group>"; };
+		2F4B8D8E25978DB30026B480 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
+		2F4B8D9125978DB80026B480 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
+		2F4B8D9525979B2A0026B480 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Onboarding.strings; sourceTree = "<group>"; };
+		2F4B8D9725979B2C0026B480 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Onboarding.strings; sourceTree = "<group>"; };
 		2F57C3B1239058B0008B0D69 /* AnimatingTutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingTutorialViewController.swift; sourceTree = "<group>"; };
 		2F57C3B32394F78B008B0D69 /* DownloadableHexFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadableHexFile.swift; sourceTree = "<group>"; };
 		2F57C3B52394F935008B0D69 /* BlinkingHeartProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkingHeartProgram.swift; sourceTree = "<group>"; };
@@ -181,10 +186,6 @@
 		2F6C1B8C258FC7D000F4B5AC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ConnectionView.strings; sourceTree = "<group>"; };
 		2F6C1B8E258FC7FE00F4B5AC /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ConnectionView.strings; sourceTree = "<group>"; };
 		2F6C1B99258FC90300F4B5AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Onboarding.storyboard; sourceTree = "<group>"; };
-		2F6C1B9D258FC90B00F4B5AC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Onboarding.strings; sourceTree = "<group>"; };
-		2F6C1B9F258FC94200F4B5AC /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Onboarding.strings; sourceTree = "<group>"; };
-		2F6C1BA0258FCB9900F4B5AC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/EditorAndPrograms.storyboard; sourceTree = "<group>"; };
-		2F6C1BA1258FCB9900F4B5AC /* de */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = de; path = de.lproj/EditorAndPrograms.storyboard; sourceTree = "<group>"; };
 		2F91665A235405A90065AD81 /* EditorCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorCollectionViewCell.swift; sourceTree = "<group>"; };
 		2F9B29EF233F0456009496DD /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		2F9B29F0233F0456009496DD /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
@@ -481,7 +482,7 @@
 		2FAA2D0922DB3C4D00BC1A5F /* EditorsAndPrograms */ = {
 			isa = PBXGroup;
 			children = (
-				2F6C1B92258FC86600F4B5AC /* EditorAndPrograms.storyboard */,
+				2F4B8D8225978D950026B480 /* EditorAndPrograms.storyboard */,
 				2F08A0E0234AC7400088A8D6 /* EditorAndProgramsContainerViewController.swift */,
 				2F61455B22BF761F001C2734 /* FirmwareUpload.swift */,
 				2F91665C2354062A0065AD81 /* Editors */,
@@ -590,11 +591,11 @@
 				2F9B2A15233F045D009496DD /* RobotoMono-Medium.ttf in Resources */,
 				2F61459E22BFE607001C2734 /* Assets.xcassets in Resources */,
 				2F9B2A1F233F045D009496DD /* RobotoMono-Thin.ttf in Resources */,
+				2F4B8D8425978D950026B480 /* EditorAndPrograms.storyboard in Resources */,
 				2F61456722BF761F001C2734 /* Calliope-mini-Start.hex in Resources */,
 				2F9B2A19233F045D009496DD /* RobotoMono-ThinItalic.ttf in Resources */,
 				2FA10F392336FC6E0058E2F6 /* News.storyboard in Resources */,
 				2F9B2A00233F0456009496DD /* Roboto-ThinItalic.ttf in Resources */,
-				2F6C1B90258FC86600F4B5AC /* EditorAndPrograms.storyboard in Resources */,
 				2F9B2A1A233F045D009496DD /* RobotoMono-Light.ttf in Resources */,
 				2F61456C22BF761F001C2734 /* CarRemote.storyboard in Resources */,
 				2F9B2A16233F045D009496DD /* RobotoMono-Regular.ttf in Resources */,
@@ -715,6 +716,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		2F4B8D8225978D950026B480 /* EditorAndPrograms.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2F4B8D8D25978D9D0026B480 /* Base */,
+				2F4B8D8E25978DB30026B480 /* en */,
+				2F4B8D9125978DB80026B480 /* de */,
+			);
+			name = EditorAndPrograms.storyboard;
+			sourceTree = "<group>";
+		};
 		2F61451A22BF75DF001C2734 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -733,21 +744,12 @@
 			name = ConnectionView.storyboard;
 			sourceTree = "<group>";
 		};
-		2F6C1B92258FC86600F4B5AC /* EditorAndPrograms.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2F6C1BA0258FCB9900F4B5AC /* en */,
-				2F6C1BA1258FCB9900F4B5AC /* de */,
-			);
-			name = EditorAndPrograms.storyboard;
-			sourceTree = "<group>";
-		};
 		2F6C1B9A258FC90300F4B5AC /* Onboarding.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				2F6C1B99258FC90300F4B5AC /* Base */,
-				2F6C1B9D258FC90B00F4B5AC /* en */,
-				2F6C1B9F258FC94200F4B5AC /* de */,
+				2F4B8D9525979B2A0026B480 /* en */,
+				2F4B8D9725979B2C0026B480 /* de */,
 			);
 			name = Onboarding.storyboard;
 			sourceTree = "<group>";

@@ -27,7 +27,7 @@ class TutorialPageConnect: TutorialPageViewController, AnimatingTutorialViewCont
     
     var animationSpeed = 0.3
     
-    var cellSize = CGSize(width: 100, height: 100)
+    var cellSize = CGSize(width: 100, height: 100) //will adjust on view layout
     
     @IBOutlet weak var continueButtonHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var continueButton: UIButton!
@@ -42,6 +42,14 @@ class TutorialPageConnect: TutorialPageViewController, AnimatingTutorialViewCont
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        let factor = CGFloat(2.5)
+        let sizeOfView = self.collectionView?.frame.size ?? CGSize(width: 100 * factor, height: 100 * factor)
+        let fractionOfSmallerDimension = min(sizeOfView.width, sizeOfView.height) / factor
+        cellSize = CGSize(width: fractionOfSmallerDimension, height: fractionOfSmallerDimension)
     }
     
     override func viewWillAppear(_ animated: Bool) {
