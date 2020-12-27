@@ -17,6 +17,8 @@
 		2F375AB9237E1179004ED8D7 /* TutorialPageUploadProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F375AB8237E1179004ED8D7 /* TutorialPageUploadProgram.swift */; };
 		2F375ABB237F28BC004ED8D7 /* DefaultProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F375ABA237F28BC004ED8D7 /* DefaultProgram.swift */; };
 		2F4B8D8425978D950026B480 /* EditorAndPrograms.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F4B8D8225978D950026B480 /* EditorAndPrograms.storyboard */; };
+		2F4B8D9F2598D7980026B480 /* HomeScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F4B8DA12598D7980026B480 /* HomeScreen.storyboard */; };
+		2F4B8DAA2598D85A0026B480 /* Help.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F4B8DA92598D85A0026B480 /* Help.storyboard */; };
 		2F57C3B2239058B0008B0D69 /* AnimatingTutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3B1239058B0008B0D69 /* AnimatingTutorialViewController.swift */; };
 		2F57C3B42394F78B008B0D69 /* DownloadableHexFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3B32394F78B008B0D69 /* DownloadableHexFile.swift */; };
 		2F57C3B62394F935008B0D69 /* BlinkingHeartProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3B52394F935008B0D69 /* BlinkingHeartProgram.swift */; };
@@ -28,7 +30,6 @@
 		2F61456622BF761F001C2734 /* mini-smile.hex in Resources */ = {isa = PBXBuildFile; fileRef = 2F61452422BF761F001C2734 /* mini-smile.hex */; };
 		2F61456722BF761F001C2734 /* Calliope-mini-Start.hex in Resources */ = {isa = PBXBuildFile; fileRef = 2F61452522BF761F001C2734 /* Calliope-mini-Start.hex */; };
 		2F61456922BF761F001C2734 /* CalliopeApp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F61452822BF761F001C2734 /* CalliopeApp.storyboard */; };
-		2F61456B22BF761F001C2734 /* HomeScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F61452A22BF761F001C2734 /* HomeScreen.storyboard */; };
 		2F61456C22BF761F001C2734 /* CarRemote.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F61452B22BF761F001C2734 /* CarRemote.storyboard */; };
 		2F61456E22BF761F001C2734 /* CalliopeBLEProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61452E22BF761F001C2734 /* CalliopeBLEProfile.swift */; };
 		2F61456F22BF761F001C2734 /* CalliopeBLEDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61452F22BF761F001C2734 /* CalliopeBLEDiscovery.swift */; };
@@ -124,6 +125,10 @@
 		2F4B8D9725979B2C0026B480 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Onboarding.strings; sourceTree = "<group>"; };
 		2F4B8D9B2598D0F60026B480 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
 		2F4B8D9D2598D1250026B480 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
+		2F4B8DA02598D7980026B480 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/HomeScreen.storyboard; sourceTree = "<group>"; };
+		2F4B8DA42598D79D0026B480 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/HomeScreen.strings; sourceTree = "<group>"; };
+		2F4B8DA62598D7CC0026B480 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/HomeScreen.strings; sourceTree = "<group>"; };
+		2F4B8DA92598D85A0026B480 /* Help.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Help.storyboard; sourceTree = "<group>"; };
 		2F57C3B1239058B0008B0D69 /* AnimatingTutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingTutorialViewController.swift; sourceTree = "<group>"; };
 		2F57C3B32394F78B008B0D69 /* DownloadableHexFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadableHexFile.swift; sourceTree = "<group>"; };
 		2F57C3B52394F935008B0D69 /* BlinkingHeartProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkingHeartProgram.swift; sourceTree = "<group>"; };
@@ -137,7 +142,6 @@
 		2F61452422BF761F001C2734 /* mini-smile.hex */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "mini-smile.hex"; sourceTree = "<group>"; };
 		2F61452522BF761F001C2734 /* Calliope-mini-Start.hex */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Calliope-mini-Start.hex"; sourceTree = "<group>"; };
 		2F61452822BF761F001C2734 /* CalliopeApp.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CalliopeApp.storyboard; sourceTree = "<group>"; };
-		2F61452A22BF761F001C2734 /* HomeScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HomeScreen.storyboard; sourceTree = "<group>"; };
 		2F61452B22BF761F001C2734 /* CarRemote.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CarRemote.storyboard; sourceTree = "<group>"; };
 		2F61452E22BF761F001C2734 /* CalliopeBLEProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalliopeBLEProfile.swift; sourceTree = "<group>"; };
 		2F61452F22BF761F001C2734 /* CalliopeBLEDiscovery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalliopeBLEDiscovery.swift; sourceTree = "<group>"; };
@@ -236,6 +240,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2F4B8DA82598D8330026B480 /* HelpScreen */ = {
+			isa = PBXGroup;
+			children = (
+				2F4B8DA92598D85A0026B480 /* Help.storyboard */,
+			);
+			path = HelpScreen;
+			sourceTree = "<group>";
+		};
 		2F61450322BF75DE001C2734 = {
 			isa = PBXGroup;
 			children = (
@@ -322,6 +334,7 @@
 				2F61452822BF761F001C2734 /* CalliopeApp.storyboard */,
 				2F61455A22BF761F001C2734 /* MainContainerViewController.swift */,
 				2FAA2D0A22DB3CCB00BC1A5F /* CarRemote */,
+				2F4B8DA82598D8330026B480 /* HelpScreen */,
 				2F61455122BF761F001C2734 /* CollapsingConnectionView */,
 				2FAA2D0922DB3C4D00BC1A5F /* EditorsAndPrograms */,
 				2FAA2D0822DB3C2500BC1A5F /* Home */,
@@ -471,7 +484,7 @@
 		2FAA2D0822DB3C2500BC1A5F /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				2F61452A22BF761F001C2734 /* HomeScreen.storyboard */,
+				2F4B8DA12598D7980026B480 /* HomeScreen.storyboard */,
 				2F00EAB722DA195A000B5FDE /* HomeScreenViewController.swift */,
 				2FAA2D0622DB3C0B00BC1A5F /* News */,
 				2FAA2D0522DB3BFB00BC1A5F /* Onboarding */,
@@ -599,7 +612,7 @@
 				2F9B2A1A233F045D009496DD /* RobotoMono-Light.ttf in Resources */,
 				2F61456C22BF761F001C2734 /* CarRemote.storyboard in Resources */,
 				2F9B2A16233F045D009496DD /* RobotoMono-Regular.ttf in Resources */,
-				2F61456B22BF761F001C2734 /* HomeScreen.storyboard in Resources */,
+				2F4B8D9F2598D7980026B480 /* HomeScreen.storyboard in Resources */,
 				2F9B29FF233F0456009496DD /* Roboto-MediumItalic.ttf in Resources */,
 				2F9B2A02233F0456009496DD /* Roboto-LightItalic.ttf in Resources */,
 				2F9B2A05233F0456009496DD /* Roboto-BlackItalic.ttf in Resources */,
@@ -608,6 +621,7 @@
 				2F9B2A03233F0456009496DD /* Roboto-Italic.ttf in Resources */,
 				2F9B2A08233F0456009496DD /* Roboto-Black.ttf in Resources */,
 				2F9B2A1C233F045D009496DD /* RobotoMono-Bold.ttf in Resources */,
+				2F4B8DAA2598D85A0026B480 /* Help.storyboard in Resources */,
 				2F61456922BF761F001C2734 /* CalliopeApp.storyboard in Resources */,
 				2F6C1B87258FC7C600F4B5AC /* ConnectionView.storyboard in Resources */,
 			);
@@ -724,6 +738,16 @@
 				2F4B8D9D2598D1250026B480 /* de */,
 			);
 			name = EditorAndPrograms.storyboard;
+			sourceTree = "<group>";
+		};
+		2F4B8DA12598D7980026B480 /* HomeScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2F4B8DA02598D7980026B480 /* Base */,
+				2F4B8DA42598D79D0026B480 /* en */,
+				2F4B8DA62598D7CC0026B480 /* de */,
+			);
+			name = HomeScreen.storyboard;
 			sourceTree = "<group>";
 		};
 		2F61451A22BF75DF001C2734 /* LaunchScreen.storyboard */ = {

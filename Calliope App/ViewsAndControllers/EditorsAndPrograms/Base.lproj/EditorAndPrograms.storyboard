@@ -746,7 +746,7 @@ These are the programs you created so far.</string>
         <scene sceneID="UDA-pj-7B3">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="2lg-ER-tdw" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Editors and Programs" id="fat-Jr-Mna"/>
+                    <tabBarItem key="tabBarItem" title="Editors and Programs" image="IconCode" id="fat-Jr-Mna"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="FFb-Pa-Fjw">
@@ -771,7 +771,8 @@ These are the programs you created so far.</string>
         <image name="EditorLogos/Makecode" width="292" height="248"/>
         <image name="EditorLogos/Nepo" width="282" height="250"/>
         <image name="EditorLogos/Playgrounds" width="284" height="252"/>
-        <image name="IconDevice" width="162" height="150"/>
+        <image name="IconCode" width="36" height="33"/>
+        <image name="IconDevice" width="36" height="33"/>
         <image name="upload_button" width="33" height="43"/>
         <namedColor name="calliope-darkgray">
             <color red="0.11400000005960464" green="0.11400000005960464" blue="0.10599999874830246" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
