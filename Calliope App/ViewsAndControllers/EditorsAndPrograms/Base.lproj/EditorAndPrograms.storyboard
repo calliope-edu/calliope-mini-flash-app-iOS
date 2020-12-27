@@ -23,7 +23,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="1000" height="917"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZAw-Ve-3Pb">
-                                        <rect key="frame" x="11" y="-4" width="479" height="524.5"/>
+                                        <rect key="frame" x="11" y="-4" width="479" height="546.5"/>
                                         <color key="backgroundColor" name="calliope-lightgray"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -32,7 +32,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2iD-Nq-XcD">
-                                        <rect key="frame" x="11" y="540.5" width="479" height="184.5"/>
+                                        <rect key="frame" x="11" y="562.5" width="479" height="184.5"/>
                                         <color key="backgroundColor" name="calliope-purple"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -41,7 +41,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y5a-Mz-x8I">
-                                        <rect key="frame" x="510" y="-4" width="479" height="374.5"/>
+                                        <rect key="frame" x="510" y="-4" width="479" height="352.5"/>
                                         <color key="backgroundColor" name="calliope-lightgray"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -50,10 +50,10 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="Dxt-9f-Z4u">
-                                        <rect key="frame" x="31" y="16" width="938" height="689"/>
+                                        <rect key="frame" x="31" y="16" width="938" height="711"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="5XM-Zd-KLN">
-                                                <rect key="frame" x="0.0" y="0.0" width="439" height="689"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="439" height="711"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bbz-2M-bft">
                                                         <rect key="frame" x="0.0" y="0.0" width="439" height="0.0"/>
@@ -62,17 +62,18 @@
                                                         </constraints>
                                                     </view>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="fYe-cI-9Hj">
-                                                        <rect key="frame" x="0.0" y="0.0" width="439" height="484.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="439" height="506.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hqp-zE-kfc">
-                                                                <rect key="frame" x="0.0" y="0.0" width="439" height="64.5"/>
-                                                                <string key="text">Editors. This text is very long and can span several lines. How will the view react to that? Seems ok, text is spread over multiple lines.</string>
+                                                                <rect key="frame" x="0.0" y="0.0" width="439" height="86.5"/>
+                                                                <string key="text">Editors.
+These editors allow you to write programs for showing text on the Calliope display, read its sensors or even build mini-robots yourself – Give it a try!</string>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ypy-Nv-qUF">
-                                                                <rect key="frame" x="0.0" y="84.5" width="439" height="400"/>
+                                                                <rect key="frame" x="0.0" y="106.5" width="439" height="400"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" priority="999" constant="400" placeholder="YES" id="0pW-vW-nJG"/>
@@ -84,17 +85,18 @@
                                                         </subviews>
                                                     </stackView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wK8-Cf-hwe">
-                                                        <rect key="frame" x="0.0" y="484.5" width="439" height="60"/>
+                                                        <rect key="frame" x="0.0" y="506.5" width="439" height="60"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="60" id="iQJ-EC-qaj"/>
                                                         </constraints>
                                                     </view>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="zjS-Vb-43h">
-                                                        <rect key="frame" x="0.0" y="544.5" width="439" height="144.5"/>
+                                                        <rect key="frame" x="0.0" y="566.5" width="439" height="144.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lYA-S0-b2D">
                                                                 <rect key="frame" x="0.0" y="0.0" width="439" height="64.5"/>
-                                                                <string key="text">Demo program. This text is very long and can span several lines. How will the view react to that? Seems ok, text is spread over multiple lines.</string>
+                                                                <string key="text">Demo program.
+Here you can download the original program of the Calliope mini.</string>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
@@ -128,17 +130,18 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="4bN-ts-cX9">
-                                                <rect key="frame" x="499" y="0.0" width="439" height="334.5"/>
+                                                <rect key="frame" x="499" y="0.0" width="439" height="312.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ips-vx-zky">
-                                                        <rect key="frame" x="0.0" y="0.0" width="439" height="64.5"/>
-                                                        <string key="text">Programs. This text is very long and can span several lines. How will the view react to that? Seems ok, text is spread over multiple lines.</string>
+                                                        <rect key="frame" x="0.0" y="0.0" width="439" height="42.5"/>
+                                                        <string key="text">Programs.
+These are the programs you created so far.</string>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KcT-G8-I8S">
-                                                        <rect key="frame" x="0.0" y="84.5" width="439" height="250"/>
+                                                        <rect key="frame" x="0.0" y="62.5" width="439" height="250"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" priority="999" constant="250" placeholder="YES" id="v3X-XW-ffa"/>
@@ -222,10 +225,10 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="makecodeEditorCell" id="LQt-dC-ueL" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="160" height="188.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="160" height="180.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="WBP-SR-R2U">
-                                    <rect key="frame" x="0.0" y="0.0" width="160" height="188.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="160" height="180.5"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="EditorLogos/Makecode" translatesAutoresizingMaskIntoConstraints="NO" id="iI5-8F-WS6">
@@ -236,7 +239,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Makecode" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KGR-ef-bqG">
-                                            <rect key="frame" x="0.0" y="168" width="160" height="20.5"/>
+                                            <rect key="frame" x="0.0" y="160" width="160" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -249,7 +252,7 @@
                                         <constraint firstItem="KGR-ef-bqG" firstAttribute="leading" secondItem="WBP-SR-R2U" secondAttribute="leading" id="Qnh-zM-4cL"/>
                                         <constraint firstAttribute="trailing" secondItem="KGR-ef-bqG" secondAttribute="trailing" id="UdY-1w-smX"/>
                                         <constraint firstItem="iI5-8F-WS6" firstAttribute="top" secondItem="WBP-SR-R2U" secondAttribute="top" id="q0A-5y-xnH"/>
-                                        <constraint firstItem="KGR-ef-bqG" firstAttribute="top" secondItem="iI5-8F-WS6" secondAttribute="bottom" constant="8" id="q3Y-uk-CW4"/>
+                                        <constraint firstItem="KGR-ef-bqG" firstAttribute="top" secondItem="iI5-8F-WS6" secondAttribute="bottom" id="q3Y-uk-CW4"/>
                                     </constraints>
                                 </collectionViewCellContentView>
                                 <connections>
@@ -259,10 +262,10 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="nepoEditorCell" id="ucV-gN-En2" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="279" y="0.0" width="160" height="188.5"/>
+                                <rect key="frame" x="279" y="0.0" width="160" height="180.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bVT-UD-yV5">
-                                    <rect key="frame" x="0.0" y="0.0" width="160" height="188.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="160" height="180.5"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="EditorLogos/Nepo" translatesAutoresizingMaskIntoConstraints="NO" id="1Ks-qN-EOY">
@@ -273,7 +276,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nepo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pm2-Za-VcF">
-                                            <rect key="frame" x="0.0" y="168" width="160" height="20.5"/>
+                                            <rect key="frame" x="0.0" y="160" width="160" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -286,7 +289,7 @@
                                         <constraint firstItem="1Ks-qN-EOY" firstAttribute="leading" secondItem="bVT-UD-yV5" secondAttribute="leading" id="SqB-Pl-lnW"/>
                                         <constraint firstAttribute="bottom" secondItem="pm2-Za-VcF" secondAttribute="bottom" id="c1o-9L-USe"/>
                                         <constraint firstAttribute="trailing" secondItem="pm2-Za-VcF" secondAttribute="trailing" id="gdb-fw-Ww5"/>
-                                        <constraint firstItem="pm2-Za-VcF" firstAttribute="top" secondItem="1Ks-qN-EOY" secondAttribute="bottom" constant="8" id="ybg-tB-sq1"/>
+                                        <constraint firstItem="pm2-Za-VcF" firstAttribute="top" secondItem="1Ks-qN-EOY" secondAttribute="bottom" id="ybg-tB-sq1"/>
                                     </constraints>
                                 </collectionViewCellContentView>
                                 <connections>
@@ -296,10 +299,10 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="playgroundCell" id="X1H-Rl-bCL" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="198.5" width="160" height="188.5"/>
+                                <rect key="frame" x="0.0" y="190.5" width="160" height="180.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="PXU-mA-kNy">
-                                    <rect key="frame" x="0.0" y="0.0" width="160" height="188.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="160" height="180.5"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="EditorLogos/Playgrounds" translatesAutoresizingMaskIntoConstraints="NO" id="qAp-AG-KqZ">
@@ -310,7 +313,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Playground" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NWk-nx-U7c">
-                                            <rect key="frame" x="0.0" y="168" width="160" height="20.5"/>
+                                            <rect key="frame" x="0.0" y="160" width="160" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -324,7 +327,7 @@
                                         <constraint firstAttribute="trailing" secondItem="qAp-AG-KqZ" secondAttribute="trailing" id="ebF-U0-vGQ"/>
                                         <constraint firstAttribute="trailing" secondItem="qAp-AG-KqZ" secondAttribute="trailing" id="j3R-e4-7hZ"/>
                                         <constraint firstItem="qAp-AG-KqZ" firstAttribute="leading" secondItem="PXU-mA-kNy" secondAttribute="leading" id="ljD-DG-SKe"/>
-                                        <constraint firstItem="NWk-nx-U7c" firstAttribute="top" secondItem="qAp-AG-KqZ" secondAttribute="bottom" constant="8" id="nje-yG-i90"/>
+                                        <constraint firstItem="NWk-nx-U7c" firstAttribute="top" secondItem="qAp-AG-KqZ" secondAttribute="bottom" id="nje-yG-i90"/>
                                         <constraint firstItem="qAp-AG-KqZ" firstAttribute="top" secondItem="PXU-mA-kNy" secondAttribute="top" id="rpJ-1y-my4"/>
                                         <constraint firstAttribute="bottom" secondItem="NWk-nx-U7c" secondAttribute="bottom" id="rsm-VI-002"/>
                                     </constraints>
@@ -335,10 +338,10 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="localEditorCell" id="Yfn-uo-n4Y" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="279" y="198.5" width="160" height="188.5"/>
+                                <rect key="frame" x="279" y="190.5" width="160" height="180.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="kQB-BW-JJf">
-                                    <rect key="frame" x="0.0" y="0.0" width="160" height="188.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="160" height="180.5"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="EditorLogos/Local" translatesAutoresizingMaskIntoConstraints="NO" id="faN-Mj-y3e">
@@ -350,7 +353,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Local editor" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ked-z3-CdC">
-                                            <rect key="frame" x="0.0" y="168" width="160" height="20.5"/>
+                                            <rect key="frame" x="0.0" y="160" width="160" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -360,7 +363,7 @@
                                         <constraint firstItem="faN-Mj-y3e" firstAttribute="top" secondItem="kQB-BW-JJf" secondAttribute="top" id="C6V-qG-zNv"/>
                                         <constraint firstItem="faN-Mj-y3e" firstAttribute="leading" secondItem="kQB-BW-JJf" secondAttribute="leading" id="Fhq-oe-hI7"/>
                                         <constraint firstAttribute="bottom" secondItem="Ked-z3-CdC" secondAttribute="bottom" id="LB0-cU-0v2"/>
-                                        <constraint firstItem="Ked-z3-CdC" firstAttribute="top" secondItem="faN-Mj-y3e" secondAttribute="bottom" constant="8" id="QlQ-sn-0dF"/>
+                                        <constraint firstItem="Ked-z3-CdC" firstAttribute="top" secondItem="faN-Mj-y3e" secondAttribute="bottom" id="QlQ-sn-0dF"/>
                                         <constraint firstAttribute="trailing" secondItem="faN-Mj-y3e" secondAttribute="trailing" id="mis-1B-7wZ"/>
                                         <constraint firstItem="Ked-z3-CdC" firstAttribute="leading" secondItem="kQB-BW-JJf" secondAttribute="leading" id="qd7-aO-FvF"/>
                                         <constraint firstAttribute="trailing" secondItem="Ked-z3-CdC" secondAttribute="trailing" id="xgr-Oi-Ykh"/>

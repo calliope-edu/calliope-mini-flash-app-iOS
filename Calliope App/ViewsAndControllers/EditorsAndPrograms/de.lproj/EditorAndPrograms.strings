@@ -2,8 +2,8 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "DpH-x4-88I"; */
 "DpH-x4-88I.text" = "Label";
 
-/* Class = "UILabel"; text = "Editors. This text is very long and can span several lines. How will the view react to that? Seems ok, text is spread over multiple lines."; ObjectID = "Hqp-zE-kfc"; */
-"Hqp-zE-kfc.text" = "Editors. This text is very long and can span several lines. How will the view react to that? Seems ok, text is spread over multiple lines.";
+/* Class = "UILabel"; text = "Editors.\nThese editors allow you to write programs for showing text on the Calliope display, read its sensors or even build mini-robots yourself – Give it a try!"; ObjectID = "Hqp-zE-kfc"; */
+"Hqp-zE-kfc.text" = "Editors.\nThese editors allow you to write programs for showing text on the Calliope display, read its sensors or even build mini-robots yourself – Give it a try!";
 
 /* Class = "UILabel"; text = "Makecode"; ObjectID = "KGR-ef-bqG"; */
 "KGR-ef-bqG.text" = "Makecode";
@@ -38,11 +38,11 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "g6h-Vu-QEH"; */
 "g6h-Vu-QEH.text" = "Label";
 
-/* Class = "UILabel"; text = "Programs. This text is very long and can span several lines. How will the view react to that? Seems ok, text is spread over multiple lines."; ObjectID = "ips-vx-zky"; */
-"ips-vx-zky.text" = "Programs. This text is very long and can span several lines. How will the view react to that? Seems ok, text is spread over multiple lines.";
+/* Class = "UILabel"; text = "Programs.\nThese are the programs you created so far."; ObjectID = "ips-vx-zky"; */
+"ips-vx-zky.text" = "Programs.\nThese are the programs you created so far.";
 
-/* Class = "UILabel"; text = "Demo program. This text is very long and can span several lines. How will the view react to that? Seems ok, text is spread over multiple lines."; ObjectID = "lYA-S0-b2D"; */
-"lYA-S0-b2D.text" = "Demo program. This text is very long and can span several lines. How will the view react to that? Seems ok, text is spread over multiple lines.";
+/* Class = "UILabel"; text = "Demo program.\nHere you can download the original program of the Calliope mini."; ObjectID = "lYA-S0-b2D"; */
+"lYA-S0-b2D.text" = "Demo program.\nHere you can download the original program of the Calliope mini.";
 
 /* Class = "UILabel"; text = "Nepo"; ObjectID = "pm2-Za-VcF"; */
 "pm2-Za-VcF.text" = "Nepo";

@@ -120,10 +120,10 @@
 		2F375AB8237E1179004ED8D7 /* TutorialPageUploadProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPageUploadProgram.swift; sourceTree = "<group>"; };
 		2F375ABA237F28BC004ED8D7 /* DefaultProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultProgram.swift; sourceTree = "<group>"; };
 		2F4B8D8D25978D9D0026B480 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/EditorAndPrograms.storyboard; sourceTree = "<group>"; };
-		2F4B8D8E25978DB30026B480 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
-		2F4B8D9125978DB80026B480 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
 		2F4B8D9525979B2A0026B480 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Onboarding.strings; sourceTree = "<group>"; };
 		2F4B8D9725979B2C0026B480 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Onboarding.strings; sourceTree = "<group>"; };
+		2F4B8D9B2598D0F60026B480 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
+		2F4B8D9D2598D1250026B480 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
 		2F57C3B1239058B0008B0D69 /* AnimatingTutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingTutorialViewController.swift; sourceTree = "<group>"; };
 		2F57C3B32394F78B008B0D69 /* DownloadableHexFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadableHexFile.swift; sourceTree = "<group>"; };
 		2F57C3B52394F935008B0D69 /* BlinkingHeartProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkingHeartProgram.swift; sourceTree = "<group>"; };
@@ -720,8 +720,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				2F4B8D8D25978D9D0026B480 /* Base */,
-				2F4B8D8E25978DB30026B480 /* en */,
-				2F4B8D9125978DB80026B480 /* de */,
+				2F4B8D9B2598D0F60026B480 /* en */,
+				2F4B8D9D2598D1250026B480 /* de */,
 			);
 			name = EditorAndPrograms.storyboard;
 			sourceTree = "<group>";
