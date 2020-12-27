@@ -38,7 +38,8 @@ final class MakeCode: Editor {
     func download(_ request: URLRequest) -> EditorDownload? {
         guard
 			let s = request.url?.absoluteString,
-			s.matches(regex: "^data:application/x-calliope-hex").count == 1,
+			s.matches(regex: "^data:application/x-calliope-hex").count
+                + s.matches(regex: "^data:application/x-microbit-hex").count == 1,
 			let url = URL(string:s) else { return nil }
         return EditorDownload(name: "makecode-" + UUID().uuidString, url: url)
     }
