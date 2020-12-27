@@ -24,7 +24,7 @@ class FirmwareUpload {
                 program.load { error in
                     let alert: UIAlertController
                     
-                    if error == nil {
+                    if error == nil && program.bin.count > 0 {
                         let alertDone = UIAlertController(title: "Download finished".localized, message: "The program is downloaded. Do you want to upload it now?".localized, preferredStyle: .alert)
                         alertDone.addAction(UIAlertAction(title: "Yes".localized, style: .default) { _ in
                             self.showUIForDownloadableProgram(controller: controller, program: program)
@@ -32,7 +32,8 @@ class FirmwareUpload {
                         alertDone.addAction(UIAlertAction(title: "No".localized, style: .cancel))
                         alert = alertDone
                     } else {
-                        let alertError = UIAlertController(title: "Program download failed".localized, message: String(format: "The program is not ready. The reason is\n%s".localized, "\(error!.localizedDescription)"), preferredStyle: .alert)
+                        let reason = error?.localizedDescription ?? "The downloaded program is empty"
+                        let alertError = UIAlertController(title: "Program download failed".localized, message: String(format: "The program is not ready. The reason is:\n%@".localized, reason), preferredStyle: .alert)
                         alertError.addAction(UIAlertAction(title: "Ok", style: .default))
                         alert = alertError
                     }
@@ -47,7 +48,7 @@ class FirmwareUpload {
     }
 
     public static func showUploadUI(controller: UIViewController, program: Hex, name: String = "the program".localized, completion: (() -> ())? = nil) {
-        let alert = UIAlertController(title: "Upload?".localized, message: String(format:"Do you want to upload %s to your calliope?".localized, name), preferredStyle: .alert)
+        let alert = UIAlertController(title: "Upload?".localized, message: String(format:"Do you want to upload %@ to your calliope?".localized, name), preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Upload".localized, style: .default) { _ in
             let uploader = FirmwareUpload()
             controller.present(uploader.alertView, animated: true) {

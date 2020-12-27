@@ -178,7 +178,7 @@ class ProgramsCollectionViewController: UICollectionViewController, UICollection
     }
 
     func renameFailed(_ cell: ProgramCollectionViewCell, to newName: String) {
-        let alertViewController = UIAlertController(title: String(format:"Could not rename %s".localized, cell.program.name), message: String(format:"The name %s could not be given to %s. The name for a program must be unique and not empty.".localized, newName, cell.program.name), preferredStyle: .alert)
+        let alertViewController = UIAlertController(title: String(format:"Could not rename %@".localized, cell.program.name), message: String(format:"The name %@ could not be given to %@. The name for a program must be unique and not empty.".localized, newName, cell.program.name), preferredStyle: .alert)
         alertViewController.addAction(UIAlertAction(title: "OK".localized, style: .default)
         { _ in self.dismiss(animated: true, completion: nil) })
 
@@ -199,13 +199,13 @@ class ProgramsCollectionViewController: UICollectionViewController, UICollection
     }
 
     func deleteProgram(of cell: ProgramCollectionViewCell) {
-        let alert = UIAlertController(title: "Delete?".localized, message: String(format:"Do you want to delete %s?".localized, cell.program.name), preferredStyle: .alert)
+        let alert = UIAlertController(title: "Delete?".localized, message: String(format:"Do you want to delete %@?".localized, cell.program.name), preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Delete".localized, style: .destructive) { _ in
             do {
                 try HexFileManager.delete(file: cell.program)
                 self.animateFileChange()
             } catch {
-                let alert = UIAlertController(title: "Delete failed".localized, message: String(format:"Could not delete %s\n", cell.program.name) + error.localizedDescription, preferredStyle: .alert)
+                let alert = UIAlertController(title: "Delete failed".localized, message: String(format:"Could not delete %@\n", cell.program.name) + error.localizedDescription, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default))
                 self.present(alert, animated: true)
             }
