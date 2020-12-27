@@ -20,7 +20,9 @@ extension String {
 
 */
 
-extension String: Error {}
+extension String: LocalizedError {
+    public var errorDescription: String? { return self }
+}
 
 extension String {
 	var localized: String {

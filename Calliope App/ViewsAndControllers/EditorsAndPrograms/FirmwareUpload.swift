@@ -24,7 +24,7 @@ class FirmwareUpload {
                 program.load { error in
                     let alert: UIAlertController
                     
-                    if error == nil && program.bin.count > 0 {
+                    if error == nil {
                         let alertDone = UIAlertController(title: "Download finished".localized, message: "The program is downloaded. Do you want to upload it now?".localized, preferredStyle: .alert)
                         alertDone.addAction(UIAlertAction(title: "Yes".localized, style: .default) { _ in
                             self.showUIForDownloadableProgram(controller: controller, program: program)

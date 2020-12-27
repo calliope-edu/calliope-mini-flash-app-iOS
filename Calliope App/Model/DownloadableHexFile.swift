@@ -32,9 +32,9 @@ extension DownloadableHexFile {
     public func load(completion: @escaping (Error?) -> ()) {
         let url = URL(string: loadableProgramURL)!
         let task = URLSession.shared.dataTask(with: url) {data, response, error in
-            guard error == nil, let data = data, let hexFile = try? HexFileManager.store(name: self.loadableProgramName, data: data) else {
-                //no download error -> file save error!
-                completion(error ?? "Could not save file")
+            guard error == nil, let data = data, data.count > 0, let hexFile = try? HexFileManager.store(name: self.loadableProgramName, data: data), hexFile.bin.count > 0 else {
+                //file saving or parsing issue!
+                completion(error ?? "Could not save file or download is not a proper hex file".localized)
                 return
             }
             //everything went smooth
