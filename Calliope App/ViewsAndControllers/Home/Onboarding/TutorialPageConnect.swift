@@ -67,7 +67,7 @@ class TutorialPageConnect: TutorialPageViewController, AnimatingTutorialViewCont
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         delay(time: 0.5) {
-            self.animateBounce()
+            MatrixConnectionViewController.instance.animateBounce()
             self.animate()
         }
     }
@@ -84,30 +84,15 @@ class TutorialPageConnect: TutorialPageViewController, AnimatingTutorialViewCont
                 self.delegate?.proceed(from: self, completed: true)
             }
         }
-        self.animateBounce()
+        MatrixConnectionViewController.instance.animateBounce()
     }
     
     override func attemptProceed() -> (Bool, Bool) {
-        self.animateBounce()
+        MatrixConnectionViewController.instance.animateBounce()
         if hasConnected {
             return (true, true)
         } else {
             return (false, false)
-        }
-    }
-    
-    private func animateBounce() {
-        guard !hasConnected else { return }
-        
-        let originalTransform = CGAffineTransform(a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0);
-        UIView.animate(withDuration: 0.25, delay: 0.0, options: .curveEaseOut, animations: {
-            //self.arrowImageView.transform = originalTransform.scaledBy(x: 1.5, y: 1.5)
-            self.view.layoutIfNeeded()
-        }) { _ in
-            UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 0.4, initialSpringVelocity: 0.0, options: .curveEaseIn, animations: {
-                //self.arrowImageView.transform = originalTransform
-                self.view.layoutIfNeeded()
-            }, completion: nil)
         }
     }
     

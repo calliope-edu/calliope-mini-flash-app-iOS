@@ -70,6 +70,7 @@ class FirmwareUpload {
 		guard let calliope = calliope else {
             let alertController = UIAlertController(title: "Cannot upload".localized, message: "There is no connected calliope in DFU mode".localized, preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: nil))
+            MatrixConnectionViewController.instance.animateBounce()
 			return alertController
 		}
 		

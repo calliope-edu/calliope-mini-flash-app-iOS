@@ -218,4 +218,12 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 			connectButton.connectionState = .testingMode
 		}
 	}
+
+    public func animateBounce() {
+        if collapseButton.expansionState == .open {
+            self.connectButton.animateBounce()
+        } else {
+            self.collapseButton.animateBounce()
+        }
+    }
 }
