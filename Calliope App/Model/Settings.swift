@@ -8,7 +8,32 @@
 
 import Foundation
 
+public enum SettingsKey: String, CaseIterable {
+    case localEditor = "localEditorOnPreference"
+    case makeCode = "makecodeOnPreference"
+    case roberta = "robertaOnPreference"
+    case playgrounds = "playgroundsOnPreference"
+
+    case makecodeUrl = "makecodeUrlPreference"
+    case robertaUrl = "robertaUrlPreference"
+
+    case appVersion = "appVersionInformationPreference"
+
+    case newsURL = "calliopeNewsUrlPreference"
+
+    case defaultHexFileURL = "calliopeDefaultHexFilePreference"
+
+    case blinkingHeartURL = "calliopeBlinkingHeartHexPreference"
+}
+
 public struct Settings {
+
+    static var defaultNewsUrl = "https://calliope.cc/forumassets/news.json"
+    static var defaultRobertaUrl = "https://lab.open-roberta.org/#loadSystem&&calliope2017"
+    static var defaultMakecodeUrl = "https://makecode.calliope.cc"
+    static var defaultHexFileUrl = "https://calliope.cc/media/pages/ble/-903257399-1566558063/calliope-demo-combined-mit-dfu-20190820.hex"
+    static var defaultBlinkingHeartUrl = "https://calliope.cc/media/pages/ble/-903257399-1566558063/calliope-demo-combined-mit-dfu-20190820.hex"
+
 	static func registerDefaults() {
 		var defaultSettings: [String: Any] = [:]
 		for key in SettingsKey.allCases {
@@ -23,17 +48,17 @@ public struct Settings {
 			case .playgrounds:
 				defaultValue = true
 			case .makecodeUrl:
-                defaultValue = "https://makecode.calliope.cc"
+                defaultValue = defaultMakecodeUrl
 			case .robertaUrl:
-				defaultValue = "https://lab.open-roberta.org/#loadSystem&&calliope2017"
+				defaultValue = defaultRobertaUrl
 			case .appVersion:
 				defaultValue = "1.0"
 			case .newsURL:
-				defaultValue = "https://calliope.cc/forumassets/news.json"
+				defaultValue = defaultNewsUrl
             case .defaultHexFileURL:
-                defaultValue = "https://calliope.cc/media/pages/ble/-903257399-1566558063/calliope-demo-combined-mit-dfu-20190820.hex"
+                defaultValue = defaultHexFileUrl
             case .blinkingHeartURL: //TODO: replace with correct URL
-                defaultValue = "https://calliope.cc/media/pages/ble/-903257399-1566558063/calliope-demo-combined-mit-dfu-20190820.hex"
+                defaultValue = defaultBlinkingHeartUrl
             }
 			defaultSettings[key.rawValue] = defaultValue
 		}
@@ -43,22 +68,4 @@ public struct Settings {
     static func updateAppVersion() {
         UserDefaults.standard.set(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String, forKey: SettingsKey.appVersion.rawValue)
     }
-}
-
-public enum SettingsKey: String, CaseIterable {
-	case localEditor = "localEditorOnPreference"
-	case makeCode = "makecodeOnPreference"
-	case roberta = "robertaOnPreference"
-	case playgrounds = "playgroundsOnPreference"
-
-	case makecodeUrl = "makecodeUrlPreference"
-	case robertaUrl = "robertaUrlPreference"
-
-	case appVersion = "appVersionInformationPreference"
-
-	case newsURL = "calliopeNewsUrlPreference"
-    
-    case defaultHexFileURL = "calliopeDefaultHexFilePreference"
-    
-    case blinkingHeartURL = "calliopeBlinkingHeartHexPreference"
 }

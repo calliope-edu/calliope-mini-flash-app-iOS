@@ -15,7 +15,15 @@ struct NewsManager {
 		URLCache.shared.removeAllCachedResponses()
 		#endif
 
-		let url = URL(string: UserDefaults.standard.string(forKey: SettingsKey.newsURL.rawValue)!)!
+        var urlString = UserDefaults.standard.string(forKey: SettingsKey.newsURL.rawValue)
+        let defaultUrlString = Settings.defaultNewsUrl
+        if urlString == nil || urlString! == defaultUrlString {
+            urlString = defaultUrlString.localized
+        }
+        guard let url = URL(string: urlString!) else {
+            completion(.failure("news url not valid"))
+            return
+        }
 		let task = URLSession.shared.dataTask(with: url) {data, response, error in
 			let result: [NewsItem]?
 			if error == nil, let data = data {
