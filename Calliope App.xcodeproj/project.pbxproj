@@ -112,7 +112,7 @@
 		2FC2A12B22C962D100675C2F /* NewsDetailWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC2A12A22C962D100675C2F /* NewsDetailWebViewController.swift */; };
 		2FFE865E22DB3DDF00728E7C /* TutorialPageConnect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE865D22DB3DDF00728E7C /* TutorialPageConnect.swift */; };
 		2FFE866022DB6A5600728E7C /* TutorialPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE865F22DB6A5600728E7C /* TutorialPageViewController.swift */; };
-		811CA39E25F894D6A4E4D3AD /* libPods-Calliope App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E195A54FA876347B655FB583 /* libPods-Calliope App.a */; };
+		CE73348EEAB4EC5248A0716C /* libPods-Calliope App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D57D51A736B908EDE6355034 /* libPods-Calliope App.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -233,9 +233,9 @@
 		2FC2A12A22C962D100675C2F /* NewsDetailWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDetailWebViewController.swift; sourceTree = "<group>"; };
 		2FFE865D22DB3DDF00728E7C /* TutorialPageConnect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPageConnect.swift; sourceTree = "<group>"; };
 		2FFE865F22DB6A5600728E7C /* TutorialPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPageViewController.swift; sourceTree = "<group>"; };
-		FBC76793314973A51432DC8D /* Pods-Calliope App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.release.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.release.xcconfig"; sourceTree = "<group>"; };
 		3849EA7340C0FAB5DB1A4000 /* Pods-Calliope App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.debug.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.debug.xcconfig"; sourceTree = "<group>"; };
 		BD1AFC4008F992EADC1C557D /* Pods-Calliope App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.release.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.release.xcconfig"; sourceTree = "<group>"; };
+		D57D51A736B908EDE6355034 /* libPods-Calliope App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Calliope App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -243,13 +243,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				811CA39E25F894D6A4E4D3AD /* libPods-Calliope App.a in Frameworks */,
+				CE73348EEAB4EC5248A0716C /* libPods-Calliope App.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2521C112B48B4BBD7252C3D2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D57D51A736B908EDE6355034 /* libPods-Calliope App.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		2F2B80A325A1273300A7CCF7 /* Playground */ = {
 			isa = PBXGroup;
 			children = (
@@ -275,7 +283,7 @@
 				2F61450E22BF75DE001C2734 /* Calliope App */,
 				2F61450D22BF75DE001C2734 /* Products */,
 				5764819361F6510AB656C448 /* Pods */,
-				EA8F631E4E989A3344FCB13A /* Frameworks */,
+				2521C112B48B4BBD7252C3D2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -538,18 +546,10 @@
 		5764819361F6510AB656C448 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				C883E6500EB6D3EFDB9AC8F8 /* Pods-Calliope App.debug.xcconfig */,
-				FBC76793314973A51432DC8D /* Pods-Calliope App.release.xcconfig */,
+				3849EA7340C0FAB5DB1A4000 /* Pods-Calliope App.debug.xcconfig */,
+				BD1AFC4008F992EADC1C557D /* Pods-Calliope App.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		EA8F631E4E989A3344FCB13A /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				E195A54FA876347B655FB583 /* libPods-Calliope App.a */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -559,10 +559,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2F61452022BF75DF001C2734 /* Build configuration list for PBXNativeTarget "Calliope App" */;
 			buildPhases = (
-				7D20D1E57577FF8181FC225E /* [CP] Check Pods Manifest.lock */,
+				5FC9862E769719F976D4061C /* [CP] Check Pods Manifest.lock */,
 				2F61450822BF75DE001C2734 /* Sources */,
 				2F61450922BF75DE001C2734 /* Frameworks */,
 				2F61450A22BF75DE001C2734 /* Resources */,
+				B0191446C4CC16DC83E3A309 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -654,7 +655,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		7D20D1E57577FF8181FC225E /* [CP] Check Pods Manifest.lock */ = {
+		5FC9862E769719F976D4061C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -674,6 +675,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B0191446C4CC16DC83E3A309 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Calliope App/Pods-Calliope App-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Calliope App/Pods-Calliope App-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Calliope App/Pods-Calliope App-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -933,7 +951,7 @@
 		};
 		2F61452122BF75DF001C2734 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C883E6500EB6D3EFDB9AC8F8 /* Pods-Calliope App.debug.xcconfig */;
+			baseConfigurationReference = 3849EA7340C0FAB5DB1A4000 /* Pods-Calliope App.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -952,7 +970,7 @@
 		};
 		2F61452222BF75DF001C2734 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FBC76793314973A51432DC8D /* Pods-Calliope App.release.xcconfig */;
+			baseConfigurationReference = BD1AFC4008F992EADC1C557D /* Pods-Calliope App.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
