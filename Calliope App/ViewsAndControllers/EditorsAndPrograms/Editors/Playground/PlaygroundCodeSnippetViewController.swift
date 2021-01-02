@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Highlightr
 
 protocol CodeSnippetController: UIViewController {
     var codeSnippet: CodeSnippet? { get set }
@@ -17,8 +18,32 @@ class PlaygroundCodeSnippetViewController: UIViewController, CodeSnippetControll
     var codeSnippet: CodeSnippet? {
         didSet {
             loadViewIfNeeded()
-            codeView.text = codeSnippet?.content
             title = codeSnippet?.title
+
+
+            guard let snippetContent = codeSnippet?.content,
+                  let code = NSMutableString(utf8String: snippetContent) else {
+                codeView.text = ""
+                return
+            }
+
+            if let regex = try? NSRegularExpression(pattern: "\\<\\#T\\#\\#.*?\\#\\#(.*?)\\#\\>", options: []) {
+                let replaced: Int = regex.replaceMatches(in: code, options: [], range: NSMakeRange(0, code.length), withTemplate: "$1")
+            }
+
+            if let regex = try? NSRegularExpression(pattern: "\\<\\#(.*?)\\#\\>") {
+                let replaced: Int = regex.replaceMatches(in: code, options: [], range: NSMakeRange(0, code.length), withTemplate: "$1")
+            }
+
+            guard let highlightr = Highlightr() else {
+                codeView.text = String(code)
+                return
+            }
+
+            highlightr.setTheme(to: "xcode")
+            //highlightr.setTheme(to: "school-book")
+            let highlightedCode = highlightr.highlight(String(code), as: "swift")
+            codeView.attributedText = highlightedCode
         }
     }
 
