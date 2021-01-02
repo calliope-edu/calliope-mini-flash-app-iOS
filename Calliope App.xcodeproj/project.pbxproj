@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,10 @@
 		2F08A0E5234B11890088A8D6 /* ProgramsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F08A0E4234B11890088A8D6 /* ProgramsCollectionViewController.swift */; };
 		2F2B443623559A95008B957E /* TutorialPageBattery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2B443523559A95008B957E /* TutorialPageBattery.swift */; };
 		2F2B44382355A018008B957E /* PageIndicatorContainingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2B44372355A018008B957E /* PageIndicatorContainingViewController.swift */; };
+		2F2B808D259F80A400A7CCF7 /* PlaygroundSnippets.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F9E4048259DFAB9002FFE0B /* PlaygroundSnippets.storyboard */; };
+		2F2B809A25A0E01500A7CCF7 /* CodeSnippets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2B809925A0E01500A7CCF7 /* CodeSnippets.swift */; };
+		2F2B809D25A0F25700A7CCF7 /* PlaygroundSnippetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2B809C25A0F25700A7CCF7 /* PlaygroundSnippetTableViewCell.swift */; };
+		2F2B80A025A1100800A7CCF7 /* PlaygroundCodeSnippetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2B809F25A1100800A7CCF7 /* PlaygroundCodeSnippetViewController.swift */; };
 		2F375AB9237E1179004ED8D7 /* TutorialPageUploadProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F375AB8237E1179004ED8D7 /* TutorialPageUploadProgram.swift */; };
 		2F375ABB237F28BC004ED8D7 /* DefaultProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F375ABA237F28BC004ED8D7 /* DefaultProgram.swift */; };
 		2F4B8D8425978D950026B480 /* EditorAndPrograms.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F4B8D8225978D950026B480 /* EditorAndPrograms.storyboard */; };
@@ -62,7 +66,6 @@
 		2F61458F22BF761F001C2734 /* MatrixConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61455922BF761F001C2734 /* MatrixConnectionViewController.swift */; };
 		2F61459022BF761F001C2734 /* MainContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61455A22BF761F001C2734 /* MainContainerViewController.swift */; };
 		2F61459122BF761F001C2734 /* FirmwareUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61455B22BF761F001C2734 /* FirmwareUpload.swift */; };
-		2F61459322BF761F001C2734 /* PlaygroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61455D22BF761F001C2734 /* PlaygroundViewController.swift */; };
 		2F61459422BF761F001C2734 /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61455E22BF761F001C2734 /* EditorViewController.swift */; };
 		2F61459522BF761F001C2734 /* ProgramCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61455F22BF761F001C2734 /* ProgramCollectionViewCell.swift */; };
 		2F61459622BF761F001C2734 /* LocalEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61456022BF761F001C2734 /* LocalEditorViewController.swift */; };
@@ -102,6 +105,7 @@
 		2F9B2A1F233F045D009496DD /* RobotoMono-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F9B2A14233F045D009496DD /* RobotoMono-Thin.ttf */; };
 		2F9B5CAB2357127A00728546 /* TutorialPageMiniDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9B5CAA2357127A00728546 /* TutorialPageMiniDemo.swift */; };
 		2F9B5CAD23571E7100728546 /* OnboardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9B5CAC23571E7100728546 /* OnboardingCollectionViewCell.swift */; };
+		2F9E404A259DFB00002FFE0B /* PlaygroundSnippetTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9E4049259DFB00002FFE0B /* PlaygroundSnippetTableViewController.swift */; };
 		2FA10F392336FC6E0058E2F6 /* News.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FA10F382336FC6E0058E2F6 /* News.storyboard */; };
 		2FAA2D0422DB3BBB00BC1A5F /* OnboardingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAA2D0322DB3BBB00BC1A5F /* OnboardingPage.swift */; };
 		2FC2A12922C8FA6F00675C2F /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC2A12822C8FA6F00675C2F /* News.swift */; };
@@ -119,6 +123,9 @@
 		2F08A0E4234B11890088A8D6 /* ProgramsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramsCollectionViewController.swift; sourceTree = "<group>"; };
 		2F2B443523559A95008B957E /* TutorialPageBattery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPageBattery.swift; sourceTree = "<group>"; };
 		2F2B44372355A018008B957E /* PageIndicatorContainingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageIndicatorContainingViewController.swift; sourceTree = "<group>"; };
+		2F2B809925A0E01500A7CCF7 /* CodeSnippets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeSnippets.swift; sourceTree = "<group>"; };
+		2F2B809C25A0F25700A7CCF7 /* PlaygroundSnippetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundSnippetTableViewCell.swift; sourceTree = "<group>"; };
+		2F2B809F25A1100800A7CCF7 /* PlaygroundCodeSnippetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundCodeSnippetViewController.swift; sourceTree = "<group>"; };
 		2F375AB8237E1179004ED8D7 /* TutorialPageUploadProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPageUploadProgram.swift; sourceTree = "<group>"; };
 		2F375ABA237F28BC004ED8D7 /* DefaultProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultProgram.swift; sourceTree = "<group>"; };
 		2F4B8D8D25978D9D0026B480 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/EditorAndPrograms.storyboard; sourceTree = "<group>"; };
@@ -175,7 +182,6 @@
 		2F61455922BF761F001C2734 /* MatrixConnectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatrixConnectionViewController.swift; sourceTree = "<group>"; };
 		2F61455A22BF761F001C2734 /* MainContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContainerViewController.swift; sourceTree = "<group>"; };
 		2F61455B22BF761F001C2734 /* FirmwareUpload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirmwareUpload.swift; sourceTree = "<group>"; };
-		2F61455D22BF761F001C2734 /* PlaygroundViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaygroundViewController.swift; sourceTree = "<group>"; };
 		2F61455E22BF761F001C2734 /* EditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorViewController.swift; sourceTree = "<group>"; };
 		2F61455F22BF761F001C2734 /* ProgramCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgramCollectionViewCell.swift; sourceTree = "<group>"; };
 		2F61456022BF761F001C2734 /* LocalEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalEditorViewController.swift; sourceTree = "<group>"; };
@@ -219,15 +225,17 @@
 		2F9B2A14233F045D009496DD /* RobotoMono-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoMono-Thin.ttf"; sourceTree = "<group>"; };
 		2F9B5CAA2357127A00728546 /* TutorialPageMiniDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPageMiniDemo.swift; sourceTree = "<group>"; };
 		2F9B5CAC23571E7100728546 /* OnboardingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewCell.swift; sourceTree = "<group>"; };
+		2F9E4048259DFAB9002FFE0B /* PlaygroundSnippets.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = PlaygroundSnippets.storyboard; path = "/Users/tassilokarge/Calliope/calliope-mini-flash-app/Calliope App/ViewsAndControllers/EditorsAndPrograms/Editors/PlaygroundSnippets.storyboard"; sourceTree = "<absolute>"; };
+		2F9E4049259DFB00002FFE0B /* PlaygroundSnippetTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundSnippetTableViewController.swift; sourceTree = "<group>"; };
 		2FA10F382336FC6E0058E2F6 /* News.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = News.storyboard; sourceTree = "<group>"; };
 		2FAA2D0322DB3BBB00BC1A5F /* OnboardingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPage.swift; sourceTree = "<group>"; };
 		2FC2A12822C8FA6F00675C2F /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
 		2FC2A12A22C962D100675C2F /* NewsDetailWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDetailWebViewController.swift; sourceTree = "<group>"; };
 		2FFE865D22DB3DDF00728E7C /* TutorialPageConnect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPageConnect.swift; sourceTree = "<group>"; };
 		2FFE865F22DB6A5600728E7C /* TutorialPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPageViewController.swift; sourceTree = "<group>"; };
-		C883E6500EB6D3EFDB9AC8F8 /* Pods-Calliope App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.debug.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.debug.xcconfig"; sourceTree = "<group>"; };
-		E195A54FA876347B655FB583 /* libPods-Calliope App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Calliope App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBC76793314973A51432DC8D /* Pods-Calliope App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.release.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.release.xcconfig"; sourceTree = "<group>"; };
+		3849EA7340C0FAB5DB1A4000 /* Pods-Calliope App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.debug.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.debug.xcconfig"; sourceTree = "<group>"; };
+		BD1AFC4008F992EADC1C557D /* Pods-Calliope App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.release.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -242,6 +250,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2F2B80A325A1273300A7CCF7 /* Playground */ = {
+			isa = PBXGroup;
+			children = (
+				2F9E4048259DFAB9002FFE0B /* PlaygroundSnippets.storyboard */,
+				2F9E4049259DFB00002FFE0B /* PlaygroundSnippetTableViewController.swift */,
+				2F2B809C25A0F25700A7CCF7 /* PlaygroundSnippetTableViewCell.swift */,
+				2F2B809F25A1100800A7CCF7 /* PlaygroundCodeSnippetViewController.swift */,
+			);
+			path = Playground;
+			sourceTree = "<group>";
+		};
 		2F4B8DA82598D8330026B480 /* HelpScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -379,6 +398,7 @@
 				2F57C3B32394F78B008B0D69 /* DownloadableHexFile.swift */,
 				2F375ABA237F28BC004ED8D7 /* DefaultProgram.swift */,
 				2F57C3B52394F935008B0D69 /* BlinkingHeartProgram.swift */,
+				2F2B809925A0E01500A7CCF7 /* CodeSnippets.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -386,10 +406,10 @@
 		2F91665C2354062A0065AD81 /* Editors */ = {
 			isa = PBXGroup;
 			children = (
+				2F2B80A325A1273300A7CCF7 /* Playground */,
 				2F91665A235405A90065AD81 /* EditorCollectionViewCell.swift */,
 				2F61455E22BF761F001C2734 /* EditorViewController.swift */,
 				2F61456022BF761F001C2734 /* LocalEditorViewController.swift */,
-				2F61455D22BF761F001C2734 /* PlaygroundViewController.swift */,
 				2F08A0E2234AD4320088A8D6 /* EditorsCollectionViewController.swift */,
 			);
 			path = Editors;
@@ -595,6 +615,7 @@
 				2F9B2A01233F0456009496DD /* Roboto-BoldItalic.ttf in Resources */,
 				2F9B2A18233F045D009496DD /* RobotoMono-BoldItalic.ttf in Resources */,
 				2F9B29FC233F0456009496DD /* Roboto-Medium.ttf in Resources */,
+				2F2B808D259F80A400A7CCF7 /* PlaygroundSnippets.storyboard in Resources */,
 				2F9B2A06233F0456009496DD /* Roboto-Bold.ttf in Resources */,
 				2F6C1B98258FC90300F4B5AC /* Onboarding.storyboard in Resources */,
 				2F61451C22BF75DF001C2734 /* LaunchScreen.storyboard in Resources */,
@@ -684,8 +705,9 @@
 				2F61457822BF761F001C2734 /* ExtString.swift in Sources */,
 				2F61459422BF761F001C2734 /* EditorViewController.swift in Sources */,
 				2F61458B22BF761F001C2734 /* MatrixView.swift in Sources */,
-				2F61459322BF761F001C2734 /* PlaygroundViewController.swift in Sources */,
+				2F2B80A025A1100800A7CCF7 /* PlaygroundCodeSnippetViewController.swift in Sources */,
 				2F08A0E1234AC7400088A8D6 /* EditorAndProgramsContainerViewController.swift in Sources */,
+				2F2B809D25A0F25700A7CCF7 /* PlaygroundSnippetTableViewCell.swift in Sources */,
 				2F9B5CAD23571E7100728546 /* OnboardingCollectionViewCell.swift in Sources */,
 				2F91665B235405AA0065AD81 /* EditorCollectionViewCell.swift in Sources */,
 				2F6145A622C7D71B001C2734 /* Settings.swift in Sources */,
@@ -704,6 +726,7 @@
 				2F61457522BF761F001C2734 /* CalliopeBLEDevice.swift in Sources */,
 				2F61458922BF761F001C2734 /* CollapsingViewControllerProtocol.swift in Sources */,
 				2F9B5CAB2357127A00728546 /* TutorialPageMiniDemo.swift in Sources */,
+				2F2B809A25A0E01500A7CCF7 /* CodeSnippets.swift in Sources */,
 				2F61458A22BF761F001C2734 /* CollapseButtonProtocol.swift in Sources */,
 				2F57C3B2239058B0008B0D69 /* AnimatingTutorialViewController.swift in Sources */,
 				2FC2A12B22C962D100675C2F /* NewsDetailWebViewController.swift in Sources */,
@@ -721,6 +744,7 @@
 				2FAA2D0422DB3BBB00BC1A5F /* OnboardingPage.swift in Sources */,
 				2F57C3BA2395B520008B0D69 /* MenuNavigationCollectionViewController.swift in Sources */,
 				2F61458D22BF761F001C2734 /* ConnectionViewCollapseButton.swift in Sources */,
+				2F9E404A259DFB00002FFE0B /* PlaygroundSnippetTableViewController.swift in Sources */,
 				2FFE866022DB6A5600728E7C /* TutorialPageViewController.swift in Sources */,
 				2F6145A422C7BE3E001C2734 /* NewsCollectionViewCell.swift in Sources */,
 				2F2B443623559A95008B957E /* TutorialPageBattery.swift in Sources */,

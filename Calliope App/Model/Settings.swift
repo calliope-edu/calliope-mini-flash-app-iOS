@@ -16,6 +16,7 @@ public enum SettingsKey: String, CaseIterable {
 
     case makecodeUrl = "makecodeUrlPreference"
     case robertaUrl = "robertaUrlPreference"
+    case playgroundTemplateUrl = "playgroundTemplateUrlPreference"
 
     case appVersion = "appVersionInformationPreference"
 
@@ -31,8 +32,9 @@ public struct Settings {
     static var defaultNewsUrl = "https://calliope.cc/forumassets/news.json"
     static var defaultRobertaUrl = "https://lab.open-roberta.org/#loadSystem&&calliope2017"
     static var defaultMakecodeUrl = "https://makecode.calliope.cc"
-    static var defaultHexFileUrl = "https://calliope.cc/media/pages/ble/-903257399-1566558063/calliope-demo-combined-mit-dfu-20190820.hex"
+    static var defaultHexFileUrl = "https://calliope.cc/media/pages/dateien/hex/-722281028-1582275052/calliope-demo.hex"
     static var defaultBlinkingHeartUrl = "https://calliope.cc/media/pages/ble/-903257399-1566558063/calliope-demo-combined-mit-dfu-20190820.hex"
+    static var defaultPlaygroundTemplateUrl = "https://calliope.cc/ble/playgroundSnippets.json"
 
 	static func registerDefaults() {
 		var defaultSettings: [String: Any] = [:]
@@ -59,6 +61,8 @@ public struct Settings {
                 defaultValue = defaultHexFileUrl
             case .blinkingHeartURL: //TODO: replace with correct URL
                 defaultValue = defaultBlinkingHeartUrl
+            case .playgroundTemplateUrl:
+                defaultValue = defaultPlaygroundTemplateUrl
             }
 			defaultSettings[key.rawValue] = defaultValue
 		}

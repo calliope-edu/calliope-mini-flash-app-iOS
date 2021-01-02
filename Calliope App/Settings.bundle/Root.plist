@@ -30,6 +30,22 @@
 		</dict>
 		<dict>
 			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Template URL</string>
+			<key>Key</key>
+			<string>playgroundTemplateUrlPreference</string>
+			<key>DefaultValue</key>
+			<string>https://calliope.cc/ble/playgroundSnippets.json</string>
+			<key>KeyboardType</key>
+			<string>URL</string>
+			<key>AutocapitalizationType</key>
+			<string>None</string>
+			<key>AutocorrectionType</key>
+			<string>No</string>
+		</dict>
+		<dict>
+			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
 			<string>Enabled</string>
