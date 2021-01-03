@@ -8,12 +8,13 @@
 
 import UIKit
 import Highlightr
+import MobileCoreServices
 
 protocol CodeSnippetController: UIViewController {
     var codeSnippet: CodeSnippet? { get set }
 }
 
-class PlaygroundCodeSnippetViewController: UIViewController, CodeSnippetController, UIDragInteractionDelegate {
+class PlaygroundCodeSnippetViewController: UIViewController, CodeSnippetController, UIDragInteractionDelegate, UIDropInteractionDelegate {
 
 
     var codeSnippet: CodeSnippet? {
@@ -111,10 +112,10 @@ class PlaygroundCodeSnippetViewController: UIViewController, CodeSnippetControll
 
 
     func dragInteraction(_ interaction: UIDragInteraction, itemsForBeginning session: UIDragSession) -> [UIDragItem] {
-        guard let codeSnippet = codeSnippet else {
+        guard let codeSnippet = codeSnippet, let data = codeSnippet.content.data(using: .utf8) else {
             return []
         }
-        let itemProvider = NSItemProvider(item: codeSnippet.content as NSSecureCoding, typeIdentifier: "public.text")
+        let itemProvider = NSItemProvider(item: data as NSData, typeIdentifier: kUTTypeUTF8PlainText as String)
         let dragItem = UIDragItem(itemProvider: itemProvider)
         return [dragItem]
     }
