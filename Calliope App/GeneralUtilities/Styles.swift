@@ -17,13 +17,25 @@ struct Styles {
     static let lightFontName = "Roboto-Light"
     static let italicFontName = "Roboto-Italic"
     static let boldFontName = "Roboto-Bold"
-    
-    static func defaultBoldFont(size: CGFloat) -> UIFont {
-        return UIFont(name: boldFontName, size: size) ?? UIFont.systemFont(ofSize: size, weight: .bold)
+
+    static let regularMonoFontName = "RobotoMono-Regular"
+    static let mediumMonoFontName = "RobotoMono-Medium"
+    static let lightMonoFontName = "RobotoMono-Light"
+    static let italicMonoFontName = "RobotoMono-Italic"
+    static let boldMonoFontName = "RobotoMono-Bold"
+
+    static func defaultBoldFont(size: CGFloat, mono: Bool = false) -> UIFont {
+        return UIFont(name: mono ? boldMonoFontName : boldFontName, size: size)
+            ?? UIFont.systemFont(ofSize: size, weight: .bold)
     }
     
-    static func defaultRegularFont(size: CGFloat) -> UIFont {
-        return UIFont(name: regularFontName, size: size) ?? UIFont.systemFont(ofSize: size)
+    static func defaultRegularFont(size: CGFloat, mono: Bool = false) -> UIFont {
+        return UIFont(name: mono ? regularMonoFontName : regularFontName, size: size)
+            ?? UIFont.systemFont(ofSize: size)
+    }
+
+    static func scaledFont(_ font: UIFont, for style: UIFont.TextStyle) -> UIFont {
+        return UIFontMetrics(forTextStyle: style).scaledFont(for: font)
     }
     
     static func setupGlobalFont() {
