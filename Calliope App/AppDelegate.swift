@@ -9,7 +9,7 @@
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
 	var window: UIWindow?
 
@@ -17,6 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		Settings.registerDefaults()
         Settings.updateAppVersion()
         Styles.setupGlobalFont()
+
+        UNUserNotificationCenter.current().requestAuthorization(options: .alert) { (_, _) in }
+        UNUserNotificationCenter.current().delegate = self
         
 		return true
 	}
@@ -62,5 +65,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		return true
 	}
+
+    // MARK: UNUserNotificationCenterDelegate
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        if #available(iOS 14, *) {
+            completionHandler(.banner)
+        } else {
+            completionHandler(.alert)
+        }
+    }
 }
 
