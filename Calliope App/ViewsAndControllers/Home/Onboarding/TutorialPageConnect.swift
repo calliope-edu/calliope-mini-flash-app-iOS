@@ -33,6 +33,7 @@ class TutorialPageConnect: TutorialPageViewController, AnimatingTutorialViewCont
     @IBOutlet weak var continueButton: UIButton!
     
     var readyCalliopeObservation: Any? = nil
+    var disconnectedCalliopeObservation: Any? = nil
     
     var cellConfigurations: [(String?, UIImage?, [UIImage]?, [UIImage]?)]  =
         [(nil, nil, [#imageLiteral(resourceName: "ble_00")], nil),
@@ -52,21 +53,29 @@ class TutorialPageConnect: TutorialPageViewController, AnimatingTutorialViewCont
         cellSize = CGSize(width: fractionOfSmallerDimension, height: fractionOfSmallerDimension)
     }
     
+    fileprivate func updateConnectionState() {
+        self.setText()
+        self.checkHasConnected()
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.view.layoutIfNeeded()
+        }
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         checkHasConnected()
-        readyCalliopeObservation = NotificationCenter.default.addObserver(forName: CalliopeBLEDevice.usageReadyNotificationName, object: nil, queue: nil) { _ in
-            self.checkHasConnected()
-            UIView.animate(withDuration: 0.3) { [weak self] in
-                self?.view.layoutIfNeeded()
-            }
-        }
-        setText()
+        readyCalliopeObservation = NotificationCenter.default
+            .addObserver(forName: CalliopeBLEDevice.usageReadyNotificationName, object: nil, queue: OperationQueue.main,
+                         using: { _ in self.updateConnectionState() })
+        disconnectedCalliopeObservation = NotificationCenter.default
+            .addObserver(forName: CalliopeBLEDevice.disconnectedNotificationName, object: nil, queue: OperationQueue.main,
+                         using: { _ in self.updateConnectionState() })
+        updateConnectionState()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        delay(time: 0.5) {
+        delay(time: 1.0) {
             MatrixConnectionViewController.instance.animateBounce()
             self.animate()
         }
@@ -75,6 +84,7 @@ class TutorialPageConnect: TutorialPageViewController, AnimatingTutorialViewCont
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(false)
         NotificationCenter.default.removeObserver(readyCalliopeObservation!)
+        NotificationCenter.default.removeObserver(disconnectedCalliopeObservation!)
     }
     
     @IBAction override func nextPage(_ sender: Any) {
@@ -83,15 +93,16 @@ class TutorialPageConnect: TutorialPageViewController, AnimatingTutorialViewCont
             delay(time: 0.8) {
                 self.delegate?.proceed(from: self, completed: true)
             }
+        } else {
+            MatrixConnectionViewController.instance.animateBounce()
         }
-        MatrixConnectionViewController.instance.animateBounce()
     }
     
     override func attemptProceed() -> (Bool, Bool) {
-        MatrixConnectionViewController.instance.animateBounce()
         if hasConnected {
             return (true, true)
         } else {
+            MatrixConnectionViewController.instance.animateBounce()
             return (false, false)
         }
     }
@@ -109,6 +120,7 @@ class TutorialPageConnect: TutorialPageViewController, AnimatingTutorialViewCont
     private func checkHasConnected() {
         if hasConnected {
             continueButtonHeightConstraint.constant = 40
+            continueButton.isHidden = false
         } else {
             continueButtonHeightConstraint.constant = 0
             continueButton.isHidden = true

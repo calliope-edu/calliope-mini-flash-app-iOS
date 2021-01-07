@@ -11,6 +11,7 @@ import CoreBluetooth
 class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 
     public static let usageReadyNotificationName = NSNotification.Name("calliope_is_usage_ready")
+    public static let disconnectedNotificationName = NSNotification.Name("calliope_connection_lost")
     
 	//the services required for the playground
 	var requiredServices : Set<CalliopeService> {
@@ -29,7 +30,7 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 	private(set) var state : CalliopeBLEDeviceState = .discovered {
 		didSet {
 			LogNotify.log("calliope state: \(state)")
-			handleStateUpdateInternal()
+			handleStateUpdateInternal(oldValue)
 			handleStateUpdate()
 		}
 	}
@@ -38,11 +39,14 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 		//default implementation does nothing
 	}
 
-	private func handleStateUpdateInternal() {
+    private func handleStateUpdateInternal(_ oldState: CalliopeBLEDeviceState) {
 		updateQueue.async { self.updateBlock() }
 		if state == .discovered {
 			//services get invalidated, undiscovered characteristics are thus restored (need to re-discover)
 			servicesWithUndiscoveredCharacteristics = requiredServicesUUIDs
+            if oldState == .usageReady {
+                NotificationCenter.default.post(name: CalliopeBLEDevice.disconnectedNotificationName, object: self)
+            }
 		} else if state == .connected {
 			//immediately evaluate whether in playground mode
 			DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + BluetoothConstants.couplingDelay) {
@@ -50,7 +54,7 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 			}
         } else if state == .usageReady {
             NotificationCenter.default.post(name: CalliopeBLEDevice.usageReadyNotificationName,
-                                            object: self, userInfo: nil)
+                                            object: self)
         }
 	}
 

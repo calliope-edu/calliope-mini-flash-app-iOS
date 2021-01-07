@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="all" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WZ3-mX-9ax">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WZ3-mX-9ax">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -91,7 +91,7 @@
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="uNX-va-3eO" secondAttribute="height" multiplier="1:1" id="7GY-Kh-5bj"/>
-                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="pmY-eG-Low"/>
+                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="400" id="pmY-eG-Low"/>
                                                 </constraints>
                                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Ykj-IZ-MyY">
                                                     <size key="itemSize" width="100" height="100"/>
@@ -503,10 +503,10 @@ Check it out!</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r5P-ze-uPF">
-                                        <rect key="frame" x="0.0" y="121.5" width="304" height="364.5"/>
+                                        <rect key="frame" x="0.0" y="121.5" width="304" height="356.5"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ani_heart_01" translatesAutoresizingMaskIntoConstraints="NO" id="UnV-tx-ClX">
-                                                <rect key="frame" x="52" y="82.5" width="200" height="200"/>
+                                                <rect key="frame" x="52" y="78.5" width="200" height="200"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="200" id="COu-pm-8zh"/>
                                                     <constraint firstAttribute="width" secondItem="UnV-tx-ClX" secondAttribute="height" multiplier="1:1" id="EzY-TA-LB5"/>
@@ -520,7 +520,7 @@ Check it out!</string>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="c79-cg-dDw">
-                                        <rect key="frame" x="0.0" y="502" width="304" height="50"/>
+                                        <rect key="frame" x="0.0" y="494" width="304" height="58"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="KZP-Ey-EXu">
                                                 <rect key="frame" x="27" y="0.0" width="250" height="50"/>
@@ -546,7 +546,7 @@ Check it out!</string>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="KZP-Ey-EXu" secondAttribute="bottom" id="0wV-Zq-sW3"/>
+                                            <constraint firstAttribute="bottom" secondItem="KZP-Ey-EXu" secondAttribute="bottom" constant="8" id="0wV-Zq-sW3"/>
                                             <constraint firstItem="KZP-Ey-EXu" firstAttribute="centerX" secondItem="c79-cg-dDw" secondAttribute="centerX" id="3rE-ls-GzA"/>
                                             <constraint firstItem="KZP-Ey-EXu" firstAttribute="top" secondItem="c79-cg-dDw" secondAttribute="top" id="LYj-M0-FSj"/>
                                         </constraints>
@@ -579,26 +579,26 @@ Check it out!</string>
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Qsp-2E-hnb">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Qsp-2E-hnb">
                                 <rect key="frame" x="16" y="16" width="288" height="552"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="255" verticalHuggingPriority="255" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" text="Start" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4tg-pn-9If">
-                                        <rect key="frame" x="117" y="0.0" width="54" height="31.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="288" height="31.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="255" verticalHuggingPriority="255" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" text="Before you can begin, your Calliope needs energy!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F8L-Km-C5f">
-                                        <rect key="frame" x="21" y="46.5" width="246.5" height="38"/>
+                                        <rect key="frame" x="0.0" y="47.5" width="288" height="38"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b5F-lH-2Y5">
-                                        <rect key="frame" x="0.0" y="99.5" width="288" height="387.5"/>
+                                        <rect key="frame" x="0.0" y="101.5" width="288" height="384.5"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="insert_battery_00" translatesAutoresizingMaskIntoConstraints="NO" id="Cas-Dr-e73">
-                                                <rect key="frame" x="0.0" y="60" width="288" height="267.5"/>
+                                                <rect key="frame" x="0.0" y="58.5" width="288" height="267.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="350" id="o1V-j2-i5O"/>
                                                 </constraints>
@@ -611,14 +611,14 @@ Check it out!</string>
                                             <constraint firstItem="Cas-Dr-e73" firstAttribute="centerX" secondItem="b5F-lH-2Y5" secondAttribute="centerX" id="uyA-a8-s4I"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mfi-4A-xeH">
-                                        <rect key="frame" x="44" y="502" width="200" height="50"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JfY-BK-XKf">
+                                        <rect key="frame" x="0.0" y="502" width="288" height="50"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SMo-Wh-StA">
-                                                <rect key="frame" x="0.0" y="0.0" width="200" height="50"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xvq-hl-UiB">
+                                                <rect key="frame" x="44" y="0.0" width="200" height="50"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="200" id="AEw-Lq-aJx"/>
-                                                    <constraint firstAttribute="height" constant="50" id="tWG-uO-Dro"/>
+                                                    <constraint firstAttribute="height" constant="50" id="49j-Ef-A0X"/>
+                                                    <constraint firstAttribute="width" constant="200" id="Dnc-FF-odr"/>
                                                 </constraints>
                                                 <state key="normal" image="tick_white" backgroundImage="continue_button_background"/>
                                                 <userDefinedRuntimeAttributes>
@@ -627,15 +627,15 @@ Check it out!</string>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <action selector="nextPage:" destination="gJR-c5-Vt7" eventType="touchUpInside" id="rSb-QG-obf"/>
+                                                    <action selector="nextPage:" destination="gJR-c5-Vt7" eventType="touchUpInside" id="7yC-Kx-HlR"/>
                                                 </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="SMo-Wh-StA" secondAttribute="bottom" id="FNc-CO-VSV"/>
-                                            <constraint firstItem="SMo-Wh-StA" firstAttribute="top" secondItem="Mfi-4A-xeH" secondAttribute="top" id="MY5-Zz-bik"/>
-                                            <constraint firstItem="SMo-Wh-StA" firstAttribute="centerX" secondItem="Mfi-4A-xeH" secondAttribute="centerX" id="b7O-Ux-g58"/>
+                                            <constraint firstAttribute="bottom" secondItem="xvq-hl-UiB" secondAttribute="bottom" id="8C6-8P-fZR"/>
+                                            <constraint firstItem="xvq-hl-UiB" firstAttribute="centerX" secondItem="JfY-BK-XKf" secondAttribute="centerX" id="Gxd-H7-XB8"/>
+                                            <constraint firstItem="xvq-hl-UiB" firstAttribute="top" secondItem="JfY-BK-XKf" secondAttribute="top" id="wIl-ak-vYG"/>
                                         </constraints>
                                     </view>
                                 </subviews>
