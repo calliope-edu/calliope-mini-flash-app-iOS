@@ -79,6 +79,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 	private func changedConnector(_ oldValue: CalliopeBLEDiscovery) {
         oldValue.giveUpResponsibility()
         connector.updateBlock = updateDiscoveryState
+        connector.errorBlock = error
 		matrixView.updateBlock = {
 			//matrix has been changed manually, this always triggers a disconnect
 			self.connector.disconnectFromCalliope()
@@ -218,6 +219,14 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 			connectButton.connectionState = .testingMode
 		}
 	}
+
+    private func error(_ error: Error) {
+        if (error as? CBError)?.errorCode == 14 {
+            self.present(UIAlertController(title: "Remove paired device".localized, message: "This Calliope can not be connected until you go to the bluetooth settings of your device and \"ignore\" it.".localized, preferredStyle: .alert), animated: true)
+        } else {
+            self.present(UIAlertController(title: "Error".localized, message: "Encountered an error discovering or connecting calliope(s):".localized + "\n\(error.localizedDescription)", preferredStyle: .alert), animated: true)
+        }
+    }
 
     public func animateBounce() {
         if collapseButton.expansionState == .open {

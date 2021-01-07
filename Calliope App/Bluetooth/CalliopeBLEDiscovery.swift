@@ -22,6 +22,7 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 
 	var updateQueue = DispatchQueue.main
 	var updateBlock: () -> () = {}
+    var errorBlock: (Error) -> () = {_ in }
 
 	var calliopeBuilder: (_ peripheral: CBPeripheral, _ name: String) -> CalliopeBLEDevice
 
@@ -217,7 +218,7 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 	func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
 		guard let name = discoveredCalliopeUUIDNameMap[peripheral.identifier],
 			let calliope = discoveredCalliopes[name] else {
-				//TODO: log that we encountered unexpected behavior
+            errorBlock("Could not find connected calliope in discovered calliopes".localized)
 				return
 		}
 		connectedCalliope = calliope
@@ -225,13 +226,18 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 
 	func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
 		LogNotify.log("disconnected from \(peripheral.name ?? "unknown device"))")
+        if let error = error {
+            errorBlock(error)
+        }
 		connectingCalliope = nil
 		connectedCalliope = nil
 		lastConnected = nil
 	}
 
 	func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
-		//TODO: remove calliope from discovered list depending on error
+        if let error = error {
+            errorBlock(error)
+        }
 		connectingCalliope = nil
 	}
 
