@@ -53,7 +53,7 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
         webview.rightAnchor.constraint(equalTo: bounds.rightAnchor).isActive = true
         
         if #available(iOS 13.0, *), traitCollection.userInterfaceIdiom == .pad {
-            //TODO: turn this off when microsoft pxt and nepo can handle the new useragent of iOS13
+            // turn this off when microsoft pxt and nepo can handle the new useragent of iOS13
             // i.e. they check in a different way for the browser type,
             // e.g. as suggested on https://51degrees.com/blog/missing-ipad-tablet-web-traffic
             webview.customUserAgent = "Mozilla/5.0 (iPad; CPU OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.1 Mobile/15E148 Safari/604.1"
@@ -74,17 +74,27 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
         if let download = editor.download(navigationAction.request) {
             decisionHandler(.cancel)
 			upload(result: download)
-        } else if navigationAction.request.url?.absoluteString == "https://calliope.cc/" {
+        } else if let url = navigationAction.request.url,
+                  let host = url.host,
+                  host.matches(regex: "^calliope.cc").count > 0 {
 			decisionHandler(.cancel)
 			self.navigationController?.popViewController(animated: true)
-		} else {
+        } else if
+            let url = navigationAction.request.url,
+            let host = url.host,
+            host.matches(regex: "roberta-home").count > 0 {
+            decisionHandler(.cancel)
+            UIApplication.shared.open(url)
+        } else {
             decisionHandler(.allow)
         }
     }
 
-    func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-        // LOG("policy for response \(String(describing: navigationResponse.response.url))")
-        decisionHandler(.allow)
+    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        if let url = navigationAction.request.url {
+            UIApplication.shared.open(url)
+        }
+        return nil
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation) {
