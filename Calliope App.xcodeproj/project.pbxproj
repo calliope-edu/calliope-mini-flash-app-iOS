@@ -80,6 +80,7 @@
 		2F6145A622C7D71B001C2734 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6145A522C7D71B001C2734 /* Settings.swift */; };
 		2F6C1B87258FC7C600F4B5AC /* ConnectionView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F6C1B89258FC7C600F4B5AC /* ConnectionView.storyboard */; };
 		2F6C1B98258FC90300F4B5AC /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F6C1B9A258FC90300F4B5AC /* Onboarding.storyboard */; };
+		2F763FE625A607A400C2029D /* SwiftCodeSnippetHighlighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F763FE525A607A400C2029D /* SwiftCodeSnippetHighlighter.swift */; };
 		2F91665B235405AA0065AD81 /* EditorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F91665A235405A90065AD81 /* EditorCollectionViewCell.swift */; };
 		2F9B29FC233F0456009496DD /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F9B29EF233F0456009496DD /* Roboto-Medium.ttf */; };
 		2F9B29FD233F0456009496DD /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F9B29F0233F0456009496DD /* Roboto-Light.ttf */; };
@@ -199,6 +200,7 @@
 		2F6C1B8E258FC7FE00F4B5AC /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ConnectionView.strings; sourceTree = "<group>"; };
 		2F6C1B99258FC90300F4B5AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Onboarding.storyboard; sourceTree = "<group>"; };
 		2F763FE125A1F4A100C2029D /* Calliope App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Calliope App.entitlements"; sourceTree = "<group>"; };
+		2F763FE525A607A400C2029D /* SwiftCodeSnippetHighlighter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftCodeSnippetHighlighter.swift; sourceTree = "<group>"; };
 		2F91665A235405A90065AD81 /* EditorCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorCollectionViewCell.swift; sourceTree = "<group>"; };
 		2F9B29EF233F0456009496DD /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		2F9B29F0233F0456009496DD /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
@@ -266,6 +268,7 @@
 				2F9E4049259DFB00002FFE0B /* PlaygroundSnippetTableViewController.swift */,
 				2F2B809C25A0F25700A7CCF7 /* PlaygroundSnippetTableViewCell.swift */,
 				2F2B809F25A1100800A7CCF7 /* PlaygroundCodeSnippetViewController.swift */,
+				2F763FE525A607A400C2029D /* SwiftCodeSnippetHighlighter.swift */,
 			);
 			path = Playground;
 			sourceTree = "<group>";
@@ -739,6 +742,7 @@
 				2F61457622BF761F001C2734 /* ProgrammableCalliope.swift in Sources */,
 				2F61457C22BF761F001C2734 /* ExtColor.swift in Sources */,
 				2F61459922BF761F001C2734 /* Hex.swift in Sources */,
+				2F763FE625A607A400C2029D /* SwiftCodeSnippetHighlighter.swift in Sources */,
 				2F61458E22BF761F001C2734 /* Matrix.swift in Sources */,
 				2F61457A22BF761F001C2734 /* ExtURL.swift in Sources */,
 				2F57C3BC2395B531008B0D69 /* MenuItemsCollectionViewController.swift in Sources */,
@@ -958,6 +962,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Calliope App/Calliope App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = GKA87N33H4;
 				INFOPLIST_FILE = "Calliope App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -978,6 +983,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Calliope App/Calliope App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = GKA87N33H4;
 				INFOPLIST_FILE = "Calliope App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (

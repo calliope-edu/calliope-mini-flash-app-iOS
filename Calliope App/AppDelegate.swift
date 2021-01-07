@@ -18,7 +18,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         Settings.updateAppVersion()
         Styles.setupGlobalFont()
 
-        UNUserNotificationCenter.current().requestAuthorization(options: .alert) { (_, _) in }
         UNUserNotificationCenter.current().delegate = self
         
 		return true

@@ -43,6 +43,11 @@ class PlaygroundSnippetTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        UNUserNotificationCenter.current().requestAuthorization(options: .alert) { (_, _) in }
+    }
+
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
