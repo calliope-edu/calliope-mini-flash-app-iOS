@@ -124,8 +124,12 @@ class ProgramCollectionViewCell: UICollectionViewCell, UITextViewDelegate {
 	}
 
 	override func delete(_ sender: Any?) {
-		delegate.deleteProgram(of: self)
+        self.delete()
 	}
+
+    @objc func delete() {
+        delegate.deleteProgram(of: self)
+    }
     
     @objc func edit() {
         editing = true
@@ -133,6 +137,10 @@ class ProgramCollectionViewCell: UICollectionViewCell, UITextViewDelegate {
     
     @objc func share() {
         delegate.share(cell: self)
+    }
+
+    override var canBecomeFirstResponder: Bool {
+        return true
     }
 
 	// MARK: UITextViewDelegate

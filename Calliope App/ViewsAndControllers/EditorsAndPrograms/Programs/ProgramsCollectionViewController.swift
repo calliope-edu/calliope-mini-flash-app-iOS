@@ -142,6 +142,21 @@ class ProgramsCollectionViewController: UICollectionViewController, UICollection
         return true
     }
 
+    @available(iOS 13.0, *)
+    override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedMenuElements -> UIMenu? in
+            let actions: [UIMenuElement] = [
+                UIAction(title: "Edit".localized, image: UIImage(systemName: "rectangle.and.pencil.and.ellipsis"), handler: { (action) in (
+                            self.collectionView.cellForItem(at: indexPath) as? ProgramCollectionViewCell)?.edit() }),
+                UIAction(title: "Share".localized, image: UIImage(systemName: "square.and.arrow.up"), handler: { (action) in (
+                            self.collectionView.cellForItem(at: indexPath) as? ProgramCollectionViewCell)?.share() }),
+                UIAction(title: "Delete".localized, image: UIImage(systemName: "trash"), handler: { (action) in (
+                            self.collectionView.cellForItem(at: indexPath) as? ProgramCollectionViewCell)?.delete(nil) })
+            ]
+            return UIMenu(title: "", children: actions)
+        }
+    }
+
     override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
         return action == #selector(delete(_:)) || action == Selector(("edit")) || action == Selector(("share"))
     }
