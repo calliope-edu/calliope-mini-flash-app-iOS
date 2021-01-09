@@ -179,7 +179,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 
 	private func evaluateCalliopeState(_ calliope: CalliopeBLEDevice) {
 
-		if calliope.state == .notPlaygroundReady || calliope.state == .discovered {
+		if calliope.state == .wrongMode || calliope.state == .discovered {
 			self.collapseButton.connectionState = attemptReconnect || reconnecting ? .connecting : .disconnected
 		} else if calliope.state == .usageReady {
 			self.collapseButton.connectionState = .connected
@@ -210,7 +210,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 		case .usageReady:
 			matrixView.isUserInteractionEnabled = true
 			connectButton.connectionState = .readyToPlay
-		case .notPlaygroundReady:
+		case .wrongMode:
 			matrixView.isUserInteractionEnabled = true
 			connectButton.connectionState = .wrongProgram
 		case .willReset:

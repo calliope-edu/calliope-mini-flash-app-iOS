@@ -13,17 +13,21 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
     public static let usageReadyNotificationName = NSNotification.Name("calliope_is_usage_ready")
     public static let disconnectedNotificationName = NSNotification.Name("calliope_connection_lost")
     
-	//the services required for the playground
+	//the services required for the usage
 	var requiredServices : Set<CalliopeService> {
 		fatalError("The CalliopeBLEDevice Class is abstract! At least requiredServices variable must be overridden by subclass.")
 	}
+    //servcies that are not strictly necessary
+    var optionalServices : Set<CalliopeService> { [] }
+
+    final var discoveredOptionalServices: Set<CalliopeService> = []
 
 	enum CalliopeBLEDeviceState {
 		case discovered //discovered and ready to connect, not connected yet
 		case connected //connected, but services and characteristics have not (yet) been found
 		case evaluateMode //connected, looking for services and characteristics
 		case usageReady //all required services and characteristics have been found, calliope ready to be programmed
-		case notPlaygroundReady //required services and characteristics not available, put into right mode
+		case wrongMode //required services and characteristics not available, put into right mode
 		case willReset //when a reset is done to enable or disable services
 	}
 
@@ -43,7 +47,8 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 		updateQueue.async { self.updateBlock() }
 		if state == .discovered {
 			//services get invalidated, undiscovered characteristics are thus restored (need to re-discover)
-			servicesWithUndiscoveredCharacteristics = requiredServicesUUIDs
+			servicesWithUndiscoveredCharacteristics = requiredServicesUUIDs + optionalServicesUUIDs
+            discoveredOptionalServices = []
             if oldState == .usageReady {
                 NotificationCenter.default.post(name: CalliopeBLEDevice.disconnectedNotificationName, object: self)
             }
@@ -65,10 +70,12 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 	let name : String
 
 	lazy var servicesWithUndiscoveredCharacteristics: [CBUUID] = {
-		return requiredServicesUUIDs
+		return requiredServicesUUIDs + optionalServicesUUIDs
 	}()
 
 	lazy var requiredServicesUUIDs: [CBUUID] = requiredServices.map { $0.uuid }
+
+    lazy var optionalServicesUUIDs: [CBUUID] = optionalServices.map { $0.uuid }
 
 	required init(peripheral: CBPeripheral, name: String) {
 		self.peripheral = peripheral
@@ -96,51 +103,59 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 	public func evaluateMode() {
 		//immediately continue with service discovery
 		state = .evaluateMode
-		peripheral.discoverServices(requiredServicesUUIDs + [CalliopeService.master.uuid])
+		peripheral.discoverServices([CalliopeService.master.uuid] + requiredServicesUUIDs + optionalServicesUUIDs)
 	}
 
 	func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
 		guard error == nil else {
 			LogNotify.log(error!.localizedDescription)
-			state = .notPlaygroundReady
+			state = .wrongMode
 			return
 		}
 
 		let services = peripheral.services ?? []
 		let uuidSet = Set(services.map { return $0.uuid })
 
+        discoveredOptionalServices = Set(uuidSet.intersection(optionalServicesUUIDs)
+                                            .compactMap { CalliopeBLEProfile.uuidServiceMap[$0] })
+
 		//evaluate whether all required services were found. If not, Calliope is not ready for programs from the playground
 		if uuidSet.isSuperset(of: requiredServicesUUIDs) {
 			LogNotify.log("found all (\(requiredServicesUUIDs.count)) required services:\n\(requiredServices)")
+            LogNotify.log("found \(optionalServicesUUIDs.count) / \(optionalServices.count) optional services")
 			//discover the characteristics of all required services, just to be thorough
-			services.filter { requiredServicesUUIDs.contains($0.uuid) }.forEach { service in
-				peripheral.discoverCharacteristics(CalliopeBLEProfile.serviceCharacteristicUUIDMap[service.uuid], for: service)
+            servicesWithUndiscoveredCharacteristics = requiredServicesUUIDs + Set(optionalServicesUUIDs).subtracting(uuidSet)
+            services
+                .filter { requiredServicesUUIDs.contains($0.uuid) || optionalServicesUUIDs.contains($0.uuid) }
+                .forEach { service in
+                    peripheral.discoverCharacteristics(
+                        CalliopeBLEProfile.serviceCharacteristicUUIDMap[service.uuid], for: service)
 			}
 		} else if (uuidSet.contains(CalliopeService.master.uuid)) {
 			//activate missing services
 			LogNotify.log("attempt activation of required services through master service")
 			guard let masterService = services.first(where: { $0.uuid == CalliopeService.master.uuid }) else {
-				state = .notPlaygroundReady
+				state = .wrongMode
 				return
 			}
 			peripheral.discoverCharacteristics([CalliopeCharacteristic.services.uuid], for: masterService)
 		} else {
 			LogNotify.log("failed to find required services or a way to activate them")
-			state = .notPlaygroundReady
+			state = .wrongMode
 		}
 	}
 
 	private func resetForRequiredServices() {
 		guard requiredServices.reduce(true, { $0 && ($1.bitPattern != 0) }) else {
 			LogNotify.log("services \(requiredServices) cannot be enabled through master service")
-			state = .notPlaygroundReady
+			state = .wrongMode
 			return
 		}
-		let flags = (requiredServices.reduce(0, { $0 | $1 }) | 1 << 31).littleEndianData
+        let flags = ((requiredServices.union(optionalServices)).reduce(0, { $0 | $1 }) | 1 << 31).littleEndianData
 		do { try write(flags, for: .services) }
 		catch {
 			if state == .evaluateMode {
-				state = .notPlaygroundReady
+				state = .wrongMode
 			}
 			LogNotify.log("was not able to enable services \(requiredServices) through master service")
 		}
@@ -170,7 +185,7 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 		if uuidSet.isSuperset(of: requiredCharacteristicsUUIDs) {
 			_ = servicesWithUndiscoveredCharacteristics.remove(object: service.uuid)
 		} else {
-			state = .notPlaygroundReady
+			state = .wrongMode
 		}
 
 		if servicesWithUndiscoveredCharacteristics.isEmpty {

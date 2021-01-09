@@ -9,11 +9,13 @@ import CoreBluetooth
 
 //Bluetooth profile of the Calliope
 
-enum CalliopeService: String {
+enum CalliopeService: String, CaseIterable {
 
 	//MARK: DFU-Services
 
 	case dfu = "E95D93B0-251D-470A-A062-FA1922DFA9A8"
+
+    case partialFlashing = "E97DD91D-251D-470A-A062-FA1922DFA9A8"
 
 	//MARK: master service
 
@@ -87,6 +89,10 @@ enum CalliopeCharacteristic: String, CaseIterable {
 	//MARK: dfu-related characteristics
 
 	case dfuControl = "E95D93B1-251D-470A-A062-FA1922DFA9A8"
+
+    //MARK: partial flashing characteristics
+
+    case partialFlashing = "E97D3B10-251D-470A-A062-FA1922DFA9A8"
 
 	//MARK: master service characteristic
 
@@ -300,7 +306,8 @@ struct CalliopeBLEProfile {
 		.event: [.microBitRequirements, .microBitEvent, .clientRequirements, .clientEvent],
 		.temperature: [.temperature, .temperaturePeriod],
 		.uart: [.txCharacteristic, .rxCharacteristic],
-		.dfu: [.dfuControl]
+		.dfu: [.dfuControl],
+        .partialFlashing: [.partialFlashing]
 	]
 
 	///inverted map of characteristics and corresponding services (there are some ambiguities, which we ignore)
@@ -312,9 +319,13 @@ struct CalliopeBLEProfile {
 	static let serviceCharacteristicUUIDMap = Dictionary(uniqueKeysWithValues:
 		serviceCharacteristicMap.map { ($0.uuid, $1.map { $0.uuid }) })
 	
-	///To quickly access the characteristic with the corresponding uuid
-	static let uuidCharacteristicMap = Dictionary(uniqueKeysWithValues:
-		CalliopeCharacteristic.allCases.map { ($0.uuid, $0) })
+	///To quickly access the service with the corresponding uuid
+	static let uuidServiceMap = Dictionary(uniqueKeysWithValues:
+		CalliopeService.allCases.map { ($0.uuid, $0) })
+
+    ///To quickly access the characteristic with the corresponding uuid
+    static let uuidCharacteristicMap = Dictionary(uniqueKeysWithValues:
+        CalliopeCharacteristic.allCases.map { ($0.uuid, $0) })
 }
 
 extension CalliopeService {

@@ -32,8 +32,6 @@
 		2F57C3BC2395B531008B0D69 /* MenuItemsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3BB2395B531008B0D69 /* MenuItemsCollectionViewController.swift */; };
 		2F61451022BF75DE001C2734 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61450F22BF75DE001C2734 /* AppDelegate.swift */; };
 		2F61451C22BF75DF001C2734 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F61451A22BF75DF001C2734 /* LaunchScreen.storyboard */; };
-		2F61456622BF761F001C2734 /* mini-smile.hex in Resources */ = {isa = PBXBuildFile; fileRef = 2F61452422BF761F001C2734 /* mini-smile.hex */; };
-		2F61456722BF761F001C2734 /* Calliope-mini-Start.hex in Resources */ = {isa = PBXBuildFile; fileRef = 2F61452522BF761F001C2734 /* Calliope-mini-Start.hex */; };
 		2F61456922BF761F001C2734 /* CalliopeApp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F61452822BF761F001C2734 /* CalliopeApp.storyboard */; };
 		2F61456C22BF761F001C2734 /* CarRemote.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F61452B22BF761F001C2734 /* CarRemote.storyboard */; };
 		2F61456E22BF761F001C2734 /* CalliopeBLEProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61452E22BF761F001C2734 /* CalliopeBLEProfile.swift */; };
@@ -149,8 +147,6 @@
 		2F61450F22BF75DE001C2734 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2F61451B22BF75DF001C2734 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2F61451D22BF75DF001C2734 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2F61452422BF761F001C2734 /* mini-smile.hex */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "mini-smile.hex"; sourceTree = "<group>"; };
-		2F61452522BF761F001C2734 /* Calliope-mini-Start.hex */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Calliope-mini-Start.hex"; sourceTree = "<group>"; };
 		2F61452822BF761F001C2734 /* CalliopeApp.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CalliopeApp.storyboard; sourceTree = "<group>"; };
 		2F61452B22BF761F001C2734 /* CarRemote.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CarRemote.storyboard; sourceTree = "<group>"; };
 		2F61452E22BF761F001C2734 /* CalliopeBLEProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalliopeBLEProfile.swift; sourceTree = "<group>"; };
@@ -307,7 +303,6 @@
 				2F61451A22BF75DF001C2734 /* LaunchScreen.storyboard */,
 				2F61459D22BFE607001C2734 /* Assets.xcassets */,
 				2F61452D22BF761F001C2734 /* Bluetooth */,
-				2F61452322BF761F001C2734 /* Firmware */,
 				2F61453722BF761F001C2734 /* GeneralUtilities */,
 				2F61456122BF761F001C2734 /* Model */,
 				2F61454F22BF761F001C2734 /* ViewsAndControllers */,
@@ -316,15 +311,6 @@
 				2F61459B22BF9D26001C2734 /* Settings.bundle */,
 			);
 			path = "Calliope App";
-			sourceTree = "<group>";
-		};
-		2F61452322BF761F001C2734 /* Firmware */ = {
-			isa = PBXGroup;
-			children = (
-				2F61452422BF761F001C2734 /* mini-smile.hex */,
-				2F61452522BF761F001C2734 /* Calliope-mini-Start.hex */,
-			);
-			path = Firmware;
 			sourceTree = "<group>";
 		};
 		2F61452D22BF761F001C2734 /* Bluetooth */ = {
@@ -629,13 +615,11 @@
 				2F9B2A1B233F045D009496DD /* RobotoMono-MediumItalic.ttf in Resources */,
 				2F9B2A07233F0456009496DD /* Roboto-Thin.ttf in Resources */,
 				2F61459C22BF9D26001C2734 /* Settings.bundle in Resources */,
-				2F61456622BF761F001C2734 /* mini-smile.hex in Resources */,
 				2F9B2A1E233F045D009496DD /* RobotoMono-Italic.ttf in Resources */,
 				2F9B2A15233F045D009496DD /* RobotoMono-Medium.ttf in Resources */,
 				2F61459E22BFE607001C2734 /* Assets.xcassets in Resources */,
 				2F9B2A1F233F045D009496DD /* RobotoMono-Thin.ttf in Resources */,
 				2F4B8D8425978D950026B480 /* EditorAndPrograms.storyboard in Resources */,
-				2F61456722BF761F001C2734 /* Calliope-mini-Start.hex in Resources */,
 				2F9B2A19233F045D009496DD /* RobotoMono-ThinItalic.ttf in Resources */,
 				2FA10F392336FC6E0058E2F6 /* News.storyboard in Resources */,
 				2F9B2A00233F0456009496DD /* Roboto-ThinItalic.ttf in Resources */,
@@ -867,7 +851,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -931,7 +914,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;

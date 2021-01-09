@@ -14,6 +14,10 @@ class DFUCalliope: CalliopeBLEDevice {
 		return [.dfu]
 	}
 
+    override var optionalServices: Set<CalliopeService> {
+        return [.partialFlashing]
+    }
+
 	private var rebootingForFirmwareUpgrade = false
 	private var initiator: DFUServiceInitiator? = nil
 	private var uploader: DFUServiceController? = nil
@@ -30,6 +34,10 @@ class DFUCalliope: CalliopeBLEDevice {
 		guard let firmware = DFUFirmware(binFile:bin, datFile:dat, type: .application) else {
 			throw "Could not create firmware from given data"
 		}
+
+        //TODO: attempt partial flashing first
+        // Android implementation: https://github.com/microbit-sam/microbit-android/blob/partial-flash/app/src/main/java/com/samsung/microbit/service/PartialFlashService.java
+        // Explanation: https://lancaster-university.github.io/microbit-docs/ble/partial-flashing-service/
 
 		triggerPairing()
 
