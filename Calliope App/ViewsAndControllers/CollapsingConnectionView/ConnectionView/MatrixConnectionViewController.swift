@@ -221,11 +221,14 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 	}
 
     private func error(_ error: Error) {
+        let alertController: UIAlertController
         if (error as? CBError)?.errorCode == 14 {
-            self.present(UIAlertController(title: "Remove paired device".localized, message: "This Calliope can not be connected until you go to the bluetooth settings of your device and \"ignore\" it.".localized, preferredStyle: .alert), animated: true)
+            alertController = UIAlertController(title: "Remove paired device".localized, message: "This Calliope can not be connected until you go to the bluetooth settings of your device and \"ignore\" it.".localized, preferredStyle: .alert)
         } else {
-            self.present(UIAlertController(title: "Error".localized, message: "Encountered an error discovering or connecting calliope(s):".localized + "\n\(error.localizedDescription)", preferredStyle: .alert), animated: true)
+            alertController = UIAlertController(title: "Error".localized, message: "Encountered an error discovering or connecting calliope(s):".localized + "\n\(error.localizedDescription)", preferredStyle: .alert)
         }
+        alertController.addAction(UIAlertAction(title: "OK", style: .default))
+        self.show(alertController, sender: nil)
     }
 
     public func animateBounce() {
