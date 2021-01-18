@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="localizable" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="XZv-gG-dt8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="localizable" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="XZv-gG-dt8">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -21,7 +21,7 @@
                                 <rect key="frame" x="101" y="0.0" width="274" height="450"/>
                                 <subviews>
                                     <view opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="200" placeholderIntrinsicHeight="200" translatesAutoresizingMaskIntoConstraints="NO" id="F14-l5-EiT">
-                                        <rect key="frame" x="20" y="128" width="234" height="234"/>
+                                        <rect key="frame" x="20" y="138" width="234" height="234"/>
                                         <subviews>
                                             <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Rez-7s-fDx" customClass="MatrixView" customModule="Calliope_App" customModuleProvider="target">
                                                 <rect key="frame" x="5" y="5" width="224" height="224"/>
@@ -38,7 +38,7 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="600" verticalCompressionResistancePriority="600" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ABo-Y2-qxl">
-                                        <rect key="frame" x="20" y="20" width="176.5" height="100"/>
+                                        <rect key="frame" x="20" y="20" width="176.5" height="110"/>
                                         <string key="text">1. Programm 5 starten
 2. Schütteln
 3. LED-Muster eingeben</string>
@@ -47,9 +47,9 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="650" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="Zyc-gu-u4s" customClass="ConnectionButton" customModule="Calliope_App" customModuleProvider="target">
-                                        <rect key="frame" x="47.5" y="370" width="179" height="60"/>
+                                        <rect key="frame" x="58.5" y="380" width="157" height="50"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="60" id="E2M-Tt-pHT"/>
+                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="50" id="E2M-Tt-pHT"/>
                                         </constraints>
                                         <state key="normal" image="liveviewconnect/mini_refresh"/>
                                         <state key="disabled">
@@ -71,7 +71,7 @@
                                     <constraint firstItem="F14-l5-EiT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fve-Pq-Ujl" secondAttribute="leading" id="KYr-Tz-E1h"/>
                                     <constraint firstItem="F14-l5-EiT" firstAttribute="top" secondItem="ABo-Y2-qxl" secondAttribute="bottom" priority="750" constant="8" id="PTn-mr-pIT"/>
                                     <constraint firstAttribute="trailing" secondItem="F14-l5-EiT" secondAttribute="trailing" priority="700" constant="20" id="RaX-di-09c"/>
-                                    <constraint firstItem="Zyc-gu-u4s" firstAttribute="width" secondItem="Rez-7s-fDx" secondAttribute="width" multiplier="0.8" priority="500" id="SFl-Bg-Fx8"/>
+                                    <constraint firstItem="Zyc-gu-u4s" firstAttribute="width" secondItem="Rez-7s-fDx" secondAttribute="width" multiplier="0.7" priority="500" id="SFl-Bg-Fx8"/>
                                     <constraint firstAttribute="bottom" secondItem="Zyc-gu-u4s" secondAttribute="bottom" priority="700" constant="20" id="Wks-5f-5tb"/>
                                     <constraint firstItem="Zyc-gu-u4s" firstAttribute="top" secondItem="F14-l5-EiT" secondAttribute="bottom" priority="710" constant="8" id="cvz-22-YYv"/>
                                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="F14-l5-EiT" secondAttribute="bottom" id="efo-zp-iif"/>

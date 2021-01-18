@@ -78,16 +78,16 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Connect to your calliope using its unique pattern signature" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="agm-gW-0YR">
-                                        <rect key="frame" x="0.0" y="47.5" width="304" height="38"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <rect key="frame" x="0.0" y="47.5" width="304" height="42.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZQX-CT-JXN">
-                                        <rect key="frame" x="0.0" y="101.5" width="304" height="278"/>
+                                        <rect key="frame" x="0.0" y="106" width="304" height="249.5"/>
                                         <subviews>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="uNX-va-3eO">
-                                                <rect key="frame" x="0.0" y="-13" width="304" height="304"/>
+                                                <rect key="frame" x="0.0" y="-27" width="304" height="304"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="uNX-va-3eO" secondAttribute="height" multiplier="1:1" id="7GY-Kh-5bj"/>
@@ -140,13 +140,13 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Hp-9d-g8m">
-                                        <rect key="frame" x="0.0" y="395.5" width="304" height="90.5"/>
+                                        <rect key="frame" x="0.0" y="371.5" width="304" height="106.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oQQ-S9-Kx6">
-                                                <rect key="frame" x="5" y="5" width="294" height="80.5"/>
+                                                <rect key="frame" x="5" y="5" width="294" height="96.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Hint: Be sure to have Bluetooth switched on and connections allowed." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rMY-Qf-bUT">
-                                                        <rect key="frame" x="8" y="8" width="278" height="64.5"/>
+                                                        <rect key="frame" x="8" y="16" width="278" height="64.5"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -155,16 +155,16 @@
                                                 <color key="backgroundColor" name="calliope-purple"/>
                                                 <constraints>
                                                     <constraint firstItem="rMY-Qf-bUT" firstAttribute="centerX" secondItem="oQQ-S9-Kx6" secondAttribute="centerX" id="5aY-hz-YX9"/>
-                                                    <constraint firstItem="rMY-Qf-bUT" firstAttribute="top" secondItem="oQQ-S9-Kx6" secondAttribute="topMargin" id="8rd-6Z-HoU"/>
+                                                    <constraint firstItem="rMY-Qf-bUT" firstAttribute="top" secondItem="oQQ-S9-Kx6" secondAttribute="top" constant="16" id="8rd-6Z-HoU"/>
                                                     <constraint firstAttribute="trailingMargin" secondItem="rMY-Qf-bUT" secondAttribute="trailing" id="Fk5-hS-bug"/>
                                                     <constraint firstItem="rMY-Qf-bUT" firstAttribute="centerY" secondItem="oQQ-S9-Kx6" secondAttribute="centerY" id="Mjx-U5-t9c"/>
-                                                    <constraint firstAttribute="bottomMargin" secondItem="rMY-Qf-bUT" secondAttribute="bottom" id="bZj-ws-1v0"/>
+                                                    <constraint firstAttribute="bottom" secondItem="rMY-Qf-bUT" secondAttribute="bottom" constant="16" id="bZj-ws-1v0"/>
                                                     <constraint firstItem="rMY-Qf-bUT" firstAttribute="leading" secondItem="oQQ-S9-Kx6" secondAttribute="leadingMargin" id="ewk-9E-4df"/>
                                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="350" id="wXA-PQ-fAi"/>
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <integer key="value" value="15"/>
+                                                        <integer key="value" value="8"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
@@ -179,12 +179,12 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UCZ-QB-tpH">
-                                        <rect key="frame" x="0.0" y="502" width="304" height="50"/>
+                                        <rect key="frame" x="0.0" y="494" width="304" height="58"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TJB-DI-0CR">
-                                                <rect key="frame" x="52" y="0.0" width="200" height="50"/>
+                                                <rect key="frame" x="67" y="0.0" width="170" height="50"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="200" id="JxU-qB-Mb5"/>
+                                                    <constraint firstAttribute="width" constant="170" id="JxU-qB-Mb5"/>
                                                     <constraint firstAttribute="height" constant="50" id="hcI-wO-26s"/>
                                                 </constraints>
                                                 <state key="normal" image="tick_white" backgroundImage="continue_button_background"/>
@@ -200,7 +200,7 @@
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="TJB-DI-0CR" secondAttribute="bottom" id="Rt2-dt-Kys"/>
+                                            <constraint firstAttribute="bottom" secondItem="TJB-DI-0CR" secondAttribute="bottom" constant="8" id="Rt2-dt-Kys"/>
                                             <constraint firstItem="TJB-DI-0CR" firstAttribute="centerX" secondItem="UCZ-QB-tpH" secondAttribute="centerX" id="iWc-89-pgc"/>
                                             <constraint firstItem="TJB-DI-0CR" firstAttribute="top" secondItem="UCZ-QB-tpH" secondAttribute="top" id="u65-mt-BRd"/>
                                         </constraints>
@@ -246,16 +246,16 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get to know your Calliope Mini" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ogi-fD-zPi">
-                                        <rect key="frame" x="0.0" y="46.5" width="304" height="18"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <rect key="frame" x="0.0" y="46.5" width="304" height="20.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RTB-XK-hg5">
-                                        <rect key="frame" x="0.0" y="79.5" width="304" height="407.5"/>
+                                        <rect key="frame" x="0.0" y="82" width="304" height="470"/>
                                         <subviews>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Pew-ae-lhb">
-                                                <rect key="frame" x="0.0" y="0.0" width="304" height="407.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="304" height="470"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="700" id="QLd-T1-leB"/>
@@ -283,7 +283,7 @@
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Greeting" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M6T-cO-epA">
                                                                     <rect key="frame" x="58" y="15" width="214" height="20.5"/>
-                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
@@ -367,6 +367,11 @@
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="ouZ-pq-Gpz"/>
+                                    </mask>
+                                </variation>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="KIv-st-QYv"/>
@@ -404,16 +409,16 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" text="In the menu, you can navigate to 5 preinstalled programs" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xcv-pQ-1ax">
-                                        <rect key="frame" x="0.0" y="47.5" width="304" height="38"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <rect key="frame" x="0.0" y="47.5" width="304" height="42.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="10p-IB-I6a">
-                                        <rect key="frame" x="0.0" y="101.5" width="304" height="384.5"/>
+                                        <rect key="frame" x="0.0" y="106" width="304" height="446"/>
                                         <subviews>
                                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wQM-h4-pwo">
-                                                <rect key="frame" x="0.0" y="0.0" width="304" height="384.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="304" height="446"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="700" id="5RW-py-gHN"/>
                                                 </constraints>
@@ -458,6 +463,11 @@
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="s67-jI-PhU"/>
+                                    </mask>
+                                </variation>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="paN-9X-3oC"/>
@@ -495,18 +505,18 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f9R-2U-MF7">
-                                        <rect key="frame" x="0.0" y="47.5" width="304" height="58"/>
+                                        <rect key="frame" x="0.0" y="47.5" width="304" height="64.5"/>
                                         <string key="text">When connected with your calliope, you can easily upload programs.
 Check it out!</string>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r5P-ze-uPF">
-                                        <rect key="frame" x="0.0" y="121.5" width="304" height="356.5"/>
+                                        <rect key="frame" x="0.0" y="128" width="304" height="350"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ani_heart_01" translatesAutoresizingMaskIntoConstraints="NO" id="UnV-tx-ClX">
-                                                <rect key="frame" x="52" y="78.5" width="200" height="200"/>
+                                                <rect key="frame" x="52" y="75" width="200" height="200"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="200" id="COu-pm-8zh"/>
                                                     <constraint firstAttribute="width" secondItem="UnV-tx-ClX" secondAttribute="height" multiplier="1:1" id="EzY-TA-LB5"/>
@@ -529,6 +539,7 @@ Check it out!</string>
                                                     <constraint firstAttribute="height" constant="50" id="EyR-5H-uNc"/>
                                                     <constraint firstAttribute="width" constant="250" id="RMz-3T-hUE"/>
                                                 </constraints>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
                                                 <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="40" maxY="0.0"/>
                                                 <state key="normal" title="Upload Program Blinking Heart" image="upload_button">
@@ -536,7 +547,7 @@ Check it out!</string>
                                                 </state>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <integer key="value" value="7"/>
+                                                        <integer key="value" value="0"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
@@ -589,16 +600,16 @@ Check it out!</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="255" verticalHuggingPriority="255" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" text="Before you can begin, your Calliope needs energy!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F8L-Km-C5f">
-                                        <rect key="frame" x="0.0" y="47.5" width="288" height="38"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <rect key="frame" x="0.0" y="47.5" width="288" height="42.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b5F-lH-2Y5">
-                                        <rect key="frame" x="0.0" y="101.5" width="288" height="384.5"/>
+                                        <rect key="frame" x="0.0" y="106" width="288" height="446"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="insert_battery_00" translatesAutoresizingMaskIntoConstraints="NO" id="Cas-Dr-e73">
-                                                <rect key="frame" x="0.0" y="58.5" width="288" height="267.5"/>
+                                                <rect key="frame" x="0.0" y="89" width="288" height="268"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="350" id="o1V-j2-i5O"/>
                                                 </constraints>
@@ -639,6 +650,11 @@ Check it out!</string>
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="JfY-BK-XKf"/>
+                                    </mask>
+                                </variation>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="foR-mk-NGJ"/>
@@ -806,7 +822,7 @@ Check it out!</string>
         <image name="paging_01" width="60" height="9"/>
         <image name="rgb_00" width="20" height="20"/>
         <image name="tick_white" width="75" height="75"/>
-        <image name="upload_button" width="33" height="43"/>
+        <image name="upload_button" width="25" height="33"/>
         <namedColor name="calliope-green">
             <color red="0.27500000596046448" green="0.875" blue="0.4309999942779541" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

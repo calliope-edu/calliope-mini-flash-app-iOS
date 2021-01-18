@@ -33,19 +33,19 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NlZ-1d-IaO">
-                                            <rect key="frame" x="8" y="8" width="274" height="182.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="290" height="193.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="NlZ-1d-IaO" secondAttribute="height" multiplier="3:2" priority="998" id="oIJ-bE-aXt"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There is veeery long text which could end up in two lines" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="uGQ-ja-syg">
-                                            <rect key="frame" x="8" y="198.5" width="274" height="53.5"/>
+                                            <rect key="frame" x="16" y="198.5" width="258" height="53.5"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b3c-so-xL7">
-                                            <rect key="frame" x="8" y="193.5" width="274" height="2"/>
+                                            <rect key="frame" x="16" y="193.5" width="258" height="2"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="2" id="Lrd-sh-bo5"/>
@@ -55,17 +55,17 @@
                                 </view>
                                 <color key="backgroundColor" name="calliope-turqoise"/>
                                 <constraints>
-                                    <constraint firstItem="NlZ-1d-IaO" firstAttribute="width" secondItem="tvy-v3-k7G" secondAttribute="width" constant="-16" id="1JS-wG-clp"/>
-                                    <constraint firstItem="NlZ-1d-IaO" firstAttribute="leading" secondItem="tvy-v3-k7G" secondAttribute="leading" constant="8" id="1V2-l2-GDG"/>
-                                    <constraint firstItem="NlZ-1d-IaO" firstAttribute="top" secondItem="tvy-v3-k7G" secondAttribute="top" constant="8" id="DVP-34-wSu"/>
-                                    <constraint firstItem="b3c-so-xL7" firstAttribute="leading" secondItem="tvy-v3-k7G" secondAttribute="leading" constant="8" id="GpG-E0-Ub4"/>
-                                    <constraint firstItem="uGQ-ja-syg" firstAttribute="top" secondItem="NlZ-1d-IaO" secondAttribute="bottom" constant="8" id="HgY-f4-oDH"/>
+                                    <constraint firstItem="NlZ-1d-IaO" firstAttribute="width" secondItem="tvy-v3-k7G" secondAttribute="width" id="1JS-wG-clp"/>
+                                    <constraint firstItem="NlZ-1d-IaO" firstAttribute="leading" secondItem="tvy-v3-k7G" secondAttribute="leading" id="1V2-l2-GDG"/>
+                                    <constraint firstItem="NlZ-1d-IaO" firstAttribute="top" secondItem="tvy-v3-k7G" secondAttribute="top" id="DVP-34-wSu"/>
+                                    <constraint firstItem="b3c-so-xL7" firstAttribute="leading" secondItem="tvy-v3-k7G" secondAttribute="leading" constant="16" id="GpG-E0-Ub4"/>
+                                    <constraint firstItem="uGQ-ja-syg" firstAttribute="top" secondItem="NlZ-1d-IaO" secondAttribute="bottom" constant="5" id="HgY-f4-oDH"/>
                                     <constraint firstAttribute="bottom" secondItem="uGQ-ja-syg" secondAttribute="bottom" priority="999" constant="8" id="Mgz-Jt-Ui4"/>
-                                    <constraint firstAttribute="trailing" secondItem="b3c-so-xL7" secondAttribute="trailing" constant="8" id="NMY-bX-6Tn"/>
-                                    <constraint firstItem="uGQ-ja-syg" firstAttribute="leading" secondItem="tvy-v3-k7G" secondAttribute="leading" constant="8" id="Ooi-60-faT"/>
-                                    <constraint firstAttribute="trailing" secondItem="uGQ-ja-syg" secondAttribute="trailing" priority="999" constant="8" id="SeY-KH-GOM"/>
+                                    <constraint firstAttribute="trailing" secondItem="b3c-so-xL7" secondAttribute="trailing" constant="16" id="NMY-bX-6Tn"/>
+                                    <constraint firstItem="uGQ-ja-syg" firstAttribute="leading" secondItem="tvy-v3-k7G" secondAttribute="leading" constant="16" id="Ooi-60-faT"/>
+                                    <constraint firstAttribute="trailing" secondItem="uGQ-ja-syg" secondAttribute="trailing" priority="999" constant="16" id="SeY-KH-GOM"/>
                                     <constraint firstAttribute="trailing" secondItem="NlZ-1d-IaO" secondAttribute="trailing" priority="999" constant="8" id="T7T-jw-CW3"/>
-                                    <constraint firstItem="b3c-so-xL7" firstAttribute="top" secondItem="NlZ-1d-IaO" secondAttribute="bottom" constant="3" id="rgY-WZ-JtL"/>
+                                    <constraint firstItem="b3c-so-xL7" firstAttribute="top" secondItem="NlZ-1d-IaO" secondAttribute="bottom" id="rgY-WZ-JtL"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
