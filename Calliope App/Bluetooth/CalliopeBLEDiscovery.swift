@@ -51,6 +51,7 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 				bluetoothQueue.asyncAfter(deadline: DispatchTime.now() + BluetoothConstants.connectTimeout) {
 					if self.connectedCalliope == nil {
 						self.centralManager.cancelPeripheralConnection(connectingCalliope.peripheral)
+                        self.updateQueue.async { self.errorBlock("Connection to calliope timed out!".localized ) }
 					}
 				}
 			}
@@ -227,9 +228,6 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 
 	func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
 		LogNotify.log("disconnected from \(peripheral.name ?? "unknown device"))")
-        if let error = error {
-            updateQueue.async { self.errorBlock(error) }
-        }
 		connectingCalliope = nil
 		connectedCalliope = nil
 		lastConnected = nil

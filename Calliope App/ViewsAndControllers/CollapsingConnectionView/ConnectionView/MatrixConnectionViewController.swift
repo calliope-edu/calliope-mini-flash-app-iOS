@@ -122,6 +122,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 		} else if let calliope = self.calliopeWithCurrentMatrix {
 			if calliope.state == .discovered || calliope.state == .willReset {
 				calliope.updateBlock = updateDiscoveryState
+                calliope.errorBlock = error
 				LogNotify.log("Matrix view connecting to \(calliope)")
 				connector.connectToCalliope(calliope)
 			} else if calliope.state == .connected {
@@ -225,7 +226,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
         if (error as? CBError)?.errorCode == 14 {
             alertController = UIAlertController(title: "Remove paired device".localized, message: "This Calliope can not be connected until you go to the bluetooth settings of your device and \"ignore\" it.".localized, preferredStyle: .alert)
         } else {
-            alertController = UIAlertController(title: "Error".localized, message: "Encountered an error discovering or connecting calliope(s):".localized + "\n\(error.localizedDescription)", preferredStyle: .alert)
+            alertController = UIAlertController(title: "Error".localized, message: "Encountered an error discovering or connecting calliope:".localized + "\n\(error.localizedDescription)", preferredStyle: .alert)
         }
         alertController.addAction(UIAlertAction(title: "OK", style: .default))
         self.show(alertController, sender: nil)

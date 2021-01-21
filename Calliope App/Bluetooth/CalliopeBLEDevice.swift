@@ -12,7 +12,9 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 
     public static let usageReadyNotificationName = NSNotification.Name("calliope_is_usage_ready")
     public static let disconnectedNotificationName = NSNotification.Name("calliope_connection_lost")
-    
+
+    private let bluetoothQueue = DispatchQueue.global(qos: .userInitiated)
+
 	//the services required for the usage
 	var requiredServices : Set<CalliopeService> {
 		fatalError("The CalliopeBLEDevice Class is abstract! At least requiredServices variable must be overridden by subclass.")
@@ -47,16 +49,24 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 		updateQueue.async { self.updateBlock() }
 		if state == .discovered {
 			//services get invalidated, undiscovered characteristics are thus restored (need to re-discover)
-			servicesWithUndiscoveredCharacteristics = requiredServicesUUIDs + optionalServicesUUIDs
+            servicesWithUndiscoveredCharacteristics = requiredServicesUUIDs.union(optionalServicesUUIDs)
             discoveredOptionalServices = []
             if oldState == .usageReady {
                 NotificationCenter.default.post(name: CalliopeBLEDevice.disconnectedNotificationName, object: self)
             }
 		} else if state == .connected {
 			//immediately evaluate whether in playground mode
-			DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + BluetoothConstants.couplingDelay) {
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + BluetoothConstants.couplingDelay) {
 				self.evaluateMode()
 			}
+        } else if state == .evaluateMode {
+            self.bluetoothQueue.asyncAfter(deadline: DispatchTime.now() + BluetoothConstants.serviceDiscoveryTimeout) {
+                //has not discovered all services in time, probably stuck
+                if self.state == .evaluateMode {
+                    self.updateQueue.async { self.errorBlock("Service discovery on calliope has timed out!".localized) }
+                    self.state = .wrongMode
+                }
+            }
         } else if state == .usageReady {
             NotificationCenter.default.post(name: CalliopeBLEDevice.usageReadyNotificationName,
                                             object: self)
@@ -65,17 +75,18 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 
 	var updateQueue = DispatchQueue.main
 	var updateBlock: () -> () = {}
+    var errorBlock: (Error) -> () = { _ in }
 
 	let peripheral : CBPeripheral
 	let name : String
 
-	lazy var servicesWithUndiscoveredCharacteristics: [CBUUID] = {
-		return requiredServicesUUIDs + optionalServicesUUIDs
+	lazy var servicesWithUndiscoveredCharacteristics: Set<CBUUID> = {
+        return requiredServicesUUIDs.union(optionalServicesUUIDs)
 	}()
 
-	lazy var requiredServicesUUIDs: [CBUUID] = requiredServices.map { $0.uuid }
+    lazy var requiredServicesUUIDs: Set<CBUUID> = Set(requiredServices.map { $0.uuid })
 
-    lazy var optionalServicesUUIDs: [CBUUID] = optionalServices.map { $0.uuid }
+    lazy var optionalServicesUUIDs: Set<CBUUID> = Set(optionalServices.map { $0.uuid })
 
 	required init(peripheral: CBPeripheral, name: String) {
 		self.peripheral = peripheral
@@ -101,7 +112,7 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 
 	/// evaluate whether calliope is in correct mode
 	public func evaluateMode() {
-		//immediately continue with service discovery
+		//service discovery
 		state = .evaluateMode
 		peripheral.discoverServices([CalliopeService.master.uuid] + requiredServicesUUIDs + optionalServicesUUIDs)
 	}
@@ -113,18 +124,18 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 			return
 		}
 
-		let services = peripheral.services ?? []
+        let services = peripheral.services ?? []
 		let uuidSet = Set(services.map { return $0.uuid })
 
-        discoveredOptionalServices = Set(uuidSet.intersection(optionalServicesUUIDs)
-                                            .compactMap { CalliopeBLEProfile.uuidServiceMap[$0] })
+        let discoveredOptionalServiceUUIDs = uuidSet.intersection(optionalServicesUUIDs)
+        discoveredOptionalServices = Set(discoveredOptionalServiceUUIDs.compactMap { CalliopeBLEProfile.uuidServiceMap[$0] })
 
-		//evaluate whether all required services were found. If not, Calliope is not ready for programs from the playground
+        //evaluate whether all required services were found. If not, Calliope is not ready for programs from the playground
 		if uuidSet.isSuperset(of: requiredServicesUUIDs) {
-			LogNotify.log("found all (\(requiredServicesUUIDs.count)) required services:\n\(requiredServices)")
-            LogNotify.log("found \(optionalServicesUUIDs.count) / \(optionalServices.count) optional services")
+			LogNotify.log("found all of \(requiredServicesUUIDs.count) required services:\n\(requiredServices)")
+            LogNotify.log("found \(discoveredOptionalServices.count) of \(optionalServices.count) optional services")
 			//discover the characteristics of all required services, just to be thorough
-            servicesWithUndiscoveredCharacteristics = requiredServicesUUIDs + Set(optionalServicesUUIDs).subtracting(uuidSet)
+            servicesWithUndiscoveredCharacteristics = uuidSet.intersection(requiredServicesUUIDs.union(discoveredOptionalServiceUUIDs))
             services
                 .filter { requiredServicesUUIDs.contains($0.uuid) || optionalServicesUUIDs.contains($0.uuid) }
                 .forEach { service in
@@ -183,7 +194,7 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 		let uuidSet = Set(characteristics.map { return $0.uuid })
 
 		if uuidSet.isSuperset(of: requiredCharacteristicsUUIDs) {
-			_ = servicesWithUndiscoveredCharacteristics.remove(object: service.uuid)
+			_ = servicesWithUndiscoveredCharacteristics.remove(service.uuid)
 		} else {
 			state = .wrongMode
 		}
