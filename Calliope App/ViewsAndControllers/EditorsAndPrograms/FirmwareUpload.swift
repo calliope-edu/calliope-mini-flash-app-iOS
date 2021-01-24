@@ -50,9 +50,9 @@ class FirmwareUpload {
     public static func showUploadUI(controller: UIViewController, program: Hex, name: String = "the program".localized, completion: (() -> ())? = nil) {
         let alert = UIAlertController(title: "Upload?".localized, message: String(format:"Do you want to upload %@ to your calliope?".localized, name), preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Upload".localized, style: .default) { _ in
-            let uploader = FirmwareUpload()
+            let uploader = FirmwareUpload(file: program, controller: controller)
             controller.present(uploader.alertView, animated: true) {
-                uploader.upload(file: program) {
+                uploader.upload() {
                     controller.dismiss(animated: true, completion: nil)
                     completion?()
                 }
@@ -61,7 +61,15 @@ class FirmwareUpload {
         alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel))
         controller.present(alert, animated: true)
     }
-    
+
+    private var file: Hex
+    private weak var controller: UIViewController?
+
+    init(file: Hex, controller: UIViewController) {
+        self.file = file
+        self.controller = controller
+    }
+
 	//keep last upload, so it cannot be de-inited prematurely
 	private static var uploadingInstance: FirmwareUpload? = nil {
 		didSet { _ = oldValue?.calliope?.cancelUpload() }
@@ -79,14 +87,23 @@ class FirmwareUpload {
 
 		let progressView = progressRing
 		progressView.translatesAutoresizingMaskIntoConstraints = false
-
 		uploadController.view.addSubview(progressView)
+
+
+        uploadController.view.addSubview(logTextView)
+
 		uploadController.view.addConstraints(
-			 NSLayoutConstraint.constraints(withVisualFormat: "V:|-(80)-[bar(120)]-(80)-|",
-											options: [], metrics: nil, views: ["bar" : progressView]))
+			 NSLayoutConstraint.constraints(withVisualFormat: "V:|-(80)-[progressView(120)]-(8)-[logTextView(60)]-(8)-|", options: [], metrics: nil,
+                                            views: ["progressView" : progressView, "logTextView": logTextView]))
 		uploadController.view.addConstraints(
-			NSLayoutConstraint.constraints(withVisualFormat: "H:|-(80@900)-[bar(120)]-(80@900)-|",
-										   options: [], metrics: nil, views: ["bar" : progressView]))
+			NSLayoutConstraint.constraints(withVisualFormat: "H:|-(80@900)-[progressView(120)]-(80@900)-|",
+										   options: [], metrics: nil, views: ["progressView" : progressView]))
+
+        uploadController.view.addConstraints(
+            NSLayoutConstraint.constraints(withVisualFormat: "H:|-(8@900)-[logTextView(264)]-(8@900)-|",
+                                           options: [], metrics: nil, views: ["logTextView": logTextView])
+        )
+
         uploadController.addAction(UIAlertAction(title: "Cancel".localized, style: .destructive) {  [weak self] _ in
 			self?.finished()
 		})
@@ -106,6 +123,13 @@ class FirmwareUpload {
 		return ring
 	}()
 
+    private lazy var logTextView: UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.backgroundColor = .clear
+        return textView
+    }()
+
 	private var finished: () -> () = {}
 	private var failed: () -> () = {
 		FirmwareUpload.uploadingInstance = nil
@@ -113,7 +137,7 @@ class FirmwareUpload {
 
 	private var calliope = MatrixConnectionViewController.instance.usageReadyCalliope as? DFUCalliope
 
-	func upload(file: Hex, finished: @escaping () -> ()) {
+	func upload(finished: @escaping () -> ()) {
 		FirmwareUpload.uploadingInstance = self
 
 		self.finished = {
@@ -125,24 +149,28 @@ class FirmwareUpload {
 
 		let bin = file.bin
 		do {
-			try calliope?.upload(bin: bin, dat: HexFile.dat(bin), progressReceiver: self)
+            try calliope?.upload(bin: bin, dat: HexFile.dat(bin), progressReceiver: self, statusDelegate: self, logReceiver: self)
 		}
 		catch {
 			DispatchQueue.main.async { [weak self] in
-                self?.alertView.title = "Upload failed!".localized
-				self?.alertView.message = "\(error.localizedDescription)"
-				self?.progressRing.isHidden = true
-				self?.failed()
+                self?.showUploadError(error)
 			}
 		}
 	}
+
+    func showUploadError(_ error: Error) {
+        alertView.title = "Upload failed!".localized
+        alertView.message = "\(error.localizedDescription)"
+        progressRing.isHidden = true
+        failed()
+    }
 
 	deinit {
 		NSLog("FirmwareUpload deinited")
 	}
 }
 
-extension FirmwareUpload: DFUProgressDelegate {
+extension FirmwareUpload: DFUProgressDelegate, DFUServiceDelegate, LoggerDelegate {
 	func dfuProgressDidChange(for part: Int, outOf totalParts: Int, to progress: Int, currentSpeedBytesPerSecond: Double, avgSpeedBytesPerSecond: Double) {
 		DispatchQueue.main.async { [weak self] in
 			self?.progressRing.startProgress(to: CGFloat(progress), duration: 0.2)
@@ -151,4 +179,18 @@ extension FirmwareUpload: DFUProgressDelegate {
 			self.finished()
 		}
 	}
+
+    func logWith(_ level: LogLevel, message: String) {
+        LogNotify.log("DFU Message: \(message)")
+        logTextView.text = message + "\n" + logTextView.text
+    }
+
+    func dfuStateDidChange(to state: DFUState) {
+        LogNotify.log("DFU State change: \(state)")
+    }
+
+    func dfuError(_ error: DFUError, didOccurWithMessage message: String) {
+        LogNotify.log("DFU Error \(error) while uploading: \(message)")
+        showUploadError(message)
+    }
 }
