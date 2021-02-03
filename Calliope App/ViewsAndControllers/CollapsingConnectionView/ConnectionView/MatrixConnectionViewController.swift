@@ -70,7 +70,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     }
     
     private var connector: CalliopeBLEDiscovery = CalliopeBLEDiscovery({ peripheral, name in
-        DFUCalliope(peripheral: peripheral, name: name) }) {
+        FlashableCalliope(peripheral: peripheral, name: name) }) {
         didSet {
             self.changedConnector(oldValue)
         }

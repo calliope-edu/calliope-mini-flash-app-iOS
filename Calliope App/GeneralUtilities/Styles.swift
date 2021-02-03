@@ -44,6 +44,7 @@ struct Styles {
         UINavigationBar.appearance().titleTextAttributes = [.font: defaultBoldFont(size: 17)]
         UITextField.appearance().substituteFontName = regularFontName
         UILabel.appearance().substituteFontName = regularFontName
+        UILabel.appearance().substituteFontNameSemibold = mediumFontName
         UILabel.appearance().substituteFontNameBold = boldFontName
         UILabel.appearance().adjustsFontForContentSizeCategory = true
     }
@@ -52,17 +53,29 @@ struct Styles {
 extension UILabel {
     @objc var isBoldFont: Bool {
         get { let fontName = self.font!.fontName
-            return fontName.contains("-Bd") || fontName.contains("Medium") || fontName.contains("Bold") }
+            return fontName.contains("-Bd") || fontName.contains("Bold") }
+    }
+    @objc var isSemiBoldFont: Bool {
+        get { let fontName = self.font!.fontName
+            return fontName.contains("Medium") || fontName.contains("Semibold") }
+    }
+    @objc var isNormalFont: Bool {
+        return !(isSemiBoldFont || isSemiBoldFont)
     }
     @objc var substituteFontName : String {
         get { return self.font.fontName }
-        set { if !isBoldFont { self.font = UIFont(name: newValue, size: self.font!.pointSize) } }
+        set { if isNormalFont { self.font = UIFont(name: newValue, size: self.font!.pointSize) } }
+    }
+    @objc var substituteFontNameSemibold : String {
+        get { return self.font.fontName }
+        set { if isSemiBoldFont { self.font = UIFont(name: newValue, size: self.font!.pointSize) } }
     }
     @objc var substituteFontNameBold : String {
         get { return self.font.fontName }
         set { if isBoldFont { self.font = UIFont(name: newValue, size: self.font!.pointSize) } }
     }
 }
+
 extension UITextField {
     @objc var substituteFontName : String {
         get { return self.font!.fontName }

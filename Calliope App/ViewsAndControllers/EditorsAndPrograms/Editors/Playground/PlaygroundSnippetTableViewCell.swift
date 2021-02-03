@@ -14,11 +14,15 @@ class PlaygroundSnippetTableViewCell: UITableViewCell {
         didSet {
             snippetTitle.text = snippet?.title ?? ""
             summary.text = snippet?.summary ?? ""
+            code?.attributedText = PlaygroundSnippetTableViewCell.codeSnippetHighlighter.codeSnippetToAttributedString(snippet)
         }
     }
 
     @IBOutlet weak var snippetTitle: UILabel!
     @IBOutlet weak var summary: UILabel!
+    @IBOutlet weak var code: UILabel?
+
+    static let codeSnippetHighlighter = SwiftCodeSnippetHighlighter()
 
     override func awakeFromNib() {
         super.awakeFromNib()

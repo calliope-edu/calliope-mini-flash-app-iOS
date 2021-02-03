@@ -70,7 +70,7 @@ class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSo
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         MatrixConnectionViewController.instance?.connectionDescriptionText = "Connect to a calliope to finish the tutorial".localized
-        MatrixConnectionViewController.instance?.changeCalliopeType(sender: self, calliopeClass: DFUCalliope.self)
+        MatrixConnectionViewController.instance?.changeCalliopeType(sender: self, calliopeClass: FlashableCalliope.self)
     }
     
     //MARK: pageviewcontroller data source

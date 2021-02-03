@@ -13,26 +13,43 @@ public struct SwiftCodeSnippetHighlighter {
 
     static let defaultCodeSize: CGFloat = 16
 
-    static let regularCodeFont = Styles.scaledFont(Styles.defaultRegularFont(size: defaultCodeSize, mono: true), for: .body)
-    static let boldCodeFont = Styles.scaledFont(Styles.defaultBoldFont(size: defaultCodeSize, mono: true), for: .body)
+    var highlightr: Highlightr?
 
-    let highlightr: Highlightr? = {
-        guard let hl = Highlightr() else {
-            //highlightr does not work for some reason
-            LogNotify.log("highlightr could not be instanciated")
-            return nil
+    var regularFont: UIFont
+
+    var boldFont: UIFont
+
+    init() {
+
+        boldFont = Styles.scaledFont(Styles.defaultBoldFont(size: SwiftCodeSnippetHighlighter.defaultCodeSize, mono: true), for: .body)
+
+        regularFont = Styles.scaledFont(Styles.defaultRegularFont(size: SwiftCodeSnippetHighlighter.defaultCodeSize, mono: true), for: .body)
+
+        highlightr = {
+            guard let hl = Highlightr() else {
+                //highlightr does not work for some reason
+                LogNotify.log("highlightr could not be instanciated")
+                return nil
+            }
+
+            hl.setTheme(to: "xcode")
+            //hl.setTheme(to: "school-book")
+            hl.theme.boldCodeFont = boldFont
+            hl.theme.codeFont = regularFont
+
+            return hl
+        }()
+    }
+
+    public func codeSnippetToAttributedString(_ codeSnippet: CodeSnippet?) -> NSAttributedString {
+        guard let snippetContent = codeSnippet?.content, let highlightedCode = codeSnippetContentToAttributedString(snippetContent) else {
+            return NSAttributedString(string: "")
         }
+        return highlightedCode
+    }
 
-        hl.setTheme(to: "xcode")
-        //hl.setTheme(to: "school-book")
-        hl.theme.boldCodeFont = boldCodeFont
-        hl.theme.codeFont = regularCodeFont
-
-        return hl
-    }()
-
-    public func codeSnippetContentToAttributedString(_ codeSnippet: String) -> NSAttributedString? {
-        guard let code = NSMutableString(utf8String: codeSnippet) else {
+    public func codeSnippetContentToAttributedString(_ codeSnippetContent: String) -> NSAttributedString? {
+        guard let code = NSMutableString(utf8String: codeSnippetContent) else {
             return nil
         }
 
@@ -63,7 +80,7 @@ public struct SwiftCodeSnippetHighlighter {
             highlighted = NSMutableAttributedString(attributedString: highlightr.highlight(String(code), as: "swift") ?? NSAttributedString())
         } else {
             highlighted = NSMutableAttributedString(string: code as String)
-            highlighted.addAttribute(.font, value: SwiftCodeSnippetHighlighter.regularCodeFont, range: NSMakeRange(0, code.length))
+            highlighted.addAttribute(.font, value: regularFont, range: NSMakeRange(0, code.length))
         }
 
         //set style of marked areas to indicate that there will be a replacement
@@ -71,7 +88,9 @@ public struct SwiftCodeSnippetHighlighter {
             let matches = regex.matches(in: highlighted.string, options: [], range: NSMakeRange(0, code.length)).reversed()
             for match in matches {
                 let range = match.range
-                highlighted.addAttribute(.backgroundColor, value: UIColor.gray, range: match.range)
+                highlighted.addAttribute(.underlineColor, value: UIColor.blue, range: match.range)
+                let underlineOptions: NSUnderlineStyle = [.patternDash, .thick]
+                highlighted.addAttribute(.underlineStyle, value: underlineOptions.rawValue, range: match.range)
                 highlighted.deleteCharacters(in: NSMakeRange(range.upperBound - 3, 3))
                 highlighted.deleteCharacters(in: NSMakeRange(range.lowerBound, 3))
             }

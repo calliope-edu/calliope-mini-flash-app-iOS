@@ -33,7 +33,7 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 		case willReset //when a reset is done to enable or disable services
 	}
 
-	private(set) var state : CalliopeBLEDeviceState = .discovered {
+	var state : CalliopeBLEDeviceState = .discovered {
 		didSet {
 			LogNotify.log("calliope state: \(state)")
 			handleStateUpdateInternal(oldValue)
@@ -205,16 +205,12 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 	}
 
 	func getCBCharacteristic(_ characteristic: CalliopeCharacteristic) -> CBCharacteristic? {
-		guard state == .usageReady || characteristic == .services,
+		guard state == .usageReady || state == .willReset,
 			let serviceUuid = CalliopeBLEProfile.characteristicServiceMap[characteristic]?.uuid
 			else { return nil }
 		let uuid = characteristic.uuid
-		return getCBCharacteristic(serviceUuid, uuid)
-	}
-
-	func getCBCharacteristic(_ serviceUuid: CBUUID, _ uuid: CBUUID) -> CBCharacteristic? {
 		return peripheral.services?.first { $0.uuid == serviceUuid }?
-			.characteristics?.first { $0.uuid == uuid }
+            .characteristics?.first { $0.uuid == uuid }
 	}
 
 	//MARK: reading and writing characteristics (asynchronously/ scheduled/ synchronously)
@@ -235,12 +231,23 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 	var readValue : Data? = nil
 
 	func write (_ data: Data, for characteristic: CalliopeCharacteristic) throws {
-		guard state == .usageReady || characteristic == .services
-			else { throw "Not ready to write to characteristic \(characteristic)" }
-		guard let cbCharacteristic = getCBCharacteristic(characteristic) else { throw "characteristic \(characteristic) not available" }
-
+        let cbCharacteristic = try checkWritePreconditions(for: characteristic)
 		try write(data, for: cbCharacteristic)
 	}
+
+    func writeWithoutResponse(_ data: Data, for characteristic: CalliopeCharacteristic) throws {
+        let cbCharacteristic = try checkWritePreconditions(for: characteristic)
+        peripheral.writeValue(data, for: cbCharacteristic, type: .withoutResponse)
+    }
+
+    private func checkWritePreconditions(for characteristic: CalliopeCharacteristic) throws -> CBCharacteristic {
+        guard state == .usageReady || state == .willReset,
+              let serviceForCharacteristic = CalliopeBLEProfile.characteristicServiceMap[characteristic],
+              requiredServices.contains(serviceForCharacteristic) || discoveredOptionalServices.contains(serviceForCharacteristic)
+            else { throw "Not ready to write to characteristic \(characteristic)" }
+        guard let cbCharacteristic = getCBCharacteristic(characteristic) else { throw "characteristic \(characteristic) not available" }
+        return cbCharacteristic
+    }
 
 	func write(_ data: Data, for characteristic: CBCharacteristic) throws {
 		try applySemaphore(readWriteSem) {

@@ -127,6 +127,9 @@ class FirmwareUpload {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.backgroundColor = .clear
+        textView.isEditable = false
+        textView.isSelectable = true
+        textView.clipsToBounds = true
         return textView
     }()
 
@@ -135,7 +138,7 @@ class FirmwareUpload {
 		FirmwareUpload.uploadingInstance = nil
 	}
 
-	private var calliope = MatrixConnectionViewController.instance.usageReadyCalliope as? DFUCalliope
+	private var calliope = MatrixConnectionViewController.instance.usageReadyCalliope as? FlashableCalliope
 
 	func upload(finished: @escaping () -> ()) {
 		FirmwareUpload.uploadingInstance = self
@@ -147,9 +150,8 @@ class FirmwareUpload {
 			}
 		}
 
-		let bin = file.bin
 		do {
-            try calliope?.upload(bin: bin, dat: HexFile.dat(bin), progressReceiver: self, statusDelegate: self, logReceiver: self)
+            try calliope?.upload(file: file, progressReceiver: self, statusDelegate: self, logReceiver: self)
 		}
 		catch {
 			DispatchQueue.main.async { [weak self] in

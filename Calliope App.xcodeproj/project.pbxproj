@@ -37,7 +37,7 @@
 		2F61456E22BF761F001C2734 /* CalliopeBLEProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61452E22BF761F001C2734 /* CalliopeBLEProfile.swift */; };
 		2F61456F22BF761F001C2734 /* CalliopeBLEDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61452F22BF761F001C2734 /* CalliopeBLEDiscovery.swift */; };
 		2F61457022BF761F001C2734 /* Extension_CBUUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453022BF761F001C2734 /* Extension_CBUUID.swift */; };
-		2F61457122BF761F001C2734 /* DFUCalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453122BF761F001C2734 /* DFUCalliope.swift */; };
+		2F61457122BF761F001C2734 /* FlashableCalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453122BF761F001C2734 /* FlashableCalliope.swift */; };
 		2F61457222BF761F001C2734 /* BLEDataTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453222BF761F001C2734 /* BLEDataTypes.swift */; };
 		2F61457322BF761F001C2734 /* BluetoothConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453322BF761F001C2734 /* BluetoothConstants.swift */; };
 		2F61457422BF761F001C2734 /* ApiCalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453422BF761F001C2734 /* ApiCalliope.swift */; };
@@ -152,7 +152,7 @@
 		2F61452E22BF761F001C2734 /* CalliopeBLEProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalliopeBLEProfile.swift; sourceTree = "<group>"; };
 		2F61452F22BF761F001C2734 /* CalliopeBLEDiscovery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalliopeBLEDiscovery.swift; sourceTree = "<group>"; };
 		2F61453022BF761F001C2734 /* Extension_CBUUID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension_CBUUID.swift; sourceTree = "<group>"; };
-		2F61453122BF761F001C2734 /* DFUCalliope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DFUCalliope.swift; sourceTree = "<group>"; };
+		2F61453122BF761F001C2734 /* FlashableCalliope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlashableCalliope.swift; sourceTree = "<group>"; };
 		2F61453222BF761F001C2734 /* BLEDataTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEDataTypes.swift; sourceTree = "<group>"; };
 		2F61453322BF761F001C2734 /* BluetoothConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothConstants.swift; sourceTree = "<group>"; };
 		2F61453422BF761F001C2734 /* ApiCalliope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiCalliope.swift; sourceTree = "<group>"; };
@@ -319,12 +319,10 @@
 				2F61452E22BF761F001C2734 /* CalliopeBLEProfile.swift */,
 				2F61452F22BF761F001C2734 /* CalliopeBLEDiscovery.swift */,
 				2F61453022BF761F001C2734 /* Extension_CBUUID.swift */,
-				2F61453122BF761F001C2734 /* DFUCalliope.swift */,
+				2F82DCA325C6FE5E00F00EE8 /* CalliopeTypes */,
 				2F61453222BF761F001C2734 /* BLEDataTypes.swift */,
 				2F61453322BF761F001C2734 /* BluetoothConstants.swift */,
-				2F61453422BF761F001C2734 /* ApiCalliope.swift */,
 				2F61453522BF761F001C2734 /* CalliopeBLEDevice.swift */,
-				2F61453622BF761F001C2734 /* ProgrammableCalliope.swift */,
 			);
 			path = Bluetooth;
 			sourceTree = "<group>";
@@ -400,6 +398,16 @@
 				2F2B809925A0E01500A7CCF7 /* CodeSnippets.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		2F82DCA325C6FE5E00F00EE8 /* CalliopeTypes */ = {
+			isa = PBXGroup;
+			children = (
+				2F61453122BF761F001C2734 /* FlashableCalliope.swift */,
+				2F61453422BF761F001C2734 /* ApiCalliope.swift */,
+				2F61453622BF761F001C2734 /* ProgrammableCalliope.swift */,
+			);
+			path = CalliopeTypes;
 			sourceTree = "<group>";
 		};
 		2F91665C2354062A0065AD81 /* Editors */ = {
@@ -719,7 +727,7 @@
 				2F91665B235405AA0065AD81 /* EditorCollectionViewCell.swift in Sources */,
 				2F6145A622C7D71B001C2734 /* Settings.swift in Sources */,
 				2F61457022BF761F001C2734 /* Extension_CBUUID.swift in Sources */,
-				2F61457122BF761F001C2734 /* DFUCalliope.swift in Sources */,
+				2F61457122BF761F001C2734 /* FlashableCalliope.swift in Sources */,
 				2F4B8DAD2598E1E40026B480 /* MenuNavigationSectionHeader.swift in Sources */,
 				2F61451022BF75DE001C2734 /* AppDelegate.swift in Sources */,
 				2F61457F22BF761F001C2734 /* Async.swift in Sources */,
@@ -944,7 +952,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Calliope App/Calliope App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = GKA87N33H4;
 				INFOPLIST_FILE = "Calliope App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -965,7 +973,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Calliope App/Calliope App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = GKA87N33H4;
 				INFOPLIST_FILE = "Calliope App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (

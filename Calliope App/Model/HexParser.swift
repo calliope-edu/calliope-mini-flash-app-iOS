@@ -70,14 +70,12 @@ final class HexParser {
                         guard let data = payload.toData(using: .hex) else { return }
                         guard data.count == Int(length) else { return }
                         f(position, data)
-                        break
                     case 1: // EOF
                         return
                     case 2: // EXT SEGEMENT ADDRESS
                         guard let segment = UInt32(payload, radix:16) else { return }
                         addressHi = segment << 4
                         // print(String(format:"EXT SEGEMENT ADDRESS 0x%x", addressHi + addressLo))
-                        break
                     case 3: // START SEGMENT ADDRESS
                         // print("START SEGMENT ADDRESS")
                         break
@@ -85,7 +83,6 @@ final class HexParser {
                         guard let segment = UInt32(payload, radix:16) else { return }
                         addressHi = segment << 16
                         // print(String(format:"EXT LINEAR ADDRESS 0x%x", addressHi + addressLo))
-                        break
                     case 5: // START LINEAR ADDRESS
                         // print("START LINEAR ADDRESS")
                         break
@@ -98,6 +95,20 @@ final class HexParser {
         } else {
             print("no path")
         }
+    }
 
+    func findDalHash() -> Data? {
+        guard let data = try? Data(contentsOf: url),
+              let magicConstant = "708E3B92C615A841C49866C975EE5197".toData(using: .hex) else {
+            return nil
+        }
+        let hashLength = 16
+        for i in 0..<(data.count-magicConstant.count-hashLength) {
+            let constantEnd = i+magicConstant.count
+            if data.subdata(in: i..<constantEnd) == magicConstant {
+                return data.subdata(in: constantEnd..<constantEnd+hashLength)
+            }
+        }
+        return nil
     }
 }

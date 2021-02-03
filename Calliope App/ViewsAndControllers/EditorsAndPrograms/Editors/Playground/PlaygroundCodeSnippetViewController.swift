@@ -23,15 +23,7 @@ class PlaygroundCodeSnippetViewController: UIViewController, CodeSnippetControll
             loadViewIfNeeded()
             title = codeSnippet?.title
 
-
-            guard let snippetContent = codeSnippet?.content,
-                  let highlightedCode = PlaygroundCodeSnippetViewController.codeSnippetHighlighter.codeSnippetContentToAttributedString(snippetContent)
-                   else {
-                codeView.text = ""
-                return
-            }
-
-            codeView.attributedText = highlightedCode
+            codeView.attributedText = PlaygroundCodeSnippetViewController.codeSnippetHighlighter.codeSnippetToAttributedString(codeSnippet)
         }
     }
 
