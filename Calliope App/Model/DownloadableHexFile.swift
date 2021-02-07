@@ -28,6 +28,9 @@ extension DownloadableHexFile {
     var bin: Data {
         return downloadedHexFile?.bin ?? Data()
     }
+    var partialFlashingInfo: (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? {
+        return downloadedHexFile?.partialFlashingInfo 
+    }
     
     public func load(completion: @escaping (Error?) -> ()) {
         let url = URL(string: loadableProgramURL)!

@@ -13,8 +13,10 @@ class FirmwareUpload {
     
     public static func showUIForDownloadableProgram(controller: UIViewController, program: DownloadableHexFile, name: String = "the program".localized, completion: (() -> ())? = nil) {
         if (program.bin.count != 0) {
-            FirmwareUpload.showUploadUI(controller: controller, program: program) {
-                MatrixConnectionViewController.instance.connect()
+            DispatchQueue.main.async {
+                FirmwareUpload.showUploadUI(controller: controller, program: program) {
+                    MatrixConnectionViewController.instance.connect()
+                }
             }
         } else {
             let alertStart = UIAlertController(title: "Wait a little".localized, message: "The program is being downloaded. Please wait a little.".localized, preferredStyle: .alert)
@@ -91,10 +93,10 @@ class FirmwareUpload {
 
 
         uploadController.view.addSubview(logTextView)
+        let logHeight = 0 //TODO: differenciate debug / production
 
 		uploadController.view.addConstraints(
-			 NSLayoutConstraint.constraints(withVisualFormat: "V:|-(80)-[progressView(120)]-(8)-[logTextView(60)]-(8)-|", options: [], metrics: nil,
-                                            views: ["progressView" : progressView, "logTextView": logTextView]))
+            NSLayoutConstraint.constraints(withVisualFormat: "V:|-(80)-[progressView(120)]-(8)-[logTextView(logHeight)]-(50)-|", options: [], metrics: ["logHeight": logHeight], views: ["progressView" : progressView, "logTextView": logTextView]))
 		uploadController.view.addConstraints(
 			NSLayoutConstraint.constraints(withVisualFormat: "H:|-(80@900)-[progressView(120)]-(80@900)-|",
 										   options: [], metrics: nil, views: ["progressView" : progressView]))

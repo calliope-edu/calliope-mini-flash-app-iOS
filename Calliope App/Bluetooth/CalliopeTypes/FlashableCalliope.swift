@@ -23,8 +23,7 @@ class FlashableCalliope: CalliopeBLEDevice {
 	private var rebootingForFirmwareUpgrade = false
     private var rebootingForPartialFlashing = false
 
-    private var bin: Data?
-    private var dat: Data?
+    private var file: Hex?
 
     private var progressReceiver: DFUProgressDelegate?
     private var statusDelegate: DFUServiceDelegate?
@@ -36,14 +35,13 @@ class FlashableCalliope: CalliopeBLEDevice {
             transferFirmware()
         } else if state == .usageReady && rebootingForPartialFlashing {
             rebootingForPartialFlashing = false
-            startPartialFlashing()
+            rebootForPartialFlashingDone()
         }
     }
 
     public func upload(file: Hex, progressReceiver: DFUProgressDelegate? = nil, statusDelegate: DFUServiceDelegate? = nil, logReceiver: LoggerDelegate? = nil) throws {
 
-        bin = file.bin
-        dat = HexFile.dat(file.bin)
+        self.file = file
 
         self.progressReceiver = progressReceiver
         self.statusDelegate = statusDelegate
@@ -53,9 +51,9 @@ class FlashableCalliope: CalliopeBLEDevice {
         // Android implementation: https://github.com/microbit-sam/microbit-android/blob/partial-flash/app/src/main/java/com/samsung/microbit/service/PartialFlashService.java
         // Explanation: https://lancaster-university.github.io/microbit-docs/ble/partial-flashing-service/
 
-        //try rebootForPartialFlashing()
+        try startPartialFlashing()
 
-        try rebootForFullFlashing()
+        //try rebootForFullFlashing()
 	}
 
     public func cancelUpload() -> Bool {
@@ -74,7 +72,15 @@ class FlashableCalliope: CalliopeBLEDevice {
     private var uploader: DFUServiceController? = nil
 
     private func rebootForFullFlashing() throws {
-        guard let bin = bin, let dat = dat, let firmware = DFUFirmware(binFile:bin, datFile:dat, type: .application) else {
+
+        guard let file = file else {
+            return
+        }
+
+        let bin = file.bin
+        let dat = HexFile.dat(bin)
+
+        guard let firmware = DFUFirmware(binFile:bin, datFile:dat, type: .application) else {
             throw "Could not create firmware from given data"
         }
 
@@ -108,16 +114,70 @@ class FlashableCalliope: CalliopeBLEDevice {
 
     // MARK: partial flashing
 
-    private func rebootForPartialFlashing() throws {
-        state = .willReset
-        rebootingForPartialFlashing = true
-        try writeWithoutResponse(Data([0xFF, 0x00]), for: .partialFlashing)
+    var dalRegionStart = Data()
+    var dalRegionEnd = Data()
+    var dalHash = Data()
+
+    var partialFlashData: PartialFlashData?
+
+    override func handleValueUpdate(_ characteristic: CalliopeCharacteristic, _ value: Data) {
+
+        guard characteristic == .partialFlashing else {
+            return
+        }
+
+        if value[0] == 0xEE { //requested mode
+            //we requested the state of the calliope and got a response
+            if (value[2] == 0x01) {
+                //calliope is in application state and needs to be rebooted
+                state = .willReset
+                do {
+                    try writeWithoutResponse(Data([0xFF, 0x00]), for: .partialFlashing)
+                } catch {
+                    return //TODO start normal flashing
+                }
+            } else {
+                //calliope is already in bluetooth state
+                handleStateUpdate()
+            }
+        }
+
+        if value[0] == 0x00 && value[1] == 0x01 { //requested dal hash
+            dalRegionStart = value[2..<6]
+            dalRegionEnd = value[6..<10]
+            dalHash = value[10..<18]
+            receivedDalHash()
+        }
     }
 
-    private func startPartialFlashing() {
-        
+    private func startPartialFlashing() throws {
+        rebootingForPartialFlashing = true
+        guard let partialFlashingCharacteristic = getCBCharacteristic(.partialFlashing) else {
+            return //TODO start normal flasing
+        }
+        peripheral.setNotifyValue(true, for: partialFlashingCharacteristic)
+        try writeWithoutResponse(Data([0xEE]), for: .partialFlashing) //request state
+    }
 
-        print("partial flashing should start now")
+    private func rebootForPartialFlashingDone() {
+        do {
+            try writeWithoutResponse(Data([0x00, 0x01]), for: .partialFlashing) //request dal hash
+        } catch {
+           return //TODO start normal flashing
+        }
+    }
 
+    private func receivedDalHash() {
+
+        guard let file = file else {
+            return
+        }
+
+        guard let partialFlashingInfo = file.partialFlashingInfo, dalHash == partialFlashingInfo.fileHash else {
+            return //TODO start normal flashing
+        }
+
+        self.partialFlashData = partialFlashingInfo.partialFlashData
+        //TODO: start sending program part packages to calliope or request program hash first and compare
     }
 }

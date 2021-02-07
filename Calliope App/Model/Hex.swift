@@ -7,6 +7,7 @@ protocol Hex {
     var date: Date { get }
     var dateString: String { get }
     var bin: Data { get }
+    var partialFlashingInfo: (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? { get }
 }
 
 extension Hex {
@@ -72,6 +73,13 @@ struct HexFile: Hex, Equatable {
             }
             
             return bin
+        }
+    }
+
+    var partialFlashingInfo: (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? {
+        get {
+            let parser = HexParser(url: url)
+            return parser.retrievePartialFlashingInfo()
         }
     }
 
