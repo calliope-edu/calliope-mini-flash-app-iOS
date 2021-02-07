@@ -118,6 +118,8 @@ class FlashableCalliope: CalliopeBLEDevice {
     var dalRegionEnd = Data()
     var dalHash = Data()
 
+    var hexFileHash = Data()
+    var hexProgramHash = Data()
     var partialFlashData: PartialFlashData?
 
     override func handleValueUpdate(_ characteristic: CalliopeCharacteristic, _ value: Data) {
@@ -126,23 +128,13 @@ class FlashableCalliope: CalliopeBLEDevice {
             return
         }
 
-        if value[0] == 0xEE { //requested mode
-            //we requested the state of the calliope and got a response
-            if (value[2] == 0x01) {
-                //calliope is in application state and needs to be rebooted
-                state = .willReset
-                do {
-                    try writeWithoutResponse(Data([0xFF, 0x00]), for: .partialFlashing)
-                } catch {
-                    return //TODO start normal flashing
-                }
-            } else {
-                //calliope is already in bluetooth state
-                handleStateUpdate()
-            }
+        if value[0] == 0xEE {
+            //requested the mode of the calliope
+            receivedCalliopeMode(value[2] == 0x01)
         }
 
-        if value[0] == 0x00 && value[1] == 0x01 { //requested dal hash
+        if value[0] == 0x00 && value[1] == 0x01 {
+            //requested dal hash and position
             dalRegionStart = value[2..<6]
             dalRegionEnd = value[6..<10]
             dalHash = value[10..<18]
@@ -151,33 +143,51 @@ class FlashableCalliope: CalliopeBLEDevice {
     }
 
     private func startPartialFlashing() throws {
-        rebootingForPartialFlashing = true
-        guard let partialFlashingCharacteristic = getCBCharacteristic(.partialFlashing) else {
+        guard let file = file,
+              let partialFlashingInfo = file.partialFlashingInfo,
+              let partialFlashingCharacteristic = getCBCharacteristic(.partialFlashing) else {
             return //TODO start normal flasing
         }
+
+        hexFileHash = partialFlashingInfo.fileHash
+        hexProgramHash = partialFlashingInfo.programHash
+        partialFlashData = partialFlashingInfo.partialFlashData
+
         peripheral.setNotifyValue(true, for: partialFlashingCharacteristic)
-        try writeWithoutResponse(Data([0xEE]), for: .partialFlashing) //request state
+
+        try writeWithoutResponse(Data([0x00, 0x01]), for: .partialFlashing) //request dal hash
     }
 
-    private func rebootForPartialFlashingDone() {
+    private func receivedDalHash() {
+
+        guard dalHash == hexFileHash else {
+            return //TODO start normal flashing
+        }
+
         do {
-            try writeWithoutResponse(Data([0x00, 0x01]), for: .partialFlashing) //request dal hash
+            try writeWithoutResponse(Data([0xEE]), for: .partialFlashing) //request mode (application running or BLE only)
         } catch {
            return //TODO start normal flashing
         }
     }
 
-    private func receivedDalHash() {
-
-        guard let file = file else {
-            return
+    private func receivedCalliopeMode(_ needsRebootIntoBLEOnlyMode: Bool) {
+        if (needsRebootIntoBLEOnlyMode) {
+            rebootingForPartialFlashing = true
+            //calliope is in application state and needs to be rebooted
+            state = .willReset
+            do {
+                try writeWithoutResponse(Data([0xFF, 0x00]), for: .partialFlashing)
+            } catch {
+                return //TODO start normal flashing
+            }
+        } else {
+            //calliope is already in bluetooth state
+            rebootForPartialFlashingDone()
         }
+    }
 
-        guard let partialFlashingInfo = file.partialFlashingInfo, dalHash == partialFlashingInfo.fileHash else {
-            return //TODO start normal flashing
-        }
-
-        self.partialFlashData = partialFlashingInfo.partialFlashData
+    private func rebootForPartialFlashingDone() {
         //TODO: start sending program part packages to calliope or request program hash first and compare
     }
 }
