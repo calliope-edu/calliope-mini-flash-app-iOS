@@ -157,7 +157,8 @@ struct PartialFlashData: Sequence, IteratorProtocol {
     }
 
     private func readData(_ record: String) -> (address: Int, data: Data)? {
-        guard record.count >= 9, record[7..<9] == "00", //record type 00 means data for program
+        guard record.count < 24 || record[9..<24] != "41140E2FB82FA2B", //magic end of program data (start of embedded source)
+              record.count >= 9, record[7..<9] == "00", //record type 00 means data for program
               let address = Int(record[3..<7], radix: 16), //address in the program is encoded with four bytes
               let length = Int(record[1..<3], radix: 16), //record length
               record.count >= 9+2*length,

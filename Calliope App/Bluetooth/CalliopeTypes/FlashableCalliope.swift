@@ -114,13 +114,17 @@ class FlashableCalliope: CalliopeBLEDevice {
 
     // MARK: partial flashing
 
-    var dalRegionStart = Data()
-    var dalRegionEnd = Data()
+    //current calliope state
     var dalHash = Data()
 
+    //data file and its properties
     var hexFileHash = Data()
     var hexProgramHash = Data()
     var partialFlashData: PartialFlashData?
+
+    //current flash package data
+    var startPackageNumber: UInt8 = 0
+    var currentDataToFlash: [(address: Int, data: Data)] = []
 
     override func handleValueUpdate(_ characteristic: CalliopeCharacteristic, _ value: Data) {
 
@@ -128,25 +132,40 @@ class FlashableCalliope: CalliopeBLEDevice {
             return
         }
 
+        LogNotify.log("received notification from partial flashing service: \(value.hexEncodedString())")
+
         if value[0] == 0xEE {
             //requested the mode of the calliope
             receivedCalliopeMode(value[2] == 0x01)
+            return
         }
 
         if value[0] == 0x00 && value[1] == 0x01 {
             //requested dal hash and position
-            dalRegionStart = value[2..<6]
-            dalRegionEnd = value[6..<10]
             dalHash = value[10..<18]
+            LogNotify.log("Dal region from \(value[2..<6].hexEncodedString()) to \(value[6..<10].hexEncodedString())")
             receivedDalHash()
+            return
+        }
+
+        if value[0] == 0x01 {
+            LogNotify.log("write status: \(Data([value[1]]).hexEncodedString())")
+            if value[1] == 0xAA {
+                resendPackage()
+            } else {
+                sendNextPackage()
+            }
+            return
         }
     }
 
     private func startPartialFlashing() throws {
+        LogNotify.log("start partial flashing")
         guard let file = file,
               let partialFlashingInfo = file.partialFlashingInfo,
               let partialFlashingCharacteristic = getCBCharacteristic(.partialFlashing) else {
-            return //TODO start normal flasing
+            fallbackToFullFlash()
+            return
         }
 
         hexFileHash = partialFlashingInfo.fileHash
@@ -159,19 +178,22 @@ class FlashableCalliope: CalliopeBLEDevice {
     }
 
     private func receivedDalHash() {
-
+        LogNotify.log("received dal hash \(dalHash.hexEncodedString()), hash in hex file is \(hexFileHash.hexEncodedString())")
         guard dalHash == hexFileHash else {
-            return //TODO start normal flashing
+            fallbackToFullFlash()
+            return
         }
 
         do {
             try writeWithoutResponse(Data([0xEE]), for: .partialFlashing) //request mode (application running or BLE only)
         } catch {
-           return //TODO start normal flashing
+            fallbackToFullFlash()
+            return
         }
     }
 
     private func receivedCalliopeMode(_ needsRebootIntoBLEOnlyMode: Bool) {
+        LogNotify.log("received mode of calliope, needs reboot: \(needsRebootIntoBLEOnlyMode)")
         if (needsRebootIntoBLEOnlyMode) {
             rebootingForPartialFlashing = true
             //calliope is in application state and needs to be rebooted
@@ -179,7 +201,8 @@ class FlashableCalliope: CalliopeBLEDevice {
             do {
                 try writeWithoutResponse(Data([0xFF, 0x00]), for: .partialFlashing)
             } catch {
-                return //TODO start normal flashing
+                fallbackToFullFlash()
+                return
             }
         } else {
             //calliope is already in bluetooth state
@@ -188,6 +211,75 @@ class FlashableCalliope: CalliopeBLEDevice {
     }
 
     private func rebootForPartialFlashingDone() {
-        //TODO: start sending program part packages to calliope or request program hash first and compare
+        LogNotify.log("reboot done if it was necessary, can now start sending new program to calliope")
+        //start sending program part packages to calliope
+        startPackageNumber = 1
+        sendNextPackage()
+    }
+
+    private func sendNextPackage() {
+        LogNotify.log("send 4 packages beginning at \(startPackageNumber)")
+        guard var partialFlashData = partialFlashData else {
+            fallbackToFullFlash()
+            return
+        }
+        currentDataToFlash = []
+        for _ in 0..<4 {
+            guard let nextPackage = partialFlashData.next() else {
+                break
+            }
+            currentDataToFlash.append(nextPackage)
+        }
+        sendPackage()
+        if currentDataToFlash.count < 4 {
+            endTransmission() //we did not have a full package to flash any more
+        }
+        startPackageNumber += 4
+    }
+
+    private func resendPackage() {
+        startPackageNumber -= 4
+        LogNotify.log("Needs to resend package \(startPackageNumber)")
+        do {
+            try writeWithoutResponse(("AAAAAAAAAAAAAAAA".toData(using: .hex) ?? Data())
+                                        + ("1234".toData(using: .hex) ?? Data())
+                                        + Data([startPackageNumber]),
+                                     for: .partialFlashing)
+        } catch {
+            fallbackToFullFlash()
+            return
+        }
+        sendPackage()
+    }
+
+    private func sendPackage() {
+        LogNotify.log("sending \(currentDataToFlash.count) packages")
+        do {
+            for (index, package) in currentDataToFlash.enumerated() {
+                let writeCommand = Data([0x01])
+                let packageNumber = Data([(startPackageNumber + UInt8(index))])
+                let writeData = writeCommand + package.address + packageNumber + package.data
+                try writeWithoutResponse(writeData, for: .partialFlashing)
+            }
+        } catch {
+            fallbackToFullFlash()
+            return
+        }
+    }
+
+    private func endTransmission() {
+        LogNotify.log("partial flashing done!")
+        do {
+            try writeWithoutResponse(Data([0x02]), for: .partialFlashing)
+        } catch {
+            fallbackToFullFlash()
+            return
+        }
+    }
+
+
+    private func fallbackToFullFlash() {
+        LogNotify.log("partial flash failed, resort to full flashing")
+        //TODO: start full flash
     }
 }
