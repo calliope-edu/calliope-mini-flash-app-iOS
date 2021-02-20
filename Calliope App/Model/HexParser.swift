@@ -133,9 +133,9 @@ final class HexParser {
 }
 
 struct PartialFlashData: Sequence, IteratorProtocol {
-    typealias Element = (address: Int, data: Data)
+    typealias Element = (address: UInt16, data: Data)
 
-    private var nextData: [(address: Int, data: Data)] = []
+    private var nextData: [(address: UInt16, data: Data)] = []
     private var reader: StreamReader
 
     init(nextLines: [String], reader: StreamReader) {
@@ -144,7 +144,7 @@ struct PartialFlashData: Sequence, IteratorProtocol {
         self.nextData.append(contentsOf: nextLines.compactMap { line in readData(line) }) //data from nextLines
     }
 
-    mutating func next() -> (address: Int, data: Data)? {
+    mutating func next() -> (address: UInt16, data: Data)? {
         let line = nextData.popLast()
         if nextData.count == 0 {
             if let nextReaderLine = reader.nextLine(), let nextLine = readData(nextReaderLine) {
@@ -156,16 +156,17 @@ struct PartialFlashData: Sequence, IteratorProtocol {
         return line
     }
 
-    private func readData(_ record: String) -> (address: Int, data: Data)? {
-        guard record.count < 24 || record[9..<24] != "41140E2FB82FA2B", //magic end of program data (start of embedded source)
-              record.count >= 9, record[7..<9] == "00", //record type 00 means data for program
-              let address = Int(record[3..<7], radix: 16), //address in the program is encoded with four bytes
-              let length = Int(record[1..<3], radix: 16), //record length
-              record.count >= 9+2*length,
-              let data = record[9..<(9+2*length)].toData(using: .hex) //data area with given byte length (2 letters per byte)
-        else {
+    private func readData(_ record: String) -> (address: UInt16, data: Data)? {
+        if record.count < 24 || record[9..<24] != "41140E2FB82FA2B", //magic end of program data (start of embedded source)
+           record.count >= 9, record[7..<9] == "00", //record type 0 means data for program
+           let address = UInt16(record[3..<7], radix: 16), //address in the program is encoded with two bytes
+           let length = Int(record[1..<3], radix: 16), //record length
+           record.count >= 9+2*length, //record length validation (string starting at 10th character must be 2*length characters long)
+           let data = record[9..<(9+2*length)].toData(using: .hex) //data area with given byte length
+        {
+            return (address, data)
+        } else {
             return nil
         }
-        return (address, data)
     }
 }

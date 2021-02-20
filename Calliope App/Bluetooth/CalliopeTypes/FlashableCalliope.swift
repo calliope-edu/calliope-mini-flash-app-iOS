@@ -51,7 +51,7 @@ class FlashableCalliope: CalliopeBLEDevice {
         // Android implementation: https://github.com/microbit-sam/microbit-android/blob/partial-flash/app/src/main/java/com/samsung/microbit/service/PartialFlashService.java
         // Explanation: https://lancaster-university.github.io/microbit-docs/ble/partial-flashing-service/
 
-        try startPartialFlashing()
+        startPartialFlashing()
 
         //try rebootForFullFlashing()
 	}
@@ -124,23 +124,28 @@ class FlashableCalliope: CalliopeBLEDevice {
 
     //current flash package data
     var startPackageNumber: UInt8 = 0
-    var currentDataToFlash: [(address: Int, data: Data)] = []
+    var currentDataToFlash: [(address: UInt16, data: Data)] = []
 
     override func handleValueUpdate(_ characteristic: CalliopeCharacteristic, _ value: Data) {
-
         guard characteristic == .partialFlashing else {
             return
         }
+        //dispatch from ble queue to update queue to avoid deadlock
+        updateQueue.async {
+            self.handlePartialValueNotification(value)
+        }
+    }
 
+    func handlePartialValueNotification(_ value: Data) {
         LogNotify.log("received notification from partial flashing service: \(value.hexEncodedString())")
 
-        if value[0] == 0xEE {
+        if value[0] == .STATUS {
             //requested the mode of the calliope
-            receivedCalliopeMode(value[2] == 0x01)
+            receivedCalliopeMode(value[2] == .MODE_APPLICATION)
             return
         }
 
-        if value[0] == 0x00 && value[1] == 0x01 {
+        if value[0] == .REGION && value[1] == .DAL_REGION {
             //requested dal hash and position
             dalHash = value[10..<18]
             LogNotify.log("Dal region from \(value[2..<6].hexEncodedString()) to \(value[6..<10].hexEncodedString())")
@@ -148,18 +153,21 @@ class FlashableCalliope: CalliopeBLEDevice {
             return
         }
 
-        if value[0] == 0x01 {
+        if value[0] == .WRITE {
             LogNotify.log("write status: \(Data([value[1]]).hexEncodedString())")
-            if value[1] == 0xAA {
+            if value[1] == .WRITE_FAIL {
                 resendPackage()
-            } else {
+            } else if value[1] == .WRITE_SUCCESS {
                 sendNextPackage()
+            } else {
+                //we do not understand the response
+                fallbackToFullFlash()
             }
             return
         }
     }
 
-    private func startPartialFlashing() throws {
+    private func startPartialFlashing() {
         LogNotify.log("start partial flashing")
         guard let file = file,
               let partialFlashingInfo = file.partialFlashingInfo,
@@ -174,7 +182,7 @@ class FlashableCalliope: CalliopeBLEDevice {
 
         peripheral.setNotifyValue(true, for: partialFlashingCharacteristic)
 
-        try writeWithoutResponse(Data([0x00, 0x01]), for: .partialFlashing) //request dal hash
+        send(command: .REGION, value: Data([.DAL_REGION]))
     }
 
     private func receivedDalHash() {
@@ -183,13 +191,8 @@ class FlashableCalliope: CalliopeBLEDevice {
             fallbackToFullFlash()
             return
         }
-
-        do {
-            try writeWithoutResponse(Data([0xEE]), for: .partialFlashing) //request mode (application running or BLE only)
-        } catch {
-            fallbackToFullFlash()
-            return
-        }
+        //request mode (application running or BLE only)
+        send(command: .STATUS)
     }
 
     private func receivedCalliopeMode(_ needsRebootIntoBLEOnlyMode: Bool) {
@@ -198,12 +201,7 @@ class FlashableCalliope: CalliopeBLEDevice {
             rebootingForPartialFlashing = true
             //calliope is in application state and needs to be rebooted
             state = .willReset
-            do {
-                try writeWithoutResponse(Data([0xFF, 0x00]), for: .partialFlashing)
-            } catch {
-                fallbackToFullFlash()
-                return
-            }
+            send(command: .REBOOT, value: Data([.MODE_BLE]))
         } else {
             //calliope is already in bluetooth state
             rebootForPartialFlashingDone()
@@ -213,7 +211,7 @@ class FlashableCalliope: CalliopeBLEDevice {
     private func rebootForPartialFlashingDone() {
         LogNotify.log("reboot done if it was necessary, can now start sending new program to calliope")
         //start sending program part packages to calliope
-        startPackageNumber = 1
+        startPackageNumber = 0
         sendNextPackage()
     }
 
@@ -230,7 +228,7 @@ class FlashableCalliope: CalliopeBLEDevice {
             }
             currentDataToFlash.append(nextPackage)
         }
-        sendPackage()
+        doSendPackage()
         if currentDataToFlash.count < 4 {
             endTransmission() //we did not have a full package to flash any more
         }
@@ -240,46 +238,66 @@ class FlashableCalliope: CalliopeBLEDevice {
     private func resendPackage() {
         startPackageNumber -= 4
         LogNotify.log("Needs to resend package \(startPackageNumber)")
-        do {
-            try writeWithoutResponse(("AAAAAAAAAAAAAAAA".toData(using: .hex) ?? Data())
-                                        + ("1234".toData(using: .hex) ?? Data())
-                                        + Data([startPackageNumber]),
-                                     for: .partialFlashing)
-        } catch {
-            fallbackToFullFlash()
-            return
-        }
-        sendPackage()
+        //FIXME
+        let resetPackageData = ("AAAAAAAAAAAAAAAA".toData(using: .hex) ?? Data())
+            + ("1234".toData(using: .hex) ?? Data())
+            + Data([startPackageNumber])
+        send(command: .WRITE, value: resetPackageData)
+        doSendPackage()
     }
 
-    private func sendPackage() {
+    private func doSendPackage() {
         LogNotify.log("sending \(currentDataToFlash.count) packages")
-        do {
-            for (index, package) in currentDataToFlash.enumerated() {
-                let writeCommand = Data([0x01])
-                let packageNumber = Data([(startPackageNumber + UInt8(index))])
-                let writeData = writeCommand + package.address + packageNumber + package.data
-                try writeWithoutResponse(writeData, for: .partialFlashing)
-            }
-        } catch {
-            fallbackToFullFlash()
-            return
+        for (index, package) in currentDataToFlash.enumerated() {
+            let packageAddress = package.address.bigEndianData
+            let packageNumber = Data([startPackageNumber + UInt8(index)])
+            let writeData = packageAddress + packageNumber + package.data
+            send(command: .WRITE, value: writeData)
         }
     }
 
     private func endTransmission() {
         LogNotify.log("partial flashing done!")
+        send(command: .TRANSMISSION_END)
+    }
+
+    private func send(command: UInt8, value: Data = Data()) {
         do {
-            try writeWithoutResponse(Data([0x02]), for: .partialFlashing)
+            try writeWithoutResponse(Data([command]) + value, for: .partialFlashing)
         } catch {
             fallbackToFullFlash()
-            return
         }
     }
 
 
     private func fallbackToFullFlash() {
         LogNotify.log("partial flash failed, resort to full flashing")
-        //TODO: start full flash
+        do {
+            try rebootForFullFlashing()
+        } catch {
+            _ = cancelUpload()
+        }
     }
+}
+
+private extension UInt8 {
+    //commands
+    static let REBOOT = UInt8(0xFF)
+    static let STATUS = UInt8(0xEE)
+    static let REGION = UInt8(0)
+    static let WRITE = UInt8(1)
+    static let TRANSMISSION_END = UInt8(2)
+
+    //REGION parameters
+    static let EMBEDDED_REGION = UInt8(0)
+    static let DAL_REGION = UInt8(1)
+    static let PROGRAM_REGION = UInt8(2)
+
+    //STATUS and REBOOT parameters
+    static let MODE_APPLICATION = UInt8(1)
+    static let MODE_BLE = UInt8(0)
+
+    //WRITE response values
+    static let WRITE_FAIL = UInt8(0xAA)
+    static let WRITE_SUCCESS = UInt8(0xFF)
 }
