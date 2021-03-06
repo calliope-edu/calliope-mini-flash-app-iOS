@@ -178,7 +178,27 @@ class FlashableCalliope: CalliopeBLEDevice {
     }
 
     private func startPartialFlashing() {
+
+        //reset variables in case we use the same calliope object twice
+
+        //current calliope state
+        dalHash = Data()
+
+        //data file and its properties
+        hexFileHash = Data()
+        hexProgramHash = Data()
+        partialFlashData = nil
+
+        //current flash package data
+        startPackageNumber = 0
+        currentSegmentAddress = 0
+        currentDataToFlash = []
+
+        //for GUI interaction
         cancel = false
+        linesFlashed = 0
+
+
         updateCallback("start partial flashing")
         guard let file = file,
               let partialFlashingInfo = file.partialFlashingInfo,
