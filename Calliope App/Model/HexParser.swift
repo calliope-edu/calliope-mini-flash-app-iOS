@@ -101,6 +101,13 @@ struct HexParser {
             return nil
         }
 
+        _ = forwardToMagicNumber(reader)
+        var numLinesToFlash = 0
+        while let line = reader.nextLine(), !HexReader.isMagicEnd(line) {
+            numLinesToFlash += 1
+        }
+        reader.rewind()
+
         let (line, currentSegmentAddress) = forwardToMagicNumber(reader)
         guard let magicLine = line else {
             return nil
@@ -115,7 +122,8 @@ struct HexParser {
                     PartialFlashData(
                         nextLines: [hashesLine, magicLine],
                         currentSegmentAddress: currentSegmentAddress,
-                        reader: reader))
+                        reader: reader,
+                        lineCount: numLinesToFlash))
         }
         return nil
     }
@@ -123,10 +131,9 @@ struct HexParser {
     private func forwardToMagicNumber(_ reader: StreamReader) -> (String?, UInt16) {
         var magicLine: String?
 
-        let magicNumber =  "708E3B92C615A841C49866C975EE5197"
         var currentSegmentAddress: UInt16 = 0
         while let record = reader.nextLine() {
-            if record.count >= 41 && record[9..<41] == magicNumber {
+            if HexReader.isMagicStart(record) {
                 magicLine = record
                 break
             } else if HexReader.type(of: record) == 4,
@@ -141,14 +148,16 @@ struct HexParser {
 struct PartialFlashData: Sequence, IteratorProtocol {
     typealias Element = (address: UInt16, data: Data)
 
+    public let lineCount: Int
     public private(set) var currentSegmentAddress: UInt16
     private var nextData: [(address: UInt16, data: Data)] = []
     private var reader: StreamReader?
 
-    init(nextLines: [String], currentSegmentAddress: UInt16, reader: StreamReader) {
+    init(nextLines: [String], currentSegmentAddress: UInt16, reader: StreamReader, lineCount: Int) {
         self.reader = reader
         self.nextData = []
         self.currentSegmentAddress = currentSegmentAddress
+        self.lineCount = lineCount
         //extract data from nextLines
         nextLines.forEach { read($0) }
     }
@@ -163,7 +172,7 @@ struct PartialFlashData: Sequence, IteratorProtocol {
     }
 
     mutating private func read(_ record: String) {
-        if record.count >= 24 && record[9..<24] == "41140E2FB82FA2B" { //magic end of program data (start of embedded source)
+        if HexReader.isMagicEnd(record) {
             reader?.close()
             reader = nil
             return
@@ -226,5 +235,14 @@ struct HexReader {
     static func data(of record: String, _ length: Int) -> Data? {
         //data area with given byte length
         return record[9..<(9+2*length)].toData(using: .hex)
+    }
+
+    static func isMagicStart(_ record: String) -> Bool {
+        record.count >= 41 && record[9..<41] == "708E3B92C615A841C49866C975EE5197"
+    }
+
+    static func isMagicEnd(_ record: String) -> Bool {
+        //magic end of program data (start of embedded source)
+        return record.count >= 24 && record[9..<24] == "41140E2FB82FA2B"
     }
 }
