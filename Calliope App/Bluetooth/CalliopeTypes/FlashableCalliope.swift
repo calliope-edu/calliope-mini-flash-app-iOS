@@ -124,6 +124,13 @@ class FlashableCalliope: CalliopeBLEDevice {
 
     //current flash package data
     var startPackageNumber: UInt8 = 0
+    var currentSegmentAddress: UInt16 = 0 {
+        didSet {
+            if oldValue != currentSegmentAddress {
+                LogNotify.log("current segment: \(currentSegmentAddress)")
+            }
+        }
+    }
     var currentDataToFlash: [(address: UInt16, data: Data)] = []
 
     override func handleValueUpdate(_ characteristic: CalliopeCharacteristic, _ value: Data) {
@@ -221,6 +228,7 @@ class FlashableCalliope: CalliopeBLEDevice {
             fallbackToFullFlash()
             return
         }
+        currentSegmentAddress = partialFlashData.currentSegmentAddress
         currentDataToFlash = []
         for _ in 0..<4 {
             guard let nextPackage = partialFlashData.next() else {
@@ -232,7 +240,7 @@ class FlashableCalliope: CalliopeBLEDevice {
         if currentDataToFlash.count < 4 {
             endTransmission() //we did not have a full package to flash any more
         }
-        startPackageNumber += 4
+        startPackageNumber = startPackageNumber.addingReportingOverflow(4).partialValue
     }
 
     private func resendPackage() {
@@ -249,7 +257,7 @@ class FlashableCalliope: CalliopeBLEDevice {
     private func doSendPackage() {
         LogNotify.log("sending \(currentDataToFlash.count) packages")
         for (index, package) in currentDataToFlash.enumerated() {
-            let packageAddress = package.address.bigEndianData
+            let packageAddress = index == 1 ? currentSegmentAddress.bigEndianData : package.address.bigEndianData
             let packageNumber = Data([startPackageNumber + UInt8(index)])
             let writeData = packageAddress + packageNumber + package.data
             send(command: .WRITE, value: writeData)

@@ -1,6 +1,6 @@
 import Foundation
 
-final class HexParser {
+struct HexParser {
 
     private let url: URL
     private var address: UInt32 = 0
@@ -50,7 +50,7 @@ final class HexParser {
             b = e
 
             e = b + 2
-            guard let type = UInt8(line[b..<e], radix: 16) else { return }
+            guard let type = HexReader.type(of: line) else { return }
             b = e
 
             e = b + 2 * Int(length)
@@ -101,7 +101,8 @@ final class HexParser {
             return nil
         }
 
-        guard let magicLine = forwardToMagicNumber(reader) else {
+        let (line, currentSegmentAddress) = forwardToMagicNumber(reader)
+        guard let magicLine = line else {
             return nil
         }
 
@@ -113,60 +114,117 @@ final class HexParser {
                     programHash,
                     PartialFlashData(
                         nextLines: [hashesLine, magicLine],
+                        currentSegmentAddress: currentSegmentAddress,
                         reader: reader))
         }
         return nil
     }
 
-    private func forwardToMagicNumber(_ reader: StreamReader) -> String? {
+    private func forwardToMagicNumber(_ reader: StreamReader) -> (String?, UInt16) {
         var magicLine: String?
 
         let magicNumber =  "708E3B92C615A841C49866C975EE5197"
-        while let line = reader.nextLine() {
-            if line.count >= 41 && line[9..<41] == magicNumber {
-                magicLine = line
+        var currentSegmentAddress: UInt16 = 0
+        while let record = reader.nextLine() {
+            if record.count >= 41 && record[9..<41] == magicNumber {
+                magicLine = record
                 break
+            } else if HexReader.type(of: record) == 4,
+                      let segmentAddress = HexReader.readSegmentAddress(record) {
+                currentSegmentAddress = segmentAddress
             }
         }
-        return magicLine
+        return (magicLine, currentSegmentAddress)
     }
 }
 
 struct PartialFlashData: Sequence, IteratorProtocol {
     typealias Element = (address: UInt16, data: Data)
 
+    public private(set) var currentSegmentAddress: UInt16
     private var nextData: [(address: UInt16, data: Data)] = []
-    private var reader: StreamReader
+    private var reader: StreamReader?
 
-    init(nextLines: [String], reader: StreamReader) {
+    init(nextLines: [String], currentSegmentAddress: UInt16, reader: StreamReader) {
         self.reader = reader
         self.nextData = []
-        self.nextData.append(contentsOf: nextLines.compactMap { line in readData(line) }) //data from nextLines
+        self.currentSegmentAddress = currentSegmentAddress
+        //extract data from nextLines
+        nextLines.forEach { read($0) }
     }
 
     mutating func next() -> (address: UInt16, data: Data)? {
         let line = nextData.popLast()
-        if nextData.count == 0 {
-            if let nextReaderLine = reader.nextLine(), let nextLine = readData(nextReaderLine) {
-                nextData.append(nextLine)
-            } else {
-                reader.close()
-            }
+        while let reader = reader, nextData.count == 0 {
+            guard let record = reader.nextLine() else { break }
+            read(record)
         }
         return line
     }
 
-    private func readData(_ record: String) -> (address: UInt16, data: Data)? {
-        if record.count < 24 || record[9..<24] != "41140E2FB82FA2B", //magic end of program data (start of embedded source)
-           record.count >= 9, record[7..<9] == "00", //record type 0 means data for program
-           let address = UInt16(record[3..<7], radix: 16), //address in the program is encoded with two bytes
-           let length = Int(record[1..<3], radix: 16), //record length
-           record.count >= 9+2*length, //record length validation (string starting at 10th character must be 2*length characters long)
-           let data = record[9..<(9+2*length)].toData(using: .hex) //data area with given byte length
-        {
+    mutating private func read(_ record: String) {
+        if record.count >= 24 && record[9..<24] == "41140E2FB82FA2B" { //magic end of program data (start of embedded source)
+            reader?.close()
+            reader = nil
+            return
+        }
+        switch HexReader.type(of: record) {
+            case 0: //record type 0 means data for program
+                if let data = HexReader.readData(record) {
+                    nextData.append(data)
+                }
+            case 4: //segment address type
+                if let segmentAddress = HexReader.readSegmentAddress(record) {
+                    currentSegmentAddress = segmentAddress
+                }
+            default:
+                break
+        }
+    }
+}
+
+struct HexReader {
+    static func readSegmentAddress(_ record: String) -> UInt16? {
+        if let length = length(of: record), length == 2,
+                   validate(record, length),
+                   let data = data(of: record, length) {
+            return UInt16(bigEndianData: data)
+        } else {
+            return nil
+        }
+    }
+
+    static func readData(_ record: String) -> (address: UInt16, data: Data)? {
+        if let length = length(of: record),
+           validate(record, length),
+           let address = address(of: record),
+           let data = data(of: record, length) {
             return (address, data)
         } else {
             return nil
         }
+    }
+
+    static func validate(_ record: String, _ length: Int) -> Bool {
+        //string starting at 10th character must be 2*length characters long plus two characters for the checksum
+        return record.trimmingCharacters(in: .whitespacesAndNewlines).count == 9 + 2*length + 2
+    }
+
+    static func type(of record: String) -> Int? {
+        return Int(record[7..<9], radix: 16)
+    }
+
+    static func length(of record: String) -> Int? {
+        return Int(record[1..<3], radix: 16)
+    }
+
+    static func address(of record: String) -> UInt16? {
+        //address in the program is encoded with two bytes
+        return UInt16(record[3..<7], radix: 16)
+    }
+
+    static func data(of record: String, _ length: Int) -> Data? {
+        //data area with given byte length
+        return record[9..<(9+2*length)].toData(using: .hex)
     }
 }

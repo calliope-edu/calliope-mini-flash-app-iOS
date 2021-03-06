@@ -323,6 +323,11 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 		}
 	}
 
+    func peripheral(_ peripheral: CBPeripheral, didModifyServices invalidatedServices: [CBService]) {
+        LogNotify.log("Calliope \(peripheral.name) invalidated services \(invalidatedServices). Re-evaluate mode.")
+        evaluateMode()
+    }
+
 	func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
 
 		if let readingCharac = readingCharacteristic, characteristic.uuid == readingCharac.uuid {
