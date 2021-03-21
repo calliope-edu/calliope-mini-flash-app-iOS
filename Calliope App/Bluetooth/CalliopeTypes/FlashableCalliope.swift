@@ -52,7 +52,10 @@ class FlashableCalliope: CalliopeBLEDevice {
         // Explanation: https://lancaster-university.github.io/microbit-docs/ble/partial-flashing-service/
         // the explanation is outdated though.
 
-        startPartialFlashing()
+        //startPartialFlashing()
+
+        //comment out this as soon as partial flashing works
+        try startFullFlashing()
 	}
 
     public func cancelUpload() -> Bool {
@@ -69,7 +72,7 @@ class FlashableCalliope: CalliopeBLEDevice {
     private var initiator: DFUServiceInitiator? = nil
     private var uploader: DFUServiceController? = nil
 
-    private func rebootForFullFlashing() throws {
+    private func startFullFlashing() throws {
 
         guard let file = file else {
             return
@@ -166,9 +169,9 @@ class FlashableCalliope: CalliopeBLEDevice {
         if value[0] == .WRITE {
             updateCallback("write status: \(Data([value[1]]).hexEncodedString())")
             if value[1] == .WRITE_FAIL {
-                resendPackage()
+                resendPackages()
             } else if value[1] == .WRITE_SUCCESS {
-                sendNextPackage()
+                sendNextPackages()
             } else {
                 //we do not understand the response
                 fallbackToFullFlash()
@@ -243,10 +246,10 @@ class FlashableCalliope: CalliopeBLEDevice {
         updateCallback("reboot done if it was necessary, can now start sending new program to calliope")
         //start sending program part packages to calliope
         startPackageNumber = 0
-        sendNextPackage()
+        sendNextPackages()
     }
 
-    private func sendNextPackage() {
+    private func sendNextPackages() {
         updateCallback("send 4 packages beginning at \(startPackageNumber)")
         guard var partialFlashData = partialFlashData else {
             fallbackToFullFlash()
@@ -260,7 +263,7 @@ class FlashableCalliope: CalliopeBLEDevice {
             }
             currentDataToFlash.append(nextPackage)
         }
-        doSendPackage()
+        sendCurrentPackages()
         if currentDataToFlash.count < 4 {
             endTransmission() //we did not have a full package to flash any more
         }
@@ -268,18 +271,19 @@ class FlashableCalliope: CalliopeBLEDevice {
         linesFlashed += 4
     }
 
-    private func resendPackage() {
+    private func resendPackages() {
+        fallbackToFullFlash()
+        /*
         startPackageNumber -= 4
         updateCallback("Needs to resend package \(startPackageNumber)")
         //FIXME
-        let resetPackageData = ("AAAAAAAAAAAAAAAA".toData(using: .hex) ?? Data())
-            + ("1234".toData(using: .hex) ?? Data())
-            + Data([startPackageNumber])
+        let resetPackageData = Data()
         send(command: .WRITE, value: resetPackageData)
-        doSendPackage()
+        sendCurrentPackages()
+         */
     }
 
-    private func doSendPackage() {
+    private func sendCurrentPackages() {
         updateCallback("sending \(currentDataToFlash.count) packages")
         for (index, package) in currentDataToFlash.enumerated() {
             let packageAddress = index == 1 ? currentSegmentAddress.bigEndianData : package.address.bigEndianData
@@ -291,8 +295,12 @@ class FlashableCalliope: CalliopeBLEDevice {
 
     private func endTransmission() {
         updateCallback("partial flashing done!")
+        state = .willReset
         send(command: .TRANSMISSION_END)
     }
+
+
+    //MARK: partial flashing utility functions
 
     private func send(command: UInt8, value: Data = Data()) {
         do {
@@ -306,22 +314,25 @@ class FlashableCalliope: CalliopeBLEDevice {
     private func fallbackToFullFlash() {
         updateCallback("partial flash failed, resort to full flashing")
         do {
-            try rebootForFullFlashing()
+            try startFullFlashing()
         } catch {
             _ = cancelUpload()
         }
     }
 
-    //callbacks to GUI
+    //MARK: partial flashing callbacks to GUI
 
     private func updateCallback(_ logMessage: String) {
         logReceiver?.logWith(.info, message: logMessage)
         let progressPerCent = Int(ceil(Double(linesFlashed * 100) / Double(partialFlashData?.lineCount ?? Int.max)))
+        LogNotify.log("partial flashing progress: \(progressPerCent)%")
         progressReceiver?.dfuProgressDidChange(for: 1, outOf: 1, to: progressPerCent, currentSpeedBytesPerSecond: 0, avgSpeedBytesPerSecond: 0)
     }
 }
 
-private extension UInt8 { //some constants for partial flasing
+
+//MARK: constants for partial flasing
+private extension UInt8 {
     //commands
     static let REBOOT = UInt8(0xFF)
     static let STATUS = UInt8(0xEE)

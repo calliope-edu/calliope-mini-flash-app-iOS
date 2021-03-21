@@ -1,24 +1,4 @@
 import Foundation
-/*
-extension String {
-
-
-}
-
-
-
-extension String {
-    func slice(from: String, to: String) -> String? {
-        return (range(of: from)?.upperBound).flatMap { substringFrom in
-            (range(of: to, range: substringFrom..<endIndex)?.lowerBound).map { substringTo in
-                String(self[substringFrom..<substringTo])
-            }
-        }
-    }
-}
-
-
-*/
 
 extension String: LocalizedError {
     public var errorDescription: String? { return self }
@@ -107,19 +87,10 @@ extension String {
 		switch encoding {
 		case .hex:
 			guard self.count % 2 == 0 else { return nil }
-			var data = Data()
-			var hi: Character = "0"
-			var lo: Character = "0"
-			for (index, character) in self.enumerated() {
-				if index % 2 == 0 {
-					hi = character
-				} else {
-					lo = character
-					guard let byte = UInt8(String([hi, lo]), radix: 16) else { return nil }
-					data.append(byte)
-				}
-			}
-			return data
+            let ascii = self.unicodeScalars.map { Character($0) }
+            return Data(stride(from: 0, to: ascii.count, by: 2).compactMap { i in
+                UInt8(String([ascii[i], ascii[i+1]]), radix: 16)
+            })
 		case .base64:
 			return Data(base64Encoded: self)
 		}
