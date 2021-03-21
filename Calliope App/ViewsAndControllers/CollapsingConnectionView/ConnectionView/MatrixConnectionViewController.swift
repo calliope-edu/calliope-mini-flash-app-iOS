@@ -19,6 +19,8 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 	var collapseButtonView: (CollapseButtonProtocol & UIView)! {
 		return collapseButton
 	}
+    //gesture recognizer added to background when open
+    lazy var collapseGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(toggleOpen(_:)))
 
 	/// the view which handles the collapsing
 	@IBOutlet var zoomView: UIView!
@@ -96,11 +98,12 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 	}
 
 	@IBAction func toggleOpen(_ sender: Any) {
+        self.parent?.view.removeGestureRecognizer(collapseGestureRecognizer)
 		toggleOpen()
 	}
 
-	//from protocol CollapsingViewController
 	func animationCompletions(expand: Bool) {
+        //start or end calliope discovery
 		if expand {
 			if self.connector.state == .initialized {
 				self.connector.startCalliopeDiscovery()
@@ -108,7 +111,20 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 		} else {
 			self.connector.stopCalliopeDiscovery()
 		}
+
+        //add gesture recognizer to background for dismissal
+        if expand {
+            self.parent?.view.addGestureRecognizer(collapseGestureRecognizer)
+        }
 	}
+
+    public func animateBounce() {
+        if collapseButton.expansionState == .open {
+            self.connectButton.animateBounce()
+        } else {
+            self.collapseButton.animateBounce()
+        }
+    }
 
 	// MARK: calliope connection
 
@@ -230,13 +246,5 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
         }
         alertController.addAction(UIAlertAction(title: "OK", style: .default))
         self.show(alertController, sender: nil)
-    }
-
-    public func animateBounce() {
-        if collapseButton.expansionState == .open {
-            self.connectButton.animateBounce()
-        } else {
-            self.collapseButton.animateBounce()
-        }
     }
 }

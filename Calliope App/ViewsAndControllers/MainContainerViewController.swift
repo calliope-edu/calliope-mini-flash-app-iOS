@@ -21,7 +21,7 @@ class MainContainerViewController: UITabBarController, UITabBarControllerDelegat
 
 		let connectionVC = UIStoryboard(name: "ConnectionView", bundle: nil).instantiateInitialViewController() as! MatrixConnectionViewController
 		connectionVC.view.translatesAutoresizingMaskIntoConstraints = false
-
+        self.addChild(connectionVC)
 		window.addSubview(connectionVC.view)
 
 		NSLayoutConstraint.activate([
@@ -30,6 +30,8 @@ class MainContainerViewController: UITabBarController, UITabBarControllerDelegat
             connectionVC.view.leftAnchor.constraint(greaterThanOrEqualTo: window.safeAreaLayoutGuide.leftAnchor, constant: 0.0),
             connectionVC.view.bottomAnchor.constraint(lessThanOrEqualTo: window.safeAreaLayoutGuide.bottomAnchor, constant: 0.0)
 			])
+
+        connectionVC.didMove(toParent: self)
 
 		connectionViewController = connectionVC
 	}
