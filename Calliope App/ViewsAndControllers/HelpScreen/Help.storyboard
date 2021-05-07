@@ -1,34 +1,430 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hx0-JF-7yx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="JSJ-uf-MRY">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Roboto-Medium.ttf">
+            <string>Roboto-Medium</string>
+        </array>
+    </customFonts>
     <scenes>
-        <!--Help-->
+        <!--View Controller-->
         <scene sceneID="jRM-RS-Fhn">
             <objects>
                 <viewController id="hx0-JF-7yx" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9l1-IX-6qA">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OtE-MB-eWJ">
+                                <rect key="frame" x="20" y="81" width="374" height="705"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="ofK-ll-D6D">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="387"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="cGi-PQ-aId">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="189"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IXx-uo-5qk">
+                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
+                                                        <color key="backgroundColor" name="calliope-brightturquoise"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="90" id="gyN-W1-dMR"/>
+                                                            <constraint firstAttribute="width" constant="375" id="kr3-t2-faQ"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="21"/>
+                                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                        <state key="normal" title="Weiteres zur Verbindung">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <connections>
+                                                            <segue destination="XU1-hQ-wSQ" kind="show" id="RhM-vS-55m"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="deY-DT-tGn">
+                                                        <rect key="frame" x="0.0" y="99" width="375" height="90"/>
+                                                        <color key="backgroundColor" name="calliope-brightturquoise"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="90" id="K2H-dk-FBx"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="21"/>
+                                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                        <state key="normal" title="Eigene Programme anpassen">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <connections>
+                                                            <segue destination="QvR-vb-RIA" kind="show" id="xLX-xM-jdQ"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="DyD-ai-YUW">
+                                                <rect key="frame" x="0.0" y="198" width="375" height="189"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6DG-KQ-tVe">
+                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
+                                                        <color key="backgroundColor" name="calliope-brightturquoise"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="90" id="Ijb-nK-NOW"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="21"/>
+                                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                        <state key="normal" title="Wissenswertes zu den Editoren">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <connections>
+                                                            <segue destination="gfg-fT-2QD" kind="show" id="Apg-br-Mqb"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E1c-Zm-8fP">
+                                                        <rect key="frame" x="0.0" y="99" width="375" height="90"/>
+                                                        <color key="backgroundColor" name="calliope-brightturquoise"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="90" id="q5Y-D9-Jkc"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="21"/>
+                                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                        <state key="normal" title="Offene Fragen">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <connections>
+                                                            <segue destination="HFk-KT-E1P" kind="show" id="I1y-bP-C8a"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <variation key="heightClass=compact" axis="horizontal"/>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="BnP-TT-fXa"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Help" image="IconHelp" id="xOk-Ya-FCk"/>
+                    <navigationItem key="navigationItem" id="UlJ-yE-vv5"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t1k-Gy-e9s" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="176" y="-5"/>
+            <point key="canvasLocation" x="1085.5072463768117" y="-5.3571428571428568"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="8vR-3P-hAd">
+            <objects>
+                <viewController id="HFk-KT-E1P" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="IMP-Eh-Ese">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="337" translatesAutoresizingMaskIntoConstraints="NO" id="Zij-wf-lu1">
+                                <rect key="frame" x="20" y="114" width="372" height="35"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" text="KONTAKT" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="EHu-P9-HzH">
+                                        <rect key="frame" x="0.0" y="0.0" width="372" height="35"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="35" id="678-gU-rEw"/>
+                                        </constraints>
+                                        <color key="textColor" systemColor="labelColor"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="18"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                            </stackView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="X5D-P4-zin">
+                                <rect key="frame" x="20" y="157" width="372" height="452"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <string key="text">Sollte es Fragen oder Probleme geben, helfen wir gern!
+Wir sind telefonisch oder per Email zu erreichen.
+
+Unter der Telefonnummer:
++49 (0)30 4849 2030 sind wir werktags zwischen 10.00 und 13.00 Uhr erreichbar.
+
+Fragen per Email können an info@calliope.cc geschrieben werden.
+
+Anleitungen, und Unterrichtsmaterialien stehen auf unserer Webseite bereit zum Ausprobieren:
+https://calliope.cc
+
+
+Calliope HQ
+Raumerstraße 11
+10437 Berlin
+</string>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
+                            </textView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="M8v-OC-F52"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="X5D-P4-zin" firstAttribute="top" secondItem="Zij-wf-lu1" secondAttribute="bottom" id="eyd-Lb-jD0"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="YOI-Vo-LaS"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mWI-ub-lF0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1931.8840579710147" y="112.5"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="d4V-r6-Zsy">
+            <objects>
+                <viewController id="gfg-fT-2QD" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="meW-UA-ZrQ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="oZz-gj-rlC">
+                                <rect key="frame" x="20" y="108" width="374" height="705"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" editable="NO" text="EDITOREN" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LPj-BC-LFS">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="42"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="50" id="JCa-S3-hdy"/>
+                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="42" id="YKp-Or-ih6"/>
+                                        </constraints>
+                                        <color key="textColor" systemColor="labelColor"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="18"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ET-0e-h68">
+                                        <rect key="frame" x="0.0" y="42" width="374" height="230"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="150" id="29d-m1-lJo"/>
+                                            <constraint firstAttribute="height" constant="230" id="eBk-pN-guy"/>
+                                        </constraints>
+                                        <string key="text">Wir haben die beiden meistverbreiteten Editoren direkt in der App eingebunden.
+Sollte es einen lokalen Editor oder einen ganz anderen geben, so kann dieser in den Einstellungen zur App hinzugefügt werden. Diese Anpassung kann in der Einstellungen App gefunden werden. 
+Zusätzlich können direkt Programmier-Teile für den Calliope mini Swift Playground kopiert und in die eigene Programmierung eingefügt werden.</string>
+                                        <color key="textColor" systemColor="labelColor"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UeV-Ic-o9V">
+                                        <rect key="frame" x="0.0" y="272" width="374" height="433"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u6I-pn-d4s">
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="433"/>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Y5J-wa-8OJ"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="oZz-gj-rlC" firstAttribute="leading" secondItem="meW-UA-ZrQ" secondAttribute="leadingMargin" id="3kv-04-epI"/>
+                            <constraint firstItem="oZz-gj-rlC" firstAttribute="trailing" secondItem="meW-UA-ZrQ" secondAttribute="trailingMargin" id="97t-Xb-7d2"/>
+                            <constraint firstItem="oZz-gj-rlC" firstAttribute="top" secondItem="Y5J-wa-8OJ" secondAttribute="top" constant="20" id="AKf-J5-R66"/>
+                            <constraint firstItem="oZz-gj-rlC" firstAttribute="bottom" secondItem="Y5J-wa-8OJ" secondAttribute="bottom" id="pZV-cn-OTi"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="8zt-CA-Ms2"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="98o-V9-G1w" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2618.840579710145" y="115.84821428571428"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="Yto-qY-mIN">
+            <objects>
+                <viewController id="XU1-hQ-wSQ" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="2xE-cN-D8E">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KkF-9e-Bxx">
+                                <rect key="frame" x="20" y="108" width="374" height="965"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Bj9-94-VpQ">
+                                        <rect key="frame" x="0.0" y="0.0" width="366" height="892"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </stackView>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="UNTERSTÜTZUNG FÜR DEN EINSATZ MIT BLUETOOTH" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZRH-ht-3Pc">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="104"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="textColor" name="calliope-darkgray"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="18"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KGt-PM-JgX">
+                                        <rect key="frame" x="0.0" y="63" width="374" height="166"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <string key="text">Um die Bluetooth Dienste des Calliope mini mit einem anderen Gerät zu nutzen, muss dieses zunächst mit dem Calliope mini verbunden bzw. gekoppelt werden! Um eine Verbindung zum Senden von Codes an den Calliope mini aus der App herzustellen, müssen die folgenden Schritte ausgeführt werden:</string>
+                                        <color key="textColor" name="calliope-darkgray"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="krallengiff_t1" translatesAutoresizingMaskIntoConstraints="NO" id="Xwb-jd-ycg">
+                                        <rect key="frame" x="0.0" y="237" width="374" height="200"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lJb-h8-Qd5">
+                                        <rect key="frame" x="0.0" y="457" width="374" height="200"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <string key="text">1. Drücke gleichzeitig die Tasten A+B und Reset deines Calliope mini. Lass nach ca. 1 Sekunde Reset los.
+2. Halten - Nachdem du Reset losgelassen hast,
+halte die Tasten A+B weiter gedrückt.
+3. ID Muster - Der Calliope mini zeigt automatisch ein
+Koppeln-Symbol (fünf Balken) auf dem LED-Display.</string>
+                                        <color key="textColor" name="calliope-darkgray"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="krallengiff_t3" translatesAutoresizingMaskIntoConstraints="NO" id="tPs-Rh-6tp">
+                                        <rect key="frame" x="0.0" y="672" width="374" height="200"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="BHp-Bb-uwl"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="KkF-9e-Bxx" firstAttribute="trailing" secondItem="2xE-cN-D8E" secondAttribute="trailingMargin" id="OAM-8D-dPi"/>
+                            <constraint firstItem="KkF-9e-Bxx" firstAttribute="top" secondItem="BHp-Bb-uwl" secondAttribute="top" constant="20" id="Xc3-Dx-5wO"/>
+                            <constraint firstItem="KkF-9e-Bxx" firstAttribute="leading" secondItem="2xE-cN-D8E" secondAttribute="leadingMargin" id="qbe-F6-41R"/>
+                            <constraint firstAttribute="bottom" secondItem="KkF-9e-Bxx" secondAttribute="bottom" constant="-177" id="veg-xq-RWj"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="WEm-pK-tnm"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jws-9O-7yG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1950.7246376811595" y="-540.40178571428567"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="e1Z-o0-y9e">
+            <objects>
+                <viewController id="QvR-vb-RIA" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="pIs-Fx-sIQ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hPj-JS-ZfN">
+                                <rect key="frame" x="0.0" y="88" width="414" height="254"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="TcS-kl-joa">
+                                        <rect key="frame" x="20" y="20" width="374" height="226"/>
+                                        <subviews>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="PROGRAMME UND NAMEN ANPASSEN" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="IKX-h1-At5">
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="CcZ-6i-Ywa"/>
+                                                </constraints>
+                                                <color key="textColor" systemColor="labelColor"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="18"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Button" translatesAutoresizingMaskIntoConstraints="NO" id="AMh-9T-Eqn">
+                                                <rect key="frame" x="0.0" y="40" width="374" height="186"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="100" id="TyV-I7-JL8"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="arV-kL-A9E"/>
+                                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="120" id="cTb-MF-dvu"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="AMh-9T-Eqn" firstAttribute="top" secondItem="IKX-h1-At5" secondAttribute="bottom" id="6Sh-oS-x1b"/>
+                                            <constraint firstItem="AMh-9T-Eqn" firstAttribute="top" secondItem="IKX-h1-At5" secondAttribute="bottom" id="QaN-PE-CVn"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="TcS-kl-joa" firstAttribute="leading" secondItem="hPj-JS-ZfN" secondAttribute="leading" constant="20" id="4Yc-Jk-KuG"/>
+                                    <constraint firstItem="TcS-kl-joa" firstAttribute="bottom" secondItem="hPj-JS-ZfN" secondAttribute="bottomMargin" id="AsX-VL-JZ7"/>
+                                    <constraint firstAttribute="trailing" secondItem="TcS-kl-joa" secondAttribute="trailing" constant="20" id="DLC-R6-v5o"/>
+                                    <constraint firstItem="TcS-kl-joa" firstAttribute="top" secondItem="hPj-JS-ZfN" secondAttribute="top" constant="20" id="Wav-zA-cQL"/>
+                                    <constraint firstAttribute="height" constant="228" id="udV-Jd-KWx"/>
+                                </constraints>
+                            </view>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="g2C-NW-qm4">
+                                <rect key="frame" x="20" y="295" width="374" height="268"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="D1k-lA-Ywd"/>
+                                    <constraint firstAttribute="height" constant="40" id="OKf-O4-Qa0"/>
+                                </constraints>
+                                <string key="text">Um die Namen der Programme anzupassen oder um Daten zu löschen, muss auf das entsprechende Programm länger gedrückt werden. Die jeweils gewünschte Option kann dann aus dem Menü ausgwählt werden.
+Die Anpassungen sind nicht reversibel.
+Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="5fw-zY-C8o"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="hPj-JS-ZfN" firstAttribute="leading" secondItem="pIs-Fx-sIQ" secondAttribute="leading" id="F1N-8b-n7R"/>
+                            <constraint firstItem="hPj-JS-ZfN" firstAttribute="bottom" secondItem="5fw-zY-C8o" secondAttribute="bottom" id="MOj-PX-ELe"/>
+                            <constraint firstAttribute="trailing" secondItem="hPj-JS-ZfN" secondAttribute="trailing" id="dVa-9x-H0p"/>
+                            <constraint firstItem="hPj-JS-ZfN" firstAttribute="top" secondItem="5fw-zY-C8o" secondAttribute="top" id="nHn-eA-APs"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="MJu-VI-FRi"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qBE-2W-cLS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2618.840579710145" y="-540.40178571428567"/>
+        </scene>
+        <!--Help-->
+        <scene sceneID="ghl-IB-trR">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QNs-cz-Thf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="JSJ-uf-MRY" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Help" image="IconHelp" id="xOk-Ya-FCk"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="6IO-Lz-xI9">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="hx0-JF-7yx" kind="relationship" relationship="rootViewController" id="Blp-EW-WEg"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="175.36231884057972" y="-5.3571428571428568"/>
         </scene>
     </scenes>
     <resources>
+        <image name="Button" width="748" height="186"/>
         <image name="IconHelp" width="30" height="33"/>
+        <image name="krallengiff_t1" width="660" height="400"/>
+        <image name="krallengiff_t3" width="660" height="400"/>
+        <namedColor name="calliope-brightturquoise">
+            <color red="0.40799999237060547" green="0.83099997043609619" blue="0.83099997043609619" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="calliope-darkgray">
+            <color red="0.11400000005960464" green="0.11400000005960464" blue="0.10599999874830246" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
