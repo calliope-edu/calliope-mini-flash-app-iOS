@@ -29,7 +29,7 @@ class NewsCollectionViewController: UICollectionViewController, UICollectionView
 			switch result {
 			case .success(let news):
 				self?.news = news
-			case .failure(let error):
+            case .failure(_):
 				self?.news = NewsManager.getDefaultNews()
 				//TODO: show offline status or restart news discovery
 				break

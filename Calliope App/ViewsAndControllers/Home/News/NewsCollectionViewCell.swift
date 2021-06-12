@@ -20,21 +20,27 @@ class NewsCollectionViewCell: UICollectionViewCell {
 
 	private func loadNews() {
 		DispatchQueue.main.async {
+            self.newsTitle.text = nil
+            self.backgroundColor = UIColor.white
 			UIView.animate(withDuration: 0.2) {
 				self.newsTitle.text = self.news?.text
                 self.newsTitle.textColor = self.news?.textcolor != nil ? UIColor(hex: self.news!.textcolor!) : UIColor.white
 				self.backgroundColor = self.news?.color != nil ? UIColor(hex: self.news!.color!) : UIColor.black
 			}
 		}
+        DispatchQueue.main.async {
+            self.newsImageView.image = nil
+        }
 		news?.loadImage({ [weak self] result in
             switch result {
             case .success(let image):
                 DispatchQueue.main.async {
-                    UIView.animate(withDuration: 0.2) {
-                        self?.newsImageView.image = image
+                    guard let self = self else { return }
+                    UIView.transition(with: self.newsImageView, duration: 0.2, options: .transitionCrossDissolve) {
+                        self.newsImageView.image = image
                     }
                 }
-            case .failure(let error):
+            case .failure(_):
                 //TODO: handle error
                 break
             }
