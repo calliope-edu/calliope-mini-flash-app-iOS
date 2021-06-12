@@ -27,7 +27,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="800" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Bj9-94-VpQ">
-                                        <rect key="frame" x="117" y="10" width="600" height="1109.5"/>
+                                        <rect key="frame" x="117" y="10" width="600" height="1113"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="259" horizontalCompressionResistancePriority="759" verticalCompressionResistancePriority="759" scrollEnabled="NO" editable="NO" text="UNTERSTÜTZUNG FÜR DEN EINSATZ MIT BLUETOOTH" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZRH-ht-3Pc">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="37.5"/>
@@ -36,20 +36,20 @@
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KGt-PM-JgX">
-                                                <rect key="frame" x="0.0" y="42.5" width="600" height="116"/>
+                                                <rect key="frame" x="0.0" y="42.5" width="600" height="117.5"/>
                                                 <string key="text">Um die Bluetooth Dienste des Calliope mini mit einem anderen Gerät zu nutzen, muss dieses zunächst mit dem Calliope mini verbunden bzw. gekoppelt werden! Um eine Verbindung zum Senden von Codes an den Calliope mini aus der App herzustellen, müssen die folgenden Schritte ausgeführt werden:</string>
                                                 <color key="textColor" name="calliope-darkgray"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="257" verticalHuggingPriority="257" horizontalCompressionResistancePriority="757" verticalCompressionResistancePriority="757" image="krallengiff_t1" translatesAutoresizingMaskIntoConstraints="NO" id="sGr-Ig-aMm">
-                                                <rect key="frame" x="0.0" y="163.5" width="600" height="400"/>
+                                                <rect key="frame" x="0.0" y="165" width="600" height="400"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="sGr-Ig-aMm" secondAttribute="height" multiplier="3:2" id="QTP-yE-Zja"/>
                                                 </constraints>
                                             </imageView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="256" verticalHuggingPriority="256" horizontalCompressionResistancePriority="756" verticalCompressionResistancePriority="756" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lJb-h8-Qd5">
-                                                <rect key="frame" x="0.0" y="568.5" width="600" height="136"/>
+                                                <rect key="frame" x="0.0" y="570" width="600" height="138"/>
                                                 <string key="text">1. Drücke gleichzeitig die Tasten A+B und Reset deines Calliope mini. Lass nach ca. 1 Sekunde Reset los.
 2. Halten - Nachdem du Reset losgelassen hast,
 halte die Tasten A+B weiter gedrückt.
@@ -60,7 +60,7 @@ Koppeln-Symbol (fünf Balken) auf dem LED-Display.</string>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="krallengiff_t3" translatesAutoresizingMaskIntoConstraints="NO" id="tPs-Rh-6tp">
-                                                <rect key="frame" x="0.0" y="709.5" width="600" height="400"/>
+                                                <rect key="frame" x="0.0" y="713" width="600" height="400"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="tPs-Rh-6tp" secondAttribute="height" multiplier="3:2" id="Kzh-bT-06r"/>
                                                 </constraints>
@@ -129,7 +129,7 @@ Koppeln-Symbol (fünf Balken) auf dem LED-Display.</string>
                                 <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="800" verticalCompressionResistancePriority="800" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Sqe-8X-loV">
-                                        <rect key="frame" x="117" y="10" width="600" height="158.5"/>
+                                        <rect key="frame" x="117" y="10" width="600" height="160"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="259" horizontalCompressionResistancePriority="759" verticalCompressionResistancePriority="759" scrollEnabled="NO" editable="NO" text="PROGRAMME UND NAMEN ANPASSEN" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YRS-Qp-QfU">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="37.5"/>
@@ -138,7 +138,7 @@ Koppeln-Symbol (fünf Balken) auf dem LED-Display.</string>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bvZ-tc-Xz5">
-                                                <rect key="frame" x="0.0" y="42.5" width="600" height="116"/>
+                                                <rect key="frame" x="0.0" y="42.5" width="600" height="117.5"/>
                                                 <string key="text">Um die Namen der Programme anzupassen oder um Daten zu löschen, muss auf das entsprechende Programm länger gedrückt werden. Die jeweils gewünschte Option kann dann aus dem Menü ausgwählt werden.
 Die Anpassungen sind nicht reversibel.
 Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
@@ -191,7 +191,7 @@ Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
                                 <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="800" verticalCompressionResistancePriority="800" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="z6O-aA-kQ4">
-                                        <rect key="frame" x="117" y="10" width="600" height="198"/>
+                                        <rect key="frame" x="117" y="10" width="600" height="200.5"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="259" horizontalCompressionResistancePriority="759" verticalCompressionResistancePriority="759" scrollEnabled="NO" editable="NO" text="EDITOREN" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bLY-5X-iTg">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="37.5"/>
@@ -200,7 +200,7 @@ Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hho-IW-sbR">
-                                                <rect key="frame" x="0.0" y="42.5" width="600" height="155.5"/>
+                                                <rect key="frame" x="0.0" y="42.5" width="600" height="158"/>
                                                 <string key="text">Wir haben die beiden meistverbreiteten Editoren direkt in der App eingebunden.
 Sollte es einen lokalen Editor oder einen ganz anderen geben, so kann dieser in den Einstellungen zur App hinzugefügt werden. Diese Anpassung kann in der Einstellungen App gefunden werden. 
 Zusätzlich können direkt Programmier-Teile für den Calliope mini Swift Playground kopiert und in die eigene Programmierung eingefügt werden.</string>
