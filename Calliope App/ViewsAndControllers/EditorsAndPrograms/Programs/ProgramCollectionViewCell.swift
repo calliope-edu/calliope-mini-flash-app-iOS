@@ -10,18 +10,13 @@ import UIKit
 protocol ProgramCellDelegate {
 	func share(cell: ProgramCollectionViewCell)
 	func renameFailed(_ cell: ProgramCollectionViewCell, to newName: String)
-	func programCellSizeDidChange(_ cell: ProgramCollectionViewCell)
 	func uploadProgram(of cell: ProgramCollectionViewCell)
 	func deleteProgram(of cell: ProgramCollectionViewCell)
 }
 
-class ProgramCollectionViewCell: UICollectionViewCell, UITextViewDelegate {
+class ProgramCollectionViewCell: AutoHeightCollectionViewCell {
 	@IBOutlet weak var image: UIImageView?
-	@IBOutlet weak var descriptionText: UITextView? {
-		didSet {
-			descriptionText?.delegate = self
-		}
-	}
+	@IBOutlet weak var descriptionText: UITextView?
 	@IBOutlet weak var name: UILabel!
     @IBOutlet weak var dateLabel: UILabel?
 	@IBOutlet weak var nameEditField: UITextField!
@@ -112,7 +107,6 @@ class ProgramCollectionViewCell: UICollectionViewCell, UITextViewDelegate {
 
 	@IBAction func editButtonClicked(_ sender: Any) {
 		editing = !editing
-        delegate.programCellSizeDidChange(self)
 	}
 
 	@IBAction func shareButtonClicked(_ sender: Any) {
@@ -142,11 +136,5 @@ class ProgramCollectionViewCell: UICollectionViewCell, UITextViewDelegate {
     override var canBecomeFirstResponder: Bool {
         return true
     }
-
-	// MARK: UITextViewDelegate
-
-	func textViewDidChange(_ textView: UITextView) {
-		delegate.programCellSizeDidChange(self)
-	}
 
 }

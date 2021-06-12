@@ -9,7 +9,7 @@
 import UIKit
 import DeepDiff
 
-class ProgramsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, ProgramCellDelegate {
+class ProgramsCollectionViewController: UICollectionViewController, ProgramCellDelegate {
 
     private let reuseIdentifierProgram = "uploadProgramCell"
 
@@ -17,14 +17,11 @@ class ProgramsCollectionViewController: UICollectionViewController, UICollection
         do { return try HexFileManager.stored() }
         catch { fatalError("could not load files \(error)") }
     }()
-    
-    private var viewSize: CGSize?
 
     private var programSubscription: NSObjectProtocol!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        (collectionViewLayout as! UICollectionViewFlowLayout).estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         programSubscription = NotificationCenter.default.addObserver(
             forName: NotificationConstants.hexFileChanged, object: nil, queue: nil,
             using: { [weak self] (_) in
@@ -32,38 +29,6 @@ class ProgramsCollectionViewController: UICollectionViewController, UICollection
                     self?.animateFileChange()
                 }
         })
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        viewSize = collectionView.frame.size
-        //collectionView.performBatchUpdates({}, completion: nil)
-    }
-
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        
-        viewSize = size
-        
-        //recalculateSizeOfAllCells(size) //commented out for uploadProgramCell only! comment in when other cell is used
-        
-        coordinator.animate(alongsideTransition: {_ in
-            self.collectionView.performBatchUpdates(nil, completion: nil)
-        }, completion: nil)
-    }
-    
-    private func recalculateSizeOfAllCells(_ size: CGSize) {
-        let cells = self.collectionView.visibleCells.compactMap { $0 as? ProgramCollectionViewCell }
-        for cell in cells {
-            self.recalculateProgramCellSize(size, cell)
-        }
-    }
-    
-    private func recalculateProgramCellSize(_ size: CGSize, _ cell: ProgramCollectionViewCell) {
-        let width = size.width - spacing
-        let maxNumCells = ceil(width / programWidthThreshold)
-        let calculatedWidth = width / maxNumCells - spacing
-        cell.widthConstraint.constant = calculatedWidth
     }
 
     // MARK: UICollectionViewDataSource
@@ -82,19 +47,12 @@ class ProgramsCollectionViewController: UICollectionViewController, UICollection
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        //for uploadProgramCell only! delete method when other cell is used
-        return CGSize(width: collectionView.frame.size.width - 20, height: 70)
-    }
-    
     private func createProgramCell(_ collectionView: UICollectionView, _ indexPath: IndexPath) -> UICollectionViewCell {
         let cell: ProgramCollectionViewCell
         
         //TODO: Configure the cell
         cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierProgram, for: indexPath) as! ProgramCollectionViewCell
-        
-        recalculateProgramCellSize(viewSize ?? collectionView.frame.size, cell)
-        
+
         cell.program = hexFiles[indexPath.row]
         cell.delegate = self
         
@@ -169,11 +127,8 @@ class ProgramsCollectionViewController: UICollectionViewController, UICollection
 
     // MARK: UICollectionViewDelegateFlowLayout
 
-    let programWidthThreshold: CGFloat = 500
-    let defaultProgramHeight: CGFloat = 100
-    let spacing: CGFloat = 10
-
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        let spacing = (collectionViewLayout as! ProgramsCollectionViewFlowLayout).cellSpacing
         return UIEdgeInsets(top: 0, left: spacing, bottom: 0, right: spacing)
     }
 
@@ -201,10 +156,6 @@ class ProgramsCollectionViewController: UICollectionViewController, UICollection
         alertViewController.popoverPresentationController?.sourceRect = cell.name.frame
 
         self.present(alertViewController, animated: true, completion: nil)
-    }
-
-    func programCellSizeDidChange(_ cell: ProgramCollectionViewCell) {
-        collectionView.performBatchUpdates({}, completion: nil)
     }
 
     func uploadProgram(of cell: ProgramCollectionViewCell) {

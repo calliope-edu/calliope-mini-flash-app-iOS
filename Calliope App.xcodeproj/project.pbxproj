@@ -12,6 +12,9 @@
 		2F08A0E1234AC7400088A8D6 /* EditorAndProgramsContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F08A0E0234AC7400088A8D6 /* EditorAndProgramsContainerViewController.swift */; };
 		2F08A0E3234AD4320088A8D6 /* EditorsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F08A0E2234AD4320088A8D6 /* EditorsCollectionViewController.swift */; };
 		2F08A0E5234B11890088A8D6 /* ProgramsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F08A0E4234B11890088A8D6 /* ProgramsCollectionViewController.swift */; };
+		2F1BD9952674D48C006A47F2 /* AutoHeightCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1BD9942674D48C006A47F2 /* AutoHeightCollectionViewFlowLayout.swift */; };
+		2F1BD9972674D804006A47F2 /* AutoHeightCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1BD9962674D804006A47F2 /* AutoHeightCollectionViewCell.swift */; };
+		2F1BD99A2674E378006A47F2 /* ProgramsCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1BD9992674E378006A47F2 /* ProgramsCollectionViewFlowLayout.swift */; };
 		2F2B443623559A95008B957E /* TutorialPageBattery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2B443523559A95008B957E /* TutorialPageBattery.swift */; };
 		2F2B44382355A018008B957E /* PageIndicatorContainingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2B44372355A018008B957E /* PageIndicatorContainingViewController.swift */; };
 		2F2B808D259F80A400A7CCF7 /* PlaygroundSnippets.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F9E4048259DFAB9002FFE0B /* PlaygroundSnippets.storyboard */; };
@@ -120,6 +123,9 @@
 		2F08A0E0234AC7400088A8D6 /* EditorAndProgramsContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorAndProgramsContainerViewController.swift; sourceTree = "<group>"; };
 		2F08A0E2234AD4320088A8D6 /* EditorsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorsCollectionViewController.swift; sourceTree = "<group>"; };
 		2F08A0E4234B11890088A8D6 /* ProgramsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramsCollectionViewController.swift; sourceTree = "<group>"; };
+		2F1BD9942674D48C006A47F2 /* AutoHeightCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoHeightCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		2F1BD9962674D804006A47F2 /* AutoHeightCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoHeightCollectionViewCell.swift; sourceTree = "<group>"; };
+		2F1BD9992674E378006A47F2 /* ProgramsCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramsCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		2F2B443523559A95008B957E /* TutorialPageBattery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPageBattery.swift; sourceTree = "<group>"; };
 		2F2B44372355A018008B957E /* PageIndicatorContainingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageIndicatorContainingViewController.swift; sourceTree = "<group>"; };
 		2F2B809925A0E01500A7CCF7 /* CodeSnippets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeSnippets.swift; sourceTree = "<group>"; };
@@ -257,6 +263,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		2F1BD9982674D910006A47F2 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				2F1BD9942674D48C006A47F2 /* AutoHeightCollectionViewFlowLayout.swift */,
+				2F1BD9962674D804006A47F2 /* AutoHeightCollectionViewCell.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		2F2B80A325A1273300A7CCF7 /* Playground */ = {
 			isa = PBXGroup;
 			children = (
@@ -349,6 +364,7 @@
 		2F61454F22BF761F001C2734 /* ViewsAndControllers */ = {
 			isa = PBXGroup;
 			children = (
+				2F1BD9982674D910006A47F2 /* Common */,
 				2F61452822BF761F001C2734 /* CalliopeApp.storyboard */,
 				2F61455A22BF761F001C2734 /* MainContainerViewController.swift */,
 				2FAA2D0A22DB3CCB00BC1A5F /* CarRemote */,
@@ -427,6 +443,7 @@
 			children = (
 				2F08A0E4234B11890088A8D6 /* ProgramsCollectionViewController.swift */,
 				2F61455F22BF761F001C2734 /* ProgramCollectionViewCell.swift */,
+				2F1BD9992674E378006A47F2 /* ProgramsCollectionViewFlowLayout.swift */,
 			);
 			path = Programs;
 			sourceTree = "<group>";
@@ -721,6 +738,7 @@
 				2F61459422BF761F001C2734 /* EditorViewController.swift in Sources */,
 				2F61458B22BF761F001C2734 /* MatrixView.swift in Sources */,
 				2F2B80A025A1100800A7CCF7 /* PlaygroundCodeSnippetViewController.swift in Sources */,
+				2F1BD99A2674E378006A47F2 /* ProgramsCollectionViewFlowLayout.swift in Sources */,
 				2F08A0E1234AC7400088A8D6 /* EditorAndProgramsContainerViewController.swift in Sources */,
 				2F2B809D25A0F25700A7CCF7 /* PlaygroundSnippetTableViewCell.swift in Sources */,
 				2F9B5CAD23571E7100728546 /* OnboardingCollectionViewCell.swift in Sources */,
@@ -735,6 +753,7 @@
 				2F61457C22BF761F001C2734 /* ExtColor.swift in Sources */,
 				2F61459922BF761F001C2734 /* Hex.swift in Sources */,
 				2F763FE625A607A400C2029D /* SwiftCodeSnippetHighlighter.swift in Sources */,
+				2F1BD9952674D48C006A47F2 /* AutoHeightCollectionViewFlowLayout.swift in Sources */,
 				2F61458E22BF761F001C2734 /* Matrix.swift in Sources */,
 				2F61457A22BF761F001C2734 /* ExtURL.swift in Sources */,
 				2F57C3BC2395B531008B0D69 /* MenuItemsCollectionViewController.swift in Sources */,
@@ -751,6 +770,7 @@
 				2F61459622BF761F001C2734 /* LocalEditorViewController.swift in Sources */,
 				2F00EABA22DA3D11000B5FDE /* OnboardingViewController.swift in Sources */,
 				2FFE865E22DB3DDF00728E7C /* TutorialPageConnect.swift in Sources */,
+				2F1BD9972674D804006A47F2 /* AutoHeightCollectionViewCell.swift in Sources */,
 				2F57C3B62394F935008B0D69 /* BlinkingHeartProgram.swift in Sources */,
 				2F61457322BF761F001C2734 /* BluetoothConstants.swift in Sources */,
 				2F6145A222C7B3C2001C2734 /* NewsCollectionViewController.swift in Sources */,
