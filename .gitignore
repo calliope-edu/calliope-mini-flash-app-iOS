@@ -4,5 +4,5 @@ DerivedData/
 *.ipa
 *.dSYM.zip
 *.dSYM
-Pods/
+**/.DS_STORE
 */xcuserdata

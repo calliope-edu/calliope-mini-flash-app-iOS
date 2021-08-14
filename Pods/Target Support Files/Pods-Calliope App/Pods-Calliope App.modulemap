@@ -1,0 +1,6 @@
+module Pods_Calliope_App {
+  umbrella header "Pods-Calliope App-umbrella.h"
+
+  export *
+  module * { export * }
+}
