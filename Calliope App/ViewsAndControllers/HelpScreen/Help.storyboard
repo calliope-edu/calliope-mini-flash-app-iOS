@@ -172,7 +172,7 @@ Koppeln-Symbol (fünf Balken) auf dem LED-Display.</string>
                                 <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="800" verticalCompressionResistancePriority="800" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Sqe-8X-loV">
-                                        <rect key="frame" x="117" y="10" width="600" height="158.5"/>
+                                        <rect key="frame" x="117" y="10" width="600" height="719.5"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="259" horizontalCompressionResistancePriority="759" verticalCompressionResistancePriority="759" scrollEnabled="NO" editable="NO" text="PROGRAMME UND NAMEN ANPASSEN" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YRS-Qp-QfU">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="37.5"/>
@@ -189,9 +189,29 @@ Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
                                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="257" verticalHuggingPriority="257" horizontalCompressionResistancePriority="757" verticalCompressionResistancePriority="757" image="krallengiff_t1" translatesAutoresizingMaskIntoConstraints="NO" id="JEH-pA-SEj">
+                                                <rect key="frame" x="0.0" y="163.5" width="600" height="400"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="JEH-pA-SEj" secondAttribute="height" multiplier="3:2" id="SKJ-er-Mlm"/>
+                                                </constraints>
+                                            </imageView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W2T-43-YeH">
+                                                <rect key="frame" x="0.0" y="568.5" width="600" height="116"/>
+                                                <string key="text">Um die Namen der Programme anzupassen oder um Daten zu löschen, muss auf das entsprechende Programm länger gedrückt werden. Die jeweils gewünschte Option kann dann aus dem Menü ausgwählt werden.
+Die Anpassungen sind nicht reversibel.
+Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
+                                                <color key="textColor" name="calliope-darkgray"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s59-eU-gGv">
+                                                <rect key="frame" x="0.0" y="689.5" width="600" height="30"/>
+                                                <state key="normal" title="Button"/>
+                                            </button>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="600" id="NeH-mA-USa"/>
+                                            <constraint firstItem="JEH-pA-SEj" firstAttribute="width" secondItem="JEH-pA-SEj" secondAttribute="height" multiplier="3:2" id="YqC-yk-qzt"/>
                                         </constraints>
                                     </stackView>
                                 </subviews>
