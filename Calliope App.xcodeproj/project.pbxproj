@@ -17,7 +17,6 @@
 		2F1BD99A2674E378006A47F2 /* ProgramsCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1BD9992674E378006A47F2 /* ProgramsCollectionViewFlowLayout.swift */; };
 		2F2B443623559A95008B957E /* TutorialPageBattery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2B443523559A95008B957E /* TutorialPageBattery.swift */; };
 		2F2B44382355A018008B957E /* PageIndicatorContainingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2B44372355A018008B957E /* PageIndicatorContainingViewController.swift */; };
-		2F2B808D259F80A400A7CCF7 /* PlaygroundSnippets.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F9E4048259DFAB9002FFE0B /* PlaygroundSnippets.storyboard */; };
 		2F2B809A25A0E01500A7CCF7 /* CodeSnippets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2B809925A0E01500A7CCF7 /* CodeSnippets.swift */; };
 		2F2B809D25A0F25700A7CCF7 /* PlaygroundSnippetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2B809C25A0F25700A7CCF7 /* PlaygroundSnippetTableViewCell.swift */; };
 		2F2B80A025A1100800A7CCF7 /* PlaygroundCodeSnippetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2B809F25A1100800A7CCF7 /* PlaygroundCodeSnippetViewController.swift */; };
@@ -112,6 +111,7 @@
 		2FAA2D0422DB3BBB00BC1A5F /* OnboardingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAA2D0322DB3BBB00BC1A5F /* OnboardingPage.swift */; };
 		2FC2A12922C8FA6F00675C2F /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC2A12822C8FA6F00675C2F /* News.swift */; };
 		2FC2A12B22C962D100675C2F /* NewsDetailWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC2A12A22C962D100675C2F /* NewsDetailWebViewController.swift */; };
+		2FCB70E426C7C00E00DF79B7 /* PlaygroundSnippets.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FCB70E326C7C00E00DF79B7 /* PlaygroundSnippets.storyboard */; };
 		2FFE865E22DB3DDF00728E7C /* TutorialPageConnect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE865D22DB3DDF00728E7C /* TutorialPageConnect.swift */; };
 		2FFE866022DB6A5600728E7C /* TutorialPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE865F22DB6A5600728E7C /* TutorialPageViewController.swift */; };
 		CE73348EEAB4EC5248A0716C /* libPods-Calliope App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D57D51A736B908EDE6355034 /* libPods-Calliope App.a */; };
@@ -230,12 +230,12 @@
 		2F9B2A14233F045D009496DD /* RobotoMono-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoMono-Thin.ttf"; sourceTree = "<group>"; };
 		2F9B5CAA2357127A00728546 /* TutorialPageMiniDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPageMiniDemo.swift; sourceTree = "<group>"; };
 		2F9B5CAC23571E7100728546 /* OnboardingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewCell.swift; sourceTree = "<group>"; };
-		2F9E4048259DFAB9002FFE0B /* PlaygroundSnippets.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = PlaygroundSnippets.storyboard; path = "/Users/tassilokarge/Calliope/calliope-mini-flash-app/Calliope App/ViewsAndControllers/EditorsAndPrograms/Editors/PlaygroundSnippets.storyboard"; sourceTree = "<absolute>"; };
 		2F9E4049259DFB00002FFE0B /* PlaygroundSnippetTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundSnippetTableViewController.swift; sourceTree = "<group>"; };
 		2FA10F382336FC6E0058E2F6 /* News.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = News.storyboard; sourceTree = "<group>"; };
 		2FAA2D0322DB3BBB00BC1A5F /* OnboardingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPage.swift; sourceTree = "<group>"; };
 		2FC2A12822C8FA6F00675C2F /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
 		2FC2A12A22C962D100675C2F /* NewsDetailWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDetailWebViewController.swift; sourceTree = "<group>"; };
+		2FCB70E326C7C00E00DF79B7 /* PlaygroundSnippets.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PlaygroundSnippets.storyboard; sourceTree = "<group>"; };
 		2FFE865D22DB3DDF00728E7C /* TutorialPageConnect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPageConnect.swift; sourceTree = "<group>"; };
 		2FFE865F22DB6A5600728E7C /* TutorialPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPageViewController.swift; sourceTree = "<group>"; };
 		3849EA7340C0FAB5DB1A4000 /* Pods-Calliope App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.debug.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.debug.xcconfig"; sourceTree = "<group>"; };
@@ -275,11 +275,11 @@
 		2F2B80A325A1273300A7CCF7 /* Playground */ = {
 			isa = PBXGroup;
 			children = (
-				2F9E4048259DFAB9002FFE0B /* PlaygroundSnippets.storyboard */,
 				2F9E4049259DFB00002FFE0B /* PlaygroundSnippetTableViewController.swift */,
 				2F2B809C25A0F25700A7CCF7 /* PlaygroundSnippetTableViewCell.swift */,
 				2F2B809F25A1100800A7CCF7 /* PlaygroundCodeSnippetViewController.swift */,
 				2F763FE525A607A400C2029D /* SwiftCodeSnippetHighlighter.swift */,
+				2FCB70E326C7C00E00DF79B7 /* PlaygroundSnippets.storyboard */,
 			);
 			path = Playground;
 			sourceTree = "<group>";
@@ -632,7 +632,6 @@
 				2F9B2A01233F0456009496DD /* Roboto-BoldItalic.ttf in Resources */,
 				2F9B2A18233F045D009496DD /* RobotoMono-BoldItalic.ttf in Resources */,
 				2F9B29FC233F0456009496DD /* Roboto-Medium.ttf in Resources */,
-				2F2B808D259F80A400A7CCF7 /* PlaygroundSnippets.storyboard in Resources */,
 				2F9B2A06233F0456009496DD /* Roboto-Bold.ttf in Resources */,
 				2F6C1B98258FC90300F4B5AC /* Onboarding.storyboard in Resources */,
 				2F61451C22BF75DF001C2734 /* LaunchScreen.storyboard in Resources */,
@@ -647,6 +646,7 @@
 				2F4B8D8425978D950026B480 /* EditorAndPrograms.storyboard in Resources */,
 				2F9B2A19233F045D009496DD /* RobotoMono-ThinItalic.ttf in Resources */,
 				2FA10F392336FC6E0058E2F6 /* News.storyboard in Resources */,
+				2FCB70E426C7C00E00DF79B7 /* PlaygroundSnippets.storyboard in Resources */,
 				2F9B2A00233F0456009496DD /* Roboto-ThinItalic.ttf in Resources */,
 				2F9B2A1A233F045D009496DD /* RobotoMono-Light.ttf in Resources */,
 				2F61456C22BF761F001C2734 /* CarRemote.storyboard in Resources */,
