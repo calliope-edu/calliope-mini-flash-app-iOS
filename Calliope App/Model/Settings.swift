@@ -34,7 +34,7 @@ public struct Settings {
     static var defaultMakecodeUrl = "https://makecode.calliope.cc"
     static var defaultHexFileUrl = "http://calliope.cc/downloads/calliope-demo.hex"
     static var defaultBlinkingHeartUrl = "http://calliope.cc/downloads/blinkendes_herz_calliope_mini.hex"
-    static var defaultPlaygroundTemplateUrl = "https://calliope.cc/ble/playgroundSnippets.json"
+    static var defaultPlaygroundTemplateUrl = "https://calliope.cc/forumassets/snippets.json"
 
 	static func registerDefaults() {
 		var defaultSettings: [String: Any] = [:]

@@ -36,7 +36,7 @@
 			<key>Key</key>
 			<string>playgroundTemplateUrlPreference</string>
 			<key>DefaultValue</key>
-			<string>https://calliope.cc/ble/playgroundSnippets.json</string>
+			<string>https://calliope.cc/forumassets/snippets.json</string>
 			<key>KeyboardType</key>
 			<string>URL</string>
 			<key>AutocapitalizationType</key>
