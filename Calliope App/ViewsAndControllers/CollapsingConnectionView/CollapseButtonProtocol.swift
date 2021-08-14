@@ -12,6 +12,6 @@ enum ExpansionState: Int {
 	case closed
 }
 
-protocol CollapseButtonProtocol: class {
+protocol CollapseButtonProtocol: AnyObject {
 	var expansionState: ExpansionState { get set }
 }

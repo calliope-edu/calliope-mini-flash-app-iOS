@@ -324,7 +324,7 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 	}
 
     func peripheral(_ peripheral: CBPeripheral, didModifyServices invalidatedServices: [CBService]) {
-        LogNotify.log("Calliope \(peripheral.name) invalidated services \(invalidatedServices). Re-evaluate mode.")
+        LogNotify.log("Calliope \(peripheral.name ?? "[no name]") invalidated services \(invalidatedServices). Re-evaluate mode.")
         evaluateMode()
     }
 

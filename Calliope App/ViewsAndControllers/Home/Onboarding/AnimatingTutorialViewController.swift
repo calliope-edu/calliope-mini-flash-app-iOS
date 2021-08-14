@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol AnimatingTutorialViewController: AnyObject, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+protocol AnimatingTutorialViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     var collectionView: UICollectionView? { get }
     

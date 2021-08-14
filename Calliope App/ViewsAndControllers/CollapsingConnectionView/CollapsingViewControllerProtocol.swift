@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol CollapsingViewControllerProtocol: class {
+protocol CollapsingViewControllerProtocol: AnyObject {
 
 	var view: UIView! { get }
 
