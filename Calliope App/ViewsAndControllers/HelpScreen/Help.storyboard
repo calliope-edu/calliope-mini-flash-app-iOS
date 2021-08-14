@@ -18,7 +18,7 @@
         <!--Verbindung-->
         <scene sceneID="Yto-qY-mIN">
             <objects>
-                <viewController title="Verbindung" id="XU1-hQ-wSQ" sceneMemberID="viewController">
+                <viewController title="Verbindung" id="XU1-hQ-wSQ" customClass="HelpContentViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2xE-cN-D8E">
                         <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -27,7 +27,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="800" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Bj9-94-VpQ">
-                                        <rect key="frame" x="117" y="10" width="600" height="1113"/>
+                                        <rect key="frame" x="117" y="10" width="600" height="1144.5"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="259" horizontalCompressionResistancePriority="759" verticalCompressionResistancePriority="759" scrollEnabled="NO" editable="NO" text="UNTERSTÜTZUNG FÜR DEN EINSATZ MIT BLUETOOTH" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZRH-ht-3Pc">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="37.5"/>
@@ -36,35 +36,43 @@
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KGt-PM-JgX">
-                                                <rect key="frame" x="0.0" y="42.5" width="600" height="117.5"/>
+                                                <rect key="frame" x="0.0" y="42.5" width="600" height="116"/>
                                                 <string key="text">Um die Bluetooth Dienste des Calliope mini mit einem anderen Gerät zu nutzen, muss dieses zunächst mit dem Calliope mini verbunden bzw. gekoppelt werden! Um eine Verbindung zum Senden von Codes an den Calliope mini aus der App herzustellen, müssen die folgenden Schritte ausgeführt werden:</string>
                                                 <color key="textColor" name="calliope-darkgray"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="257" verticalHuggingPriority="257" horizontalCompressionResistancePriority="757" verticalCompressionResistancePriority="757" image="krallengiff_t1" translatesAutoresizingMaskIntoConstraints="NO" id="sGr-Ig-aMm">
-                                                <rect key="frame" x="0.0" y="165" width="600" height="400"/>
+                                                <rect key="frame" x="0.0" y="163.5" width="600" height="400"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="sGr-Ig-aMm" secondAttribute="height" multiplier="3:2" id="QTP-yE-Zja"/>
                                                 </constraints>
                                             </imageView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="256" verticalHuggingPriority="256" horizontalCompressionResistancePriority="756" verticalCompressionResistancePriority="756" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lJb-h8-Qd5">
-                                                <rect key="frame" x="0.0" y="570" width="600" height="138"/>
+                                                <rect key="frame" x="0.0" y="568.5" width="600" height="136"/>
                                                 <string key="text">1. Drücke gleichzeitig die Tasten A+B und Reset deines Calliope mini. Lass nach ca. 1 Sekunde Reset los.
-2. Halten - Nachdem du Reset losgelassen hast,
+2. Halten - Nachdem du Reset losgelassen hast, www.calliope.cc
 halte die Tasten A+B weiter gedrückt.
 3. ID Muster - Der Calliope mini zeigt automatisch ein
 Koppeln-Symbol (fünf Balken) auf dem LED-Display.</string>
                                                 <color key="textColor" name="calliope-darkgray"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
                                             </textView>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="krallengiff_t3" translatesAutoresizingMaskIntoConstraints="NO" id="tPs-Rh-6tp">
-                                                <rect key="frame" x="0.0" y="713" width="600" height="400"/>
+                                                <rect key="frame" x="0.0" y="709.5" width="600" height="400"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="tPs-Rh-6tp" secondAttribute="height" multiplier="3:2" id="Kzh-bT-06r"/>
                                                 </constraints>
                                             </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DMN-vs-YaT">
+                                                <rect key="frame" x="0.0" y="1114.5" width="600" height="30"/>
+                                                <state key="normal" title="Button"/>
+                                                <connections>
+                                                    <segue destination="cWl-mP-Xkh" kind="show" identifier="moreConnect" id="ftY-XM-sUL"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="600" id="ieU-nv-jwl"/>
@@ -92,7 +100,7 @@ Koppeln-Symbol (fünf Balken) auf dem LED-Display.</string>
                             <constraint firstItem="KaZ-YD-HnJ" firstAttribute="top" secondItem="2xE-cN-D8E" secondAttribute="top" id="p2w-cr-jmZ"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="WEm-pK-tnm"/>
+                    <navigationItem key="navigationItem" title="Connections" id="WEm-pK-tnm"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jws-9O-7yG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -117,6 +125,41 @@ Koppeln-Symbol (fünf Balken) auf dem LED-Display.</string>
             </objects>
             <point key="canvasLocation" x="175.36231884057972" y="-5.3571428571428568"/>
         </scene>
+        <!--Help Web View Controller-->
+        <scene sceneID="W92-Wk-9yI">
+            <objects>
+                <viewController id="cWl-mP-Xkh" customClass="HelpWebViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zw9-ke-GHd">
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XOy-8x-rMc">
+                                <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="UPt-sZ-hWE"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="XOy-8x-rMc" secondAttribute="bottom" id="6ZQ-g9-EBQ"/>
+                            <constraint firstAttribute="trailing" secondItem="XOy-8x-rMc" secondAttribute="trailing" id="Aqc-st-RWD"/>
+                            <constraint firstItem="XOy-8x-rMc" firstAttribute="leading" secondItem="zw9-ke-GHd" secondAttribute="leading" id="WJP-2u-Ez2"/>
+                            <constraint firstItem="XOy-8x-rMc" firstAttribute="top" secondItem="zw9-ke-GHd" secondAttribute="top" id="z9R-jy-s8p"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="YWK-uU-cGH"/>
+                    <connections>
+                        <outlet property="webView" destination="XOy-8x-rMc" id="ux0-zR-Jov"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FqK-fk-6dz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5308" y="-627"/>
+        </scene>
         <!--Programme-->
         <scene sceneID="Aps-e4-lgz">
             <objects>
@@ -129,7 +172,7 @@ Koppeln-Symbol (fünf Balken) auf dem LED-Display.</string>
                                 <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="800" verticalCompressionResistancePriority="800" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Sqe-8X-loV">
-                                        <rect key="frame" x="117" y="10" width="600" height="160"/>
+                                        <rect key="frame" x="117" y="10" width="600" height="158.5"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="259" horizontalCompressionResistancePriority="759" verticalCompressionResistancePriority="759" scrollEnabled="NO" editable="NO" text="PROGRAMME UND NAMEN ANPASSEN" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YRS-Qp-QfU">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="37.5"/>
@@ -138,7 +181,7 @@ Koppeln-Symbol (fünf Balken) auf dem LED-Display.</string>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bvZ-tc-Xz5">
-                                                <rect key="frame" x="0.0" y="42.5" width="600" height="117.5"/>
+                                                <rect key="frame" x="0.0" y="42.5" width="600" height="116"/>
                                                 <string key="text">Um die Namen der Programme anzupassen oder um Daten zu löschen, muss auf das entsprechende Programm länger gedrückt werden. Die jeweils gewünschte Option kann dann aus dem Menü ausgwählt werden.
 Die Anpassungen sind nicht reversibel.
 Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
@@ -173,7 +216,7 @@ Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
                             <constraint firstItem="aXK-lI-usY" firstAttribute="trailing" secondItem="l5d-KW-LVA" secondAttribute="trailing" id="hzD-Wr-67b"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="P5r-U0-i5U"/>
+                    <navigationItem key="navigationItem" title="Programs" id="P5r-U0-i5U"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tdC-JB-7Hg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -191,7 +234,7 @@ Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
                                 <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="800" verticalCompressionResistancePriority="800" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="z6O-aA-kQ4">
-                                        <rect key="frame" x="117" y="10" width="600" height="200.5"/>
+                                        <rect key="frame" x="117" y="10" width="600" height="198"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="259" horizontalCompressionResistancePriority="759" verticalCompressionResistancePriority="759" scrollEnabled="NO" editable="NO" text="EDITOREN" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bLY-5X-iTg">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="37.5"/>
@@ -200,7 +243,7 @@ Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hho-IW-sbR">
-                                                <rect key="frame" x="0.0" y="42.5" width="600" height="158"/>
+                                                <rect key="frame" x="0.0" y="42.5" width="600" height="155.5"/>
                                                 <string key="text">Wir haben die beiden meistverbreiteten Editoren direkt in der App eingebunden.
 Sollte es einen lokalen Editor oder einen ganz anderen geben, so kann dieser in den Einstellungen zur App hinzugefügt werden. Diese Anpassung kann in der Einstellungen App gefunden werden. 
 Zusätzlich können direkt Programmier-Teile für den Calliope mini Swift Playground kopiert und in die eigene Programmierung eingefügt werden.</string>
@@ -235,7 +278,7 @@ Zusätzlich können direkt Programmier-Teile für den Calliope mini Swift Playgr
                             <constraint firstItem="7WY-lD-d9c" firstAttribute="top" secondItem="H5t-bt-AXU" secondAttribute="top" id="nEK-LL-WVk"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="u9n-tU-PpW"/>
+                    <navigationItem key="navigationItem" title="Editors" id="u9n-tU-PpW"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FYi-gQ-97Z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -311,7 +354,7 @@ Raumerstraße 11
                             <constraint firstItem="92d-Cz-7Bn" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="IHd-r8-x4q" secondAttribute="leading" constant="20" id="xzZ-eb-5Js"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Skq-vk-RAC"/>
+                    <navigationItem key="navigationItem" title="Contact" id="Skq-vk-RAC"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yKU-Qd-QJa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -422,7 +465,7 @@ Raumerstraße 11
                             <constraint firstItem="VlR-Kl-XgU" firstAttribute="leading" secondItem="fwM-b7-rT8" secondAttribute="leading" id="hdm-IQ-89Y"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Home" id="8Dh-5e-PlT"/>
+                    <navigationItem key="navigationItem" title="Help" id="8Dh-5e-PlT"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kuT-e7-SRh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
