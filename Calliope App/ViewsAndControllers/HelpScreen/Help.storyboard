@@ -466,7 +466,7 @@ Raumerstraße 11
                                 <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="800" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="dw8-b5-O7a">
-                                        <rect key="frame" x="117" y="10" width="600" height="375"/>
+                                        <rect key="frame" x="117" y="10" width="600" height="470"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="vVg-jc-n8f">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="90"/>
@@ -532,6 +532,22 @@ Raumerstraße 11
                                                     <segue destination="gnA-rV-4yL" kind="show" id="AQA-Uv-ugx"/>
                                                 </connections>
                                             </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="UlD-8R-0kJ">
+                                                <rect key="frame" x="0.0" y="380" width="600" height="90"/>
+                                                <color key="backgroundColor" name="calliope-brightturquoise"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="90" id="dsa-ft-RTU"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="21"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="Calliope mini Übersicht">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <segue destination="cWl-mP-Xkh" kind="show" identifier="moreCalliopeMini" id="Dxa-g4-Vy7"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="600" id="Xq6-K8-An7"/>
@@ -567,7 +583,7 @@ Raumerstraße 11
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="I0Q-ym-Ipc"/>
+        <segue reference="Dxa-g4-Vy7"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="IconHelp" width="30" height="33"/>

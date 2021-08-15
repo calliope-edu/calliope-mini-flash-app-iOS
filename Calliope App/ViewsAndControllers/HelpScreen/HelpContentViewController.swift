@@ -35,8 +35,9 @@ class HelpContentViewController: UIViewController {
         if segue.identifier == "morePlayground" {
             webViewController.url = URL(string: "https://calliope.cc/programmieren/playground")
         }
-        
-        
+        if segue.identifier == "moreCalliopeMini" {
+            webViewController.url = URL(string: "https://calliope.cc/calliope-mini/uebersicht")
+        }
     }
 
 }
