@@ -183,12 +183,12 @@ Auf das Startprogramm kann über den Flash zugegriffen werden.
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FqK-fk-6dz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5308" y="-627"/>
+            <point key="canvasLocation" x="2097" y="1365"/>
         </scene>
         <!--Programme-->
         <scene sceneID="Aps-e4-lgz">
             <objects>
-                <viewController title="Programme" id="Y0N-r0-o7h" sceneMemberID="viewController">
+                <viewController title="Programme" id="Y0N-r0-o7h" customClass="HelpContentViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="i2g-rU-Uav">
                         <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -262,7 +262,7 @@ Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
         <!--Editoren-->
         <scene sceneID="Zug-xF-UlB">
             <objects>
-                <viewController title="Editoren" id="rML-fc-Uwl" sceneMemberID="viewController">
+                <viewController title="Editoren" id="rML-fc-Uwl" customClass="HelpContentViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="H5t-bt-AXU">
                         <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -295,7 +295,7 @@ Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
                                                 <rect key="frame" x="0.0" y="229.5" width="600" height="30"/>
                                                 <state key="normal" title="Mehr zu den Editoren"/>
                                                 <connections>
-                                                    <segue destination="cWl-mP-Xkh" kind="show" identifier="editoren" id="BJw-AB-Dyt"/>
+                                                    <segue destination="cWl-mP-Xkh" kind="show" identifier="moreEditors" id="BJw-AB-Dyt"/>
                                                 </connections>
                                             </button>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fkr-N8-Pu3">
@@ -367,7 +367,7 @@ Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
         <!--Kontakt-->
         <scene sceneID="hem-qC-S7N">
             <objects>
-                <viewController title="Kontakt" id="gnA-rV-4yL" sceneMemberID="viewController">
+                <viewController title="Kontakt" id="gnA-rV-4yL" customClass="HelpContentViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lMP-Ss-fsU">
                         <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -457,7 +457,7 @@ Raumerstraße 11
         <!--Verbindung-->
         <scene sceneID="gvR-ix-uDG">
             <objects>
-                <viewController title="Verbindung" id="km0-IP-BB6" sceneMemberID="viewController">
+                <viewController title="Verbindung" id="km0-IP-BB6" customClass="HelpContentViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fkN-jk-OqP">
                         <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -583,7 +583,7 @@ Raumerstraße 11
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Dxa-g4-Vy7"/>
+        <segue reference="BJw-AB-Dyt"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="IconHelp" width="30" height="33"/>

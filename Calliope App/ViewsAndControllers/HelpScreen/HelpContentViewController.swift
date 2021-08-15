@@ -26,7 +26,7 @@ class HelpContentViewController: UIViewController {
         if segue.identifier == "moreFlash" {
             webViewController.url = URL(string: "https://calliope.cc/start/tipps")
         }
-        if segue.identifier == "editoren" {
+        if segue.identifier == "moreEditors" {
             webViewController.url = URL(string: "https://calliope.cc/programmieren/editoren")
         }
         if segue.identifier == "moreCalliope" {
