@@ -32,6 +32,10 @@ class HelpContentViewController: UIViewController {
         if segue.identifier == "moreCalliope" {
             webViewController.url = URL(string: "https://calliope.cc")
         }
+        if segue.identifier == "morePlayground" {
+            webViewController.url = URL(string: "https://calliope.cc/programmieren/playground")
+        }
+        
         
     }
 

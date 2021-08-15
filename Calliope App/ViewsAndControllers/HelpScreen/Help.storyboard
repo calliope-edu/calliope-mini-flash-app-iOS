@@ -37,9 +37,16 @@
                                             </textView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KGt-PM-JgX">
                                                 <rect key="frame" x="0.0" y="42.5" width="600" height="315"/>
-                                                <mutableString key="text">Um die Bluetooth Dienste des Calliope mini mit einem anderen Gerät zu nutzen, muss dieses zunächst mit dem Calliope mini verbunden bzw. gekoppelt werden! Um eine Verbindung zum Senden von Codes an den Calliope mini aus der App herzustellen, müssen die folgenden Schritte ausgeführt werden:
+                                                <string key="text">Um die Bluetooth Dienste des Calliope mini mit einem anderen Gerät zu nutzen, muss dieses zunächst mit dem Calliope mini verbunden bzw. gekoppelt werden! Um eine Verbindung zum Senden von Codes an den Calliope mini aus der App herzustellen, müssen die folgenden Schritte ausgeführt werden:
 
-1. Drücke gleichzeitig die Tasten A+B und Reset deines Calliope mini. 2. Lass nach ca. 1 Sekunde Reset los.3. Halte die Tasten A+B weiter gedrückt bis eine Animation auf dem LED-Display startet.4. ID Muster - Der Calliope mini zeigt automatisch einKoppeln-Symbol (fünf Balken) auf dem LED-Display.</mutableString>
+1. Drücke gleichzeitig die Tasten A+B und Reset deines Calliope mini. 
+
+2. Lass nach ca. 1 Sekunde Reset los.
+
+3. Halte die Tasten A+B weiter gedrückt bis eine Animation auf dem LED-Display startet.
+
+4. ID Muster - Der Calliope mini zeigt automatisch ein
+Koppeln-Symbol (fünf Balken) auf dem LED-Display.</string>
                                                 <color key="textColor" name="calliope-darkgray"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -59,7 +66,7 @@
                                             </button>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CC8-d7-LIv">
                                                 <rect key="frame" x="0.0" y="645" width="600" height="474.5"/>
-                                                <mutableString key="text">Um ein Programm aus dem Playground zu überspielen, muss das Programm 5 aus dem Startprogramm ausgewählt werden. 
+                                                <string key="text">Um ein Programm aus dem Playground zu überspielen, muss das Programm 5 aus dem Startprogramm ausgewählt werden. 
 
 Calliope mini 1.x
 Das Startprogramm kann über die App auf den Calliope mini geflasht werden. Gehe dazu auf "Editoren und Programme", kopple deinen Calliope mini (s. oben) und überspile das Startprogramm auf deinen Calliope mini.
@@ -68,8 +75,12 @@ Calliope mini 2.0
 Auf das Startprogramm kann über den Flash zugegriffen werden.
 
 1. Drücke für 5-6 Sekunden die Reset Taste.
-2. Dann blinkt das komplette LED-Display kurz auf und es leuchtet anschließend die erste LED oben links.3. Mit den Tasten A und B kannst du durch die gespeicherten Programme navigieren. Mit der Taste A gehst du direkt zu Programm 25 - das Startprogramm. Die letzte LED in der untersten Reihe leuchtet jetzt.
-4. Drückst du nun die Tasten A und B gleichzeitig, so kannst du das ausgewählte Programm starten. Es wird nun direkt in den Prozessor geladen und kann durch Reset neu getsratet werden.</mutableString>
+
+2. Dann blinkt das komplette LED-Display kurz auf und es leuchtet anschließend die erste LED oben links.
+
+3. Mit den Tasten A und B kannst du durch die gespeicherten Programme navigieren. Mit der Taste A gehst du direkt zu Programm 25 - das Startprogramm. Die letzte LED in der untersten Reihe leuchtet jetzt.
+
+4. Drückst du nun die Tasten A und B gleichzeitig, so kannst du das ausgewählte Programm starten. Es wird nun direkt in den Prozessor geladen und kann durch Reset neu getsratet werden.</string>
                                                 <color key="textColor" name="calliope-darkgray"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -260,7 +271,7 @@ Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
                                 <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="800" verticalCompressionResistancePriority="800" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="z6O-aA-kQ4">
-                                        <rect key="frame" x="117" y="10" width="600" height="933"/>
+                                        <rect key="frame" x="117" y="10" width="600" height="988"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="259" horizontalCompressionResistancePriority="759" verticalCompressionResistancePriority="759" scrollEnabled="NO" editable="NO" text="EDITOREN" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bLY-5X-iTg">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="37.5"/>
@@ -307,12 +318,19 @@ Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
                                                 </constraints>
                                             </imageView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kbf-NW-5k6">
-                                                <rect key="frame" x="0.0" y="877" width="600" height="56"/>
-                                                <string key="text">Zusätzlich können direkt Programmier-Teile für den Calliope mini Swift Playground kopiert und in die eigene Programmierung eingefügt werden.</string>
+                                                <rect key="frame" x="0.0" y="877" width="600" height="76"/>
+                                                <string key="text">Zusätzlich können direkt Programmier-Teile für den Calliope mini Swift Playground aus der Snippet Library kopiert und in die eigenen Programme eingefügt werden.</string>
                                                 <color key="textColor" name="calliope-darkgray"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cQi-Mj-MB3">
+                                                <rect key="frame" x="0.0" y="958" width="600" height="30"/>
+                                                <state key="normal" title="Mehr zum Calliope mini Swift Playground"/>
+                                                <connections>
+                                                    <segue destination="cWl-mP-Xkh" kind="show" identifier="morePlayground" id="I0Q-ym-Ipc"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="600" id="VlN-jn-L2S"/>
@@ -549,7 +567,7 @@ Raumerstraße 11
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="PtW-fq-q7G"/>
+        <segue reference="I0Q-ym-Ipc"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="IconHelp" width="30" height="33"/>
