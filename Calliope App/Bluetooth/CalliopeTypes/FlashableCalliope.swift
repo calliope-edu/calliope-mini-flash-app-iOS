@@ -85,7 +85,7 @@ class FlashableCalliope: CalliopeBLEDevice {
             throw "Could not create firmware from given data"
         }
 
-        preparePairing()
+        try preparePairing()
 
         initiator = DFUServiceInitiator().with(firmware: firmware)
         initiator?.logger = logReceiver
@@ -95,10 +95,10 @@ class FlashableCalliope: CalliopeBLEDevice {
         try triggerDfuMode()
 	}
 
-    private func preparePairing() {
+    private func preparePairing() throws {
         //this apparently is necessary before DFU characteristic can be properly used
         //was like this in the old app version
-        _ = try? read(characteristic: .dfuControl)
+        _ = try read(characteristic: .dfuControl)
     }
 
     private func triggerDfuMode() throws {
