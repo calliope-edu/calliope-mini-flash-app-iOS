@@ -10,22 +10,6 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
-			<string>Local editor</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-			<key>Title</key>
-			<string>Enabled</string>
-			<key>Key</key>
-			<string>localEditorOnPreference</string>
-			<key>DefaultValue</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-			<key>Title</key>
 			<string>Playgrounds</string>
 		</dict>
 		<dict>
@@ -137,6 +121,46 @@
 			<string>App Version</string>
 			<key>Key</key>
 			<string>appVersionInformationPreference</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>News URL</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>News URL</string>
+			<key>Key</key>
+			<string>calliopeNewsUrlPreference</string>
+			<key>DefaultValue</key>
+			<string>defaultNewsUrl</string>
+			<key>IsSecure</key>
+			<false/>
+			<key>KeyboardType</key>
+			<string>URL</string>
+			<key>AutocapitalizationType</key>
+			<string>None</string>
+			<key>AutocorrectionType</key>
+			<string>No</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Reset settings</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Enabled</string>
+			<key>Key</key>
+			<string>resetSettingsPreference</string>
+			<key>DefaultValue</key>
+			<false/>
 		</dict>
 	</array>
 </dict>
