@@ -27,11 +27,13 @@ class ConnectionButton: UIButton {
                 switch self.connectionState {
                 case .initialized:
                     self.imageView?.stopAnimating()
+                    self.imageView?.animationImages = nil
                     self.isEnabled = true
                     self.setBackgroundImage(nil, for: .normal)
                     self.setImage(UIImage(named: "liveviewconnect/mini_refresh"), for: .normal)
                 case .waitingForBluetooth:
                     self.imageView?.stopAnimating()
+                    self.imageView?.animationImages = nil
                     self.isEnabled = false
                     self.setBackgroundImage(nil, for: .normal)
                     self.setImage(UIImage(named: "liveviewconnect/bluetooth_disabled"), for: .normal)
@@ -44,35 +46,42 @@ class ConnectionButton: UIButton {
                     self.imageView?.startAnimating()
                 case .notFoundRetry:
                     self.imageView?.stopAnimating()
+                    self.imageView?.animationImages = nil
                     self.isEnabled = true
                     self.setBackgroundImage(UIImage(named: "liveviewconnect/mini_button_red"), for: .normal)
-                    self.setImage(UIImage(named: "liveviewconnect/mini_refresh"), for: .normal)
+                    self.setImage(UIImage(named: "liveviewconnect/connect_refresh"), for: .normal)
                 case .readyToConnect:
                     self.imageView?.stopAnimating()
+                    self.imageView?.animationImages = nil
                     self.isEnabled = true
                     self.setBackgroundImage(UIImage(named: "liveviewconnect/mini_button_green"), for: .normal)
-                    self.setImage(UIImage(named: "liveviewconnect/mini_pfeil"), for: .normal)
+                    self.setImage(UIImage(named: "liveviewconnect/connect_0001"), for: .normal)
                 case .connecting:
-                    self.imageView?.stopAnimating()
                     self.isEnabled = false
                     self.setBackgroundImage(nil, for: .normal)
-                    self.setImage(UIImage(named: "liveviewconnect/connect"), for: .normal)
+                    let images = [#imageLiteral(resourceName: "liveviewconnect/connect_0001"),#imageLiteral(resourceName: "liveviewconnect/connect_0002")]
+                    self.imageView?.animationImages = images
+                    self.imageView?.animationDuration = 0.3 * Double(images.count)
+                    self.imageView?.startAnimating()
                 case .testingMode:
-                    self.imageView?.stopAnimating()
                     self.isEnabled = false
                     self.setBackgroundImage(nil, for: .normal)
-                    self.setImage(UIImage(named: "liveviewconnect/mini_test_mode"), for: .normal)
-                //TODO: number animation
+                    let images = [#imageLiteral(resourceName: "liveviewconnect/connect_0001"),#imageLiteral(resourceName: "liveviewconnect/connect_0002")]
+                    self.imageView?.animationImages = images
+                    self.imageView?.animationDuration = 0.3 * Double(images.count)
+                    self.imageView?.startAnimating()
                 case .readyToPlay:
                     self.imageView?.stopAnimating()
+                    self.imageView?.animationImages = nil
                     self.isEnabled = false
                     self.setBackgroundImage(nil, for: .normal)
                     self.setImage(UIImage(named: "liveviewconnect/mini_figur"), for: .normal)
                 case .wrongProgram:
                     self.imageView?.stopAnimating()
+                    self.imageView?.animationImages = nil
                     self.isEnabled = false
-                    self.setBackgroundImage(UIImage(named: "liveviewconnect/mini_button_red"), for: .normal)
-                    self.setImage(UIImage(named: "liveviewconnect/mini_wrong_mode"), for: .normal)
+                    self.setBackgroundImage(nil, for: .normal)
+                    self.setImage(UIImage(named: "liveviewconnect/connect_failed"), for: .normal)
                 }
             }, completion: nil)
         }
