@@ -59,7 +59,7 @@ Koppeln-Symbol (fünf Balken) auf dem LED-Display.</string>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DMN-vs-YaT">
                                                 <rect key="frame" x="0.0" y="610" width="600" height="30"/>
-                                                <state key="normal" title="Weitere Informationen zur Verwendung von Bluetooth"/>
+                                                <state key="normal" title="Weiteres zur Verwendung von Bluetooth"/>
                                                 <connections>
                                                     <segue destination="cWl-mP-Xkh" kind="show" identifier="morebluetooth" id="ftY-XM-sUL"/>
                                                 </connections>
@@ -583,7 +583,7 @@ Raumerstraße 11
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="BJw-AB-Dyt"/>
+        <segue reference="Dxa-g4-Vy7"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="IconHelp" width="30" height="33"/>
