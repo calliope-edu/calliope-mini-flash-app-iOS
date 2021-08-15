@@ -29,7 +29,7 @@ final class MiniEditor: Editor {
         return EditorDownload(name: "mini-" + matches[1], url: url)
     }
 
-    func isBackNavigation() -> Bool {
+    func isBackNavigation(_ request: URLRequest) -> Bool {
         fatalError("MiniEditor not implemented currently")
     }
 }
