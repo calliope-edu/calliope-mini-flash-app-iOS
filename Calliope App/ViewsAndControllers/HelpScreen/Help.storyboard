@@ -376,7 +376,7 @@ Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
                                 <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="800" verticalCompressionResistancePriority="800" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="92d-Cz-7Bn">
-                                        <rect key="frame" x="117" y="10" width="600" height="504"/>
+                                        <rect key="frame" x="117" y="10" width="600" height="498.5"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="259" horizontalCompressionResistancePriority="759" verticalCompressionResistancePriority="759" scrollEnabled="NO" editable="NO" text="KONTAKT" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V0j-9j-nCA">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="37.5"/>
@@ -390,31 +390,25 @@ Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
                                                     <constraint firstAttribute="width" secondItem="h2x-jc-f27" secondAttribute="height" multiplier="1980:400" id="auN-hV-ZtX"/>
                                                 </constraints>
                                             </imageView>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="XkX-7n-aps">
-                                                <rect key="frame" x="0.0" y="168.5" width="600" height="300.5"/>
-                                                <string key="text">Sollte es Fragen oder Probleme geben, helfen wir gern!
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a5l-k2-8Jf">
+                                                <rect key="frame" x="0.0" y="168.5" width="600" height="295"/>
+                                                <string key="text">Sollte es Fragen oder Probleme geben helfen wir gern!
+
 Wir sind telefonisch oder per Email zu erreichen.
+Unter der Telefonnummer:+49 (0)30 4849 2030 sind wir werktags zwischen 10.00 und 13.00 Uhr erreichbar.
 
-Unter der Telefonnummer:
-+49 (0)30 4849 2030 sind wir werktags zwischen 10.00 und 13.00 Uhr erreichbar.
-
-Fragen per Email können an info@calliope.cc geschrieben werden.
-
-Anleitungen, und Unterrichtsmaterialien stehen auf unserer Webseite bereit zum Ausprobieren:
+Fragen per Email können an info@calliope.cc geschrieben werden.Anleitungen und Unterrichtsmaterialien stehen auf unserer Webseite bereit zum Ausprobieren:
 https://calliope.cc
-
 
 Calliope HQ
 Raumerstraße 11
-10437 Berlin
-</string>
-                                                <color key="textColor" systemColor="labelColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+10437 Berlin</string>
+                                                <color key="textColor" name="calliope-darkgray"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
                                             </textView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FOM-5E-71J">
-                                                <rect key="frame" x="0.0" y="474" width="600" height="30"/>
+                                                <rect key="frame" x="0.0" y="468.5" width="600" height="30"/>
                                                 <state key="normal" title="calliope.cc"/>
                                                 <connections>
                                                     <segue destination="cWl-mP-Xkh" kind="show" identifier="moreCalliope" id="PtW-fq-q7G"/>
@@ -583,7 +577,7 @@ Raumerstraße 11
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Dxa-g4-Vy7"/>
+        <segue reference="PtW-fq-q7G"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="IconHelp" width="30" height="33"/>
@@ -600,9 +594,6 @@ Raumerstraße 11
         <namedColor name="calliope-darkgray">
             <color red="0.11400000005960464" green="0.11400000005960464" blue="0.10599999874830246" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
