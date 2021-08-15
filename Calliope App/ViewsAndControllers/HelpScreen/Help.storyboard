@@ -172,7 +172,7 @@ Koppeln-Symbol (fünf Balken) auf dem LED-Display.</string>
                                 <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="800" verticalCompressionResistancePriority="800" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Sqe-8X-loV">
-                                        <rect key="frame" x="117" y="10" width="600" height="719.5"/>
+                                        <rect key="frame" x="117" y="10" width="600" height="343"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="259" horizontalCompressionResistancePriority="759" verticalCompressionResistancePriority="759" scrollEnabled="NO" editable="NO" text="PROGRAMME UND NAMEN ANPASSEN" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YRS-Qp-QfU">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="37.5"/>
@@ -181,37 +181,29 @@ Koppeln-Symbol (fünf Balken) auf dem LED-Display.</string>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bvZ-tc-Xz5">
-                                                <rect key="frame" x="0.0" y="42.5" width="600" height="116"/>
-                                                <string key="text">Um die Namen der Programme anzupassen oder um Daten zu löschen, muss auf das entsprechende Programm länger gedrückt werden. Die jeweils gewünschte Option kann dann aus dem Menü ausgwählt werden.
-Die Anpassungen sind nicht reversibel.
-Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
+                                                <rect key="frame" x="0.0" y="42.5" width="600" height="76"/>
+                                                <string key="text">Um die Namen der Programme anzupassen oder um Daten zu löschen, muss auf das entsprechende Programm länger gedrückt werden. Die jeweils gewünschte Option kann dann aus dem Menü ausgwählt werden.</string>
                                                 <color key="textColor" name="calliope-darkgray"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="257" verticalHuggingPriority="257" horizontalCompressionResistancePriority="757" verticalCompressionResistancePriority="757" image="krallengiff_t1" translatesAutoresizingMaskIntoConstraints="NO" id="JEH-pA-SEj">
-                                                <rect key="frame" x="0.0" y="163.5" width="600" height="400"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="257" verticalHuggingPriority="257" horizontalCompressionResistancePriority="757" verticalCompressionResistancePriority="757" image="programms" translatesAutoresizingMaskIntoConstraints="NO" id="JEH-pA-SEj">
+                                                <rect key="frame" x="0.0" y="123.5" width="600" height="158.5"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" secondItem="JEH-pA-SEj" secondAttribute="height" multiplier="3:2" id="SKJ-er-Mlm"/>
+                                                    <constraint firstAttribute="width" secondItem="JEH-pA-SEj" secondAttribute="height" multiplier="1980:523" id="SKJ-er-Mlm"/>
                                                 </constraints>
                                             </imageView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W2T-43-YeH">
-                                                <rect key="frame" x="0.0" y="568.5" width="600" height="116"/>
-                                                <string key="text">Um die Namen der Programme anzupassen oder um Daten zu löschen, muss auf das entsprechende Programm länger gedrückt werden. Die jeweils gewünschte Option kann dann aus dem Menü ausgwählt werden.
-Die Anpassungen sind nicht reversibel.
+                                                <rect key="frame" x="0.0" y="287" width="600" height="56"/>
+                                                <string key="text">ACHTUNG! Die Anpassungen sind nicht reversibel.
 Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
                                                 <color key="textColor" name="calliope-darkgray"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s59-eU-gGv">
-                                                <rect key="frame" x="0.0" y="689.5" width="600" height="30"/>
-                                                <state key="normal" title="Button"/>
-                                            </button>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="600" id="NeH-mA-USa"/>
-                                            <constraint firstItem="JEH-pA-SEj" firstAttribute="width" secondItem="JEH-pA-SEj" secondAttribute="height" multiplier="3:2" id="YqC-yk-qzt"/>
                                         </constraints>
                                     </stackView>
                                 </subviews>
@@ -254,7 +246,7 @@ Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
                                 <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="800" verticalCompressionResistancePriority="800" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="z6O-aA-kQ4">
-                                        <rect key="frame" x="117" y="10" width="600" height="198"/>
+                                        <rect key="frame" x="117" y="10" width="600" height="933"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="259" horizontalCompressionResistancePriority="759" verticalCompressionResistancePriority="759" scrollEnabled="NO" editable="NO" text="EDITOREN" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bLY-5X-iTg">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="37.5"/>
@@ -262,11 +254,47 @@ Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
                                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="18"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hho-IW-sbR">
-                                                <rect key="frame" x="0.0" y="42.5" width="600" height="155.5"/>
-                                                <string key="text">Wir haben die beiden meistverbreiteten Editoren direkt in der App eingebunden.
-Sollte es einen lokalen Editor oder einen ganz anderen geben, so kann dieser in den Einstellungen zur App hinzugefügt werden. Diese Anpassung kann in der Einstellungen App gefunden werden. 
-Zusätzlich können direkt Programmier-Teile für den Calliope mini Swift Playground kopiert und in die eigene Programmierung eingefügt werden.</string>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" scrollEnabled="NO" editable="NO" text="Wir haben die beiden meistverbreiteten Editoren direkt in der App eingebunden." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hho-IW-sbR">
+                                                <rect key="frame" x="0.0" y="42.5" width="600" height="56"/>
+                                                <color key="textColor" name="calliope-darkgray"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="257" verticalHuggingPriority="257" horizontalCompressionResistancePriority="757" verticalCompressionResistancePriority="757" image="editoren" translatesAutoresizingMaskIntoConstraints="NO" id="BGa-XB-PYe">
+                                                <rect key="frame" x="0.0" y="103.5" width="600" height="121"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="BGa-XB-PYe" secondAttribute="height" multiplier="1980:400" id="OLA-cW-Y21"/>
+                                                </constraints>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pz2-S5-d2S">
+                                                <rect key="frame" x="0.0" y="229.5" width="600" height="30"/>
+                                                <state key="normal" title="Mehr zu den Editoren"/>
+                                                <connections>
+                                                    <segue destination="cWl-mP-Xkh" kind="show" identifier="editoren" id="BJw-AB-Dyt"/>
+                                                </connections>
+                                            </button>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fkr-N8-Pu3">
+                                                <rect key="frame" x="0.0" y="264.5" width="600" height="76"/>
+                                                <string key="text">Sollte es einen lokalen Editor oder einen ganz anderen geben, so kann dieser in den Einstellungen zur App hinzugefügt werden. Diese Anpassung kann in der Einstellungen App gefunden werden. </string>
+                                                <color key="textColor" name="calliope-darkgray"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="257" verticalHuggingPriority="257" horizontalCompressionResistancePriority="757" verticalCompressionResistancePriority="757" image="preferences" translatesAutoresizingMaskIntoConstraints="NO" id="sLd-6D-3H1">
+                                                <rect key="frame" x="0.0" y="345.5" width="600" height="400"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="sLd-6D-3H1" secondAttribute="height" multiplier="3:2" id="IyO-rH-dne"/>
+                                                </constraints>
+                                            </imageView>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="257" verticalHuggingPriority="257" horizontalCompressionResistancePriority="757" verticalCompressionResistancePriority="757" image="editoren_playgrounds" translatesAutoresizingMaskIntoConstraints="NO" id="d3Z-xv-iAI">
+                                                <rect key="frame" x="0.0" y="750.5" width="600" height="121.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="d3Z-xv-iAI" secondAttribute="height" multiplier="1980:400" id="fdm-kB-f2g"/>
+                                                </constraints>
+                                            </imageView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kbf-NW-5k6">
+                                                <rect key="frame" x="0.0" y="877" width="600" height="56"/>
+                                                <string key="text">Zusätzlich können direkt Programmier-Teile für den Calliope mini Swift Playground kopiert und in die eigene Programmierung eingefügt werden.</string>
                                                 <color key="textColor" name="calliope-darkgray"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -492,10 +520,17 @@ Raumerstraße 11
             <point key="canvasLocation" x="1014" y="-6"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="BJw-AB-Dyt"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="IconHelp" width="30" height="33"/>
+        <image name="editoren" width="660" height="133.5"/>
+        <image name="editoren_playgrounds" width="660" height="133.5"/>
         <image name="krallengiff_t1" width="660" height="400"/>
         <image name="krallengiff_t3" width="660" height="400"/>
+        <image name="preferences" width="660" height="400"/>
+        <image name="programms" width="660" height="174.5"/>
         <namedColor name="calliope-brightturquoise">
             <color red="0.40799999237060547" green="0.83099997043609619" blue="0.83099997043609619" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

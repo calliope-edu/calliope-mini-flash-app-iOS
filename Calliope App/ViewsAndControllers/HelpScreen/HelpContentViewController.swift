@@ -23,6 +23,9 @@ class HelpContentViewController: UIViewController {
         if segue.identifier == "moreConnect" {
             webViewController.url = URL(string: "https://calliope.cc")
         }
+        if segue.identifier == "editoren" {
+            webViewController.url = URL(string: "https://calliope.cc")
+        }
     }
 
 }
