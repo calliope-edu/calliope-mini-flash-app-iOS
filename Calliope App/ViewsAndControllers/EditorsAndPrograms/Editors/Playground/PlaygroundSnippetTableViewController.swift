@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MobileCoreServices
 
-class PlaygroundSnippetTableViewController: UITableViewController {
+class PlaygroundSnippetTableViewController: UITableViewController, UITableViewDragDelegate {
 
     var secondary: CodeSnippetController? {
 
@@ -29,6 +30,9 @@ class PlaygroundSnippetTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        tableView.dragInteractionEnabled = true
+        tableView.dragDelegate = self
 
         CodeSnippets.reload { [weak self] in
             DispatchQueue.main.async {
@@ -123,4 +127,13 @@ class PlaygroundSnippetTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
+
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        guard let codeSnippet = (tableView.cellForRow(at: indexPath) as? PlaygroundSnippetTableViewCell)?.snippet, let data = codeSnippet.content.data(using: .utf8) else {
+            return []
+        }
+        let itemProvider = NSItemProvider(item: data as NSData, typeIdentifier: kUTTypeUTF8PlainText as String)
+        let dragItem = UIDragItem(itemProvider: itemProvider)
+        return [dragItem]
+    }
 }
