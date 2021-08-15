@@ -59,17 +59,18 @@ class ConnectionButton: UIButton {
                 case .connecting:
                     self.isEnabled = false
                     self.setBackgroundImage(nil, for: .normal)
-                    let images = [#imageLiteral(resourceName: "liveviewconnect/connect_0001"),#imageLiteral(resourceName: "liveviewconnect/connect_0002")]
+                    let images = [#imageLiteral(resourceName: "liveviewconnect/connect_0001"),#imageLiteral(resourceName: "liveviewconnect/connect_0002"),#imageLiteral(resourceName: "liveviewconnect/connect_0003"),#imageLiteral(resourceName: "liveviewconnect/connect_0004"),#imageLiteral(resourceName: "liveviewconnect/connect_0005"),#imageLiteral(resourceName: "liveviewconnect/connect_0006"),#imageLiteral(resourceName: "liveviewconnect/connect_0007"),#imageLiteral(resourceName: "liveviewconnect/connect_0008"),#imageLiteral(resourceName: "liveviewconnect/connect_0009"),#imageLiteral(resourceName: "liveviewconnect/connect_0010"),#imageLiteral(resourceName: "liveviewconnect/connect_0009"),#imageLiteral(resourceName: "liveviewconnect/connect_0008"),#imageLiteral(resourceName: "liveviewconnect/connect_0007"),#imageLiteral(resourceName: "liveviewconnect/connect_0006"),#imageLiteral(resourceName: "liveviewconnect/connect_0005"),#imageLiteral(resourceName: "liveviewconnect/connect_0004"),#imageLiteral(resourceName: "liveviewconnect/connect_0003"),#imageLiteral(resourceName: "liveviewconnect/connect_0002"),#imageLiteral(resourceName: "liveviewconnect/connect_0001")]
                     self.imageView?.animationImages = images
-                    self.imageView?.animationDuration = 0.3 * Double(images.count)
+                    self.imageView?.animationDuration = 0.1 * Double(images.count)
                     self.imageView?.startAnimating()
                 case .testingMode:
-                    self.isEnabled = false
-                    self.setBackgroundImage(nil, for: .normal)
-                    let images = [#imageLiteral(resourceName: "liveviewconnect/connect_0001"),#imageLiteral(resourceName: "liveviewconnect/connect_0002")]
-                    self.imageView?.animationImages = images
-                    self.imageView?.animationDuration = 0.3 * Double(images.count)
-                    self.imageView?.startAnimating()
+                    break
+                    //self.isEnabled = false
+                    //self.setBackgroundImage(nil, for: .normal)
+                    //let images = [#imageLiteral(resourceName: "liveviewconnect/connect_0001"),#imageLiteral(resourceName: "liveviewconnect/connect_0002"),#imageLiteral(resourceName: "liveviewconnect/connect_0003"),#imageLiteral(resourceName: "liveviewconnect/connect_0004"),#imageLiteral(resourceName: "liveviewconnect/connect_0005"),#imageLiteral(resourceName: "liveviewconnect/connect_0006"),#imageLiteral(resourceName: "liveviewconnect/connect_0007"),#imageLiteral(resourceName: "liveviewconnect/connect_0008"),#imageLiteral(resourceName: "liveviewconnect/connect_0009"),#imageLiteral(resourceName: "liveviewconnect/connect_0010"),#imageLiteral(resourceName: "liveviewconnect/connect_0009"),#imageLiteral(resourceName: "liveviewconnect/connect_0008"),#imageLiteral(resourceName: "liveviewconnect/connect_0007"),#imageLiteral(resourceName: "liveviewconnect/connect_0006"),#imageLiteral(resourceName: "liveviewconnect/connect_0005"),#imageLiteral(resourceName: "liveviewconnect/connect_0004"),#imageLiteral(resourceName: "liveviewconnect/connect_0003"),#imageLiteral(resourceName: "liveviewconnect/connect_0002"),#imageLiteral(resourceName: "liveviewconnect/connect_0001")]
+                    //self.imageView?.animationImages = images
+                    //self.imageView?.animationDuration = 0.1 * Double(images.count)
+                    //self.imageView?.startAnimating()
                 case .readyToPlay:
                     self.imageView?.stopAnimating()
                     self.imageView?.animationImages = nil
