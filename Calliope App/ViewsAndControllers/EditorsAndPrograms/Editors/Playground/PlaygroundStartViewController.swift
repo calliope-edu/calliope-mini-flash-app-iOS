@@ -11,6 +11,12 @@ import UIKit
 class PlaygroundStartViewController: UIViewController {
 
     @IBOutlet weak var mainStackView: UIStackView!
+    @IBOutlet weak var snippetLibraryButton: UIButton!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        snippetLibraryButton.imageView?.contentMode = .scaleAspectFit
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

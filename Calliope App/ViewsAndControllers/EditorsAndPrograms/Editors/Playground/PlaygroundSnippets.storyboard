@@ -361,6 +361,7 @@
                     <navigationItem key="navigationItem" title="Home" id="wz7-bF-qTT"/>
                     <connections>
                         <outlet property="mainStackView" destination="roW-FT-wft" id="Ib7-C0-zLl"/>
+                        <outlet property="snippetLibraryButton" destination="zqc-Md-ScS" id="1ly-yw-GAM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wYO-wv-LFs" userLabel="First Responder" sceneMemberID="firstResponder"/>
