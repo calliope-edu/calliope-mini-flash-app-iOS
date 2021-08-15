@@ -27,50 +27,64 @@
                                 <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="800" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Bj9-94-VpQ">
-                                        <rect key="frame" x="117" y="10" width="600" height="1144.5"/>
+                                        <rect key="frame" x="117" y="10" width="600" height="1402"/>
                                         <subviews>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="259" horizontalCompressionResistancePriority="759" verticalCompressionResistancePriority="759" scrollEnabled="NO" editable="NO" text="UNTERSTÜTZUNG FÜR DEN EINSATZ MIT BLUETOOTH" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZRH-ht-3Pc">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="259" horizontalCompressionResistancePriority="759" verticalCompressionResistancePriority="759" scrollEnabled="NO" editable="NO" text="BLUETOOTH ÜBERTRAGUNG" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZRH-ht-3Pc">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="37.5"/>
                                                 <color key="textColor" name="calliope-darkgray"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="18"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KGt-PM-JgX">
-                                                <rect key="frame" x="0.0" y="42.5" width="600" height="116"/>
-                                                <string key="text">Um die Bluetooth Dienste des Calliope mini mit einem anderen Gerät zu nutzen, muss dieses zunächst mit dem Calliope mini verbunden bzw. gekoppelt werden! Um eine Verbindung zum Senden von Codes an den Calliope mini aus der App herzustellen, müssen die folgenden Schritte ausgeführt werden:</string>
+                                                <rect key="frame" x="0.0" y="42.5" width="600" height="315"/>
+                                                <mutableString key="text">Um die Bluetooth Dienste des Calliope mini mit einem anderen Gerät zu nutzen, muss dieses zunächst mit dem Calliope mini verbunden bzw. gekoppelt werden! Um eine Verbindung zum Senden von Codes an den Calliope mini aus der App herzustellen, müssen die folgenden Schritte ausgeführt werden:
+
+1. Drücke gleichzeitig die Tasten A+B und Reset deines Calliope mini. 2. Lass nach ca. 1 Sekunde Reset los.3. Halte die Tasten A+B weiter gedrückt bis eine Animation auf dem LED-Display startet.4. ID Muster - Der Calliope mini zeigt automatisch einKoppeln-Symbol (fünf Balken) auf dem LED-Display.</mutableString>
                                                 <color key="textColor" name="calliope-darkgray"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="257" verticalHuggingPriority="257" horizontalCompressionResistancePriority="757" verticalCompressionResistancePriority="757" image="krallengiff_t1" translatesAutoresizingMaskIntoConstraints="NO" id="sGr-Ig-aMm">
-                                                <rect key="frame" x="0.0" y="163.5" width="600" height="400"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="257" verticalHuggingPriority="257" horizontalCompressionResistancePriority="757" verticalCompressionResistancePriority="757" image="bluetooth_kralle" translatesAutoresizingMaskIntoConstraints="NO" id="sGr-Ig-aMm">
+                                                <rect key="frame" x="0.0" y="362.5" width="600" height="242.5"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" secondItem="sGr-Ig-aMm" secondAttribute="height" multiplier="3:2" id="QTP-yE-Zja"/>
-                                                </constraints>
-                                            </imageView>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="256" verticalHuggingPriority="256" horizontalCompressionResistancePriority="756" verticalCompressionResistancePriority="756" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lJb-h8-Qd5">
-                                                <rect key="frame" x="0.0" y="568.5" width="600" height="136"/>
-                                                <string key="text">1. Drücke gleichzeitig die Tasten A+B und Reset deines Calliope mini. Lass nach ca. 1 Sekunde Reset los.
-2. Halten - Nachdem du Reset losgelassen hast, www.calliope.cc
-halte die Tasten A+B weiter gedrückt.
-3. ID Muster - Der Calliope mini zeigt automatisch ein
-Koppeln-Symbol (fünf Balken) auf dem LED-Display.</string>
-                                                <color key="textColor" name="calliope-darkgray"/>
-                                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
-                                            </textView>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="krallengiff_t3" translatesAutoresizingMaskIntoConstraints="NO" id="tPs-Rh-6tp">
-                                                <rect key="frame" x="0.0" y="709.5" width="600" height="400"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" secondItem="tPs-Rh-6tp" secondAttribute="height" multiplier="3:2" id="Kzh-bT-06r"/>
+                                                    <constraint firstAttribute="width" secondItem="sGr-Ig-aMm" secondAttribute="height" multiplier="1980:800" id="QTP-yE-Zja"/>
                                                 </constraints>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DMN-vs-YaT">
-                                                <rect key="frame" x="0.0" y="1114.5" width="600" height="30"/>
-                                                <state key="normal" title="Button"/>
+                                                <rect key="frame" x="0.0" y="610" width="600" height="30"/>
+                                                <state key="normal" title="Weitere Informationen zur Verwendung von Bluetooth"/>
                                                 <connections>
-                                                    <segue destination="cWl-mP-Xkh" kind="show" identifier="moreConnect" id="ftY-XM-sUL"/>
+                                                    <segue destination="cWl-mP-Xkh" kind="show" identifier="morebluetooth" id="ftY-XM-sUL"/>
+                                                </connections>
+                                            </button>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CC8-d7-LIv">
+                                                <rect key="frame" x="0.0" y="645" width="600" height="474.5"/>
+                                                <mutableString key="text">Um ein Programm aus dem Playground zu überspielen, muss das Programm 5 aus dem Startprogramm ausgewählt werden. 
+
+Calliope mini 1.x
+Das Startprogramm kann über die App auf den Calliope mini geflasht werden. Gehe dazu auf "Editoren und Programme", kopple deinen Calliope mini (s. oben) und überspile das Startprogramm auf deinen Calliope mini.
+
+Calliope mini 2.0
+Auf das Startprogramm kann über den Flash zugegriffen werden.
+
+1. Drücke für 5-6 Sekunden die Reset Taste.
+2. Dann blinkt das komplette LED-Display kurz auf und es leuchtet anschließend die erste LED oben links.3. Mit den Tasten A und B kannst du durch die gespeicherten Programme navigieren. Mit der Taste A gehst du direkt zu Programm 25 - das Startprogramm. Die letzte LED in der untersten Reihe leuchtet jetzt.
+4. Drückst du nun die Tasten A und B gleichzeitig, so kannst du das ausgewählte Programm starten. Es wird nun direkt in den Prozessor geladen und kann durch Reset neu getsratet werden.</mutableString>
+                                                <color key="textColor" name="calliope-darkgray"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="bluetooth_startprogramm" translatesAutoresizingMaskIntoConstraints="NO" id="f6K-zg-qF1">
+                                                <rect key="frame" x="0.0" y="1124.5" width="600" height="242.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="f6K-zg-qF1" secondAttribute="height" multiplier="1980:800" id="P2R-D9-Tba"/>
+                                                </constraints>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Ig-w3-fGp">
+                                                <rect key="frame" x="0.0" y="1372" width="600" height="30"/>
+                                                <state key="normal" title="Weitere Informationen zum Flash"/>
+                                                <connections>
+                                                    <segue destination="cWl-mP-Xkh" kind="show" identifier="moreFlash" id="t8l-mE-HbW"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -172,7 +186,7 @@ Koppeln-Symbol (fünf Balken) auf dem LED-Display.</string>
                                 <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="800" verticalCompressionResistancePriority="800" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Sqe-8X-loV">
-                                        <rect key="frame" x="117" y="10" width="600" height="343"/>
+                                        <rect key="frame" x="117" y="10" width="600" height="415"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="259" horizontalCompressionResistancePriority="759" verticalCompressionResistancePriority="759" scrollEnabled="NO" editable="NO" text="PROGRAMME UND NAMEN ANPASSEN" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YRS-Qp-QfU">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="37.5"/>
@@ -188,13 +202,13 @@ Koppeln-Symbol (fünf Balken) auf dem LED-Display.</string>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="257" verticalHuggingPriority="257" horizontalCompressionResistancePriority="757" verticalCompressionResistancePriority="757" image="programms" translatesAutoresizingMaskIntoConstraints="NO" id="JEH-pA-SEj">
-                                                <rect key="frame" x="0.0" y="123.5" width="600" height="158.5"/>
+                                                <rect key="frame" x="0.0" y="123.5" width="600" height="230.5"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" secondItem="JEH-pA-SEj" secondAttribute="height" multiplier="1980:523" id="SKJ-er-Mlm"/>
+                                                    <constraint firstAttribute="width" secondItem="JEH-pA-SEj" secondAttribute="height" multiplier="1980:760" id="SKJ-er-Mlm"/>
                                                 </constraints>
                                             </imageView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W2T-43-YeH">
-                                                <rect key="frame" x="0.0" y="287" width="600" height="56"/>
+                                                <rect key="frame" x="0.0" y="359" width="600" height="56"/>
                                                 <string key="text">ACHTUNG! Die Anpassungen sind nicht reversibel.
 Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
                                                 <color key="textColor" name="calliope-darkgray"/>
@@ -344,7 +358,7 @@ Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
                                 <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="800" verticalCompressionResistancePriority="800" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="92d-Cz-7Bn">
-                                        <rect key="frame" x="117" y="10" width="600" height="343"/>
+                                        <rect key="frame" x="117" y="10" width="600" height="504"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="259" horizontalCompressionResistancePriority="759" verticalCompressionResistancePriority="759" scrollEnabled="NO" editable="NO" text="KONTAKT" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V0j-9j-nCA">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="37.5"/>
@@ -352,8 +366,14 @@ Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
                                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="18"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="257" verticalHuggingPriority="257" horizontalCompressionResistancePriority="757" verticalCompressionResistancePriority="757" image="calliope_logo" translatesAutoresizingMaskIntoConstraints="NO" id="h2x-jc-f27">
+                                                <rect key="frame" x="0.0" y="42.5" width="600" height="121"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="h2x-jc-f27" secondAttribute="height" multiplier="1980:400" id="auN-hV-ZtX"/>
+                                                </constraints>
+                                            </imageView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="XkX-7n-aps">
-                                                <rect key="frame" x="0.0" y="42.5" width="600" height="300.5"/>
+                                                <rect key="frame" x="0.0" y="168.5" width="600" height="300.5"/>
                                                 <string key="text">Sollte es Fragen oder Probleme geben, helfen wir gern!
 Wir sind telefonisch oder per Email zu erreichen.
 
@@ -375,8 +395,16 @@ Raumerstraße 11
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
                                             </textView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FOM-5E-71J">
+                                                <rect key="frame" x="0.0" y="474" width="600" height="30"/>
+                                                <state key="normal" title="calliope.cc"/>
+                                                <connections>
+                                                    <segue destination="cWl-mP-Xkh" kind="show" identifier="moreCalliope" id="PtW-fq-q7G"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <constraints>
+                                            <constraint firstItem="h2x-jc-f27" firstAttribute="width" secondItem="h2x-jc-f27" secondAttribute="height" multiplier="1980:400" id="e4Z-kL-I1a"/>
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="600" id="wpg-dw-5p3"/>
                                         </constraints>
                                     </stackView>
@@ -521,14 +549,15 @@ Raumerstraße 11
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="BJw-AB-Dyt"/>
+        <segue reference="PtW-fq-q7G"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="IconHelp" width="30" height="33"/>
+        <image name="bluetooth_kralle" width="660" height="266.5"/>
+        <image name="bluetooth_startprogramm" width="660" height="266.5"/>
+        <image name="calliope_logo" width="660" height="133.5"/>
         <image name="editoren" width="660" height="133.5"/>
         <image name="editoren_playgrounds" width="660" height="133.5"/>
-        <image name="krallengiff_t1" width="660" height="400"/>
-        <image name="krallengiff_t3" width="660" height="400"/>
         <image name="preferences" width="660" height="400"/>
         <image name="programms" width="660" height="174.5"/>
         <namedColor name="calliope-brightturquoise">
