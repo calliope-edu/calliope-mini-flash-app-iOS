@@ -12,7 +12,7 @@ class DefaultProgram: DownloadableHexFile {
     
     static var defaultProgram: DefaultProgram = DefaultProgram()
     
-    let loadableProgramName = "Demo Program"
+    let loadableProgramName = "Start Program"
     let loadableProgramURL = UserDefaults.standard.string(forKey: SettingsKey.defaultHexFileURL.rawValue)!
     
     lazy var downloadedHexFile: HexFile? = storedHexFileInitializer()

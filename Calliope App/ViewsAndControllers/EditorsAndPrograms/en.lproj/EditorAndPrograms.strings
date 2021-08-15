@@ -23,8 +23,8 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "X8Y-8O-g6O"; */
 "X8Y-8O-g6O.text" = "Label";
 
-/* Class = "UIButton"; normalTitle = "Demo program"; ObjectID = "Z3u-48-3Mt"; */
-"Z3u-48-3Mt.normalTitle" = "Demo program";
+/* Class = "UIButton"; normalTitle = "Start program"; ObjectID = "Z3u-48-3Mt"; */
+"Z3u-48-3Mt.normalTitle" = "Start program";
 
 /* Class = "UITextView"; text = "program description"; ObjectID = "Zf4-FC-EzJ"; */
 "Zf4-FC-EzJ.text" = "program description";
@@ -41,8 +41,8 @@
 /* Class = "UILabel"; text = "Programs.\nThese are the programs you created so far."; ObjectID = "ips-vx-zky"; */
 "ips-vx-zky.text" = "Programs.\nThese are the programs you created so far.";
 
-/* Class = "UILabel"; text = "Demo program.\nHere you can download the original program of the Calliope mini."; ObjectID = "lYA-S0-b2D"; */
-"lYA-S0-b2D.text" = "Demo program.\nHere you can download the original program of the Calliope mini.";
+/* Class = "UILabel"; text = "Start program.\nHere you can download the original program of the Calliope mini."; ObjectID = "lYA-S0-b2D"; */
+"lYA-S0-b2D.text" = "Start program.\nHere you can download the original program of the Calliope mini.";
 
 /* Class = "UILabel"; text = "Nepo"; ObjectID = "pm2-Za-VcF"; */
 "pm2-Za-VcF.text" = "Nepo";
