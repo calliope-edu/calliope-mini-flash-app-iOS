@@ -32,6 +32,8 @@
 		2F57C3B82395B016008B0D69 /* TutorialPageMiniMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3B72395B016008B0D69 /* TutorialPageMiniMenu.swift */; };
 		2F57C3BA2395B520008B0D69 /* MenuNavigationCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3B92395B520008B0D69 /* MenuNavigationCollectionViewController.swift */; };
 		2F57C3BC2395B531008B0D69 /* MenuItemsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3BB2395B531008B0D69 /* MenuItemsCollectionViewController.swift */; };
+		2F5E8F0226C94F5F00CE03CB /* PlaygroundInstructionsCollectionCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5E8F0126C94F5F00CE03CB /* PlaygroundInstructionsCollectionCollectionViewController.swift */; };
+		2F5E8F0426C9787400CE03CB /* PlaygroundStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5E8F0326C9787400CE03CB /* PlaygroundStartViewController.swift */; };
 		2F61451022BF75DE001C2734 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61450F22BF75DE001C2734 /* AppDelegate.swift */; };
 		2F61451C22BF75DF001C2734 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F61451A22BF75DF001C2734 /* LaunchScreen.storyboard */; };
 		2F61456922BF761F001C2734 /* CalliopeApp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F61452822BF761F001C2734 /* CalliopeApp.storyboard */; };
@@ -151,6 +153,8 @@
 		2F57C3B72395B016008B0D69 /* TutorialPageMiniMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPageMiniMenu.swift; sourceTree = "<group>"; };
 		2F57C3B92395B520008B0D69 /* MenuNavigationCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuNavigationCollectionViewController.swift; sourceTree = "<group>"; };
 		2F57C3BB2395B531008B0D69 /* MenuItemsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemsCollectionViewController.swift; sourceTree = "<group>"; };
+		2F5E8F0126C94F5F00CE03CB /* PlaygroundInstructionsCollectionCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundInstructionsCollectionCollectionViewController.swift; sourceTree = "<group>"; };
+		2F5E8F0326C9787400CE03CB /* PlaygroundStartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundStartViewController.swift; sourceTree = "<group>"; };
 		2F61450C22BF75DE001C2734 /* Calliope App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Calliope App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F61450F22BF75DE001C2734 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2F61451B22BF75DF001C2734 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -284,6 +288,8 @@
 				2F2B809F25A1100800A7CCF7 /* PlaygroundCodeSnippetViewController.swift */,
 				2F763FE525A607A400C2029D /* SwiftCodeSnippetHighlighter.swift */,
 				2FCB70E326C7C00E00DF79B7 /* PlaygroundSnippets.storyboard */,
+				2F5E8F0126C94F5F00CE03CB /* PlaygroundInstructionsCollectionCollectionViewController.swift */,
+				2F5E8F0326C9787400CE03CB /* PlaygroundStartViewController.swift */,
 			);
 			path = Playground;
 			sourceTree = "<group>";
@@ -537,8 +543,8 @@
 		2FAA2D0822DB3C2500BC1A5F /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				2F4B8DA12598D7980026B480 /* HomeScreen.storyboard */,
 				2F00EAB722DA195A000B5FDE /* HomeScreenViewController.swift */,
+				2F4B8DA12598D7980026B480 /* HomeScreen.storyboard */,
 				2FAA2D0622DB3C0B00BC1A5F /* News */,
 				2FAA2D0522DB3BFB00BC1A5F /* Onboarding */,
 			);
@@ -772,6 +778,7 @@
 				2F2B809A25A0E01500A7CCF7 /* CodeSnippets.swift in Sources */,
 				2F61458A22BF761F001C2734 /* CollapseButtonProtocol.swift in Sources */,
 				2F57C3B2239058B0008B0D69 /* AnimatingTutorialViewController.swift in Sources */,
+				2F5E8F0426C9787400CE03CB /* PlaygroundStartViewController.swift in Sources */,
 				2FC2A12B22C962D100675C2F /* NewsDetailWebViewController.swift in Sources */,
 				2F61459522BF761F001C2734 /* ProgramCollectionViewCell.swift in Sources */,
 				2F00EAB822DA195A000B5FDE /* HomeScreenViewController.swift in Sources */,
@@ -779,6 +786,7 @@
 				2F00EABA22DA3D11000B5FDE /* OnboardingViewController.swift in Sources */,
 				2FFE865E22DB3DDF00728E7C /* TutorialPageConnect.swift in Sources */,
 				2F1BD9972674D804006A47F2 /* AutoHeightCollectionViewCell.swift in Sources */,
+				2F5E8F0226C94F5F00CE03CB /* PlaygroundInstructionsCollectionCollectionViewController.swift in Sources */,
 				2F57C3B62394F935008B0D69 /* BlinkingHeartProgram.swift in Sources */,
 				2F61457322BF761F001C2734 /* BluetoothConstants.swift in Sources */,
 				2F6145A222C7B3C2001C2734 /* NewsCollectionViewController.swift in Sources */,

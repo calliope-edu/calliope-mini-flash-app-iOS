@@ -14,7 +14,7 @@ class NewsCollectionViewController: UICollectionViewController, UICollectionView
 
     let widthRatio: CGFloat = 1.2
     
-	var news: [NewsItem] = [] {
+	var news: [NewsItemProtocol] = [] {
 		didSet {
 			DispatchQueue.main.async {
 				self.collectionView.reloadData()
@@ -24,17 +24,20 @@ class NewsCollectionViewController: UICollectionViewController, UICollectionView
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadNews()
+    }
 
-		NewsManager.getNews { [weak self] result in
-			switch result {
-			case .success(let news):
-				self?.news = news
+    func loadNews() {
+        NewsManager.getNews { [weak self] result in
+            switch result {
+            case .success(let news):
+                self?.news = news
             case .failure(_):
-				self?.news = NewsManager.getDefaultNews()
-				//TODO: show offline status or restart news discovery
-				break
-			}
-		}
+                self?.news = NewsManager.getDefaultNews()
+                //TODO: show offline status or restart news discovery
+                break
+            }
+        }
     }
     
     var intermediarySize: CGSize? = nil

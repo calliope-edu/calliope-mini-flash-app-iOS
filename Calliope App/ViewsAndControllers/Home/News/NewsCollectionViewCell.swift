@@ -9,7 +9,7 @@
 import UIKit
 
 class NewsCollectionViewCell: UICollectionViewCell {
-	var news: NewsItem? {
+	var news: NewsItemProtocol? {
 		didSet {
 			loadNews()
 		}
