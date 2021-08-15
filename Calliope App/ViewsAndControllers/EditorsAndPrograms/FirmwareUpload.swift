@@ -136,19 +136,25 @@ class FirmwareUpload {
     }()
 
 	private var finished: () -> () = {}
-	private var failed: () -> () = {
-		FirmwareUpload.uploadingInstance = nil
-	}
+    private var failed: () -> () = {}
 
 	private var calliope = MatrixConnectionViewController.instance.usageReadyCalliope as? FlashableCalliope
 
-	func upload(finished: @escaping () -> ()) {
+	func upload(finishedCallback: @escaping () -> ()) {
 		FirmwareUpload.uploadingInstance = self
 
+        UIApplication.shared.isIdleTimerDisabled = true
+
+        let downloadCompletion = {
+            FirmwareUpload.uploadingInstance = nil
+            UIApplication.shared.isIdleTimerDisabled = false
+        }
+
+        self.failed = downloadCompletion
 		self.finished = {
-			FirmwareUpload.uploadingInstance = nil
+			downloadCompletion()
 			DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.0) {
-				finished()
+				finishedCallback()
 			}
 		}
 
