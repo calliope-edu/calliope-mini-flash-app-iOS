@@ -70,13 +70,21 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
 
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         LogNotify.log("policy for action \(navigationAction.request.url?.absoluteString.truncate(length: 100) ?? "")")
-        let request = navigationAction.request
-        if let download = editor.download(request) {
+
+        if let download = editor.download(navigationAction.request) {
             decisionHandler(.cancel)
 			upload(result: download)
-        } else if editor.isBackNavigation(request) {
+        } else if let url = navigationAction.request.url,
+                  let host = url.host,
+                  host.matches(regex: "^calliope.cc").count > 0 {
 			decisionHandler(.cancel)
 			self.navigationController?.popViewController(animated: true)
+        } else if
+            let url = navigationAction.request.url,
+            let host = url.host,
+            host.matches(regex: "roberta-home").count > 0 {
+            decisionHandler(.cancel)
+            UIApplication.shared.open(url)
         } else {
             decisionHandler(.allow)
         }

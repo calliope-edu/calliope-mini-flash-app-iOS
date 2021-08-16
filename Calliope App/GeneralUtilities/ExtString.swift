@@ -61,12 +61,16 @@ extension String {
 	func matches(regex: String) -> [String] {
 		do {
 			let regex = try NSRegularExpression(pattern: regex, options: [])
-            let results = regex.matches(in: self, options: [], range: NSRange(self.startIndex..., in:self))
-            return results.map {
-                String(self[Range($0.range, in: self)!])
-            }
+			let nsString = self as NSString
+			let results = regex.matches(in: self, options: [], range: NSMakeRange(0, nsString.length))
+			var match = [String]()
+			for result in results {
+				for i in 0..<result.numberOfRanges {
+					match.append(nsString.substring( with: result.range(at: i) ))
+				}
+			}
+			return match
 		} catch {
-            LogNotify.log("error while matching regex \(regex) to string \(self.truncate(length: 80))")
 			return []
 		}
 	}
