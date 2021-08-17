@@ -106,9 +106,7 @@ class FirmwareUpload {
                                            options: [], metrics: nil, views: ["logTextView": logTextView])
         )
 
-        uploadController.addAction(UIAlertAction(title: "Cancel".localized, style: .destructive) {  [weak self] _ in
-			self?.finished()
-		})
+        uploadController.addAction(cancelUploadAction)
 		return uploadController
 	}()
 
@@ -124,6 +122,12 @@ class FirmwareUpload {
 		ring.valueFormatter = UICircularProgressRingFormatter(valueIndicator: "%", rightToLeft: false, showFloatingPoint: false, decimalPlaces: 0)
 		return ring
 	}()
+
+    private lazy var cancelUploadAction: UIAlertAction = {
+        return UIAlertAction(title: "Cancel".localized, style: .destructive) {  [weak self] _ in
+            self?.finished()
+        }
+    }()
 
     private lazy var logTextView: UITextView = {
         let textView = UITextView()
@@ -183,7 +187,13 @@ class FirmwareUpload {
 extension FirmwareUpload: DFUProgressDelegate, DFUServiceDelegate, LoggerDelegate {
 	func dfuProgressDidChange(for part: Int, outOf totalParts: Int, to progress: Int, currentSpeedBytesPerSecond: Double, avgSpeedBytesPerSecond: Double) {
 		DispatchQueue.main.async { [weak self] in
-			self?.progressRing.startProgress(to: CGFloat(progress), duration: 0.2)
+            if let self = self {
+                self.progressRing.startProgress(to: CGFloat(progress), duration: 0.2)
+                if progress > 0 && self.cancelUploadAction.isEnabled {
+                    self.cancelUploadAction.isEnabled = false
+                    //alertView.
+                }
+            }
 		}
 		if progress == 100 {
 			self.finished()

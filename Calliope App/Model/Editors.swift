@@ -9,6 +9,7 @@ protocol Editor {
     var name: String { get }
     var url: URL? { get }
     func download(_ request: URLRequest) -> EditorDownload?
+    func isBackNavigation(_ request: URLRequest) -> Bool
 }
 
 // https://miniedit.calliope.cc/86184610-93de-11e7-a0b1-cd0ef2962ca5
@@ -27,6 +28,10 @@ final class MiniEditor: Editor {
         guard matches.count == 2 else { return nil }
         return EditorDownload(name: "mini-" + matches[1], url: url)
     }
+
+    func isBackNavigation(_ request: URLRequest) -> Bool {
+        fatalError("MiniEditor not implemented currently")
+    }
 }
 
 final class MakeCode: Editor {
@@ -38,10 +43,14 @@ final class MakeCode: Editor {
     func download(_ request: URLRequest) -> EditorDownload? {
         guard
 			let s = request.url?.absoluteString,
-			s.matches(regex: "^data:application/x-calliope-hex").count
-                + s.matches(regex: "^data:application/x-microbit-hex").count == 1,
+			s.matches(regex: "^([^:]*://)?data:application/x-calliope-hex").count
+                + s.matches(regex: "^([^:]*://)?data:application/x-microbit-hex").count == 1,
 			let url = URL(string:s) else { return nil }
         return EditorDownload(name: "makecode-" + UUID().uuidString, url: url)
+    }
+
+    func isBackNavigation(_ request: URLRequest) -> Bool {
+        return request.url?.host?.matches(regex: "^calliope.cc").count ?? 0 > 0
     }
 }
 
@@ -58,6 +67,10 @@ final class RobertaEditor: Editor {
         let matches = s.matches(regex: "^data:")
         guard matches.count == 1 else { return nil }
         return EditorDownload(name: "roberta-" + UUID().uuidString, url: url)
+    }
+
+    func isBackNavigation(_ request: URLRequest) -> Bool {
+        return request.url?.host?.matches(regex: "roberta-home").count ?? 0 > 0
     }
 }
 

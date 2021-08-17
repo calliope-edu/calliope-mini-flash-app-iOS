@@ -20,8 +20,23 @@ class HelpContentViewController: UIViewController {
         guard let webViewController = segue.destination as? HelpWebViewController else {
             return
         }
-        if segue.identifier == "moreConnect" {
+        if segue.identifier == "morebluetooth" {
+            webViewController.url = URL(string: "https://calliope.cc/programmieren/mobil")
+        }
+        if segue.identifier == "moreFlash" {
+            webViewController.url = URL(string: "https://calliope.cc/start/tipps")
+        }
+        if segue.identifier == "moreEditors" {
+            webViewController.url = URL(string: "https://calliope.cc/programmieren/editoren")
+        }
+        if segue.identifier == "moreCalliope" {
             webViewController.url = URL(string: "https://calliope.cc")
+        }
+        if segue.identifier == "morePlayground" {
+            webViewController.url = URL(string: "https://calliope.cc/programmieren/playground")
+        }
+        if segue.identifier == "moreCalliopeMini" {
+            webViewController.url = URL(string: "https://calliope.cc/calliope-mini/uebersicht")
         }
     }
 
