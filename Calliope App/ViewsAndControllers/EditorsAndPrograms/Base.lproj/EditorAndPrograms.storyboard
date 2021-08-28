@@ -95,7 +95,7 @@ These editors allow you to write programs for showing text on the Calliope displ
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lYA-S0-b2D">
                                                                 <rect key="frame" x="0.0" y="0.0" width="439" height="36"/>
-                                                                <string key="text">Demo program.
+                                                                <string key="text">Start program.
 Here you can download the original program of the Calliope mini.</string>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -114,7 +114,7 @@ Here you can download the original program of the Calliope mini.</string>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                         <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
                                                                         <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="40" maxY="0.0"/>
-                                                                        <state key="normal" title="Demo program" image="upload_button"/>
+                                                                        <state key="normal" title="Start program" image="upload_button"/>
                                                                         <connections>
                                                                             <action selector="uploadDefaultProgram:" destination="rb5-ni-SG8" eventType="touchUpInside" id="4as-T9-8R6"/>
                                                                         </connections>

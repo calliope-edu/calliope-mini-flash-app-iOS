@@ -8,8 +8,17 @@
 
 import UIKit
 
+protocol NewsItemProtocol {
+    var text: String { get set }
+    var url: URL { get set }
+    var color: String? { get set }
+    var textcolor: String? { get set }
+
+    func loadImage(_ completion: @escaping (Result<UIImage, Error>) -> ())
+}
+
 struct NewsManager {
-	static func getNews(_ completion: @escaping (Result<[NewsItem], Error>) -> ()) {
+	static func getNews(_ completion: @escaping (Result<[NewsItemProtocol], Error>) -> ()) {
 
 		#if DEBUG
 		URLCache.shared.removeAllCachedResponses()
@@ -37,13 +46,13 @@ struct NewsManager {
 		task.resume()
 	}
 
-	static func getDefaultNews() -> [NewsItem] {
-		return [NewsItem(image: nil, text: "No Internet", url: URL(string: "http://calliope.cc")!, color: #colorLiteral(red: 0.5019999743, green: 0.451000005, blue: 0.8980000019, alpha: 1).hex, textcolor: #colorLiteral(red: 0.4079999924, green: 0.8309999704, blue: 0.8309999704, alpha: 1).hex)]
+	static func getDefaultNews() -> [NewsItemProtocol] {
+		return [NewsItemWithStaticImage(image: #imageLiteral(resourceName: "teaser_noInternet.pdf"), text: "No Internet", url: URL(string: "http://calliope.cc")!, color: #colorLiteral(red: 0.5019999743, green: 0.451000005, blue: 0.8980000019, alpha: 1).hex, textcolor: #colorLiteral(red: 0.4079999924, green: 0.8309999704, blue: 0.8309999704, alpha: 1).hex)]
         //color: #colorLiteral(red: 0.5019999743, green: 0.451000005, blue: 0.8980000019, alpha: 1).hex, textcolor: #colorLiteral(red: 0.4079999924, green: 0.8309999704, blue: 0.8309999704, alpha: 1).hex
 	}
 }
 
-struct NewsItem: Codable {
+struct NewsItem: NewsItemProtocol, Codable {
 	var image: URL?
 	var text: String
 	var url: URL
@@ -66,4 +75,22 @@ struct NewsItem: Codable {
 		}
 		task.resume()
 	}
+}
+
+
+
+struct NewsItemWithStaticImage: NewsItemProtocol {
+    var image: UIImage?
+    var text: String
+    var url: URL
+    var color: String?
+    var textcolor: String?
+
+    func loadImage(_ completion: @escaping (Result<UIImage, Error>) -> ()) {
+        guard let image = image else {
+            completion(.success(#imageLiteral(resourceName: "teaser_noInternet.pdf")))
+            return
+        }
+        completion(.success(image))
+    }
 }
