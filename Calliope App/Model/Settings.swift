@@ -38,43 +38,62 @@ public struct Settings {
     static var defaultBlinkingHeartUrl = "http://calliope.cc/downloads/blinkendes_herz_calliope_mini.hex"
     static var defaultPlaygroundTemplateUrl = "https://calliope.cc/forumassets/snippets.json"
 
-	static func registerDefaults() {
+    static var defaultLocalEditorEnabled = false
+    static var defaultMakeCodeEnabled = true
+    static var defaultRobertaEnabled = true
+    static var defaultPlaygroundsEnabled = true
+
+    static var defaultAppVersion = "1.0"
+
+    static var defaultResetSettingsValue = false
+
+    private static func defaultForKey(_ key: SettingsKey) -> Any {
+        switch key {
+        case .localEditor:
+            return defaultLocalEditorEnabled
+        case .makeCode:
+            return defaultMakecodeUrl
+        case .roberta:
+            return defaultRobertaUrl
+        case .playgrounds:
+            return defaultPlaygroundsEnabled
+        case .makecodeUrl:
+            return defaultMakecodeUrl
+        case .robertaUrl:
+            return defaultRobertaUrl
+        case .appVersion:
+            return defaultAppVersion
+        case .newsURL:
+            return defaultNewsUrl
+        case .defaultHexFileURL:
+            return defaultHexFileUrl
+        case .blinkingHeartURL:
+            return defaultBlinkingHeartUrl
+        case .playgroundTemplateUrl:
+            return defaultPlaygroundTemplateUrl
+        case .resetSettings:
+            return false
+        }
+}
+
+static func registerDefaults() {
 		var defaultSettings: [String: Any] = [:]
 		for key in SettingsKey.allCases {
-			let defaultValue: Any
-			switch key {
-			case .localEditor:
-				defaultValue = false
-			case .makeCode:
-				defaultValue = true
-			case .roberta:
-				defaultValue = true
-			case .playgrounds:
-				defaultValue = true
-			case .makecodeUrl:
-                defaultValue = defaultMakecodeUrl
-			case .robertaUrl:
-				defaultValue = defaultRobertaUrl
-			case .appVersion:
-				defaultValue = "1.0"
-			case .newsURL:
-				defaultValue = defaultNewsUrl
-            case .defaultHexFileURL:
-                defaultValue = defaultHexFileUrl
-            case .blinkingHeartURL:
-                defaultValue = defaultBlinkingHeartUrl
-            case .playgroundTemplateUrl:
-                defaultValue = defaultPlaygroundTemplateUrl
-            case .resetSettings:
-                defaultValue = false
-            }
+			let defaultValue = defaultForKey(key)
 			defaultSettings[key.rawValue] = defaultValue
 		}
 		UserDefaults.standard.register(defaults: defaultSettings)
 	}
     
     static func updateAppVersion() {
-        UserDefaults.standard.set(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String, forKey: SettingsKey.appVersion.rawValue)
+        let versionString: String? = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+        UserDefaults.standard.set(versionString, forKey: SettingsKey.appVersion.rawValue)
+    }
+
+    static func resetSettingsIfRequired() {
+        if UserDefaults.standard.bool(forKey: SettingsKey.resetSettings.rawValue) {
+            resetSettings()
+        }
     }
 
     private static func resetSettings() {
@@ -82,5 +101,4 @@ public struct Settings {
             UserDefaults.standard.removeObject(forKey: $0.rawValue)
         }
     }
-    
 }
