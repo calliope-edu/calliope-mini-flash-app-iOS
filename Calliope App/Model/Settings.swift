@@ -25,6 +25,8 @@ public enum SettingsKey: String, CaseIterable {
     case defaultHexFileURL = "calliopeDefaultHexFilePreference"
 
     case blinkingHeartURL = "calliopeBlinkingHeartHexPreference"
+    
+    case resetSettings = "resetSettingsPreference"
 }
 
 public struct Settings {
@@ -63,6 +65,8 @@ public struct Settings {
                 defaultValue = defaultBlinkingHeartUrl
             case .playgroundTemplateUrl:
                 defaultValue = defaultPlaygroundTemplateUrl
+            case .resetSettings:
+                defaultValue = false
             }
 			defaultSettings[key.rawValue] = defaultValue
 		}
@@ -72,4 +76,11 @@ public struct Settings {
     static func updateAppVersion() {
         UserDefaults.standard.set(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String, forKey: SettingsKey.appVersion.rawValue)
     }
+
+    private static func resetSettings() {
+        SettingsKey.allCases.forEach {
+            UserDefaults.standard.removeObject(forKey: $0.rawValue)
+        }
+    }
+    
 }
