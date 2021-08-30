@@ -1,7 +1,7 @@
 platform :ios, '11.0'
 
 pod 'TPKeyboardAvoiding'
-pod 'SnapKit', '~> 5.0.0'
+pod 'SnapKit'
 pod 'iOSDFULibrary'
 pod 'UICircularProgressRing'
 pod 'DeepDiff'

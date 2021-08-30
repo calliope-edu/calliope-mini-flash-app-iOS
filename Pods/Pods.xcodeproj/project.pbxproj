@@ -207,94 +207,94 @@
 /* Begin PBXFileReference section */
 		001889D5AE55AE57761C95ACE1651734 /* SecureDFUControlPoint.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SecureDFUControlPoint.swift; path = iOSDFULibrary/Classes/Implementation/SecureDFU/Characteristics/SecureDFUControlPoint.swift; sourceTree = "<group>"; };
 		004AA9DACA9291E3154021D56143C75A /* ConstraintInsets.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintInsets.swift; path = Source/ConstraintInsets.swift; sourceTree = "<group>"; };
-		018AF79768A2D51F0153CC316AF826DE /* tomorrow-night-blue.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "tomorrow-night-blue.min.css"; path = "Pod/Assets/styles/tomorrow-night-blue.min.css"; sourceTree = "<group>"; };
+		018AF79768A2D51F0153CC316AF826DE /* tomorrow-night-blue.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "tomorrow-night-blue.min.css"; path = "Pod/Assets/styles/tomorrow-night-blue.min.css"; sourceTree = "<group>"; };
 		02DC9893476AA2D4F8B848BA6156B5B4 /* Archive.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Archive.swift; path = Sources/ZIPFoundation/Archive.swift; sourceTree = "<group>"; };
-		0384B4056A44F14D6BE4A7DA3B88417D /* vs.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = vs.min.css; path = Pod/Assets/styles/vs.min.css; sourceTree = "<group>"; };
-		038D39FE38AD68DFAF32C1F200DA975A /* monokai.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = monokai.min.css; path = Pod/Assets/styles/monokai.min.css; sourceTree = "<group>"; };
+		0384B4056A44F14D6BE4A7DA3B88417D /* vs.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = vs.min.css; path = Pod/Assets/styles/vs.min.css; sourceTree = "<group>"; };
+		038D39FE38AD68DFAF32C1F200DA975A /* monokai.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = monokai.min.css; path = Pod/Assets/styles/monokai.min.css; sourceTree = "<group>"; };
 		03A0D38075085871CE1A186535E7ADD1 /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TPKeyboardAvoidingScrollView.m; path = TPKeyboardAvoiding/TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
 		045D7FC97632188F2FFBBB8AB67C1C31 /* ConstraintLayoutGuide.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutGuide.swift; path = Source/ConstraintLayoutGuide.swift; sourceTree = "<group>"; };
 		04A1329DBB6168AE3FD9873E56C61FA1 /* DeepDiff.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = DeepDiff.modulemap; sourceTree = "<group>"; };
-		04C07F4CBBF478911231431750A6ABDF /* tomorrow.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = tomorrow.min.css; path = Pod/Assets/styles/tomorrow.min.css; sourceTree = "<group>"; };
-		057548F3F4FD5B0509D88FDBCE20C9C5 /* solarized-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "solarized-dark.min.css"; path = "Pod/Assets/styles/solarized-dark.min.css"; sourceTree = "<group>"; };
+		04C07F4CBBF478911231431750A6ABDF /* tomorrow.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = tomorrow.min.css; path = Pod/Assets/styles/tomorrow.min.css; sourceTree = "<group>"; };
+		057548F3F4FD5B0509D88FDBCE20C9C5 /* solarized-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "solarized-dark.min.css"; path = "Pod/Assets/styles/solarized-dark.min.css"; sourceTree = "<group>"; };
 		05AB2ABEDBA0BAFEE5629476EAF93524 /* ManifestFirmwareInfo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ManifestFirmwareInfo.swift; path = iOSDFULibrary/Classes/Utilities/DFUPackage/Manifest/ManifestFirmwareInfo.swift; sourceTree = "<group>"; };
 		05F059A1EF5F15F32D555724FDE88EAD /* UICircularProgressRing-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UICircularProgressRing-prefix.pch"; sourceTree = "<group>"; };
 		0665D9FC1C85FE37CED28D281EC4069D /* Pods-Calliope App-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Calliope App-acknowledgements.markdown"; sourceTree = "<group>"; };
-		0668667C61FA0630DA910B1566365D6E /* dracula.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = dracula.min.css; path = Pod/Assets/styles/dracula.min.css; sourceTree = "<group>"; };
-		069BEFF3D94237C2ACDC4C7D78C151B8 /* androidstudio.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = androidstudio.min.css; path = Pod/Assets/styles/androidstudio.min.css; sourceTree = "<group>"; };
+		0668667C61FA0630DA910B1566365D6E /* dracula.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = dracula.min.css; path = Pod/Assets/styles/dracula.min.css; sourceTree = "<group>"; };
+		069BEFF3D94237C2ACDC4C7D78C151B8 /* androidstudio.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = androidstudio.min.css; path = Pod/Assets/styles/androidstudio.min.css; sourceTree = "<group>"; };
 		07BC3136F71AF61088C6AF919AC0BBFF /* Theme.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Theme.swift; path = Pod/Classes/Theme.swift; sourceTree = "<group>"; };
-		0AB07E600277786BF4F1A345B2160D66 /* arduino-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "arduino-light.min.css"; path = "Pod/Assets/styles/arduino-light.min.css"; sourceTree = "<group>"; };
+		0AB07E600277786BF4F1A345B2160D66 /* arduino-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "arduino-light.min.css"; path = "Pod/Assets/styles/arduino-light.min.css"; sourceTree = "<group>"; };
 		0C08269F947F1F33562DECA8730EDFFF /* Highlightr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Highlightr.debug.xcconfig; sourceTree = "<group>"; };
 		0C2FDED6DB757B47350F71114913F4C4 /* ConstraintInsetTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintInsetTarget.swift; path = Source/ConstraintInsetTarget.swift; sourceTree = "<group>"; };
-		0DFFD83001C65F1193B782D1C5FC7131 /* darkula.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = darkula.min.css; path = Pod/Assets/styles/darkula.min.css; sourceTree = "<group>"; };
+		0DFFD83001C65F1193B782D1C5FC7131 /* darkula.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = darkula.min.css; path = Pod/Assets/styles/darkula.min.css; sourceTree = "<group>"; };
 		0FBFDDC636CF246277F4340C75A3B74E /* ConstraintLayoutGuide+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ConstraintLayoutGuide+Extensions.swift"; path = "Source/ConstraintLayoutGuide+Extensions.swift"; sourceTree = "<group>"; };
 		0FE643D40601A2D62EF5011709E92921 /* UIScrollView+TPKeyboardAvoidingAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+TPKeyboardAvoidingAdditions.h"; path = "TPKeyboardAvoiding/UIScrollView+TPKeyboardAvoidingAdditions.h"; sourceTree = "<group>"; };
-		105F5D91B7BA9043704A3B5D696BB715 /* default.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = default.min.css; path = Pod/Assets/styles/default.min.css; sourceTree = "<group>"; };
+		105F5D91B7BA9043704A3B5D696BB715 /* default.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = default.min.css; path = Pod/Assets/styles/default.min.css; sourceTree = "<group>"; };
 		1165C01029ACC9856452D43F891D9035 /* DFUServiceDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUServiceDelegate.swift; path = iOSDFULibrary/Classes/Implementation/DFUServiceDelegate.swift; sourceTree = "<group>"; };
-		14815DC6AE683A4496F8E0A805962F17 /* paraiso-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "paraiso-dark.min.css"; path = "Pod/Assets/styles/paraiso-dark.min.css"; sourceTree = "<group>"; };
+		14815DC6AE683A4496F8E0A805962F17 /* paraiso-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "paraiso-dark.min.css"; path = "Pod/Assets/styles/paraiso-dark.min.css"; sourceTree = "<group>"; };
 		152ACC96A231496A600D80B2A390AE1A /* MoveReducer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MoveReducer.swift; path = Sources/Shared/MoveReducer.swift; sourceTree = "<group>"; };
-		158BF61F088C87D9CEEE310445885C9C /* lightfair.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = lightfair.min.css; path = Pod/Assets/styles/lightfair.min.css; sourceTree = "<group>"; };
+		158BF61F088C87D9CEEE310445885C9C /* lightfair.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = lightfair.min.css; path = Pod/Assets/styles/lightfair.min.css; sourceTree = "<group>"; };
 		1646A82FCC66A808D2F036E3D3658817 /* UICircularRingValueFormatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UICircularRingValueFormatter.swift; path = Legacy/UICircularRingValueFormatter.swift; sourceTree = "<group>"; };
-		184FDD1056DC959E904B2E16E503BAF7 /* qtcreator_dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = qtcreator_dark.min.css; path = Pod/Assets/styles/qtcreator_dark.min.css; sourceTree = "<group>"; };
+		184FDD1056DC959E904B2E16E503BAF7 /* qtcreator_dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = qtcreator_dark.min.css; path = Pod/Assets/styles/qtcreator_dark.min.css; sourceTree = "<group>"; };
 		186569B014400478BB2CB95813E0F3BB /* DFUService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUService.swift; path = iOSDFULibrary/Classes/Implementation/GenericDFU/DFUService.swift; sourceTree = "<group>"; };
 		1895CF684D5377FF7AA992934413E9CB /* SecureDFUServiceInitiator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SecureDFUServiceInitiator.swift; path = iOSDFULibrary/Classes/Implementation/SecureDFU/DFU/SecureDFUServiceInitiator.swift; sourceTree = "<group>"; };
 		19AF1D1CCB2C7AFB23B705454444D876 /* Typealiases.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Typealiases.swift; path = Source/Typealiases.swift; sourceTree = "<group>"; };
 		19EE2BAA4791E19B7DC2048E2FBE11A6 /* ConstraintItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintItem.swift; path = Source/ConstraintItem.swift; sourceTree = "<group>"; };
 		19F1DB175468E939A861083E7195539D /* DFUExecutor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUExecutor.swift; path = iOSDFULibrary/Classes/Implementation/GenericDFU/DFUExecutor.swift; sourceTree = "<group>"; };
 		1AE3D7FC87C77B4FA3D5B3BB5E900AC3 /* Pods-Calliope App-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Calliope App-dummy.m"; sourceTree = "<group>"; };
-		1B367864007A754006ED1F9949709BFF /* libPods-Calliope App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Calliope App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1B367864007A754006ED1F9949709BFF /* libPods-Calliope App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-Calliope App.a"; path = "libPods-Calliope App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B768478A1EF52DB27D8531574E84EF5 /* Highlightr-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Highlightr-umbrella.h"; sourceTree = "<group>"; };
 		1B9DF795C2DE8394A5186BDC7B899234 /* ConstraintMaker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMaker.swift; path = Source/ConstraintMaker.swift; sourceTree = "<group>"; };
-		1D83E845F900C6F8F2F709BFEB2DC959 /* atelier-lakeside-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "atelier-lakeside-light.min.css"; path = "Pod/Assets/styles/atelier-lakeside-light.min.css"; sourceTree = "<group>"; };
+		1D83E845F900C6F8F2F709BFEB2DC959 /* atelier-lakeside-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "atelier-lakeside-light.min.css"; path = "Pod/Assets/styles/atelier-lakeside-light.min.css"; sourceTree = "<group>"; };
 		1D9FCC71C27709619737BB3D0CF4F09E /* Data+Serialization.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Data+Serialization.swift"; path = "Sources/ZIPFoundation/Data+Serialization.swift"; sourceTree = "<group>"; };
 		1F27F10E868FEC79C164DE7237AEE6F1 /* SecureDFUPacket.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SecureDFUPacket.swift; path = iOSDFULibrary/Classes/Implementation/SecureDFU/Characteristics/SecureDFUPacket.swift; sourceTree = "<group>"; };
-		1F9107ABB518D477968AF3402BEED77E /* far.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = far.min.css; path = Pod/Assets/styles/far.min.css; sourceTree = "<group>"; };
+		1F9107ABB518D477968AF3402BEED77E /* far.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = far.min.css; path = Pod/Assets/styles/far.min.css; sourceTree = "<group>"; };
 		201A6625F2A7842CD9DE35FEDA3CD736 /* UICircularRing.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UICircularRing.swift; path = Legacy/UICircularRing.swift; sourceTree = "<group>"; };
-		21B1375088A0310C7AE2BE4C8188D12F /* libiOSDFULibrary.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiOSDFULibrary.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		21B1375088A0310C7AE2BE4C8188D12F /* libiOSDFULibrary.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libiOSDFULibrary.a; path = libiOSDFULibrary.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		226299EE076911B29D26A2D5B860BAA6 /* LegacyDFUPeripheral.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LegacyDFUPeripheral.swift; path = iOSDFULibrary/Classes/Implementation/LegacyDFU/Peripherals/LegacyDFUPeripheral.swift; sourceTree = "<group>"; };
 		2421D0FCAF5393045C365369624237BA /* LoggerDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LoggerDelegate.swift; path = iOSDFULibrary/Classes/Utilities/Logging/LoggerDelegate.swift; sourceTree = "<group>"; };
 		24AEB38DC215844E3D7DEAD2AD416F7C /* UICollectionView+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UICollectionView+Extensions.swift"; path = "Sources/iOS/UICollectionView+Extensions.swift"; sourceTree = "<group>"; };
 		25995D69351BF2B7739DABE5842A1353 /* iOSDFULibrary-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "iOSDFULibrary-dummy.m"; sourceTree = "<group>"; };
-		26A709025A67B0C0526212CA97335AB9 /* darcula.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = darcula.min.css; path = Pod/Assets/styles/darcula.min.css; sourceTree = "<group>"; };
+		26A709025A67B0C0526212CA97335AB9 /* darcula.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = darcula.min.css; path = Pod/Assets/styles/darcula.min.css; sourceTree = "<group>"; };
 		27420D91AEB720C186BDB540024AC714 /* ConstraintMultiplierTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMultiplierTarget.swift; path = Source/ConstraintMultiplierTarget.swift; sourceTree = "<group>"; };
-		281FF343B752A92DB1E05F42A476D344 /* atelier-heath-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "atelier-heath-dark.min.css"; path = "Pod/Assets/styles/atelier-heath-dark.min.css"; sourceTree = "<group>"; };
+		281FF343B752A92DB1E05F42A476D344 /* atelier-heath-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "atelier-heath-dark.min.css"; path = "Pod/Assets/styles/atelier-heath-dark.min.css"; sourceTree = "<group>"; };
 		29C5A5260195F7008775AB3A5F6BBB3A /* ConstraintAttributes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintAttributes.swift; path = Source/ConstraintAttributes.swift; sourceTree = "<group>"; };
 		2FA3D50003B1A3272D1F10691EF040B6 /* TPKeyboardAvoiding-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "TPKeyboardAvoiding-dummy.m"; sourceTree = "<group>"; };
 		343E6F01A10C387ECABAF2ED2FC3BBB2 /* DeepDiff.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = DeepDiff.release.xcconfig; sourceTree = "<group>"; };
 		34B2CE4AC2E58852767B230119CDE2BB /* DeepDiff-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "DeepDiff-prefix.pch"; sourceTree = "<group>"; };
-		36EE8716F6D043B43175B2BDA8C26BEF /* github-gist.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "github-gist.min.css"; path = "Pod/Assets/styles/github-gist.min.css"; sourceTree = "<group>"; };
+		36EE8716F6D043B43175B2BDA8C26BEF /* github-gist.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "github-gist.min.css"; path = "Pod/Assets/styles/github-gist.min.css"; sourceTree = "<group>"; };
 		37781DF35A89716CC797906112C12226 /* UICircularProgressRing-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "UICircularProgressRing-dummy.m"; sourceTree = "<group>"; };
-		3AE34D6598E2448E2909B5EA7B6E8E39 /* a11y-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "a11y-dark.min.css"; path = "Pod/Assets/styles/a11y-dark.min.css"; sourceTree = "<group>"; };
+		3AE34D6598E2448E2909B5EA7B6E8E39 /* a11y-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "a11y-dark.min.css"; path = "Pod/Assets/styles/a11y-dark.min.css"; sourceTree = "<group>"; };
 		3C26AA5D04A99D7F40D5F8A02024FBFE /* ZIPFoundation-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ZIPFoundation-dummy.m"; sourceTree = "<group>"; };
-		3C74E441BB7C20D78B6A760427440987 /* atelier-estuary-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "atelier-estuary-light.min.css"; path = "Pod/Assets/styles/atelier-estuary-light.min.css"; sourceTree = "<group>"; };
+		3C74E441BB7C20D78B6A760427440987 /* atelier-estuary-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "atelier-estuary-light.min.css"; path = "Pod/Assets/styles/atelier-estuary-light.min.css"; sourceTree = "<group>"; };
 		3CF29243F825FE6B90ADB5394341DEE0 /* ConstraintLayoutGuideDSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutGuideDSL.swift; path = Source/ConstraintLayoutGuideDSL.swift; sourceTree = "<group>"; };
-		3DA79B84D533A6DF32534B8D271E5FA9 /* foundation.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = foundation.min.css; path = Pod/Assets/styles/foundation.min.css; sourceTree = "<group>"; };
+		3DA79B84D533A6DF32534B8D271E5FA9 /* foundation.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = foundation.min.css; path = Pod/Assets/styles/foundation.min.css; sourceTree = "<group>"; };
 		4378DE87647FAADDDEC7C9332988F42D /* SnapKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SnapKit-umbrella.h"; sourceTree = "<group>"; };
 		446BF150C524126121766F4D882A7A17 /* ConstraintRelation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintRelation.swift; path = Source/ConstraintRelation.swift; sourceTree = "<group>"; };
 		45038C9F651AB40C110E5A5EEE407C1C /* ConstraintViewDSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintViewDSL.swift; path = Source/ConstraintViewDSL.swift; sourceTree = "<group>"; };
 		451E59C8AEA3C05C4BA62DACBAFE0037 /* SnapKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SnapKit.debug.xcconfig; sourceTree = "<group>"; };
 		453E47AE21D85ABC480B117D53F2F007 /* Highlightr-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Highlightr-prefix.pch"; sourceTree = "<group>"; };
-		45A3EC98311F8B1478AC57244B4570CC /* libDeepDiff.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDeepDiff.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		46D7FB8F7B7A4E28F780E47E770132E8 /* nord.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = nord.min.css; path = Pod/Assets/styles/nord.min.css; sourceTree = "<group>"; };
+		45A3EC98311F8B1478AC57244B4570CC /* libDeepDiff.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libDeepDiff.a; path = libDeepDiff.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		46D7FB8F7B7A4E28F780E47E770132E8 /* nord.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = nord.min.css; path = Pod/Assets/styles/nord.min.css; sourceTree = "<group>"; };
 		480513643F59BA449813EDFB208CB435 /* DFUPeripheralSelectorDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUPeripheralSelectorDelegate.swift; path = iOSDFULibrary/Classes/Implementation/DFUPeripheralSelectorDelegate.swift; sourceTree = "<group>"; };
-		486FA9F9BD2411E17C46E14C79C6EBD7 /* qtcreator_light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = qtcreator_light.min.css; path = Pod/Assets/styles/qtcreator_light.min.css; sourceTree = "<group>"; };
-		48A4A6EDC08C8AC933D0DCD507E9D173 /* libZIPFoundation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libZIPFoundation.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		486FA9F9BD2411E17C46E14C79C6EBD7 /* qtcreator_light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = qtcreator_light.min.css; path = Pod/Assets/styles/qtcreator_light.min.css; sourceTree = "<group>"; };
+		48A4A6EDC08C8AC933D0DCD507E9D173 /* libZIPFoundation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libZIPFoundation.a; path = libZIPFoundation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		49E5A271C5CCB3695EE84FCD439C7292 /* UICircularTimerRing.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UICircularTimerRing.swift; path = Legacy/UICircularTimerRing.swift; sourceTree = "<group>"; };
-		4A77F2DFE8760BA8BC2C4796E7FFEF4E /* paraiso-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "paraiso-light.min.css"; path = "Pod/Assets/styles/paraiso-light.min.css"; sourceTree = "<group>"; };
+		4A77F2DFE8760BA8BC2C4796E7FFEF4E /* paraiso-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "paraiso-light.min.css"; path = "Pod/Assets/styles/paraiso-light.min.css"; sourceTree = "<group>"; };
 		4B5B535D9016361D4F20E4241B7D543E /* SnapKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SnapKit-prefix.pch"; sourceTree = "<group>"; };
-		4BA73D98FBE33C9A1AB658AF3AADD65C /* mono-blue.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "mono-blue.min.css"; path = "Pod/Assets/styles/mono-blue.min.css"; sourceTree = "<group>"; };
-		4BE044BD7E482C61F339AFCF2F4B239E /* ascetic.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = ascetic.min.css; path = Pod/Assets/styles/ascetic.min.css; sourceTree = "<group>"; };
-		4C6C27B59EDCC94319613839BA5E5C90 /* routeros.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = routeros.min.css; path = Pod/Assets/styles/routeros.min.css; sourceTree = "<group>"; };
-		4C9DAE3D2CD4E3E745FDCDB0267C5CEB /* atelier-savanna-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "atelier-savanna-dark.min.css"; path = "Pod/Assets/styles/atelier-savanna-dark.min.css"; sourceTree = "<group>"; };
+		4BA73D98FBE33C9A1AB658AF3AADD65C /* mono-blue.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "mono-blue.min.css"; path = "Pod/Assets/styles/mono-blue.min.css"; sourceTree = "<group>"; };
+		4BE044BD7E482C61F339AFCF2F4B239E /* ascetic.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = ascetic.min.css; path = Pod/Assets/styles/ascetic.min.css; sourceTree = "<group>"; };
+		4C6C27B59EDCC94319613839BA5E5C90 /* routeros.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = routeros.min.css; path = Pod/Assets/styles/routeros.min.css; sourceTree = "<group>"; };
+		4C9DAE3D2CD4E3E745FDCDB0267C5CEB /* atelier-savanna-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "atelier-savanna-dark.min.css"; path = "Pod/Assets/styles/atelier-savanna-dark.min.css"; sourceTree = "<group>"; };
 		4D097A113BB2C9EFF619BF265537ED74 /* CodeAttributedString.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CodeAttributedString.swift; path = Pod/Classes/CodeAttributedString.swift; sourceTree = "<group>"; };
 		4F5DCA2D9D7A04DC21108D79BE4324A8 /* UICircularRingLayer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UICircularRingLayer.swift; path = Legacy/UICircularRingLayer.swift; sourceTree = "<group>"; };
 		507B63772ADA1B37E30121C029B0076E /* DFUServiceController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUServiceController.swift; path = iOSDFULibrary/Classes/Implementation/DFUServiceController.swift; sourceTree = "<group>"; };
-		51E60F43F130C1E86698B0773E6EE922 /* atelier-sulphurpool-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "atelier-sulphurpool-light.min.css"; path = "Pod/Assets/styles/atelier-sulphurpool-light.min.css"; sourceTree = "<group>"; };
+		51E60F43F130C1E86698B0773E6EE922 /* atelier-sulphurpool-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "atelier-sulphurpool-light.min.css"; path = "Pod/Assets/styles/atelier-sulphurpool-light.min.css"; sourceTree = "<group>"; };
 		52EA53DDED71E3F81A8BD7BDCA526E31 /* ZIPFoundation-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ZIPFoundation-prefix.pch"; sourceTree = "<group>"; };
 		55093180005CDA0DADE71682406FA239 /* UICircularProgressRing.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = UICircularProgressRing.modulemap; sourceTree = "<group>"; };
 		581B11AF4E9AE47127EB54C4B37E38BE /* Pods-Calliope App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Calliope App.release.xcconfig"; sourceTree = "<group>"; };
-		5831A100687EDA586E4C987C6B953E96 /* hopscotch.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = hopscotch.min.css; path = Pod/Assets/styles/hopscotch.min.css; sourceTree = "<group>"; };
+		5831A100687EDA586E4C987C6B953E96 /* hopscotch.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = hopscotch.min.css; path = Pod/Assets/styles/hopscotch.min.css; sourceTree = "<group>"; };
 		5878BD24920A42383D50DFBF98B7FB90 /* ConstraintConstantTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintConstantTarget.swift; path = Source/ConstraintConstantTarget.swift; sourceTree = "<group>"; };
-		5A05A69FC75132ABEF28DE440D9161F3 /* an-old-hope.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "an-old-hope.min.css"; path = "Pod/Assets/styles/an-old-hope.min.css"; sourceTree = "<group>"; };
+		5A05A69FC75132ABEF28DE440D9161F3 /* an-old-hope.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "an-old-hope.min.css"; path = "Pod/Assets/styles/an-old-hope.min.css"; sourceTree = "<group>"; };
 		5A3489DB55D9C7CB7861F5FFF8D53281 /* SnapKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SnapKit.release.xcconfig; sourceTree = "<group>"; };
 		5B2A3C4E0A87CBB4F8971AE7BF76258E /* DFUServiceInitiator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUServiceInitiator.swift; path = iOSDFULibrary/Classes/Implementation/DFUServiceInitiator.swift; sourceTree = "<group>"; };
 		5B63C6BD47D0D5972479549E6791C9DF /* Highlightr.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Highlightr.modulemap; sourceTree = "<group>"; };
@@ -302,11 +302,11 @@
 		60B1D46596BCF02BBA17982661D0C8A9 /* Shims.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Shims.swift; path = Pod/Classes/Shims.swift; sourceTree = "<group>"; };
 		635E12452419B8AC24A7B976891AE63F /* ConstraintOffsetTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintOffsetTarget.swift; path = Source/ConstraintOffsetTarget.swift; sourceTree = "<group>"; };
 		64215C7661F94A9D4DC71E40695C934C /* ConstraintMakerRelatable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerRelatable.swift; path = Source/ConstraintMakerRelatable.swift; sourceTree = "<group>"; };
-		649B5467679B80DB31033072D7718993 /* agate.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = agate.min.css; path = Pod/Assets/styles/agate.min.css; sourceTree = "<group>"; };
+		649B5467679B80DB31033072D7718993 /* agate.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = agate.min.css; path = Pod/Assets/styles/agate.min.css; sourceTree = "<group>"; };
 		64BB7868C6DE682106947BD473F6A4FA /* ConstraintLayoutSupport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutSupport.swift; path = Source/ConstraintLayoutSupport.swift; sourceTree = "<group>"; };
-		655CCC890F63F7BBE58CAC778D7FC430 /* dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = dark.min.css; path = Pod/Assets/styles/dark.min.css; sourceTree = "<group>"; };
+		655CCC890F63F7BBE58CAC778D7FC430 /* dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = dark.min.css; path = Pod/Assets/styles/dark.min.css; sourceTree = "<group>"; };
 		66B50DE21EB4FE0CF0DC76C6DF6C7581 /* DeepDiff.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DeepDiff.swift; path = Sources/Shared/DeepDiff.swift; sourceTree = "<group>"; };
-		67A31B808C31B45B61F7D7778426EE27 /* googlecode.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = googlecode.min.css; path = Pod/Assets/styles/googlecode.min.css; sourceTree = "<group>"; };
+		67A31B808C31B45B61F7D7778426EE27 /* googlecode.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = googlecode.min.css; path = Pod/Assets/styles/googlecode.min.css; sourceTree = "<group>"; };
 		68414D5D08617DAB3A4584DB787312B4 /* Entry.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Entry.swift; path = Sources/ZIPFoundation/Entry.swift; sourceTree = "<group>"; };
 		68BD14F2073D6B57C67C7CD5BB6F2491 /* TPKeyboardAvoidingCollectionView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TPKeyboardAvoidingCollectionView.m; path = TPKeyboardAvoiding/TPKeyboardAvoidingCollectionView.m; sourceTree = "<group>"; };
 		68DD1AE11DB235EC50CE21C008B38742 /* UICircularProgressRing.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UICircularProgressRing.swift; path = Legacy/UICircularProgressRing.swift; sourceTree = "<group>"; };
@@ -315,46 +315,46 @@
 		6BB5CB274651836AB126EE7332DA5284 /* Pods-Calliope App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Calliope App.debug.xcconfig"; sourceTree = "<group>"; };
 		6C70F85C20A37C085C4CC3D37F07ADC3 /* Change.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Change.swift; path = Sources/Shared/Change.swift; sourceTree = "<group>"; };
 		6C9B33D2DBE6B7DB0BE4EE32546D5E48 /* ConstraintMakerExtendable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerExtendable.swift; path = Source/ConstraintMakerExtendable.swift; sourceTree = "<group>"; };
-		6CFF90E1173817DF6A5B75D6AE28188A /* purebasic.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = purebasic.min.css; path = Pod/Assets/styles/purebasic.min.css; sourceTree = "<group>"; };
-		6DC2A38E7058C41A60C16AAD93FB03D3 /* xcode.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = xcode.min.css; path = Pod/Assets/styles/xcode.min.css; sourceTree = "<group>"; };
+		6CFF90E1173817DF6A5B75D6AE28188A /* purebasic.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = purebasic.min.css; path = Pod/Assets/styles/purebasic.min.css; sourceTree = "<group>"; };
+		6DC2A38E7058C41A60C16AAD93FB03D3 /* xcode.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = xcode.min.css; path = Pod/Assets/styles/xcode.min.css; sourceTree = "<group>"; };
 		6EA61D5C42C797520C432C4E2B1E9AB8 /* SecureDFUExecutor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SecureDFUExecutor.swift; path = iOSDFULibrary/Classes/Implementation/SecureDFU/DFU/SecureDFUExecutor.swift; sourceTree = "<group>"; };
 		6F33D071ED7D48689B103651C2C6FD4A /* UICircularProgressRing.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = UICircularProgressRing.debug.xcconfig; sourceTree = "<group>"; };
-		726447E4FBCFEBD787C5A5B7F61ED252 /* arta.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = arta.min.css; path = Pod/Assets/styles/arta.min.css; sourceTree = "<group>"; };
+		726447E4FBCFEBD787C5A5B7F61ED252 /* arta.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = arta.min.css; path = Pod/Assets/styles/arta.min.css; sourceTree = "<group>"; };
 		72CD8CD6F9EFD29C6C2FE8243B10166D /* DFUPeripheralSelector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUPeripheralSelector.swift; path = iOSDFULibrary/Classes/Implementation/DFUPeripheralSelector.swift; sourceTree = "<group>"; };
 		731931B2E101D7843F38BB4C4EDC585B /* Highlightr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Highlightr.release.xcconfig; sourceTree = "<group>"; };
 		734E305E872B90683FA66A9C992CC013 /* ButtonlessDFU.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ButtonlessDFU.swift; path = iOSDFULibrary/Classes/Implementation/SecureDFU/Characteristics/ButtonlessDFU.swift; sourceTree = "<group>"; };
 		742F93059A250EE820D9BE5C495A2BD8 /* TPKeyboardAvoiding-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "TPKeyboardAvoiding-prefix.pch"; sourceTree = "<group>"; };
-		74868EE17E1F6917C2274FCA921C9A99 /* atelier-lakeside-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "atelier-lakeside-dark.min.css"; path = "Pod/Assets/styles/atelier-lakeside-dark.min.css"; sourceTree = "<group>"; };
+		74868EE17E1F6917C2274FCA921C9A99 /* atelier-lakeside-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "atelier-lakeside-dark.min.css"; path = "Pod/Assets/styles/atelier-lakeside-dark.min.css"; sourceTree = "<group>"; };
 		74CDA9C3A8FED377E6370CB723759415 /* LegacyDFUExecutor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LegacyDFUExecutor.swift; path = iOSDFULibrary/Classes/Implementation/LegacyDFU/DFU/LegacyDFUExecutor.swift; sourceTree = "<group>"; };
 		76A976F983F7F0486CF40A8FB721C9D1 /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TPKeyboardAvoidingScrollView.h; path = TPKeyboardAvoiding/TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
 		771A1DF1A054A6086B188F0CAF493F35 /* Archive+MemoryFile.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Archive+MemoryFile.swift"; path = "Sources/ZIPFoundation/Archive+MemoryFile.swift"; sourceTree = "<group>"; };
 		78B0044A2D6399F61F5140BC29EF3DF5 /* SecureDFUService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SecureDFUService.swift; path = iOSDFULibrary/Classes/Implementation/SecureDFU/Services/SecureDFUService.swift; sourceTree = "<group>"; };
 		7BEA605AC27E84A64337441EE3027C0D /* Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Legacy/Extensions.swift; sourceTree = "<group>"; };
 		7D3A4EBFACD16B6158D9A1EAD1A17A4A /* Data+Compression.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Data+Compression.swift"; path = "Sources/ZIPFoundation/Data+Compression.swift"; sourceTree = "<group>"; };
-		7DB3C8BAA3D78E532F17CD75C7EC3704 /* libHighlightr.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libHighlightr.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		7EBA14F9AFE1A4709CBA2D407F62FA01 /* atelier-cave-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "atelier-cave-dark.min.css"; path = "Pod/Assets/styles/atelier-cave-dark.min.css"; sourceTree = "<group>"; };
-		842CD4AC8E5A1DBD7CE9C1295F004BC2 /* atelier-forest-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "atelier-forest-dark.min.css"; path = "Pod/Assets/styles/atelier-forest-dark.min.css"; sourceTree = "<group>"; };
+		7DB3C8BAA3D78E532F17CD75C7EC3704 /* libHighlightr.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libHighlightr.a; path = libHighlightr.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7EBA14F9AFE1A4709CBA2D407F62FA01 /* atelier-cave-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "atelier-cave-dark.min.css"; path = "Pod/Assets/styles/atelier-cave-dark.min.css"; sourceTree = "<group>"; };
+		842CD4AC8E5A1DBD7CE9C1295F004BC2 /* atelier-forest-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "atelier-forest-dark.min.css"; path = "Pod/Assets/styles/atelier-forest-dark.min.css"; sourceTree = "<group>"; };
 		84F911A7E6D54558AC133292DEB262D8 /* UIScrollView+TPKeyboardAvoidingAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+TPKeyboardAvoidingAdditions.m"; path = "TPKeyboardAvoiding/UIScrollView+TPKeyboardAvoidingAdditions.m"; sourceTree = "<group>"; };
 		853D5DBB10BD5AAE4B6A4AC98CC7A911 /* iOSDFULibrary.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = iOSDFULibrary.modulemap; sourceTree = "<group>"; };
-		85512A8CFC6270A44D951D6B5D1770F4 /* tomorrow-night-bright.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "tomorrow-night-bright.min.css"; path = "Pod/Assets/styles/tomorrow-night-bright.min.css"; sourceTree = "<group>"; };
-		85C8ABA5314452AE31DAA5AE55BBBC1F /* libTPKeyboardAvoiding.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTPKeyboardAvoiding.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		85512A8CFC6270A44D951D6B5D1770F4 /* tomorrow-night-bright.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "tomorrow-night-bright.min.css"; path = "Pod/Assets/styles/tomorrow-night-bright.min.css"; sourceTree = "<group>"; };
+		85C8ABA5314452AE31DAA5AE55BBBC1F /* libTPKeyboardAvoiding.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libTPKeyboardAvoiding.a; path = libTPKeyboardAvoiding.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		86ADDCBC3D7D565E24E13FDB813F1514 /* ConstraintLayoutSupportDSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutSupportDSL.swift; path = Source/ConstraintLayoutSupportDSL.swift; sourceTree = "<group>"; };
-		86D119F08A2768A0796065BECF4CE94A /* vs2015.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = vs2015.min.css; path = Pod/Assets/styles/vs2015.min.css; sourceTree = "<group>"; };
-		8738561DC36DEA2A43001757C98772DD /* hybrid.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = hybrid.min.css; path = Pod/Assets/styles/hybrid.min.css; sourceTree = "<group>"; };
+		86D119F08A2768A0796065BECF4CE94A /* vs2015.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = vs2015.min.css; path = Pod/Assets/styles/vs2015.min.css; sourceTree = "<group>"; };
+		8738561DC36DEA2A43001757C98772DD /* hybrid.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = hybrid.min.css; path = Pod/Assets/styles/hybrid.min.css; sourceTree = "<group>"; };
 		8761CE4983FF5963E13B9998DD8690CA /* LoggerHelper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LoggerHelper.swift; path = iOSDFULibrary/Classes/Utilities/Logging/LoggerHelper.swift; sourceTree = "<group>"; };
 		8797FFF51FA46D2151C1F6E16C14D3EC /* HTMLUtils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HTMLUtils.swift; path = Pod/Classes/HTMLUtils.swift; sourceTree = "<group>"; };
 		88D80CAA7085E5B7E8663285AC8348A8 /* ConstraintDescription.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintDescription.swift; path = Source/ConstraintDescription.swift; sourceTree = "<group>"; };
 		8995F098C03DDDDBC4B1381D64941A85 /* LayoutConstraint.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LayoutConstraint.swift; path = Source/LayoutConstraint.swift; sourceTree = "<group>"; };
-		8B2C9D78F50F9D86415AB4BDCDEA02B0 /* sunburst.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = sunburst.min.css; path = Pod/Assets/styles/sunburst.min.css; sourceTree = "<group>"; };
-		8BA1E4EF6FAC64DD73AAA9DEDDEBA304 /* magula.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = magula.min.css; path = Pod/Assets/styles/magula.min.css; sourceTree = "<group>"; };
-		8D162FE0C68A1A0453B55187D08BDFD2 /* xt256.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = xt256.min.css; path = Pod/Assets/styles/xt256.min.css; sourceTree = "<group>"; };
+		8B2C9D78F50F9D86415AB4BDCDEA02B0 /* sunburst.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = sunburst.min.css; path = Pod/Assets/styles/sunburst.min.css; sourceTree = "<group>"; };
+		8BA1E4EF6FAC64DD73AAA9DEDDEBA304 /* magula.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = magula.min.css; path = Pod/Assets/styles/magula.min.css; sourceTree = "<group>"; };
+		8D162FE0C68A1A0453B55187D08BDFD2 /* xt256.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = xt256.min.css; path = Pod/Assets/styles/xt256.min.css; sourceTree = "<group>"; };
 		8E483FD5330A659043DAB0B00843023D /* DFUPeripheralDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUPeripheralDelegate.swift; path = iOSDFULibrary/Classes/Implementation/GenericDFU/DFUPeripheralDelegate.swift; sourceTree = "<group>"; };
-		93DD420F532336E07F74150FC1938A2C /* isbl-editor-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "isbl-editor-dark.min.css"; path = "Pod/Assets/styles/isbl-editor-dark.min.css"; sourceTree = "<group>"; };
+		93DD420F532336E07F74150FC1938A2C /* isbl-editor-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "isbl-editor-dark.min.css"; path = "Pod/Assets/styles/isbl-editor-dark.min.css"; sourceTree = "<group>"; };
 		94A24515DC94F387074D64D1DC106A9F /* SecureDFUPeripheral.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SecureDFUPeripheral.swift; path = iOSDFULibrary/Classes/Implementation/SecureDFU/Peripheral/SecureDFUPeripheral.swift; sourceTree = "<group>"; };
-		96279B3F12771AF000C3E81075512546 /* brown-paper.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "brown-paper.min.css"; path = "Pod/Assets/styles/brown-paper.min.css"; sourceTree = "<group>"; };
+		96279B3F12771AF000C3E81075512546 /* brown-paper.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "brown-paper.min.css"; path = "Pod/Assets/styles/brown-paper.min.css"; sourceTree = "<group>"; };
 		96B22F85BA02069CF62BA170A5A8CE52 /* Array+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Array+Extensions.swift"; path = "Sources/Shared/Array+Extensions.swift"; sourceTree = "<group>"; };
-		97238A7F331591BC97C82A9908DFC5A7 /* atom-one-dark-reasonable.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "atom-one-dark-reasonable.min.css"; path = "Pod/Assets/styles/atom-one-dark-reasonable.min.css"; sourceTree = "<group>"; };
-		979486118B3E90C08386079D57962701 /* libSnapKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSnapKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		97238A7F331591BC97C82A9908DFC5A7 /* atom-one-dark-reasonable.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "atom-one-dark-reasonable.min.css"; path = "Pod/Assets/styles/atom-one-dark-reasonable.min.css"; sourceTree = "<group>"; };
+		979486118B3E90C08386079D57962701 /* libSnapKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libSnapKit.a; path = libSnapKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		982544826708921822601F2DEBCAECBE /* FileManager+ZIP.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "FileManager+ZIP.swift"; path = "Sources/ZIPFoundation/FileManager+ZIP.swift"; sourceTree = "<group>"; };
 		98DBBA0CBFC557E9F6502C174F692B6A /* IndexPathConverter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IndexPathConverter.swift; path = Sources/iOS/IndexPathConverter.swift; sourceTree = "<group>"; };
 		992DAB99A05B284671FAF390D2518F95 /* ConstraintConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintConfig.swift; path = Source/ConstraintConfig.swift; sourceTree = "<group>"; };
@@ -362,75 +362,75 @@
 		9A2EDAD246A6AE40539D0C8185365474 /* DeepDiff-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "DeepDiff-dummy.m"; sourceTree = "<group>"; };
 		9D8706BA3F2B74166D6FD5F9224C5412 /* ZIPFoundation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ZIPFoundation.release.xcconfig; sourceTree = "<group>"; };
 		9D91EB0D575015EC0373907E01F1BF88 /* UILayoutSupport+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UILayoutSupport+Extensions.swift"; path = "Source/UILayoutSupport+Extensions.swift"; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9DC0673AEF4E1E3227BF86C0EB98C64E /* ConstraintRelatableTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintRelatableTarget.swift; path = Source/ConstraintRelatableTarget.swift; sourceTree = "<group>"; };
 		9EA3F167DA4F35878749137F27E144C8 /* DeepDiff-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "DeepDiff-umbrella.h"; sourceTree = "<group>"; };
 		9EA7F768CF91C6671ACDBF14FD79CF96 /* UITableView+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UITableView+Extensions.swift"; path = "Sources/iOS/UITableView+Extensions.swift"; sourceTree = "<group>"; };
 		9F7530045772292031AAC4FEC1BD1E6B /* SnapKit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SnapKit.modulemap; sourceTree = "<group>"; };
 		9FE6A19AA92B201B7888EA1F4E062E5D /* ConstraintView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintView.swift; path = Source/ConstraintView.swift; sourceTree = "<group>"; };
 		9FF98EDF37F48CCDEA9BAE14070CBBE9 /* LegacyDFUServiceInitiator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LegacyDFUServiceInitiator.swift; path = iOSDFULibrary/Classes/Implementation/LegacyDFU/DFU/LegacyDFUServiceInitiator.swift; sourceTree = "<group>"; };
-		A0356D2142D25535C4A4783A672EB958 /* gruvbox-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "gruvbox-dark.min.css"; path = "Pod/Assets/styles/gruvbox-dark.min.css"; sourceTree = "<group>"; };
-		A0854A7D872B5B29C5C8915D7D7B84F0 /* github.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = github.min.css; path = Pod/Assets/styles/github.min.css; sourceTree = "<group>"; };
+		A0356D2142D25535C4A4783A672EB958 /* gruvbox-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "gruvbox-dark.min.css"; path = "Pod/Assets/styles/gruvbox-dark.min.css"; sourceTree = "<group>"; };
+		A0854A7D872B5B29C5C8915D7D7B84F0 /* github.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = github.min.css; path = Pod/Assets/styles/github.min.css; sourceTree = "<group>"; };
 		A0B33A92F00078682E586BFFAC05BBDC /* SnapKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SnapKit-dummy.m"; sourceTree = "<group>"; };
-		A155185A2CD847F5D3A9D1D422A7926C /* solarized-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "solarized-light.min.css"; path = "Pod/Assets/styles/solarized-light.min.css"; sourceTree = "<group>"; };
+		A155185A2CD847F5D3A9D1D422A7926C /* solarized-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "solarized-light.min.css"; path = "Pod/Assets/styles/solarized-light.min.css"; sourceTree = "<group>"; };
 		A2FCBC34B6076878CFACEC305CE7C0B7 /* ConstraintMakerFinalizable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerFinalizable.swift; path = Source/ConstraintMakerFinalizable.swift; sourceTree = "<group>"; };
 		A477BCFC5DD5D0F1C04654773E33E418 /* UICircularProgressRingDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UICircularProgressRingDelegate.swift; path = Legacy/UICircularProgressRingDelegate.swift; sourceTree = "<group>"; };
 		A541B84378B9005C3922C3660EEAD927 /* Highlightr-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Highlightr-dummy.m"; sourceTree = "<group>"; };
 		A794A698CA1C2850E8BF70A7A01AAA1B /* Debugging.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Debugging.swift; path = Source/Debugging.swift; sourceTree = "<group>"; };
 		A7A658FF188162CFF8D68916684C1A12 /* UICircularProgressRing.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = UICircularProgressRing.release.xcconfig; sourceTree = "<group>"; };
 		A8D89A1A4D5B3678E5A60DB62176FF16 /* iOSDFULibrary-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "iOSDFULibrary-umbrella.h"; sourceTree = "<group>"; };
-		A9F39DBF3A7C47B4D7D27A0482C5A2B3 /* atelier-seaside-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "atelier-seaside-light.min.css"; path = "Pod/Assets/styles/atelier-seaside-light.min.css"; sourceTree = "<group>"; };
-		AA40BD503C2B59019F8BA74D8ACF705C /* ir-black.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "ir-black.min.css"; path = "Pod/Assets/styles/ir-black.min.css"; sourceTree = "<group>"; };
-		AB01D426218C356FC9FB96C3B2945785 /* idea.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = idea.min.css; path = Pod/Assets/styles/idea.min.css; sourceTree = "<group>"; };
-		AC1988EFBAF9048533A540C550F5CF4E /* grayscale.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = grayscale.min.css; path = Pod/Assets/styles/grayscale.min.css; sourceTree = "<group>"; };
+		A9F39DBF3A7C47B4D7D27A0482C5A2B3 /* atelier-seaside-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "atelier-seaside-light.min.css"; path = "Pod/Assets/styles/atelier-seaside-light.min.css"; sourceTree = "<group>"; };
+		AA40BD503C2B59019F8BA74D8ACF705C /* ir-black.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "ir-black.min.css"; path = "Pod/Assets/styles/ir-black.min.css"; sourceTree = "<group>"; };
+		AB01D426218C356FC9FB96C3B2945785 /* idea.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = idea.min.css; path = Pod/Assets/styles/idea.min.css; sourceTree = "<group>"; };
+		AC1988EFBAF9048533A540C550F5CF4E /* grayscale.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = grayscale.min.css; path = Pod/Assets/styles/grayscale.min.css; sourceTree = "<group>"; };
 		AC7C0D9FC494012666074777C4298985 /* DFUVersion.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUVersion.swift; path = iOSDFULibrary/Classes/Implementation/LegacyDFU/Characteristics/DFUVersion.swift; sourceTree = "<group>"; };
 		AF70F756319D8082449B67466791A8A0 /* DFUFirmware.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUFirmware.swift; path = iOSDFULibrary/Classes/Implementation/Firmware/DFUFirmware.swift; sourceTree = "<group>"; };
 		B1A0C1C4895548E87A9AF0075314A192 /* TPKeyboardAvoiding.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = TPKeyboardAvoiding.release.xcconfig; sourceTree = "<group>"; };
 		B38B44F0083E4DBC5BEE4C11CD12CBD6 /* iOSDFULibrary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = iOSDFULibrary.debug.xcconfig; sourceTree = "<group>"; };
 		B49D899A73BD4DBD11F8E8850E6BB604 /* Pods-Calliope App-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Calliope App-acknowledgements.plist"; sourceTree = "<group>"; };
 		B4D8B83C669BC2563A4640A6CB13603D /* DeepDiff.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = DeepDiff.debug.xcconfig; sourceTree = "<group>"; };
-		B4FF76FFA9ABF504526085847485A7F5 /* atelier-seaside-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "atelier-seaside-dark.min.css"; path = "Pod/Assets/styles/atelier-seaside-dark.min.css"; sourceTree = "<group>"; };
+		B4FF76FFA9ABF504526085847485A7F5 /* atelier-seaside-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "atelier-seaside-dark.min.css"; path = "Pod/Assets/styles/atelier-seaside-dark.min.css"; sourceTree = "<group>"; };
 		B667FB08D91735AE508254F0EF3D05B4 /* LegacyDFUPeripheralDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LegacyDFUPeripheralDelegate.swift; path = iOSDFULibrary/Classes/Implementation/LegacyDFU/Peripherals/LegacyDFUPeripheralDelegate.swift; sourceTree = "<group>"; };
-		B70980AB512688A78B8379C7C9868A0D /* highlight.min.js */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.javascript; name = highlight.min.js; path = Pod/Assets/Highlighter/highlight.min.js; sourceTree = "<group>"; };
-		B7100ED805A58483AFAA4F895CC5B28D /* color-brewer.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "color-brewer.min.css"; path = "Pod/Assets/styles/color-brewer.min.css"; sourceTree = "<group>"; };
+		B70980AB512688A78B8379C7C9868A0D /* highlight.min.js */ = {isa = PBXFileReference; includeInIndex = 1; name = highlight.min.js; path = Pod/Assets/Highlighter/highlight.min.js; sourceTree = "<group>"; };
+		B7100ED805A58483AFAA4F895CC5B28D /* color-brewer.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "color-brewer.min.css"; path = "Pod/Assets/styles/color-brewer.min.css"; sourceTree = "<group>"; };
 		B7E51ECC20EEBF0A8A322F91A86A7E9D /* ConstraintPriorityTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintPriorityTarget.swift; path = Source/ConstraintPriorityTarget.swift; sourceTree = "<group>"; };
 		B8416D2A4A0DCF595B4238F603A696D5 /* DFUStarterPeripheral.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUStarterPeripheral.swift; path = iOSDFULibrary/Classes/Implementation/DFUSelector/DFUStarterPeripheral.swift; sourceTree = "<group>"; };
-		B846D9941F83FAB9C0A66A5C49DCE235 /* atelier-plateau-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "atelier-plateau-dark.min.css"; path = "Pod/Assets/styles/atelier-plateau-dark.min.css"; sourceTree = "<group>"; };
+		B846D9941F83FAB9C0A66A5C49DCE235 /* atelier-plateau-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "atelier-plateau-dark.min.css"; path = "Pod/Assets/styles/atelier-plateau-dark.min.css"; sourceTree = "<group>"; };
 		B8638A7A900A898561C4B8D13724A4D5 /* Pods-Calliope App-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Calliope App-umbrella.h"; sourceTree = "<group>"; };
 		BA43D3855D6708DD7B50350BD3CA2364 /* TPKeyboardAvoidingTableView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TPKeyboardAvoidingTableView.m; path = TPKeyboardAvoiding/TPKeyboardAvoidingTableView.m; sourceTree = "<group>"; };
-		BA43D731DC5159E6030E5D84FB509E1C /* atelier-forest-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "atelier-forest-light.min.css"; path = "Pod/Assets/styles/atelier-forest-light.min.css"; sourceTree = "<group>"; };
-		BA5944778D3B2A74C83716F595B42551 /* monokai-sublime.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "monokai-sublime.min.css"; path = "Pod/Assets/styles/monokai-sublime.min.css"; sourceTree = "<group>"; };
+		BA43D731DC5159E6030E5D84FB509E1C /* atelier-forest-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "atelier-forest-light.min.css"; path = "Pod/Assets/styles/atelier-forest-light.min.css"; sourceTree = "<group>"; };
+		BA5944778D3B2A74C83716F595B42551 /* monokai-sublime.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "monokai-sublime.min.css"; path = "Pod/Assets/styles/monokai-sublime.min.css"; sourceTree = "<group>"; };
 		BA787A5E554455C51D6FCF1D20C56D30 /* iOSDFULibrary-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "iOSDFULibrary-prefix.pch"; sourceTree = "<group>"; };
-		BB6FDFDF79732400B81CD55EF7046DC7 /* atelier-savanna-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "atelier-savanna-light.min.css"; path = "Pod/Assets/styles/atelier-savanna-light.min.css"; sourceTree = "<group>"; };
+		BB6FDFDF79732400B81CD55EF7046DC7 /* atelier-savanna-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "atelier-savanna-light.min.css"; path = "Pod/Assets/styles/atelier-savanna-light.min.css"; sourceTree = "<group>"; };
 		BDF18A2F8C14AB5058AF50953016583C /* DFUStreamHex.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUStreamHex.swift; path = iOSDFULibrary/Classes/Utilities/Streams/DFUStreamHex.swift; sourceTree = "<group>"; };
 		BF302FA50BA1B6DACF92E828CD3F8C49 /* DFUCharacteristic.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUCharacteristic.swift; path = iOSDFULibrary/Classes/Implementation/GenericDFU/DFUCharacteristic.swift; sourceTree = "<group>"; };
 		BF7CA3BA2AF61A3B0CD2FCC00FB1843F /* Double.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Double.swift; path = iOSDFULibrary/Classes/Utilities/Double.swift; sourceTree = "<group>"; };
 		C0F26D33F11D12FD0D6639AB0728BC32 /* WagnerFischer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WagnerFischer.swift; path = Sources/Shared/Algorithms/WagnerFischer.swift; sourceTree = "<group>"; };
 		C133E6A1F339C04384A7A4C9DF864619 /* Highlightr.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Highlightr.swift; path = Pod/Classes/Highlightr.swift; sourceTree = "<group>"; };
 		C2078BAE13C78DFB3ED651122C5176DA /* LegacyDFUService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LegacyDFUService.swift; path = iOSDFULibrary/Classes/Implementation/LegacyDFU/Services/LegacyDFUService.swift; sourceTree = "<group>"; };
-		C207B9C2E42BADEE08377360095762E5 /* atelier-dune-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "atelier-dune-light.min.css"; path = "Pod/Assets/styles/atelier-dune-light.min.css"; sourceTree = "<group>"; };
+		C207B9C2E42BADEE08377360095762E5 /* atelier-dune-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "atelier-dune-light.min.css"; path = "Pod/Assets/styles/atelier-dune-light.min.css"; sourceTree = "<group>"; };
 		C402FACBC8712B2EF14709AAF936705D /* SecureDFUPeripheralDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SecureDFUPeripheralDelegate.swift; path = iOSDFULibrary/Classes/Implementation/SecureDFU/Peripheral/SecureDFUPeripheralDelegate.swift; sourceTree = "<group>"; };
-		C52ADA9E1826E0D6CE09BEC57A832D50 /* atelier-plateau-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "atelier-plateau-light.min.css"; path = "Pod/Assets/styles/atelier-plateau-light.min.css"; sourceTree = "<group>"; };
+		C52ADA9E1826E0D6CE09BEC57A832D50 /* atelier-plateau-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "atelier-plateau-light.min.css"; path = "Pod/Assets/styles/atelier-plateau-light.min.css"; sourceTree = "<group>"; };
 		C6800DC067B49E9E39D544970338FF73 /* Pods-Calliope App.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Calliope App.modulemap"; sourceTree = "<group>"; };
-		C6AB54C1E51355B522BDA2F691BC3775 /* railscasts.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = railscasts.min.css; path = Pod/Assets/styles/railscasts.min.css; sourceTree = "<group>"; };
+		C6AB54C1E51355B522BDA2F691BC3775 /* railscasts.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = railscasts.min.css; path = Pod/Assets/styles/railscasts.min.css; sourceTree = "<group>"; };
 		C70AF90C1CEB6FC9A80D9F4EDCC83C22 /* ConstraintDirectionalInsets.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintDirectionalInsets.swift; path = Source/ConstraintDirectionalInsets.swift; sourceTree = "<group>"; };
-		C721816B59DFC3A78F7FE651CC411B0B /* atom-one-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "atom-one-dark.min.css"; path = "Pod/Assets/styles/atom-one-dark.min.css"; sourceTree = "<group>"; };
-		C9909DD2DC09A2487BAFB7DA875E35AF /* ocean.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = ocean.min.css; path = Pod/Assets/styles/ocean.min.css; sourceTree = "<group>"; };
+		C721816B59DFC3A78F7FE651CC411B0B /* atom-one-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "atom-one-dark.min.css"; path = "Pod/Assets/styles/atom-one-dark.min.css"; sourceTree = "<group>"; };
+		C9909DD2DC09A2487BAFB7DA875E35AF /* ocean.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = ocean.min.css; path = Pod/Assets/styles/ocean.min.css; sourceTree = "<group>"; };
 		C9B36A99D7CFA305091B3C9588BC9D03 /* ConstraintMakerEditable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerEditable.swift; path = Source/ConstraintMakerEditable.swift; sourceTree = "<group>"; };
-		CA077842A54F500F17CEFA3E8B6D8C65 /* tomorrow-night-eighties.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "tomorrow-night-eighties.min.css"; path = "Pod/Assets/styles/tomorrow-night-eighties.min.css"; sourceTree = "<group>"; };
+		CA077842A54F500F17CEFA3E8B6D8C65 /* tomorrow-night-eighties.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "tomorrow-night-eighties.min.css"; path = "Pod/Assets/styles/tomorrow-night-eighties.min.css"; sourceTree = "<group>"; };
 		CA7DC71D648AF20A092EBFA8872849F3 /* IntelHex2BinConverter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IntelHex2BinConverter.swift; path = iOSDFULibrary/Classes/Utilities/HexToBinConverter/IntelHex2BinConverter.swift; sourceTree = "<group>"; };
 		CB5922B9116DAFB3498DEF25FF128623 /* DFUServiceSelector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUServiceSelector.swift; path = iOSDFULibrary/Classes/Implementation/DFUSelector/DFUServiceSelector.swift; sourceTree = "<group>"; };
 		CCFFDFCFD2383D1E3C5E60EEC9EE5516 /* DFUControlPoint.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUControlPoint.swift; path = iOSDFULibrary/Classes/Implementation/LegacyDFU/Characteristics/DFUControlPoint.swift; sourceTree = "<group>"; };
 		CF173F7828EF8DA677AAF9509F8AFF9C /* DiffAware.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DiffAware.swift; path = Sources/Shared/DiffAware.swift; sourceTree = "<group>"; };
 		CFDBD2AB5499644C98252C891F49B7D1 /* ConstraintView+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ConstraintView+Extensions.swift"; path = "Source/ConstraintView+Extensions.swift"; sourceTree = "<group>"; };
 		D0EDDFB28F22976465DBD81A4458EB04 /* Archive+Reading.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Archive+Reading.swift"; path = "Sources/ZIPFoundation/Archive+Reading.swift"; sourceTree = "<group>"; };
-		D105C2CB2195F178BFC3B1C974225A46 /* school-book.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "school-book.min.css"; path = "Pod/Assets/styles/school-book.min.css"; sourceTree = "<group>"; };
-		D1F6C16A58CC88015C3A1AB56DBA7075 /* atelier-dune-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "atelier-dune-dark.min.css"; path = "Pod/Assets/styles/atelier-dune-dark.min.css"; sourceTree = "<group>"; };
+		D105C2CB2195F178BFC3B1C974225A46 /* school-book.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "school-book.min.css"; path = "Pod/Assets/styles/school-book.min.css"; sourceTree = "<group>"; };
+		D1F6C16A58CC88015C3A1AB56DBA7075 /* atelier-dune-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "atelier-dune-dark.min.css"; path = "Pod/Assets/styles/atelier-dune-dark.min.css"; sourceTree = "<group>"; };
 		D29D4701DFF8B80B80F075DF2ECD83CD /* ConstraintPriority.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintPriority.swift; path = Source/ConstraintPriority.swift; sourceTree = "<group>"; };
 		D31245DCC597A7689D74F3C5086819B5 /* TPKeyboardAvoiding.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = TPKeyboardAvoiding.debug.xcconfig; sourceTree = "<group>"; };
-		D33FDBEE161D2DF95C40099985DAC6E2 /* obsidian.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = obsidian.min.css; path = Pod/Assets/styles/obsidian.min.css; sourceTree = "<group>"; };
+		D33FDBEE161D2DF95C40099985DAC6E2 /* obsidian.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = obsidian.min.css; path = Pod/Assets/styles/obsidian.min.css; sourceTree = "<group>"; };
 		D397A4451E3EF392A3A564C8E7B2B876 /* UICircularProgressRing.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = UICircularProgressRing.h; path = Legacy/UICircularProgressRing.h; sourceTree = "<group>"; };
-		D39B1495E16C077A7CD05F2C8FA2D3EE /* atelier-estuary-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "atelier-estuary-dark.min.css"; path = "Pod/Assets/styles/atelier-estuary-dark.min.css"; sourceTree = "<group>"; };
+		D39B1495E16C077A7CD05F2C8FA2D3EE /* atelier-estuary-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "atelier-estuary-dark.min.css"; path = "Pod/Assets/styles/atelier-estuary-dark.min.css"; sourceTree = "<group>"; };
 		D3C4DD8C50DC5B7D4A8E526027520140 /* UICircularProgressRing-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UICircularProgressRing-umbrella.h"; sourceTree = "<group>"; };
 		D42C9575413BDEA6F6ACF37C8E179850 /* DFUStreamBin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUStreamBin.swift; path = iOSDFULibrary/Classes/Utilities/Streams/DFUStreamBin.swift; sourceTree = "<group>"; };
 		D9420E408C2B4F160F2EAE51C70EB96B /* iOSDFULibrary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = iOSDFULibrary.release.xcconfig; sourceTree = "<group>"; };
@@ -443,36 +443,36 @@
 		DE394E92B48F695C5F8F75CF15211086 /* ConstraintMakerPriortizable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerPriortizable.swift; path = Source/ConstraintMakerPriortizable.swift; sourceTree = "<group>"; };
 		DFC0AD8BCF84112D45C03A9355ADA880 /* ConstraintDirectionalInsetTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintDirectionalInsetTarget.swift; path = Source/ConstraintDirectionalInsetTarget.swift; sourceTree = "<group>"; };
 		E33CE73E3F4531469D43AF58AAB79E07 /* ConstraintDSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintDSL.swift; path = Source/ConstraintDSL.swift; sourceTree = "<group>"; };
-		E3B1AFE8E831D056B7FA222D894F5B3B /* isbl-editor-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "isbl-editor-light.min.css"; path = "Pod/Assets/styles/isbl-editor-light.min.css"; sourceTree = "<group>"; };
-		E41BAE5F71D9C2D2522F1B69193B90D4 /* tomorrow-night.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "tomorrow-night.min.css"; path = "Pod/Assets/styles/tomorrow-night.min.css"; sourceTree = "<group>"; };
+		E3B1AFE8E831D056B7FA222D894F5B3B /* isbl-editor-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "isbl-editor-light.min.css"; path = "Pod/Assets/styles/isbl-editor-light.min.css"; sourceTree = "<group>"; };
+		E41BAE5F71D9C2D2522F1B69193B90D4 /* tomorrow-night.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "tomorrow-night.min.css"; path = "Pod/Assets/styles/tomorrow-night.min.css"; sourceTree = "<group>"; };
 		E4251F50B440E88D5B635088CABE4170 /* DFUPacket.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUPacket.swift; path = iOSDFULibrary/Classes/Implementation/LegacyDFU/Characteristics/DFUPacket.swift; sourceTree = "<group>"; };
 		E439F0B18BD992122FCE2AE65CF76006 /* LayoutConstraintItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LayoutConstraintItem.swift; path = Source/LayoutConstraintItem.swift; sourceTree = "<group>"; };
 		E6755877EE3CBEFDB5667E04DD4BA832 /* TPKeyboardAvoidingTableView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TPKeyboardAvoidingTableView.h; path = TPKeyboardAvoiding/TPKeyboardAvoidingTableView.h; sourceTree = "<group>"; };
-		E692E64B531674BA3A63984F77B471C7 /* atom-one-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "atom-one-light.min.css"; path = "Pod/Assets/styles/atom-one-light.min.css"; sourceTree = "<group>"; };
-		E726E9A44644FBDB6436DA10FC8EC840 /* gml.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = gml.min.css; path = Pod/Assets/styles/gml.min.css; sourceTree = "<group>"; };
-		E74B916B8BACF5D57AE6A89CD8D0C546 /* libUICircularProgressRing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libUICircularProgressRing.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		E8A8DCA4BB58886EBEE949A7F4BE5D15 /* kimbie.dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = kimbie.dark.min.css; path = Pod/Assets/styles/kimbie.dark.min.css; sourceTree = "<group>"; };
-		E95F2B97070BE8C6D999CF5CA3F90C0C /* atelier-cave-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "atelier-cave-light.min.css"; path = "Pod/Assets/styles/atelier-cave-light.min.css"; sourceTree = "<group>"; };
+		E692E64B531674BA3A63984F77B471C7 /* atom-one-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "atom-one-light.min.css"; path = "Pod/Assets/styles/atom-one-light.min.css"; sourceTree = "<group>"; };
+		E726E9A44644FBDB6436DA10FC8EC840 /* gml.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = gml.min.css; path = Pod/Assets/styles/gml.min.css; sourceTree = "<group>"; };
+		E74B916B8BACF5D57AE6A89CD8D0C546 /* libUICircularProgressRing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libUICircularProgressRing.a; path = libUICircularProgressRing.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E8A8DCA4BB58886EBEE949A7F4BE5D15 /* kimbie.dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = kimbie.dark.min.css; path = Pod/Assets/styles/kimbie.dark.min.css; sourceTree = "<group>"; };
+		E95F2B97070BE8C6D999CF5CA3F90C0C /* atelier-cave-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "atelier-cave-light.min.css"; path = "Pod/Assets/styles/atelier-cave-light.min.css"; sourceTree = "<group>"; };
 		EADD6355C3D44BDE413A94686AD71BC1 /* DFUUuidHelper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUUuidHelper.swift; path = iOSDFULibrary/Classes/Implementation/DFUUuidHelper.swift; sourceTree = "<group>"; };
-		EB2ED3B231326EABC4059117F61A22E0 /* atelier-sulphurpool-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "atelier-sulphurpool-dark.min.css"; path = "Pod/Assets/styles/atelier-sulphurpool-dark.min.css"; sourceTree = "<group>"; };
+		EB2ED3B231326EABC4059117F61A22E0 /* atelier-sulphurpool-dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "atelier-sulphurpool-dark.min.css"; path = "Pod/Assets/styles/atelier-sulphurpool-dark.min.css"; sourceTree = "<group>"; };
 		EC144593A8878726087450D7AC2C4AFC /* crc32.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = crc32.swift; path = iOSDFULibrary/Classes/Utilities/crc32.swift; sourceTree = "<group>"; };
-		ECA26C2D0DC7E0B40EC50C1778D12659 /* a11y-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "a11y-light.min.css"; path = "Pod/Assets/styles/a11y-light.min.css"; sourceTree = "<group>"; };
-		ECDDEBF98D33FFDCC7AC5BFA30944F53 /* gruvbox-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "gruvbox-light.min.css"; path = "Pod/Assets/styles/gruvbox-light.min.css"; sourceTree = "<group>"; };
+		ECA26C2D0DC7E0B40EC50C1778D12659 /* a11y-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "a11y-light.min.css"; path = "Pod/Assets/styles/a11y-light.min.css"; sourceTree = "<group>"; };
+		ECDDEBF98D33FFDCC7AC5BFA30944F53 /* gruvbox-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "gruvbox-light.min.css"; path = "Pod/Assets/styles/gruvbox-light.min.css"; sourceTree = "<group>"; };
 		ED4FDADB242091C43DD35C76CE278513 /* DFUPeripheral.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUPeripheral.swift; path = iOSDFULibrary/Classes/Implementation/GenericDFU/DFUPeripheral.swift; sourceTree = "<group>"; };
-		EE0F2E30B3DAFFA4C535156A26AB7CA1 /* shades-of-purple.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "shades-of-purple.min.css"; path = "Pod/Assets/styles/shades-of-purple.min.css"; sourceTree = "<group>"; };
-		EE373E23761301AFACBCD6C0EB2F95A3 /* kimbie.light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = kimbie.light.min.css; path = Pod/Assets/styles/kimbie.light.min.css; sourceTree = "<group>"; };
-		EE7C8020B6E0649A39FF2625BC66925F /* zenburn.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = zenburn.min.css; path = Pod/Assets/styles/zenburn.min.css; sourceTree = "<group>"; };
+		EE0F2E30B3DAFFA4C535156A26AB7CA1 /* shades-of-purple.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "shades-of-purple.min.css"; path = "Pod/Assets/styles/shades-of-purple.min.css"; sourceTree = "<group>"; };
+		EE373E23761301AFACBCD6C0EB2F95A3 /* kimbie.light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = kimbie.light.min.css; path = Pod/Assets/styles/kimbie.light.min.css; sourceTree = "<group>"; };
+		EE7C8020B6E0649A39FF2625BC66925F /* zenburn.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = zenburn.min.css; path = Pod/Assets/styles/zenburn.min.css; sourceTree = "<group>"; };
 		F0FB122E01C400A3CAAEDACBA08A45A6 /* Archive+Writing.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Archive+Writing.swift"; path = "Sources/ZIPFoundation/Archive+Writing.swift"; sourceTree = "<group>"; };
 		F2A932970FEA398EBC5638EE69B863E1 /* DFUController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUController.swift; path = iOSDFULibrary/Classes/Implementation/GenericDFU/DFUController.swift; sourceTree = "<group>"; };
 		F40B2DC46F4E391FA660C392ACE57335 /* Pods-Calliope App-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Calliope App-resources.sh"; sourceTree = "<group>"; };
 		F449C5FABD209AA00E8B9021365E7575 /* DFUStreamZip.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUStreamZip.swift; path = iOSDFULibrary/Classes/Utilities/Streams/DFUStreamZip.swift; sourceTree = "<group>"; };
 		F5DE846FA691492D126995BFFC4CA0DF /* SoftdeviceBootloaderInfo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SoftdeviceBootloaderInfo.swift; path = iOSDFULibrary/Classes/Utilities/DFUPackage/Manifest/SoftdeviceBootloaderInfo.swift; sourceTree = "<group>"; };
-		F81B1ED6649F24C846B2B76F60210571 /* pojoaque.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = pojoaque.min.css; path = Pod/Assets/styles/pojoaque.min.css; sourceTree = "<group>"; };
-		F94B77D9369AAE5EC93B1B058E5686D5 /* atelier-heath-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "atelier-heath-light.min.css"; path = "Pod/Assets/styles/atelier-heath-light.min.css"; sourceTree = "<group>"; };
-		F9B03EE4C8AA08976C8111E131807B22 /* rainbow.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = rainbow.min.css; path = Pod/Assets/styles/rainbow.min.css; sourceTree = "<group>"; };
-		FBBDEA44EA6C669F30432CCBB92821C4 /* docco.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = docco.min.css; path = Pod/Assets/styles/docco.min.css; sourceTree = "<group>"; };
+		F81B1ED6649F24C846B2B76F60210571 /* pojoaque.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = pojoaque.min.css; path = Pod/Assets/styles/pojoaque.min.css; sourceTree = "<group>"; };
+		F94B77D9369AAE5EC93B1B058E5686D5 /* atelier-heath-light.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "atelier-heath-light.min.css"; path = "Pod/Assets/styles/atelier-heath-light.min.css"; sourceTree = "<group>"; };
+		F9B03EE4C8AA08976C8111E131807B22 /* rainbow.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = rainbow.min.css; path = Pod/Assets/styles/rainbow.min.css; sourceTree = "<group>"; };
+		FBBDEA44EA6C669F30432CCBB92821C4 /* docco.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = docco.min.css; path = Pod/Assets/styles/docco.min.css; sourceTree = "<group>"; };
 		FBF9540B3192CA9A5CC45356AD091EF6 /* Heckel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Heckel.swift; path = Sources/Shared/Algorithms/Heckel.swift; sourceTree = "<group>"; };
-		FC3264F35EFCE6282CB2A65F9A88265A /* codepen-embed.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = "codepen-embed.min.css"; path = "Pod/Assets/styles/codepen-embed.min.css"; sourceTree = "<group>"; };
+		FC3264F35EFCE6282CB2A65F9A88265A /* codepen-embed.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = "codepen-embed.min.css"; path = "Pod/Assets/styles/codepen-embed.min.css"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -548,6 +548,7 @@
 				84F911A7E6D54558AC133292DEB262D8 /* UIScrollView+TPKeyboardAvoidingAdditions.m */,
 				7A8AF14F0AF8517703B67455B6A871B0 /* Support Files */,
 			);
+			name = TPKeyboardAvoiding;
 			path = TPKeyboardAvoiding;
 			sourceTree = "<group>";
 		};
@@ -629,6 +630,7 @@
 				9986EF1FA25133014A994F066F84AD42 /* ZipArchive.swift */,
 				EE6779D25981303F3CF08D586D4DEAF2 /* Support Files */,
 			);
+			name = iOSDFULibrary;
 			path = iOSDFULibrary;
 			sourceTree = "<group>";
 		};
@@ -750,6 +752,7 @@
 				982544826708921822601F2DEBCAECBE /* FileManager+ZIP.swift */,
 				07955381074B3A9E467AC60830FD29DA /* Support Files */,
 			);
+			name = ZIPFoundation;
 			path = ZIPFoundation;
 			sourceTree = "<group>";
 		};
@@ -764,6 +767,7 @@
 				4113C5F6C7557A5FBDEA024CE341B637 /* Resources */,
 				9CC8980FDDC64F68311F467B14651001 /* Support Files */,
 			);
+			name = Highlightr;
 			path = Highlightr;
 			sourceTree = "<group>";
 		};
@@ -807,6 +811,7 @@
 				49E5A271C5CCB3695EE84FCD439C7292 /* UICircularTimerRing.swift */,
 				109CF8DD67032D8CE59E7B80847C2277 /* Support Files */,
 			);
+			name = UICircularProgressRing;
 			path = UICircularProgressRing;
 			sourceTree = "<group>";
 		};
@@ -825,6 +830,7 @@
 				C0F26D33F11D12FD0D6639AB0728BC32 /* WagnerFischer.swift */,
 				BCBA32EF98B21941D96D44C093B4E227 /* Support Files */,
 			);
+			name = DeepDiff;
 			path = DeepDiff;
 			sourceTree = "<group>";
 		};
@@ -883,6 +889,7 @@
 				9D91EB0D575015EC0373907E01F1BF88 /* UILayoutSupport+Extensions.swift */,
 				F58EA2616004528C3629FBE6ECE57922 /* Support Files */,
 			);
+			name = SnapKit;
 			path = SnapKit;
 			sourceTree = "<group>";
 		};
@@ -1207,13 +1214,8 @@
 		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1100;
-				LastUpgradeCheck = 1100;
-				TargetAttributes = {
-					B0DFE582E64AE7298C59241B7B610B04 = {
-						LastSwiftMigration = 1250;
-					};
-				};
+				LastSwiftUpdateCheck = 1240;
+				LastUpgradeCheck = 1240;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 10.0";
@@ -1669,6 +1671,32 @@
 			};
 			name = Release;
 		};
+		4CD536EEF28266DEBF469FB070DC0566 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A7A658FF188162CFF8D68916684C1A12 /* UICircularProgressRing.release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				GCC_PREFIX_HEADER = "Target Support Files/UICircularProgressRing/UICircularProgressRing-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MODULEMAP_FILE = Headers/Public/UICircularProgressRing/UICircularProgressRing.modulemap;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_MODULE_NAME = UICircularProgressRing;
+				PRODUCT_NAME = UICircularProgressRing;
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.3;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		50CFDEE6804C615FD7F5A0124A953B6D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D31245DCC597A7689D74F3C5086819B5 /* TPKeyboardAvoiding.debug.xcconfig */;
@@ -1691,31 +1719,6 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
-		};
-		81FA2FA3B7A9D7C03D929E25B7276F08 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D9420E408C2B4F160F2EAE51C70EB96B /* iOSDFULibrary.release.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				GCC_PREFIX_HEADER = "Target Support Files/iOSDFULibrary/iOSDFULibrary-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				MODULEMAP_FILE = Headers/Public/iOSDFULibrary/iOSDFULibrary.modulemap;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_MODULE_NAME = iOSDFULibrary;
-				PRODUCT_NAME = iOSDFULibrary;
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.3;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
 		};
 		86C4721E71E38FA6AF38CC8A637B4909 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -1850,30 +1853,6 @@
 			};
 			name = Debug;
 		};
-		9C4526B7150C9B69BF8649AF626F1DE3 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6F33D071ED7D48689B103651C2C6FD4A /* UICircularProgressRing.debug.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				GCC_PREFIX_HEADER = "Target Support Files/UICircularProgressRing/UICircularProgressRing-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MODULEMAP_FILE = Headers/Public/UICircularProgressRing/UICircularProgressRing.modulemap;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_MODULE_NAME = UICircularProgressRing;
-				PRODUCT_NAME = UICircularProgressRing;
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.2.4;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
 		9ECB085B42395BDC381E22BE4A0F400E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 451E59C8AEA3C05C4BA62DACBAFE0037 /* SnapKit.debug.xcconfig */;
@@ -1899,31 +1878,6 @@
 			};
 			name = Debug;
 		};
-		A78ECEFDCFD5B338A64C7C08AAF5EF83 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = A7A658FF188162CFF8D68916684C1A12 /* UICircularProgressRing.release.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				GCC_PREFIX_HEADER = "Target Support Files/UICircularProgressRing/UICircularProgressRing-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MODULEMAP_FILE = Headers/Public/UICircularProgressRing/UICircularProgressRing.modulemap;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_MODULE_NAME = UICircularProgressRing;
-				PRODUCT_NAME = UICircularProgressRing;
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.2.4;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
 		AB4BAACAB2389448734B7B17533A3DA9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 731931B2E101D7843F38BB4C4EDC585B /* Highlightr.release.xcconfig */;
@@ -1944,6 +1898,31 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AB987099C0752749378CEC495E43B75D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D9420E408C2B4F160F2EAE51C70EB96B /* iOSDFULibrary.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				GCC_PREFIX_HEADER = "Target Support Files/iOSDFULibrary/iOSDFULibrary-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MODULEMAP_FILE = Headers/Public/iOSDFULibrary/iOSDFULibrary.modulemap;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_MODULE_NAME = iOSDFULibrary;
+				PRODUCT_NAME = iOSDFULibrary;
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.5;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -2015,21 +1994,22 @@
 			};
 			name = Debug;
 		};
-		C045A6580A3EA878C6B68157C50154CC /* Debug */ = {
+		C66D4D80B7CA2AD9A47E71573C4EBF99 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B38B44F0083E4DBC5BEE4C11CD12CBD6 /* iOSDFULibrary.debug.xcconfig */;
+			baseConfigurationReference = 6F33D071ED7D48689B103651C2C6FD4A /* UICircularProgressRing.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				GCC_PREFIX_HEADER = "Target Support Files/iOSDFULibrary/iOSDFULibrary-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				MODULEMAP_FILE = Headers/Public/iOSDFULibrary/iOSDFULibrary.modulemap;
+				GCC_PREFIX_HEADER = "Target Support Files/UICircularProgressRing/UICircularProgressRing-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MODULEMAP_FILE = Headers/Public/UICircularProgressRing/UICircularProgressRing.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_MODULE_NAME = iOSDFULibrary;
-				PRODUCT_NAME = iOSDFULibrary;
+				PRODUCT_MODULE_NAME = UICircularProgressRing;
+				PRODUCT_NAME = UICircularProgressRing;
 				PUBLIC_HEADERS_FOLDER_PATH = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -2063,6 +2043,30 @@
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
+		};
+		DF8CDDB698B2BF1ADB954E2DDE4682F7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B38B44F0083E4DBC5BEE4C11CD12CBD6 /* iOSDFULibrary.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				GCC_PREFIX_HEADER = "Target Support Files/iOSDFULibrary/iOSDFULibrary-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MODULEMAP_FILE = Headers/Public/iOSDFULibrary/iOSDFULibrary.modulemap;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_MODULE_NAME = iOSDFULibrary;
+				PRODUCT_NAME = iOSDFULibrary;
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.5;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
 		};
 		E4565B184F3AED3FEC199A85703E56A8 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -2162,8 +2166,8 @@
 		6B87EE7D2D0B85287A44BE138B6927D5 /* Build configuration list for PBXNativeTarget "iOSDFULibrary" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C045A6580A3EA878C6B68157C50154CC /* Debug */,
-				81FA2FA3B7A9D7C03D929E25B7276F08 /* Release */,
+				DF8CDDB698B2BF1ADB954E2DDE4682F7 /* Debug */,
+				AB987099C0752749378CEC495E43B75D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2189,8 +2193,8 @@
 		8E153BFC9F5D352223546EE98E2B07C0 /* Build configuration list for PBXNativeTarget "UICircularProgressRing" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9C4526B7150C9B69BF8649AF626F1DE3 /* Debug */,
-				A78ECEFDCFD5B338A64C7C08AAF5EF83 /* Release */,
+				C66D4D80B7CA2AD9A47E71573C4EBF99 /* Debug */,
+				4CD536EEF28266DEBF469FB070DC0566 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
