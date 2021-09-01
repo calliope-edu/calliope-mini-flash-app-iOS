@@ -9,13 +9,16 @@
 import Foundation
 
 public enum SettingsKey: String, CaseIterable {
-    case localEditor = "localEditorOnPreference"
-    case makeCode = "makecodeOnPreference"
-    case roberta = "robertaOnPreference"
-    case playgrounds = "playgroundsOnPreference"
 
+    case localEditor = "localEditorOnPreference"
+
+    case makeCode = "makecodeOnPreference"
     case makecodeUrl = "makecodeUrlPreference"
+
+    case roberta = "robertaOnPreference"
     case robertaUrl = "robertaUrlPreference"
+
+    case playgrounds = "playgroundsOnPreference"
     case playgroundTemplateUrl = "playgroundTemplateUrlPreference"
 
     case appVersion = "appVersionInformationPreference"
@@ -23,7 +26,6 @@ public enum SettingsKey: String, CaseIterable {
     case newsURL = "calliopeNewsUrlPreference"
 
     case defaultHexFileURL = "calliopeDefaultHexFilePreference"
-
     case blinkingHeartURL = "calliopeBlinkingHeartHexPreference"
     
     case resetSettings = "resetSettingsPreference"
@@ -49,28 +51,36 @@ public struct Settings {
 
     private static func defaultForKey(_ key: SettingsKey) -> Any {
         switch key {
+
         case .localEditor:
             return defaultLocalEditorEnabled
+
         case .makeCode:
-            return defaultMakecodeUrl
-        case .roberta:
-            return defaultRobertaUrl
-        case .playgrounds:
-            return defaultPlaygroundsEnabled
+            return defaultMakeCodeEnabled
         case .makecodeUrl:
             return defaultMakecodeUrl
+
+        case .roberta:
+            return defaultRobertaEnabled
         case .robertaUrl:
             return defaultRobertaUrl
+
+        case .playgrounds:
+            return defaultPlaygroundsEnabled
+        case .playgroundTemplateUrl:
+            return defaultPlaygroundTemplateUrl
+
         case .appVersion:
             return defaultAppVersion
+
         case .newsURL:
             return defaultNewsUrl
+
         case .defaultHexFileURL:
             return defaultHexFileUrl
         case .blinkingHeartURL:
             return defaultBlinkingHeartUrl
-        case .playgroundTemplateUrl:
-            return defaultPlaygroundTemplateUrl
+
         case .resetSettings:
             return false
         }

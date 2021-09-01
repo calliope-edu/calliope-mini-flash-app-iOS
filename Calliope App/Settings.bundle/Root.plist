@@ -150,6 +150,48 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
+			<string>Default Hex Files</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Start Program</string>
+			<key>Key</key>
+			<string>calliopeDefaultHexFilePreference</string>
+			<key>DefaultValue</key>
+			<string>http://calliope.cc/downloads/calliope-demo.hex</string>
+			<key>IsSecure</key>
+			<false/>
+			<key>KeyboardType</key>
+			<string>URL</string>
+			<key>AutocapitalizationType</key>
+			<string>None</string>
+			<key>AutocorrectionType</key>
+			<string>No</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Blinking Heart</string>
+			<key>Key</key>
+			<string>calliopeBlinkingHeartHexPreference</string>
+			<key>DefaultValue</key>
+			<string>http://calliope.cc/downloads/blinkendes_herz_calliope_mini.hex</string>
+			<key>IsSecure</key>
+			<false/>
+			<key>KeyboardType</key>
+			<string>URL</string>
+			<key>AutocapitalizationType</key>
+			<string>None</string>
+			<key>AutocorrectionType</key>
+			<string>No</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
 			<string>Reset Settings</string>
 		</dict>
 		<dict>
