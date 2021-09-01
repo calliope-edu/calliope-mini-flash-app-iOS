@@ -162,31 +162,18 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
 
 	//MARK: uploading
 
-	private func upload(result download: EditorDownload) {
-		DispatchQueue.global().async {
-			do {
-				LogNotify.log("downloaded: start - \(download.url.absoluteString.truncate(length: 60))")
-				let data = try Data(contentsOf: download.url)
-				LogNotify.log("downloaded: stop \(data.count)")
-
-				DispatchQueue.main.async {
-					do {
-						let file = try HexFileManager.store(name: download.name, data: data)
-                        FirmwareUpload.showUploadUI(controller: self, program: file) {
-                            MatrixConnectionViewController.instance.connect()
-                        }
-					}
-					catch {
-						LogNotify.log("\(error)")
-					}
-				}
-			}
-			catch {
-				LogNotify.log("\(error)")
-			}
-		}
-
-	}
-
+    private func upload(result download: EditorDownload) {
+        do {
+            DispatchQueue.main.async {
+                HexFileStoreDialog.showStoreHexUI(controller: self, hexFile: download.url) { error in
+                    //TODO: some reaction
+                } saveCompleted: { file in
+                    FirmwareUpload.showUploadUI(controller: self, program: file) {
+                        MatrixConnectionViewController.instance.connect()
+                    }
+                }
+            }
+        }
+    }
 }
 

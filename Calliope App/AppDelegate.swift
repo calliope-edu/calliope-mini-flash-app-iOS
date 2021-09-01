@@ -51,19 +51,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
 	func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
 
-		if url.isFileURL {
-			do {
-				if let name = url.lastPathComponent.split(separator: ".").map(String.init).first {
-					let data = try url.asData()
-					let file = try HexFileManager.store(name: "received-" + name, data: data)
-					LogNotify.log("received \(file)")
-				}
-			} catch {
-				LogNotify.log("failed to receive \(url)")
-			}
-		}
+        if url.isFileURL && url.pathExtension.lowercased() == "hex" {
+            LogNotify.log("received \(url.lastPathComponent)")
+            guard let viewController = UIApplication.shared.keyWindow?.rootViewController else {
+                fatalError("No root view controller for presenting File Save UI found".localized)
+            }
+            HexFileStoreDialog.showStoreHexUI(controller: viewController, hexFile: url, notSaved: { error in
+                return //TODO: handle error
+            }) { savedFile in
+                return //TODO: handle file saved
+            }
 
-		return true
+            return true
+        }
+
+		return false
 	}
 
     // MARK: UNUserNotificationCenterDelegate

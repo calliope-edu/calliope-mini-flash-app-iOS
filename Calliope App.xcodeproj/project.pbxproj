@@ -26,6 +26,7 @@
 		2F4B8D9F2598D7980026B480 /* HomeScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F4B8DA12598D7980026B480 /* HomeScreen.storyboard */; };
 		2F4B8DAA2598D85A0026B480 /* Help.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F4B8DA92598D85A0026B480 /* Help.storyboard */; };
 		2F4B8DAD2598E1E40026B480 /* MenuNavigationSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4B8DAC2598E1E40026B480 /* MenuNavigationSectionHeader.swift */; };
+		2F526C2426E00696004BA8FF /* HexFileStoreDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F526C2326E00696004BA8FF /* HexFileStoreDialog.swift */; };
 		2F57C3B2239058B0008B0D69 /* AnimatingTutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3B1239058B0008B0D69 /* AnimatingTutorialViewController.swift */; };
 		2F57C3B42394F78B008B0D69 /* DownloadableHexFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3B32394F78B008B0D69 /* DownloadableHexFile.swift */; };
 		2F57C3B62394F935008B0D69 /* BlinkingHeartProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3B52394F935008B0D69 /* BlinkingHeartProgram.swift */; };
@@ -147,6 +148,7 @@
 		2F4B8DA62598D7CC0026B480 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/HomeScreen.strings; sourceTree = "<group>"; };
 		2F4B8DA92598D85A0026B480 /* Help.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Help.storyboard; sourceTree = "<group>"; };
 		2F4B8DAC2598E1E40026B480 /* MenuNavigationSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuNavigationSectionHeader.swift; sourceTree = "<group>"; };
+		2F526C2326E00696004BA8FF /* HexFileStoreDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexFileStoreDialog.swift; sourceTree = "<group>"; };
 		2F57C3B1239058B0008B0D69 /* AnimatingTutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingTutorialViewController.swift; sourceTree = "<group>"; };
 		2F57C3B32394F78B008B0D69 /* DownloadableHexFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadableHexFile.swift; sourceTree = "<group>"; };
 		2F57C3B52394F935008B0D69 /* BlinkingHeartProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkingHeartProgram.swift; sourceTree = "<group>"; };
@@ -557,6 +559,7 @@
 				2F4B8D8225978D950026B480 /* EditorAndPrograms.storyboard */,
 				2F08A0E0234AC7400088A8D6 /* EditorAndProgramsContainerViewController.swift */,
 				2F61455B22BF761F001C2734 /* FirmwareUpload.swift */,
+				2F526C2326E00696004BA8FF /* HexFileStoreDialog.swift */,
 				2F91665C2354062A0065AD81 /* Editors */,
 				2F91665D2354064C0065AD81 /* Programs */,
 			);
@@ -734,6 +737,7 @@
 				2F57C3B42394F78B008B0D69 /* DownloadableHexFile.swift in Sources */,
 				2F08A0E5234B11890088A8D6 /* ProgramsCollectionViewController.swift in Sources */,
 				2F57C3B82395B016008B0D69 /* TutorialPageMiniMenu.swift in Sources */,
+				2F526C2426E00696004BA8FF /* HexFileStoreDialog.swift in Sources */,
 				2F61457422BF761F001C2734 /* ApiCalliope.swift in Sources */,
 				2F61458F22BF761F001C2734 /* MatrixConnectionViewController.swift in Sources */,
 				2F61459822BF761F001C2734 /* StreamReader.swift in Sources */,
