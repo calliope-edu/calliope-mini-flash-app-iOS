@@ -29,6 +29,8 @@ class PlaygroundCodeSnippetViewController: UIViewController, CodeSnippetControll
 
     @IBOutlet weak var codeView: UITextView!
 
+    @IBOutlet weak var copySuccessView: UIView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         let copyAction = UILongPressGestureRecognizer()
@@ -39,16 +41,20 @@ class PlaygroundCodeSnippetViewController: UIViewController, CodeSnippetControll
     }
 
     @objc func copyCode(_ sender: Any) {
-        guard let codeSnippet = codeSnippet,
-              ((sender as? UIGestureRecognizer)?.state ?? .began) == .began else {
+        guard ((sender as? UIGestureRecognizer)?.state ?? .began) == .began else {
             return
         }
-        UIPasteboard.general.string = codeSnippet.content
-        let notificationContent = UNMutableNotificationContent()
-        notificationContent.body = "Code snippet copied to clipboard".localized
-        let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.1, repeats: false)
-        let notificationRequest = UNNotificationRequest(identifier: "calliope-copied-playground-snippet", content: notificationContent, trigger: notificationTrigger)
-        UNUserNotificationCenter.current().add(notificationRequest, withCompletionHandler: nil)
+        UIView.animate(withDuration: 0.2) {
+            self.copySuccessView.alpha = 1.0
+        } completion: { done in
+            if done {
+                UIView.animateKeyframes(withDuration: 0.2, delay: 2.0) {
+                    self.copySuccessView.alpha = 0.0
+                }
+
+            }
+        }
+
     }
 
 
@@ -60,15 +66,4 @@ class PlaygroundCodeSnippetViewController: UIViewController, CodeSnippetControll
         let dragItem = UIDragItem(itemProvider: itemProvider)
         return [dragItem]
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

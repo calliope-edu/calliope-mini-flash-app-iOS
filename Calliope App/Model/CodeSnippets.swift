@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct CodeSnippets {
 
@@ -14,7 +15,7 @@ struct CodeSnippets {
 
     var snippets: [CodeSnippet]
 
-    static func reload(_ completion: @escaping () -> ()) {
+    static func reload(failure: @escaping (Error?) -> (), completion: @escaping () -> ()) {
 
         var urlString = UserDefaults.standard.string(forKey: SettingsKey.playgroundTemplateUrl.rawValue)
         let defaultUrlString = Settings.defaultPlaygroundTemplateUrl
@@ -28,8 +29,17 @@ struct CodeSnippets {
 
         let dataTask = URLSession.shared.dataTask(with: url) { data, response, error in
             let decoder = JSONDecoder()
-            guard error == nil, let data = data, let urls = try? decoder.decode([URL].self, from: data) else {
-                LogNotify.log("no URL json found in \(url), error: \(error ?? "none")")
+            guard error == nil, let data = data else {
+                LogNotify.log("no data found in \(url), error: \(error ?? "none")")
+                failure(error)
+                return
+            }
+            let urls: [URL]
+            do {
+                urls = try decoder.decode([URL].self, from: data)
+            } catch {
+                LogNotify.log("no valid json in \(url), error: \(error)")
+                failure(error)
                 return
             }
 

@@ -18,9 +18,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="513.5" height="1194"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L1q-WM-W3L">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L1q-WM-W3L">
+                                <rect key="frame" x="0.0" y="50" width="513.5" height="1084"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <attributedString key="attributedText">
                                     <fragment>
@@ -37,12 +36,43 @@
                                 </attributedString>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gTk-sL-RBi">
+                                <rect key="frame" x="0.0" y="1134" width="513.5" height="60"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copied snippet!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7rw-qs-gzO">
+                                        <rect key="frame" x="0.0" y="0.0" width="513.5" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="fG2-9N-LB3"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" name="calliope-orange"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="7rw-qs-gzO" secondAttribute="trailing" id="3u7-hG-qTe"/>
+                                    <constraint firstItem="7rw-qs-gzO" firstAttribute="top" secondItem="gTk-sL-RBi" secondAttribute="top" id="iD4-IE-lnD"/>
+                                    <constraint firstItem="7rw-qs-gzO" firstAttribute="leading" secondItem="gTk-sL-RBi" secondAttribute="leading" id="sdo-rC-1P0"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="gSF-XG-CiI"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="gSF-XG-CiI" firstAttribute="trailing" secondItem="gTk-sL-RBi" secondAttribute="trailing" id="3Xi-qu-RgN"/>
+                            <constraint firstItem="gSF-XG-CiI" firstAttribute="trailing" secondItem="L1q-WM-W3L" secondAttribute="trailing" id="5cy-gr-Li8"/>
+                            <constraint firstItem="L1q-WM-W3L" firstAttribute="leading" secondItem="gSF-XG-CiI" secondAttribute="leading" id="Njt-YP-DH1"/>
+                            <constraint firstItem="L1q-WM-W3L" firstAttribute="top" secondItem="gSF-XG-CiI" secondAttribute="top" id="VqF-LL-ghL"/>
+                            <constraint firstItem="gTk-sL-RBi" firstAttribute="leading" secondItem="gSF-XG-CiI" secondAttribute="leading" id="Xzu-jj-PEv"/>
+                            <constraint firstAttribute="bottom" secondItem="gTk-sL-RBi" secondAttribute="bottom" id="egS-uP-jC2"/>
+                            <constraint firstItem="gTk-sL-RBi" firstAttribute="top" secondItem="L1q-WM-W3L" secondAttribute="bottom" id="xxg-1L-Cdg"/>
+                            <constraint firstItem="gSF-XG-CiI" firstAttribute="bottom" secondItem="7rw-qs-gzO" secondAttribute="bottom" id="yNd-RG-mST"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="codeView" destination="L1q-WM-W3L" id="O8c-Lr-mcL"/>
+                        <outlet property="copySuccessView" destination="gTk-sL-RBi" id="n3e-1z-Oeu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jpb-JW-eDl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -276,7 +306,7 @@
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sDg-74-hMi">
                                                                         <rect key="frame" x="8" y="16" width="584" height="74"/>
-                                                                        <mutableString key="text">Verwende die Snippet Library mit dem Swift Playground. Wenn du in dem Swift Playground "Calliope Mini - Vorlage" arbeitest, kannst du die Snippets Library neben der Playgrounds App öffnen und die Codesnippets ganz bequem von der App in den Playground kopieren.</mutableString>
+                                                                        <string key="text">Verwende die Snippet Library mit dem Swift Playground. Wenn du in dem Swift Playground "Calliope Mini - Vorlage" arbeitest, kannst du die Snippets Library neben der Playgrounds App öffnen und die Codesnippets ganz bequem von der App in den Playground kopieren.</string>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
@@ -455,6 +485,9 @@
         <image name="playground_startscreen/mini_button_grey" width="19" height="180"/>
         <namedColor name="calliope-lightgray">
             <color red="0.92900002002716064" green="0.93300002813339233" blue="0.93699997663497925" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="calliope-orange">
+            <color red="1" green="0.3059999942779541" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="calliope-turqoise">
             <color red="0.25900000333786011" green="0.78799998760223389" blue="0.78799998760223389" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

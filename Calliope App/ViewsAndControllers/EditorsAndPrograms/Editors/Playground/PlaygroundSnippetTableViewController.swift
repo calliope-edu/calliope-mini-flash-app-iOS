@@ -34,7 +34,16 @@ class PlaygroundSnippetTableViewController: UITableViewController, UITableViewDr
         tableView.dragInteractionEnabled = true
         tableView.dragDelegate = self
 
-        CodeSnippets.reload { [weak self] in
+        CodeSnippets.reload(failure: { error in
+            let errorDescription = error?.localizedDescription ?? "No description available".localized
+            let alert = UIAlertController(title: "Failed to load snippets".localized, message: String(format:"Check your internet connection or the snippets url in settings.\n\nThe error description is:\n%@".localized, errorDescription), preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok".localized, style: .cancel))
+            DispatchQueue.main.async {
+                self.parent?.dismiss(animated: true) {
+                    UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
+                }
+            }
+        }) { [weak self] in
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
             }
@@ -45,11 +54,6 @@ class PlaygroundSnippetTableViewController: UITableViewController, UITableViewDr
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        UNUserNotificationCenter.current().requestAuthorization(options: .alert) { (_, _) in }
     }
 
     // MARK: - Table view data source
