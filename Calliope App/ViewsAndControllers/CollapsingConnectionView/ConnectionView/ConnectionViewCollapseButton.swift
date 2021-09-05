@@ -10,12 +10,13 @@ import UIKit
 class ConnectionViewCollapseButton: UIButton, CollapseButtonProtocol {
 
 	public enum ConnectionState {
+        case disabled
 		case disconnected
 		case connecting
 		case connected
 	}
 
-	public var connectionState: ConnectionState = .disconnected {
+	public var connectionState: ConnectionState = .disabled {
 		didSet {
 			if oldValue != connectionState {
 				determineAppearance(smooth: true)
@@ -36,6 +37,8 @@ class ConnectionViewCollapseButton: UIButton, CollapseButtonProtocol {
 			self.setImages(smooth, nil, UIImage(named: "liveviewconnect/mini_close"), for: .normal)
 		} else {
 			switch self.connectionState {
+            case .disabled:
+                self.setImages(smooth, nil, nil, for: .normal)
 			case .disconnected:
 				self.setImages(smooth, UIImage(named: "liveviewconnect/mini_button_circle_red"), UIImage(named: "liveviewconnect/mini_mini"), for: .normal)
 			case .connecting:

@@ -42,9 +42,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 	let expandedHeight: CGFloat = 430
 
 	private let queue = DispatchQueue(label: "bluetooth")
-    
-    public private(set) var calliopeTypeLastChangedBy: AnyObject?
-    
+
     public var connectionDescriptionText: String = "1. Programm 5 starten\n2. Schütteln\n3. LED-Muster eingeben".localized {
         didSet { connectionDescriptionLabel.text = connectionDescriptionText }
     }
@@ -59,16 +57,31 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 			else { return nil }
 		return calliope
 	}
-    
-    public func changeCalliopeType(sender: AnyObject, calliopeClass: CalliopeBLEDevice.Type) {
-        if let changer = calliopeTypeLastChangedBy, changer === sender {
-            return
+
+    public var calliopeClass: CalliopeBLEDevice.Type? = nil {
+        didSet {
+            guard calliopeClass != oldValue else {
+                return
+            }
+            connectionDisabled = calliopeClass == nil
+            guard let calliopeClass = calliopeClass else {
+                return
+            }
+            let calliopeBuilder = { (_ peripheral: CBPeripheral, _ name: String) -> CalliopeBLEDevice in
+                return calliopeClass.init(peripheral: peripheral, name: name)
+            }
+            connector = CalliopeBLEDiscovery(calliopeBuilder)
         }
-        calliopeTypeLastChangedBy = sender
-        let calliopeBuilder = { (_ peripheral: CBPeripheral, _ name: String) -> CalliopeBLEDevice in
-            return calliopeClass.init(peripheral: peripheral, name: name)
+    }
+
+    private var connectionDisabled = true {
+        didSet {
+            if connectionDisabled {
+                animate(expand: false)
+                collapseButton.connectionState = .disabled
+                connector.giveUpResponsibility()
+            }
         }
-        connector = CalliopeBLEDiscovery(calliopeBuilder)
     }
     
     private var connector: CalliopeBLEDiscovery = CalliopeBLEDiscovery({ peripheral, name in
@@ -92,7 +105,6 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 	override public func viewDidLoad() {
 		super.viewDidLoad()
 		MatrixConnectionViewController.instance = self
-		changedConnector(connector)
 		connectButton.imageView?.contentMode = .scaleAspectFit
 		animate(expand: false)
 	}

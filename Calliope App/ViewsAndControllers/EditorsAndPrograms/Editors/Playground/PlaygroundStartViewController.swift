@@ -21,6 +21,7 @@ class PlaygroundStartViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.rearrangeStackview(view.bounds.size)
+        MatrixConnectionViewController.instance?.calliopeClass = nil
     }
 
     override func viewDidAppear(_ animated: Bool) {

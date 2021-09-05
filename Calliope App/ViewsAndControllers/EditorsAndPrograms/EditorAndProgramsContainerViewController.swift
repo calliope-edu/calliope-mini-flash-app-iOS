@@ -86,7 +86,7 @@ class EditorAndProgramsContainerViewController: UIViewController {
         }
         
         MatrixConnectionViewController.instance?.connectionDescriptionText = "Connect to enable uploading programs".localized
-        MatrixConnectionViewController.instance?.changeCalliopeType(sender: self, calliopeClass: FlashableCalliope.self)
+        MatrixConnectionViewController.instance?.calliopeClass = FlashableCalliope.self
     }
     
     override func viewWillDisappear(_ animated: Bool) {
