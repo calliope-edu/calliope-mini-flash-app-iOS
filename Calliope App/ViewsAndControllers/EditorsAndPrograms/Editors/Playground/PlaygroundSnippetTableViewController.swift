@@ -56,6 +56,11 @@ class PlaygroundSnippetTableViewController: UITableViewController, UITableViewDr
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        MatrixConnectionViewController.instance?.calliopeClass = nil
+    }
+
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
