@@ -64,7 +64,7 @@ class PlaygroundSnippetTableViewController: UITableViewController, UITableViewDr
         else {
             return
         }
-        
+        cell.copyCode()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -87,7 +87,7 @@ class PlaygroundSnippetTableViewController: UITableViewController, UITableViewDr
 
         cell.snippet = CodeSnippets.cached.snippets[indexPath.row]
 
-        cell.copySuccessOverlay.effect = nil
+        cell.copySuccessOverlay?.effect = nil
 
         return cell
     }

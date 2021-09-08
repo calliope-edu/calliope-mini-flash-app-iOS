@@ -251,7 +251,7 @@
                                                                 <constraint firstAttribute="trailing" secondItem="cIf-ra-SUA" secondAttribute="trailing" id="nI6-1H-Dgl"/>
                                                             </constraints>
                                                         </view>
-                                                        <vibrancyEffect style="label">
+                                                        <vibrancyEffect>
                                                             <blurEffect style="prominent"/>
                                                         </vibrancyEffect>
                                                     </visualEffectView>
