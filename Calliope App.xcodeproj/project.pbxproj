@@ -84,6 +84,7 @@
 		2F6145A222C7B3C2001C2734 /* NewsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6145A122C7B3C2001C2734 /* NewsCollectionViewController.swift */; };
 		2F6145A422C7BE3E001C2734 /* NewsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6145A322C7BE3E001C2734 /* NewsCollectionViewCell.swift */; };
 		2F6145A622C7D71B001C2734 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6145A522C7D71B001C2734 /* Settings.swift */; };
+		2F684E3026E977FC008A39CD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2F684E3226E977FC008A39CD /* InfoPlist.strings */; };
 		2F6C1B87258FC7C600F4B5AC /* ConnectionView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F6C1B89258FC7C600F4B5AC /* ConnectionView.storyboard */; };
 		2F6C1B98258FC90300F4B5AC /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F6C1B9A258FC90300F4B5AC /* Onboarding.storyboard */; };
 		2F763FE625A607A400C2029D /* SwiftCodeSnippetHighlighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F763FE525A607A400C2029D /* SwiftCodeSnippetHighlighter.swift */; };
@@ -166,13 +167,11 @@
 		2F526C4626E9698B004BA8FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/News.storyboard; sourceTree = "<group>"; };
 		2F526C4926E9698F004BA8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/News.strings; sourceTree = "<group>"; };
 		2F526C4B26E969BF004BA8FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/News.strings; sourceTree = "<group>"; };
-		2F526C4C26E96A30004BA8FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Base; path = Base.lproj/Info.plist; sourceTree = "<group>"; };
-		2F526C4E26E96A36004BA8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/Info.plist; sourceTree = "<group>"; };
-		2F526C4F26E96A37004BA8FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = de; path = de.lproj/Info.plist; sourceTree = "<group>"; };
 		2F526C5E26E96FC7004BA8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2F526C6026E96FCB004BA8FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2F526C6526E970D4004BA8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Settings.strings; sourceTree = "<group>"; };
 		2F526C6726E970DE004BA8FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Settings.strings; sourceTree = "<group>"; };
+		2F526C6F26E976A2004BA8FF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2F57C3B1239058B0008B0D69 /* AnimatingTutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingTutorialViewController.swift; sourceTree = "<group>"; };
 		2F57C3B32394F78B008B0D69 /* DownloadableHexFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadableHexFile.swift; sourceTree = "<group>"; };
 		2F57C3B52394F935008B0D69 /* BlinkingHeartProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkingHeartProgram.swift; sourceTree = "<group>"; };
@@ -226,6 +225,8 @@
 		2F6145A122C7B3C2001C2734 /* NewsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewController.swift; sourceTree = "<group>"; };
 		2F6145A322C7BE3E001C2734 /* NewsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewCell.swift; sourceTree = "<group>"; };
 		2F6145A522C7D71B001C2734 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		2F684E3126E977FC008A39CD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2F684E3326E97801008A39CD /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2F6C1B88258FC7C600F4B5AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ConnectionView.storyboard; sourceTree = "<group>"; };
 		2F6C1B8C258FC7D000F4B5AC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ConnectionView.strings; sourceTree = "<group>"; };
 		2F6C1B8E258FC7FE00F4B5AC /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ConnectionView.strings; sourceTree = "<group>"; };
@@ -355,10 +356,11 @@
 				2F61456122BF761F001C2734 /* Model */,
 				2F61454F22BF761F001C2734 /* ViewsAndControllers */,
 				2F9B296F233F03FC009496DD /* Fonts */,
-				2F526C4D26E96A30004BA8FF /* Info.plist */,
+				2F526C6F26E976A2004BA8FF /* Info.plist */,
 				2F526C6626E970D4004BA8FF /* Settings.strings */,
 				2F61459B22BF9D26001C2734 /* Settings.bundle */,
 				2F526C5F26E96FC7004BA8FF /* Localizable.strings */,
+				2F684E3226E977FC008A39CD /* InfoPlist.strings */,
 			);
 			path = "Calliope App";
 			sourceTree = "<group>";
@@ -670,6 +672,7 @@
 				2F9B29FC233F0456009496DD /* Roboto-Medium.ttf in Resources */,
 				2F9B2A06233F0456009496DD /* Roboto-Bold.ttf in Resources */,
 				2F6C1B98258FC90300F4B5AC /* Onboarding.storyboard in Resources */,
+				2F684E3026E977FC008A39CD /* InfoPlist.strings in Resources */,
 				2F61451C22BF75DF001C2734 /* LaunchScreen.storyboard in Resources */,
 				2F9B29FD233F0456009496DD /* Roboto-Light.ttf in Resources */,
 				2F9B2A1B233F045D009496DD /* RobotoMono-MediumItalic.ttf in Resources */,
@@ -906,16 +909,6 @@
 			name = News.storyboard;
 			sourceTree = "<group>";
 		};
-		2F526C4D26E96A30004BA8FF /* Info.plist */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2F526C4C26E96A30004BA8FF /* Base */,
-				2F526C4E26E96A36004BA8FF /* en */,
-				2F526C4F26E96A37004BA8FF /* de */,
-			);
-			name = Info.plist;
-			sourceTree = "<group>";
-		};
 		2F526C5F26E96FC7004BA8FF /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -943,6 +936,15 @@
 				2F526C2826E96885004BA8FF /* de */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		2F684E3226E977FC008A39CD /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2F684E3126E977FC008A39CD /* en */,
+				2F684E3326E97801008A39CD /* de */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		2F6C1B89258FC7C600F4B5AC /* ConnectionView.storyboard */ = {
