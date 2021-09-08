@@ -97,6 +97,12 @@
 /* No comment provided by engineer. */
 "Greetings" = "";
 
+/* The url for the news json */
+"https://calliope.cc/forumassets/news.json" = "";
+
+/* The url for the snippets json */
+"https://calliope.cc/forumassets/snippets.json" = "";
+
 /* No comment provided by engineer. */
 "Multiplication tables" = "";
 

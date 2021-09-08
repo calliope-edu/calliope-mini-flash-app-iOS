@@ -26,8 +26,8 @@ struct NewsManager {
 
         var urlString = UserDefaults.standard.string(forKey: SettingsKey.newsURL.rawValue)
         let defaultUrlString = Settings.defaultNewsUrl
-        if urlString == nil || urlString! == defaultUrlString {
-            urlString = defaultUrlString.localized
+        if urlString == nil {
+            urlString = defaultUrlString
         }
         guard let url = URL(string: urlString!) else {
             completion(.failure("news url not valid"))

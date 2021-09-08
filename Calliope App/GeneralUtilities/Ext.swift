@@ -28,10 +28,6 @@ extension String {
 	var ascii: [UInt8] {
 		return unicodeScalars.filter { $0.isASCII }.map { UInt8($0.value) }
 	}
-
-	/*public var localized: String {
-		return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
-	}*/
 }
 
 public extension String.StringInterpolation {

@@ -34,12 +34,12 @@ public enum SettingsKey: String, CaseIterable {
 
 public struct Settings {
 
-    static var defaultNewsUrl = "https://calliope.cc/forumassets/news.json"
+    static var defaultNewsUrl = NSLocalizedString("https://calliope.cc/forumassets/news.json", comment: "The url for the news json");
     static var defaultRobertaUrl = "https://lab.open-roberta.org/#loadSystem&&calliope2017"
     static var defaultMakecodeUrl = "https://makecode.calliope.cc"
     static var defaultHexFileUrl = "http://calliope.cc/downloads/calliope-demo.hex"
     static var defaultBlinkingHeartUrl = "http://calliope.cc/downloads/blinkendes_herz_calliope_mini.hex"
-    static var defaultPlaygroundTemplateUrl = "https://calliope.cc/forumassets/snippets.json"
+    static var defaultPlaygroundTemplateUrl = NSLocalizedString("https://calliope.cc/forumassets/snippets.json", comment: "The url for the snippets json");
 
     static var defaultLocalEditorEnabled = false
     static var defaultMakeCodeEnabled = true

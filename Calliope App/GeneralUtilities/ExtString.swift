@@ -5,12 +5,6 @@ extension String: LocalizedError {
 }
 
 extension String {
-	var localized: String {
-		return NSLocalizedString(self, comment: "")
-	}
-}
-
-extension String {
 	//TODO: subscript has been deprecated for a good reason, maybe replace
 
 	subscript (i: Int) -> Character {

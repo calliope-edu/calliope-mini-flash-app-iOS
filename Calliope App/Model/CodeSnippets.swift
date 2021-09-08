@@ -19,8 +19,8 @@ struct CodeSnippets {
 
         var urlString = UserDefaults.standard.string(forKey: SettingsKey.playgroundTemplateUrl.rawValue)
         let defaultUrlString = Settings.defaultPlaygroundTemplateUrl
-        if urlString == nil || urlString! == defaultUrlString {
-            urlString = defaultUrlString.localized
+        if urlString == nil {
+            urlString = defaultUrlString
         }
         guard let url = URL(string: urlString!) else {
             LogNotify.log("snippets url not valid")
