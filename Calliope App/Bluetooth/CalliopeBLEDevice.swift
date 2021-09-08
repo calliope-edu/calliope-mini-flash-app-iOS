@@ -63,7 +63,7 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
             self.bluetoothQueue.asyncAfter(deadline: DispatchTime.now() + BluetoothConstants.serviceDiscoveryTimeout) {
                 //has not discovered all services in time, probably stuck
                 if self.state == .evaluateMode {
-                    self.updateQueue.async { self.errorBlock("Service discovery on calliope has timed out!".localized) }
+                    self.updateQueue.async { self.errorBlock(NSLocalizedString("Service discovery on calliope has timed out!", comment: "")) }
                     self.state = .wrongMode
                 }
             }

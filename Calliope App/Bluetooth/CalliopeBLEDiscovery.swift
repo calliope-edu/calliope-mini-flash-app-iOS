@@ -51,7 +51,7 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 				bluetoothQueue.asyncAfter(deadline: DispatchTime.now() + BluetoothConstants.connectTimeout) {
 					if self.connectedCalliope == nil {
 						self.centralManager.cancelPeripheralConnection(connectingCalliope.peripheral)
-                        self.updateQueue.async { self.errorBlock("Connection to calliope timed out!".localized ) }
+                        self.updateQueue.async { self.errorBlock(NSLocalizedString("Connection to calliope timed out!", comment: "") ) }
 					}
 				}
 			}
@@ -159,7 +159,7 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 		//start scan only if central manger already connected to bluetooth system service (=poweredOn)
 		//alternatively, this is invoked after the state of the central mananger changed to poweredOn.
 		if centralManager.state != .poweredOn {
-            updateQueue.async { self.errorBlock("Activate Bluetooth!".localized) }
+            updateQueue.async { self.errorBlock(NSLocalizedString("Activate Bluetooth!", comment: "")) }
 			state = .discoveryWaitingForBluetooth
 		} else if !centralManager.isScanning {
 			centralManager.scanForPeripherals(withServices: nil, options: nil)
@@ -220,7 +220,7 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 	func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
 		guard let name = discoveredCalliopeUUIDNameMap[peripheral.identifier],
 			let calliope = discoveredCalliopes[name] else {
-            updateQueue.async { self.errorBlock("Could not find connected calliope in discovered calliopes".localized) }
+            updateQueue.async { self.errorBlock(NSLocalizedString("Could not find connected calliope in discovered calliopes", comment: "")) }
             return
 		}
 		connectedCalliope = calliope

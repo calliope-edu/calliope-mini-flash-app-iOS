@@ -54,9 +54,9 @@ class ProgramCollectionViewCell: AutoHeightCollectionViewCell {
 			}
 
             if !editing {
-                editButton?.setTitle("Edit".localized, for: .normal)
+                editButton?.setTitle(NSLocalizedString("Edit", comment: ""), for: .normal)
             } else {
-                editButton?.setTitle("Finished".localized, for: .normal)
+                editButton?.setTitle(NSLocalizedString("Finished", comment: ""), for: .normal)
             }
             
 			descriptionText?.isEditable = editing && !simpleCell

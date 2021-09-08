@@ -24,9 +24,14 @@
 		2F375ABB237F28BC004ED8D7 /* DefaultProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F375ABA237F28BC004ED8D7 /* DefaultProgram.swift */; };
 		2F4B8D8425978D950026B480 /* EditorAndPrograms.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F4B8D8225978D950026B480 /* EditorAndPrograms.storyboard */; };
 		2F4B8D9F2598D7980026B480 /* HomeScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F4B8DA12598D7980026B480 /* HomeScreen.storyboard */; };
-		2F4B8DAA2598D85A0026B480 /* Help.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F4B8DA92598D85A0026B480 /* Help.storyboard */; };
 		2F4B8DAD2598E1E40026B480 /* MenuNavigationSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4B8DAC2598E1E40026B480 /* MenuNavigationSectionHeader.swift */; };
 		2F526C2426E00696004BA8FF /* HexFileStoreDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F526C2326E00696004BA8FF /* HexFileStoreDialog.swift */; };
+		2F526C2926E9688B004BA8FF /* CalliopeApp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F526C2B26E9688B004BA8FF /* CalliopeApp.storyboard */; };
+		2F526C3026E9689A004BA8FF /* CarRemote.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F526C3226E9689A004BA8FF /* CarRemote.storyboard */; };
+		2F526C3726E968A2004BA8FF /* Help.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F526C3926E968A2004BA8FF /* Help.storyboard */; };
+		2F526C3E26E9694D004BA8FF /* PlaygroundSnippets.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F526C4026E9694D004BA8FF /* PlaygroundSnippets.storyboard */; };
+		2F526C4526E9698B004BA8FF /* News.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F526C4726E9698B004BA8FF /* News.storyboard */; };
+		2F526C5D26E96FC7004BA8FF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2F526C5F26E96FC7004BA8FF /* Localizable.strings */; };
 		2F57C3B2239058B0008B0D69 /* AnimatingTutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3B1239058B0008B0D69 /* AnimatingTutorialViewController.swift */; };
 		2F57C3B42394F78B008B0D69 /* DownloadableHexFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3B32394F78B008B0D69 /* DownloadableHexFile.swift */; };
 		2F57C3B62394F935008B0D69 /* BlinkingHeartProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3B52394F935008B0D69 /* BlinkingHeartProgram.swift */; };
@@ -37,8 +42,6 @@
 		2F5E8F0426C9787400CE03CB /* PlaygroundStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5E8F0326C9787400CE03CB /* PlaygroundStartViewController.swift */; };
 		2F61451022BF75DE001C2734 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61450F22BF75DE001C2734 /* AppDelegate.swift */; };
 		2F61451C22BF75DF001C2734 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F61451A22BF75DF001C2734 /* LaunchScreen.storyboard */; };
-		2F61456922BF761F001C2734 /* CalliopeApp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F61452822BF761F001C2734 /* CalliopeApp.storyboard */; };
-		2F61456C22BF761F001C2734 /* CarRemote.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F61452B22BF761F001C2734 /* CarRemote.storyboard */; };
 		2F61456E22BF761F001C2734 /* CalliopeBLEProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61452E22BF761F001C2734 /* CalliopeBLEProfile.swift */; };
 		2F61456F22BF761F001C2734 /* CalliopeBLEDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61452F22BF761F001C2734 /* CalliopeBLEDiscovery.swift */; };
 		2F61457022BF761F001C2734 /* Extension_CBUUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453022BF761F001C2734 /* Extension_CBUUID.swift */; };
@@ -110,11 +113,9 @@
 		2F9B5CAB2357127A00728546 /* TutorialPageMiniDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9B5CAA2357127A00728546 /* TutorialPageMiniDemo.swift */; };
 		2F9B5CAD23571E7100728546 /* OnboardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9B5CAC23571E7100728546 /* OnboardingCollectionViewCell.swift */; };
 		2F9E404A259DFB00002FFE0B /* PlaygroundSnippetTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9E4049259DFB00002FFE0B /* PlaygroundSnippetTableViewController.swift */; };
-		2FA10F392336FC6E0058E2F6 /* News.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FA10F382336FC6E0058E2F6 /* News.storyboard */; };
 		2FAA2D0422DB3BBB00BC1A5F /* OnboardingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAA2D0322DB3BBB00BC1A5F /* OnboardingPage.swift */; };
 		2FC2A12922C8FA6F00675C2F /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC2A12822C8FA6F00675C2F /* News.swift */; };
 		2FC2A12B22C962D100675C2F /* NewsDetailWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC2A12A22C962D100675C2F /* NewsDetailWebViewController.swift */; };
-		2FCB70E426C7C00E00DF79B7 /* PlaygroundSnippets.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FCB70E326C7C00E00DF79B7 /* PlaygroundSnippets.storyboard */; };
 		2FCB70E626C7FCA300DF79B7 /* HelpContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCB70E526C7FCA300DF79B7 /* HelpContentViewController.swift */; };
 		2FCB70E826C7FD5300DF79B7 /* HelpWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCB70E726C7FD5300DF79B7 /* HelpWebViewController.swift */; };
 		2FFE865E22DB3DDF00728E7C /* TutorialPageConnect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE865D22DB3DDF00728E7C /* TutorialPageConnect.swift */; };
@@ -146,9 +147,32 @@
 		2F4B8DA02598D7980026B480 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/HomeScreen.storyboard; sourceTree = "<group>"; };
 		2F4B8DA42598D79D0026B480 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/HomeScreen.strings; sourceTree = "<group>"; };
 		2F4B8DA62598D7CC0026B480 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/HomeScreen.strings; sourceTree = "<group>"; };
-		2F4B8DA92598D85A0026B480 /* Help.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Help.storyboard; sourceTree = "<group>"; };
 		2F4B8DAC2598E1E40026B480 /* MenuNavigationSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuNavigationSectionHeader.swift; sourceTree = "<group>"; };
 		2F526C2326E00696004BA8FF /* HexFileStoreDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexFileStoreDialog.swift; sourceTree = "<group>"; };
+		2F526C2626E9687C004BA8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		2F526C2826E96885004BA8FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		2F526C2A26E9688B004BA8FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/CalliopeApp.storyboard; sourceTree = "<group>"; };
+		2F526C2D26E96890004BA8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CalliopeApp.strings; sourceTree = "<group>"; };
+		2F526C2F26E96891004BA8FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/CalliopeApp.strings; sourceTree = "<group>"; };
+		2F526C3126E9689A004BA8FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/CarRemote.storyboard; sourceTree = "<group>"; };
+		2F526C3426E9689C004BA8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CarRemote.strings; sourceTree = "<group>"; };
+		2F526C3626E9689D004BA8FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/CarRemote.strings; sourceTree = "<group>"; };
+		2F526C3826E968A2004BA8FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Help.storyboard; sourceTree = "<group>"; };
+		2F526C3B26E968D2004BA8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Help.strings; sourceTree = "<group>"; };
+		2F526C3D26E96905004BA8FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Help.strings; sourceTree = "<group>"; };
+		2F526C3F26E9694D004BA8FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/PlaygroundSnippets.storyboard; sourceTree = "<group>"; };
+		2F526C4226E9694F004BA8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PlaygroundSnippets.strings; sourceTree = "<group>"; };
+		2F526C4426E9697D004BA8FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/PlaygroundSnippets.strings; sourceTree = "<group>"; };
+		2F526C4626E9698B004BA8FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/News.storyboard; sourceTree = "<group>"; };
+		2F526C4926E9698F004BA8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/News.strings; sourceTree = "<group>"; };
+		2F526C4B26E969BF004BA8FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/News.strings; sourceTree = "<group>"; };
+		2F526C4C26E96A30004BA8FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Base; path = Base.lproj/Info.plist; sourceTree = "<group>"; };
+		2F526C4E26E96A36004BA8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/Info.plist; sourceTree = "<group>"; };
+		2F526C4F26E96A37004BA8FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = de; path = de.lproj/Info.plist; sourceTree = "<group>"; };
+		2F526C5E26E96FC7004BA8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2F526C6026E96FCB004BA8FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2F526C6526E970D4004BA8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Settings.strings; sourceTree = "<group>"; };
+		2F526C6726E970DE004BA8FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Settings.strings; sourceTree = "<group>"; };
 		2F57C3B1239058B0008B0D69 /* AnimatingTutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingTutorialViewController.swift; sourceTree = "<group>"; };
 		2F57C3B32394F78B008B0D69 /* DownloadableHexFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadableHexFile.swift; sourceTree = "<group>"; };
 		2F57C3B52394F935008B0D69 /* BlinkingHeartProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkingHeartProgram.swift; sourceTree = "<group>"; };
@@ -160,9 +184,6 @@
 		2F61450C22BF75DE001C2734 /* Calliope App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Calliope App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F61450F22BF75DE001C2734 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2F61451B22BF75DF001C2734 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		2F61451D22BF75DF001C2734 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2F61452822BF761F001C2734 /* CalliopeApp.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CalliopeApp.storyboard; sourceTree = "<group>"; };
-		2F61452B22BF761F001C2734 /* CarRemote.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CarRemote.storyboard; sourceTree = "<group>"; };
 		2F61452E22BF761F001C2734 /* CalliopeBLEProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalliopeBLEProfile.swift; sourceTree = "<group>"; };
 		2F61452F22BF761F001C2734 /* CalliopeBLEDiscovery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalliopeBLEDiscovery.swift; sourceTree = "<group>"; };
 		2F61453022BF761F001C2734 /* Extension_CBUUID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension_CBUUID.swift; sourceTree = "<group>"; };
@@ -239,11 +260,9 @@
 		2F9B5CAA2357127A00728546 /* TutorialPageMiniDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPageMiniDemo.swift; sourceTree = "<group>"; };
 		2F9B5CAC23571E7100728546 /* OnboardingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewCell.swift; sourceTree = "<group>"; };
 		2F9E4049259DFB00002FFE0B /* PlaygroundSnippetTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundSnippetTableViewController.swift; sourceTree = "<group>"; };
-		2FA10F382336FC6E0058E2F6 /* News.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = News.storyboard; sourceTree = "<group>"; };
 		2FAA2D0322DB3BBB00BC1A5F /* OnboardingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPage.swift; sourceTree = "<group>"; };
 		2FC2A12822C8FA6F00675C2F /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
 		2FC2A12A22C962D100675C2F /* NewsDetailWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDetailWebViewController.swift; sourceTree = "<group>"; };
-		2FCB70E326C7C00E00DF79B7 /* PlaygroundSnippets.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PlaygroundSnippets.storyboard; sourceTree = "<group>"; };
 		2FCB70E526C7FCA300DF79B7 /* HelpContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpContentViewController.swift; sourceTree = "<group>"; };
 		2FCB70E726C7FD5300DF79B7 /* HelpWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpWebViewController.swift; sourceTree = "<group>"; };
 		2FFE865D22DB3DDF00728E7C /* TutorialPageConnect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPageConnect.swift; sourceTree = "<group>"; };
@@ -289,7 +308,7 @@
 				2F2B809C25A0F25700A7CCF7 /* PlaygroundSnippetTableViewCell.swift */,
 				2F2B809F25A1100800A7CCF7 /* PlaygroundCodeSnippetViewController.swift */,
 				2F763FE525A607A400C2029D /* SwiftCodeSnippetHighlighter.swift */,
-				2FCB70E326C7C00E00DF79B7 /* PlaygroundSnippets.storyboard */,
+				2F526C4026E9694D004BA8FF /* PlaygroundSnippets.storyboard */,
 				2F5E8F0126C94F5F00CE03CB /* PlaygroundInstructionsCollectionCollectionViewController.swift */,
 				2F5E8F0326C9787400CE03CB /* PlaygroundStartViewController.swift */,
 			);
@@ -299,7 +318,7 @@
 		2F4B8DA82598D8330026B480 /* HelpScreen */ = {
 			isa = PBXGroup;
 			children = (
-				2F4B8DA92598D85A0026B480 /* Help.storyboard */,
+				2F526C3926E968A2004BA8FF /* Help.storyboard */,
 				2FCB70E526C7FCA300DF79B7 /* HelpContentViewController.swift */,
 				2FCB70E726C7FD5300DF79B7 /* HelpWebViewController.swift */,
 			);
@@ -336,8 +355,10 @@
 				2F61456122BF761F001C2734 /* Model */,
 				2F61454F22BF761F001C2734 /* ViewsAndControllers */,
 				2F9B296F233F03FC009496DD /* Fonts */,
-				2F61451D22BF75DF001C2734 /* Info.plist */,
+				2F526C4D26E96A30004BA8FF /* Info.plist */,
+				2F526C6626E970D4004BA8FF /* Settings.strings */,
 				2F61459B22BF9D26001C2734 /* Settings.bundle */,
+				2F526C5F26E96FC7004BA8FF /* Localizable.strings */,
 			);
 			path = "Calliope App";
 			sourceTree = "<group>";
@@ -379,7 +400,7 @@
 			isa = PBXGroup;
 			children = (
 				2F1BD9982674D910006A47F2 /* Common */,
-				2F61452822BF761F001C2734 /* CalliopeApp.storyboard */,
+				2F526C2B26E9688B004BA8FF /* CalliopeApp.storyboard */,
 				2F61455A22BF761F001C2734 /* MainContainerViewController.swift */,
 				2FAA2D0A22DB3CCB00BC1A5F /* CarRemote */,
 				2F4B8DA82598D8330026B480 /* HelpScreen */,
@@ -534,7 +555,7 @@
 		2FAA2D0622DB3C0B00BC1A5F /* News */ = {
 			isa = PBXGroup;
 			children = (
-				2FA10F382336FC6E0058E2F6 /* News.storyboard */,
+				2F526C4726E9698B004BA8FF /* News.storyboard */,
 				2F6145A122C7B3C2001C2734 /* NewsCollectionViewController.swift */,
 				2F6145A322C7BE3E001C2734 /* NewsCollectionViewCell.swift */,
 				2FC2A12A22C962D100675C2F /* NewsDetailWebViewController.swift */,
@@ -569,7 +590,7 @@
 		2FAA2D0A22DB3CCB00BC1A5F /* CarRemote */ = {
 			isa = PBXGroup;
 			children = (
-				2F61452B22BF761F001C2734 /* CarRemote.storyboard */,
+				2F526C3226E9689A004BA8FF /* CarRemote.storyboard */,
 			);
 			path = CarRemote;
 			sourceTree = "<group>";
@@ -654,17 +675,18 @@
 				2F9B2A1B233F045D009496DD /* RobotoMono-MediumItalic.ttf in Resources */,
 				2F9B2A07233F0456009496DD /* Roboto-Thin.ttf in Resources */,
 				2F61459C22BF9D26001C2734 /* Settings.bundle in Resources */,
+				2F526C5D26E96FC7004BA8FF /* Localizable.strings in Resources */,
 				2F9B2A1E233F045D009496DD /* RobotoMono-Italic.ttf in Resources */,
 				2F9B2A15233F045D009496DD /* RobotoMono-Medium.ttf in Resources */,
 				2F61459E22BFE607001C2734 /* Assets.xcassets in Resources */,
 				2F9B2A1F233F045D009496DD /* RobotoMono-Thin.ttf in Resources */,
 				2F4B8D8425978D950026B480 /* EditorAndPrograms.storyboard in Resources */,
 				2F9B2A19233F045D009496DD /* RobotoMono-ThinItalic.ttf in Resources */,
-				2FA10F392336FC6E0058E2F6 /* News.storyboard in Resources */,
-				2FCB70E426C7C00E00DF79B7 /* PlaygroundSnippets.storyboard in Resources */,
+				2F526C4526E9698B004BA8FF /* News.storyboard in Resources */,
+				2F526C3E26E9694D004BA8FF /* PlaygroundSnippets.storyboard in Resources */,
 				2F9B2A00233F0456009496DD /* Roboto-ThinItalic.ttf in Resources */,
 				2F9B2A1A233F045D009496DD /* RobotoMono-Light.ttf in Resources */,
-				2F61456C22BF761F001C2734 /* CarRemote.storyboard in Resources */,
+				2F526C3026E9689A004BA8FF /* CarRemote.storyboard in Resources */,
 				2F9B2A16233F045D009496DD /* RobotoMono-Regular.ttf in Resources */,
 				2F4B8D9F2598D7980026B480 /* HomeScreen.storyboard in Resources */,
 				2F9B29FF233F0456009496DD /* Roboto-MediumItalic.ttf in Resources */,
@@ -675,8 +697,8 @@
 				2F9B2A03233F0456009496DD /* Roboto-Italic.ttf in Resources */,
 				2F9B2A08233F0456009496DD /* Roboto-Black.ttf in Resources */,
 				2F9B2A1C233F045D009496DD /* RobotoMono-Bold.ttf in Resources */,
-				2F4B8DAA2598D85A0026B480 /* Help.storyboard in Resources */,
-				2F61456922BF761F001C2734 /* CalliopeApp.storyboard in Resources */,
+				2F526C3726E968A2004BA8FF /* Help.storyboard in Resources */,
+				2F526C2926E9688B004BA8FF /* CalliopeApp.storyboard in Resources */,
 				2F6C1B87258FC7C600F4B5AC /* ConnectionView.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -834,10 +856,91 @@
 			name = HomeScreen.storyboard;
 			sourceTree = "<group>";
 		};
+		2F526C2B26E9688B004BA8FF /* CalliopeApp.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2F526C2A26E9688B004BA8FF /* Base */,
+				2F526C2D26E96890004BA8FF /* en */,
+				2F526C2F26E96891004BA8FF /* de */,
+			);
+			name = CalliopeApp.storyboard;
+			sourceTree = "<group>";
+		};
+		2F526C3226E9689A004BA8FF /* CarRemote.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2F526C3126E9689A004BA8FF /* Base */,
+				2F526C3426E9689C004BA8FF /* en */,
+				2F526C3626E9689D004BA8FF /* de */,
+			);
+			name = CarRemote.storyboard;
+			sourceTree = "<group>";
+		};
+		2F526C3926E968A2004BA8FF /* Help.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2F526C3826E968A2004BA8FF /* Base */,
+				2F526C3B26E968D2004BA8FF /* en */,
+				2F526C3D26E96905004BA8FF /* de */,
+			);
+			name = Help.storyboard;
+			sourceTree = "<group>";
+		};
+		2F526C4026E9694D004BA8FF /* PlaygroundSnippets.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2F526C3F26E9694D004BA8FF /* Base */,
+				2F526C4226E9694F004BA8FF /* en */,
+				2F526C4426E9697D004BA8FF /* de */,
+			);
+			name = PlaygroundSnippets.storyboard;
+			sourceTree = "<group>";
+		};
+		2F526C4726E9698B004BA8FF /* News.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2F526C4626E9698B004BA8FF /* Base */,
+				2F526C4926E9698F004BA8FF /* en */,
+				2F526C4B26E969BF004BA8FF /* de */,
+			);
+			name = News.storyboard;
+			sourceTree = "<group>";
+		};
+		2F526C4D26E96A30004BA8FF /* Info.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2F526C4C26E96A30004BA8FF /* Base */,
+				2F526C4E26E96A36004BA8FF /* en */,
+				2F526C4F26E96A37004BA8FF /* de */,
+			);
+			name = Info.plist;
+			sourceTree = "<group>";
+		};
+		2F526C5F26E96FC7004BA8FF /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2F526C5E26E96FC7004BA8FF /* en */,
+				2F526C6026E96FCB004BA8FF /* de */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		2F526C6626E970D4004BA8FF /* Settings.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2F526C6526E970D4004BA8FF /* en */,
+				2F526C6726E970DE004BA8FF /* de */,
+			);
+			name = Settings.strings;
+			path = Settings.bundle;
+			sourceTree = "<group>";
+		};
 		2F61451A22BF75DF001C2734 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				2F61451B22BF75DF001C2734 /* Base */,
+				2F526C2626E9687C004BA8FF /* en */,
+				2F526C2826E96885004BA8FF /* de */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";

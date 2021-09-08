@@ -37,7 +37,7 @@ extension DownloadableHexFile {
         let task = URLSession.shared.dataTask(with: url) {data, response, error in
             guard error == nil, let data = data, data.count > 0, let hexFile = try? HexFileManager.store(name: self.loadableProgramName, data: data), hexFile.bin.count > 0 else {
                 //file saving or parsing issue!
-                completion(error ?? "Could not save file or download is not a proper hex file".localized)
+                completion(error ?? NSLocalizedString("Could not save file or download is not a proper hex file", comment: ""))
                 return
             }
             //everything went smooth

@@ -112,7 +112,7 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
                  completionHandler: @escaping () -> Void) {
 
         let alertController = UIAlertController(title: nil, message: message, preferredStyle: .actionSheet)
-        alertController.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { (action) in
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: { (action) in
             completionHandler()
         }))
 
@@ -125,11 +125,11 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
 
         let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
 
-        alertController.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { (action) in
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: { (action) in
             completionHandler(true)
         }))
 
-        alertController.addAction(UIAlertAction(title: "Cancel".localized, style: .default, handler: { (action) in
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .default, handler: { (action) in
             completionHandler(false)
         }))
 
@@ -145,7 +145,7 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
             textField.text = defaultText
         }
 
-        alertController.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { (action) in
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: { (action) in
             if let text = alertController.textFields?.first?.text {
                 completionHandler(text)
             } else {
@@ -153,7 +153,7 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
             }
         }))
 
-        alertController.addAction(UIAlertAction(title: "Cancel".localized, style: .default, handler: { (action) in
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .default, handler: { (action) in
             completionHandler(nil)
         }))
 

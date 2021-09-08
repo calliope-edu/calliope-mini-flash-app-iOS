@@ -35,9 +35,9 @@ class PlaygroundSnippetTableViewController: UITableViewController, UITableViewDr
         tableView.dragDelegate = self
 
         CodeSnippets.reload(failure: { error in
-            let errorDescription = error?.localizedDescription ?? "No description available".localized
-            let alert = UIAlertController(title: "Failed to load snippets".localized, message: String(format:"Check your internet connection or the snippets url in settings.\n\nThe error description is:\n%@".localized, errorDescription), preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok".localized, style: .cancel))
+            let errorDescription = error?.localizedDescription ?? NSLocalizedString("No description available", comment: "")
+            let alert = UIAlertController(title: NSLocalizedString("Failed to load snippets", comment: ""), message: String(format:NSLocalizedString("Check your internet connection or the snippets url in settings.\n\nThe error description is:\n%@", comment: ""), errorDescription), preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Ok", comment: ""), style: .cancel))
             DispatchQueue.main.async {
                 self.parent?.dismiss(animated: true) {
                     UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)

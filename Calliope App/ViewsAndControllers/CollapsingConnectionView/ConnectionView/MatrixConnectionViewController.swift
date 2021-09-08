@@ -43,7 +43,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 
 	private let queue = DispatchQueue(label: "bluetooth")
 
-    public var connectionDescriptionText: String = "1. Programm 5 starten\n2. Schütteln\n3. LED-Muster eingeben".localized {
+    public var connectionDescriptionText: String = NSLocalizedString("1. Programm 5 starten\n2. Schütteln\n3. LED-Muster eingeben", comment: "") {
         didSet { connectionDescriptionLabel.text = connectionDescriptionText }
     }
 
@@ -252,9 +252,9 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     private func error(_ error: Error) {
         let alertController: UIAlertController
         if (error as? CBError)?.errorCode == 14 {
-            alertController = UIAlertController(title: "Remove paired device".localized, message: "This Calliope can not be connected until you go to the bluetooth settings of your device and \"ignore\" it.".localized, preferredStyle: .alert)
+            alertController = UIAlertController(title: NSLocalizedString("Remove paired device", comment: ""), message: NSLocalizedString("This Calliope can not be connected until you go to the bluetooth settings of your device and \"ignore\" it.", comment: ""), preferredStyle: .alert)
         } else {
-            alertController = UIAlertController(title: "Error".localized, message: "Encountered an error discovering or connecting calliope:".localized + "\n\(error.localizedDescription)", preferredStyle: .alert)
+            alertController = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Encountered an error discovering or connecting calliope:", comment: "") + "\n\(error.localizedDescription)", preferredStyle: .alert)
         }
         alertController.addAction(UIAlertAction(title: "OK", style: .default))
         self.show(alertController, sender: nil)

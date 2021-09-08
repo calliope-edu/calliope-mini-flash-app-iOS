@@ -25,14 +25,14 @@ enum HexFileStoreDialog {
             return
         }
 
-        let alert = UIAlertController(title: "Save Program".localized, message: "Please choose a name", preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("Save Program", comment: ""), message: "Please choose a name", preferredStyle: .alert)
 
         alert.addTextField { textField in
             textField.keyboardType = .default
             textField.text = name
         }
 
-        alert.addAction(UIAlertAction(title: "Don´t save".localized, style: .destructive) {_ in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Don´t save", comment: ""), style: .destructive) {_ in
             notSaved(nil)
         })
 

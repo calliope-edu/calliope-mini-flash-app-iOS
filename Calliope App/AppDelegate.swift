@@ -52,7 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if url.isFileURL && url.pathExtension.lowercased() == "hex" {
             LogNotify.log("received \(url.lastPathComponent)")
             guard let viewController = UIApplication.shared.keyWindow?.rootViewController else {
-                fatalError("No root view controller for presenting File Save UI found".localized)
+                fatalError(NSLocalizedString("No root view controller for presenting File Save UI found", comment: ""))
             }
             HexFileStoreDialog.showStoreHexUI(controller: viewController, hexFile: url, notSaved: { error in
                 return //TODO: handle error

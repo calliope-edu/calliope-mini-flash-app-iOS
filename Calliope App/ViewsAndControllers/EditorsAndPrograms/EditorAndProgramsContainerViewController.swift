@@ -85,7 +85,7 @@ class EditorAndProgramsContainerViewController: UIViewController {
             containerVC.programsCollectionViewController?.collectionView.layoutIfNeeded()
         }
         
-        MatrixConnectionViewController.instance?.connectionDescriptionText = "Connect to enable uploading programs".localized
+        MatrixConnectionViewController.instance?.connectionDescriptionText = NSLocalizedString("Connect to enable uploading programs", comment: "")
         MatrixConnectionViewController.instance?.calliopeClass = FlashableCalliope.self
     }
     

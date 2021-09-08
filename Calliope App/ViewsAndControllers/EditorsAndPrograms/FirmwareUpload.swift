@@ -11,7 +11,7 @@ import iOSDFULibrary
 
 class FirmwareUpload {
     
-    public static func showUIForDownloadableProgram(controller: UIViewController, program: DownloadableHexFile, name: String = "the program".localized, completion: (() -> ())? = nil) {
+    public static func showUIForDownloadableProgram(controller: UIViewController, program: DownloadableHexFile, name: String = NSLocalizedString("the program", comment: ""), completion: (() -> ())? = nil) {
         if (program.bin.count != 0) {
             DispatchQueue.main.async {
                 FirmwareUpload.showUploadUI(controller: controller, program: program) {
@@ -19,7 +19,7 @@ class FirmwareUpload {
                 }
             }
         } else {
-            let alertStart = UIAlertController(title: "Wait a little".localized, message: "The program is being downloaded. Please wait a little.".localized, preferredStyle: .alert)
+            let alertStart = UIAlertController(title: NSLocalizedString("Wait a little", comment: ""), message: NSLocalizedString("The program is being downloaded. Please wait a little.", comment: ""), preferredStyle: .alert)
             alertStart.addAction(UIAlertAction(title: "Ok", style: .default))
             
             controller.present(alertStart, animated: true) {
@@ -27,15 +27,15 @@ class FirmwareUpload {
                     let alert: UIAlertController
                     
                     if error == nil {
-                        let alertDone = UIAlertController(title: "Download finished".localized, message: "The program is downloaded. Do you want to upload it now?".localized, preferredStyle: .alert)
-                        alertDone.addAction(UIAlertAction(title: "Yes".localized, style: .default) { _ in
+                        let alertDone = UIAlertController(title: NSLocalizedString("Download finished", comment: ""), message: NSLocalizedString("The program is downloaded. Do you want to upload it now?", comment: ""), preferredStyle: .alert)
+                        alertDone.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default) { _ in
                             self.showUIForDownloadableProgram(controller: controller, program: program)
                         })
-                        alertDone.addAction(UIAlertAction(title: "No".localized, style: .cancel))
+                        alertDone.addAction(UIAlertAction(title: NSLocalizedString("No", comment: ""), style: .cancel))
                         alert = alertDone
                     } else {
                         let reason = error?.localizedDescription ?? "The downloaded program is empty"
-                        let alertError = UIAlertController(title: "Program download failed".localized, message: String(format: "The program is not ready. The reason is:\n%@".localized, reason), preferredStyle: .alert)
+                        let alertError = UIAlertController(title: NSLocalizedString("Program download failed", comment: ""), message: String(format: NSLocalizedString("The program is not ready. The reason is:\n%@", comment: ""), reason), preferredStyle: .alert)
                         alertError.addAction(UIAlertAction(title: "Ok", style: .default))
                         alert = alertError
                     }
@@ -49,9 +49,9 @@ class FirmwareUpload {
         }
     }
 
-    public static func showUploadUI(controller: UIViewController, program: Hex, name: String = "the program".localized, completion: (() -> ())? = nil) {
-        let alert = UIAlertController(title: "Upload?".localized, message: String(format:"Do you want to upload %@ to your calliope?".localized, name), preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Upload".localized, style: .default) { _ in
+    public static func showUploadUI(controller: UIViewController, program: Hex, name: String = NSLocalizedString("the program", comment: ""), completion: (() -> ())? = nil) {
+        let alert = UIAlertController(title: NSLocalizedString("Upload?", comment: ""), message: String(format:NSLocalizedString("Do you want to upload %@ to your calliope?", comment: ""), name), preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Upload", comment: ""), style: .default) { _ in
             let uploader = FirmwareUpload(file: program, controller: controller)
             controller.present(uploader.alertView, animated: true) {
                 uploader.upload() {
@@ -60,7 +60,7 @@ class FirmwareUpload {
                 }
             }
         })
-        alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel))
         controller.present(alert, animated: true)
     }
 
@@ -79,13 +79,13 @@ class FirmwareUpload {
 
 	lazy var alertView: UIAlertController = {
 		guard let calliope = calliope else {
-            let alertController = UIAlertController(title: "Cannot upload".localized, message: "There is no connected calliope in DFU mode".localized, preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: nil))
+            let alertController = UIAlertController(title: NSLocalizedString("Cannot upload", comment: ""), message: NSLocalizedString("There is no connected calliope in DFU mode", comment: ""), preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: nil))
             MatrixConnectionViewController.instance.animateBounce()
 			return alertController
 		}
 		
-        let uploadController = UIAlertController(title: "Uploading".localized, message: "", preferredStyle: .alert)
+        let uploadController = UIAlertController(title: NSLocalizedString("Uploading", comment: ""), message: "", preferredStyle: .alert)
 
 		let progressView = progressRing
 		progressView.translatesAutoresizingMaskIntoConstraints = false
@@ -124,7 +124,7 @@ class FirmwareUpload {
 	}()
 
     private lazy var cancelUploadAction: UIAlertAction = {
-        return UIAlertAction(title: "Cancel".localized, style: .destructive) {  [weak self] _ in
+        return UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .destructive) {  [weak self] _ in
             self?.finished()
         }
     }()
@@ -173,7 +173,7 @@ class FirmwareUpload {
 	}
 
     func showUploadError(_ error: Error) {
-        alertView.title = "Upload failed!".localized
+        alertView.title = NSLocalizedString("Upload failed!", comment: "")
         alertView.message = "\(error.localizedDescription)"
         progressRing.isHidden = true
         failed()

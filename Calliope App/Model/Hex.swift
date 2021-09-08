@@ -154,10 +154,13 @@ final class HexFileManager {
         })
     }
 
-    public static func store(name: String, data: Data) throws -> HexFile {
+    public static func store(name: String, data: Data, overrideDuplicate: Bool = true) throws -> HexFile {
         let dir = try self.dir()
         let file = dir.appendingPathComponent(name + ".hex")
         LogNotify.log("writing file \(file)")
+        if !overrideDuplicate && FileManager.default.fileExists(atPath: file.path) {
+            throw NSLocalizedString("File already exists", comment: "")
+        }
         try data.write(to: file)
 		let date = Date()
 		let hexFile = HexFile(url: file, name: name, date: date)

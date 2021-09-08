@@ -19,15 +19,15 @@ class MenuNavigationCollectionViewController: UIViewController, AnimatingTutoria
     var cellIdentifier: String = "cell"
     
     var cellConfigurations: [(String?, UIImage?, [UIImage]?, [UIImage]?)] =
-        [("Flip through the programs by pressing the keys A or B".localized, nil, [#imageLiteral(resourceName: "menu_01.pdf")], nil),
-         ("By shaking, you confirm the selection".localized, nil, [#imageLiteral(resourceName: "menu_02.pdf")], nil),
-         ("Press both A and B to return to the menu".localized, nil, [#imageLiteral(resourceName: "menu_03.pdf")], nil),
+        [(NSLocalizedString("Flip through the programs by pressing the keys A or B", comment: ""), nil, [#imageLiteral(resourceName: "menu_01.pdf")], nil),
+         (NSLocalizedString("By shaking, you confirm the selection", comment: ""), nil, [#imageLiteral(resourceName: "menu_02.pdf")], nil),
+         (NSLocalizedString("Press both A and B to return to the menu", comment: ""), nil, [#imageLiteral(resourceName: "menu_03.pdf")], nil),
          //SECTION 2
-         ("Oracle".localized, #imageLiteral(resourceName: "num_01.pdf"), nil, nil),
-         ("Paper, Rock, Scissor".localized, #imageLiteral(resourceName: "num_02.pdf"), nil, nil),
-         ("Multiplication tables".localized, #imageLiteral(resourceName: "num_03.pdf"), nil, nil),
-         ("Noise-o-meter".localized, #imageLiteral(resourceName: "num_04.pdf"), nil, nil),
-         ("Bluetooth".localized, #imageLiteral(resourceName: "num_05.pdf"), nil, nil)]
+         (NSLocalizedString("Oracle", comment: ""), #imageLiteral(resourceName: "num_01.pdf"), nil, nil),
+         (NSLocalizedString("Paper, Rock, Scissor", comment: ""), #imageLiteral(resourceName: "num_02.pdf"), nil, nil),
+         (NSLocalizedString("Multiplication tables", comment: ""), #imageLiteral(resourceName: "num_03.pdf"), nil, nil),
+         (NSLocalizedString("Noise-o-meter", comment: ""), #imageLiteral(resourceName: "num_04.pdf"), nil, nil),
+         (NSLocalizedString("Bluetooth", comment: ""), #imageLiteral(resourceName: "num_05.pdf"), nil, nil)]
     
     var animationStep: Int = 0
 
