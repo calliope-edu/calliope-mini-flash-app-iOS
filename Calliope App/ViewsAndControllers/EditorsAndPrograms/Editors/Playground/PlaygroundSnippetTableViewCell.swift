@@ -10,6 +10,8 @@ import UIKit
 
 class PlaygroundSnippetTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var copySuccessOverlay: UIVisualEffectView!
+
     var snippet: CodeSnippet? {
         didSet {
             snippetTitle.text = snippet?.title ?? ""
@@ -35,4 +37,24 @@ class PlaygroundSnippetTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    func copyCode() {
+        guard let codeSnippet = snippet else {
+            return
+        }
+        UIPasteboard.general.string = codeSnippet.content
+        copySuccessOverlay.isHidden = false
+        UIView.animate(withDuration: 0.4) {
+            self.copySuccessOverlay.effect = UIBlurEffect(style: .regular)
+        } completion: { done in
+            if done {
+                UIView.animateKeyframes(withDuration: 0.2, delay: 1.0) {
+                    self.copySuccessOverlay.effect = nil
+                } completion: { done in
+                    if done {
+                        self.copySuccessOverlay.isHidden = true
+                    }
+                }
+            }
+        }
+    }
 }

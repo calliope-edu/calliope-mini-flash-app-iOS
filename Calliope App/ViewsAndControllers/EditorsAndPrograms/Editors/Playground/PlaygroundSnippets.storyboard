@@ -225,8 +225,52 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </view>
+                                        <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AP8-Ad-iON">
+                                            <rect key="frame" x="0.0" y="0.0" width="834" height="99"/>
+                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bQW-1C-7xd">
+                                                <rect key="frame" x="0.0" y="0.0" width="834" height="99"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <subviews>
+                                                    <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="heg-XS-XiE">
+                                                        <rect key="frame" x="0.0" y="0.0" width="834" height="99"/>
+                                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Trp-Mt-Jap">
+                                                            <rect key="frame" x="0.0" y="0.0" width="834" height="99"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copied snippet!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cIf-ra-SUA">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="834" height="99"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstItem="cIf-ra-SUA" firstAttribute="top" secondItem="Trp-Mt-Jap" secondAttribute="top" id="1AT-kd-GCO"/>
+                                                                <constraint firstAttribute="bottom" secondItem="cIf-ra-SUA" secondAttribute="bottom" id="1SN-5c-NcN"/>
+                                                                <constraint firstItem="cIf-ra-SUA" firstAttribute="leading" secondItem="Trp-Mt-Jap" secondAttribute="leading" id="EYM-yH-R3p"/>
+                                                                <constraint firstAttribute="trailing" secondItem="cIf-ra-SUA" secondAttribute="trailing" id="nI6-1H-Dgl"/>
+                                                            </constraints>
+                                                        </view>
+                                                        <vibrancyEffect style="label">
+                                                            <blurEffect style="prominent"/>
+                                                        </vibrancyEffect>
+                                                    </visualEffectView>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="heg-XS-XiE" firstAttribute="top" secondItem="bQW-1C-7xd" secondAttribute="top" id="6ji-fu-HKO"/>
+                                                    <constraint firstAttribute="bottom" secondItem="heg-XS-XiE" secondAttribute="bottom" id="ZwR-EG-Q5b"/>
+                                                    <constraint firstItem="heg-XS-XiE" firstAttribute="leading" secondItem="bQW-1C-7xd" secondAttribute="leading" id="fG3-1s-FQn"/>
+                                                    <constraint firstAttribute="trailing" secondItem="heg-XS-XiE" secondAttribute="trailing" id="wr4-42-Lh2"/>
+                                                </constraints>
+                                            </view>
+                                            <blurEffect style="prominent"/>
+                                        </visualEffectView>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="AP8-Ad-iON" firstAttribute="leading" secondItem="zPA-ln-gsu" secondAttribute="leading" id="0Uk-xy-efD"/>
+                                        <constraint firstAttribute="bottom" secondItem="AP8-Ad-iON" secondAttribute="bottom" id="5qj-8A-RAq"/>
+                                        <constraint firstItem="AP8-Ad-iON" firstAttribute="top" secondItem="zPA-ln-gsu" secondAttribute="top" id="671-tx-bV5"/>
+                                        <constraint firstAttribute="trailing" secondItem="AP8-Ad-iON" secondAttribute="trailing" id="FCm-QA-vxs"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="8Al-Qu-EWO" secondAttribute="trailing" id="KWf-cM-okY"/>
                                         <constraint firstItem="CQE-r4-aTu" firstAttribute="top" secondItem="8Al-Qu-EWO" secondAttribute="bottom" constant="3" id="Ksc-4r-Pey"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="mVL-Pc-a55" secondAttribute="trailing" id="Q5X-c6-alk"/>
@@ -241,6 +285,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="code" destination="YGA-Ni-z9x" id="Thl-Yb-RdP"/>
+                                    <outlet property="copySuccessOverlay" destination="AP8-Ad-iON" id="mAP-Yl-cH9"/>
                                     <outlet property="snippetTitle" destination="mVL-Pc-a55" id="Lij-ef-Cf9"/>
                                     <outlet property="summary" destination="8Al-Qu-EWO" id="b8s-TN-2lK"/>
                                 </connections>

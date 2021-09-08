@@ -40,18 +40,18 @@ class PlaygroundCodeSnippetViewController: UIViewController, CodeSnippetControll
         self.view.addInteraction(UIDragInteraction(delegate: self))
     }
 
-    @objc func copyCode(_ sender: Any) {
-        guard ((sender as? UIGestureRecognizer)?.state ?? .began) == .began else {
+    @objc func copyCode(_ sender: UILongPressGestureRecognizer) {
+        guard sender.state == .began, let codeSnippet = codeSnippet else {
             return
         }
+        UIPasteboard.general.string = codeSnippet.content
         UIView.animate(withDuration: 0.2) {
             self.copySuccessView.alpha = 1.0
         } completion: { done in
             if done {
-                UIView.animateKeyframes(withDuration: 0.2, delay: 2.0) {
+                UIView.animateKeyframes(withDuration: 0.2, delay: 1.0) {
                     self.copySuccessView.alpha = 0.0
                 }
-
             }
         }
 
