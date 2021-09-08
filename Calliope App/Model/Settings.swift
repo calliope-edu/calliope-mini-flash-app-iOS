@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 public enum SettingsKey: String, CaseIterable {
 
@@ -43,7 +44,7 @@ public struct Settings {
     static var defaultLocalEditorEnabled = false
     static var defaultMakeCodeEnabled = true
     static var defaultRobertaEnabled = true
-    static var defaultPlaygroundsEnabled = true
+    static var defaultPlaygroundsEnabled = UIDevice.current.userInterfaceIdiom != .phone
 
     static var defaultAppVersion = "1.0"
 
