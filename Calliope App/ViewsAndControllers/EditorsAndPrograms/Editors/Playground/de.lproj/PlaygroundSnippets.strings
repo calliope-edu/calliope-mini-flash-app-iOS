@@ -1,26 +1,26 @@
 /* Class = "UILabel"; text = "Copied snippet!"; ObjectID = "7rw-qs-gzO"; */
-"7rw-qs-gzO.text" = "Copied snippet!";
+"7rw-qs-gzO.text" = "Programm-Schnipsel kopiert!";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "8Al-Qu-EWO"; */
 "8Al-Qu-EWO.text" = "Label";
 
 /* Class = "UIViewController"; title = "Home"; ObjectID = "93j-LA-Q6m"; */
-"93j-LA-Q6m.title" = "Home";
+"93j-LA-Q6m.title" = "Start";
 
 /* Class = "UILabel"; text = "There is veeery long text which could end up in two lines"; ObjectID = "AKN-ba-DUa"; */
 "AKN-ba-DUa.text" = "There is veeery long text which could end up in two lines";
 
 /* Class = "UILabel"; text = "Copied snippet!"; ObjectID = "cIf-ra-SUA"; */
-"cIf-ra-SUA.text" = "Copied snippet!";
+"cIf-ra-SUA.text" = "Programm-Schnipsel kopiert!";
 
 /* Class = "UITableViewController"; title = "Playground Snippets"; ObjectID = "IAA-SO-Qac"; */
-"IAA-SO-Qac.title" = "Playground Snippets";
+"IAA-SO-Qac.title" = "Swift Playground Programm-Schnipsel";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "jZR-Hi-92E"; */
 "jZR-Hi-92E.text" = "Label";
 
 /* Class = "UINavigationItem"; title = "Playground Snippets"; ObjectID = "ke0-Pl-3Bl"; */
-"ke0-Pl-3Bl.title" = "Playground Snippets";
+"ke0-Pl-3Bl.title" = "Swift Playground Programm-Schnipsel";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "mVL-Pc-a55"; */
 "mVL-Pc-a55.text" = "Label";
@@ -29,19 +29,20 @@
 "oCk-WD-9Kc.text" = "Label";
 
 /* Class = "UILabel"; text = "Verwende die Snippet Library mit dem Swift Playground. Wenn du in dem Swift Playground \"Calliope Mini - Vorlage\" arbeitest, kannst du die Snippets Library neben der Playgrounds App öffnen und die Codesnippets ganz bequem von der App in den Playground kopieren."; ObjectID = "sDg-74-hMi"; */
-"sDg-74-hMi.text" = "Verwende die Snippet Library mit dem Swift Playground. Wenn du in dem Swift Playground \"Calliope Mini - Vorlage\" arbeitest, kannst du die Snippets Library neben der Playgrounds App öffnen und die Codesnippets ganz bequem von der App in den Playground kopieren.";
+"sDg-74-hMi.text" = "Verwende die Programm-Schnipsel Bibliothek mit dem Swift Playground Wenn du in dem Swift Playground \"Calliope Mini - Vorlage\" arbeitest, kannst du die Programm-Schnipsel Bibliothek neben der Playgrounds App öffnen und die Programm-Schnipsel ganz bequem von der App in den Playground kopieren.";
 
 /* Class = "UITableViewController"; title = "Playground Snippets"; ObjectID = "SgB-Yb-sTD"; */
-"SgB-Yb-sTD.title" = "Playground Snippets";
+"SgB-Yb-sTD.title" = "Swift Playground Programm-Schnipsel";
 
 /* Class = "UINavigationItem"; title = "Home"; ObjectID = "wz7-bF-qTT"; */
-"wz7-bF-qTT.title" = "Home";
+"wz7-bF-qTT.title" = "Start";
 
 /* Class = "UINavigationItem"; title = "Playground Snippets"; ObjectID = "yeh-9e-tUu"; */
-"yeh-9e-tUu.title" = "Playground Snippets";
+"yeh-9e-tUu.title" = "Playground Programm-Schnipsel";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "YGA-Ni-z9x"; */
 "YGA-Ni-z9x.text" = "Label";
 
 /* Class = "UIButton"; normalTitle = "Snippets Library"; ObjectID = "zqc-Md-ScS"; */
-"zqc-Md-ScS.normalTitle" = "Snippets Library";
+"zqc-Md-ScS.normalTitle" = "Programm-Schnipsel Bibliothek";
+

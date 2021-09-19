@@ -11,7 +11,7 @@
 "bvZ-tc-Xz5.text" = "Um die Namen der Programme anzupassen oder um Daten zu löschen, muss auf das entsprechende Programm länger gedrückt werden. Die jeweils gewünschte Option kann dann aus dem Menü ausgwählt werden.";
 
 /* Class = "UITextView"; text = "Um ein Programm aus dem Playground zu überspielen, muss das Programm 5 aus dem Startprogramm ausgewählt werden. \n\nCalliope mini 1.x\nDas Startprogramm kann über die App auf den Calliope mini geflasht werden. Gehe dazu auf \"Editoren und Programme\", kopple deinen Calliope mini (s. oben) und überspile das Startprogramm auf deinen Calliope mini.\n\nCalliope mini 2.0\nAuf das Startprogramm kann über den Flash zugegriffen werden.\n\n1. Drücke für 5-6 Sekunden die Reset Taste.\n\n2. Dann blinkt das komplette LED-Display kurz auf und es leuchtet anschließend die erste LED oben links.\n\n3. Mit den Tasten A und B kannst du durch die gespeicherten Programme navigieren. Mit der Taste A gehst du direkt zu Programm 25 - das Startprogramm. Die letzte LED in der untersten Reihe leuchtet jetzt.\n\n4. Drückst du nun die Tasten A und B gleichzeitig, so kannst du das ausgewählte Programm starten. Es wird nun direkt in den Prozessor geladen und kann durch Reset neu getsratet werden."; ObjectID = "CC8-d7-LIv"; */
-"CC8-d7-LIv.text" = "Um ein Programm aus dem Playground zu überspielen, muss das Programm 5 aus dem Startprogramm ausgewählt werden. \n\nCalliope mini 1.x\nDas Startprogramm kann über die App auf den Calliope mini geflasht werden. Gehe dazu auf \"Editoren und Programme\", kopple deinen Calliope mini (s. oben) und überspile das Startprogramm auf deinen Calliope mini.\n\nCalliope mini 2.0\nAuf das Startprogramm kann über den Flash zugegriffen werden.\n\n1. Drücke für 5-6 Sekunden die Reset Taste.\n\n2. Dann blinkt das komplette LED-Display kurz auf und es leuchtet anschließend die erste LED oben links.\n\n3. Mit den Tasten A und B kannst du durch die gespeicherten Programme navigieren. Mit der Taste A gehst du direkt zu Programm 25 - das Startprogramm. Die letzte LED in der untersten Reihe leuchtet jetzt.\n\n4. Drückst du nun die Tasten A und B gleichzeitig, so kannst du das ausgewählte Programm starten. Es wird nun direkt in den Prozessor geladen und kann durch Reset neu getsratet werden.";
+"CC8-d7-LIv.text" = "Um ein Programm aus dem Swift Playground zu überspielen, muss das Programm 5 aus dem Startprogramm ausgewählt werden.\n\nCalliope mini 1.x\nDas Startprogramm kann über die App auf den Calliope mini geflasht werden. Gehe dazu auf \"Editoren und Programme\", kopple deinen Calliope mini (s. oben) und überspile das Startprogramm auf deinen Calliope mini.\n\nCalliope mini 2.0\nAuf das Startprogramm kann über den Flash zugegriffen werden.\n\n1. Drücke für 5-6 Sekunden die Reset Taste.\n\n2. Dann blinkt das komplette LED-Display kurz auf und es leuchtet anschließend die erste LED oben links.\n\n3. Mit den Tasten A und B kannst du durch die gespeicherten Programme navigieren. Mit der Taste A gehst du direkt zu Programm 25 - das Startprogramm. Die letzte LED in der untersten Reihe leuchtet jetzt.\n\n4. Drückst du nun die Tasten A und B gleichzeitig, so kannst du das ausgewählte Programm starten. Es wird nun direkt in den Prozessor geladen und kann durch Reset neu getsratet werden.";
 
 /* Class = "UIButton"; normalTitle = "Mehr zum Calliope mini Swift Playground"; ObjectID = "cQi-Mj-MB3"; */
 "cQi-Mj-MB3.normalTitle" = "Mehr zum Calliope mini Swift Playground";
@@ -32,19 +32,16 @@
 "gnA-rV-4yL.title" = "Kontakt";
 
 /* Class = "UITextView"; text = "Wir haben die beiden meistverbreiteten Editoren direkt in der App eingebunden."; ObjectID = "Hho-IW-sbR"; */
-"Hho-IW-sbR.text" = "Wir haben die beiden meistverbreiteten Editoren direkt in der App eingebunden.";
+"Hho-IW-sbR.text" = "Wir haben die meistverbreiteten Editoren direkt in der App eingebunden.";
 
 /* Class = "UITextView"; text = "Zusätzlich können direkt Programmier-Teile für den Calliope mini Swift Playground aus der Snippet Library kopiert und in die eigenen Programme eingefügt werden."; ObjectID = "Kbf-NW-5k6"; */
-"Kbf-NW-5k6.text" = "Zusätzlich können direkt Programmier-Teile für den Calliope mini Swift Playground aus der Snippet Library kopiert und in die eigenen Programme eingefügt werden.";
-
-/* Class = "UITextView"; text = "Um die Bluetooth Dienste des Calliope mini mit einem anderen Gerät zu nutzen, muss dieses zunächst mit dem Calliope mini verbunden bzw. gekoppelt werden! Um eine Verbindung zum Senden von Codes an den Calliope mini aus der App herzustellen, müssen die folgenden Schritte ausgeführt werden:\n\n1. Drücke gleichzeitig die Tasten A+B und Reset deines Calliope mini. \n\n2. Lass nach ca. 1 Sekunde Reset los.\n\n3. Halte die Tasten A+B weiter gedrückt bis eine Animation auf dem LED-Display startet.\n\n4. ID Muster - Der Calliope mini zeigt automatisch ein\nKoppeln-Symbol (fünf Balken) auf dem LED-Display."; ObjectID = "KGt-PM-JgX"; */
-"KGt-PM-JgX.text" = "Um die Bluetooth Dienste des Calliope mini mit einem anderen Gerät zu nutzen, muss dieses zunächst mit dem Calliope mini verbunden bzw. gekoppelt werden! Um eine Verbindung zum Senden von Codes an den Calliope mini aus der App herzustellen, müssen die folgenden Schritte ausgeführt werden:\n\n1. Drücke gleichzeitig die Tasten A+B und Reset deines Calliope mini. \n\n2. Lass nach ca. 1 Sekunde Reset los.\n\n3. Halte die Tasten A+B weiter gedrückt bis eine Animation auf dem LED-Display startet.\n\n4. ID Muster - Der Calliope mini zeigt automatisch ein\nKoppeln-Symbol (fünf Balken) auf dem LED-Display.";
+"Kbf-NW-5k6.text" = "Zusätzlich können direkt Programm-Teile für den Calliope mini Swift Playground aus der Programm-Schnipsel Bibliothek kopiert und in die eigenen Programme eingefügt werden.";
 
 /* Class = "UIViewController"; title = "Verbindung"; ObjectID = "km0-IP-BB6"; */
 "km0-IP-BB6.title" = "Verbindung";
 
 /* Class = "UINavigationItem"; title = "Programs"; ObjectID = "P5r-U0-i5U"; */
-"P5r-U0-i5U.title" = "Programs";
+"P5r-U0-i5U.title" = "Programme";
 
 /* Class = "UIButton"; normalTitle = "Mehr zu den Editoren"; ObjectID = "pz2-S5-d2S"; */
 "pz2-S5-d2S.normalTitle" = "Mehr zu den Editoren";
@@ -53,13 +50,13 @@
 "rML-fc-Uwl.title" = "Editoren";
 
 /* Class = "UINavigationItem"; title = "Contact"; ObjectID = "Skq-vk-RAC"; */
-"Skq-vk-RAC.title" = "Contact";
+"Skq-vk-RAC.title" = "Kontakt";
 
 /* Class = "UIButton"; normalTitle = "KONTAKT"; ObjectID = "svg-Wi-K2K"; */
 "svg-Wi-K2K.normalTitle" = "KONTAKT";
 
 /* Class = "UINavigationItem"; title = "Editors"; ObjectID = "u9n-tU-PpW"; */
-"u9n-tU-PpW.title" = "Editors";
+"u9n-tU-PpW.title" = "Editoren";
 
 /* Class = "UIButton"; normalTitle = "CALLIOPE MINI ÜBERSICHT"; ObjectID = "UlD-8R-0kJ"; */
 "UlD-8R-0kJ.normalTitle" = "CALLIOPE MINI ÜBERSICHT";
@@ -71,16 +68,19 @@
 "W2T-43-YeH.text" = "ACHTUNG! Die Anpassungen sind nicht reversibel.\nDie gelöschten Dateien sind nicht mehr in der App verfügbar.";
 
 /* Class = "UINavigationItem"; title = "Bluetooth Connection"; ObjectID = "WEm-pK-tnm"; */
-"WEm-pK-tnm.title" = "Bluetooth Connection";
+"WEm-pK-tnm.title" = "Bluetooth Verbindung";
 
 /* Class = "UIButton"; normalTitle = "EIGENE PROGRAMME "; ObjectID = "wNV-S9-kWA"; */
 "wNV-S9-kWA.normalTitle" = "EIGENE PROGRAMME ";
 
 /* Class = "UITabBarItem"; title = "Help"; ObjectID = "xOk-Ya-FCk"; */
-"xOk-Ya-FCk.title" = "Help";
+"xOk-Ya-FCk.title" = "Hilfe";
 
 /* Class = "UIViewController"; title = "Verbindung"; ObjectID = "XU1-hQ-wSQ"; */
 "XU1-hQ-wSQ.title" = "Verbindung";
 
 /* Class = "UIViewController"; title = "Programme"; ObjectID = "Y0N-r0-o7h"; */
 "Y0N-r0-o7h.title" = "Programme";
+
+/* Class = "UITextView"; text = "Um die Bluetooth Dienste des Calliope mini mit einem anderen Gerät zu nutzen, muss dieses zunächst mit dem Calliope mini verbunden bzw. gekoppelt werden! Um eine Verbindung zum Senden von Codes an den Calliope mini aus der App herzustellen, müssen die folgenden Schritte ausgeführt werden:\n\n1. Drücke gleichzeitig die Tasten A+B und Reset deines Calliope mini. \n\n2. Lass nach ca. 1 Sekunde Reset los.\n\n3. Halte die Tasten A+B weiter gedrückt bis eine Animation auf dem LED-Display startet.\n\n4. ID Muster - Der Calliope mini zeigt automatisch ein\nKoppeln-Symbol (fünf Balken) auf dem LED-Display."; ObjectID = "KGt-PM-JgX"; */
+"KGt-PM-JgX.text" = "";

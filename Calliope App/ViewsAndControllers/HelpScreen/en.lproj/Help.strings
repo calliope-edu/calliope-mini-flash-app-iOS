@@ -1,86 +1,86 @@
 /* Class = "UIButton"; normalTitle = "Weitere Informationen zum Flash"; ObjectID = "5Ig-w3-fGp"; */
-"5Ig-w3-fGp.normalTitle" = "Weitere Informationen zum Flash";
-
-/* Class = "UINavigationItem"; title = "Help"; ObjectID = "8Dh-5e-PlT"; */
-"8Dh-5e-PlT.title" = "Help";
+"5Ig-w3-fGp.normalTitle" = "Learn more about the Flash";
 
 /* Class = "UITextView"; text = "Sollte es Fragen oder Probleme geben helfen wir gern!\n\nWir sind telefonisch oder per Email zu erreichen.\nUnter der Telefonnummer:+49 (0)30 4849 2030 sind wir werktags zwischen 10.00 und 13.00 Uhr erreichbar.\n\nFragen per Email können an info@calliope.cc geschrieben werden.Anleitungen und Unterrichtsmaterialien stehen auf unserer Webseite bereit zum Ausprobieren:\nhttps://calliope.cc\n\nCalliope HQ\nRaumerstraße 11\n10437 Berlin"; ObjectID = "a5l-k2-8Jf"; */
-"a5l-k2-8Jf.text" = "Sollte es Fragen oder Probleme geben helfen wir gern!\n\nWir sind telefonisch oder per Email zu erreichen.\nUnter der Telefonnummer:+49 (0)30 4849 2030 sind wir werktags zwischen 10.00 und 13.00 Uhr erreichbar.\n\nFragen per Email können an info@calliope.cc geschrieben werden.Anleitungen und Unterrichtsmaterialien stehen auf unserer Webseite bereit zum Ausprobieren:\nhttps://calliope.cc\n\nCalliope HQ\nRaumerstraße 11\n10437 Berlin";
+"a5l-k2-8Jf.text" = "If there are any questions or problems we are happy to help!\n            \n            We can be reached by phone or email.\n            On weekdays between 10.00 - 3.00 pm (CET) we can also be reached by phone at +49 30 48492030.\n\n            Questions by email can be written to info@calliope.cc.Instructions and teaching materials are available on our website:\nhttps://calliope.cc\n\nCalliope HQ\nRaumerstraße 11\n10437 Berlin";
 
 /* Class = "UITextView"; text = "Um die Namen der Programme anzupassen oder um Daten zu löschen, muss auf das entsprechende Programm länger gedrückt werden. Die jeweils gewünschte Option kann dann aus dem Menü ausgwählt werden."; ObjectID = "bvZ-tc-Xz5"; */
-"bvZ-tc-Xz5.text" = "Um die Namen der Programme anzupassen oder um Daten zu löschen, muss auf das entsprechende Programm länger gedrückt werden. Die jeweils gewünschte Option kann dann aus dem Menü ausgwählt werden.";
+"bvZ-tc-Xz5.text" = "To adjust the names of the programs or to delete data, the corresponding program must be pressed and held down. The desired option can then be selected from the menu.";
 
 /* Class = "UITextView"; text = "Um ein Programm aus dem Playground zu überspielen, muss das Programm 5 aus dem Startprogramm ausgewählt werden. \n\nCalliope mini 1.x\nDas Startprogramm kann über die App auf den Calliope mini geflasht werden. Gehe dazu auf \"Editoren und Programme\", kopple deinen Calliope mini (s. oben) und überspile das Startprogramm auf deinen Calliope mini.\n\nCalliope mini 2.0\nAuf das Startprogramm kann über den Flash zugegriffen werden.\n\n1. Drücke für 5-6 Sekunden die Reset Taste.\n\n2. Dann blinkt das komplette LED-Display kurz auf und es leuchtet anschließend die erste LED oben links.\n\n3. Mit den Tasten A und B kannst du durch die gespeicherten Programme navigieren. Mit der Taste A gehst du direkt zu Programm 25 - das Startprogramm. Die letzte LED in der untersten Reihe leuchtet jetzt.\n\n4. Drückst du nun die Tasten A und B gleichzeitig, so kannst du das ausgewählte Programm starten. Es wird nun direkt in den Prozessor geladen und kann durch Reset neu getsratet werden."; ObjectID = "CC8-d7-LIv"; */
-"CC8-d7-LIv.text" = "Um ein Programm aus dem Playground zu überspielen, muss das Programm 5 aus dem Startprogramm ausgewählt werden. \n\nCalliope mini 1.x\nDas Startprogramm kann über die App auf den Calliope mini geflasht werden. Gehe dazu auf \"Editoren und Programme\", kopple deinen Calliope mini (s. oben) und überspile das Startprogramm auf deinen Calliope mini.\n\nCalliope mini 2.0\nAuf das Startprogramm kann über den Flash zugegriffen werden.\n\n1. Drücke für 5-6 Sekunden die Reset Taste.\n\n2. Dann blinkt das komplette LED-Display kurz auf und es leuchtet anschließend die erste LED oben links.\n\n3. Mit den Tasten A und B kannst du durch die gespeicherten Programme navigieren. Mit der Taste A gehst du direkt zu Programm 25 - das Startprogramm. Die letzte LED in der untersten Reihe leuchtet jetzt.\n\n4. Drückst du nun die Tasten A und B gleichzeitig, so kannst du das ausgewählte Programm starten. Es wird nun direkt in den Prozessor geladen und kann durch Reset neu getsratet werden.";
+"CC8-d7-LIv.text" = "To transfer a program from the Playground, program 5 must be selected from the Start program.\n\n            Calliope mini 1.x\n            The Start program can be flashed to the Calliope mini via the app. To do so, go to \"Editors and Programs\", connect your Calliope mini (see above) and flash the Start program to your Calliope mini.\n\n            Calliope mini 2.0\n            The Start program can be accessed via the Flash.\n\n1. Press the reset button for 5-6 seconds.\n\n2. Then the complete LED display flashes briefly and then the first LED at the top left lights up.\n\n3. Use the A and B buttons to navigate through the preinstalled programs. With the button A you go directly to program 25 - the Start program. The last LED in the bottom row is now lit.\n\n4. If you now press the button A and B simultaneously, you can start the selected program. It is now loaded directly into the processor and can be reset by pressing the reset button.";
 
 /* Class = "UIButton"; normalTitle = "Mehr zum Calliope mini Swift Playground"; ObjectID = "cQi-Mj-MB3"; */
-"cQi-Mj-MB3.normalTitle" = "Mehr zum Calliope mini Swift Playground";
+"cQi-Mj-MB3.normalTitle" = "More about the Calliope mini Swift Playground";
 
 /* Class = "UIButton"; normalTitle = "BLUETOOTH VERBINDUNG"; ObjectID = "d1s-ln-zLY"; */
-"d1s-ln-zLY.normalTitle" = "BLUETOOTH VERBINDUNG";
+"d1s-ln-zLY.normalTitle" = "BLUETOOTH CONNECTION";
 
 /* Class = "UIButton"; normalTitle = "Weiteres zur Verwendung von Bluetooth"; ObjectID = "DMN-vs-YaT"; */
-"DMN-vs-YaT.normalTitle" = "Weiteres zur Verwendung von Bluetooth";
+"DMN-vs-YaT.normalTitle" = "More about using Bluetooth";
 
 /* Class = "UITextView"; text = "Sollte es einen lokalen Editor oder einen ganz anderen geben, so kann dieser in den Einstellungen zur App hinzugefügt werden. Diese Anpassung kann in der Einstellungen App gefunden werden. "; ObjectID = "Fkr-N8-Pu3"; */
-"Fkr-N8-Pu3.text" = "Sollte es einen lokalen Editor oder einen ganz anderen geben, so kann dieser in den Einstellungen zur App hinzugefügt werden. Diese Anpassung kann in der Einstellungen App gefunden werden. ";
-
-/* Class = "UIButton"; normalTitle = "calliope.cc"; ObjectID = "FOM-5E-71J"; */
-"FOM-5E-71J.normalTitle" = "calliope.cc";
+"Fkr-N8-Pu3.text" = "SIf there is a local editor or a different one, it can be added to the app in the settings. This customization can be found in the Settings app.";
 
 /* Class = "UIViewController"; title = "Kontakt"; ObjectID = "gnA-rV-4yL"; */
-"gnA-rV-4yL.title" = "Kontakt";
+"gnA-rV-4yL.title" = "Contact";
 
 /* Class = "UITextView"; text = "Wir haben die beiden meistverbreiteten Editoren direkt in der App eingebunden."; ObjectID = "Hho-IW-sbR"; */
-"Hho-IW-sbR.text" = "Wir haben die beiden meistverbreiteten Editoren direkt in der App eingebunden.";
-
-/* Class = "UITextView"; text = "Zusätzlich können direkt Programmier-Teile für den Calliope mini Swift Playground aus der Snippet Library kopiert und in die eigenen Programme eingefügt werden."; ObjectID = "Kbf-NW-5k6"; */
-"Kbf-NW-5k6.text" = "Zusätzlich können direkt Programmier-Teile für den Calliope mini Swift Playground aus der Snippet Library kopiert und in die eigenen Programme eingefügt werden.";
+"Hho-IW-sbR.text" = "We have included the two most popular editors directly in the app.";
 
 /* Class = "UITextView"; text = "Um die Bluetooth Dienste des Calliope mini mit einem anderen Gerät zu nutzen, muss dieses zunächst mit dem Calliope mini verbunden bzw. gekoppelt werden! Um eine Verbindung zum Senden von Codes an den Calliope mini aus der App herzustellen, müssen die folgenden Schritte ausgeführt werden:\n\n1. Drücke gleichzeitig die Tasten A+B und Reset deines Calliope mini. \n\n2. Lass nach ca. 1 Sekunde Reset los.\n\n3. Halte die Tasten A+B weiter gedrückt bis eine Animation auf dem LED-Display startet.\n\n4. ID Muster - Der Calliope mini zeigt automatisch ein\nKoppeln-Symbol (fünf Balken) auf dem LED-Display."; ObjectID = "KGt-PM-JgX"; */
-"KGt-PM-JgX.text" = "Um die Bluetooth Dienste des Calliope mini mit einem anderen Gerät zu nutzen, muss dieses zunächst mit dem Calliope mini verbunden bzw. gekoppelt werden! Um eine Verbindung zum Senden von Codes an den Calliope mini aus der App herzustellen, müssen die folgenden Schritte ausgeführt werden:\n\n1. Drücke gleichzeitig die Tasten A+B und Reset deines Calliope mini. \n\n2. Lass nach ca. 1 Sekunde Reset los.\n\n3. Halte die Tasten A+B weiter gedrückt bis eine Animation auf dem LED-Display startet.\n\n4. ID Muster - Der Calliope mini zeigt automatisch ein\nKoppeln-Symbol (fünf Balken) auf dem LED-Display.";
+"KGt-PM-JgX.text" = "In order to use the Bluetooth services of the Calliope mini with another device, this device must first be connected or paired with the Calliope mini! To establish a connection for sending codes to the Calliope mini from the app, the following steps must be performed:\n\n1. Press the buttons A+B and Reset of your Calliope mini simultaneously.\n\n2. Release Reset after about 1 second.\n\n3. Keep pressing the A+B buttons until an animation on the LED display starts.\n\n4. IID pattern - The Calliope mini will automatically show a\n            pairing symbol (five bars) on the LED display.";
 
 /* Class = "UIViewController"; title = "Verbindung"; ObjectID = "km0-IP-BB6"; */
-"km0-IP-BB6.title" = "Verbindung";
-
-/* Class = "UINavigationItem"; title = "Programs"; ObjectID = "P5r-U0-i5U"; */
-"P5r-U0-i5U.title" = "Programs";
+"km0-IP-BB6.title" = "Connection";
 
 /* Class = "UIButton"; normalTitle = "Mehr zu den Editoren"; ObjectID = "pz2-S5-d2S"; */
-"pz2-S5-d2S.normalTitle" = "Mehr zu den Editoren";
+"pz2-S5-d2S.normalTitle" = "More on the editors";
 
 /* Class = "UIViewController"; title = "Editoren"; ObjectID = "rML-fc-Uwl"; */
-"rML-fc-Uwl.title" = "Editoren";
-
-/* Class = "UINavigationItem"; title = "Contact"; ObjectID = "Skq-vk-RAC"; */
-"Skq-vk-RAC.title" = "Contact";
+"rML-fc-Uwl.title" = "Editors";
 
 /* Class = "UIButton"; normalTitle = "KONTAKT"; ObjectID = "svg-Wi-K2K"; */
-"svg-Wi-K2K.normalTitle" = "KONTAKT";
-
-/* Class = "UINavigationItem"; title = "Editors"; ObjectID = "u9n-tU-PpW"; */
-"u9n-tU-PpW.title" = "Editors";
+"svg-Wi-K2K.normalTitle" = "CONTACT";
 
 /* Class = "UIButton"; normalTitle = "CALLIOPE MINI ÜBERSICHT"; ObjectID = "UlD-8R-0kJ"; */
-"UlD-8R-0kJ.normalTitle" = "CALLIOPE MINI ÜBERSICHT";
+"UlD-8R-0kJ.normalTitle" = "CALLIOPE MINI FEATURES";
 
 /* Class = "UIButton"; normalTitle = "EDITOREN"; ObjectID = "vVg-jc-n8f"; */
-"vVg-jc-n8f.normalTitle" = "EDITOREN";
+"vVg-jc-n8f.normalTitle" = "EDITORS";
 
 /* Class = "UITextView"; text = "ACHTUNG! Die Anpassungen sind nicht reversibel.\nDie gelöschten Dateien sind nicht mehr in der App verfügbar."; ObjectID = "W2T-43-YeH"; */
-"W2T-43-YeH.text" = "ACHTUNG! Die Anpassungen sind nicht reversibel.\nDie gelöschten Dateien sind nicht mehr in der App verfügbar.";
-
-/* Class = "UINavigationItem"; title = "Bluetooth Connection"; ObjectID = "WEm-pK-tnm"; */
-"WEm-pK-tnm.title" = "Bluetooth Connection";
+"W2T-43-YeH.text" = "ATTENTION! The adjustments are not reversible.\n            The deleted files are no longer available in the app.";
 
 /* Class = "UIButton"; normalTitle = "EIGENE PROGRAMME "; ObjectID = "wNV-S9-kWA"; */
-"wNV-S9-kWA.normalTitle" = "EIGENE PROGRAMME ";
-
-/* Class = "UITabBarItem"; title = "Help"; ObjectID = "xOk-Ya-FCk"; */
-"xOk-Ya-FCk.title" = "Help";
+"wNV-S9-kWA.normalTitle" = "YOUR PROGRAMS ";
 
 /* Class = "UIViewController"; title = "Verbindung"; ObjectID = "XU1-hQ-wSQ"; */
-"XU1-hQ-wSQ.title" = "Verbindung";
+"XU1-hQ-wSQ.title" = "Connection";
 
 /* Class = "UIViewController"; title = "Programme"; ObjectID = "Y0N-r0-o7h"; */
-"Y0N-r0-o7h.title" = "Programme";
+"Y0N-r0-o7h.title" = "Programs";
+
+/* Class = "UINavigationItem"; title = "Help"; ObjectID = "8Dh-5e-PlT"; */
+"8Dh-5e-PlT.title" = "";
+
+/* Class = "UIButton"; normalTitle = "calliope.cc"; ObjectID = "FOM-5E-71J"; */
+"FOM-5E-71J.normalTitle" = "";
+
+/* Class = "UITextView"; text = "Zusätzlich können direkt Programmier-Teile für den Calliope mini Swift Playground aus der Snippet Library kopiert und in die eigenen Programme eingefügt werden."; ObjectID = "Kbf-NW-5k6"; */
+"Kbf-NW-5k6.text" = "";
+
+/* Class = "UINavigationItem"; title = "Programs"; ObjectID = "P5r-U0-i5U"; */
+"P5r-U0-i5U.title" = "";
+
+/* Class = "UINavigationItem"; title = "Contact"; ObjectID = "Skq-vk-RAC"; */
+"Skq-vk-RAC.title" = "";
+
+/* Class = "UINavigationItem"; title = "Editors"; ObjectID = "u9n-tU-PpW"; */
+"u9n-tU-PpW.title" = "";
+
+/* Class = "UINavigationItem"; title = "Bluetooth Connection"; ObjectID = "WEm-pK-tnm"; */
+"WEm-pK-tnm.title" = "";
+
+/* Class = "UITabBarItem"; title = "Help"; ObjectID = "xOk-Ya-FCk"; */
+"xOk-Ya-FCk.title" = "";

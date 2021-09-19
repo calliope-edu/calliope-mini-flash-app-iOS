@@ -1,5 +1,9 @@
+/* (No Comment) */
+"Hex File" = "";
+
+/* Privacy - Bluetooth Always Usage Description */
 "NSBluetoothAlwaysUsageDescription" = "";
 
+/* Privacy - Bluetooth Peripheral Usage Description */
 "NSBluetoothPeripheralUsageDescription" = "";
 
-"Hex File" = "";

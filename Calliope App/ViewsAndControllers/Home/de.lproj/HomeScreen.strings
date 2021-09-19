@@ -2,10 +2,11 @@
 "9eT-f2-X1q.title" = "Home";
 
 /* Class = "UITabBarItem"; title = "Home"; ObjectID = "fxY-KR-WSy"; */
-"fxY-KR-WSy.title" = "Home";
+"fxY-KR-WSy.title" = "Start";
 
 /* Class = "UILabel"; text = "GETTING STARTED"; ObjectID = "Mc9-nL-hpA"; */
-"Mc9-nL-hpA.text" = "GETTING STARTED";
+"Mc9-nL-hpA.text" = "LOS GEHT'S";
 
 /* Class = "UINavigationItem"; title = "Home"; ObjectID = "w16-hI-VJ6"; */
-"w16-hI-VJ6.title" = "Home";
+"w16-hI-VJ6.title" = "Start";
+

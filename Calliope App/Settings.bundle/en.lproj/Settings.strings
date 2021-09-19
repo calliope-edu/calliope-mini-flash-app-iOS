@@ -1,27 +1,42 @@
-"App Version" = "";
+/* (No Comment) */
+"App Version" = "App Version";
 
-"Blinking Heart" = "";
+/* (No Comment) */
+"Blinking Heart" = "Blinking Heart";
 
-"Default Hex Files" = "";
+/* (No Comment) */
+"Default Hex Files" = "Default HEX Files";
 
-"Enabled" = "";
+/* (No Comment) */
+"Enabled" = "Enabled";
 
-"Information" = "";
+/* (No Comment) */
+"Information" = "Information";
 
-"MakeCode" = "";
+/* (No Comment) */
+"MakeCode" = "MakeCode";
 
-"News URL" = "";
+/* (No Comment) */
+"News URL" = "News URL";
 
-"Playgrounds" = "";
+/* (No Comment) */
+"Playgrounds" = "Calliope mini Swift Playground";
 
-"Reset Settings" = "";
+/* (No Comment) */
+"Reset Settings" = "Reset Settings";
 
-"Reset when app restarts" = "";
+/* (No Comment) */
+"Reset when app restarts" = "Reset when app restarts";
 
-"Roberta" = "";
+/* (No Comment) */
+"Roberta" = "Open Roberta Lab";
 
-"Start Program" = "";
+/* (No Comment) */
+"Start Program" = "Start Program";
 
-"Template URL" = "";
+/* (No Comment) */
+"Template URL" = "Library URL";
 
-"URL" = "";
+/* (No Comment) */
+"URL" = "URL";
+

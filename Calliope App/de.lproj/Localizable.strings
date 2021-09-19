@@ -1,62 +1,179 @@
 /* No comment provided by engineer. */
+"Activate Bluetooth!" = "Bitte Bluetooth aktivieren!";
+
+/* No comment provided by engineer. */
+"Blinking Heart" = "Blinkendes Herz";
+
+/* No comment provided by engineer. */
+"Bluetooth" = "Bluetooth";
+
+/* No comment provided by engineer. */
+"Button A" = "Taste A";
+
+/* No comment provided by engineer. */
+"Button A and B" = "Taste A und B";
+
+/* No comment provided by engineer. */
+"Button B" = "Taste B";
+
+/* No comment provided by engineer. */
+"By shaking, you confirm the selection" = "Bestätige deine Auswahl, indem du den Calliope mini schüttelst";
+
+/* No comment provided by engineer. */
+"Cancel" = "Abbrechen";
+
+/* No comment provided by engineer. */
+"Cannot upload" = "Übertragung nicht möglich";
+
+/* No comment provided by engineer. */
+"Connect to a calliope to finish the tutorial" = "Verbinde dich mit dem Calliope mini, um die Einführung abzuschließen";
+
+/* No comment provided by engineer. */
+"Connect to enable uploading programs" = "Verbinde dich, um Programme zu übertragen.";
+
+/* No comment provided by engineer. */
+"Connection to calliope timed out!" = "Zeitüberschreitung bei der Übertragung";
+
+/* No comment provided by engineer. */
+"Could not find connected calliope in discovered calliopes" = "Es konnte kein Calliope mini gefunden werden";
+
+/* No comment provided by engineer. */
+"Could not save file or download is not a proper hex file" = "Die Datei konnte nicht gesichert oder geladen werden";
+
+/* No comment provided by engineer. */
+"Delete" = "Löschen";
+
+/* No comment provided by engineer. */
+"Delete failed" = "Löschen fehlgeschlagen";
+
+/* No comment provided by engineer. */
+"Delete?" = "Löschen?";
+
+/* No comment provided by engineer. */
+"Don´t save" = "Nicht sichern";
+
+/* No comment provided by engineer. */
+"Download finished" = "Dwonload abgeschlossen";
+
+/* No comment provided by engineer. */
+"Download the Swift Playgrounds App" = "Lade die Swift Playgrounds App";
+
+/* No comment provided by engineer. */
+"Edit" = "Bearbeiten";
+
+/* No comment provided by engineer. */
+"Error" = "Fehler";
+
+/* No comment provided by engineer. */
+"Failed to load snippets" = "Laden der Programm-Schnipsel fehlgeschlagen";
+
+/* No comment provided by engineer. */
+"File already exists" = "Datei existiert bereits";
+
+/* No comment provided by engineer. */
+"Finished" = "Abgeschlossen";
+
+/* No comment provided by engineer. */
+"Flip through the programs by pressing the keys A or B" = "Gehe durch die Programme, indem du die Tasten A und B drückst";
+
+/* No comment provided by engineer. */
+"Greetings" = "Begrüßung";
+
+/* No comment provided by engineer. */
+"Multiplication tables" = "1x1 Rechner";
+
+/* No comment provided by engineer. */
+"No" = "Nein";
+
+/* No comment provided by engineer. */
+"No description available" = "Keine Beschreibung verfügbar";
+
+/* No comment provided by engineer. */
+"Noise-o-meter" = "Lärm-o-meter";
+
+/* No comment provided by engineer. */
+"Ok" = "OK";
+
+/* No comment provided by engineer. */
+"OK" = "OK";
+
+/* No comment provided by engineer. */
+"Oracle" = "Orakel";
+
+/* No comment provided by engineer. */
+"Paper, Rock, Scissor" = "Schere, Stein, Papier";
+
+/* No comment provided by engineer. */
+"Press both A and B to return to the menu" = "Drücke die Tasten A und B, um zum Menü zu gelangen";
+
+/* No comment provided by engineer. */
+"Program download failed" = "Programmübertragung fehlgeschlagen";
+
+/* No comment provided by engineer. */
+"Push the button and follow the instructions for connecting to your Calliope" = "Drück hier und folge den Anweisungen";
+
+/* No comment provided by engineer. */
+"Ready!" = "Fertig!";
+
+/* No comment provided by engineer. */
+"Remove paired device" = "Trennen";
+
+/* No comment provided by engineer. */
+"Save Program" = "Programm sichern";
+
+/* No comment provided by engineer. */
+"Service discovery on calliope has timed out!" = "Zeitüberschreitung";
+
+/* No comment provided by engineer. */
+"Shake" = "Schütteln";
+
+/* No comment provided by engineer. */
+"Share" = "Teilen";
+
+/* No comment provided by engineer. */
+"Subscribe to the Calliope Playgrounds" = "Abonniere den Calliope mini Swift Playground";
+
+/* No comment provided by engineer. */
+"The program is being downloaded. Please wait a little." = "Das Programm wird geladen. Einen Augenblick Geduld.";
+
+/* No comment provided by engineer. */
+"The program is downloaded. Do you want to upload it now?" = "Das Programm wurde geladen. Möchtest du es übertragen?";
+
+/* No comment provided by engineer. */
+"There is no connected calliope in DFU mode" = "Es konnte kein Calliope mini gefunden werden";
+
+/* No comment provided by engineer. */
+"Upload" = "Übertragen";
+
+/* No comment provided by engineer. */
+"Upload failed!" = "Übertragung fehlgeschlagen";
+
+/* No comment provided by engineer. */
+"Upload the start program to your Calliope" = "Übertrag das Startprogramm auf den Calliope mini";
+
+/* No comment provided by engineer. */
+"Upload?" = "Übertragen?";
+
+/* No comment provided by engineer. */
+"Uploading" = "Übertragung läuft…";
+
+/* No comment provided by engineer. */
+"Wait a little" = "Einen Moment bitte";
+
+/* No comment provided by engineer. */
+"Yes" = "Ja";
+
+/* No comment provided by engineer. */
+"You are connected to your Calliope, well done!" = "Yeah, du bist verbunden - super gemacht!";
+
+/* No comment provided by engineer. */
 "1. Programm 5 starten\n2. Schütteln\n3. LED-Muster eingeben" = "";
-
-/* No comment provided by engineer. */
-"Activate Bluetooth!" = "";
-
-/* No comment provided by engineer. */
-"Blinking Heart" = "";
-
-/* No comment provided by engineer. */
-"Bluetooth" = "";
-
-/* No comment provided by engineer. */
-"Button A" = "";
-
-/* No comment provided by engineer. */
-"Button A and B" = "";
-
-/* No comment provided by engineer. */
-"Button B" = "";
-
-/* No comment provided by engineer. */
-"By shaking, you confirm the selection" = "";
-
-/* No comment provided by engineer. */
-"Cancel" = "";
-
-/* No comment provided by engineer. */
-"Cannot upload" = "";
 
 /* No comment provided by engineer. */
 "Check your internet connection or the snippets url in settings.\n\nThe error description is:\n%@" = "";
 
 /* No comment provided by engineer. */
-"Connect to a calliope to finish the tutorial" = "";
-
-/* No comment provided by engineer. */
-"Connect to enable uploading programs" = "";
-
-/* No comment provided by engineer. */
-"Connection to calliope timed out!" = "";
-
-/* No comment provided by engineer. */
-"Could not find connected calliope in discovered calliopes" = "";
-
-/* No comment provided by engineer. */
 "Could not rename %@" = "";
-
-/* No comment provided by engineer. */
-"Could not save file or download is not a proper hex file" = "";
-
-/* No comment provided by engineer. */
-"Delete" = "";
-
-/* No comment provided by engineer. */
-"Delete failed" = "";
-
-/* No comment provided by engineer. */
-"Delete?" = "";
 
 /* No comment provided by engineer. */
 "Do you want to delete %@?" = "";
@@ -65,37 +182,7 @@
 "Do you want to upload %@ to your calliope?" = "";
 
 /* No comment provided by engineer. */
-"Don´t save" = "";
-
-/* No comment provided by engineer. */
-"Download finished" = "";
-
-/* No comment provided by engineer. */
-"Download the Swift Playgrounds App" = "";
-
-/* No comment provided by engineer. */
-"Edit" = "";
-
-/* No comment provided by engineer. */
 "Encountered an error discovering or connecting calliope:" = "";
-
-/* No comment provided by engineer. */
-"Error" = "";
-
-/* No comment provided by engineer. */
-"Failed to load snippets" = "";
-
-/* No comment provided by engineer. */
-"File already exists" = "";
-
-/* No comment provided by engineer. */
-"Finished" = "";
-
-/* No comment provided by engineer. */
-"Flip through the programs by pressing the keys A or B" = "";
-
-/* No comment provided by engineer. */
-"Greetings" = "";
 
 /* The url for the news json */
 "https://calliope.cc/forumassets/news.json" = "";
@@ -104,61 +191,7 @@
 "https://calliope.cc/forumassets/snippets.json" = "";
 
 /* No comment provided by engineer. */
-"Multiplication tables" = "";
-
-/* No comment provided by engineer. */
-"No" = "";
-
-/* No comment provided by engineer. */
-"No description available" = "";
-
-/* No comment provided by engineer. */
 "No root view controller for presenting File Save UI found" = "";
-
-/* No comment provided by engineer. */
-"Noise-o-meter" = "";
-
-/* No comment provided by engineer. */
-"OK" = "";
-
-/* No comment provided by engineer. */
-"Ok" = "";
-
-/* No comment provided by engineer. */
-"Oracle" = "";
-
-/* No comment provided by engineer. */
-"Paper, Rock, Scissor" = "";
-
-/* No comment provided by engineer. */
-"Press both A and B to return to the menu" = "";
-
-/* No comment provided by engineer. */
-"Program download failed" = "";
-
-/* No comment provided by engineer. */
-"Push the button and follow the instructions for connecting to your Calliope" = "";
-
-/* No comment provided by engineer. */
-"Ready!" = "";
-
-/* No comment provided by engineer. */
-"Remove paired device" = "";
-
-/* No comment provided by engineer. */
-"Save Program" = "";
-
-/* No comment provided by engineer. */
-"Service discovery on calliope has timed out!" = "";
-
-/* No comment provided by engineer. */
-"Shake" = "";
-
-/* No comment provided by engineer. */
-"Share" = "";
-
-/* No comment provided by engineer. */
-"Subscribe to the Calliope Playgrounds" = "";
 
 /* No comment provided by engineer. */
 "The name %@ could not be given to %@. The name for a program must be unique and not empty." = "";
@@ -167,40 +200,7 @@
 "the program" = "";
 
 /* No comment provided by engineer. */
-"The program is being downloaded. Please wait a little." = "";
-
-/* No comment provided by engineer. */
-"The program is downloaded. Do you want to upload it now?" = "";
-
-/* No comment provided by engineer. */
 "The program is not ready. The reason is:\n%@" = "";
 
 /* No comment provided by engineer. */
-"There is no connected calliope in DFU mode" = "";
-
-/* No comment provided by engineer. */
 "This Calliope can not be connected until you go to the bluetooth settings of your device and \"ignore\" it." = "";
-
-/* No comment provided by engineer. */
-"Upload" = "";
-
-/* No comment provided by engineer. */
-"Upload failed!" = "";
-
-/* No comment provided by engineer. */
-"Upload the start program to your Calliope" = "";
-
-/* No comment provided by engineer. */
-"Upload?" = "";
-
-/* No comment provided by engineer. */
-"Uploading" = "";
-
-/* No comment provided by engineer. */
-"Wait a little" = "";
-
-/* No comment provided by engineer. */
-"Yes" = "";
-
-/* No comment provided by engineer. */
-"You are connected to your Calliope, well done!" = "";

@@ -1,41 +1,41 @@
-/* Class = "UILabel"; text = "Label"; ObjectID = "DpH-x4-88I"; */
-"DpH-x4-88I.text" = "Label";
-
-/* Class = "UIViewController"; title = "Editor"; ObjectID = "eeY-2x-OZY"; */
-"eeY-2x-OZY.title" = "Editor";
-
-/* Class = "UITabBarItem"; title = "Editors and Programs"; ObjectID = "fat-Jr-Mna"; */
-"fat-Jr-Mna.title" = "Editors and Programs";
-
-/* Class = "UILabel"; text = "Label"; ObjectID = "g6h-Vu-QEH"; */
-"g6h-Vu-QEH.text" = "Label";
-
 /* Class = "UILabel"; text = "Editors.\nThese editors allow you to write programs for showing text on the Calliope display, read its sensors or even build mini-robots yourself – Give it a try!"; ObjectID = "Hqp-zE-kfc"; */
-"Hqp-zE-kfc.text" = "Editors.\nThese editors allow you to write programs for showing text on the Calliope display, read its sensors or even build mini-robots yourself – Give it a try!";
+"Hqp-zE-kfc.text" = "Editors\nThese editors allow you to write programs for showing text on the Calliope display, read its sensors or even build mini-robots yourself – Give it a try!";
 
 /* Class = "UILabel"; text = "Programs.\nThese are the programs you created so far."; ObjectID = "ips-vx-zky"; */
-"ips-vx-zky.text" = "Programs.\nThese are the programs you created so far.";
-
-/* Class = "UILabel"; text = "Local editor"; ObjectID = "Ked-z3-CdC"; */
-"Ked-z3-CdC.text" = "Local editor";
-
-/* Class = "UILabel"; text = "Makecode"; ObjectID = "KGR-ef-bqG"; */
-"KGR-ef-bqG.text" = "Makecode";
+"ips-vx-zky.text" = "Programs\nThese are the programs you created so far.";
 
 /* Class = "UILabel"; text = "Start program.\nHere you can download the original program of the Calliope mini."; ObjectID = "lYA-S0-b2D"; */
-"lYA-S0-b2D.text" = "Start program.\nHere you can download the original program of the Calliope mini.";
+"lYA-S0-b2D.text" = "Start program\nHere you can download the original program of the Calliope mini.";
 
 /* Class = "UILabel"; text = "Playground"; ObjectID = "NWk-nx-U7c"; */
-"NWk-nx-U7c.text" = "Playground";
+"NWk-nx-U7c.text" = "Swift Playground";
 
 /* Class = "UILabel"; text = "Open Roberta Lab"; ObjectID = "pm2-Za-VcF"; */
 "pm2-Za-VcF.text" = "Nepo";
 
+/* Class = "UILabel"; text = "Label"; ObjectID = "DpH-x4-88I"; */
+"DpH-x4-88I.text" = "";
+
+/* Class = "UIViewController"; title = "Editor"; ObjectID = "eeY-2x-OZY"; */
+"eeY-2x-OZY.title" = "";
+
+/* Class = "UITabBarItem"; title = "Editors and Programs"; ObjectID = "fat-Jr-Mna"; */
+"fat-Jr-Mna.title" = "";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "g6h-Vu-QEH"; */
+"g6h-Vu-QEH.text" = "";
+
+/* Class = "UILabel"; text = "Local editor"; ObjectID = "Ked-z3-CdC"; */
+"Ked-z3-CdC.text" = "";
+
+/* Class = "UILabel"; text = "Makecode"; ObjectID = "KGR-ef-bqG"; */
+"KGR-ef-bqG.text" = "";
+
 /* Class = "UIViewController"; title = "Programs and Editors"; ObjectID = "rb5-ni-SG8"; */
-"rb5-ni-SG8.title" = "Programs and Editors";
+"rb5-ni-SG8.title" = "";
 
 /* Class = "UINavigationItem"; title = "Editors and Programs"; ObjectID = "uLO-aS-ZNS"; */
-"uLO-aS-ZNS.title" = "Editors and Programs";
+"uLO-aS-ZNS.title" = "";
 
 /* Class = "UIButton"; normalTitle = "Start program"; ObjectID = "Z3u-48-3Mt"; */
-"Z3u-48-3Mt.normalTitle" = "Start program";
+"Z3u-48-3Mt.normalTitle" = "";
