@@ -20,7 +20,7 @@ class FirmwareUpload {
             }
         } else {
             let alertStart = UIAlertController(title: NSLocalizedString("Wait a little", comment: ""), message: NSLocalizedString("The program is being downloaded. Please wait a little.", comment: ""), preferredStyle: .alert)
-            alertStart.addAction(UIAlertAction(title: "Ok", style: .default))
+            alertStart.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default))
             
             controller.present(alertStart, animated: true) {
                 program.load { error in
@@ -36,7 +36,7 @@ class FirmwareUpload {
                     } else {
                         let reason = error?.localizedDescription ?? "The downloaded program is empty"
                         let alertError = UIAlertController(title: NSLocalizedString("Program download failed", comment: ""), message: String(format: NSLocalizedString("The program is not ready. The reason is:\n%@", comment: ""), reason), preferredStyle: .alert)
-                        alertError.addAction(UIAlertAction(title: "Ok", style: .default))
+                        alertError.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default))
                         alert = alertError
                     }
                     DispatchQueue.main.async {
