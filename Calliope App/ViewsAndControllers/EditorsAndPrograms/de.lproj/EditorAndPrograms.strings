@@ -10,32 +10,33 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "g6h-Vu-QEH"; */
 "g6h-Vu-QEH.text" = "Label";
 
+/* Class = "UILabel"; text = "Editors.\nThese editors allow you to write programs for showing text on the Calliope display, read its sensors or even build mini-robots yourself – Give it a try!"; ObjectID = "Hqp-zE-kfc"; */
+"Hqp-zE-kfc.text" = "Editoren\n            Mit diesen Editoren kannst du Programme schreiben, um Text auf dem LED-Display anzuzeigen, die Sensoren auszulesen oder sogar selbst Mini-Roboter zu bauen - probiere es aus!";
+
+/* Class = "UILabel"; text = "Programs.\nThese are the programs you created so far."; ObjectID = "ips-vx-zky"; */
+"ips-vx-zky.text" = "Programme\n            Dies sind die Programme, die Sie bisher erstellt haben.";
+
 /* Class = "UILabel"; text = "Local editor"; ObjectID = "Ked-z3-CdC"; */
 "Ked-z3-CdC.text" = "Lokaler Editor";
+
+/* Class = "UILabel"; text = "Makecode"; ObjectID = "KGR-ef-bqG"; */
+"KGR-ef-bqG.text" = "Makecode";
+
+/* Class = "UILabel"; text = "Start program.\nHere you can download the original program of the Calliope mini."; ObjectID = "lYA-S0-b2D"; */
+"lYA-S0-b2D.text" = "Programm starten\n            Hier kannst du das Startprogramm des Calliope mini herunterladen.";
 
 /* Class = "UILabel"; text = "Playground"; ObjectID = "NWk-nx-U7c"; */
 "NWk-nx-U7c.text" = "Swift Playground";
 
 /* Class = "UILabel"; text = "Open Roberta Lab"; ObjectID = "pm2-Za-VcF"; */
-"pm2-Za-VcF.text" = "Nepo";
+"pm2-Za-VcF.text" = "Open Roberta Lab";
 
 /* Class = "UIViewController"; title = "Programs and Editors"; ObjectID = "rb5-ni-SG8"; */
 "rb5-ni-SG8.title" = "Editoren und Programme";
 
+/* Class = "UINavigationItem"; title = "Editors and Programs"; ObjectID = "uLO-aS-ZNS"; */
+"uLO-aS-ZNS.title" = "Programme und Editoren";
+
 /* Class = "UIButton"; normalTitle = "Start program"; ObjectID = "Z3u-48-3Mt"; */
 "Z3u-48-3Mt.normalTitle" = "Startprogramm";
 
-/* Class = "UILabel"; text = "Editors.\nThese editors allow you to write programs for showing text on the Calliope display, read its sensors or even build mini-robots yourself – Give it a try!"; ObjectID = "Hqp-zE-kfc"; */
-"Hqp-zE-kfc.text" = "";
-
-/* Class = "UILabel"; text = "Programs.\nThese are the programs you created so far."; ObjectID = "ips-vx-zky"; */
-"ips-vx-zky.text" = "";
-
-/* Class = "UILabel"; text = "Makecode"; ObjectID = "KGR-ef-bqG"; */
-"KGR-ef-bqG.text" = "";
-
-/* Class = "UILabel"; text = "Start program.\nHere you can download the original program of the Calliope mini."; ObjectID = "lYA-S0-b2D"; */
-"lYA-S0-b2D.text" = "";
-
-/* Class = "UINavigationItem"; title = "Editors and Programs"; ObjectID = "uLO-aS-ZNS"; */
-"uLO-aS-ZNS.title" = "";

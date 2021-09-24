@@ -1,47 +1,6 @@
+/* Class = "UILabel"; text = "There is veeery long text which could end up in two lines"; ObjectID = "AKN-ba-DUa"; */
+"AKN-ba-DUa.text" = "Text is too long";
+
 /* Class = "UILabel"; text = "Verwende die Snippet Library mit dem Swift Playground. Wenn du in dem Swift Playground \"Calliope Mini - Vorlage\" arbeitest, kannst du die Snippets Library neben der Playgrounds App öffnen und die Codesnippets ganz bequem von der App in den Playground kopieren."; ObjectID = "sDg-74-hMi"; */
 "sDg-74-hMi.text" = "Use the Snippet Library with the Swift Playground. If you are working in the Swift Playground \"Calliope Mini - Template\", you can open the Snippets Library next to the Playgrounds app and easily copy the code snippets from the app to the Playground.";
 
-/* Class = "UILabel"; text = "Copied snippet!"; ObjectID = "7rw-qs-gzO"; */
-"7rw-qs-gzO.text" = "";
-
-/* Class = "UILabel"; text = "Label"; ObjectID = "8Al-Qu-EWO"; */
-"8Al-Qu-EWO.text" = "";
-
-/* Class = "UIViewController"; title = "Home"; ObjectID = "93j-LA-Q6m"; */
-"93j-LA-Q6m.title" = "";
-
-/* Class = "UILabel"; text = "There is veeery long text which could end up in two lines"; ObjectID = "AKN-ba-DUa"; */
-"AKN-ba-DUa.text" = "";
-
-/* Class = "UILabel"; text = "Copied snippet!"; ObjectID = "cIf-ra-SUA"; */
-"cIf-ra-SUA.text" = "";
-
-/* Class = "UITableViewController"; title = "Playground Snippets"; ObjectID = "IAA-SO-Qac"; */
-"IAA-SO-Qac.title" = "";
-
-/* Class = "UILabel"; text = "Label"; ObjectID = "jZR-Hi-92E"; */
-"jZR-Hi-92E.text" = "";
-
-/* Class = "UINavigationItem"; title = "Playground Snippets"; ObjectID = "ke0-Pl-3Bl"; */
-"ke0-Pl-3Bl.title" = "";
-
-/* Class = "UILabel"; text = "Label"; ObjectID = "mVL-Pc-a55"; */
-"mVL-Pc-a55.text" = "";
-
-/* Class = "UILabel"; text = "Label"; ObjectID = "oCk-WD-9Kc"; */
-"oCk-WD-9Kc.text" = "";
-
-/* Class = "UITableViewController"; title = "Playground Snippets"; ObjectID = "SgB-Yb-sTD"; */
-"SgB-Yb-sTD.title" = "";
-
-/* Class = "UINavigationItem"; title = "Home"; ObjectID = "wz7-bF-qTT"; */
-"wz7-bF-qTT.title" = "";
-
-/* Class = "UINavigationItem"; title = "Playground Snippets"; ObjectID = "yeh-9e-tUu"; */
-"yeh-9e-tUu.title" = "";
-
-/* Class = "UILabel"; text = "Label"; ObjectID = "YGA-Ni-z9x"; */
-"YGA-Ni-z9x.text" = "";
-
-/* Class = "UIButton"; normalTitle = "Snippets Library"; ObjectID = "zqc-Md-ScS"; */
-"zqc-Md-ScS.normalTitle" = "";

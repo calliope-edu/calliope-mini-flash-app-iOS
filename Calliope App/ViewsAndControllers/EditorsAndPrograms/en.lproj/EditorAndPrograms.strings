@@ -10,32 +10,6 @@
 /* Class = "UILabel"; text = "Playground"; ObjectID = "NWk-nx-U7c"; */
 "NWk-nx-U7c.text" = "Swift Playground";
 
-/* Class = "UILabel"; text = "Open Roberta Lab"; ObjectID = "pm2-Za-VcF"; */
-"pm2-Za-VcF.text" = "Nepo";
-
-/* Class = "UILabel"; text = "Label"; ObjectID = "DpH-x4-88I"; */
-"DpH-x4-88I.text" = "";
-
-/* Class = "UIViewController"; title = "Editor"; ObjectID = "eeY-2x-OZY"; */
-"eeY-2x-OZY.title" = "";
-
-/* Class = "UITabBarItem"; title = "Editors and Programs"; ObjectID = "fat-Jr-Mna"; */
-"fat-Jr-Mna.title" = "";
-
-/* Class = "UILabel"; text = "Label"; ObjectID = "g6h-Vu-QEH"; */
-"g6h-Vu-QEH.text" = "";
-
-/* Class = "UILabel"; text = "Local editor"; ObjectID = "Ked-z3-CdC"; */
-"Ked-z3-CdC.text" = "";
-
-/* Class = "UILabel"; text = "Makecode"; ObjectID = "KGR-ef-bqG"; */
-"KGR-ef-bqG.text" = "";
-
-/* Class = "UIViewController"; title = "Programs and Editors"; ObjectID = "rb5-ni-SG8"; */
-"rb5-ni-SG8.title" = "";
-
 /* Class = "UINavigationItem"; title = "Editors and Programs"; ObjectID = "uLO-aS-ZNS"; */
-"uLO-aS-ZNS.title" = "";
+"uLO-aS-ZNS.title" = "Programs and Editors";
 
-/* Class = "UIButton"; normalTitle = "Start program"; ObjectID = "Z3u-48-3Mt"; */
-"Z3u-48-3Mt.normalTitle" = "";

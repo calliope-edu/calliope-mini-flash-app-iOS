@@ -28,6 +28,9 @@
 /* Class = "UITextView"; text = "Wir haben die beiden meistverbreiteten Editoren direkt in der App eingebunden."; ObjectID = "Hho-IW-sbR"; */
 "Hho-IW-sbR.text" = "We have included the two most popular editors directly in the app.";
 
+/* Class = "UITextView"; text = "Zusätzlich können direkt Programmier-Teile für den Calliope mini Swift Playground aus der Snippet Library kopiert und in die eigenen Programme eingefügt werden."; ObjectID = "Kbf-NW-5k6"; */
+"Kbf-NW-5k6.text" = "In addition, programming parts for the Calliope mini Swift Playground can be copied directly from the Snippet Library and inserted into your own programs.";
+
 /* Class = "UITextView"; text = "Um die Bluetooth Dienste des Calliope mini mit einem anderen Gerät zu nutzen, muss dieses zunächst mit dem Calliope mini verbunden bzw. gekoppelt werden! Um eine Verbindung zum Senden von Codes an den Calliope mini aus der App herzustellen, müssen die folgenden Schritte ausgeführt werden:\n\n1. Drücke gleichzeitig die Tasten A+B und Reset deines Calliope mini. \n\n2. Lass nach ca. 1 Sekunde Reset los.\n\n3. Halte die Tasten A+B weiter gedrückt bis eine Animation auf dem LED-Display startet.\n\n4. ID Muster - Der Calliope mini zeigt automatisch ein\nKoppeln-Symbol (fünf Balken) auf dem LED-Display."; ObjectID = "KGt-PM-JgX"; */
 "KGt-PM-JgX.text" = "In order to use the Bluetooth services of the Calliope mini with another device, this device must first be connected or paired with the Calliope mini! To establish a connection for sending codes to the Calliope mini from the app, the following steps must be performed:\n\n1. Press the buttons A+B and Reset of your Calliope mini simultaneously.\n\n2. Release Reset after about 1 second.\n\n3. Keep pressing the A+B buttons until an animation on the LED display starts.\n\n4. IID pattern - The Calliope mini will automatically show a\n            pairing symbol (five bars) on the LED display.";
 
@@ -61,26 +64,3 @@
 /* Class = "UIViewController"; title = "Programme"; ObjectID = "Y0N-r0-o7h"; */
 "Y0N-r0-o7h.title" = "Programs";
 
-/* Class = "UINavigationItem"; title = "Help"; ObjectID = "8Dh-5e-PlT"; */
-"8Dh-5e-PlT.title" = "";
-
-/* Class = "UIButton"; normalTitle = "calliope.cc"; ObjectID = "FOM-5E-71J"; */
-"FOM-5E-71J.normalTitle" = "";
-
-/* Class = "UITextView"; text = "Zusätzlich können direkt Programmier-Teile für den Calliope mini Swift Playground aus der Snippet Library kopiert und in die eigenen Programme eingefügt werden."; ObjectID = "Kbf-NW-5k6"; */
-"Kbf-NW-5k6.text" = "";
-
-/* Class = "UINavigationItem"; title = "Programs"; ObjectID = "P5r-U0-i5U"; */
-"P5r-U0-i5U.title" = "";
-
-/* Class = "UINavigationItem"; title = "Contact"; ObjectID = "Skq-vk-RAC"; */
-"Skq-vk-RAC.title" = "";
-
-/* Class = "UINavigationItem"; title = "Editors"; ObjectID = "u9n-tU-PpW"; */
-"u9n-tU-PpW.title" = "";
-
-/* Class = "UINavigationItem"; title = "Bluetooth Connection"; ObjectID = "WEm-pK-tnm"; */
-"WEm-pK-tnm.title" = "";
-
-/* Class = "UITabBarItem"; title = "Help"; ObjectID = "xOk-Ya-FCk"; */
-"xOk-Ya-FCk.title" = "";
