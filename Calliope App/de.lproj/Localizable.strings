@@ -158,6 +158,9 @@
 "Share" = "Teilen";
 
 /* No comment provided by engineer. */
+"Start Program" = "Startprogramm";
+
+/* No comment provided by engineer. */
 "Subscribe to the Calliope Playgrounds" = "Abonniere den Calliope mini Swift Playground";
 
 /* No comment provided by engineer. */
@@ -204,3 +207,4 @@
 
 /* No comment provided by engineer. */
 "You are connected to your Calliope, well done!" = "Yeah, du bist verbunden - super gemacht!";
+
