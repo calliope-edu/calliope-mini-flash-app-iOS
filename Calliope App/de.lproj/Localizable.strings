@@ -127,6 +127,9 @@
 /* No comment provided by engineer. */
 "Paper, Rock, Scissor" = "Schere, Stein, Papier";
 
+/* In dialog to choose name for new program */
+"Please choose a name" = "Wähle einen Namen";
+
 /* No comment provided by engineer. */
 "Press both A and B to return to the menu" = "Drücke die Tasten A und B, um zum Menü zu gelangen";
 
@@ -176,7 +179,7 @@
 "There is no connected calliope in DFU mode" = "Es konnte kein Calliope mini gefunden werden";
 
 /* No comment provided by engineer. */
-"This Calliope can not be connected until you go to the bluetooth settings of your device and \"ignore\" it." = "This Calliope can not be connected until you go to the bluetooth settings of your device and \"Dieser Calliope mini kann erst verbunden werden, wenn du in den Bluetooth-Einstellungen deines Geräts die Option \"ignorieren\" wählst.\" it.";
+"This Calliope can not be connected until you go to the bluetooth settings of your device and \"ignore\" it." = "Dieser Calliope mini kann erst verbunden werden, wenn du in den Bluetooth-Einstellungen deines Geräts die Option \"ignorieren\" wählst.";
 
 /* No comment provided by engineer. */
 "Upload" = "Übertragen";
@@ -201,4 +204,3 @@
 
 /* No comment provided by engineer. */
 "You are connected to your Calliope, well done!" = "Yeah, du bist verbunden - super gemacht!";
-

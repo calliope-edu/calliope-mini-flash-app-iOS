@@ -127,6 +127,9 @@
 /* No comment provided by engineer. */
 "Paper, Rock, Scissor" = "Paper, Rock, Scissor";
 
+/* In dialog to choose name for new program */
+"Please choose a name" = "Please choose a name";
+
 /* No comment provided by engineer. */
 "Press both A and B to return to the menu" = "Press both A and B to return to the menu";
 
@@ -201,4 +204,3 @@
 
 /* No comment provided by engineer. */
 "You are connected to your Calliope, well done!" = "Yeah, you are connected to your Calliope mini, well done!";
-

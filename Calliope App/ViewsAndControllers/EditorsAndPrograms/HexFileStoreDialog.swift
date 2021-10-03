@@ -25,7 +25,9 @@ enum HexFileStoreDialog {
             return
         }
 
-        let alert = UIAlertController(title: NSLocalizedString("Save Program", comment: ""), message: "Please choose a name", preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("Save Program", comment: ""),
+                                      message: NSLocalizedString("Please choose a name", comment: "In dialog to choose name for new program"),
+                                      preferredStyle: .alert)
 
         alert.addTextField { textField in
             textField.keyboardType = .default
