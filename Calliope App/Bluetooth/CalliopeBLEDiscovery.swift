@@ -51,7 +51,7 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 				bluetoothQueue.asyncAfter(deadline: DispatchTime.now() + BluetoothConstants.connectTimeout) {
 					if self.connectedCalliope == nil {
 						self.centralManager.cancelPeripheralConnection(connectingCalliope.peripheral)
-                        self.updateQueue.async { self.errorBlock(NSLocalizedString("Connection to calliope timed out!", comment: "") ) }
+                        self.updateQueue.async { self.errorBlock( NSLocalizedString("Connection to calliope timed out!", comment: "") ) }
 					}
 				}
 			}

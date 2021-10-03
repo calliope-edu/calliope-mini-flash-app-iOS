@@ -250,12 +250,19 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 	}
 
     private func error(_ error: Error) {
-        let alertController: UIAlertController
+        let alertController: UIAlertController?
         if (error as? CBError)?.errorCode == 14 {
             alertController = UIAlertController(title: NSLocalizedString("Remove paired device", comment: ""), message: NSLocalizedString("This Calliope can not be connected until you go to the bluetooth settings of your device and \"ignore\" it.", comment: ""), preferredStyle: .alert)
+        } else if error.localizedDescription == NSLocalizedString("Connection to calliope timed out!", comment: "") {
+            alertController = nil //ignore error
         } else {
             alertController = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Encountered an error discovering or connecting calliope:", comment: "") + "\n\(error.localizedDescription)", preferredStyle: .alert)
         }
+
+        guard let alertController = alertController else {
+            return
+        }
+
         alertController.addAction(UIAlertAction(title: "OK", style: .default))
         self.show(alertController, sender: nil)
     }
