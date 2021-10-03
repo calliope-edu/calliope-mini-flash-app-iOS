@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-class NewsDetailWebViewController: UIViewController {
+class NewsDetailWebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
 
 	@IBOutlet weak var webView: WKWebView!
 
@@ -18,19 +18,25 @@ class NewsDetailWebViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        webView.navigationDelegate = self
+        webView.uiDelegate = self
+
 		webView.load(URLRequest(url: url))
-        // Do any additional setup after loading the view.
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url {
+            UIApplication.shared.open(url)
+            decisionHandler(.cancel)
+        } else {
+            decisionHandler(.allow)
+        }
     }
-    */
 
+    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        if let url = navigationAction.request.url {
+            UIApplication.shared.open(url)
+        }
+        return nil
+    }
 }
