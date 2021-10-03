@@ -8,10 +8,27 @@
 
 import UIKit
 
+extension UIView {
+    func localizeTextViews(_ translationTableName: String) {
+        for view in self.subviews {
+            if let textView = view as? UITextView {
+                if let identifier = textView.restorationIdentifier {
+                    let localizationIdentifier = identifier + ".text"
+                    textView.text = NSLocalizedString(localizationIdentifier,
+                                                      tableName: translationTableName, comment: "")
+                }
+            } else {
+                view.localizeTextViews(translationTableName)
+            }
+        }
+    }
+}
+
 class HelpContentViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.localizeTextViews("Help")
     }
 
     // MARK: - Navigation

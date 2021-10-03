@@ -4,6 +4,9 @@
 /* Class = "UILabel"; text = "Programs.\nThese are the programs you created so far."; ObjectID = "ips-vx-zky"; */
 "ips-vx-zky.text" = "Programs\nThese are the programs you created so far.";
 
+/* Class = "UILabel"; text = "Local editor"; ObjectID = "Ked-z3-CdC"; */
+"Ked-z3-CdC.text" = "Local Editor";
+
 /* Class = "UILabel"; text = "Start program.\nHere you can download the original program of the Calliope mini."; ObjectID = "lYA-S0-b2D"; */
 "lYA-S0-b2D.text" = "Start program\nHere you can download the original program of the Calliope mini.";
 

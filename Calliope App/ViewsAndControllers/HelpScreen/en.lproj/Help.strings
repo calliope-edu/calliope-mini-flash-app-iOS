@@ -1,6 +1,9 @@
 /* Class = "UIButton"; normalTitle = "Weitere Informationen zum Flash"; ObjectID = "5Ig-w3-fGp"; */
 "5Ig-w3-fGp.normalTitle" = "Learn more about the Flash";
 
+/* Class = "UINavigationItem"; title = "Help"; ObjectID = "8Dh-5e-PlT"; */
+"8Dh-5e-PlT.title" = "Help";
+
 /* Class = "UITextView"; text = "Sollte es Fragen oder Probleme geben helfen wir gern!\n\nWir sind telefonisch oder per Email zu erreichen.\nUnter der Telefonnummer:+49 (0)30 4849 2030 sind wir werktags zwischen 10.00 und 13.00 Uhr erreichbar.\n\nFragen per Email können an info@calliope.cc geschrieben werden.Anleitungen und Unterrichtsmaterialien stehen auf unserer Webseite bereit zum Ausprobieren:\nhttps://calliope.cc\n\nCalliope HQ\nRaumerstraße 11\n10437 Berlin"; ObjectID = "a5l-k2-8Jf"; */
 "a5l-k2-8Jf.text" = "If there are any questions or problems we are happy to help!\n            \n            We can be reached by phone or email.\n            On weekdays between 10.00 - 3.00 pm (CET) we can also be reached by phone at +49 30 48492030.\n\n            Questions by email can be written to info@calliope.cc.Instructions and teaching materials are available on our website:\nhttps://calliope.cc\n\nCalliope HQ\nRaumerstraße 11\n10437 Berlin";
 
@@ -21,6 +24,9 @@
 
 /* Class = "UITextView"; text = "Sollte es einen lokalen Editor oder einen ganz anderen geben, so kann dieser in den Einstellungen zur App hinzugefügt werden. Diese Anpassung kann in der Einstellungen App gefunden werden. "; ObjectID = "Fkr-N8-Pu3"; */
 "Fkr-N8-Pu3.text" = "SIf there is a local editor or a different one, it can be added to the app in the settings. This customization can be found in the Settings app.";
+
+/* Class = "UIButton"; normalTitle = "calliope.cc"; ObjectID = "FOM-5E-71J"; */
+"FOM-5E-71J.normalTitle" = "calliope.cc";
 
 /* Class = "UIViewController"; title = "Kontakt"; ObjectID = "gnA-rV-4yL"; */
 "gnA-rV-4yL.title" = "Contact";

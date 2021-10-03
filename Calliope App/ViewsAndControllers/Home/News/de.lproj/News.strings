@@ -1,3 +1,3 @@
 /* Class = "UILabel"; text = "There is veeery long text which could end up in two lines"; ObjectID = "uGQ-ja-syg"; */
-"uGQ-ja-syg.text" = "Dieser Text ist sehr lang. Er sollte auf zwei Zeilen verkürzt werden.";
+"uGQ-ja-syg.text" = "Dieser Text ist sehr lang. Er sollte in zwei Zeilen angezeigt werden.";
 
