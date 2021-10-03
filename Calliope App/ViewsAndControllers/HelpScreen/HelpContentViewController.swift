@@ -38,22 +38,22 @@ class HelpContentViewController: UIViewController {
             return
         }
         if segue.identifier == "morebluetooth" {
-            webViewController.url = URL(string: "https://calliope.cc/programmieren/mobil")
+            webViewController.url = URL(string: NSLocalizedString("https://calliope.cc/programmieren/mobil", comment:"URL in Help screen"))
         }
         if segue.identifier == "moreFlash" {
-            webViewController.url = URL(string: "https://calliope.cc/start/tipps")
+            webViewController.url = URL(string: NSLocalizedString("https://calliope.cc/start/tipps", comment:"URL in Help screen"))
         }
         if segue.identifier == "moreEditors" {
-            webViewController.url = URL(string: "https://calliope.cc/programmieren/editoren")
+            webViewController.url = URL(string: NSLocalizedString("https://calliope.cc/programmieren/editoren", comment:"URL in Help screen"))
         }
         if segue.identifier == "moreCalliope" {
-            webViewController.url = URL(string: "https://calliope.cc")
+            webViewController.url = URL(string: NSLocalizedString("https://calliope.cc", comment:"URL in Help screen"))
         }
         if segue.identifier == "morePlayground" {
-            webViewController.url = URL(string: "https://calliope.cc/programmieren/playground")
+            webViewController.url = URL(string: NSLocalizedString("https://calliope.cc/programmieren/playground", comment:"URL in Help screen"))
         }
         if segue.identifier == "moreCalliopeMini" {
-            webViewController.url = URL(string: "https://calliope.cc/calliope-mini/uebersicht")
+            webViewController.url = URL(string: NSLocalizedString("https://calliope.cc/calliope-mini/uebersicht", comment:"URL in Help screen"))
         }
     }
 

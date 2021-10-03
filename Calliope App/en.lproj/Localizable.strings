@@ -207,3 +207,21 @@
 
 /* No comment provided by engineer. */
 "You are connected to your Calliope, well done!" = "Yeah, you are connected to your Calliope mini, well done!";
+
+/* URL in Help screen */
+"https://calliope.cc" = "https://calliope.cc";
+
+/* URL in Help screen */
+"https://calliope.cc/calliope-mini/uebersicht" = "https://calliope.cc/calliope-mini/uebersicht";
+
+/* URL in Help screen */
+"https://calliope.cc/programmieren/editoren" = "https://calliope.cc/programmieren/editoren";
+
+/* URL in Help screen */
+"https://calliope.cc/programmieren/mobil" = "https://calliope.cc/programmieren/mobil";
+
+/* URL in Help screen */
+"https://calliope.cc/programmieren/playground" = "https://calliope.cc/programmieren/playground";
+
+/* URL in Help screen */
+"https://calliope.cc/start/tipps" = "https://calliope.cc/start/tipps";
