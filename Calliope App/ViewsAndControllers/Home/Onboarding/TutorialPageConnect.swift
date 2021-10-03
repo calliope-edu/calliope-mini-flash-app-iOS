@@ -47,10 +47,9 @@ class TutorialPageConnect: TutorialPageViewController, AnimatingTutorialViewCont
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        let factor = CGFloat(2.5)
-        let sizeOfView = self.collectionView?.frame.size ?? CGSize(width: 100 * factor, height: 100 * factor)
-        let fractionOfSmallerDimension = min(sizeOfView.width, sizeOfView.height) / factor
-        cellSize = CGSize(width: fractionOfSmallerDimension, height: fractionOfSmallerDimension)
+        let sizeOfView = self.collectionView?.frame.size ?? CGSize(width: 100, height: 100)
+        let cellSidelength = min(min(sizeOfView.width, sizeOfView.height), 720) / 2.0 - 20
+        cellSize = CGSize(width: cellSidelength, height: cellSidelength)
     }
     
     fileprivate func updateConnectionState() {

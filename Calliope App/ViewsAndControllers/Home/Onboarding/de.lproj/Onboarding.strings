@@ -20,7 +20,7 @@
 "fjc-AF-Uny.text" = "Programm übertragen";
 
 /* Class = "UIButton"; normalTitle = "Upload Program Blinking Heart"; ObjectID = "KZP-Ey-EXu"; */
-"KZP-Ey-EXu.normalTitle" = "Überspiele das Programm \"Blinkende Herz\" auf deinen Calliope mini.";
+"KZP-Ey-EXu.normalTitle" = "\"Blinkendes Herz\" überspielen";
 
 /* Class = "UILabel"; text = "Greeting"; ObjectID = "M6T-cO-epA"; */
 "M6T-cO-epA.text" = "Begrüßung";
