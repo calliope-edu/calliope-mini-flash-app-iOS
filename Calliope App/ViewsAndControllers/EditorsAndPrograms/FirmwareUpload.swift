@@ -52,16 +52,20 @@ class FirmwareUpload {
     public static func showUploadUI(controller: UIViewController, program: Hex, name: String = NSLocalizedString("the program", comment: ""), completion: (() -> ())? = nil) {
         let alert = UIAlertController(title: NSLocalizedString("Upload?", comment: ""), message: String(format:NSLocalizedString("Do you want to upload %@ to your calliope?", comment: ""), name), preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("Upload", comment: ""), style: .default) { _ in
-            let uploader = FirmwareUpload(file: program, controller: controller)
-            controller.present(uploader.alertView, animated: true) {
-                uploader.upload() {
-                    controller.dismiss(animated: true, completion: nil)
-                    completion?()
-                }
-            }
+            uploadWithoutConfirmation(controller: controller, program: program, completion: completion)
         })
         alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel))
         controller.present(alert, animated: true)
+    }
+
+    public static func uploadWithoutConfirmation(controller: UIViewController, program: Hex, completion: (() -> ())? = nil) {
+        let uploader = FirmwareUpload(file: program, controller: controller)
+        controller.present(uploader.alertView, animated: true) {
+            uploader.upload() {
+                controller.dismiss(animated: true, completion: nil)
+                completion?()
+            }
+        }
     }
 
     private var file: Hex
@@ -175,7 +179,7 @@ class FirmwareUpload {
     func showUploadError(_ error: Error) {
         alertView.title = NSLocalizedString("Upload failed!", comment: "")
         alertView.message = "\(error.localizedDescription)"
-        progressRing.isHidden = true
+        progressRing.outerRingColor = #colorLiteral(red: 0.99, green: 0.29, blue: 0.15, alpha: 1)
         failed()
     }
 
@@ -187,11 +191,16 @@ class FirmwareUpload {
 extension FirmwareUpload: DFUProgressDelegate, DFUServiceDelegate, LoggerDelegate {
 	func dfuProgressDidChange(for part: Int, outOf totalParts: Int, to progress: Int, currentSpeedBytesPerSecond: Double, avgSpeedBytesPerSecond: Double) {
 		DispatchQueue.main.async { [weak self] in
-            if let self = self {
-                self.progressRing.startProgress(to: CGFloat(progress), duration: 0.2)
-                if progress > 0 && self.cancelUploadAction.isEnabled {
-                    self.cancelUploadAction.isEnabled = false
-                    //alertView.
+            guard let self = self else {
+                return
+            }
+            self.progressRing.startProgress(to: CGFloat(progress), duration: 0.2)
+            if progress > 0 && self.cancelUploadAction.isEnabled {
+                self.cancelUploadAction.isEnabled = false
+                let failed = self.failed
+                self.failed = {
+                    self.cancelUploadAction.isEnabled = true
+                    failed()
                 }
             }
 		}

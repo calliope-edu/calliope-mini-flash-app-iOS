@@ -170,7 +170,7 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
                 HexFileStoreDialog.showStoreHexUI(controller: self, hexFile: download.url) { error in
                     //TODO: some reaction
                 } saveCompleted: { file in
-                    FirmwareUpload.showUploadUI(controller: self, program: file) {
+                    FirmwareUpload.uploadWithoutConfirmation(controller: self, program: file) {
                         MatrixConnectionViewController.instance.connect()
                     }
                 }
