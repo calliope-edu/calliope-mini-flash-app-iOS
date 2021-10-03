@@ -37,7 +37,9 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
         
         let controller = WKUserContentController()
         let configuration = WKWebViewConfiguration()
-        configuration.userContentController = controller;
+        configuration.userContentController = controller
+        configuration.mediaTypesRequiringUserActionForPlayback = .video
+
         webview = WKWebView(frame:self.view.bounds, configuration: configuration)
         webview.translatesAutoresizingMaskIntoConstraints = false
         
