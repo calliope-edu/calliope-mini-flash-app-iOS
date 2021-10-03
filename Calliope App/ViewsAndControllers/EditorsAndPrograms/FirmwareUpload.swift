@@ -26,10 +26,12 @@ class FirmwareUpload {
                 program.load { error in
                     let alert: UIAlertController
                     
-                    if error == nil {
+                    if error == nil, program.bin.count != 0 {
                         let alertDone = UIAlertController(title: NSLocalizedString("Download finished", comment: ""), message: NSLocalizedString("The program is downloaded. Do you want to upload it now?", comment: ""), preferredStyle: .alert)
                         alertDone.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default) { _ in
-                            self.showUIForDownloadableProgram(controller: controller, program: program)
+                            DispatchQueue.main.async {
+                                FirmwareUpload.uploadWithoutConfirmation(controller: controller, program: program)
+                            }
                         })
                         alertDone.addAction(UIAlertAction(title: NSLocalizedString("No", comment: ""), style: .cancel))
                         alert = alertDone
