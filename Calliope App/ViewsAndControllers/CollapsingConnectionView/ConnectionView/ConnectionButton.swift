@@ -23,69 +23,90 @@ class ConnectionButton: UIButton {
 
 	public var connectionState: ConnectionState = .initialized {
 		didSet {
-			UIView.transition(with: self, duration: 0.5, options: .transitionCrossDissolve, animations: {
-                switch self.connectionState {
+
+            //testingMode is only an intermediate state, no animation change.
+            guard self.connectionState != .testingMode else {
+                return
+            }
+
+			switch self.connectionState {
                 case .initialized:
-                    self.imageView?.stopAnimating()
-                    self.imageView?.animationImages = nil
-                    self.isEnabled = true
-                    self.setBackgroundImage(nil, for: .normal)
-                    self.setImage(UIImage(named: "liveviewconnect/mini_refresh"), for: .normal)
+                    self.configureButton(background: nil,
+                                         foreground: UIImage(named: "liveviewconnect/mini_refresh"),
+                                         animationImages: nil,
+                                         enabled: true)
                 case .waitingForBluetooth:
-                    self.imageView?.stopAnimating()
-                    self.imageView?.animationImages = nil
-                    self.isEnabled = false
-                    self.setBackgroundImage(nil, for: .normal)
-                    self.setImage(UIImage(named: "liveviewconnect/bluetooth_disabled"), for: .normal)
+                    self.configureButton(background: nil,
+                                         foreground: UIImage(named: "liveviewconnect/bluetooth_disabled"),
+                                         animationImages: nil,
+                                         enabled: false)
                 case .searching:
-                    self.isEnabled = false
-                    self.setBackgroundImage(nil, for: .normal)
                     let images = [#imageLiteral(resourceName: "AnimProgress/0001"),#imageLiteral(resourceName: "AnimProgress/0002"),#imageLiteral(resourceName: "AnimProgress/0003"),#imageLiteral(resourceName: "AnimProgress/0004"),#imageLiteral(resourceName: "AnimProgress/0005"),#imageLiteral(resourceName: "AnimProgress/0006"),#imageLiteral(resourceName: "AnimProgress/0007"),#imageLiteral(resourceName: "AnimProgress/0008"),#imageLiteral(resourceName: "AnimProgress/0009"),#imageLiteral(resourceName: "AnimProgress/0010"),#imageLiteral(resourceName: "AnimProgress/0011"),#imageLiteral(resourceName: "AnimProgress/0012"),#imageLiteral(resourceName: "AnimProgress/0013"),#imageLiteral(resourceName: "AnimProgress/0014"),#imageLiteral(resourceName: "AnimProgress/0015"),#imageLiteral(resourceName: "AnimProgress/0016"),#imageLiteral(resourceName: "AnimProgress/0017"),#imageLiteral(resourceName: "AnimProgress/0018"),#imageLiteral(resourceName: "AnimProgress/0019"),#imageLiteral(resourceName: "AnimProgress/0020")]
-                    self.imageView?.animationImages = images
-                    self.imageView?.animationDuration = 0.1 * Double(images.count)
-                    self.imageView?.startAnimating()
+                    self.configureButton(background: nil,
+                                         foreground: nil,
+                                         animationImages: images,
+                                         animationDuration: 0.1 * Double(images.count),
+                                         enabled: false)
                 case .notFoundRetry:
-                    self.imageView?.stopAnimating()
-                    self.imageView?.animationImages = nil
-                    self.isEnabled = true
-                    self.setBackgroundImage(UIImage(named: "liveviewconnect/mini_button_red"), for: .normal)
-                    self.setImage(UIImage(named: "liveviewconnect/connect_refresh"), for: .normal)
+                    self.configureButton(background: UIImage(named: "liveviewconnect/mini_button_red"),
+                                         foreground: UIImage(named: "liveviewconnect/connect_refresh"),
+                                         animationImages: nil,
+                                         enabled: true)
                 case .readyToConnect:
-                    self.imageView?.stopAnimating()
-                    self.imageView?.animationImages = nil
-                    self.isEnabled = true
-                    self.setBackgroundImage(UIImage(named: "liveviewconnect/mini_button_green"), for: .normal)
-                    self.setImage(UIImage(named: "liveviewconnect/connect_0001"), for: .normal)
+                    self.configureButton(background: UIImage(named: "liveviewconnect/mini_button_green"),
+                                         foreground: UIImage(named: "liveviewconnect/connect_0001"),
+                                         animationImages: nil,
+                                         enabled: true)
                 case .connecting:
-                    self.isEnabled = false
-                    self.setBackgroundImage(nil, for: .normal)
                     let images = [#imageLiteral(resourceName: "liveviewconnect/connect_0001"),#imageLiteral(resourceName: "liveviewconnect/connect_0002"),#imageLiteral(resourceName: "liveviewconnect/connect_0003"),#imageLiteral(resourceName: "liveviewconnect/connect_0004"),#imageLiteral(resourceName: "liveviewconnect/connect_0005"),#imageLiteral(resourceName: "liveviewconnect/connect_0006"),#imageLiteral(resourceName: "liveviewconnect/connect_0007"),#imageLiteral(resourceName: "liveviewconnect/connect_0008"),#imageLiteral(resourceName: "liveviewconnect/connect_0009"),#imageLiteral(resourceName: "liveviewconnect/connect_0010"),#imageLiteral(resourceName: "liveviewconnect/connect_0009"),#imageLiteral(resourceName: "liveviewconnect/connect_0008"),#imageLiteral(resourceName: "liveviewconnect/connect_0007"),#imageLiteral(resourceName: "liveviewconnect/connect_0006"),#imageLiteral(resourceName: "liveviewconnect/connect_0005"),#imageLiteral(resourceName: "liveviewconnect/connect_0004"),#imageLiteral(resourceName: "liveviewconnect/connect_0003"),#imageLiteral(resourceName: "liveviewconnect/connect_0002"),#imageLiteral(resourceName: "liveviewconnect/connect_0001")]
-                    self.imageView?.animationImages = images
-                    self.imageView?.animationDuration = 0.05 * Double(images.count)
-                    self.imageView?.startAnimating()
+                    self.configureButton(background: nil,
+                                         foreground: nil,
+                                         animationImages: images,
+                                         animationDuration: 0.05 * Double(images.count),
+                                         enabled: false)
                 case .testingMode:
-                    break
-                    //self.isEnabled = false
-                    //self.setBackgroundImage(nil, for: .normal)
-                    //let images = [#imageLiteral(resourceName: "liveviewconnect/connect_0001"),#imageLiteral(resourceName: "liveviewconnect/connect_0002"),#imageLiteral(resourceName: "liveviewconnect/connect_0003"),#imageLiteral(resourceName: "liveviewconnect/connect_0004"),#imageLiteral(resourceName: "liveviewconnect/connect_0005"),#imageLiteral(resourceName: "liveviewconnect/connect_0006"),#imageLiteral(resourceName: "liveviewconnect/connect_0007"),#imageLiteral(resourceName: "liveviewconnect/connect_0008"),#imageLiteral(resourceName: "liveviewconnect/connect_0009"),#imageLiteral(resourceName: "liveviewconnect/connect_0010"),#imageLiteral(resourceName: "liveviewconnect/connect_0009"),#imageLiteral(resourceName: "liveviewconnect/connect_0008"),#imageLiteral(resourceName: "liveviewconnect/connect_0007"),#imageLiteral(resourceName: "liveviewconnect/connect_0006"),#imageLiteral(resourceName: "liveviewconnect/connect_0005"),#imageLiteral(resourceName: "liveviewconnect/connect_0004"),#imageLiteral(resourceName: "liveviewconnect/connect_0003"),#imageLiteral(resourceName: "liveviewconnect/connect_0002"),#imageLiteral(resourceName: "liveviewconnect/connect_0001")]
-                    //self.imageView?.animationImages = images
-                    //self.imageView?.animationDuration = 0.1 * Double(images.count)
-                    //self.imageView?.startAnimating()
+                    break //already skipped this part at function start, will not happen
                 case .readyToPlay:
-                    self.imageView?.stopAnimating()
-                    self.imageView?.animationImages = nil
-                    self.isEnabled = false
-                    self.setBackgroundImage(nil, for: .normal)
-                    self.setImage(UIImage(named: "liveviewconnect/mini_figur"), for: .normal)
+                    self.configureButton(background: nil,
+                                         foreground: UIImage(named: "liveviewconnect/mini_figur"),
+                                         animationImages: nil,
+                                         enabled: false)
                 case .wrongProgram:
-                    self.imageView?.stopAnimating()
-                    self.imageView?.animationImages = nil
-                    self.isEnabled = false
-                    self.setBackgroundImage(nil, for: .normal)
-                    self.setImage(UIImage(named: "liveviewconnect/connect_failed"), for: .normal)
+                    self.configureButton(background: nil,
+                                         foreground: UIImage(named: "liveviewconnect/connect_failed"),
+                                         animationImages: nil,
+                                         enabled: false)
                 }
-            }, completion: nil)
         }
+    }
+
+    func configureButton(background: UIImage?, foreground: UIImage?,
+                         animationImages: [UIImage]?, animationDuration: Double = 1.0,
+                         enabled: Bool) {
+
+        UIView.transition(with: self,
+                          duration: 0.5,
+                          options: [.transitionCrossDissolve, .beginFromCurrentState],
+                          animations: {
+
+            if animationImages == nil {
+                self.imageView?.stopAnimating()
+                self.imageView?.animationImages = nil
+            }
+
+            self.isEnabled = enabled
+            self.setBackgroundImage(background, for: .normal)
+
+            if animationImages == nil {
+                self.setImage(foreground, for: .normal)
+            }
+
+            if let animationImages = animationImages {
+                self.imageView?.animationImages = animationImages
+                self.imageView?.animationDuration = animationDuration
+                self.imageView?.startAnimating()
+            }
+        }, completion: nil)
     }
 
     func animateBounce() {

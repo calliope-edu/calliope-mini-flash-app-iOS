@@ -61,16 +61,16 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 
 	private(set) var connectedCalliope: CalliopeBLEDevice? {
 		didSet {
-			if connectedCalliope != nil {
-				connectingCalliope = nil
-			}
 			if let uuid = connectedCalliope?.peripheral.identifier,
 				let name = discoveredCalliopeUUIDNameMap[uuid] {
 				lastConnected = (uuid, name)
 			}
-			redetermineState()
 			oldValue?.hasDisconnected()
 			connectedCalliope?.hasConnected()
+            if connectedCalliope != nil {
+                connectingCalliope = nil
+            }
+            redetermineState()
 		}
 	}
 
