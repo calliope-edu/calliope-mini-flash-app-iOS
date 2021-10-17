@@ -79,8 +79,10 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
         } else if editor.isBackNavigation(request) {
 			decisionHandler(.cancel)
 			self.navigationController?.popViewController(animated: true)
-        } else {
+        } else if editor.allowNavigation(request) {
             decisionHandler(.allow)
+        } else {
+            decisionHandler(.cancel)
         }
     }
 

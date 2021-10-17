@@ -10,6 +10,13 @@ protocol Editor {
     var url: URL? { get }
     func download(_ request: URLRequest) -> EditorDownload?
     func isBackNavigation(_ request: URLRequest) -> Bool
+    func allowNavigation(_ request: URLRequest) -> Bool
+}
+
+extension Editor {
+    func allowNavigation(_ request: URLRequest) -> Bool {
+        return true
+    }
 }
 
 // https://miniedit.calliope.cc/86184610-93de-11e7-a0b1-cd0ef2962ca5
@@ -61,10 +68,17 @@ final class RobertaEditor: Editor {
 		return URL(string: UserDefaults.standard.string(forKey: SettingsKey.robertaUrl.rawValue)!)
 	}()
 
+    func allowNavigation(_ request: URLRequest) -> Bool {
+        guard let url = request.url else { return true }
+        let s = url.absoluteString
+        let matches = s.matches(regex: "^data:text/xml")
+        return matches.count == 0
+    }
+
     func download(_ request: URLRequest) -> EditorDownload? {
         guard let url = request.url else { return nil }
         let s = url.absoluteString
-        let matches = s.matches(regex: "^data:")
+        let matches = s.matches(regex: "^data:text/hex")
         guard matches.count == 1 else { return nil }
         return EditorDownload(name: "roberta-" + UUID().uuidString, url: url)
     }
