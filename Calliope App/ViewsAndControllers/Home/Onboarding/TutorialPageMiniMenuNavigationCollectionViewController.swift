@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MenuNavigationCollectionViewController: UIViewController, AnimatingTutorialViewController {
+class TutorialPageMiniMenuNavigationCollectionViewController: UIViewController, AnimatingTutorialViewController {
 
     public var finishedCallback: () -> () = { }
     
@@ -59,34 +59,11 @@ class MenuNavigationCollectionViewController: UIViewController, AnimatingTutoria
         }
 
         let cell = proxyCollectionView(collectionView, cellForItemAt: indexPath)
-        if indexPath.section == 1 && indexPath.item == 4 {
-            (cell as! OnboardingCollectionViewCell).title?.textColor = #colorLiteral(red: 0.2590000033, green: 0.7879999876, blue: 0.7879999876, alpha: 1)
-        } else {
-            (cell as! OnboardingCollectionViewCell).title?.textColor = UIColor.black
-        }
+        (cell as! OnboardingCollectionViewCell).title?.textColor = UIColor.black
         return cell
     }
     
     @objc func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return indexPath.section == 0 ? cellSize : CGSize(width: 250, height: 65)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "sectionHeader", for: indexPath) as! MenuNavigationSectionHeader
-        return sectionHeader
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        if section != 1 {
-            return CGSize.zero
-        } else {
-            if animationStep != firstSectionCount + 5 {
-                return CGSize.zero
-            }
-            let header = self.collectionView(collectionView, viewForSupplementaryElementOfKind: "UICollectionElementKindSectionFooter", at: IndexPath(item: 0, section: section)) as! MenuNavigationSectionHeader
-
-            let labelSize = header.headerText.sizeThatFits(CGSize(width: collectionView.contentSize.width, height: .greatestFiniteMagnitude))
-            return CGSize(width: labelSize.width, height: labelSize.height + 16)
-        }
     }
 }

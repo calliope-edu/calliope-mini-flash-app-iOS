@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TutorialPageBattery: TutorialPageViewController {
+class TutorialPageBattery: UIViewController {
     
     @IBOutlet weak var instructionSlideshowImage: UIImageView!
     
@@ -41,6 +41,33 @@ class TutorialPageBattery: TutorialPageViewController {
             delay(time: 2.0) { [weak self] in
                 self?.showNextImage()
             }
+        }
+    }
+
+    //MARK: transition to page view controller
+
+    var pagesStartProgram = ["tutorial_mini_demo", "tutorial_menu"]
+    var pagesUpload = ["tutorial_connect_bluetooth", "tutorial_upload_program"]
+
+    @IBSegueAction func openStartProgramTutorial(_ coder: NSCoder) -> PageIndicatorContainingViewController? {
+        return PageIndicatorContainingViewController(coder: coder, pages: pagesStartProgram)
+    }
+
+    @IBSegueAction func openUploadTutorial(_ coder: NSCoder) -> PageIndicatorContainingViewController? {
+        return PageIndicatorContainingViewController(coder: coder, pages: pagesUpload)
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if #available(iOS 13.0, *) { return } // will use open...Tutorial methods
+
+        guard let vc = segue.destination as? OnboardingViewController else {
+            return
+        }
+
+        if segue.identifier == "showStartProgramPages" {
+            vc.pages = pagesStartProgram
+        } else if segue.identifier == "showUploadPages" {
+            vc.pages = pagesUpload
         }
     }
 }

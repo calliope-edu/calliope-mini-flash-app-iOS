@@ -11,7 +11,7 @@ import UIKit
 class TutorialPageMiniMenu: TutorialPageViewController {
     
     @IBOutlet weak var navigationExplanationView: UIView!
-    var navigationExplanation: MenuNavigationCollectionViewController!
+    var navigationExplanation: TutorialPageMiniMenuNavigationCollectionViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,8 +29,8 @@ class TutorialPageMiniMenu: TutorialPageViewController {
         navigationExplanation.animate()
     }
     
-    @IBSegueAction func initializeNavigationExplanation(_ coder: NSCoder) -> MenuNavigationCollectionViewController? {
-        navigationExplanation = MenuNavigationCollectionViewController(coder: coder)
+    @IBSegueAction func initializeNavigationExplanation(_ coder: NSCoder) -> TutorialPageMiniMenuNavigationCollectionViewController? {
+        navigationExplanation = TutorialPageMiniMenuNavigationCollectionViewController(coder: coder)
         return navigationExplanation
     }
     
@@ -39,7 +39,7 @@ class TutorialPageMiniMenu: TutorialPageViewController {
         if #available(iOS 13.0, *) { return }
         
         if segue.identifier == "embedMenuNavigationCollectionController" {
-            self.navigationExplanation = segue.destination as? MenuNavigationCollectionViewController
+            self.navigationExplanation = segue.destination as? TutorialPageMiniMenuNavigationCollectionViewController
         }
     }
 }

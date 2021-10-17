@@ -36,8 +36,7 @@
 		2F57C3B42394F78B008B0D69 /* DownloadableHexFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3B32394F78B008B0D69 /* DownloadableHexFile.swift */; };
 		2F57C3B62394F935008B0D69 /* BlinkingHeartProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3B52394F935008B0D69 /* BlinkingHeartProgram.swift */; };
 		2F57C3B82395B016008B0D69 /* TutorialPageMiniMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3B72395B016008B0D69 /* TutorialPageMiniMenu.swift */; };
-		2F57C3BA2395B520008B0D69 /* MenuNavigationCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3B92395B520008B0D69 /* MenuNavigationCollectionViewController.swift */; };
-		2F57C3BC2395B531008B0D69 /* MenuItemsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3BB2395B531008B0D69 /* MenuItemsCollectionViewController.swift */; };
+		2F57C3BA2395B520008B0D69 /* TutorialPageMiniMenuNavigationCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3B92395B520008B0D69 /* TutorialPageMiniMenuNavigationCollectionViewController.swift */; };
 		2F5E8F0226C94F5F00CE03CB /* PlaygroundInstructionsCollectionCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5E8F0126C94F5F00CE03CB /* PlaygroundInstructionsCollectionCollectionViewController.swift */; };
 		2F5E8F0426C9787400CE03CB /* PlaygroundStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5E8F0326C9787400CE03CB /* PlaygroundStartViewController.swift */; };
 		2F61451022BF75DE001C2734 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61450F22BF75DE001C2734 /* AppDelegate.swift */; };
@@ -176,8 +175,7 @@
 		2F57C3B32394F78B008B0D69 /* DownloadableHexFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadableHexFile.swift; sourceTree = "<group>"; };
 		2F57C3B52394F935008B0D69 /* BlinkingHeartProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkingHeartProgram.swift; sourceTree = "<group>"; };
 		2F57C3B72395B016008B0D69 /* TutorialPageMiniMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPageMiniMenu.swift; sourceTree = "<group>"; };
-		2F57C3B92395B520008B0D69 /* MenuNavigationCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuNavigationCollectionViewController.swift; sourceTree = "<group>"; };
-		2F57C3BB2395B531008B0D69 /* MenuItemsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemsCollectionViewController.swift; sourceTree = "<group>"; };
+		2F57C3B92395B520008B0D69 /* TutorialPageMiniMenuNavigationCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPageMiniMenuNavigationCollectionViewController.swift; sourceTree = "<group>"; };
 		2F5E8F0126C94F5F00CE03CB /* PlaygroundInstructionsCollectionCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundInstructionsCollectionCollectionViewController.swift; sourceTree = "<group>"; };
 		2F5E8F0326C9787400CE03CB /* PlaygroundStartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundStartViewController.swift; sourceTree = "<group>"; };
 		2F61450C22BF75DE001C2734 /* Calliope App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Calliope App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -547,8 +545,7 @@
 				2F375AB8237E1179004ED8D7 /* TutorialPageUploadProgram.swift */,
 				2F57C3B1239058B0008B0D69 /* AnimatingTutorialViewController.swift */,
 				2F57C3B72395B016008B0D69 /* TutorialPageMiniMenu.swift */,
-				2F57C3B92395B520008B0D69 /* MenuNavigationCollectionViewController.swift */,
-				2F57C3BB2395B531008B0D69 /* MenuItemsCollectionViewController.swift */,
+				2F57C3B92395B520008B0D69 /* TutorialPageMiniMenuNavigationCollectionViewController.swift */,
 				2F4B8DAC2598E1E40026B480 /* MenuNavigationSectionHeader.swift */,
 			);
 			path = Onboarding;
@@ -799,7 +796,6 @@
 				2F1BD9952674D48C006A47F2 /* AutoHeightCollectionViewFlowLayout.swift in Sources */,
 				2F61458E22BF761F001C2734 /* Matrix.swift in Sources */,
 				2F61457A22BF761F001C2734 /* ExtURL.swift in Sources */,
-				2F57C3BC2395B531008B0D69 /* MenuItemsCollectionViewController.swift in Sources */,
 				2F61458C22BF761F001C2734 /* ConnectionButton.swift in Sources */,
 				2F61457522BF761F001C2734 /* CalliopeBLEDevice.swift in Sources */,
 				2F61458922BF761F001C2734 /* CollapsingViewControllerProtocol.swift in Sources */,
@@ -823,7 +819,7 @@
 				2F08A0E3234AD4320088A8D6 /* EditorsCollectionViewController.swift in Sources */,
 				2F61457222BF761F001C2734 /* BLEDataTypes.swift in Sources */,
 				2FAA2D0422DB3BBB00BC1A5F /* OnboardingPage.swift in Sources */,
-				2F57C3BA2395B520008B0D69 /* MenuNavigationCollectionViewController.swift in Sources */,
+				2F57C3BA2395B520008B0D69 /* TutorialPageMiniMenuNavigationCollectionViewController.swift in Sources */,
 				2F61458D22BF761F001C2734 /* ConnectionViewCollapseButton.swift in Sources */,
 				2F9E404A259DFB00002FFE0B /* PlaygroundSnippetTableViewController.swift in Sources */,
 				2FFE866022DB6A5600728E7C /* TutorialPageViewController.swift in Sources */,

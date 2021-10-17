@@ -11,12 +11,9 @@ import UIKit
 class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, OnboardingPageDelegate {
     
     typealias OnboardingController = UIViewController & OnboardingPage
-    
-    var pages = ["tutorial_connect_battery",
-                 "tutorial_mini_demo",
-                 "tutorial_menu",
-                 "tutorial_connect_bluetooth",
-                 "tutorial_upload_program"]
+
+    var pages: [String] = []
+
     var pageIndicatorImages = [#imageLiteral(resourceName: "paging_01.pdf"), #imageLiteral(resourceName: "paging_02.pdf"), #imageLiteral(resourceName: "paging_03.pdf"), #imageLiteral(resourceName: "paging_04.pdf"), #imageLiteral(resourceName: "paging_05.pdf")]
     
     var loadedControllers: [OnboardingController] = []
@@ -34,8 +31,9 @@ class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSo
     
     private var viewControllersObservation: NSKeyValueObservation?
     
-    init?(coder: NSCoder, pageIndicator: UIImageView) {
+    init?(coder: NSCoder, pageIndicator: UIImageView, pages: [String]) {
         self.pageIndicator = pageIndicator
+        self.pages = pages
         super.init(coder: coder)
     }
     
@@ -56,8 +54,6 @@ class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSo
         if pages.count > pageIndicatorImages.count {
             fatalError("there must be at least as many page indicators as tutorial pages!")
         }
-        
-        
         
         let firstViewController = loadController(0)
         loadedControllers.append(firstViewController)

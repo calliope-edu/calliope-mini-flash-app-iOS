@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WZ3-mX-9ax">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="gJR-c5-Vt7">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -16,17 +16,17 @@
             <objects>
                 <viewController id="WZ3-mX-9ax" customClass="PageIndicatorContainingViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8mO-h9-MU2">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yfA-bW-mH7">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="552"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="532"/>
                                 <connections>
                                     <segue destination="hlE-Hx-CQk" kind="embed" identifier="embedPageVC" destinationCreationSelector="makeOnboardingPageViewController:" id="2ub-JL-2f5"/>
                                 </connections>
                             </containerView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="paging_01" translatesAutoresizingMaskIntoConstraints="NO" id="k10-4o-Y2a">
-                                <rect key="frame" x="0.0" y="552" width="320" height="10"/>
+                                <rect key="frame" x="0.0" y="532" width="320" height="10"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="10" id="2qc-As-9Nv"/>
                                 </constraints>
@@ -44,13 +44,14 @@
                             <constraint firstItem="w4R-1E-AIA" firstAttribute="trailing" secondItem="k10-4o-Y2a" secondAttribute="trailing" id="vgo-eJ-UWk"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="ROh-Wv-QRw"/>
                     <connections>
                         <outlet property="pageIndicator" destination="k10-4o-Y2a" id="1TO-pQ-E4O"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Uw-cc-NHP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1990" y="-241"/>
+            <point key="canvasLocation" x="2499" y="206"/>
         </scene>
         <!--Onboarding View Controller-->
         <scene sceneID="oXx-Kc-5Vv">
@@ -58,7 +59,7 @@
                 <pageViewController storyboardIdentifier="OnboardingPageVC" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="hlE-Hx-CQk" customClass="OnboardingViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8ZQ-YA-X6c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2759" y="-241"/>
+            <point key="canvasLocation" x="3268" y="206"/>
         </scene>
         <!--Tutorial Page Connect-->
         <scene sceneID="75U-4r-EUm">
@@ -226,7 +227,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pcu-oD-gwc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5462" y="-252"/>
+            <point key="canvasLocation" x="4136" y="645"/>
         </scene>
         <!--Tutorial Page Mini Demo-->
         <scene sceneID="3gl-6J-xMr">
@@ -339,39 +340,7 @@
                                             <constraint firstItem="Pew-ae-lhb" firstAttribute="width" secondItem="RTB-XK-hg5" secondAttribute="width" priority="999" id="ieu-6g-uPd"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ouZ-pq-Gpz">
-                                        <rect key="frame" x="0.0" y="502" width="304" height="50"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cod-lu-mjA">
-                                                <rect key="frame" x="52" y="0.0" width="200" height="50"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="3Ba-UW-PMy"/>
-                                                    <constraint firstAttribute="width" constant="200" id="csq-ys-btg"/>
-                                                </constraints>
-                                                <state key="normal" image="tick_white" backgroundImage="continue_button_background"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="imageView.contentMode">
-                                                        <integer key="value" value="1"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="nextPage:" destination="81h-0e-Sjn" eventType="touchUpInside" id="IR8-xT-qVA"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <constraints>
-                                            <constraint firstItem="cod-lu-mjA" firstAttribute="top" secondItem="ouZ-pq-Gpz" secondAttribute="top" id="5Cz-9z-fj1"/>
-                                            <constraint firstAttribute="bottom" secondItem="cod-lu-mjA" secondAttribute="bottom" id="5cA-bR-2ao"/>
-                                            <constraint firstItem="cod-lu-mjA" firstAttribute="centerX" secondItem="ouZ-pq-Gpz" secondAttribute="centerX" id="hZ2-9l-EbQ"/>
-                                        </constraints>
-                                    </view>
                                 </subviews>
-                                <variation key="default">
-                                    <mask key="subviews">
-                                        <exclude reference="ouZ-pq-Gpz"/>
-                                    </mask>
-                                </variation>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="KIv-st-QYv"/>
@@ -435,39 +404,7 @@
                                             <constraint firstItem="wQM-h4-pwo" firstAttribute="centerX" secondItem="10p-IB-I6a" secondAttribute="centerX" id="zO9-HK-cZx"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s67-jI-PhU">
-                                        <rect key="frame" x="0.0" y="502" width="304" height="50"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="255" verticalHuggingPriority="255" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qXj-re-klm">
-                                                <rect key="frame" x="52" y="0.0" width="200" height="50"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="200" id="2YR-N1-sqp"/>
-                                                    <constraint firstAttribute="height" constant="50" id="Jnd-9O-CQZ"/>
-                                                </constraints>
-                                                <state key="normal" image="tick_white" backgroundImage="continue_button_background"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="imageView.contentMode">
-                                                        <integer key="value" value="1"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="nextPage:" destination="fxD-lK-Awt" eventType="touchUpInside" id="uO9-rI-TKf"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="qXj-re-klm" secondAttribute="bottom" id="BVc-tc-soD"/>
-                                            <constraint firstItem="qXj-re-klm" firstAttribute="centerX" secondItem="s67-jI-PhU" secondAttribute="centerX" id="CM1-yd-L7k"/>
-                                            <constraint firstItem="qXj-re-klm" firstAttribute="top" secondItem="s67-jI-PhU" secondAttribute="top" id="r3K-RQ-CYh"/>
-                                        </constraints>
-                                    </view>
                                 </subviews>
-                                <variation key="default">
-                                    <mask key="subviews">
-                                        <exclude reference="s67-jI-PhU"/>
-                                    </mask>
-                                </variation>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="paN-9X-3oC"/>
@@ -580,7 +517,7 @@ Check it out!</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="147-yY-Bih" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6171" y="-252"/>
+            <point key="canvasLocation" x="4845" y="645"/>
         </scene>
         <!--Tutorial Page Battery-->
         <scene sceneID="bDn-K7-wtW">
@@ -606,10 +543,10 @@ Check it out!</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b5F-lH-2Y5">
-                                        <rect key="frame" x="0.0" y="98" width="288" height="454"/>
+                                        <rect key="frame" x="0.0" y="98" width="288" height="306"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="insert_battery_00" translatesAutoresizingMaskIntoConstraints="NO" id="Cas-Dr-e73">
-                                                <rect key="frame" x="0.0" y="93" width="288" height="268"/>
+                                                <rect key="frame" x="0.0" y="19" width="288" height="268"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="350" id="o1V-j2-i5O"/>
                                                 </constraints>
@@ -622,39 +559,64 @@ Check it out!</string>
                                             <constraint firstItem="Cas-Dr-e73" firstAttribute="centerX" secondItem="b5F-lH-2Y5" secondAttribute="centerX" id="uyA-a8-s4I"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JfY-BK-XKf">
-                                        <rect key="frame" x="0.0" y="502" width="288" height="50"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N6k-Q0-c0x">
+                                        <rect key="frame" x="0.0" y="420" width="288" height="50"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xvq-hl-UiB">
-                                                <rect key="frame" x="44" y="0.0" width="200" height="50"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a1q-6T-PvS">
+                                                <rect key="frame" x="0.0" y="0.0" width="288" height="50"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="49j-Ef-A0X"/>
-                                                    <constraint firstAttribute="width" constant="200" id="Dnc-FF-odr"/>
+                                                    <constraint firstAttribute="height" constant="50" id="9sL-Zm-Ytb"/>
+                                                    <constraint firstAttribute="width" constant="288" id="dT2-yH-lWU"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="gzk-VA-QLa"/>
                                                 </constraints>
-                                                <state key="normal" image="tick_white" backgroundImage="continue_button_background"/>
+                                                <state key="normal" title="First start" backgroundImage="continue_button_background"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="imageView.contentMode">
                                                         <integer key="value" value="1"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <action selector="nextPage:" destination="gJR-c5-Vt7" eventType="touchUpInside" id="7yC-Kx-HlR"/>
+                                                    <action selector="nextPage:" destination="NBI-xe-pQG" eventType="touchUpInside" id="Cz2-mO-s2u"/>
+                                                    <segue destination="WZ3-mX-9ax" kind="show" identifier="showStartProgramPages" destinationCreationSelector="openStartProgramTutorial:" id="DHl-TS-CEh"/>
                                                 </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="xvq-hl-UiB" secondAttribute="bottom" id="8C6-8P-fZR"/>
-                                            <constraint firstItem="xvq-hl-UiB" firstAttribute="centerX" secondItem="JfY-BK-XKf" secondAttribute="centerX" id="Gxd-H7-XB8"/>
-                                            <constraint firstItem="xvq-hl-UiB" firstAttribute="top" secondItem="JfY-BK-XKf" secondAttribute="top" id="wIl-ak-vYG"/>
+                                            <constraint firstItem="a1q-6T-PvS" firstAttribute="top" secondItem="N6k-Q0-c0x" secondAttribute="top" id="9Dl-Cx-qWN"/>
+                                            <constraint firstItem="a1q-6T-PvS" firstAttribute="centerX" secondItem="N6k-Q0-c0x" secondAttribute="centerX" id="F7w-3t-H5l"/>
+                                            <constraint firstAttribute="bottom" secondItem="a1q-6T-PvS" secondAttribute="bottom" id="Krr-3T-LvJ"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IUs-Bb-x1p">
+                                        <rect key="frame" x="0.0" y="486" width="288" height="66"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="It6-wP-cL1">
+                                                <rect key="frame" x="0.0" y="0.0" width="288" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="NXn-Ap-pqv"/>
+                                                    <constraint firstAttribute="width" constant="288" id="htk-8a-TkF"/>
+                                                </constraints>
+                                                <state key="normal" title="Transfer your first program" backgroundImage="continue_button_background"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="imageView.contentMode">
+                                                        <integer key="value" value="1"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="nextPage:" destination="NBI-xe-pQG" eventType="touchUpInside" id="fVc-xz-1JA"/>
+                                                    <segue destination="WZ3-mX-9ax" kind="show" identifier="showUploadPages" destinationCreationSelector="openUploadTutorial:" id="Ffn-Jo-bzp"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="It6-wP-cL1" firstAttribute="top" secondItem="IUs-Bb-x1p" secondAttribute="top" id="X1w-7r-fgp"/>
+                                            <constraint firstAttribute="bottom" secondItem="It6-wP-cL1" secondAttribute="bottom" constant="16" id="ekX-YM-ChT"/>
+                                            <constraint firstItem="It6-wP-cL1" firstAttribute="centerX" secondItem="IUs-Bb-x1p" secondAttribute="centerX" id="yje-Rb-UHy"/>
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <variation key="default">
-                                    <mask key="subviews">
-                                        <exclude reference="JfY-BK-XKf"/>
-                                    </mask>
-                                </variation>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="foR-mk-NGJ"/>
@@ -673,12 +635,12 @@ Check it out!</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="63d-cU-k1k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3468.75" y="-252.46478873239437"/>
+            <point key="canvasLocation" x="1708" y="206"/>
         </scene>
-        <!--Menu Navigation Collection View Controller-->
+        <!--Tutorial Page Mini Menu Navigation Collection View Controller-->
         <scene sceneID="A91-WI-4F1">
             <objects>
-                <viewController id="bDb-1n-Hi4" customClass="MenuNavigationCollectionViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="bDb-1n-Hi4" customClass="TutorialPageMiniMenuNavigationCollectionViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Fgy-Tq-pwb">
                         <rect key="frame" x="0.0" y="0.0" width="304" height="350"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -689,7 +651,7 @@ Check it out!</string>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="30" minimumInteritemSpacing="30" id="GuY-3A-O6o">
                                     <size key="itemSize" width="200" height="200"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="50" height="50"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
@@ -766,27 +728,6 @@ Check it out!</string>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
-                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="sectionHeader" id="7SD-yj-tqp" customClass="MenuNavigationSectionHeader" customModule="Calliope_App" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="310" width="272" height="50"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Now choose program 5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EcQ-ZK-Kap">
-                                            <rect key="frame" x="0.0" y="0.0" width="272" height="50"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="EcQ-ZK-Kap" secondAttribute="trailing" id="9Nr-Nv-dgQ"/>
-                                        <constraint firstAttribute="bottom" secondItem="EcQ-ZK-Kap" secondAttribute="bottom" id="bpW-09-2Cn"/>
-                                        <constraint firstItem="EcQ-ZK-Kap" firstAttribute="leading" secondItem="7SD-yj-tqp" secondAttribute="leading" id="hsa-X0-QhJ"/>
-                                        <constraint firstItem="EcQ-ZK-Kap" firstAttribute="top" secondItem="7SD-yj-tqp" secondAttribute="top" id="ktf-Xc-RRK"/>
-                                    </constraints>
-                                    <connections>
-                                        <outlet property="headerText" destination="EcQ-ZK-Kap" id="6Wo-La-aJb"/>
-                                    </connections>
-                                </collectionReusableView>
                                 <connections>
                                     <outlet property="dataSource" destination="bDb-1n-Hi4" id="FGc-Fq-9c6"/>
                                     <outlet property="delegate" destination="bDb-1n-Hi4" id="3Mt-rU-BCh"/>
@@ -809,9 +750,12 @@ Check it out!</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uZs-7k-LvU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4809" y="414"/>
+            <point key="canvasLocation" x="5469" y="270"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Ffn-Jo-bzp"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="ani_heart_01" width="216" height="227"/>
         <image name="ble_01" width="100" height="100"/>
