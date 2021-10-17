@@ -14,7 +14,7 @@ class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSo
 
     var pages: [String] = []
 
-    var pageIndicatorImages = [#imageLiteral(resourceName: "paging_01.pdf"), #imageLiteral(resourceName: "paging_02.pdf"), #imageLiteral(resourceName: "paging_03.pdf"), #imageLiteral(resourceName: "paging_04.pdf"), #imageLiteral(resourceName: "paging_05.pdf")]
+    var pageIndicatorImages = [#imageLiteral(resourceName: "paging_01.pdf"), #imageLiteral(resourceName: "paging_02.pdf")]
     
     var loadedControllers: [OnboardingController] = []
     
