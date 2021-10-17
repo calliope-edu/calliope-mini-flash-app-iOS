@@ -11,10 +11,10 @@
 "g6h-Vu-QEH.text" = "Label";
 
 /* Class = "UILabel"; text = "Editors.\nThese editors allow you to write programs for showing text on the Calliope display, read its sensors or even build mini-robots yourself – Give it a try!"; ObjectID = "Hqp-zE-kfc"; */
-"Hqp-zE-kfc.text" = "Editoren\n            Mit diesen Editoren kannst du Programme schreiben, um Text auf dem LED-Display anzuzeigen, die Sensoren auszulesen oder sogar selbst Mini-Roboter zu bauen - probiere es aus!";
+"Hqp-zE-kfc.text" = "Mit diesen Editoren kannst du Programme schreiben, um Text auf dem LED-Display anzuzeigen, die Sensoren auszulesen oder sogar selbst Mini-Roboter zu bauen - probiere es aus!";
 
 /* Class = "UILabel"; text = "Programs.\nThese are the programs you created so far."; ObjectID = "ips-vx-zky"; */
-"ips-vx-zky.text" = "Programme\n            Dies sind die Programme, die Sie bisher erstellt haben.";
+"ips-vx-zky.text" = "Dies sind die Programme, die du bisher erstellt hast.";
 
 /* Class = "UILabel"; text = "Local editor"; ObjectID = "Ked-z3-CdC"; */
 "Ked-z3-CdC.text" = "Lokaler Editor";
@@ -23,7 +23,7 @@
 "KGR-ef-bqG.text" = "Makecode";
 
 /* Class = "UILabel"; text = "Start program.\nHere you can download the original program of the Calliope mini."; ObjectID = "lYA-S0-b2D"; */
-"lYA-S0-b2D.text" = "Programm starten\n            Hier kannst du das Startprogramm des Calliope mini herunterladen.";
+"lYA-S0-b2D.text" = "Hier kannst du das Startprogramm des Calliope mini herunterladen.";
 
 /* Class = "UILabel"; text = "Playground"; ObjectID = "NWk-nx-U7c"; */
 "NWk-nx-U7c.text" = "Swift Playground";

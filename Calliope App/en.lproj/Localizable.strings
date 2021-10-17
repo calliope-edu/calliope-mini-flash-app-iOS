@@ -1,5 +1,5 @@
 /* No comment provided by engineer. */
-"1. Programm 5 starten\n2. Schütteln\n3. LED-Muster eingeben" = "1. Start program 5\n2. Shake\n3. Enter ID-Pattern in the App";
+"1. Programm 5 starten\n2. Schütteln\n3. LED-Muster eingeben" = "1. Start program 5\n2. Shake Calliope mini\n3. Enter id pattern ";
 
 /* No comment provided by engineer. */
 "Activate Bluetooth!" = "Activate Bluetooth!";
@@ -35,7 +35,7 @@
 "Connect to a calliope to finish the tutorial" = "Connect to a calliope to finish the tutorial";
 
 /* No comment provided by engineer. */
-"Connect to enable uploading programs" = "Connect to enable uploading programs";
+"Connect to enable uploading programs" = "Connect to Calliope mini to enable uploading programs";
 
 /* No comment provided by engineer. */
 "Connection to calliope timed out!" = "Connection to calliope timed out!";
@@ -97,11 +97,29 @@
 /* No comment provided by engineer. */
 "Greetings" = "Welcome";
 
+/* URL in Help screen */
+"https://calliope.cc" = "https://calliope.cc";
+
+/* URL in Help screen */
+"https://calliope.cc/calliope-mini/uebersicht" = "https://calliope.cc/calliope-mini/uebersicht";
+
 /* The url for the news json */
 "https://calliope.cc/forumassets/news.json" = "https://calliope.cc/forumassets/news.json";
 
 /* The url for the snippets json */
 "https://calliope.cc/forumassets/snippets.json" = "https://calliope.cc/forumassets/snippets.json";
+
+/* URL in Help screen */
+"https://calliope.cc/programmieren/editoren" = "https://calliope.cc/programmieren/editoren";
+
+/* URL in Help screen */
+"https://calliope.cc/programmieren/mobil" = "https://calliope.cc/programmieren/mobil";
+
+/* URL in Help screen */
+"https://calliope.cc/programmieren/playground" = "https://calliope.cc/programmieren/playground";
+
+/* URL in Help screen */
+"https://calliope.cc/start/tipps" = "https://calliope.cc/start/tipps";
 
 /* No comment provided by engineer. */
 "Multiplication tables" = "1x1 Multiplication";
@@ -208,20 +226,3 @@
 /* No comment provided by engineer. */
 "You are connected to your Calliope, well done!" = "Yeah, you are connected to your Calliope mini, well done!";
 
-/* URL in Help screen */
-"https://calliope.cc" = "https://calliope.cc";
-
-/* URL in Help screen */
-"https://calliope.cc/calliope-mini/uebersicht" = "https://calliope.cc/calliope-mini/uebersicht";
-
-/* URL in Help screen */
-"https://calliope.cc/programmieren/editoren" = "https://calliope.cc/programmieren/editoren";
-
-/* URL in Help screen */
-"https://calliope.cc/programmieren/mobil" = "https://calliope.cc/programmieren/mobil";
-
-/* URL in Help screen */
-"https://calliope.cc/programmieren/playground" = "https://calliope.cc/programmieren/playground";
-
-/* URL in Help screen */
-"https://calliope.cc/start/tipps" = "https://calliope.cc/start/tipps";

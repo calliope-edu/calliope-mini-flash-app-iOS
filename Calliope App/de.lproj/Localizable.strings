@@ -1,5 +1,5 @@
 /* No comment provided by engineer. */
-"1. Programm 5 starten\n2. Schütteln\n3. LED-Muster eingeben" = "1. Programm 5 starten\n2. Schütteln\n3. LED-Muster eingeben";
+"1. Programm 5 starten\n2. Schütteln\n3. LED-Muster eingeben" = "1. Programm 5 starten\n2. Calliope mini schütteln\n3. LED-Muster eingeben";
 
 /* No comment provided by engineer. */
 "Activate Bluetooth!" = "Bitte Bluetooth aktivieren!";
@@ -35,7 +35,7 @@
 "Connect to a calliope to finish the tutorial" = "Verbinde dich mit dem Calliope mini, um die Einführung abzuschließen";
 
 /* No comment provided by engineer. */
-"Connect to enable uploading programs" = "Verbinde dich, um Programme zu übertragen.";
+"Connect to enable uploading programs" = "Verbinde dich mit dem Calliope mini, um Programme zu übertragen.";
 
 /* No comment provided by engineer. */
 "Connection to calliope timed out!" = "Zeitüberschreitung bei der Übertragung";
@@ -97,11 +97,29 @@
 /* No comment provided by engineer. */
 "Greetings" = "Begrüßung";
 
+/* URL in Help screen */
+"https://calliope.cc" = "https://calliope.cc";
+
+/* URL in Help screen */
+"https://calliope.cc/calliope-mini/uebersicht" = "https://calliope.cc/calliope-mini/uebersicht";
+
 /* The url for the news json */
 "https://calliope.cc/forumassets/news.json" = "https://calliope.cc/forumassets/news.json";
 
 /* The url for the snippets json */
 "https://calliope.cc/forumassets/snippets.json" = "https://calliope.cc/forumassets/snippets.json";
+
+/* URL in Help screen */
+"https://calliope.cc/programmieren/editoren" = "https://calliope.cc/programmieren/editoren";
+
+/* URL in Help screen */
+"https://calliope.cc/programmieren/mobil" = "https://calliope.cc/programmieren/mobil";
+
+/* URL in Help screen */
+"https://calliope.cc/programmieren/playground" = "https://calliope.cc/programmieren/playground";
+
+/* URL in Help screen */
+"https://calliope.cc/start/tipps" = "https://calliope.cc/start/tipps";
 
 /* No comment provided by engineer. */
 "Multiplication tables" = "1x1 Rechner";
@@ -137,7 +155,7 @@
 "Program download failed" = "Programmübertragung fehlgeschlagen";
 
 /* No comment provided by engineer. */
-"Push the button and follow the instructions for connecting to your Calliope" = "Drück den Knopf zum Verbinden und folge den Anweisungen";
+"Push the button and follow the instructions for connecting to your Calliope" = "Drück hier und folge den Anweisungen";
 
 /* No comment provided by engineer. */
 "Ready!" = "Fertig!";
@@ -208,20 +226,3 @@
 /* No comment provided by engineer. */
 "You are connected to your Calliope, well done!" = "Yeah, du bist verbunden - super gemacht!";
 
-/* URL in Help screen */
-"https://calliope.cc" = "https://calliope.cc";
-
-/* URL in Help screen */
-"https://calliope.cc/calliope-mini/uebersicht" = "https://calliope.cc/calliope-mini/uebersicht";
-
-/* URL in Help screen */
-"https://calliope.cc/programmieren/editoren" = "https://calliope.cc/programmieren/editoren";
-
-/* URL in Help screen */
-"https://calliope.cc/programmieren/mobil" = "https://calliope.cc/programmieren/mobil";
-
-/* URL in Help screen */
-"https://calliope.cc/programmieren/playground" = "https://calliope.cc/programmieren/playground";
-
-/* URL in Help screen */
-"https://calliope.cc/start/tipps" = "https://calliope.cc/start/tipps";
