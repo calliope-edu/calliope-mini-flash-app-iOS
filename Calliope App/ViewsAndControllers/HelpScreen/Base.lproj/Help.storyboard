@@ -186,7 +186,7 @@ Auf das Startprogramm kann über den Flash zugegriffen werden.
                                 <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="800" verticalCompressionResistancePriority="800" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Sqe-8X-loV">
-                                        <rect key="frame" x="117" y="10" width="600" height="367.5"/>
+                                        <rect key="frame" x="117" y="10" width="600" height="402.5"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" restorationIdentifier="bvZ-tc-Xz5" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bvZ-tc-Xz5">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="73"/>
@@ -209,6 +209,13 @@ Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="et5-hg-kob">
+                                                <rect key="frame" x="0.0" y="372.5" width="600" height="30"/>
+                                                <state key="normal" title="Informationen zum Installieren des Startprogramms"/>
+                                                <connections>
+                                                    <segue destination="cWl-mP-Xkh" kind="show" identifier="installstartprogram" id="MJR-n3-wyg"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="600" id="NeH-mA-USa"/>
@@ -548,7 +555,7 @@ Raumerstraße 11
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Dxa-g4-Vy7"/>
+        <segue reference="MJR-n3-wyg"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="calliope-lilablau"/>
     <resources>
