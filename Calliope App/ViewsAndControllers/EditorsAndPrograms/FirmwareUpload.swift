@@ -11,10 +11,11 @@ import iOSDFULibrary
 
 class FirmwareUpload {
     
-    public static func showUIForDownloadableProgram(controller: UIViewController, program: DownloadableHexFile, name: String = NSLocalizedString("the program", comment: ""), completion: (() -> ())? = nil) {
+    public static func showUIForDownloadableProgram(controller: UIViewController, program: DownloadableHexFile, name: String = NSLocalizedString("the program", comment: ""), completion: ((_ success: Bool) -> ())? = nil) {
         if (program.bin.count != 0) {
             DispatchQueue.main.async {
                 FirmwareUpload.showUploadUI(controller: controller, program: program) {
+                    completion?(true)
                     MatrixConnectionViewController.instance.connect()
                 }
             }
@@ -30,7 +31,9 @@ class FirmwareUpload {
                         let alertDone = UIAlertController(title: NSLocalizedString("Download finished", comment: ""), message: NSLocalizedString("The program is downloaded. Do you want to upload it now?", comment: ""), preferredStyle: .alert)
                         alertDone.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default) { _ in
                             DispatchQueue.main.async {
-                                FirmwareUpload.uploadWithoutConfirmation(controller: controller, program: program)
+                                FirmwareUpload.uploadWithoutConfirmation(controller: controller, program: program) {
+                                        completion?(true)
+                                }
                             }
                         })
                         alertDone.addAction(UIAlertAction(title: NSLocalizedString("No", comment: ""), style: .cancel))
@@ -38,7 +41,9 @@ class FirmwareUpload {
                     } else {
                         let reason = error?.localizedDescription ?? "The downloaded program is empty"
                         let alertError = UIAlertController(title: NSLocalizedString("Program download failed", comment: ""), message: String(format: NSLocalizedString("The program is not ready. The reason is:\n%@", comment: ""), reason), preferredStyle: .alert)
-                        alertError.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default))
+                        alertError.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
+                            completion?(false)
+                        })
                         alert = alertError
                     }
                     DispatchQueue.main.async {

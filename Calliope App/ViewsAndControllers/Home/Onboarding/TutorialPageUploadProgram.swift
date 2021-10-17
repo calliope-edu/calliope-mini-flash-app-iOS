@@ -20,6 +20,18 @@ class TutorialPageUploadProgram: TutorialPageViewController {
     
     @IBAction func uploadProgram(_ sender: Any) {
         let program = BlinkingHeartProgram.blinkingHeartProgram
-        FirmwareUpload.showUIForDownloadableProgram(controller: self, program: program, name: NSLocalizedString("Blinking Heart", comment: ""))
+        FirmwareUpload.showUIForDownloadableProgram(controller: self, program: program, name: NSLocalizedString("Blinking Heart", comment: "")) { success in
+            guard success else {
+                return
+            }
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                self.blinkingHeart.stopAnimating()
+                self.blinkingHeart.animationImages = nil
+                self.blinkingHeart.image = #imageLiteral(resourceName: "blinking_heart_done.png")
+            }
+        }
     }
 }
