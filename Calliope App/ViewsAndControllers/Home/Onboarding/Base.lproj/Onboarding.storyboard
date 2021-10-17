@@ -756,6 +756,7 @@ Check it out!</string>
     <inferredMetricsTieBreakers>
         <segue reference="Ffn-Jo-bzp"/>
     </inferredMetricsTieBreakers>
+    <color key="tintColor" name="calliope-lilablau"/>
     <resources>
         <image name="ani_heart_01" width="216" height="227"/>
         <image name="ble_01" width="100" height="100"/>
@@ -769,6 +770,9 @@ Check it out!</string>
         <image name="upload_button" width="25" height="33"/>
         <namedColor name="calliope-green">
             <color red="0.27500000596046448" green="0.875" blue="0.4309999942779541" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="calliope-lilablau">
+            <color red="0.3919999897480011" green="0.46200001239776611" blue="0.99199998378753662" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="calliope-purple">
             <color red="0.50199997425079346" green="0.45100000500679016" blue="0.89800000190734863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

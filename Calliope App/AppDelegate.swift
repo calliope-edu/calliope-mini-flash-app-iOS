@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Settings.resetSettingsIfRequired()
         Settings.updateAppVersion()
         Styles.setupGlobalFont()
+        Styles.setGlobalTint()
         
 		return true
 	}

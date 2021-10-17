@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="93j-LA-Q6m">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="93j-LA-Q6m">
     <device id="ipad11_0rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -89,20 +89,20 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="snippetOverviewCell" id="HYI-qk-Ict" customClass="PlaygroundSnippetTableViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="24.5" width="420" height="59.5"/>
+                                <rect key="frame" x="0.0" y="44.5" width="420" height="59.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HYI-qk-Ict" id="GnZ-Nf-zya">
                                     <rect key="frame" x="100" y="0.0" width="320" height="59.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jZR-Hi-92E">
-                                            <rect key="frame" x="16" y="11" width="288" height="17"/>
+                                            <rect key="frame" x="16" y="11" width="388" height="17"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oCk-WD-9Kc">
-                                            <rect key="frame" x="16" y="31" width="288" height="17.5"/>
+                                            <rect key="frame" x="16" y="31" width="388" height="17.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -181,7 +181,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="snippetOverviewCell" id="fAq-65-61O" customClass="PlaygroundSnippetTableViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="24.5" width="834" height="99"/>
+                                <rect key="frame" x="0.0" y="44.5" width="834" height="99"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fAq-65-61O" id="zPA-ln-gsu">
                                     <rect key="frame" x="0.0" y="0.0" width="834" height="99"/>
@@ -335,16 +335,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="roW-FT-wft">
-                                <rect key="frame" x="0.0" y="10" width="834" height="1154"/>
+                                <rect key="frame" x="0.0" y="34" width="834" height="1130"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cCG-ae-1G1">
-                                        <rect key="frame" x="0.0" y="0.0" width="834" height="572"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="834" height="560"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bKp-jF-jIw">
-                                                <rect key="frame" x="10" y="0.0" width="814" height="572"/>
+                                                <rect key="frame" x="10" y="0.0" width="814" height="560"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="did-Lr-Ts3">
-                                                        <rect key="frame" x="107" y="0.0" width="600" height="572"/>
+                                                        <rect key="frame" x="107" y="0.0" width="600" height="560"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iNU-gK-Q8E">
                                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="180"/>
@@ -379,7 +379,7 @@
                                                                 </constraints>
                                                             </view>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="playground_startscreen/calliope_multitasking" translatesAutoresizingMaskIntoConstraints="NO" id="qal-QC-PEH">
-                                                                <rect key="frame" x="0.0" y="180" width="600" height="392"/>
+                                                                <rect key="frame" x="0.0" y="180" width="600" height="380"/>
                                                             </imageView>
                                                         </subviews>
                                                         <constraints>
@@ -416,7 +416,7 @@
                                         </constraints>
                                     </view>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sH8-TE-zVt">
-                                        <rect key="frame" x="0.0" y="582" width="834" height="572"/>
+                                        <rect key="frame" x="0.0" y="570" width="834" height="560"/>
                                         <connections>
                                             <segue destination="5BP-cm-jHp" kind="embed" id="39p-cH-dIJ"/>
                                         </connections>
@@ -524,12 +524,16 @@
             <point key="canvasLocation" x="-338" y="1688"/>
         </scene>
     </scenes>
+    <color key="tintColor" name="calliope-lilablau"/>
     <resources>
         <image name="playground_startscreen/calliope_multitasking" width="1200" height="800"/>
         <image name="playground_startscreen/code_library_snippets" width="82" height="82"/>
         <image name="playground_startscreen/mini_button_grey" width="19" height="180"/>
         <namedColor name="calliope-lightgray">
             <color red="0.92900002002716064" green="0.93300002813339233" blue="0.93699997663497925" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="calliope-lilablau">
+            <color red="0.3919999897480011" green="0.46200001239776611" blue="0.99199998378753662" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="calliope-orange">
             <color red="1" green="0.3059999942779541" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

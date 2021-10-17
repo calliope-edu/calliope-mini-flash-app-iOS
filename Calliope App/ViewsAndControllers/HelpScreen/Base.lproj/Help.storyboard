@@ -550,6 +550,7 @@ Raumerstraße 11
     <inferredMetricsTieBreakers>
         <segue reference="Dxa-g4-Vy7"/>
     </inferredMetricsTieBreakers>
+    <color key="tintColor" name="calliope-lilablau"/>
     <resources>
         <image name="IconHelp" width="30" height="33"/>
         <image name="bluetooth_kralle" width="660" height="266.5"/>
@@ -564,6 +565,9 @@ Raumerstraße 11
         </namedColor>
         <namedColor name="calliope-darkgray">
             <color red="0.11400000005960464" green="0.11400000005960464" blue="0.10599999874830246" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="calliope-lilablau">
+            <color red="0.3919999897480011" green="0.46200001239776611" blue="0.99199998378753662" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="calliope-pink">
             <color red="0.90200001001358032" green="0.0" blue="0.49000000953674316" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

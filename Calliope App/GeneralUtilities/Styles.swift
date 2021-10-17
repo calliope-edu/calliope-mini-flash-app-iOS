@@ -48,6 +48,14 @@ struct Styles {
         UILabel.appearance().substituteFontNameBold = boldFontName
         UILabel.appearance().adjustsFontForContentSizeCategory = true
     }
+
+    static func setGlobalTint() {
+        let tintColor = UIColor(named: "calliope-lilablau")
+        UIApplication.shared.keyWindow?.tintColor = tintColor
+        UITabBar.appearance().tintColor = tintColor
+        UINavigationBar.appearance().tintColor = tintColor
+        UIButton.appearance().tintColor = tintColor
+    }
 }
 
 extension UILabel {
