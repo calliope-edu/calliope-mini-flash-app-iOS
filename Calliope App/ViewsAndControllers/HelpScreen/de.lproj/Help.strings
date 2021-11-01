@@ -76,6 +76,9 @@
 /* Class = "UINavigationItem"; title = "Bluetooth Connection"; ObjectID = "WEm-pK-tnm"; */
 "WEm-pK-tnm.title" = "Bluetooth Verbindung";
 
+/* Class = "UITextView"; text = "Der Calliope kann durch installieren des Startprogramms auf seinen ursprünglichen Zustand zurückgesetzt werden. Hierfür bietet die Programme Ansicht eine eigene Schaltfläche."; ObjectID = "Wnc-WX-DdO"; */
+"Wnc-WX-DdO.text" = "Der Calliope kann durch installieren des Startprogramms auf seinen ursprünglichen Zustand zurückgesetzt werden. Hierfür bietet die Programme Ansicht eine eigene Schaltfläche.";
+
 /* Class = "UIButton"; normalTitle = "EIGENE PROGRAMME "; ObjectID = "wNV-S9-kWA"; */
 "wNV-S9-kWA.normalTitle" = "EIGENE PROGRAMME ";
 

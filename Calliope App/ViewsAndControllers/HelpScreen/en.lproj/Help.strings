@@ -40,23 +40,14 @@
 /* Class = "UIViewController"; title = "Verbindung"; ObjectID = "km0-IP-BB6"; */
 "km0-IP-BB6.title" = "Connection";
 
-/* Class = "UINavigationItem"; title = "Programs"; ObjectID = "P5r-U0-i5U"; */
-"P5r-U0-i5U.title" = "Programs";
-
 /* Class = "UIButton"; normalTitle = "Mehr zu den Editoren"; ObjectID = "pz2-S5-d2S"; */
 "pz2-S5-d2S.normalTitle" = "More on the editors";
 
 /* Class = "UIViewController"; title = "Editoren"; ObjectID = "rML-fc-Uwl"; */
 "rML-fc-Uwl.title" = "Editors";
 
-/* Class = "UINavigationItem"; title = "Contact"; ObjectID = "Skq-vk-RAC"; */
-"Skq-vk-RAC.title" = "Contact";
-
 /* Class = "UIButton"; normalTitle = "KONTAKT"; ObjectID = "svg-Wi-K2K"; */
 "svg-Wi-K2K.normalTitle" = "CONTACT";
-
-/* Class = "UINavigationItem"; title = "Editors"; ObjectID = "u9n-tU-PpW"; */
-"u9n-tU-PpW.title" = "Editors";
 
 /* Class = "UIButton"; normalTitle = "CALLIOPE MINI ÜBERSICHT"; ObjectID = "UlD-8R-0kJ"; */
 "UlD-8R-0kJ.normalTitle" = "CALLIOPE MINI FEATURES";
@@ -65,16 +56,13 @@
 "vVg-jc-n8f.normalTitle" = "EDITORS";
 
 /* Class = "UITextView"; text = "ACHTUNG! Die Anpassungen sind nicht reversibel.\nDie gelöschten Dateien sind nicht mehr in der App verfügbar."; ObjectID = "W2T-43-YeH"; */
-"W2T-43-YeH.text" = "ATTENTION! The adjustments cannot be undone?\nThe deleted files are no longer available in the app.";
+"W2T-43-YeH.text" = "ATTENTION! The adjustments cannot be undone!\nThe deleted files are no longer available in the app.";
 
-/* Class = "UINavigationItem"; title = "Bluetooth Connection"; ObjectID = "WEm-pK-tnm"; */
-"WEm-pK-tnm.title" = "Bluetooth Connection";
+/* Class = "UITextView"; text = "Der Calliope kann durch installieren des Startprogramms auf seinen ursprünglichen Zustand zurückgesetzt werden. Hierfür bietet die Programme Ansicht eine eigene Schaltfläche."; ObjectID = "Wnc-WX-DdO"; */
+"Wnc-WX-DdO.text" = "By installing the \"Start Program\", the Calliope can be reset to its original state. There is a dedicated button for that in the programs menu.";
 
 /* Class = "UIButton"; normalTitle = "EIGENE PROGRAMME "; ObjectID = "wNV-S9-kWA"; */
 "wNV-S9-kWA.normalTitle" = "YOUR PROGRAMS ";
-
-/* Class = "UITabBarItem"; title = "Help"; ObjectID = "xOk-Ya-FCk"; */
-"xOk-Ya-FCk.title" = "Help";
 
 /* Class = "UIViewController"; title = "Verbindung"; ObjectID = "XU1-hQ-wSQ"; */
 "XU1-hQ-wSQ.title" = "Connection";
