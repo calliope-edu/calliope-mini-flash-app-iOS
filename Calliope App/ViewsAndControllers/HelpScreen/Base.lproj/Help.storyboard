@@ -186,7 +186,7 @@ Auf das Startprogramm kann über den Flash zugegriffen werden.
                                 <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="800" verticalCompressionResistancePriority="800" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Sqe-8X-loV">
-                                        <rect key="frame" x="117" y="10" width="600" height="402.5"/>
+                                        <rect key="frame" x="117" y="10" width="600" height="767.5"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" restorationIdentifier="bvZ-tc-Xz5" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bvZ-tc-Xz5">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="73"/>
@@ -196,21 +196,34 @@ Auf das Startprogramm kann über den Flash zugegriffen werden.
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="257" verticalHuggingPriority="257" horizontalCompressionResistancePriority="757" verticalCompressionResistancePriority="757" image="programms" translatesAutoresizingMaskIntoConstraints="NO" id="JEH-pA-SEj">
-                                                <rect key="frame" x="0.0" y="78" width="600" height="230.5"/>
+                                                <rect key="frame" x="0.0" y="78" width="600" height="242"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" secondItem="JEH-pA-SEj" secondAttribute="height" multiplier="1980:760" id="SKJ-er-Mlm"/>
+                                                    <constraint firstAttribute="width" secondItem="JEH-pA-SEj" secondAttribute="height" multiplier="429:173" id="SKJ-er-Mlm"/>
                                                 </constraints>
                                             </imageView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" restorationIdentifier="W2T-43-YeH" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W2T-43-YeH">
-                                                <rect key="frame" x="0.0" y="313.5" width="600" height="54"/>
+                                                <rect key="frame" x="0.0" y="325" width="600" height="54"/>
                                                 <string key="text">ACHTUNG! Die Anpassungen sind nicht reversibel.
 Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
                                                 <color key="textColor" name="calliope-pink"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" restorationIdentifier="Wnc-WX-DdO" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wnc-WX-DdO">
+                                                <rect key="frame" x="0.0" y="384" width="600" height="73"/>
+                                                <string key="text">Der Calliope kann durch installieren des Startprogramms auf seinen ursprünglichen Zustand zurückgesetzt werden. Hierfür bietet die Programme Ansicht eine eigene Schaltfläche.</string>
+                                                <color key="textColor" name="calliope-darkgray"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="257" verticalHuggingPriority="257" horizontalCompressionResistancePriority="757" verticalCompressionResistancePriority="757" image="start_program" translatesAutoresizingMaskIntoConstraints="NO" id="fVN-dX-xQg">
+                                                <rect key="frame" x="0.0" y="462" width="600" height="270.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="fVN-dX-xQg" secondAttribute="height" multiplier="750:338" id="1hh-2u-2Ii"/>
+                                                </constraints>
+                                            </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="et5-hg-kob">
-                                                <rect key="frame" x="0.0" y="372.5" width="600" height="30"/>
+                                                <rect key="frame" x="0.0" y="737.5" width="600" height="30"/>
                                                 <state key="normal" title="Informationen zum Installieren des Startprogramms"/>
                                                 <connections>
                                                     <segue destination="cWl-mP-Xkh" kind="show" identifier="installstartprogram" id="MJR-n3-wyg"/>
@@ -566,7 +579,8 @@ Raumerstraße 11
         <image name="editoren" width="660" height="133.5"/>
         <image name="editoren_playgrounds" width="660" height="133.5"/>
         <image name="preferences" width="660" height="400"/>
-        <image name="programms" width="660" height="174.5"/>
+        <image name="programms" width="429" height="173"/>
+        <image name="start_program" width="750" height="338"/>
         <namedColor name="calliope-brightturquoise">
             <color red="0.40799999237060547" green="0.83099997043609619" blue="0.83099997043609619" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

@@ -224,10 +224,10 @@ These are the programs you created so far.</string>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="makecodeEditorCell" id="LQt-dC-ueL" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.5" width="160" height="180.5"/>
+                                <rect key="frame" x="0.0" y="0.5" width="160" height="185.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="WBP-SR-R2U">
-                                    <rect key="frame" x="0.0" y="0.0" width="160" height="180.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="160" height="185.5"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="editors_makecode" translatesAutoresizingMaskIntoConstraints="NO" id="iI5-8F-WS6">
@@ -238,7 +238,7 @@ These are the programs you created so far.</string>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Makecode" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KGR-ef-bqG">
-                                            <rect key="frame" x="0.0" y="160" width="160" height="20.5"/>
+                                            <rect key="frame" x="0.0" y="165" width="160" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -251,7 +251,7 @@ These are the programs you created so far.</string>
                                         <constraint firstItem="KGR-ef-bqG" firstAttribute="leading" secondItem="WBP-SR-R2U" secondAttribute="leading" id="Qnh-zM-4cL"/>
                                         <constraint firstAttribute="trailing" secondItem="KGR-ef-bqG" secondAttribute="trailing" id="UdY-1w-smX"/>
                                         <constraint firstItem="iI5-8F-WS6" firstAttribute="top" secondItem="WBP-SR-R2U" secondAttribute="top" id="q0A-5y-xnH"/>
-                                        <constraint firstItem="KGR-ef-bqG" firstAttribute="top" secondItem="iI5-8F-WS6" secondAttribute="bottom" id="q3Y-uk-CW4"/>
+                                        <constraint firstItem="KGR-ef-bqG" firstAttribute="top" secondItem="iI5-8F-WS6" secondAttribute="bottom" constant="5" id="q3Y-uk-CW4"/>
                                     </constraints>
                                 </collectionViewCellContentView>
                                 <connections>
@@ -261,10 +261,10 @@ These are the programs you created so far.</string>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="nepoEditorCell" id="ucV-gN-En2" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="279" y="0.0" width="160" height="181"/>
+                                <rect key="frame" x="279" y="0.0" width="160" height="186"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bVT-UD-yV5">
-                                    <rect key="frame" x="0.0" y="0.0" width="160" height="181"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="160" height="186"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="editors_nepo" translatesAutoresizingMaskIntoConstraints="NO" id="1Ks-qN-EOY">
@@ -275,7 +275,7 @@ These are the programs you created so far.</string>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Open Roberta Lab" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pm2-Za-VcF">
-                                            <rect key="frame" x="0.0" y="160" width="160" height="21"/>
+                                            <rect key="frame" x="0.0" y="165" width="160" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -288,7 +288,7 @@ These are the programs you created so far.</string>
                                         <constraint firstItem="1Ks-qN-EOY" firstAttribute="leading" secondItem="bVT-UD-yV5" secondAttribute="leading" id="SqB-Pl-lnW"/>
                                         <constraint firstAttribute="bottom" secondItem="pm2-Za-VcF" secondAttribute="bottom" id="c1o-9L-USe"/>
                                         <constraint firstAttribute="trailing" secondItem="pm2-Za-VcF" secondAttribute="trailing" id="gdb-fw-Ww5"/>
-                                        <constraint firstItem="pm2-Za-VcF" firstAttribute="top" secondItem="1Ks-qN-EOY" secondAttribute="bottom" id="ybg-tB-sq1"/>
+                                        <constraint firstItem="pm2-Za-VcF" firstAttribute="top" secondItem="1Ks-qN-EOY" secondAttribute="bottom" constant="5" id="ybg-tB-sq1"/>
                                     </constraints>
                                 </collectionViewCellContentView>
                                 <connections>
@@ -298,10 +298,10 @@ These are the programs you created so far.</string>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="playgroundCell" id="X1H-Rl-bCL" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="191" width="160" height="180.5"/>
+                                <rect key="frame" x="0.0" y="196" width="160" height="185.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="PXU-mA-kNy">
-                                    <rect key="frame" x="0.0" y="0.0" width="160" height="180.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="160" height="185.5"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="editors_swift" translatesAutoresizingMaskIntoConstraints="NO" id="qAp-AG-KqZ">
@@ -312,7 +312,7 @@ These are the programs you created so far.</string>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Playground" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NWk-nx-U7c">
-                                            <rect key="frame" x="0.0" y="160" width="160" height="20.5"/>
+                                            <rect key="frame" x="0.0" y="165" width="160" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -326,7 +326,7 @@ These are the programs you created so far.</string>
                                         <constraint firstAttribute="trailing" secondItem="qAp-AG-KqZ" secondAttribute="trailing" id="ebF-U0-vGQ"/>
                                         <constraint firstAttribute="trailing" secondItem="qAp-AG-KqZ" secondAttribute="trailing" id="j3R-e4-7hZ"/>
                                         <constraint firstItem="qAp-AG-KqZ" firstAttribute="leading" secondItem="PXU-mA-kNy" secondAttribute="leading" id="ljD-DG-SKe"/>
-                                        <constraint firstItem="NWk-nx-U7c" firstAttribute="top" secondItem="qAp-AG-KqZ" secondAttribute="bottom" id="nje-yG-i90"/>
+                                        <constraint firstItem="NWk-nx-U7c" firstAttribute="top" secondItem="qAp-AG-KqZ" secondAttribute="bottom" constant="5" id="nje-yG-i90"/>
                                         <constraint firstItem="qAp-AG-KqZ" firstAttribute="top" secondItem="PXU-mA-kNy" secondAttribute="top" id="rpJ-1y-my4"/>
                                         <constraint firstAttribute="bottom" secondItem="NWk-nx-U7c" secondAttribute="bottom" id="rsm-VI-002"/>
                                     </constraints>
@@ -338,10 +338,10 @@ These are the programs you created so far.</string>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="localEditorCell" id="Yfn-uo-n4Y" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="279" y="191" width="160" height="180.5"/>
+                                <rect key="frame" x="279" y="196" width="160" height="185.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="kQB-BW-JJf">
-                                    <rect key="frame" x="0.0" y="0.0" width="160" height="180.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="160" height="185.5"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WelcomeLogo" translatesAutoresizingMaskIntoConstraints="NO" id="faN-Mj-y3e">
@@ -353,7 +353,7 @@ These are the programs you created so far.</string>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Local editor" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ked-z3-CdC">
-                                            <rect key="frame" x="0.0" y="160" width="160" height="20.5"/>
+                                            <rect key="frame" x="0.0" y="165" width="160" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -363,7 +363,7 @@ These are the programs you created so far.</string>
                                         <constraint firstItem="faN-Mj-y3e" firstAttribute="top" secondItem="kQB-BW-JJf" secondAttribute="top" id="C6V-qG-zNv"/>
                                         <constraint firstItem="faN-Mj-y3e" firstAttribute="leading" secondItem="kQB-BW-JJf" secondAttribute="leading" id="Fhq-oe-hI7"/>
                                         <constraint firstAttribute="bottom" secondItem="Ked-z3-CdC" secondAttribute="bottom" id="LB0-cU-0v2"/>
-                                        <constraint firstItem="Ked-z3-CdC" firstAttribute="top" secondItem="faN-Mj-y3e" secondAttribute="bottom" id="QlQ-sn-0dF"/>
+                                        <constraint firstItem="Ked-z3-CdC" firstAttribute="top" secondItem="faN-Mj-y3e" secondAttribute="bottom" constant="5" id="QlQ-sn-0dF"/>
                                         <constraint firstAttribute="trailing" secondItem="faN-Mj-y3e" secondAttribute="trailing" id="mis-1B-7wZ"/>
                                         <constraint firstItem="Ked-z3-CdC" firstAttribute="leading" secondItem="kQB-BW-JJf" secondAttribute="leading" id="qd7-aO-FvF"/>
                                         <constraint firstAttribute="trailing" secondItem="Ked-z3-CdC" secondAttribute="trailing" id="xgr-Oi-Ykh"/>
@@ -577,9 +577,9 @@ These are the programs you created so far.</string>
     <resources>
         <image name="IconCode" width="36" height="33"/>
         <image name="WelcomeLogo" width="859" height="374"/>
-        <image name="editors_makecode" width="1057" height="914"/>
-        <image name="editors_nepo" width="1057" height="914"/>
-        <image name="editors_swift" width="1057" height="914"/>
+        <image name="editors_makecode" width="320" height="320"/>
+        <image name="editors_nepo" width="320" height="320"/>
+        <image name="editors_swift" width="320" height="320"/>
         <image name="upload_button" width="25" height="33"/>
         <namedColor name="calliope-darkgray">
             <color red="0.11400000005960464" green="0.11400000005960464" blue="0.10599999874830246" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
