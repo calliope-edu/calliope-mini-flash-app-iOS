@@ -23,7 +23,7 @@
 "KGR-ef-bqG.text" = "Makecode";
 
 /* Class = "UILabel"; text = "Start program.\nHere you can download the original program of the Calliope mini."; ObjectID = "lYA-S0-b2D"; */
-"lYA-S0-b2D.text" = "Hier kannst du das Startprogramm des Calliope mini herunterladen.";
+"lYA-S0-b2D.text" = "Hier kannst du das Startprogramm auf den Calliope mini laden.";
 
 /* Class = "UILabel"; text = "Playground"; ObjectID = "NWk-nx-U7c"; */
 "NWk-nx-U7c.text" = "Swift Playground";

@@ -5,7 +5,7 @@
 "4tg-pn-9If.text" = "Start";
 
 /* Class = "UILabel"; text = "Connect to your calliope using its unique pattern signature"; ObjectID = "agm-gW-0YR"; */
-"agm-gW-0YR.text" = "Connect to your calliope using its unique pattern signature";
+"agm-gW-0YR.text" = "Start the Bluetooth mode and connect to your calliope using its unique pattern signature";
 
 /* Class = "UILabel"; text = "Now choose program 5"; ObjectID = "EcQ-ZK-Kap"; */
 "EcQ-ZK-Kap.text" = "Now choose program 5";
@@ -14,13 +14,13 @@
 "F8L-Km-C5f.text" = "Before you can begin, your Calliope needs energy!";
 
 /* Class = "UILabel"; text = "When connected with your calliope, you can easily upload programs.\nCheck it out!"; ObjectID = "f9R-2U-MF7"; */
-"f9R-2U-MF7.text" = "When connected with your calliope, you can easily upload programs.\nCheck it out!";
+"f9R-2U-MF7.text" = "When connected with your calliope, you can upload programs.\nCheck it out!";
 
 /* Class = "UILabel"; text = "Upload Program"; ObjectID = "fjc-AF-Uny"; */
 "fjc-AF-Uny.text" = "Upload Program";
 
 /* Class = "UIButton"; normalTitle = "Upload Program Blinking Heart"; ObjectID = "KZP-Ey-EXu"; */
-"KZP-Ey-EXu.normalTitle" = "Upload Program Blinking Heart";
+"KZP-Ey-EXu.normalTitle" = "Blinking Heart";
 
 /* Class = "UILabel"; text = "Greeting"; ObjectID = "M6T-cO-epA"; */
 "M6T-cO-epA.text" = "Greeting";
@@ -29,7 +29,7 @@
 "O20-zt-E5c.text" = "Rock, Paper, Scissor and some longer";
 
 /* Class = "UILabel"; text = "Get to know your Calliope Mini"; ObjectID = "ogi-fD-zPi"; */
-"ogi-fD-zPi.text" = "Get to know your Calliope Mini";
+"ogi-fD-zPi.text" = "When you start the Calliope for the first time or reinstall the startup program, you will see the following sequence.Information about the startup program can be found in \"Help\" in the \"Programs\" section.";
 
 /* Class = "UILabel"; text = "Programs Menu"; ObjectID = "pnY-4s-lpT"; */
 "pnY-4s-lpT.text" = "Programs Menu";

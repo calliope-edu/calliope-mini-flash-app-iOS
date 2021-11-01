@@ -1,5 +1,5 @@
 /* No comment provided by engineer. */
-"1. Programm 5 starten\n2. Schütteln\n3. LED-Muster eingeben" = "1. Programm 5 starten\n2. Calliope mini schütteln\n3. LED-Muster eingeben";
+"1. Programm 5 starten\n2. Schütteln\n3. LED-Muster eingeben" = "1. A+B und 1 Sek Reset \n2. A+B gedrückt halten\n3. LED-Muster eingeben";
 
 /* No comment provided by engineer. */
 "Activate Bluetooth!" = "Bitte Bluetooth aktivieren!";
@@ -8,7 +8,7 @@
 "Blinking Heart" = "Blinkendes Herz";
 
 /* No comment provided by engineer. */
-"Bluetooth" = "Bluetooth";
+"Bluetooth" = "Bluetooth Swift Playground";
 
 /* No comment provided by engineer. */
 "Button A" = "Taste A";
@@ -32,10 +32,10 @@
 "Check your internet connection or the snippets url in settings.\n\nThe error description is:\n%@" = "Überprüfe deine Internetverbindung oder die Code-Schnipsel-Url in den Einstellungen.\n\nFehlermedlung:\n%@";
 
 /* No comment provided by engineer. */
-"Connect to a calliope to finish the tutorial" = "Verbinde dich mit dem Calliope mini, um die Einführung abzuschließen";
+"Connect to a calliope to finish the tutorial" = "Verbinde dich hier mit dem Calliope mini.";
 
 /* No comment provided by engineer. */
-"Connect to enable uploading programs" = "Verbinde dich mit dem Calliope mini, um Programme zu übertragen.";
+"Connect to enable uploading programs" = "Verbinde dich hier mit dem Calliope mini.";
 
 /* No comment provided by engineer. */
 "Connection to calliope timed out!" = "Zeitüberschreitung bei der Übertragung";
@@ -116,7 +116,10 @@
 "https://calliope.cc/programmieren/mobil" = "https://calliope.cc/programmieren/mobil";
 
 /* URL in Help screen */
-"https://calliope.cc/programmieren/playground" = "https://calliope.cc/programmieren/playground";
+"https://calliope.cc/programmieren/mobil/hilfe" = "https://calliope.cc/programmieren/mobil/hilfe";
+
+/* URL in Help screen */
+"https://calliope.cc/programmieren/playground" = "https://calliope.cc/programmieren/editoren/playground";
 
 /* URL in Help screen */
 "https://calliope.cc/start/tipps" = "https://calliope.cc/start/tipps";
@@ -155,7 +158,7 @@
 "Program download failed" = "Programmübertragung fehlgeschlagen";
 
 /* No comment provided by engineer. */
-"Push the button and follow the instructions for connecting to your Calliope" = "Drück hier und folge den Anweisungen";
+"Push the button and follow the instructions for connecting to your Calliope" = "ID-Muster auf dem Calliope mini anzeigen: A+B+Reset gedrückt halten, nach 1 Sekunde Reset loslassen. Weitere Infos unter „Hilfe”.";
 
 /* No comment provided by engineer. */
 "Ready!" = "Fertig!";
@@ -224,5 +227,5 @@
 "Yes" = "Ja";
 
 /* No comment provided by engineer. */
-"You are connected to your Calliope, well done!" = "Yeah, du bist verbunden - super gemacht!";
+"You are connected to your Calliope, well done!" = "Yeah, du bist verbunden - super gemacht! Weiter geht's!";
 

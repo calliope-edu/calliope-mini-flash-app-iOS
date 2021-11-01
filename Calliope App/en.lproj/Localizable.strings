@@ -1,5 +1,5 @@
 /* No comment provided by engineer. */
-"1. Programm 5 starten\n2. Schütteln\n3. LED-Muster eingeben" = "1. Start program 5\n2. Shake Calliope mini\n3. Enter id pattern ";
+"1. Programm 5 starten\n2. Schütteln\n3. LED-Muster eingeben" = "1. Press A+B and 1 Sek Reset \n2. Keep A+B pressed\n3. Transfer ID pattern";
 
 /* No comment provided by engineer. */
 "Activate Bluetooth!" = "Activate Bluetooth!";
@@ -8,7 +8,7 @@
 "Blinking Heart" = "Blinking Heart";
 
 /* No comment provided by engineer. */
-"Bluetooth" = "Bluetooth";
+"Bluetooth" = "Bluetooth Swift Playground";
 
 /* No comment provided by engineer. */
 "Button A" = "Button A";
@@ -32,16 +32,16 @@
 "Check your internet connection or the snippets url in settings.\n\nThe error description is:\n%@" = "Check your internet connection or the snippets url in settings.\n\nThe error description is:\n%@";
 
 /* No comment provided by engineer. */
-"Connect to a calliope to finish the tutorial" = "Connect to a calliope to finish the tutorial";
+"Connect to a calliope to finish the tutorial" = "Connect to a Calliope mini to finish the tutorial";
 
 /* No comment provided by engineer. */
 "Connect to enable uploading programs" = "Connect to Calliope mini to enable uploading programs";
 
 /* No comment provided by engineer. */
-"Connection to calliope timed out!" = "Connection to calliope timed out!";
+"Connection to calliope timed out!" = "Connection to Calliope mini timed out!";
 
 /* No comment provided by engineer. */
-"Could not find connected calliope in discovered calliopes" = "Could not find connected calliope mini";
+"Could not find connected calliope in discovered calliopes" = "Could not find connected Calliope mini";
 
 /* No comment provided by engineer. */
 "Could not rename %@" = "Could not rename %@";
@@ -62,7 +62,7 @@
 "Do you want to delete %@?" = "Could not rename %@";
 
 /* No comment provided by engineer. */
-"Do you want to upload %@ to your calliope?" = "Do you want to upload %@ to your calliope?";
+"Do you want to upload %@ to your calliope?" = "Do you want to upload %@ to your Calliope mini?";
 
 /* No comment provided by engineer. */
 "Don´t save" = "Don´t save";
@@ -98,28 +98,31 @@
 "Greetings" = "Welcome";
 
 /* URL in Help screen */
-"https://calliope.cc" = "https://calliope.cc";
+"https://calliope.cc" = "https://calliope.cc/en";
 
 /* URL in Help screen */
-"https://calliope.cc/calliope-mini/uebersicht" = "https://calliope.cc/calliope-mini/uebersicht";
+"https://calliope.cc/calliope-mini/uebersicht" = "https://calliope.cc/en/calliope-mini/features";
 
 /* The url for the news json */
-"https://calliope.cc/forumassets/news.json" = "https://calliope.cc/forumassets/news.json";
+"https://calliope.cc/forumassets/news.json" = "https://calliope.cc/forumassets/news_EN.json";
 
 /* The url for the snippets json */
 "https://calliope.cc/forumassets/snippets.json" = "https://calliope.cc/forumassets/snippets.json";
 
 /* URL in Help screen */
-"https://calliope.cc/programmieren/editoren" = "https://calliope.cc/programmieren/editoren";
+"https://calliope.cc/programmieren/editoren" = "https://calliope.cc/en/coding/editors";
 
 /* URL in Help screen */
-"https://calliope.cc/programmieren/mobil" = "https://calliope.cc/programmieren/mobil";
+"https://calliope.cc/programmieren/mobil" = "https://calliope.cc/en/coding/mobile";
 
 /* URL in Help screen */
-"https://calliope.cc/programmieren/playground" = "https://calliope.cc/programmieren/playground";
+"https://calliope.cc/programmieren/mobil/hilfe" = "https://calliope.cc/en/coding/mobile/help";
 
 /* URL in Help screen */
-"https://calliope.cc/start/tipps" = "https://calliope.cc/start/tipps";
+"https://calliope.cc/programmieren/playground" = "https://calliope.cc/en/coding/editors/playground";
+
+/* URL in Help screen */
+"https://calliope.cc/start/tipps" = "https://calliope.cc/en/start/tips";
 
 /* No comment provided by engineer. */
 "Multiplication tables" = "1x1 Multiplication";
@@ -155,7 +158,7 @@
 "Program download failed" = "Download failed";
 
 /* No comment provided by engineer. */
-"Push the button and follow the instructions for connecting to your Calliope" = "Start here and follow the instructions for connecting to your Calliope";
+"Push the button and follow the instructions for connecting to your Calliope" = "Display ID pattern on the Calliope mini: Press and hold A+B+Reset, release reset after 1 second. More info under \"Help“.";
 
 /* No comment provided by engineer. */
 "Ready!" = "Done!";
@@ -176,7 +179,7 @@
 "Share" = "Share";
 
 /* No comment provided by engineer. */
-"Start Program" = "Start Program";
+"Start Program" = "Start program";
 
 /* No comment provided by engineer. */
 "Subscribe to the Calliope Playgrounds" = "Subscribe to the Calliope mini Swift Playground";
@@ -200,7 +203,7 @@
 "There is no connected calliope in DFU mode" = "There is no connected calliope mini";
 
 /* No comment provided by engineer. */
-"This Calliope can not be connected until you go to the bluetooth settings of your device and \"ignore\" it." = "This Calliope can not be connected until you go to the bluetooth settings of your device and \"ignore\" it.";
+"This Calliope can not be connected until you go to the bluetooth settings of your device and \"ignore\" it." = "This Calliope mini can not be connected until you go to the bluetooth settings of your device and \"ignore\" it.";
 
 /* No comment provided by engineer. */
 "Upload" = "Upload";
@@ -209,7 +212,7 @@
 "Upload failed!" = "Upload failed!";
 
 /* No comment provided by engineer. */
-"Upload the start program to your Calliope" = "ÜUpload the Start program to your Calliope mini";
+"Upload the start program to your Calliope" = "Upload the Start program to your Calliope mini";
 
 /* No comment provided by engineer. */
 "Upload?" = "Upload?";
@@ -224,5 +227,5 @@
 "Yes" = "Yes";
 
 /* No comment provided by engineer. */
-"You are connected to your Calliope, well done!" = "Yeah, you are connected to your Calliope mini, well done!";
+"You are connected to your Calliope, well done!" = "Yeah, you are connected to your Calliope mini, well done! Let's continue!";
 

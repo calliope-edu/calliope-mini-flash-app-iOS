@@ -5,7 +5,7 @@
 "8Dh-5e-PlT.title" = "Help";
 
 /* Class = "UITextView"; text = "Sollte es Fragen oder Probleme geben helfen wir gern!\n\nWir sind telefonisch oder per Email zu erreichen.\nUnter der Telefonnummer:+49 (0)30 4849 2030 sind wir werktags zwischen 10.00 und 13.00 Uhr erreichbar.\n\nFragen per Email können an info@calliope.cc geschrieben werden.Anleitungen und Unterrichtsmaterialien stehen auf unserer Webseite bereit zum Ausprobieren:\nhttps://calliope.cc\n\nCalliope HQ\nRaumerstraße 11\n10437 Berlin"; ObjectID = "a5l-k2-8Jf"; */
-"a5l-k2-8Jf.text" = "Sollte es Fragen oder Probleme geben helfen wir gern!\n\nWir sind telefonisch oder per Email zu erreichen.\nUnter der Telefonnummer:+49 (0)30 4849 2030 sind wir werktags zwischen 10.00 und 13.00 Uhr erreichbar.\n\nFragen per Email können an info@calliope.cc geschrieben werden.Anleitungen und Unterrichtsmaterialien stehen auf unserer Webseite bereit zum Ausprobieren:\nhttps://calliope.cc\n\nCalliope HQ\nRaumerstraße 11\n10437 Berlin";
+"a5l-k2-8Jf.text" = "Sollte es Fragen oder Probleme geben helfen wir gern!\n\nWir sind telefonisch oder per Email zu erreichen.\n+49 (0)30 4849 2030 \nMo-Fr 10.00 - 13.00 Uhr\n\ninfo@calliope.cc \n\nAnleitungen und Unterrichtsmaterialien stehen auf unserer Webseite bereit zum Ausprobieren:\nhttps://calliope.cc\n\nCalliope HQ\nRaumerstraße 11\n10437 Berlin";
 
 /* Class = "UITextView"; text = "Um die Namen der Programme anzupassen oder um Daten zu löschen, muss auf das entsprechende Programm länger gedrückt werden. Die jeweils gewünschte Option kann dann aus dem Menü ausgwählt werden."; ObjectID = "bvZ-tc-Xz5"; */
 "bvZ-tc-Xz5.text" = "Um die Namen der Programme anzupassen oder um Daten zu löschen, muss auf das entsprechende Programm länger gedrückt werden. Die jeweils gewünschte Option kann dann aus dem Menü ausgwählt werden.";
@@ -14,13 +14,16 @@
 "CC8-d7-LIv.text" = "Um ein Programm aus dem Swift Playground zu überspielen, muss das Programm 5 aus dem Startprogramm ausgewählt werden.\n\nCalliope mini 1.x\nDas Startprogramm kann über die App auf den Calliope mini geflasht werden. Gehe dazu auf \"Editoren und Programme\", kopple deinen Calliope mini (s. oben) und überspiele das Startprogramm auf deinen Calliope mini.\n\nCalliope mini 2.0\nAuf das Startprogramm kann über den Flash zugegriffen werden.\n\n1. Drücke für 5-6 Sekunden die Reset Taste.\n\n2. Dann blinkt das komplette LED-Display kurz auf und es leuchtet anschließend die erste LED oben links.\n\n3. Mit den Tasten A und B kannst du durch die gespeicherten Programme navigieren. Mit der Taste A gehst du direkt zu Programm 25 - das Startprogramm. Die letzte LED in der untersten Reihe leuchtet jetzt.\n\n4. Drückst du nun die Tasten A und B gleichzeitig, so kannst du das ausgewählte Programm starten. Es wird nun direkt in den Prozessor geladen und kann durch Reset neu getsratet werden.";
 
 /* Class = "UIButton"; normalTitle = "Mehr zum Calliope mini Swift Playground"; ObjectID = "cQi-Mj-MB3"; */
-"cQi-Mj-MB3.normalTitle" = "Mehr zum Calliope mini Swift Playground";
+"cQi-Mj-MB3.normalTitle" = "Mehr zum Swift Playground";
 
 /* Class = "UIButton"; normalTitle = "BLUETOOTH VERBINDUNG"; ObjectID = "d1s-ln-zLY"; */
 "d1s-ln-zLY.normalTitle" = "BLUETOOTH VERBINDUNG";
 
 /* Class = "UIButton"; normalTitle = "Weiteres zur Verwendung von Bluetooth"; ObjectID = "DMN-vs-YaT"; */
 "DMN-vs-YaT.normalTitle" = "Weiteres zur Verwendung von Bluetooth";
+
+/* Class = "UIButton"; normalTitle = "Informationen zum Installieren des Startprogramms"; ObjectID = "et5-hg-kob"; */
+"et5-hg-kob.normalTitle" = "Informationen zum Startprogramm";
 
 /* Class = "UITextView"; text = "Sollte es einen lokalen Editor oder einen ganz anderen geben, so kann dieser in den Einstellungen zur App hinzugefügt werden. Diese Anpassung kann in der Einstellungen App gefunden werden. "; ObjectID = "Fkr-N8-Pu3"; */
 "Fkr-N8-Pu3.text" = "Sollte es einen lokalen Editor oder einen ganz anderen geben, so kann dieser in den Einstellungen zur App hinzugefügt werden. Diese Anpassung kann in der Einstellungen App gefunden werden. ";

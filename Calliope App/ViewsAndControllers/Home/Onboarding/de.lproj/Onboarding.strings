@@ -4,23 +4,26 @@
 /* Class = "UILabel"; text = "Start"; ObjectID = "4tg-pn-9If"; */
 "4tg-pn-9If.text" = "Start";
 
-/* Class = "UILabel"; text = "Connect to your calliope using its unique pattern signature"; ObjectID = "agm-gW-0YR"; */
-"agm-gW-0YR.text" = "Verbinde deinen Calliope mini, indem du das ID-Muster auf die 5x5-Matrix überträgst.";
+/* Class = "UIButton"; normalTitle = "First start"; ObjectID = "a1q-6T-PvS"; */
+"a1q-6T-PvS.normalTitle" = "Erster Start";
 
-/* Class = "UILabel"; text = "Now choose program 5"; ObjectID = "EcQ-ZK-Kap"; */
-"EcQ-ZK-Kap.text" = "Jetzt wähle Programm 5.";
+/* Class = "UILabel"; text = "Connect to your calliope using its unique pattern signature"; ObjectID = "agm-gW-0YR"; */
+"agm-gW-0YR.text" = "Starte den Bluetooth Modus und verbinde deinen Calliope mini, indem du das ID-Muster auf die 5x5-Matrix überträgst.";
 
 /* Class = "UILabel"; text = "Before you can begin, your Calliope needs energy!"; ObjectID = "F8L-Km-C5f"; */
 "F8L-Km-C5f.text" = "Bevor es losgeht, braucht dein Calliope mini Strom.";
 
 /* Class = "UILabel"; text = "When connected with your calliope, you can easily upload programs.\nCheck it out!"; ObjectID = "f9R-2U-MF7"; */
-"f9R-2U-MF7.text" = "Wenn du mit dem Calliope mini verbunden bist, kannst du ganz einfach deien Programme übertragen. Probiere es aus!";
+"f9R-2U-MF7.text" = "Wenn du mit dem Calliope mini verbunden bist, kannst du Programme übertragen. Probiere es aus!";
 
 /* Class = "UILabel"; text = "Upload Program"; ObjectID = "fjc-AF-Uny"; */
 "fjc-AF-Uny.text" = "Programm übertragen";
 
+/* Class = "UIButton"; normalTitle = "Transfer your first program"; ObjectID = "It6-wP-cL1"; */
+"It6-wP-cL1.normalTitle" = "Erstes Programm übertragen";
+
 /* Class = "UIButton"; normalTitle = "Upload Program Blinking Heart"; ObjectID = "KZP-Ey-EXu"; */
-"KZP-Ey-EXu.normalTitle" = "Überspiele das Programm \"Blinkende Herz\" auf deinen Calliope mini.";
+"KZP-Ey-EXu.normalTitle" = "Blinkendes Herz";
 
 /* Class = "UILabel"; text = "Greeting"; ObjectID = "M6T-cO-epA"; */
 "M6T-cO-epA.text" = "Begrüßung";
@@ -29,7 +32,7 @@
 "O20-zt-E5c.text" = "Schere, Stein, Papier …";
 
 /* Class = "UILabel"; text = "Get to know your Calliope Mini"; ObjectID = "ogi-fD-zPi"; */
-"ogi-fD-zPi.text" = "Lerne den Calliope mini kennen";
+"ogi-fD-zPi.text" = "Wenn du den Calliope zum ersten Mal startest oder das Startprogramm neu installierst, siehst du folgende Sequenz. Infos zum Startprogramm findest du in \"Hilfe\" unter \"Programme\".";
 
 /* Class = "UILabel"; text = "Programs Menu"; ObjectID = "pnY-4s-lpT"; */
 "pnY-4s-lpT.text" = "Programmauswahl";
