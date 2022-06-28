@@ -57,7 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             HexFileStoreDialog.showStoreHexUI(controller: viewController, hexFile: url, notSaved: { error in
                 return //TODO: handle error
-            }) { savedFile in
+            }) { savedFile, partial in
                 return //TODO: handle file saved
             }
 
