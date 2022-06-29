@@ -13,7 +13,7 @@ import UIKit
 enum HexFileStoreDialog {
     public static func showStoreHexUI(controller: UIViewController, hexFile: URL,
                                       notSaved: @escaping (Error?) -> (),
-                                      saveCompleted: ((Hex, Bool) -> ())? = nil) {
+                                      saveCompleted: ((Hex, _ partialFlashing: Bool) -> ())? = nil) {
 
         let name = hexFile.deletingPathExtension().lastPathComponent
 
@@ -34,26 +34,27 @@ enum HexFileStoreDialog {
             textField.text = name
         }
 
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Don´t save", comment: ""), style: .destructive) {_ in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Don´t save", comment: ""), style: .cancel) {_ in
             notSaved(nil)
         })
 
-        do {
-            let enteredName = alert.textFields?[0].text ?? name
-            //TODO clean up name
-            let file = try HexFileManager.store(name: enteredName, data: data)
-            //TODO watch for file name duplicates
+        let partialFlashingButtonTitle = NSLocalizedString("PartialFlashing", comment: "")
 
-            alert.addAction(UIAlertAction(title: NSLocalizedString("Partial", comment: ""), style: .destructive) { _ in
-                saveCompleted?(file, true)
-            })
-            
-            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
-                saveCompleted?(file, false)
-            })
-        } catch {
-            notSaved(error)
+        let saveConfirmedHandler: (UIAlertAction) -> Void = { action in
+            do {
+                let enteredName = alert.textFields?[0].text ?? name
+                //TODO clean up name
+                let file = try HexFileManager.store(name: enteredName, data: data)
+                //TODO watch for file name duplicates
+                saveCompleted?(file, action.title == partialFlashingButtonTitle)
+            } catch {
+                notSaved(error)
+            }
         }
+
+        alert.addAction(UIAlertAction(title: partialFlashingButtonTitle, style: .default, handler: saveConfirmedHandler))
+
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: saveConfirmedHandler))
 
         controller.present(alert, animated: true)
     }
