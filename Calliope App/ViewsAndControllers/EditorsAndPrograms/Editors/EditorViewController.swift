@@ -171,8 +171,8 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
             DispatchQueue.main.async {
                 HexFileStoreDialog.showStoreHexUI(controller: self, hexFile: download.url) { error in
                     //TODO: some reaction
-                } saveCompleted: { file, partial in
-                    FirmwareUpload.uploadWithoutConfirmation(controller: self, program: file, partial: partial) {
+                } saveCompleted: { file, partialFlashing in
+                    FirmwareUpload.uploadWithoutConfirmation(controller: self, program: file, partialFlashing: partialFlashing) {
                         MatrixConnectionViewController.instance.connect()
                     }
                 }

@@ -39,7 +39,7 @@ class FlashableCalliope: CalliopeBLEDevice {
         }
     }
 
-    public func upload(file: Hex, progressReceiver: DFUProgressDelegate? = nil, statusDelegate: DFUServiceDelegate? = nil, logReceiver: LoggerDelegate? = nil, partial: Bool = true) throws {
+    public func upload(file: Hex, progressReceiver: DFUProgressDelegate? = nil, statusDelegate: DFUServiceDelegate? = nil, logReceiver: LoggerDelegate? = nil, partialFlashing: Bool = true) throws {
 
         self.file = file
 
@@ -52,7 +52,7 @@ class FlashableCalliope: CalliopeBLEDevice {
         // Explanation: https://lancaster-university.github.io/microbit-docs/ble/partial-flashing-service/
         // the explanation is outdated though.
 
-        if (partial) {
+        if (partialFlashing) {
             try startPartialFlashing()
         }
         else {
@@ -280,20 +280,19 @@ class FlashableCalliope: CalliopeBLEDevice {
 
     private func sendNextPackages() {
         updateCallback("send 4 packages beginning at \(startPackageNumber)")
-        /* guard var partialFlashData = partialFlashData else {
-        } */
-        if (partialFlashData == nil) {
+        guard var partialFlashData = partialFlashData else {
             fallbackToFullFlash()
             return
         }
-        currentSegmentAddress = partialFlashData!.currentSegmentAddress
+        currentSegmentAddress = partialFlashData.currentSegmentAddress
         currentDataToFlash = []
         for _ in 0..<4 {
-            guard let nextPackage = partialFlashData!.next() else {
+            guard let nextPackage = partialFlashData.next() else {
                 break
             }
             currentDataToFlash.append(nextPackage)
         }
+        self.partialFlashData = partialFlashData
         sendCurrentPackages()
         if currentDataToFlash.count < 4 {
             endTransmission() //we did not have a full package to flash any more
