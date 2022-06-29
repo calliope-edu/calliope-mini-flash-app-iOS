@@ -39,7 +39,7 @@ class FlashableCalliope: CalliopeBLEDevice {
         }
     }
 
-    public func upload(file: Hex, progressReceiver: DFUProgressDelegate? = nil, statusDelegate: DFUServiceDelegate? = nil, logReceiver: LoggerDelegate? = nil) throws {
+    public func upload(file: Hex, progressReceiver: DFUProgressDelegate? = nil, statusDelegate: DFUServiceDelegate? = nil, logReceiver: LoggerDelegate? = nil, partialFlashing: Bool = true) throws {
 
         self.file = file
 
@@ -52,10 +52,13 @@ class FlashableCalliope: CalliopeBLEDevice {
         // Explanation: https://lancaster-university.github.io/microbit-docs/ble/partial-flashing-service/
         // the explanation is outdated though.
 
-        //startPartialFlashing()
-
-        //comment out this as soon as partial flashing works
-        try startFullFlashing()
+        if (partialFlashing) {
+            try startPartialFlashing()
+        }
+        else {
+            //comment out this as soon as partial flashing works
+            try startFullFlashing()
+        }
 	}
 
     public func cancelUpload() -> Bool {
@@ -169,6 +172,18 @@ class FlashableCalliope: CalliopeBLEDevice {
             receivedDalHash()
             return
         }
+        
+        if value[0] == .REGION && value[1] == .PROGRAM_REGION {
+            LogNotify.log("Program region: \(value[2..<6].hexEncodedString()) to \(value[6..<10].hexEncodedString()) - hash: \(value[10..<18].hexEncodedString())")
+            receivedProgramHash()
+            return
+        }
+
+        if value[0] == .REGION && value[1] == 0 {
+            LogNotify.log("Soft region: \(value[2..<6].hexEncodedString()) to \(value[6..<10].hexEncodedString()) - hash: \(value[10..<18].hexEncodedString())")
+            receivedEmbedHash()
+            return
+        }
 
         if value[0] == .WRITE {
             updateCallback("write status: \(Data([value[1]]).hexEncodedString())")
@@ -210,6 +225,7 @@ class FlashableCalliope: CalliopeBLEDevice {
         guard let file = file,
               let partialFlashingInfo = file.partialFlashingInfo,
               let partialFlashingCharacteristic = getCBCharacteristic(.partialFlashing) else {
+            LogNotify.log("partialFlashing not found")
             fallbackToFullFlash()
             return
         }
@@ -230,7 +246,16 @@ class FlashableCalliope: CalliopeBLEDevice {
             return
         }
         //request mode (application running or BLE only)
+        //send(command: .STATUS)
+        send(command: .REGION, value: Data([.EMBEDDED_REGION]))
+    }
+    
+    private func receivedProgramHash() {
         send(command: .STATUS)
+    }
+    
+    private func receivedEmbedHash() {
+        send(command: .REGION, value: Data([.PROGRAM_REGION]))
     }
 
     private func receivedCalliopeMode(_ needsRebootIntoBLEOnlyMode: Bool) {
@@ -267,6 +292,7 @@ class FlashableCalliope: CalliopeBLEDevice {
             }
             currentDataToFlash.append(nextPackage)
         }
+        self.partialFlashData = partialFlashData
         sendCurrentPackages()
         if currentDataToFlash.count < 4 {
             endTransmission() //we did not have a full package to flash any more
