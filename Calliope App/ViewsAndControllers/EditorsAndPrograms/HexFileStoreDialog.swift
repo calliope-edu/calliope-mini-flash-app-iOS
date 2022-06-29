@@ -34,11 +34,11 @@ enum HexFileStoreDialog {
             textField.text = name
         }
 
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Don´t save", comment: ""), style: .cancel) {_ in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Don´t save", comment: ""), style: .destructive) {_ in
             notSaved(nil)
         })
 
-        let partialFlashingButtonTitle = NSLocalizedString("PartialFlashing", comment: "")
+        let partialFlashingButtonTitle = NSLocalizedString("Save and fast upload", comment: "")
 
         let saveConfirmedHandler: (UIAlertAction) -> Void = { action in
             do {
@@ -54,7 +54,7 @@ enum HexFileStoreDialog {
 
         alert.addAction(UIAlertAction(title: partialFlashingButtonTitle, style: .default, handler: saveConfirmedHandler))
 
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: saveConfirmedHandler))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Save and thorough upload", comment: ""), style: .default, handler: saveConfirmedHandler))
 
         controller.present(alert, animated: true)
     }
