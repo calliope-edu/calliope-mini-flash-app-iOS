@@ -38,29 +38,22 @@ enum HexFileStoreDialog {
             notSaved(nil)
         })
 
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Partial", comment: ""), style: .destructive) { _ in
-            do {
-                let enteredName = alert.textFields?[0].text ?? name
-                //TODO clean up name
-                let file = try HexFileManager.store(name: enteredName, data: data)
-                //TODO watch for file name duplicates
+        do {
+            let enteredName = alert.textFields?[0].text ?? name
+            //TODO clean up name
+            let file = try HexFileManager.store(name: enteredName, data: data)
+            //TODO watch for file name duplicates
+
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Partial", comment: ""), style: .destructive) { _ in
                 saveCompleted?(file, true)
-            } catch {
-                notSaved(error)
-            }
-        })
-        
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
-            do {
-                let enteredName = alert.textFields?[0].text ?? name
-                //TODO clean up name
-                let file = try HexFileManager.store(name: enteredName, data: data)
-                //TODO watch for file name duplicates
+            })
+            
+            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
                 saveCompleted?(file, false)
-            } catch {
-                notSaved(error)
-            }
-        })
+            })
+        } catch {
+            notSaved(error)
+        }
 
         controller.present(alert, animated: true)
     }
