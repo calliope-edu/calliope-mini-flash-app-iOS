@@ -13,7 +13,7 @@ import UIKit
 enum HexFileStoreDialog {
     public static func showStoreHexUI(controller: UIViewController, hexFile: URL,
                                       notSaved: @escaping (Error?) -> (),
-                                      saveCompleted: ((Hex, _ partialFlashing: Bool) -> ())? = nil) {
+                                      saveCompleted: ((Hex) -> ())? = nil) {
 
         let name = hexFile.deletingPathExtension().lastPathComponent
 
@@ -38,23 +38,17 @@ enum HexFileStoreDialog {
             notSaved(nil)
         })
 
-        let partialFlashingButtonTitle = NSLocalizedString("Save and fast upload", comment: "")
-
-        let saveConfirmedHandler: (UIAlertAction) -> Void = { action in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
             do {
                 let enteredName = alert.textFields?[0].text ?? name
                 //TODO clean up name
                 let file = try HexFileManager.store(name: enteredName, data: data)
                 //TODO watch for file name duplicates
-                saveCompleted?(file, action.title == partialFlashingButtonTitle)
+                saveCompleted?(file)
             } catch {
                 notSaved(error)
             }
-        }
-
-        alert.addAction(UIAlertAction(title: partialFlashingButtonTitle, style: .default, handler: saveConfirmedHandler))
-
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Save and thorough upload", comment: ""), style: .default, handler: saveConfirmedHandler))
+        })
 
         controller.present(alert, animated: true)
     }
