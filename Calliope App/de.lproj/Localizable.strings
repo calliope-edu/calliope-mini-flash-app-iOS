@@ -68,7 +68,7 @@
 "Don´t save" = "Nicht sichern";
 
 /* No comment provided by engineer. */
-"Download finished" = "Dwonload abgeschlossen";
+"Download finished" = "Download abgeschlossen";
 
 /* No comment provided by engineer. */
 "Download the Swift Playgrounds App" = "Lade die Swift Playgrounds App";
@@ -229,3 +229,8 @@
 /* No comment provided by engineer. */
 "You are connected to your Calliope, well done!" = "Yeah, du bist verbunden - super gemacht! Weiter geht's!";
 
+/* No comment provided by engineer. */
+"Save and fast upload" = "Speichern und schnelles Übertragen";
+
+/* No comment provided by engineer. */
+"Save and thorough upload" = "Speichern und gründliches Übertragen";
