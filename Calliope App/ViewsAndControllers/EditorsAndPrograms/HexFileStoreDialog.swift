@@ -38,7 +38,7 @@ enum HexFileStoreDialog {
             notSaved(nil)
         })
 
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Save Program", comment: ""), style: .default) { _ in
             do {
                 let enteredName = alert.textFields?[0].text ?? name
                 //TODO clean up name
