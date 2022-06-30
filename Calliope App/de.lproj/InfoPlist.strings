@@ -1,0 +1,12 @@
+/* Bundle name */
+"CFBundleName" = "Calliope mini App";
+
+/* (No Comment) */
+"Hex File" = "Hex Datei";
+
+/* Privacy - Bluetooth Always Usage Description */
+"NSBluetoothAlwaysUsageDescription" = "Du benötigst Bluetooth, um den Calliope mini zu verbinden";
+
+/* Privacy - Bluetooth Peripheral Usage Description */
+"NSBluetoothPeripheralUsageDescription" = "Du benötigst Bluetooth, um den Calliope mini zu verbinden";
+

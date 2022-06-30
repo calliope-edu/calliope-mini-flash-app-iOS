@@ -1,0 +1,21 @@
+/* Class = "UILabel"; text = "Editors.\nThese editors allow you to write programs for showing text on the Calliope display, read its sensors or even build mini-robots yourself – Give it a try!"; ObjectID = "Hqp-zE-kfc"; */
+"Hqp-zE-kfc.text" = "These editors allow you to write programs for showing text on the Calliope display, read its sensors or even build mini-robots yourself – Give it a try!";
+
+/* Class = "UILabel"; text = "Programs.\nThese are the programs you created so far."; ObjectID = "ips-vx-zky"; */
+"ips-vx-zky.text" = "These are the programs you created so far.";
+
+/* Class = "UILabel"; text = "Local editor"; ObjectID = "Ked-z3-CdC"; */
+"Ked-z3-CdC.text" = "Local Editor";
+
+/* Class = "UILabel"; text = "Start program.\nHere you can download the original program of the Calliope mini."; ObjectID = "lYA-S0-b2D"; */
+"lYA-S0-b2D.text" = "Here you can upload the original start program to the Calliope mini.";
+
+/* Class = "UILabel"; text = "Playground"; ObjectID = "NWk-nx-U7c"; */
+"NWk-nx-U7c.text" = "Swift Playground";
+
+/* Class = "UIViewController"; title = "Programs and Editors"; ObjectID = "rb5-ni-SG8"; */
+"rb5-ni-SG8.title" = "Editors and Programs";
+
+/* Class = "UINavigationItem"; title = "Editors and Programs"; ObjectID = "uLO-aS-ZNS"; */
+"uLO-aS-ZNS.title" = "Programs and Editors";
+

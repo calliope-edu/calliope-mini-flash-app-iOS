@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="m9X-fh-d5Q">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Main Container View Controller-->
+        <scene sceneID="Fcc-yf-iCm">
+            <objects>
+                <tabBarController hidesBottomBarWhenPushed="YES" id="m9X-fh-d5Q" customClass="MainContainerViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Xub-TL-qh8">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="QC6-jX-Y4m" kind="relationship" relationship="viewControllers" id="og1-gc-qTa"/>
+                        <segue destination="kl6-xA-Pcd" kind="relationship" relationship="viewControllers" id="OLi-i6-ZEQ"/>
+                        <segue destination="wRX-do-xvj" kind="relationship" relationship="viewControllers" id="a7r-3U-ybX"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hYA-TX-bOA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-674" y="82"/>
+        </scene>
+        <!--HomeScreen-->
+        <scene sceneID="jLW-uC-T8t">
+            <objects>
+                <viewControllerPlaceholder storyboardName="HomeScreen" id="QC6-jX-Y4m" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="oPM-D6-CaJ"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ebe-J8-pOr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-80" y="-206"/>
+        </scene>
+        <!--EditorAndPrograms-->
+        <scene sceneID="Wph-vh-ne1">
+            <objects>
+                <viewControllerPlaceholder storyboardName="EditorAndPrograms" id="kl6-xA-Pcd" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="mwh-ql-LOg"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Tjr-pK-dRN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-47" y="81"/>
+        </scene>
+        <!--Help-->
+        <scene sceneID="ht7-dB-PaT">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Help" id="wRX-do-xvj" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="UiX-pc-Qln"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mf8-se-eBQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-104" y="211"/>
+        </scene>
+        <!--CarRemote-->
+        <scene sceneID="qAH-41-EEu">
+            <objects>
+                <viewControllerPlaceholder storyboardName="CarRemote" id="qdf-eW-UAA" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="JMf-lJ-R5Y"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8aW-h4-Sc4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-88" y="332"/>
+        </scene>
+    </scenes>
+    <color key="tintColor" name="calliope-lilablau"/>
+    <resources>
+        <namedColor name="calliope-lilablau">
+            <color red="0.3919999897480011" green="0.46200001239776611" blue="0.99199998378753662" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

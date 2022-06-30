@@ -1,0 +1,41 @@
+{
+  "images" : [
+    {
+      "filename" : "teaser_onboarding_EN.pdf",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    },
+    {
+      "filename" : "teaser_onboarding-DE.pdf",
+      "idiom" : "universal",
+      "locale" : "de",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "locale" : "de",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "locale" : "de",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "localizable" : true,
+    "preserves-vector-representation" : true
+  }
+}

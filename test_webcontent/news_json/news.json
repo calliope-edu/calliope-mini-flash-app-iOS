@@ -1,0 +1,75 @@
+[
+  {
+    "image": "https://calliope.cc/media/pages/home/-875033869-1558478075/logo_editor_playground.gif",
+    "text": "Test 1",
+    "url": "https://calliope.cc",
+    "color": "#ffeab9"
+  },
+  {
+    "image": "https://calliope.cc/media/pages/home/1183085795-1558478071/calliope_website_mooc_bild.jpg",
+    "text": "Test 2 is with a little longer text, to see how the news item reacts",
+    "url": "https://calliope.cc/projekte",
+    "color": "#00FF99"
+  },
+  {
+    "image": "https://calliope.cc/media/pages/home/-875033869-1558478075/logo_editor_playground.gif",
+    "text": "Test 1",
+    "url": "https://calliope.cc",
+    "color": "#00FFFF",
+    "textcolor": "#0000FF"
+  },
+  {
+    "image": "https://calliope.cc/media/pages/home/1183085795-1558478071/calliope_website_mooc_bild.jpg",
+    "text": "Test 2 is with a little longer text, to see how the news item reacts",
+    "url": "https://calliope.cc/projekte",
+    "color": "#FF0099"
+  },
+  {
+    "image": "https://calliope.cc/media/pages/home/-875033869-1558478075/logo_editor_playground.gif",
+    "text": "Test 1",
+    "url": "https://calliope.cc",
+    "color": "#99FF00"
+  },
+  {
+    "image": "https://calliope.cc/media/pages/home/1183085795-1558478071/calliope_website_mooc_bild.jpg",
+    "text": "Test 2 is with a little longer text, to see how the news item reacts",
+    "url": "https://calliope.cc/projekte",
+    "color": "#000099"
+  },
+  {
+    "image": "https://calliope.cc/media/pages/home/-875033869-1558478075/logo_editor_playground.gif",
+    "text": "Test 1",
+    "url": "https://calliope.cc",
+    "color": "#00F000"
+  },
+  {
+    "image": "https://calliope.cc/media/pages/home/1183085795-1558478071/calliope_website_mooc_bild.jpg",
+    "text": "Test 2 is with a little longer text, to see how the news item reacts",
+    "url": "https://calliope.cc/projekte",
+    "color": "#AAFF55"
+  },
+  {
+    "image": "https://calliope.cc/media/pages/home/-875033869-1558478075/logo_editor_playground.gif",
+    "text": "Test 1",
+    "url": "https://calliope.cc",
+    "color": "#ABCDEF"
+  },
+  {
+    "image": "https://calliope.cc/media/pages/home/1183085795-1558478071/calliope_website_mooc_bild.jpg",
+    "text": "Test 2 is with a little longer text, to see how the news item reacts",
+    "url": "https://calliope.cc/projekte",
+    "color": "#123456"
+  },
+  {
+    "image": "https://calliope.cc/media/pages/home/-875033869-1558478075/logo_editor_playground.gif",
+    "text": "Test 1",
+    "url": "https://calliope.cc",
+    "color": "#999999"
+  },
+  {
+    "image": "https://calliope.cc/media/pages/home/1183085795-1558478071/calliope_website_mooc_bild.jpg",
+    "text": "Test 2 is with a little longer text, to see how the news item reacts",
+    "url": "https://calliope.cc/projekte",
+    "color": "#A0B1C2"
+  }
+]

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="localizable" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="XZv-gG-dt8">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Matrix Connection View Controller-->
+        <scene sceneID="DXh-A3-3ac">
+            <objects>
+                <viewController id="XZv-gG-dt8" customClass="MatrixConnectionViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="l7L-r3-07w">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" placeholderIntrinsicWidth="300" placeholderIntrinsicHeight="300" translatesAutoresizingMaskIntoConstraints="NO" id="fve-Pq-Ujl" userLabel="zoomView">
+                                <rect key="frame" x="101" y="0.0" width="274" height="450"/>
+                                <subviews>
+                                    <view opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="200" placeholderIntrinsicHeight="200" translatesAutoresizingMaskIntoConstraints="NO" id="F14-l5-EiT">
+                                        <rect key="frame" x="20" y="138" width="234" height="234"/>
+                                        <subviews>
+                                            <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Rez-7s-fDx" customClass="MatrixView" customModule="Calliope_App" customModuleProvider="target">
+                                                <rect key="frame" x="5" y="5" width="224" height="224"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="0.20051384229999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="Rez-7s-fDx" secondAttribute="bottom" constant="5" id="8Qf-gR-EQu"/>
+                                            <constraint firstItem="Rez-7s-fDx" firstAttribute="top" secondItem="F14-l5-EiT" secondAttribute="top" constant="5" id="FhE-E6-3Pe"/>
+                                            <constraint firstAttribute="trailing" secondItem="Rez-7s-fDx" secondAttribute="trailing" constant="5" id="G7q-7b-vYl"/>
+                                            <constraint firstItem="Rez-7s-fDx" firstAttribute="leading" secondItem="F14-l5-EiT" secondAttribute="leading" constant="5" id="Wrz-Wh-yL5"/>
+                                            <constraint firstAttribute="width" secondItem="F14-l5-EiT" secondAttribute="height" multiplier="1:1" id="Y4p-2V-8JM"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="600" verticalCompressionResistancePriority="600" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ABo-Y2-qxl">
+                                        <rect key="frame" x="20" y="20" width="147.5" height="110"/>
+                                        <string key="text">1. Programm 5 starten
+2. Schütteln
+3. LED-Muster eingeben</string>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="650" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="Zyc-gu-u4s" customClass="ConnectionButton" customModule="Calliope_App" customModuleProvider="target">
+                                        <rect key="frame" x="58.5" y="380" width="157" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="50" id="E2M-Tt-pHT"/>
+                                        </constraints>
+                                        <state key="normal" image="liveviewconnect/mini_refresh"/>
+                                        <state key="disabled">
+                                            <color key="titleColor" systemColor="darkTextColor"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="connect" destination="XZv-gG-dt8" eventType="touchUpInside" id="sEd-A7-UpC"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" name="calliope-yellow"/>
+                                <constraints>
+                                    <constraint firstItem="Zyc-gu-u4s" firstAttribute="centerX" secondItem="Rez-7s-fDx" secondAttribute="centerX" id="1CF-TZ-VcY"/>
+                                    <constraint firstAttribute="width" priority="999" constant="274" id="7Ms-GT-4Gg"/>
+                                    <constraint firstAttribute="height" priority="999" constant="450" id="B5e-yL-cNE"/>
+                                    <constraint firstItem="ABo-Y2-qxl" firstAttribute="top" secondItem="fve-Pq-Ujl" secondAttribute="top" priority="751" constant="20" id="C9m-4b-xQg"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="F14-l5-EiT" secondAttribute="trailing" id="G81-L7-fWX"/>
+                                    <constraint firstItem="F14-l5-EiT" firstAttribute="top" relation="greaterThanOrEqual" secondItem="fve-Pq-Ujl" secondAttribute="top" id="GRJ-KG-hN8"/>
+                                    <constraint firstItem="F14-l5-EiT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fve-Pq-Ujl" secondAttribute="leading" id="KYr-Tz-E1h"/>
+                                    <constraint firstItem="F14-l5-EiT" firstAttribute="top" secondItem="ABo-Y2-qxl" secondAttribute="bottom" priority="750" constant="8" id="PTn-mr-pIT"/>
+                                    <constraint firstAttribute="trailing" secondItem="F14-l5-EiT" secondAttribute="trailing" priority="700" constant="20" id="RaX-di-09c"/>
+                                    <constraint firstItem="Zyc-gu-u4s" firstAttribute="width" secondItem="Rez-7s-fDx" secondAttribute="width" multiplier="0.7" priority="500" id="SFl-Bg-Fx8"/>
+                                    <constraint firstAttribute="bottom" secondItem="Zyc-gu-u4s" secondAttribute="bottom" priority="700" constant="20" id="Wks-5f-5tb"/>
+                                    <constraint firstItem="Zyc-gu-u4s" firstAttribute="top" secondItem="F14-l5-EiT" secondAttribute="bottom" priority="710" constant="8" id="cvz-22-YYv"/>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="F14-l5-EiT" secondAttribute="bottom" id="efo-zp-iif"/>
+                                    <constraint firstItem="F14-l5-EiT" firstAttribute="leading" secondItem="fve-Pq-Ujl" secondAttribute="leading" priority="700" constant="20" id="nh8-Sa-lbi"/>
+                                    <constraint firstItem="ABo-Y2-qxl" firstAttribute="leading" secondItem="fve-Pq-Ujl" secondAttribute="leading" priority="755" constant="20" id="o2g-rY-bD4"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f6r-M2-oVO" customClass="ConnectionViewCollapseButton" customModule="Calliope_App" customModuleProvider="target">
+                                <rect key="frame" x="325" y="0.0" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="hO2-iY-xGJ"/>
+                                    <constraint firstAttribute="width" secondItem="f6r-M2-oVO" secondAttribute="height" multiplier="1:1" id="ioW-gs-FT4"/>
+                                </constraints>
+                                <state key="normal" image="liveviewconnect/mini_mini" backgroundImage="liveviewconnect/mini_button_circle_red"/>
+                                <connections>
+                                    <action selector="toggleOpen:" destination="XZv-gG-dt8" eventType="touchUpInside" id="nrV-Mn-L2w"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="ilK-df-gtj"/>
+                        <constraints>
+                            <constraint firstItem="ilK-df-gtj" firstAttribute="leading" relation="lessThanOrEqual" secondItem="f6r-M2-oVO" secondAttribute="leading" id="0j1-sv-azc"/>
+                            <constraint firstItem="f6r-M2-oVO" firstAttribute="top" secondItem="l7L-r3-07w" secondAttribute="top" id="5RN-UL-HVC"/>
+                            <constraint firstAttribute="trailing" secondItem="f6r-M2-oVO" secondAttribute="trailing" id="AeD-vD-j99"/>
+                            <constraint firstItem="f6r-M2-oVO" firstAttribute="trailing" secondItem="fve-Pq-Ujl" secondAttribute="trailing" id="Hhg-YG-uUs"/>
+                            <constraint firstItem="ilK-df-gtj" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="f6r-M2-oVO" secondAttribute="bottom" id="JFT-kw-Tni"/>
+                            <constraint firstItem="fve-Pq-Ujl" firstAttribute="leading" secondItem="ilK-df-gtj" secondAttribute="leading" priority="998" id="RrH-EB-eL7"/>
+                            <constraint firstItem="f6r-M2-oVO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ABo-Y2-qxl" secondAttribute="trailing" priority="755" constant="8" id="SC1-Uh-17S"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="fve-Pq-Ujl" secondAttribute="bottom" id="ZjT-3a-3IC"/>
+                            <constraint firstItem="ilK-df-gtj" firstAttribute="bottom" secondItem="fve-Pq-Ujl" secondAttribute="bottom" priority="998" id="cLh-no-TgU"/>
+                            <constraint firstItem="fve-Pq-Ujl" firstAttribute="top" secondItem="f6r-M2-oVO" secondAttribute="top" id="eI0-tU-ZqL"/>
+                            <constraint firstItem="fve-Pq-Ujl" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="l7L-r3-07w" secondAttribute="leading" id="qSr-eK-EnV"/>
+                        </constraints>
+                    </view>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="375" height="667"/>
+                    <connections>
+                        <outlet property="collapseButton" destination="f6r-M2-oVO" id="CGw-4B-kgt"/>
+                        <outlet property="collapseHeightConstraint" destination="B5e-yL-cNE" id="y7M-86-74O"/>
+                        <outlet property="collapseWidthConstraint" destination="7Ms-GT-4Gg" id="uQa-QA-Zgn"/>
+                        <outlet property="connectButton" destination="Zyc-gu-u4s" id="28j-lq-Rjr"/>
+                        <outlet property="connectionDescriptionLabel" destination="ABo-Y2-qxl" id="Tez-PV-yEJ"/>
+                        <outlet property="matrixView" destination="Rez-7s-fDx" id="Myv-kV-dAN"/>
+                        <outlet property="zoomView" destination="fve-Pq-Ujl" id="1sh-j4-HCY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="s2h-Zj-3ns" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-754" y="-540"/>
+        </scene>
+    </scenes>
+    <color key="tintColor" name="calliope-lilablau"/>
+    <resources>
+        <image name="liveviewconnect/mini_button_circle_red" width="75" height="75"/>
+        <image name="liveviewconnect/mini_mini" width="75" height="75"/>
+        <image name="liveviewconnect/mini_refresh" width="75" height="75"/>
+        <namedColor name="calliope-lilablau">
+            <color red="0.3919999897480011" green="0.46200001239776611" blue="0.99199998378753662" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="calliope-yellow">
+            <color red="0.97600001096725464" green="0.77600002288818359" blue="0.14900000393390656" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="darkTextColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

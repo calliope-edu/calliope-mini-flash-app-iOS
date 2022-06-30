@@ -1,0 +1,9 @@
+/* Class = "UILabel"; text = "There is veeery long text which could end up in two lines"; ObjectID = "AKN-ba-DUa"; */
+"AKN-ba-DUa.text" = "Text is too long";
+
+/* Class = "UILabel"; text = "Copied snippet!"; ObjectID = "cIf-ra-SUA"; */
+"cIf-ra-SUA.text" = "Copied Snippet";
+
+/* Class = "UILabel"; text = "Verwende die Snippet Library mit dem Swift Playground. Wenn du in dem Swift Playground \"Calliope Mini - Vorlage\" arbeitest, kannst du die Snippets Library neben der Playgrounds App öffnen und die Codesnippets ganz bequem von der App in den Playground kopieren."; ObjectID = "sDg-74-hMi"; */
+"sDg-74-hMi.text" = "Use the Snippet Library with the Swift Playground. If you are working in the Swift Playground \"Calliope Mini - Template\", you can open the Snippets Library next to the Playgrounds app and easily copy the code snippets from the app to the Playground.";
+
