@@ -56,7 +56,7 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
             }
 		} else if state == .connected {
 			//immediately evaluate whether in playground mode
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + BluetoothConstants.couplingDelay) {
+            updateQueue.asyncAfter(deadline: DispatchTime.now() + BluetoothConstants.couplingDelay) {
 				self.evaluateMode()
 			}
         } else if state == .evaluateMode {

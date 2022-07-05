@@ -35,7 +35,9 @@ class FlashableCalliope: CalliopeBLEDevice {
             transferFirmware()
         } else if state == .usageReady && rebootingForPartialFlashing {
             rebootingForPartialFlashing = false
-            rebootForPartialFlashingDone()
+            updateQueue.async {
+                self.startPartialFlashing()
+            }
         }
     }
 
@@ -174,12 +176,12 @@ class FlashableCalliope: CalliopeBLEDevice {
         }
         
         if value[0] == .REGION && value[1] == .PROGRAM_REGION {
-            LogNotify.log("Program region: \(value[2..<6].hexEncodedString()) to \(value[6..<10].hexEncodedString()) - hash: \(value[10..<18].hexEncodedString())")
+            LogNotify.log("Program region: \(value[2..<6].hexEncodedString()) to \(value[6..<10].hexEncodedString()) - hash: \(value[10..<18].hexEncodedString()) - new hash: \(hexProgramHash.hexEncodedString())")
             receivedProgramHash()
             return
         }
 
-        if value[0] == .REGION && value[1] == 0 {
+        if value[0] == .REGION && value[1] == .EMBEDDED_REGION {
             LogNotify.log("Soft region: \(value[2..<6].hexEncodedString()) to \(value[6..<10].hexEncodedString()) - hash: \(value[10..<18].hexEncodedString())")
             receivedEmbedHash()
             return
