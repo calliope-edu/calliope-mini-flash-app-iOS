@@ -142,6 +142,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 
 	private var attemptReconnect = false
 	private var reconnecting = false
+    private var delayedDiscovery = false
 
 	@IBAction func connect() {
 		if self.connector.state == .initialized
@@ -191,11 +192,15 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
                 if connectButton.connectionState == .readyToConnect && matchingCalliope.autoConnect {
                     connect()
                 }
+                else {
+                    startDelayedDiscovery()
+                }
 			} else {
 				matrixView.isUserInteractionEnabled = true
 				connectButton.connectionState = .notFoundRetry
 				self.collapseButton.connectionState = .disconnected
-			}
+                startDelayedDiscovery()
+            }
 		case .connecting:
 			matrixView.isUserInteractionEnabled = false
 			attemptReconnect = false
@@ -211,6 +216,19 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 			evaluateCalliopeState(calliopeWithCurrentMatrix!)
 		}
 	}
+    
+    private func startDelayedDiscovery() {
+        if delayedDiscovery { return }
+        delayedDiscovery = true
+        
+        LogNotify.log("adding delayed discovery to queue")
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
+            self.delayedDiscovery = false
+            if self.connector.state == .discoveredAll && self.connectButton.connectionState != .readyToPlay {
+                self.connector.startCalliopeDiscovery()
+            }
+        }
+    }
 
 	private func evaluateCalliopeState(_ calliope: CalliopeBLEDevice) {
 
