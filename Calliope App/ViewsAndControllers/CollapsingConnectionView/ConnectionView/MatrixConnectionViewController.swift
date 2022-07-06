@@ -177,6 +177,9 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 		case .discovering, .discovered:
 			if let calliope = self.calliopeWithCurrentMatrix {
 				evaluateCalliopeState(calliope)
+                if connectButton.connectionState == .readyToConnect {
+                    connect()
+                }
 			} else {
 				matrixView.isUserInteractionEnabled = true
 				connectButton.connectionState = .searching
@@ -185,6 +188,9 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 		case .discoveredAll:
 			if let matchingCalliope = calliopeWithCurrentMatrix {
 				evaluateCalliopeState(matchingCalliope)
+                if connectButton.connectionState == .readyToConnect && matchingCalliope.autoConnect {
+                    connect()
+                }
 			} else {
 				matrixView.isUserInteractionEnabled = true
 				connectButton.connectionState = .notFoundRetry

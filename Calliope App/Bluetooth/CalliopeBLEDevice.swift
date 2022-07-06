@@ -79,6 +79,7 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 
 	let peripheral : CBPeripheral
 	let name : String
+    var autoConnect : Bool = true
 
 	lazy var servicesWithUndiscoveredCharacteristics: Set<CBUUID> = {
         return requiredServicesUUIDs.union(optionalServicesUUIDs)
@@ -99,6 +100,7 @@ class CalliopeBLEDevice: NSObject, CBPeripheralDelegate {
 	public func hasConnected() {
 		if state == .discovered {
 			state = .connected
+            autoConnect = true
 		}
 	}
 
