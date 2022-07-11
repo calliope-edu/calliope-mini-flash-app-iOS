@@ -57,6 +57,37 @@ final class MatrixView: UIView {
         }
         updateBlock()
     }
+    
+    func isBlank() -> Bool {
+        for b1 in matrix {
+            for b2 in b1 {
+                if b2 { return false }
+            }
+        }
+        return true
+    }
+    
+    func getMatrixString() -> String {
+        var result = ""
+        for b1 in matrix {
+            for b2 in b1 {
+                result += (b2 ? "1" : "0")
+            }
+        }
+        return result
+    }
+    
+    func setMatrixString(pattern:String) {
+        if pattern.count != getMatrixString().count { return }
+        
+        var index = 0
+        for (i1,b1) in matrix.enumerated() {
+            for (i2,_) in b1.enumerated() {
+                matrix[i1][i2] = (pattern[index] == "1") ? true : false
+                index += 1
+            }
+        }
+    }
 
     let sf = 0.03
 

@@ -1,4 +1,10 @@
 /* (No Comment) */
+"Automatic Discovery" = "Automatische Suche";
+
+/* (No Comment) */
+"App Settings" = "App Einstellungen";
+
+/* (No Comment) */
 "App Version" = "App Version";
 
 /* (No Comment) */
@@ -21,6 +27,9 @@
 
 /* (No Comment) */
 "Playgrounds" = "Calliope mini Swift Playground";
+
+/* (No Comment) */
+"Restore Last Matrix" = "Letzte Matrix Laden";
 
 /* (No Comment) */
 "Reset Settings" = "Reset Einstellungen";
