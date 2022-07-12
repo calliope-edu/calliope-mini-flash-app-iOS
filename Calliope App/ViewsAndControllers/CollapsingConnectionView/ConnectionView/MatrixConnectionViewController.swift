@@ -95,6 +95,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     }
 
 	private func changedConnector(_ oldValue: CalliopeBLEDiscovery) {
+        LogNotify.log("connector changed")
         oldValue.giveUpResponsibility()
         connector.updateBlock = updateDiscoveryState
         connector.errorBlock = error
@@ -118,6 +119,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 		MatrixConnectionViewController.instance = self
 		connectButton.imageView?.contentMode = .scaleAspectFit
 		animate(expand: false)
+        LogNotify.log("Auto Discovery: \(autoDiscoveryEnabled)")
 	}
 
 	@IBAction func toggleOpen(_ sender: Any) {
@@ -156,17 +158,20 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     private var delayedDiscovery = false
 
 	@IBAction func connect() {
+        let calliope = self.calliopeWithCurrentMatrix
 		if self.connector.state == .initialized
 			|| self.calliopeWithCurrentMatrix == nil && self.connector.state == .discoveredAll {
-			connector.startCalliopeDiscovery()
-		} else if let calliope = self.calliopeWithCurrentMatrix {
-			if calliope.state == .discovered || calliope.state == .willReset {
-				calliope.updateBlock = updateDiscoveryState
-                calliope.errorBlock = error
+            if autoDiscoveryEnabled {
+                connector.startCalliopeDiscovery()
+            }
+        } else if calliope != nil && (autoDiscoveryEnabled || !matrixView.isBlank()) {
+            if calliope!.state == .discovered || calliope!.state == .willReset {
+				calliope!.updateBlock = updateDiscoveryState
+                calliope!.errorBlock = error
 				LogNotify.log("Matrix view connecting to \(calliope)")
-				connector.connectToCalliope(calliope)
-			} else if calliope.state == .connected {
-				calliope.evaluateMode()
+				connector.connectToCalliope(calliope!)
+			} else if calliope!.state == .connected {
+                calliope!.evaluateMode()
 			} else {
 				LogNotify.log("Connect button of matrix view should not be enabled in this state (\(self.connector.state), \(String(describing: self.calliopeWithCurrentMatrix?.state)))")
 			}
@@ -183,13 +188,17 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 			connectButton.connectionState = .initialized
 			self.collapseButton.connectionState = .disconnected
             restoreLastMatrix()
+            if !matrixView.isBlank() {
+                startDelayedDiscovery()
+            }
 		case .discoveryWaitingForBluetooth:
 			matrixView.isUserInteractionEnabled = true
 			connectButton.connectionState = .waitingForBluetooth
 			self.collapseButton.connectionState = .disconnected
 		case .discovering, .discovered:
-			if let calliope = self.calliopeWithCurrentMatrix {
-				evaluateCalliopeState(calliope)
+            let calliope = self.calliopeWithCurrentMatrix
+            if calliope != nil && (autoDiscoveryEnabled || !matrixView.isBlank()) {
+				evaluateCalliopeState(calliope!)
                 if connectButton.connectionState == .readyToConnect {
                     connect()
                 }
