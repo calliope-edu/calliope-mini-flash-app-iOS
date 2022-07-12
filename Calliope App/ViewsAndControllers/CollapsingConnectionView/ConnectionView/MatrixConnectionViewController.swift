@@ -41,7 +41,6 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 	let expandedWidth: CGFloat = 274
 	let expandedHeight: CGFloat = 430
 
-    let autoDiscoveryEnabled = UserDefaults.standard.bool(forKey: SettingsKey.autoDiscovery.rawValue)
     let restoreLastMatrixEnabled = UserDefaults.standard.bool(forKey: SettingsKey.restoreLastMatrix.rawValue)
 
     private let queue = DispatchQueue(label: "bluetooth")
@@ -95,7 +94,6 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     }
 
 	private func changedConnector(_ oldValue: CalliopeBLEDiscovery) {
-        LogNotify.log("connector changed")
         oldValue.giveUpResponsibility()
         connector.updateBlock = updateDiscoveryState
         connector.errorBlock = error
@@ -119,7 +117,6 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 		MatrixConnectionViewController.instance = self
 		connectButton.imageView?.contentMode = .scaleAspectFit
 		animate(expand: false)
-        LogNotify.log("Auto Discovery: \(autoDiscoveryEnabled)")
 	}
 
 	@IBAction func toggleOpen(_ sender: Any) {
@@ -158,20 +155,17 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     private var delayedDiscovery = false
 
 	@IBAction func connect() {
-        let calliope = self.calliopeWithCurrentMatrix
 		if self.connector.state == .initialized
 			|| self.calliopeWithCurrentMatrix == nil && self.connector.state == .discoveredAll {
-            if autoDiscoveryEnabled {
-                connector.startCalliopeDiscovery()
-            }
-        } else if calliope != nil && (autoDiscoveryEnabled || !matrixView.isBlank()) {
-            if calliope!.state == .discovered || calliope!.state == .willReset {
-				calliope!.updateBlock = updateDiscoveryState
-                calliope!.errorBlock = error
+			connector.startCalliopeDiscovery()
+		} else if let calliope = self.calliopeWithCurrentMatrix {
+			if calliope.state == .discovered || calliope.state == .willReset {
+				calliope.updateBlock = updateDiscoveryState
+                calliope.errorBlock = error
 				LogNotify.log("Matrix view connecting to \(calliope)")
-				connector.connectToCalliope(calliope!)
-			} else if calliope!.state == .connected {
-                calliope!.evaluateMode()
+				connector.connectToCalliope(calliope)
+			} else if calliope.state == .connected {
+				calliope.evaluateMode()
 			} else {
 				LogNotify.log("Connect button of matrix view should not be enabled in this state (\(self.connector.state), \(String(describing: self.calliopeWithCurrentMatrix?.state)))")
 			}
@@ -196,9 +190,8 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 			connectButton.connectionState = .waitingForBluetooth
 			self.collapseButton.connectionState = .disconnected
 		case .discovering, .discovered:
-            let calliope = self.calliopeWithCurrentMatrix
-            if calliope != nil && (autoDiscoveryEnabled || !matrixView.isBlank()) {
-				evaluateCalliopeState(calliope!)
+			if let calliope = self.calliopeWithCurrentMatrix {
+				evaluateCalliopeState(calliope)
                 if connectButton.connectionState == .readyToConnect {
                     connect()
                 }
