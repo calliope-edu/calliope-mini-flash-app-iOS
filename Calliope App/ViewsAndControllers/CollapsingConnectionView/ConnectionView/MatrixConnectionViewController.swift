@@ -238,7 +238,8 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
         LogNotify.log("adding delayed discovery to queue")
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
             self.delayedDiscovery = false
-            if self.connector.state == .discoveredAll && self.connectButton.connectionState != .readyToPlay {
+            if !self.matrixView.isBlank() && (self.connector.state == .initialized ||
+                self.connector.state == .discoveredAll && self.connectButton.connectionState != .readyToPlay) {
                 self.connector.startCalliopeDiscovery()
             }
         }
