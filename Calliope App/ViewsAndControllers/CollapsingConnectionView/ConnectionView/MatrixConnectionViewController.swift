@@ -251,7 +251,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 		} else if calliope.state == .usageReady {
 			self.collapseButton.connectionState = .connected
             LogNotify.log("last pattern:\r\(matrixView.getMatrixString())")
-            UserDefaults.standard.set(matrixView.getMatrixString(), forKey: "lastMatrix")
+            UserDefaults.standard.set(matrixView.getMatrixString(), forKey: SettingsKey.lastMatrix.rawValue)
 		} else {
 			self.collapseButton.connectionState = .connecting
 		}
