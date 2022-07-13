@@ -9,7 +9,10 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
     var editor: Editor!
 
     var webview: WKWebView! //webviews are buggy and cannot be placed via interface builder
-
+    lazy var documentsURL: URL = {
+        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    }()
+    
     init?(coder: NSCoder, editor: Editor) {
         self.editor = editor
         super.init(coder: coder)
@@ -75,7 +78,12 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
         let request = navigationAction.request
         if let download = editor.download(request) {
             decisionHandler(.cancel)
-			upload(result: download)
+            if (download.url.absoluteString.starts(with: "data:text/hex")) {
+                upload(result: download)
+            }
+            else if (download.url.absoluteString.starts(with: "data:text/xml")) {
+                save(download: download)
+            }
         } else if editor.isBackNavigation(request) {
 			decisionHandler(.cancel)
 			self.navigationController?.popViewController(animated: true)
@@ -177,6 +185,19 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
                     }
                 }
             }
+        }
+    }
+    
+    private func save(download: EditorDownload) {
+        let filename = documentsURL.appendingPathComponent("\(download.name).xml")
+        
+        do {
+            let xml = try download.url.asData()
+            try xml.write(to: filename)
+            let result = try String(contentsOf: filename)
+            LogNotify.log("xml: \(result.count) byte")
+        } catch {
+            LogNotify.log(error.localizedDescription)
         }
     }
 }

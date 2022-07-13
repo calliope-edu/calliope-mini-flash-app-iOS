@@ -78,7 +78,7 @@ final class RobertaEditor: Editor {
     func download(_ request: URLRequest) -> EditorDownload? {
         guard let url = request.url else { return nil }
         let s = url.absoluteString
-        let matches = s.matches(regex: "^data:text/hex")
+        let matches = s.matches(regex: "^data:text/(?:hex|xml)")
         guard matches.count == 1 else { return nil }
         return EditorDownload(name: "roberta-" + UUID().uuidString, url: url)
     }
