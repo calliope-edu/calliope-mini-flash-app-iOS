@@ -67,7 +67,7 @@ struct HexFile: Hex, Equatable {
             let parser = HexParser(url:url)
             var bin = Data()
             parser.parse { (address, data) in
-                if address >= 0x18000 && address < 0x40000 {
+                if address >= 0x18000 && address < 0x3C000 {
                     bin.append(data)
                 }
             }
