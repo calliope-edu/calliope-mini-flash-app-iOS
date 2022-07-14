@@ -25,14 +25,26 @@ extension UIView {
 }
 
 class HelpContentViewController: UIViewController {
-
+    let url_online_help = URL(string: "https://calliope.cc/programmieren/mobil/hilfe#top")!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.localizeTextViews("Help")
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        DispatchQueue.main.async {
+            let task = URLSession.shared.dataTask(with: self.url_online_help) {(data, response, error) in
+                guard let _ = data else {
+                    return self.view.localizeTextViews("Help")
+                }
+                    self.performSegue(withIdentifier: "online_help", sender: self)
+            }
+            task.resume()
+        }
     }
 
     // MARK: - Navigation
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let webViewController = segue.destination as? HelpWebViewController else {
             return
@@ -57,6 +69,9 @@ class HelpContentViewController: UIViewController {
         }
         if segue.identifier == "installstartprogram" {
             webViewController.url = URL(string: NSLocalizedString("https://calliope.cc/programmieren/mobil/hilfe", comment:"URL in Help screen"))
+        }
+        if segue.identifier == "online_help" {
+            webViewController.url = url_online_help
         }
     }
 
