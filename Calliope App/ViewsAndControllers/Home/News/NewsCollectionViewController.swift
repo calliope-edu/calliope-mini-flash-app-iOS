@@ -23,6 +23,7 @@ class NewsCollectionViewController: UICollectionViewController, UICollectionView
 	}
 
     override func viewDidLoad() {
+        navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewDidLoad()
         loadNews()
     }

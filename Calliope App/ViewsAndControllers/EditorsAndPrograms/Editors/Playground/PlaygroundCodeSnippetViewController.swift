@@ -32,6 +32,7 @@ class PlaygroundCodeSnippetViewController: UIViewController, CodeSnippetControll
     @IBOutlet weak var copySuccessView: UIView!
 
     override func viewDidLoad() {
+        navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewDidLoad()
         let copyAction = UILongPressGestureRecognizer()
         copyAction.minimumPressDuration = 1.0

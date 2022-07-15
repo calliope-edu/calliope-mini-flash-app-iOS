@@ -28,19 +28,21 @@ class HelpContentViewController: UIViewController {
     let url_online_help = URL(string: "https://calliope.cc/programmieren/mobil/hilfe#top")!
     
     override func viewDidLoad() {
+        navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewDidLoad()
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        DispatchQueue.main.async {
-            let task = URLSession.shared.dataTask(with: self.url_online_help) {(data, response, error) in
-                guard let _ = data else {
-                    return self.view.localizeTextViews("Help")
-                }
-                    self.performSegue(withIdentifier: "online_help", sender: self)
+        let task = URLSession.shared.dataTask(with: self.url_online_help) {(data, response, error) in
+            guard let _ = data else {
+                self.view.localizeTextViews("Help")
+                return
             }
-            task.resume()
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "online_help", sender: self)
+            }
         }
+        task.resume()
     }
 
     // MARK: - Navigation
