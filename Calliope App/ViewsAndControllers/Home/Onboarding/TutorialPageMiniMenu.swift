@@ -14,6 +14,7 @@ class TutorialPageMiniMenu: TutorialPageViewController {
     var navigationExplanation: TutorialPageMiniMenuNavigationCollectionViewController!
     
     override func viewDidLoad() {
+        navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewDidLoad()
 
         navigationExplanation.view.translatesAutoresizingMaskIntoConstraints = false

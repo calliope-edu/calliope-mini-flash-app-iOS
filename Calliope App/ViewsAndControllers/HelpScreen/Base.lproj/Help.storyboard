@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="JSJ-uf-MRY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="JSJ-uf-MRY">
     <device id="ipad11_0rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -168,6 +168,7 @@ Auf das Startprogramm kann über den Flash zugegriffen werden.
                     <navigationItem key="navigationItem" id="YWK-uU-cGH"/>
                     <connections>
                         <outlet property="webView" destination="XOy-8x-rMc" id="ux0-zR-Jov"/>
+                        <segue destination="km0-IP-BB6" kind="show" identifier="leave_online_help" id="l4N-Na-gFU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FqK-fk-6dz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -514,7 +515,7 @@ Raumerstraße 11
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
-                                                    <segue destination="cWl-mP-Xkh" kind="show" identifier="moreCalliopeMini" id="Dxa-g4-Vy7"/>
+                                                    <segue destination="cWl-mP-Xkh" kind="show" identifier="moreCalliopeMini" animates="NO" id="Dxa-g4-Vy7"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="svg-Wi-K2K">
@@ -561,6 +562,9 @@ Raumerstraße 11
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Help" id="8Dh-5e-PlT"/>
+                    <connections>
+                        <segue destination="cWl-mP-Xkh" kind="show" identifier="onlineHelp" animates="NO" id="vff-VN-tQL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kuT-e7-SRh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -568,7 +572,8 @@ Raumerstraße 11
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="MJR-n3-wyg"/>
+        <segue reference="l4N-Na-gFU"/>
+        <segue reference="vff-VN-tQL"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="calliope-lilablau"/>
     <resources>

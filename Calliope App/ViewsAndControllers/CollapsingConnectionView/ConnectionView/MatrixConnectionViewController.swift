@@ -113,6 +113,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     }
 
 	override public func viewDidLoad() {
+        navigationController?.setNavigationBarHidden(true, animated: false)
 		super.viewDidLoad()
 		MatrixConnectionViewController.instance = self
 		connectButton.imageView?.contentMode = .scaleAspectFit

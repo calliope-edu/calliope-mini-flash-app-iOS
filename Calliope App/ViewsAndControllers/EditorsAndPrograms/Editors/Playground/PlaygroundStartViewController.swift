@@ -14,6 +14,7 @@ class PlaygroundStartViewController: UIViewController {
     @IBOutlet weak var snippetLibraryButton: UIButton!
 
     override func viewDidLoad() {
+        navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewDidLoad()
         snippetLibraryButton.imageView?.contentMode = .scaleAspectFit
     }

@@ -38,6 +38,7 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
     var heightConstraint: NSLayoutConstraint!
 
     override func viewDidLoad() {
+        navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewDidLoad()
         (collectionViewLayout as! UICollectionViewFlowLayout).estimatedItemSize = UICollectionViewFlowLayout.automaticSize
     }

@@ -25,18 +25,44 @@ extension UIView {
 }
 
 class HelpContentViewController: UIViewController {
-
+    let url_online_help = URL(string: "https://calliope.cc/programmieren/mobil/hilfe#top")!
+    var successfullyOnline = false
+    
     override func viewDidLoad() {
+        navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewDidLoad()
-        view.localizeTextViews("Help")
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        var request = URLRequest(url: self.url_online_help)
+        request.httpMethod = "HEAD"
+        
+        // skip the online check if we were already online
+        if successfullyOnline {
+            self.performSegue(withIdentifier: "onlineHelp", sender: self)
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
+            guard let _ = data else {
+                self.view.localizeTextViews("Help")
+                return
+            }
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "onlineHelp", sender: self)
+                self.successfullyOnline = true
+            }
+        }
+        task.resume()
     }
 
     // MARK: - Navigation
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let webViewController = segue.destination as? HelpWebViewController else {
             return
         }
+        webViewController.setContentController(controller: self)
         if segue.identifier == "morebluetooth" {
             webViewController.url = URL(string: NSLocalizedString("https://calliope.cc/programmieren/mobil", comment:"URL in Help screen"))
         }
@@ -57,6 +83,9 @@ class HelpContentViewController: UIViewController {
         }
         if segue.identifier == "installstartprogram" {
             webViewController.url = URL(string: NSLocalizedString("https://calliope.cc/programmieren/mobil/hilfe", comment:"URL in Help screen"))
+        }
+        if segue.identifier == "onlineHelp" {
+            webViewController.url = url_online_help
         }
     }
 
