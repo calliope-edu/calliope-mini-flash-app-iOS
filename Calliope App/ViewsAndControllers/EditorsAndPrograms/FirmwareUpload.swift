@@ -159,11 +159,17 @@ class FirmwareUpload {
     func upload(finishedCallback: @escaping () -> (), partialFlashing: Bool = true) {
 		FirmwareUpload.uploadingInstance = self
 
+        let background_ident = UIApplication.shared.beginBackgroundTask(withName: "flashing", expirationHandler: {() -> Void in
+            LogNotify.log("task expired?")
+            // not exactly sure what belongs here...
+        })
+        
         UIApplication.shared.isIdleTimerDisabled = true
 
         let downloadCompletion = {
             FirmwareUpload.uploadingInstance = nil
             UIApplication.shared.isIdleTimerDisabled = false
+            UIApplication.shared.endBackgroundTask(background_ident)
         }
 
         self.failed = downloadCompletion
