@@ -232,16 +232,22 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 		}
 	}
     
-    private func startDelayedDiscovery() {
+    private func startDelayedDiscovery(delaySeconds:Int = 7) {
         if delayedDiscovery { return }
         delayedDiscovery = true
         
         LogNotify.log("adding delayed discovery to queue")
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delaySeconds)) {
             self.delayedDiscovery = false
-            if !self.matrixView.isBlank() && (self.connector.state == .initialized ||
-                self.connector.state == .discoveredAll && self.connectButton.connectionState != .readyToPlay) {
-                self.connector.startCalliopeDiscovery()
+            if self.collapseButton.expansionState == .closed {
+                if !self.matrixView.isBlank() && (self.connector.state == .initialized ||
+                    self.connector.state == .discoveredAll && self.connectButton.connectionState != .readyToPlay) {
+                    self.connector.startCalliopeDiscovery()
+                }
+            }
+            else {
+                // the matrix view is open so don't start a discovery as the connection attempt prevents user input to it
+                self.startDelayedDiscovery(delaySeconds: 2)
             }
         }
     }
