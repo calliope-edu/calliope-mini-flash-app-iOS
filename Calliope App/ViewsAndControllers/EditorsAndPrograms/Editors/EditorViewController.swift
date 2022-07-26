@@ -208,7 +208,9 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
                 do {
                     try fm.createDirectory(at: pathToUse, withIntermediateDirectories: true)
                 } catch {
-                    return saveFile(filename: filename, data: data, path: documentsPath)
+		    if pathToUse != documentsPath { // don't recurse into fallback mode
+                        return saveFile(filename: filename, data: data, path: documentsPath)
+		    }
                 }
             }
             try data.write(to: pathToUse.appendingPathComponent(filename))
