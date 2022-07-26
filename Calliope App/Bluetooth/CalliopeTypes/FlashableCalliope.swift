@@ -35,7 +35,9 @@ class FlashableCalliope: CalliopeBLEDevice {
             transferFirmware()
         } else if state == .usageReady && rebootingForPartialFlashing {
             rebootingForPartialFlashing = false
-            rebootForPartialFlashingDone()
+            updateQueue.async {
+                self.startPartialFlashing()
+            }
         }
     }
 
@@ -124,6 +126,7 @@ class FlashableCalliope: CalliopeBLEDevice {
 
     //current calliope state
     var dalHash = Data()
+    var currentProgramHash = Data()
 
     //data file and its properties
     var hexFileHash = Data()
@@ -174,12 +177,13 @@ class FlashableCalliope: CalliopeBLEDevice {
         }
         
         if value[0] == .REGION && value[1] == .PROGRAM_REGION {
-            LogNotify.log("Program region: \(value[2..<6].hexEncodedString()) to \(value[6..<10].hexEncodedString()) - hash: \(value[10..<18].hexEncodedString())")
+            currentProgramHash = value[10..<18]
+            LogNotify.log("Program region: \(value[2..<6].hexEncodedString()) to \(value[6..<10].hexEncodedString()) - hash: \(currentProgramHash.hexEncodedString()) - new hash: \(hexProgramHash.hexEncodedString())")
             receivedProgramHash()
             return
         }
 
-        if value[0] == .REGION && value[1] == 0 {
+        if value[0] == .REGION && value[1] == .EMBEDDED_REGION {
             LogNotify.log("Soft region: \(value[2..<6].hexEncodedString()) to \(value[6..<10].hexEncodedString()) - hash: \(value[10..<18].hexEncodedString())")
             receivedEmbedHash()
             return
@@ -251,7 +255,15 @@ class FlashableCalliope: CalliopeBLEDevice {
     }
     
     private func receivedProgramHash() {
-        send(command: .STATUS)
+        if currentProgramHash == hexProgramHash {
+            cancelUpload()
+            updateCallback("no changes to upload")
+            statusDelegate?.dfuError(.remoteLegacyDFUSuccess, didOccurWithMessage: NSLocalizedString("No changes to upload", comment: ""))
+            //progressReceiver?.dfuProgressDidChange(for: 1, outOf: 1, to: 100, currentSpeedBytesPerSecond: 0, avgSpeedBytesPerSecond: 0)
+        }
+        else {
+            send(command: .STATUS)
+        }
     }
     
     private func receivedEmbedHash() {

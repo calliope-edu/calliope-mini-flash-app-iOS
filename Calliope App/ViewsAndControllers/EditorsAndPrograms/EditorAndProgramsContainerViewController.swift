@@ -48,6 +48,7 @@ class EditorAndProgramsContainerViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+        navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewDidLoad()
         
         editorContainerView?.translatesAutoresizingMaskIntoConstraints = false

@@ -131,6 +131,9 @@
 "No" = "No";
 
 /* No comment provided by engineer. */
+"No changes to upload" = "No changes to upload";
+
+/* No comment provided by engineer. */
 "No description available" = "No description available";
 
 /* No comment provided by engineer. */
@@ -156,6 +159,12 @@
 
 /* No comment provided by engineer. */
 "Program download failed" = "Download failed";
+
+/* No comment provided by engineer. */
+"Program exported" = "Program exported";
+
+/* No comment provided by engineer. */
+"Program exported message" = "The program was saved in the documents folder on your device.";
 
 /* No comment provided by engineer. */
 "Push the button and follow the instructions for connecting to your Calliope" = "Display ID pattern on the Calliope mini: Press and hold A+B+Reset, release reset after 1 second. More info under \"Help“.";

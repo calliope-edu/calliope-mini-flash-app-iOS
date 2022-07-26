@@ -131,6 +131,9 @@
 "No" = "Nein";
 
 /* No comment provided by engineer. */
+"No changes to upload" = "Keine Änderungen zu übertragen";
+
+/* No comment provided by engineer. */
 "No description available" = "Keine Beschreibung verfügbar";
 
 /* No comment provided by engineer. */
@@ -156,6 +159,12 @@
 
 /* No comment provided by engineer. */
 "Program download failed" = "Programmübertragung fehlgeschlagen";
+
+/* No comment provided by engineer. */
+"Program exported" = "Program exportiert";
+
+/* No comment provided by engineer. */
+"Program exported message" = "Das Program wurde im Dokumente Ordner des Gerätes gespeichert.";
 
 /* No comment provided by engineer. */
 "Push the button and follow the instructions for connecting to your Calliope" = "ID-Muster auf dem Calliope mini anzeigen: A+B+Reset gedrückt halten, nach 1 Sekunde Reset loslassen. Weitere Infos unter „Hilfe”.";

@@ -12,6 +12,7 @@ class TutorialPageUploadProgram: TutorialPageViewController {
     @IBOutlet weak var blinkingHeart: UIImageView!
     
     override func viewDidLoad() {
+        navigationController?.setNavigationBarHidden(true, animated: false)
         let images = [#imageLiteral(resourceName: "ani_heart_00.pdf"), #imageLiteral(resourceName: "ani_heart_01.pdf"), #imageLiteral(resourceName: "ani_heart_02.pdf"), #imageLiteral(resourceName: "ani_heart_03.pdf")]
         blinkingHeart.animationImages = images
         blinkingHeart.animationDuration = 0.3 * Double(images.count)

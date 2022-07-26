@@ -29,6 +29,9 @@ public enum SettingsKey: String, CaseIterable {
     case defaultHexFileURL = "calliopeDefaultHexFilePreference"
     case blinkingHeartURL = "calliopeBlinkingHeartHexPreference"
     
+    case restoreLastMatrix = "restoreLastMatrixPreference" // key for IF to restore the matrix
+    case lastMatrix = "lastMatrix" // key for storing the matrix
+
     case resetSettings = "resetSettingsPreference"
 }
 
@@ -46,6 +49,8 @@ public struct Settings {
     static var defaultRobertaEnabled = true
     static var defaultPlaygroundsEnabled = UIDevice.current.userInterfaceIdiom != .phone
 
+    static var defaultRestoreLastMatrixEnabled = true
+    
     static var defaultAppVersion = "1.0"
 
     static var defaultResetSettingsValue = false
@@ -81,6 +86,11 @@ public struct Settings {
             return defaultHexFileUrl
         case .blinkingHeartURL:
             return defaultBlinkingHeartUrl
+            
+        case .restoreLastMatrix:
+            return defaultRestoreLastMatrixEnabled
+        case .lastMatrix:
+            return ""
 
         case .resetSettings:
             return false

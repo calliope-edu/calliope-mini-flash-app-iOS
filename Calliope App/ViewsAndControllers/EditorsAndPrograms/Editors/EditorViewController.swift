@@ -9,11 +9,12 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
     var editor: Editor!
 
     var webview: WKWebView! //webviews are buggy and cannot be placed via interface builder
-
+    lazy var documentsPath: URL = { FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0] }()
+    lazy var downloadsPath: URL = { FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask)[0] }()
+    
     init?(coder: NSCoder, editor: Editor) {
         self.editor = editor
         super.init(coder: coder)
-         
     }
     
     required init?(coder: NSCoder) {
@@ -24,6 +25,7 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
     }
     
     override func viewDidLoad() {
+        navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewDidLoad()
 
         navigationItem.title = editor.name
@@ -67,7 +69,7 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		self.navigationController?.setNavigationBarHidden(false, animated: animated)
+//		self.navigationController?.setNavigationBarHidden(false, animated: animated)
 	}
 
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -75,7 +77,12 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
         let request = navigationAction.request
         if let download = editor.download(request) {
             decisionHandler(.cancel)
-			upload(result: download)
+            if (download.url.absoluteString.starts(with: "data:text/xml")) {
+                export(download: download)
+            }
+            else {
+                upload(result: download)
+            }
         } else if editor.isBackNavigation(request) {
 			decisionHandler(.cancel)
 			self.navigationController?.popViewController(animated: true)
@@ -165,9 +172,22 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
     }
 
 	//MARK: uploading
-
+    var query = "document.querySelector('input#fileNameInput2').value"
     private func upload(result download: EditorDownload) {
-        do {
+        self.webview.evaluateJavaScript(query) { (result, error) in
+            let html = "\(result ?? "")"
+            LogNotify.log("html: \(html)")
+            do {
+                let file = try HexFileManager.store(name: html, data: download.url.asData())
+                FirmwareUpload.uploadWithoutConfirmation(controller: self, program: file, partialFlashing: true) {
+                    MatrixConnectionViewController.instance.connect()
+                }
+            } catch {
+                LogNotify.log(error.localizedDescription)
+            }
+        }
+        
+        /* do {
             DispatchQueue.main.async {
                 HexFileStoreDialog.showStoreHexUI(controller: self, hexFile: download.url) { error in
                     //TODO: some reaction
@@ -177,6 +197,52 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
                     }
                 }
             }
+        } */
+    }
+    
+    private func saveFile(filename: String, data:Data, path:URL? = nil) -> (Bool, Error?) {
+        let pathToUse = (path ?? downloadsPath)
+        let fm = FileManager.default
+        do {
+            if !fm.fileExists(atPath: pathToUse.path) {
+                do {
+                    try fm.createDirectory(at: pathToUse, withIntermediateDirectories: true)
+                } catch {
+                    return saveFile(filename: filename, data: data, path: documentsPath)
+                }
+            }
+            try data.write(to: pathToUse.appendingPathComponent(filename))
+        } catch {
+            LogNotify.log("saveFile error: \(error.localizedDescription)")
+            return (false, error)
+        }
+        
+        return (true, nil)
+    }
+    
+    private func export(download: EditorDownload) {
+        do {
+            let xml = try download.url.asData()
+            let (success, error) = saveFile(filename: "\(download.name).xml", data: xml)
+            if success {
+                let alert = UIAlertController(title: NSLocalizedString("Program exported", comment: ""),
+                                              message: NSLocalizedString("Program exported message", comment: "actual message in translation file"),
+                                              preferredStyle: .alert)
+
+                alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .destructive) {_ in
+                })
+
+                self.present(alert, animated: true)
+            }
+            else {
+                throw error!
+            }
+            /*
+             let result = try String(contentsOf: filename)
+             LogNotify.log("xml: \(result.count) byte")
+             */
+        } catch {
+            LogNotify.log(error.localizedDescription)
         }
     }
 }

@@ -10,6 +10,7 @@ import UIKit
 class LocalEditorViewController: UIViewController {
 
     override func viewDidLoad() {
+        navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
@@ -17,7 +18,7 @@ class LocalEditorViewController: UIViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		self.navigationController?.setNavigationBarHidden(false, animated: true)
+//		self.navigationController?.setNavigationBarHidden(false, animated: true)
 	}
 
     /*
