@@ -16,7 +16,7 @@ class HomeScreenViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewWillAppear(animated)
         self.rearrangeStackview(view.bounds.size)
-        MatrixConnectionViewController.instance?.calliopeClass = nil
+        //MatrixConnectionViewController.instance?.calliopeClass = nil // is this needed?
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {

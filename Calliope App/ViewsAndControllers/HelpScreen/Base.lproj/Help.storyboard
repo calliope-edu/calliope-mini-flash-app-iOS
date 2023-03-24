@@ -9,6 +9,11 @@
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="RobotoMono-Regular.ttf">
+            <string>RobotoMono-Regular</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Verbindung-->
         <scene sceneID="Yto-qY-mIN">
@@ -144,12 +149,11 @@ Auf das Startprogramm kann über den Flash zugegriffen werden.
             <objects>
                 <viewController id="cWl-mP-Xkh" customClass="HelpWebViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zw9-ke-GHd">
-                        <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
+                        <rect key="frame" x="0.0" y="0.0" width="704" height="995.5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XOy-8x-rMc">
-                                <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
-                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="0.0" y="0.0" width="704" height="995.5"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                     <wkPreferences key="preferences"/>
@@ -168,7 +172,7 @@ Auf das Startprogramm kann über den Flash zugegriffen werden.
                     <navigationItem key="navigationItem" id="YWK-uU-cGH"/>
                     <connections>
                         <outlet property="webView" destination="XOy-8x-rMc" id="ux0-zR-Jov"/>
-                        <segue destination="km0-IP-BB6" kind="show" identifier="leave_online_help" id="l4N-Na-gFU"/>
+                        <segue destination="km0-IP-BB6" kind="show" identifier="leave_online_help" animates="NO" id="l4N-Na-gFU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FqK-fk-6dz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -445,107 +449,20 @@ Raumerstraße 11
             <objects>
                 <viewController title="Verbindung" id="km0-IP-BB6" customClass="HelpContentViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fkN-jk-OqP">
-                        <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
+                        <rect key="frame" x="0.0" y="0.0" width="704" height="995.5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VlR-Kl-XgU">
-                                <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VlR-Kl-XgU">
+                                <rect key="frame" x="0.0" y="0.0" width="704" height="995.5"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="800" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="dw8-b5-O7a">
-                                        <rect key="frame" x="117" y="10" width="600" height="470"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="vVg-jc-n8f">
-                                                <rect key="frame" x="0.0" y="0.0" width="600" height="90"/>
-                                                <color key="backgroundColor" name="calliope-brightturquoise"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="90" id="odl-ib-oun"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                <state key="normal" title="EDITOREN">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <segue destination="rML-fc-Uwl" kind="show" id="2wZ-JF-iIC"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="wNV-S9-kWA">
-                                                <rect key="frame" x="0.0" y="95" width="600" height="90"/>
-                                                <color key="backgroundColor" name="calliope-brightturquoise"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="90" id="4n6-R6-H2L"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                <state key="normal" title="EIGENE PROGRAMME ">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <segue destination="Y0N-r0-o7h" kind="show" id="sB0-o9-Q53"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="d1s-ln-zLY">
-                                                <rect key="frame" x="0.0" y="190" width="600" height="90"/>
-                                                <color key="backgroundColor" name="calliope-brightturquoise"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="90" id="K6d-CW-0lO"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                <state key="normal" title="BLUETOOTH VERBINDUNG">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <segue destination="XU1-hQ-wSQ" kind="show" id="yI9-qf-e8g"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="UlD-8R-0kJ">
-                                                <rect key="frame" x="0.0" y="285" width="600" height="90"/>
-                                                <color key="backgroundColor" name="calliope-brightturquoise"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="90" id="dsa-ft-RTU"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                <state key="normal" title="CALLIOPE MINI ÜBERSICHT">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <segue destination="cWl-mP-Xkh" kind="show" identifier="moreCalliopeMini" animates="NO" id="Dxa-g4-Vy7"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="svg-Wi-K2K">
-                                                <rect key="frame" x="0.0" y="380" width="600" height="90"/>
-                                                <color key="backgroundColor" name="calliope-brightturquoise"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="90" id="5Jo-Hd-Wth"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                <state key="normal" title="KONTAKT">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <segue destination="gnA-rV-4yL" kind="show" id="AQA-Uv-ugx"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="600" id="Xq6-K8-An7"/>
-                                        </constraints>
-                                    </stackView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NO INTERNET CONNECTION" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SJT-mp-mcA">
+                                        <rect key="frame" x="0.0" y="0.0" width="704" height="995"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <fontDescription key="fontDescription" name="RobotoMono-Regular" family="Roboto Mono" pointSize="32"/>
+                                        <color key="textColor" systemColor="opaqueSeparatorColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstItem="dw8-b5-O7a" firstAttribute="leading" secondItem="GU1-gw-Vse" secondAttribute="leading" priority="999" id="4ql-b2-fQV"/>
-                                    <constraint firstItem="dw8-b5-O7a" firstAttribute="trailing" secondItem="GU1-gw-Vse" secondAttribute="trailing" priority="999" id="aqt-cN-SiD"/>
-                                    <constraint firstItem="dw8-b5-O7a" firstAttribute="top" secondItem="GU1-gw-Vse" secondAttribute="top" constant="10" id="fl8-Wo-3dk"/>
-                                    <constraint firstItem="dw8-b5-O7a" firstAttribute="bottom" secondItem="GU1-gw-Vse" secondAttribute="bottom" constant="-10" id="iIj-h7-51E"/>
-                                </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="GU1-gw-Vse"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="OBJ-aW-1iY"/>
                             </scrollView>
@@ -554,10 +471,8 @@ Raumerstraße 11
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="VlR-Kl-XgU" secondAttribute="bottom" id="3X4-wW-dEz"/>
-                            <constraint firstItem="dw8-b5-O7a" firstAttribute="centerX" secondItem="fwM-b7-rT8" secondAttribute="centerX" id="AkS-6X-CIG"/>
                             <constraint firstItem="VlR-Kl-XgU" firstAttribute="trailing" secondItem="fwM-b7-rT8" secondAttribute="trailing" id="g1M-OG-B9R"/>
                             <constraint firstItem="VlR-Kl-XgU" firstAttribute="top" secondItem="fkN-jk-OqP" secondAttribute="top" id="gTH-5a-XOC"/>
-                            <constraint firstItem="dw8-b5-O7a" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fwM-b7-rT8" secondAttribute="leading" constant="20" id="hGc-yY-U4E"/>
                             <constraint firstItem="VlR-Kl-XgU" firstAttribute="leading" secondItem="fwM-b7-rT8" secondAttribute="leading" id="hdm-IQ-89Y"/>
                         </constraints>
                     </view>
@@ -568,7 +483,7 @@ Raumerstraße 11
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kuT-e7-SRh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1014" y="-6"/>
+            <point key="canvasLocation" x="1013.6690647482015" y="-6.0301507537688446"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
@@ -586,9 +501,6 @@ Raumerstraße 11
         <image name="preferences" width="660" height="400"/>
         <image name="programms" width="1372" height="780"/>
         <image name="start_program" width="1372" height="780"/>
-        <namedColor name="calliope-brightturquoise">
-            <color red="0.40799999237060547" green="0.83099997043609619" blue="0.83099997043609619" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="calliope-darkgray">
             <color red="0.11400000005960464" green="0.11400000005960464" blue="0.10599999874830246" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -598,6 +510,9 @@ Raumerstraße 11
         <namedColor name="calliope-pink">
             <color red="0.90200001001358032" green="0.0" blue="0.49000000953674316" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

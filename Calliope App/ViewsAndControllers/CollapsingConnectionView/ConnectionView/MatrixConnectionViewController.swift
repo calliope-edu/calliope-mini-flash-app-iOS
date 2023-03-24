@@ -165,6 +165,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
                 calliope.errorBlock = error
 				LogNotify.log("Matrix view connecting to \(calliope)")
 				connector.connectToCalliope(calliope)
+                calliope.autoConnect = false // prevent spamming "need to unpair first" if it should appear
 			} else if calliope.state == .connected {
 				calliope.evaluateMode()
 			} else {
@@ -236,7 +237,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
         if delayedDiscovery { return }
         delayedDiscovery = true
         
-        LogNotify.log("adding delayed discovery to queue")
+        LogNotify.log("adding delayed discovery to queue: \(delaySeconds)")
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delaySeconds)) {
             self.delayedDiscovery = false
             if self.collapseButton.expansionState == .closed {
