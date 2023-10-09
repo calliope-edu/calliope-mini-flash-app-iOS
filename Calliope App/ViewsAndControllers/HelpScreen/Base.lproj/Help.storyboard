@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="JSJ-uf-MRY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="JSJ-uf-MRY">
     <device id="ipad11_0rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -27,10 +27,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="800" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Bj9-94-VpQ">
-                                        <rect key="frame" x="117" y="10" width="600" height="1305"/>
+                                        <rect key="frame" x="117" y="10" width="600" height="1438"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" restorationIdentifier="KGt-PM-JgX" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KGt-PM-JgX">
-                                                <rect key="frame" x="0.0" y="0.0" width="600" height="282"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="600" height="346"/>
                                                 <string key="text">Um die Bluetooth Dienste des Calliope mini mit einem anderen Gerät zu nutzen, muss dieses zunächst mit dem Calliope mini verbunden bzw. gekoppelt werden! Um eine Verbindung zum Senden von Codes an den Calliope mini aus der App herzustellen, müssen die folgenden Schritte ausgeführt werden:
 
 1. Drücke gleichzeitig die Tasten A+B und Reset deines Calliope mini. 
@@ -46,20 +46,20 @@ Koppeln-Symbol (fünf Balken) auf dem LED-Display.</string>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="257" verticalHuggingPriority="257" horizontalCompressionResistancePriority="757" verticalCompressionResistancePriority="757" image="bluetooth_kralle" translatesAutoresizingMaskIntoConstraints="NO" id="sGr-Ig-aMm">
-                                                <rect key="frame" x="0.0" y="287" width="600" height="242.5"/>
+                                                <rect key="frame" x="0.0" y="351" width="600" height="242.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="sGr-Ig-aMm" secondAttribute="height" multiplier="1980:800" id="QTP-yE-Zja"/>
                                                 </constraints>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DMN-vs-YaT">
-                                                <rect key="frame" x="0.0" y="534.5" width="600" height="30"/>
+                                                <rect key="frame" x="0.0" y="598.5" width="600" height="30"/>
                                                 <state key="normal" title="Weiteres zur Verwendung von Bluetooth"/>
                                                 <connections>
                                                     <segue destination="cWl-mP-Xkh" kind="show" identifier="morebluetooth" id="ftY-XM-sUL"/>
                                                 </connections>
                                             </button>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" restorationIdentifier="CC8-d7-LIv" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CC8-d7-LIv">
-                                                <rect key="frame" x="0.0" y="569.5" width="600" height="453"/>
+                                                <rect key="frame" x="0.0" y="633.5" width="600" height="522"/>
                                                 <string key="text">Um ein Programm aus dem Playground zu überspielen, muss das Programm 5 aus dem Startprogramm ausgewählt werden. 
 
 Calliope mini 1.x
@@ -80,13 +80,13 @@ Auf das Startprogramm kann über den Flash zugegriffen werden.
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="bluetooth_startprogramm" translatesAutoresizingMaskIntoConstraints="NO" id="f6K-zg-qF1">
-                                                <rect key="frame" x="0.0" y="1027.5" width="600" height="242.5"/>
+                                                <rect key="frame" x="0.0" y="1160.5" width="600" height="242.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="f6K-zg-qF1" secondAttribute="height" multiplier="1980:800" id="P2R-D9-Tba"/>
                                                 </constraints>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Ig-w3-fGp">
-                                                <rect key="frame" x="0.0" y="1275" width="600" height="30"/>
+                                                <rect key="frame" x="0.0" y="1408" width="600" height="30"/>
                                                 <state key="normal" title="Weitere Informationen zum Flash"/>
                                                 <connections>
                                                     <segue destination="cWl-mP-Xkh" kind="show" identifier="moreFlash" id="t8l-mE-HbW"/>
@@ -191,23 +191,23 @@ Auf das Startprogramm kann über den Flash zugegriffen werden.
                                 <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="800" verticalCompressionResistancePriority="800" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Sqe-8X-loV">
-                                        <rect key="frame" x="117" y="10" width="600" height="937"/>
+                                        <rect key="frame" x="117" y="10" width="600" height="961"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" restorationIdentifier="bvZ-tc-Xz5" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bvZ-tc-Xz5">
-                                                <rect key="frame" x="0.0" y="0.0" width="600" height="73"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="600" height="82"/>
                                                 <string key="text">Um die Namen der Programme anzupassen oder um Daten zu löschen, muss auf das entsprechende Programm länger gedrückt werden. Die jeweils gewünschte Option kann dann aus dem Menü ausgwählt werden.</string>
                                                 <color key="textColor" name="calliope-darkgray"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="257" verticalHuggingPriority="257" horizontalCompressionResistancePriority="757" verticalCompressionResistancePriority="757" image="programms" translatesAutoresizingMaskIntoConstraints="NO" id="JEH-pA-SEj">
-                                                <rect key="frame" x="0.0" y="78" width="600" height="341"/>
+                                                <rect key="frame" x="0.0" y="87" width="600" height="341"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="JEH-pA-SEj" secondAttribute="height" multiplier="1372:780" id="SKJ-er-Mlm"/>
                                                 </constraints>
                                             </imageView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" restorationIdentifier="W2T-43-YeH" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W2T-43-YeH">
-                                                <rect key="frame" x="0.0" y="424" width="600" height="54"/>
+                                                <rect key="frame" x="0.0" y="433" width="600" height="60"/>
                                                 <string key="text">ACHTUNG! Die Anpassungen sind nicht reversibel.
 Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
                                                 <color key="textColor" name="calliope-pink"/>
@@ -215,20 +215,20 @@ Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" restorationIdentifier="Wnc-WX-DdO" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wnc-WX-DdO">
-                                                <rect key="frame" x="0.0" y="483" width="600" height="73"/>
+                                                <rect key="frame" x="0.0" y="498" width="600" height="82"/>
                                                 <string key="text">Der Calliope kann durch installieren des Startprogramms auf seinen ursprünglichen Zustand zurückgesetzt werden. Hierfür bietet die Programme Ansicht eine eigene Schaltfläche.</string>
                                                 <color key="textColor" name="calliope-darkgray"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="257" verticalHuggingPriority="257" horizontalCompressionResistancePriority="757" verticalCompressionResistancePriority="757" image="start_program" translatesAutoresizingMaskIntoConstraints="NO" id="fVN-dX-xQg">
-                                                <rect key="frame" x="0.0" y="561" width="600" height="341"/>
+                                                <rect key="frame" x="0.0" y="585" width="600" height="341"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="fVN-dX-xQg" secondAttribute="height" multiplier="1372:780" id="1hh-2u-2Ii"/>
                                                 </constraints>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="et5-hg-kob">
-                                                <rect key="frame" x="0.0" y="907" width="600" height="30"/>
+                                                <rect key="frame" x="0.0" y="931" width="600" height="30"/>
                                                 <state key="normal" title="Informationen zum Installieren des Startprogramms"/>
                                                 <connections>
                                                     <segue destination="cWl-mP-Xkh" kind="show" identifier="installstartprogram" id="MJR-n3-wyg"/>
@@ -279,55 +279,55 @@ Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
                                 <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="800" verticalCompressionResistancePriority="800" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="z6O-aA-kQ4">
-                                        <rect key="frame" x="117" y="10" width="600" height="899.5"/>
+                                        <rect key="frame" x="117" y="10" width="600" height="961.5"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" restorationIdentifier="Hho-IW-sbR" scrollEnabled="NO" editable="NO" text="Wir haben die beiden meistverbreiteten Editoren direkt in der App eingebunden." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hho-IW-sbR">
-                                                <rect key="frame" x="0.0" y="0.0" width="600" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
                                                 <color key="textColor" name="calliope-darkgray"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="257" verticalHuggingPriority="257" horizontalCompressionResistancePriority="757" verticalCompressionResistancePriority="757" image="editoren" translatesAutoresizingMaskIntoConstraints="NO" id="BGa-XB-PYe">
-                                                <rect key="frame" x="0.0" y="40" width="600" height="121"/>
+                                                <rect key="frame" x="0.0" y="65" width="600" height="121"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="BGa-XB-PYe" secondAttribute="height" multiplier="1980:400" id="OLA-cW-Y21"/>
                                                 </constraints>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pz2-S5-d2S">
-                                                <rect key="frame" x="0.0" y="166" width="600" height="30"/>
+                                                <rect key="frame" x="0.0" y="191" width="600" height="30"/>
                                                 <state key="normal" title="Mehr zu den Editoren"/>
                                                 <connections>
                                                     <segue destination="cWl-mP-Xkh" kind="show" identifier="moreEditors" id="BJw-AB-Dyt"/>
                                                 </connections>
                                             </button>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" restorationIdentifier="Fkr-N8-Pu3" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fkr-N8-Pu3">
-                                                <rect key="frame" x="0.0" y="201" width="600" height="73"/>
+                                                <rect key="frame" x="0.0" y="226" width="600" height="82"/>
                                                 <string key="text">Sollte es einen lokalen Editor oder einen ganz anderen geben, so kann dieser in den Einstellungen zur App hinzugefügt werden. Diese Anpassung kann in der Einstellungen App gefunden werden. </string>
                                                 <color key="textColor" name="calliope-darkgray"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="257" verticalHuggingPriority="257" horizontalCompressionResistancePriority="757" verticalCompressionResistancePriority="757" image="preferences" translatesAutoresizingMaskIntoConstraints="NO" id="sLd-6D-3H1">
-                                                <rect key="frame" x="0.0" y="279" width="600" height="400"/>
+                                                <rect key="frame" x="0.0" y="313" width="600" height="400"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="sLd-6D-3H1" secondAttribute="height" multiplier="3:2" id="IyO-rH-dne"/>
                                                 </constraints>
                                             </imageView>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="257" verticalHuggingPriority="257" horizontalCompressionResistancePriority="757" verticalCompressionResistancePriority="757" image="editoren_playgrounds" translatesAutoresizingMaskIntoConstraints="NO" id="d3Z-xv-iAI">
-                                                <rect key="frame" x="0.0" y="684" width="600" height="121.5"/>
+                                                <rect key="frame" x="0.0" y="718" width="600" height="121.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="d3Z-xv-iAI" secondAttribute="height" multiplier="1980:400" id="fdm-kB-f2g"/>
                                                 </constraints>
                                             </imageView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" restorationIdentifier="Kbf-NW-5k6" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kbf-NW-5k6">
-                                                <rect key="frame" x="0.0" y="810.5" width="600" height="54"/>
+                                                <rect key="frame" x="0.0" y="844.5" width="600" height="82"/>
                                                 <string key="text">Zusätzlich können direkt Programmier-Teile für den Calliope mini Swift Playground aus der Snippet Library kopiert und in die eigenen Programme eingefügt werden.</string>
                                                 <color key="textColor" name="calliope-darkgray"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cQi-Mj-MB3">
-                                                <rect key="frame" x="0.0" y="869.5" width="600" height="30"/>
+                                                <rect key="frame" x="0.0" y="931.5" width="600" height="30"/>
                                                 <state key="normal" title="Mehr zum Calliope mini Swift Playground"/>
                                                 <connections>
                                                     <segue destination="cWl-mP-Xkh" kind="show" identifier="morePlayground" id="I0Q-ym-Ipc"/>
@@ -378,16 +378,17 @@ Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
                                 <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="800" verticalCompressionResistancePriority="800" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="92d-Cz-7Bn">
-                                        <rect key="frame" x="117" y="10" width="600" height="424"/>
+                                        <rect key="frame" x="117" y="10" width="600" height="485"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="257" verticalHuggingPriority="257" horizontalCompressionResistancePriority="757" verticalCompressionResistancePriority="757" image="calliope_logo" translatesAutoresizingMaskIntoConstraints="NO" id="h2x-jc-f27">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="121"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="h2x-jc-f27" secondAttribute="height" multiplier="1980:400" id="auN-hV-ZtX"/>
+                                                    <constraint firstAttribute="width" secondItem="h2x-jc-f27" secondAttribute="height" multiplier="1980:400" id="e4Z-kL-I1a"/>
                                                 </constraints>
                                             </imageView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" restorationIdentifier="a5l-k2-8Jf" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a5l-k2-8Jf">
-                                                <rect key="frame" x="0.0" y="126" width="600" height="263"/>
+                                                <rect key="frame" x="0.0" y="126" width="600" height="324"/>
                                                 <string key="text">Sollte es Fragen oder Probleme geben helfen wir gern!
 
 Wir sind telefonisch oder per Email zu erreichen.
@@ -404,7 +405,7 @@ Raumerstraße 11
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FOM-5E-71J">
-                                                <rect key="frame" x="0.0" y="394" width="600" height="30"/>
+                                                <rect key="frame" x="0.0" y="455" width="600" height="30"/>
                                                 <state key="normal" title="calliope.cc"/>
                                                 <connections>
                                                     <segue destination="cWl-mP-Xkh" kind="show" identifier="moreCalliope" id="PtW-fq-q7G"/>
@@ -412,7 +413,6 @@ Raumerstraße 11
                                             </button>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="h2x-jc-f27" firstAttribute="width" secondItem="h2x-jc-f27" secondAttribute="height" multiplier="1980:400" id="e4Z-kL-I1a"/>
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="600" id="wpg-dw-5p3"/>
                                         </constraints>
                                     </stackView>
@@ -455,7 +455,7 @@ Raumerstraße 11
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VlR-Kl-XgU">
                                 <rect key="frame" x="0.0" y="0.0" width="704" height="995.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NO INTERNET CONNECTION" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SJT-mp-mcA">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="NO INTERNET CONNECTION" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SJT-mp-mcA">
                                         <rect key="frame" x="0.0" y="0.0" width="704" height="995"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="RobotoMono-Regular" family="Roboto Mono" pointSize="32"/>
@@ -488,7 +488,7 @@ Raumerstraße 11
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="l4N-Na-gFU"/>
-        <segue reference="vff-VN-tQL"/>
+        <segue reference="BJw-AB-Dyt"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="calliope-lilablau"/>
     <resources>

@@ -55,7 +55,7 @@ class FlashableCalliope: CalliopeBLEDevice {
         // the explanation is outdated though.
 
         if (partialFlashing) {
-            try startPartialFlashing()
+            startPartialFlashing()
         }
         else {
             //comment out this as soon as partial flashing works
@@ -86,9 +86,7 @@ class FlashableCalliope: CalliopeBLEDevice {
         let bin = file.bin
         let dat = HexFile.dat(bin)
 
-        guard let firmware = DFUFirmware(binFile:bin, datFile:dat, type: .application) else {
-            throw "Could not create firmware from given data"
-        }
+        let firmware = DFUFirmware(binFile:bin, datFile:dat, type: .application)
 
         try preparePairing()
 
@@ -256,7 +254,7 @@ class FlashableCalliope: CalliopeBLEDevice {
     
     private func receivedProgramHash() {
         if currentProgramHash == hexProgramHash {
-            cancelUpload()
+            let _ = cancelUpload() //if cancel does not work, we cannot do anything about it here. Push reset button on Calliope should suffice
             updateCallback("no changes to upload")
             statusDelegate?.dfuError(.remoteLegacyDFUSuccess, didOccurWithMessage: NSLocalizedString("No changes to upload", comment: ""))
             //progressReceiver?.dfuProgressDidChange(for: 1, outOf: 1, to: 100, currentSpeedBytesPerSecond: 0, avgSpeedBytesPerSecond: 0)
