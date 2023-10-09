@@ -16,7 +16,6 @@ class NewsDetailWebViewController: UIViewController, WKNavigationDelegate, WKUID
 	public var url: URL!
 
     override func viewDidLoad() {
-        navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewDidLoad()
 
         webView.navigationDelegate = self

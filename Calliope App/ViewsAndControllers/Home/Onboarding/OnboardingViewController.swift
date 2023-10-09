@@ -45,7 +45,6 @@ class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSo
     }
     
     override func viewDidLoad() {
-        navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewDidLoad()
         
         viewControllersObservation = observe(\.viewControllers, changeHandler: { [weak self] (_, _) in

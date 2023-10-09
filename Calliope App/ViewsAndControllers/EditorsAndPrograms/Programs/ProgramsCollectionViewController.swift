@@ -21,7 +21,6 @@ class ProgramsCollectionViewController: UICollectionViewController, ProgramCellD
     private var programSubscription: NSObjectProtocol!
 
     override func viewDidLoad() {
-        navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewDidLoad()
         programSubscription = NotificationCenter.default.addObserver(
             forName: NotificationConstants.hexFileChanged, object: nil, queue: nil,

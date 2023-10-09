@@ -25,7 +25,6 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
     }
     
     override func viewDidLoad() {
-        navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewDidLoad()
 
         navigationItem.title = editor.name
@@ -69,7 +68,7 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-//		self.navigationController?.setNavigationBarHidden(false, animated: animated)
+		self.navigationController?.setNavigationBarHidden(false, animated: animated)
 	}
 
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {

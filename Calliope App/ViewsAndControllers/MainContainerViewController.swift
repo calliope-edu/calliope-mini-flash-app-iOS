@@ -15,7 +15,6 @@ class MainContainerViewController: UITabBarController, UITabBarControllerDelegat
 	weak var connectionViewController: MatrixConnectionViewController!
 
 	override func viewDidAppear(_ animated: Bool) {
-        navigationController?.setNavigationBarHidden(true, animated: false)
 		super.viewDidAppear(animated)
 
         DispatchQueue.main.async {

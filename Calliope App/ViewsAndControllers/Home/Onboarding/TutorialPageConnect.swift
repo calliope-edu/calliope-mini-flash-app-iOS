@@ -42,7 +42,6 @@ class TutorialPageConnect: TutorialPageViewController, AnimatingTutorialViewCont
          (nil, nil, [#imageLiteral(resourceName: "blr_03")], nil)]
     
     override func viewDidLoad() {
-        navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewDidLoad()
     }
 

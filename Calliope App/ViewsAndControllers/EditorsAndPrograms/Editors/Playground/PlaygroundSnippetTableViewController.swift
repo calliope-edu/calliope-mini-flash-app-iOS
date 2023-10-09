@@ -29,7 +29,6 @@ class PlaygroundSnippetTableViewController: UITableViewController, UITableViewDr
     }
 
     override func viewDidLoad() {
-        navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewDidLoad()
 
         tableView.dragInteractionEnabled = true

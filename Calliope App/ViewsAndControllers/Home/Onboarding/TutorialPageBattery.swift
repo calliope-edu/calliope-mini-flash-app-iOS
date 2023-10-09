@@ -18,7 +18,6 @@ class TutorialPageBattery: UIViewController {
     private var slideshowRunning: Bool = false
     
     override func viewDidLoad() {
-        navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewDidLoad()
     }
     
