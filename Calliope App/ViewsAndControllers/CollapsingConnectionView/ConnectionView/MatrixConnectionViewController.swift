@@ -287,6 +287,9 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 		case .usageReady:
 			matrixView.isUserInteractionEnabled = true
 			connectButton.connectionState = .readyToPlay
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+                self.animate(expand: false)
+            }
 		case .wrongMode:
 			matrixView.isUserInteractionEnabled = true
 			connectButton.connectionState = .wrongProgram

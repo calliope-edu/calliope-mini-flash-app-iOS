@@ -57,7 +57,7 @@ class ConnectionViewCollapseButton: UIButton, CollapseButtonProtocol {
 		}
 
 		if smooth {
-		UIView.transition(with: self, duration: 0.2, options: [.transitionCrossDissolve, .allowAnimatedContent, .curveLinear], animations: animations, completion: nil)
+            UIView.transition(with: self, duration: 0.2, options: [.transitionCrossDissolve, .allowAnimatedContent, .curveLinear], animations: animations, completion: nil)
 		} else {
 			animations()
 		}
