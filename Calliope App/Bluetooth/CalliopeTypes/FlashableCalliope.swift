@@ -13,11 +13,11 @@ class FlashableCalliope: CalliopeBLEDevice {
     // MARK: common
 
 	override var requiredServices: Set<CalliopeService> {
-		return [.dfu]
+		return []
 	}
 
     override var optionalServices: Set<CalliopeService> {
-        return [.partialFlashing]
+        return [.partialFlashing, .dfu]
     }
 
 	private var rebootingForFirmwareUpgrade = false

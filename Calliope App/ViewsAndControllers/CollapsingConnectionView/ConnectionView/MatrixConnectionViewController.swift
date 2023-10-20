@@ -164,7 +164,6 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
                 calliope.errorBlock = error
 				LogNotify.log("Matrix view connecting to \(calliope)")
 				connector.connectToCalliope(calliope)
-                calliope.autoConnect = false // prevent spamming "need to unpair first" if it should appear
 			} else if calliope.state == .connected {
 				calliope.evaluateMode()
 			} else {
@@ -204,12 +203,6 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 		case .discoveredAll:
 			if let matchingCalliope = calliopeWithCurrentMatrix {
 				evaluateCalliopeState(matchingCalliope)
-                if connectButton.connectionState == .readyToConnect && matchingCalliope.autoConnect {
-                    connect()
-                }
-                else {
-                    startDelayedDiscovery()
-                }
 			} else {
 				matrixView.isUserInteractionEnabled = true
 				connectButton.connectionState = .notFoundRetry
