@@ -41,7 +41,7 @@ class FlashableCalliope: CalliopeBLEDevice {
         }
     }
 
-    public func upload(file: Hex, progressReceiver: DFUProgressDelegate? = nil, statusDelegate: DFUServiceDelegate? = nil, logReceiver: LoggerDelegate? = nil, partialFlashing: Bool = true) throws {
+    public func upload(file: Hex, progressReceiver: DFUProgressDelegate? = nil, statusDelegate: DFUServiceDelegate? = nil, logReceiver: LoggerDelegate? = nil) throws {
 
         self.file = file
 
@@ -49,16 +49,14 @@ class FlashableCalliope: CalliopeBLEDevice {
         self.statusDelegate = statusDelegate
         self.logReceiver = logReceiver
 
-        //TODO: attempt partial flashing first
+        //Attempt partial flashing first
         // Android implementation: https://github.com/microbit-sam/microbit-android/blob/partial-flash/app/src/main/java/com/samsung/microbit/service/PartialFlashService.java
         // Explanation: https://lancaster-university.github.io/microbit-docs/ble/partial-flashing-service/
         // the explanation is outdated though.
 
-        if (partialFlashing) {
+        if discoveredOptionalServices.contains(.partialFlashing) {
             startPartialFlashing()
-        }
-        else {
-            //comment out this as soon as partial flashing works
+        } else {
             try startFullFlashing()
         }
 	}
@@ -90,7 +88,7 @@ class FlashableCalliope: CalliopeBLEDevice {
 
         try preparePairing()
 
-        initiator = DFUServiceInitiator().with(firmware: firmware)
+        initiator = SecureDFUServiceInitiator().with(firmware: firmware)
         initiator?.logger = logReceiver
         initiator?.delegate = statusDelegate
         initiator?.progressDelegate = progressReceiver
@@ -116,7 +114,7 @@ class FlashableCalliope: CalliopeBLEDevice {
 			fatalError("firmware has disappeared somehow")
 		}
 
-		uploader = initiator.start(target: peripheral)
+        uploader = initiator.start(target: peripheral)
 	}
 
 

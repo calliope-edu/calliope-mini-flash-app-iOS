@@ -178,7 +178,7 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
             LogNotify.log("html: \(html)")
             do {
                 let file = try HexFileManager.store(name: html, data: download.url.asData())
-                FirmwareUpload.uploadWithoutConfirmation(controller: self, program: file, partialFlashing: true) {
+                FirmwareUpload.uploadWithoutConfirmation(controller: self, program: file) {
                     MatrixConnectionViewController.instance.connect()
                 }
             } catch {

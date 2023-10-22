@@ -65,14 +65,14 @@ class FirmwareUpload {
         controller.present(alert, animated: true)
     }
 
-    public static func uploadWithoutConfirmation(controller: UIViewController, program: Hex, partialFlashing: Bool = true,
+    public static func uploadWithoutConfirmation(controller: UIViewController, program: Hex,
                                                  completion: (() -> ())? = nil) {
         let uploader = FirmwareUpload(file: program, controller: controller)
         controller.present(uploader.alertView, animated: true) {
             uploader.upload(finishedCallback: {
                 controller.dismiss(animated: true, completion: nil)
                 completion?()
-            }, partialFlashing: partialFlashing)
+            })
         }
     }
 
@@ -156,7 +156,7 @@ class FirmwareUpload {
 
 	private var calliope = MatrixConnectionViewController.instance.usageReadyCalliope as? FlashableCalliope
 
-    func upload(finishedCallback: @escaping () -> (), partialFlashing: Bool = true) {
+    func upload(finishedCallback: @escaping () -> ()) {
 		FirmwareUpload.uploadingInstance = self
 
         let background_ident = UIApplication.shared.beginBackgroundTask(withName: "flashing", expirationHandler: {() -> Void in
@@ -181,8 +181,7 @@ class FirmwareUpload {
 		}
 
 		do {
-            try calliope?.upload(file: file, progressReceiver: self, statusDelegate: self, logReceiver: self,
-                                 partialFlashing: partialFlashing)
+            try calliope?.upload(file: file, progressReceiver: self, statusDelegate: self, logReceiver: self)
 		}
 		catch {
 			DispatchQueue.main.async { [weak self] in
