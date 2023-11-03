@@ -218,9 +218,6 @@ extension FirmwareUpload: DFUProgressDelegate, DFUServiceDelegate, LoggerDelegat
                 }
             }
 		}
-		if progress == 100 {
-			self.finished()
-		}
 	}
 
     func logWith(_ level: LogLevel, message: String) {
@@ -230,6 +227,9 @@ extension FirmwareUpload: DFUProgressDelegate, DFUServiceDelegate, LoggerDelegat
 
     func dfuStateDidChange(to state: DFUState) {
         LogNotify.log("DFU State change: \(state)")
+        if [DFUState.aborted, .completed].contains(state) {
+            self.finished()
+        }
     }
 
     func dfuError(_ error: DFUError, didOccurWithMessage message: String) {

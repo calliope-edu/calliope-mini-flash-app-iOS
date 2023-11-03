@@ -10,6 +10,24 @@ protocol Hex {
     var partialFlashingInfo: (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? { get }
 }
 
+struct InitPacket {
+    let appName = "microbit_app".data(using: .utf8) ?? Data()   // identify this struct "microbit_app"
+    let initPacketVersion: UInt32 = 1   // version of this struct == 1
+    let appSize: UInt32 // only used for DFU_FW_TYPE_APPLICATION, DFU_FW_TYPE_EXTERNAL_APPLICATION
+    let hashSize: UInt32 = 0    // 32 => DFU_HASH_TYPE_SHA256 or zero to bypass hash check
+    let hashBytes: [UInt8] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]    // hash of whole DFU download
+    
+    func encode() -> Data {
+        var initPacket = Data()
+        initPacket.append(appName)
+        initPacket.append(initPacketVersion.littleEndianData)
+        initPacket.append(appSize.littleEndianData)
+        initPacket.append(hashSize.bigEndianData)
+        initPacket.append(contentsOf: hashBytes)
+        return initPacket
+    }
+}
+
 extension Hex {
     
     var dateString: String {
@@ -17,7 +35,14 @@ extension Hex {
     }
     
     static func dat(_ data: Data) -> Data {
+        var hexLength = data.count
+        var littleEndianData = Data()
+        littleEndianData.append(contentsOf: [UInt8](hexLength.littleEndianData))
         
+        var initPacket = InitPacket(appSize: UInt32(data.count))
+        
+        //---Legacy DFU---
+        //The Following Implementation contains the Init Packet definition for the Legacy DFU.
         let deviceType: UInt16 = 0xffff
         let deviceRevision: UInt16 = 0xffff
         let applicationVersion: UInt32 = 0xffffffff
@@ -34,7 +59,7 @@ extension Hex {
             checksum
         ])
         
-        return d
+        return initPacket.encode()
     }
 }
 
