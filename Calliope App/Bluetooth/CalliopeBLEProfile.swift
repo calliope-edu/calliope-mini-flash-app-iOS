@@ -14,6 +14,8 @@ enum CalliopeService: String, CaseIterable {
 	//MARK: DFU-Services
 
 	case dfu = "E95D93B0-251D-470A-A062-FA1922DFA9A8"
+    
+    case secure_dfu = "FE59"
 
     case partialFlashing = "E97DD91D-251D-470A-A062-FA1922DFA9A8"
 
@@ -89,6 +91,8 @@ enum CalliopeCharacteristic: String, CaseIterable {
 	//MARK: dfu-related characteristics
 
 	case dfuControl = "E95D93B1-251D-470A-A062-FA1922DFA9A8"
+    
+    case secure_dfu_characteristic = "8EC90004-F315-4F60-9FB8-838830DAEA50"
 
     //MARK: partial flashing characteristics
 
@@ -307,7 +311,8 @@ struct CalliopeBLEProfile {
 		.temperature: [.temperature, .temperaturePeriod],
 		.uart: [.txCharacteristic, .rxCharacteristic],
 		.dfu: [.dfuControl],
-        .partialFlashing: [.partialFlashing]
+        .partialFlashing: [.partialFlashing],
+        .secure_dfu: [.secure_dfu_characteristic],
 	]
 
 	///inverted map of characteristics and corresponding services (there are some ambiguities, which we ignore)

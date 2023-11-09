@@ -228,7 +228,7 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 	}
 
 	func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
-		LogNotify.log("disconnected from \(peripheral.name ?? "unknown device"))")
+        LogNotify.log("disconnected from \(peripheral.name ?? "unknown device"), with error: \(error?.localizedDescription ?? "none")")
 		connectingCalliope = nil
 		connectedCalliope = nil
 		lastConnected = nil

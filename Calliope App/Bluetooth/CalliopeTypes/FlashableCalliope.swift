@@ -17,7 +17,7 @@ class FlashableCalliope: CalliopeBLEDevice {
 	}
 
     override var optionalServices: Set<CalliopeService> {
-        return [.partialFlashing, .dfu]
+        return [.partialFlashing, .dfu, .secure_dfu]
     }
 
 	private var rebootingForFirmwareUpgrade = false
@@ -54,11 +54,12 @@ class FlashableCalliope: CalliopeBLEDevice {
         // Explanation: https://lancaster-university.github.io/microbit-docs/ble/partial-flashing-service/
         // the explanation is outdated though.
 
-        if discoveredOptionalServices.contains(.partialFlashing) {
-            startPartialFlashing()
-        } else {
-            try startFullFlashing()
-        }
+        //Partial flashing deactivated for now. Calliope mini disconnects from device with MakeCode Beta Hex File.
+        //if discoveredOptionalServices.contains(.partialFlashing) {
+        //    startPartialFlashing()
+        //} else {
+        try startFullFlashing()
+        //}
 	}
 
     public func cancelUpload() -> Bool {
@@ -82,31 +83,17 @@ class FlashableCalliope: CalliopeBLEDevice {
         }
 
         let bin = file.bin
-        let dat = HexFile.dat(bin)
-
-        let firmware = DFUFirmware(binFile:bin, datFile:dat, type: .application)
-
-        try preparePairing()
+        let dat = try HexFile.dat(bin)
+        
+        let firmware = try DFUFirmware(binFile: bin, datFile: dat, type: .application)
 
         initiator = SecureDFUServiceInitiator().with(firmware: firmware)
         initiator?.logger = logReceiver
         initiator?.delegate = statusDelegate
         initiator?.progressDelegate = progressReceiver
 
-        try triggerDfuMode()
+        try transferFirmware()
 	}
-
-    private func preparePairing() throws {
-        //this apparently is necessary before DFU characteristic can be properly used
-        //was like this in the old app version
-        _ = try read(characteristic: .dfuControl)
-    }
-
-    private func triggerDfuMode() throws {
-        let data = Data([0x01])
-        rebootingForFirmwareUpgrade = true
-        try write(data, for: .dfuControl)
-    }
 
 	private func transferFirmware() {
 
@@ -236,6 +223,7 @@ class FlashableCalliope: CalliopeBLEDevice {
 
         peripheral.setNotifyValue(true, for: partialFlashingCharacteristic)
 
+        // request dal hash
         send(command: .REGION, value: Data([.DAL_REGION]))
     }
 
@@ -245,25 +233,28 @@ class FlashableCalliope: CalliopeBLEDevice {
             fallbackToFullFlash()
             return
         }
-        //request mode (application running or BLE only)
-        //send(command: .STATUS)
+        // request embed hash
         send(command: .REGION, value: Data([.EMBEDDED_REGION]))
     }
     
-    private func receivedProgramHash() {
-        if currentProgramHash == hexProgramHash {
-            let _ = cancelUpload() //if cancel does not work, we cannot do anything about it here. Push reset button on Calliope should suffice
-            updateCallback("no changes to upload")
-            statusDelegate?.dfuError(.remoteLegacyDFUSuccess, didOccurWithMessage: NSLocalizedString("No changes to upload", comment: ""))
-            //progressReceiver?.dfuProgressDidChange(for: 1, outOf: 1, to: 100, currentSpeedBytesPerSecond: 0, avgSpeedBytesPerSecond: 0)
-        }
-        else {
-            send(command: .STATUS)
-        }
+    private func receivedEmbedHash() {
+        updateCallback("received embed hash")
+        // request program hash
+        send(command: .REGION, value: Data([.PROGRAM_REGION]))
     }
     
-    private func receivedEmbedHash() {
-        send(command: .REGION, value: Data([.PROGRAM_REGION]))
+    private func receivedProgramHash() {
+        updateCallback("received program hash \(hexProgramHash.hexEncodedString())")
+        if currentProgramHash == hexProgramHash {
+            linesFlashed = partialFlashData?.lineCount ?? Int.max //set progress to 100%
+            updateCallback("no changes to upload")
+            let _ = cancelUpload() //if cancel does not work, we cannot do anything about it here. Push reset button on Calliope should suffice
+            statusDelegate?.dfuStateDidChange(to: .completed)
+        }
+        else {
+            //request mode (application running or BLE only)
+            send(command: .STATUS)
+        }
     }
 
     private func receivedCalliopeMode(_ needsRebootIntoBLEOnlyMode: Bool) {

@@ -34,31 +34,9 @@ extension Hex {
         get { return HexFileManager.dateFormatter.string(from: date) }
     }
     
-    static func dat(_ data: Data) -> Data {
-        var hexLength = data.count
-        var littleEndianData = Data()
-        littleEndianData.append(contentsOf: [UInt8](hexLength.littleEndianData))
-        
+    static func dat(_ data: Data) throws -> Data  {
         var initPacket = InitPacket(appSize: UInt32(data.count))
-        
-        //---Legacy DFU---
-        //The Following Implementation contains the Init Packet definition for the Legacy DFU.
-        let deviceType: UInt16 = 0xffff
-        let deviceRevision: UInt16 = 0xffff
-        let applicationVersion: UInt32 = 0xffffffff
-        let softdevicesCount: UInt16 = 0x0001
-        let softdevice: UInt16 = 0x0064
-        let checksum = Checksum.crc16([UInt8](data))
-        
-        let d = Binary.pack(format:"<HHLHHH", values:[
-            deviceType,
-            deviceRevision,
-            applicationVersion,
-            softdevicesCount,
-            softdevice,
-            checksum
-        ])
-        
+
         return initPacket.encode()
     }
 }
@@ -92,7 +70,7 @@ struct HexFile: Hex, Equatable {
             let parser = HexParser(url:url)
             var bin = Data()
             parser.parse { (address, data) in
-                if address >= 0x18000 && address < 0x3C000 {
+                if address >= 0x1C000 && address < 0x77000 {
                     bin.append(data)
                 }
             }
