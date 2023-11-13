@@ -49,18 +49,18 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
         didSet { connectionDescriptionLabel.text = connectionDescriptionText }
     }
 
-	public var calliopeWithCurrentMatrix: CalliopeBLEDevice? {
+	public var discoveredCalliopeWithCurrentMatrix: DiscoveredBLEDDevice? {
 		return connector.discoveredCalliopes[Matrix.matrix2friendly(matrixView.matrix) ?? ""]
 	}
 
-	public var usageReadyCalliope: CalliopeBLEDevice? {
-		guard let calliope = connector.connectedCalliope,
+	public var usageReadyCalliope: FlashableCalliope? {
+        guard let calliope = connector.connectedCalliope?.usageReadyCalliope,
 			calliope.state == .usageReady
 			else { return nil }
 		return calliope
 	}
 
-    public var calliopeClass: CalliopeBLEDevice.Type? = nil {
+    public var calliopeClass: DiscoveredBLEDDevice.Type? = nil {
         didSet {
             guard calliopeClass != oldValue else {
                 return
@@ -69,7 +69,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
             guard let calliopeClass = calliopeClass else {
                 return
             }
-            let calliopeBuilder = { (_ peripheral: CBPeripheral, _ name: String) -> CalliopeBLEDevice in
+            let calliopeBuilder = { (_ peripheral: CBPeripheral, _ name: String) -> DiscoveredBLEDDevice in
                 return calliopeClass.init(peripheral: peripheral, name: name)
             }
             connector = CalliopeBLEDiscovery(calliopeBuilder)
@@ -87,7 +87,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     }
     
     private var connector: CalliopeBLEDiscovery = CalliopeBLEDiscovery({ peripheral, name in
-        FlashableCalliope(peripheral: peripheral, name: name) }) {
+        DiscoveredBLEDDevice(peripheral: peripheral, name: name) }) {
         didSet {
             self.changedConnector(oldValue)
         }
@@ -156,9 +156,9 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 
 	@IBAction func connect() {
 		if self.connector.state == .initialized
-			|| self.calliopeWithCurrentMatrix == nil && self.connector.state == .discoveredAll {
+			|| self.discoveredCalliopeWithCurrentMatrix == nil && self.connector.state == .discoveredAll {
 			connector.startCalliopeDiscovery()
-		} else if let calliope = self.calliopeWithCurrentMatrix {
+		} else if let calliope = self.discoveredCalliopeWithCurrentMatrix {
 			if calliope.state == .discovered || calliope.state == .willReset {
 				calliope.updateBlock = updateDiscoveryState
                 calliope.errorBlock = error
@@ -167,10 +167,10 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 			} else if calliope.state == .connected {
 				calliope.evaluateMode()
 			} else {
-				LogNotify.log("Connect button of matrix view should not be enabled in this state (\(self.connector.state), \(String(describing: self.calliopeWithCurrentMatrix?.state)))")
+				LogNotify.log("Connect button of matrix view should not be enabled in this state (\(self.connector.state), \(String(describing: self.discoveredCalliopeWithCurrentMatrix?.state)))")
 			}
 		} else {
-			LogNotify.log("Connect button of matrix view should not be enabled in this state (\(self.connector.state), \(String(describing: self.calliopeWithCurrentMatrix?.state)))")
+			LogNotify.log("Connect button of matrix view should not be enabled in this state (\(self.connector.state), \(String(describing: self.discoveredCalliopeWithCurrentMatrix?.state)))")
 		}
 	}
 
@@ -190,7 +190,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 			connectButton.connectionState = .waitingForBluetooth
 			self.collapseButton.connectionState = .disconnected
 		case .discovering, .discovered:
-			if let calliope = self.calliopeWithCurrentMatrix {
+			if let calliope = self.discoveredCalliopeWithCurrentMatrix {
 				evaluateCalliopeState(calliope)
                 if connectButton.connectionState == .readyToConnect {
                     connect()
@@ -201,7 +201,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 				self.collapseButton.connectionState = .disconnected
 			}
 		case .discoveredAll:
-			if let matchingCalliope = calliopeWithCurrentMatrix {
+			if let matchingCalliope = discoveredCalliopeWithCurrentMatrix {
 				evaluateCalliopeState(matchingCalliope)
 			} else {
 				matrixView.isUserInteractionEnabled = true
@@ -216,12 +216,12 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 			connectButton.connectionState = .connecting
 			self.collapseButton.connectionState = .connecting
 		case .connected:
-			if let connectedCalliope = connector.connectedCalliope, calliopeWithCurrentMatrix != connector.connectedCalliope {
+			if let connectedCalliope = connector.connectedCalliope, discoveredCalliopeWithCurrentMatrix != connector.connectedCalliope {
 				//set matrix in case of auto-reconnect, where we do not have corresponding matrix yet
 				matrixView.matrix = Matrix.friendly2Matrix(connectedCalliope.name)
 				connectedCalliope.updateBlock = updateDiscoveryState
 			}
-			evaluateCalliopeState(calliopeWithCurrentMatrix!)
+			evaluateCalliopeState(discoveredCalliopeWithCurrentMatrix!)
 		}
 	}
     
@@ -245,7 +245,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
         }
     }
 
-	private func evaluateCalliopeState(_ calliope: CalliopeBLEDevice) {
+	private func evaluateCalliopeState(_ calliope: DiscoveredBLEDDevice) {
 
 		if calliope.state == .wrongMode || calliope.state == .discovered {
 			self.collapseButton.connectionState = attemptReconnect || reconnecting ? .connecting : .disconnected
@@ -281,6 +281,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 			matrixView.isUserInteractionEnabled = true
 			connectButton.connectionState = .readyToPlay
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+                self.parent?.view.removeGestureRecognizer(self.collapseGestureRecognizer)
                 self.animate(expand: false)
             }
 		case .wrongMode:

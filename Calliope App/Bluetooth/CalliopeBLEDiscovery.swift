@@ -24,7 +24,7 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 	var updateBlock: () -> () = {}
     var errorBlock: (Error) -> () = {_ in }
 
-	var calliopeBuilder: (_ peripheral: CBPeripheral, _ name: String) -> CalliopeBLEDevice
+	var calliopeBuilder: (_ peripheral: CBPeripheral, _ name: String) -> DiscoveredBLEDDevice
 
 	private(set) var state : CalliopeDiscoveryState = .initialized {
 		didSet {
@@ -33,7 +33,7 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 		}
 	}
 
-	private(set) var discoveredCalliopes : [String : CalliopeBLEDevice] = [:] {
+	private(set) var discoveredCalliopes : [String : DiscoveredBLEDDevice] = [:] {
 		didSet {
 			LogNotify.log("discovered: \(discoveredCalliopes)")
 			redetermineState()
@@ -42,7 +42,7 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 
 	private var discoveredCalliopeUUIDNameMap : [UUID : String] = [:]
 
-	private(set) var connectingCalliope: CalliopeBLEDevice? {
+	private(set) var connectingCalliope: DiscoveredBLEDDevice? {
 		didSet {
 			if let connectingCalliope = self.connectingCalliope {
 				connectedCalliope = nil
@@ -60,7 +60,7 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 		}
 	}
 
-	private(set) var connectedCalliope: CalliopeBLEDevice? {
+	private(set) var connectedCalliope: DiscoveredBLEDDevice? {
 		didSet {
 			if let uuid = connectedCalliope?.peripheral.identifier,
 				let name = discoveredCalliopeUUIDNameMap[uuid] {
@@ -104,7 +104,7 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 		}
 	}
 
-	init(_ calliopeBuilder: @escaping (_ peripheral: CBPeripheral, _ name: String) -> CalliopeBLEDevice) {
+	init(_ calliopeBuilder: @escaping (_ peripheral: CBPeripheral, _ name: String) -> DiscoveredBLEDDevice) {
 		self.calliopeBuilder = calliopeBuilder
 		super.init()
         if centralManager.state == .poweredOn {
@@ -200,7 +200,7 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 
 	// MARK: connection
 
-	func connectToCalliope(_ calliope: CalliopeBLEDevice) {
+	func connectToCalliope(_ calliope: DiscoveredBLEDDevice) {
 		//when we first connect, we stop searching further
 		stopCalliopeDiscovery()
 		//do not connect twice

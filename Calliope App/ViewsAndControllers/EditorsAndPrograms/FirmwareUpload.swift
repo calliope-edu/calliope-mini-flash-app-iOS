@@ -12,7 +12,7 @@ import iOSDFULibrary
 class FirmwareUpload {
     
     public static func showUIForDownloadableProgram(controller: UIViewController, program: DownloadableHexFile, name: String = NSLocalizedString("the program", comment: ""), completion: ((_ success: Bool) -> ())? = nil) {
-        if (program.bin.count != 0) {
+        if (program.calliopeV1andV2Bin.count != 0) {
             DispatchQueue.main.async {
                 FirmwareUpload.showUploadUI(controller: controller, program: program) {
                     completion?(true)
@@ -27,7 +27,7 @@ class FirmwareUpload {
                 program.load { error in
                     let alert: UIAlertController
                     
-                    if error == nil, program.bin.count != 0 {
+                    if error == nil, program.calliopeV1andV2Bin.count != 0 {
                         let alertDone = UIAlertController(title: NSLocalizedString("Download finished", comment: ""), message: NSLocalizedString("The program is downloaded. Do you want to upload it now?", comment: ""), preferredStyle: .alert)
                         alertDone.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default) { _ in
                             DispatchQueue.main.async {
@@ -154,10 +154,10 @@ class FirmwareUpload {
 	private var finished: () -> () = {}
     private var failed: () -> () = {}
 
-	private var calliope = MatrixConnectionViewController.instance.usageReadyCalliope as? FlashableCalliope
+	private var calliope = MatrixConnectionViewController.instance.usageReadyCalliope
 
     func upload(finishedCallback: @escaping () -> ()) {
-		FirmwareUpload.uploadingInstance = self
+        FirmwareUpload.uploadingInstance = self
 
         let background_ident = UIApplication.shared.beginBackgroundTask(withName: "flashing", expirationHandler: {() -> Void in
             LogNotify.log("task expired?")

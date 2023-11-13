@@ -47,9 +47,7 @@
 		2F61457122BF761F001C2734 /* FlashableCalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453122BF761F001C2734 /* FlashableCalliope.swift */; };
 		2F61457222BF761F001C2734 /* BLEDataTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453222BF761F001C2734 /* BLEDataTypes.swift */; };
 		2F61457322BF761F001C2734 /* BluetoothConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453322BF761F001C2734 /* BluetoothConstants.swift */; };
-		2F61457422BF761F001C2734 /* ApiCalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453422BF761F001C2734 /* ApiCalliope.swift */; };
-		2F61457522BF761F001C2734 /* CalliopeBLEDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453522BF761F001C2734 /* CalliopeBLEDevice.swift */; };
-		2F61457622BF761F001C2734 /* ProgrammableCalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453622BF761F001C2734 /* ProgrammableCalliope.swift */; };
+		2F61457522BF761F001C2734 /* DiscoveredBLEDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453522BF761F001C2734 /* DiscoveredBLEDevice.swift */; };
 		2F61457722BF761F001C2734 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453822BF761F001C2734 /* Styles.swift */; };
 		2F61457822BF761F001C2734 /* ExtString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453922BF761F001C2734 /* ExtString.swift */; };
 		2F61457922BF761F001C2734 /* Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61453A22BF761F001C2734 /* Ext.swift */; };
@@ -120,6 +118,8 @@
 		2FCB70E826C7FD5300DF79B7 /* HelpWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCB70E726C7FD5300DF79B7 /* HelpWebViewController.swift */; };
 		2FFE865E22DB3DDF00728E7C /* TutorialPageConnect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE865D22DB3DDF00728E7C /* TutorialPageConnect.swift */; };
 		2FFE866022DB6A5600728E7C /* TutorialPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE865F22DB6A5600728E7C /* TutorialPageViewController.swift */; };
+		60316BF82B01FEC300130C0D /* BLECalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60316BF72B01FEC300130C0D /* BLECalliope.swift */; };
+		60316BFA2B0210CC00130C0D /* CalliopeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60316BF92B0210CC00130C0D /* CalliopeFactory.swift */; };
 		CE73348EEAB4EC5248A0716C /* libPods-Calliope App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D57D51A736B908EDE6355034 /* libPods-Calliope App.a */; };
 /* End PBXBuildFile section */
 
@@ -187,9 +187,7 @@
 		2F61453122BF761F001C2734 /* FlashableCalliope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlashableCalliope.swift; sourceTree = "<group>"; };
 		2F61453222BF761F001C2734 /* BLEDataTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEDataTypes.swift; sourceTree = "<group>"; };
 		2F61453322BF761F001C2734 /* BluetoothConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothConstants.swift; sourceTree = "<group>"; };
-		2F61453422BF761F001C2734 /* ApiCalliope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiCalliope.swift; sourceTree = "<group>"; };
-		2F61453522BF761F001C2734 /* CalliopeBLEDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalliopeBLEDevice.swift; sourceTree = "<group>"; };
-		2F61453622BF761F001C2734 /* ProgrammableCalliope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgrammableCalliope.swift; sourceTree = "<group>"; };
+		2F61453522BF761F001C2734 /* DiscoveredBLEDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveredBLEDevice.swift; sourceTree = "<group>"; };
 		2F61453822BF761F001C2734 /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		2F61453922BF761F001C2734 /* ExtString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtString.swift; sourceTree = "<group>"; };
 		2F61453A22BF761F001C2734 /* Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext.swift; sourceTree = "<group>"; };
@@ -267,6 +265,8 @@
 		2FFE865D22DB3DDF00728E7C /* TutorialPageConnect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPageConnect.swift; sourceTree = "<group>"; };
 		2FFE865F22DB6A5600728E7C /* TutorialPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPageViewController.swift; sourceTree = "<group>"; };
 		3849EA7340C0FAB5DB1A4000 /* Pods-Calliope App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.debug.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.debug.xcconfig"; sourceTree = "<group>"; };
+		60316BF72B01FEC300130C0D /* BLECalliope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLECalliope.swift; sourceTree = "<group>"; };
+		60316BF92B0210CC00130C0D /* CalliopeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeFactory.swift; sourceTree = "<group>"; };
 		BD1AFC4008F992EADC1C557D /* Pods-Calliope App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.release.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.release.xcconfig"; sourceTree = "<group>"; };
 		D57D51A736B908EDE6355034 /* libPods-Calliope App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Calliope App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -372,7 +372,8 @@
 				2F82DCA325C6FE5E00F00EE8 /* CalliopeTypes */,
 				2F61453222BF761F001C2734 /* BLEDataTypes.swift */,
 				2F61453322BF761F001C2734 /* BluetoothConstants.swift */,
-				2F61453522BF761F001C2734 /* CalliopeBLEDevice.swift */,
+				2F61453522BF761F001C2734 /* DiscoveredBLEDevice.swift */,
+				60316BF92B0210CC00130C0D /* CalliopeFactory.swift */,
 			);
 			path = Bluetooth;
 			sourceTree = "<group>";
@@ -455,8 +456,7 @@
 			isa = PBXGroup;
 			children = (
 				2F61453122BF761F001C2734 /* FlashableCalliope.swift */,
-				2F61453422BF761F001C2734 /* ApiCalliope.swift */,
-				2F61453622BF761F001C2734 /* ProgrammableCalliope.swift */,
+				60316BF72B01FEC300130C0D /* BLECalliope.swift */,
 			);
 			path = CalliopeTypes;
 			sourceTree = "<group>";
@@ -761,10 +761,10 @@
 				2F08A0E5234B11890088A8D6 /* ProgramsCollectionViewController.swift in Sources */,
 				2F57C3B82395B016008B0D69 /* TutorialPageMiniMenu.swift in Sources */,
 				2F526C2426E00696004BA8FF /* HexFileStoreDialog.swift in Sources */,
-				2F61457422BF761F001C2734 /* ApiCalliope.swift in Sources */,
 				2F61458F22BF761F001C2734 /* MatrixConnectionViewController.swift in Sources */,
 				2F61459822BF761F001C2734 /* StreamReader.swift in Sources */,
 				2F61457722BF761F001C2734 /* Styles.swift in Sources */,
+				60316BF82B01FEC300130C0D /* BLECalliope.swift in Sources */,
 				2F61458722BF761F001C2734 /* Extension_Data.swift in Sources */,
 				2F61459022BF761F001C2734 /* MainContainerViewController.swift in Sources */,
 				2F61459722BF761F001C2734 /* Editors.swift in Sources */,
@@ -790,15 +790,15 @@
 				2F4B8DAD2598E1E40026B480 /* MenuNavigationSectionHeader.swift in Sources */,
 				2F61451022BF75DE001C2734 /* AppDelegate.swift in Sources */,
 				2F61457F22BF761F001C2734 /* Async.swift in Sources */,
-				2F61457622BF761F001C2734 /* ProgrammableCalliope.swift in Sources */,
 				2F61457C22BF761F001C2734 /* ExtColor.swift in Sources */,
 				2F61459922BF761F001C2734 /* Hex.swift in Sources */,
 				2F763FE625A607A400C2029D /* SwiftCodeSnippetHighlighter.swift in Sources */,
 				2F1BD9952674D48C006A47F2 /* AutoHeightCollectionViewFlowLayout.swift in Sources */,
 				2F61458E22BF761F001C2734 /* Matrix.swift in Sources */,
 				2F61457A22BF761F001C2734 /* ExtURL.swift in Sources */,
+				60316BFA2B0210CC00130C0D /* CalliopeFactory.swift in Sources */,
 				2F61458C22BF761F001C2734 /* ConnectionButton.swift in Sources */,
-				2F61457522BF761F001C2734 /* CalliopeBLEDevice.swift in Sources */,
+				2F61457522BF761F001C2734 /* DiscoveredBLEDevice.swift in Sources */,
 				2F61458922BF761F001C2734 /* CollapsingViewControllerProtocol.swift in Sources */,
 				2F9B5CAB2357127A00728546 /* TutorialPageMiniDemo.swift in Sources */,
 				2F2B809A25A0E01500A7CCF7 /* CodeSnippets.swift in Sources */,
@@ -1010,7 +1010,6 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1027,7 +1026,6 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -1085,7 +1083,6 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1100,6 +1097,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_TEAM = GKA87N33H4;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "Calliope App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1108,6 +1106,7 @@
 				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "cc.calliope.ios.flash-debug";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

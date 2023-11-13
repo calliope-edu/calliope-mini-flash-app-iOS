@@ -6,7 +6,8 @@ protocol Hex {
     var name: String { get }
     var date: Date { get }
     var dateString: String { get }
-    var bin: Data { get }
+    var calliopeV1andV2Bin: Data { get }
+    var calliopeV3Bin: Data { get }
     var partialFlashingInfo: (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? { get }
 }
 
@@ -34,10 +35,31 @@ extension Hex {
         get { return HexFileManager.dateFormatter.string(from: date) }
     }
     
-    static func dat(_ data: Data) throws -> Data  {
-        var initPacket = InitPacket(appSize: UInt32(data.count))
-
+    static func calliopeV3InitPacket(_ data: Data) throws -> Data  {
+        let initPacket = InitPacket(appSize: UInt32(data.count))
+        
         return initPacket.encode()
+    }
+    
+    static func calliopeV1AndV2InitPacket(_ data: Data) -> Data {
+        
+        let deviceType: UInt16 = 0xffff
+        let deviceRevision: UInt16 = 0xffff
+        let applicationVersion: UInt32 = 0xffffffff
+        let softdevicesCount: UInt16 = 0x0001
+        let softdevice: UInt16 = 0x0064
+        let checksum = Checksum.crc16([UInt8](data))
+        
+        let d = Binary.pack(format:"<HHLHHH", values:[
+            deviceType,
+            deviceRevision,
+            applicationVersion,
+            softdevicesCount,
+            softdevice,
+            checksum
+        ])
+        
+        return d
     }
 }
 
@@ -65,7 +87,21 @@ struct HexFile: Hex, Equatable {
     
     let date: Date
 
-    var bin: Data {
+    var calliopeV1andV2Bin: Data {
+        get {
+            let parser = HexParser(url:url)
+            var bin = Data()
+            parser.parse { (address, data) in
+                if address >= 0x18000 && address < 0x3C000 {
+                    bin.append(data)
+                }
+            }
+            
+            return bin
+        }
+    }
+    
+    var calliopeV3Bin: Data {
         get {
             let parser = HexParser(url:url)
             var bin = Data()
@@ -78,7 +114,7 @@ struct HexFile: Hex, Equatable {
             return bin
         }
     }
-
+    
     var partialFlashingInfo: (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? {
         get {
             let parser = HexParser(url: url)
