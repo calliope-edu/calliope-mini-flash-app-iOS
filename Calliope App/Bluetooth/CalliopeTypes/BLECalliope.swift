@@ -11,13 +11,13 @@ import iOSDFULibrary
 import CoreBluetooth
 
 class BLECalliope: NSObject, CBPeripheralDelegate {
+    
     //the services required for the usage
     var requiredServices : Set<CalliopeService> {
         []
-        //fatalError("The CalliopeBLEDevice Class is abstract! At least requiredServices variable must be overridden by subclass.")
     }
     //servcies that are not strictly necessary
-    var optionalServices : Set<CalliopeService> { [.partialFlashing, .dfu, .secure_dfu] }
+    var optionalServices : Set<CalliopeService> { [] }
     
     final var discoveredOptionalServices: Set<CalliopeService> = []
     
@@ -32,26 +32,20 @@ class BLECalliope: NSObject, CBPeripheralDelegate {
     let name : String
     let servicesChangedCallback: () -> ()?
     
-    required init(peripheral: CBPeripheral, name: String, servicesChangedCallback: @escaping () -> ()?) {
+    required init?(peripheral: CBPeripheral, name: String, discoveredServices: Set<CalliopeService>, servicesChangedCallback: @escaping () -> ()?) {
         self.peripheral = peripheral
         self.name = name
         self.servicesChangedCallback = servicesChangedCallback
         super.init()
-        peripheral.delegate = self
-        _ = requiredServices
+        self.discoveredOptionalServices = discoveredServices.intersection(optionalServices)
+        if !FlashableCalliopeFactory.validateOptionalAndRequiredServices(requiredServices: requiredServices, optionalServices: optionalServices, discoveredServices: discoveredServices, peripheral: peripheral) {
+            LogNotify.log("failed to find required services or a way to activate them for \(String(describing: self))")
+            return nil
+        }
+        LogNotify.log("successfully validated Calliope Type \(String(describing: self))")
     }
 
-    
-    enum CalliopeBLEDeviceState {
-        case discovered //discovered and ready to connect, not connected yet
-        case connected //connected, but services and characteristics have not (yet) been found
-        case evaluateMode //connected, looking for services and characteristics
-        case usageReady //all required services and characteristics have been found, calliope ready to be programmed
-        case wrongMode //required services and characteristics not available, put into right mode
-        case willReset //when a reset is done to enable or disable services
-    }
-
-    var state : CalliopeBLEDeviceState = .usageReady {
+    var state : DiscoveredBLEDDevice.CalliopeBLEDeviceState = .usageReady {
         didSet {
             LogNotify.log("calliope state: \(state)")
             handleStateUpdate()

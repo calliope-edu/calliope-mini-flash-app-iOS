@@ -21,11 +21,12 @@ class FlashableCalliope: BLECalliope {
     internal private(set) var statusDelegate: DFUServiceDelegate?
     internal private(set) var logReceiver: LoggerDelegate?
     
-    override func handleStateUpdate() {
-        if state == .discovered && rebootingForFirmwareUpgrade {
+    func notify(aboutState newState: DiscoveredBLEDDevice.CalliopeBLEDeviceState) {
+        LogNotify.log("Check the State Update")
+        if newState == .discovered && rebootingForFirmwareUpgrade {
             rebootingForFirmwareUpgrade = false
             transferFirmware()
-        } else if state == .usageReady && rebootingForPartialFlashing {
+        } else if newState == .usageReady && rebootingForPartialFlashing {
             rebootingForPartialFlashing = false
             updateQueue.async {
                 self.startPartialFlashing()
@@ -348,7 +349,18 @@ class FlashableCalliope: BLECalliope {
     
 }
 
+//MARK: Calliope V1 and V2
+
 class CalliopeV1AndV2: FlashableCalliope {
+    
+    override var requiredServices: Set<CalliopeService> {
+        return [.dfu]
+    }
+    
+    override var optionalServices: Set<CalliopeService> {
+        return [.partialFlashing]
+    }
+    
     internal override func startFullFlashing() throws {
         
         guard let file = file else {
@@ -370,10 +382,16 @@ class CalliopeV1AndV2: FlashableCalliope {
     }
 }
 
+//MARK: Calliope V3
+
 class CalliopeV3: FlashableCalliope {
     
     override var requiredServices: Set<CalliopeService> {
-        return []
+        return [.secure_dfu]
+    }
+    
+    override var optionalServices: Set<CalliopeService> {
+        return [.partialFlashing]
     }
     
     internal override func startFullFlashing() throws {
@@ -393,6 +411,17 @@ class CalliopeV3: FlashableCalliope {
         initiator?.progressDelegate = progressReceiver
 
         transferFirmware()
+    }
+    
+    internal override func startPartialFlashing() {
+        // TODO: Solve Partial Flashing Errors
+        // Partial Flashing does not work entirely functional with the current Version of the Firmware. We therefor fallback to Full Flashing until this has been solved.
+        // Partial Flashing starts, but the Calliope disconnects unexpectedly after around 6% have been transfered.
+        do {
+            try startFullFlashing()
+        } catch {
+            LogNotify.log("Tried reverting to Full Flashing, but failed")
+        }
     }
 }
 

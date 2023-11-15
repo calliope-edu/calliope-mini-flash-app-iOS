@@ -15,11 +15,14 @@ class DiscoveredBLEDDevice: NSObject, CBPeripheralDelegate {
 
     private let bluetoothQueue = DispatchQueue.global(qos: .userInitiated)
 
+    //discoverable Services of the BLE Devices
+    static var discoverableServices: Set<CalliopeService> = [.secure_dfu, .dfu, .partialFlashing]
+    static var discoverableServicesUUIDs: Set<CBUUID> = Set(discoverableServices.map { $0.uuid })
+    
     //discovered Services of the BLE Device
     final var discoveredServices: Set<CalliopeService> = []
-    final var discoverableServices: Set<CalliopeService> = [.secure_dfu, .dfu, .partialFlashing]
-    
     lazy var discoveredServicesUUIDs: Set<CBUUID> = Set(discoveredServices.map { $0.uuid })
+
 
 	enum CalliopeBLEDeviceState {
 		case discovered //discovered and ready to connect, not connected yet
@@ -33,16 +36,14 @@ class DiscoveredBLEDDevice: NSObject, CBPeripheralDelegate {
 	var state : CalliopeBLEDeviceState = .discovered {
 		didSet {
 			LogNotify.log("calliope state: \(state)")
-			handleStateUpdateInternal(oldValue)
-			handleStateUpdate()
+			handleStateUpdate(oldValue)
+            if usageReadyCalliope != nil {
+                usageReadyCalliope?.notify(aboutState: state)
+            }
 		}
 	}
 
-	func handleStateUpdate() {
-		//default implementation does nothing
-	}
-
-    private func handleStateUpdateInternal(_ oldState: CalliopeBLEDeviceState) {
+    private func handleStateUpdate(_ oldState: CalliopeBLEDeviceState) {
 		updateQueue.async { self.updateBlock() }
 		if state == .discovered {
             discoveredServices = []
@@ -55,6 +56,7 @@ class DiscoveredBLEDDevice: NSObject, CBPeripheralDelegate {
 				self.evaluateMode()
 			}
         } else if state == .evaluateMode {
+            peripheral.delegate = self
             self.bluetoothQueue.asyncAfter(deadline: DispatchTime.now() + BluetoothConstants.serviceDiscoveryTimeout) {
                 //has not discovered all services in time, probably stuck
                 if self.state == .evaluateMode {
@@ -108,7 +110,7 @@ class DiscoveredBLEDDevice: NSObject, CBPeripheralDelegate {
     public func evaluateMode() {
 		//service discovery
 		state = .evaluateMode
-        peripheral.discoverServices([] + discoveredServicesUUIDs)
+        peripheral.discoverServices([] + Self.discoverableServicesUUIDs)
 	}
 
 	func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
@@ -145,10 +147,13 @@ class DiscoveredBLEDDevice: NSObject, CBPeripheralDelegate {
         } else {
             state = .wrongMode
         }
-
-        //TODO: Validate required and optional services
-        state = .usageReady
-        usageReadyCalliope = FlashableCalliopeBuilder.getFlashableCalliopeForBLEDevice(device: self)
+        usageReadyCalliope = FlashableCalliopeFactory.getFlashableCalliopeForBLEDevice(device: self)
+        if usageReadyCalliope != nil {
+            state = .usageReady
+        } else {
+            // Delegate has been set to Calliope during creation, needs to be reset
+            state = .wrongMode
+        }
     }
 }
 
