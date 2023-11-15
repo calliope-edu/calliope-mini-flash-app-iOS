@@ -380,6 +380,17 @@ class CalliopeV1AndV2: FlashableCalliope {
         
         try triggerDfuMode()
     }
+    
+    internal override func startPartialFlashing() {
+        // TODO: Solve Partial Flashing Errors
+        // Partial Flashing does not work entirely functional with the current Version of the Firmware. We therefor fallback to Full Flashing until this has been solved.
+        // Partial Flashing starts, but the Calliope disconnects unexpectedly after around 6% have been transfered.
+        do {
+            try startFullFlashing()
+        } catch {
+            LogNotify.log("Tried reverting to Full Flashing, but failed")
+        }
+    }
 }
 
 //MARK: Calliope V3
