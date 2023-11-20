@@ -31,6 +31,10 @@ class FlashableCalliope: BLECalliope {
             updateQueue.async {
                 self.startPartialFlashing()
             }
+        } else if newState == .discovered && !isRebooting(){
+            DispatchQueue.main.async {
+                self.statusDelegate?.dfuStateDidChange(to: .aborted)
+            }
         }
     }
     
@@ -70,6 +74,10 @@ class FlashableCalliope: BLECalliope {
     }
     
     internal func startFullFlashing() throws {
+    }
+    
+    public func isRebooting() -> Bool {
+        return rebootingForFirmwareUpgrade || rebootingForPartialFlashing
     }
     
     internal func preparePairing() throws {
@@ -251,7 +259,8 @@ class FlashableCalliope: BLECalliope {
         if (needsRebootIntoBLEOnlyMode) {
             rebootingForPartialFlashing = true
             //calliope is in application state and needs to be rebooted
-            state = .willReset
+            //TODO: Resete hier, muss die Info an die andere Seite weiterbringe, aber die hört nicht auf mich?
+            //Matrix ConnectionViewController kriegt hiervon nix mit
             send(command: .REBOOT, value: Data([.MODE_BLE]))
         } else {
             //calliope is already in bluetooth state
@@ -313,7 +322,6 @@ class FlashableCalliope: BLECalliope {
     
     private func endTransmission() {
         updateCallback("partial flashing done!")
-        state = .willReset
         send(command: .TRANSMISSION_END)
     }
     
@@ -345,6 +353,10 @@ class FlashableCalliope: BLECalliope {
         let progressPerCent = Int(ceil(Double(linesFlashed * 100) / Double(partialFlashData?.lineCount ?? Int.max)))
         LogNotify.log("partial flashing progress: \(progressPerCent)%")
         progressReceiver?.dfuProgressDidChange(for: 1, outOf: 1, to: progressPerCent, currentSpeedBytesPerSecond: 0, avgSpeedBytesPerSecond: 0)
+        //Notify statusDelegate of completed Progress
+        if progressPerCent == 100 {
+            statusDelegate?.dfuStateDidChange(to: .completed)
+        }
     }
     
 }
@@ -354,7 +366,7 @@ class FlashableCalliope: BLECalliope {
 class CalliopeV1AndV2: FlashableCalliope {
     
     override var requiredServices: Set<CalliopeService> {
-        return [.dfu]
+        return [.dfuControlService]
     }
     
     override var optionalServices: Set<CalliopeService> {
@@ -380,17 +392,6 @@ class CalliopeV1AndV2: FlashableCalliope {
         
         try triggerDfuMode()
     }
-    
-    internal override func startPartialFlashing() {
-        // TODO: Solve Partial Flashing Errors
-        // Partial Flashing does not work entirely functional with the current Version of the Firmware. We therefor fallback to Full Flashing until this has been solved.
-        // Partial Flashing starts, but the Calliope disconnects unexpectedly after around 6% have been transfered.
-        do {
-            try startFullFlashing()
-        } catch {
-            LogNotify.log("Tried reverting to Full Flashing, but failed")
-        }
-    }
 }
 
 //MARK: Calliope V3
@@ -398,7 +399,7 @@ class CalliopeV1AndV2: FlashableCalliope {
 class CalliopeV3: FlashableCalliope {
     
     override var requiredServices: Set<CalliopeService> {
-        return [.secure_dfu]
+        return [.secureDfuService]
     }
     
     override var optionalServices: Set<CalliopeService> {

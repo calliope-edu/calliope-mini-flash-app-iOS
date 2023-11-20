@@ -16,7 +16,7 @@ class DiscoveredBLEDDevice: NSObject, CBPeripheralDelegate {
     private let bluetoothQueue = DispatchQueue.global(qos: .userInitiated)
 
     //discoverable Services of the BLE Devices
-    static var discoverableServices: Set<CalliopeService> = [.secure_dfu, .dfu, .partialFlashing]
+    static var discoverableServices: Set<CalliopeService> = [.secureDfuService, .dfuControlService, .partialFlashing]
     static var discoverableServicesUUIDs: Set<CBUUID> = Set(discoverableServices.map { $0.uuid })
     
     //discovered Services of the BLE Device

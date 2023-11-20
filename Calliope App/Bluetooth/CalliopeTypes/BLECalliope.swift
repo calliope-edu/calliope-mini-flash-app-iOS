@@ -47,17 +47,6 @@ class BLECalliope: NSObject, CBPeripheralDelegate {
         LogNotify.log("successfully validated Calliope Type \(String(describing: self))")
     }
 
-    var state : DiscoveredBLEDDevice.CalliopeBLEDeviceState = .usageReady {
-        didSet {
-            LogNotify.log("calliope state: \(state)")
-            handleStateUpdate()
-        }
-    }
-
-    func handleStateUpdate() {
-        //default implementation does nothing
-    }
-    
     //MARK: reading and writing characteristics (asynchronously/ scheduled/ synchronously)
     //to sequentialize reads and writes
 
@@ -144,9 +133,8 @@ class BLECalliope: NSObject, CBPeripheralDelegate {
     }
     
     func getCBCharacteristic(_ characteristic: CalliopeCharacteristic) -> CBCharacteristic? {
-        guard state == .usageReady || state == .willReset,
-            let serviceUuid = CalliopeBLEProfile.characteristicServiceMap[characteristic]?.uuid
-            else { return nil }
+        guard let serviceUuid = CalliopeBLEProfile.characteristicServiceMap[characteristic]?.uuid
+        else { return nil }
         let uuid = characteristic.uuid
         return peripheral.services?.first { $0.uuid == serviceUuid }?
             .characteristics?.first { $0.uuid == uuid }
@@ -163,9 +151,8 @@ class BLECalliope: NSObject, CBPeripheralDelegate {
     }
 
     private func checkWritePreconditions(for characteristic: CalliopeCharacteristic) throws -> CBCharacteristic {
-        guard state == .usageReady || state == .willReset,
-              let serviceForCharacteristic = CalliopeBLEProfile.characteristicServiceMap[characteristic],
-              requiredServices.contains(serviceForCharacteristic) || discoveredOptionalServices.contains(serviceForCharacteristic)
+          guard let serviceForCharacteristic = CalliopeBLEProfile.characteristicServiceMap[characteristic],
+          requiredServices.contains(serviceForCharacteristic) || discoveredOptionalServices.contains(serviceForCharacteristic)
             else { throw "Not ready to write to characteristic \(characteristic)" }
         guard let cbCharacteristic = getCBCharacteristic(characteristic) else { throw "characteristic \(characteristic) not available" }
         return cbCharacteristic
@@ -201,8 +188,6 @@ class BLECalliope: NSObject, CBPeripheralDelegate {
     
     
     func read(characteristic: CalliopeCharacteristic) throws -> Data? {
-        guard state == .usageReady
-            else { throw "Not ready to read characteristic \(characteristic)" }
         guard let cbCharacteristic = getCBCharacteristic(characteristic)
             else { throw "no service that contains characteristic \(characteristic)" }
         return try read(characteristic: cbCharacteristic)

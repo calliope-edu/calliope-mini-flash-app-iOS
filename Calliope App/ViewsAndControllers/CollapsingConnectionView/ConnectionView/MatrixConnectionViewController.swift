@@ -54,9 +54,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 	}
 
 	public var usageReadyCalliope: FlashableCalliope? {
-        guard let calliope = connector.connectedCalliope?.usageReadyCalliope,
-			calliope.state == .usageReady
-			else { return nil }
+        let calliope = connector.connectedCalliope?.usageReadyCalliope
 		return calliope
 	}
 
