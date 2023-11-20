@@ -32,13 +32,15 @@ class BLECalliope: NSObject, CBPeripheralDelegate {
     let name : String
     let servicesChangedCallback: () -> ()?
     
-    required init?(peripheral: CBPeripheral, name: String, discoveredServices: Set<CalliopeService>, servicesChangedCallback: @escaping () -> ()?) {
+    required init?(peripheral: CBPeripheral, name: String, discoveredServices: Set<CalliopeService>, servicesToCharacteristicsMap: [CalliopeService:Set<CBUUID>], servicesChangedCallback: @escaping () -> ()?) {
         self.peripheral = peripheral
         self.name = name
         self.servicesChangedCallback = servicesChangedCallback
         super.init()
+        
+        
         self.discoveredOptionalServices = discoveredServices.intersection(optionalServices)
-        if !FlashableCalliopeFactory.validateOptionalAndRequiredServices(requiredServices: requiredServices, optionalServices: optionalServices, discoveredServices: discoveredServices, peripheral: peripheral) {
+        if !FlashableCalliopeFactory.validateServicesAndCharacteristics(requiredServices: requiredServices, optionalServices: optionalServices, discoveredServices: discoveredServices, peripheral: peripheral, servicesToCharacteristicsMap: servicesToCharacteristicsMap) {
             LogNotify.log("failed to find required services or a way to activate them for \(String(describing: self))")
             return nil
         }

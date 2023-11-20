@@ -22,6 +22,9 @@ class DiscoveredBLEDDevice: NSObject, CBPeripheralDelegate {
     //discovered Services of the BLE Device
     final var discoveredServices: Set<CalliopeService> = []
     lazy var discoveredServicesUUIDs: Set<CBUUID> = Set(discoveredServices.map { $0.uuid })
+    
+    
+    var serviceToDiscoveredCharacteristicsMap = [CalliopeService : Set<CBUUID>]()
 
 
 	enum CalliopeBLEDeviceState {
@@ -87,7 +90,7 @@ class DiscoveredBLEDDevice: NSObject, CBPeripheralDelegate {
     
     var usageReadyCalliope: FlashableCalliope?
     
-    lazy var servicesWithUndiscoveredCharacteristics: Set<CBUUID> = {
+    lazy var servicesLeftToDiscoverFor: Set<CBUUID> = {
         return discoveredServicesUUIDs
     }()
 
@@ -138,21 +141,27 @@ class DiscoveredBLEDDevice: NSObject, CBPeripheralDelegate {
 
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         let requiredCharacteristicsUUIDs = Set(CalliopeBLEProfile.serviceCharacteristicUUIDMap[service.uuid] ?? [])
-
         let characteristics = service.characteristics ?? []
         let uuidSet = Set(characteristics.map { return $0.uuid })
-
+        
         if uuidSet.isSuperset(of: requiredCharacteristicsUUIDs) {
-            _ = servicesWithUndiscoveredCharacteristics.remove(service.uuid)
+            var serviceDiscoveredFor = CalliopeBLEProfile.uuidServiceMap[service.uuid]
+            serviceToDiscoveredCharacteristicsMap[serviceDiscoveredFor!] = requiredCharacteristicsUUIDs
         } else {
             state = .wrongMode
         }
-        usageReadyCalliope = FlashableCalliopeFactory.getFlashableCalliopeForBLEDevice(device: self)
-        if usageReadyCalliope != nil {
-            state = .usageReady
+        //Only continue once every discovered service has atleast been checked for characteristic
+        servicesLeftToDiscoverFor.remove(service.uuid)
+        if(servicesLeftToDiscoverFor.isEmpty) {
+            usageReadyCalliope = FlashableCalliopeFactory.getFlashableCalliopeForBLEDevice(device: self)
+            if usageReadyCalliope != nil {
+                state = .usageReady
+            } else {
+                // Delegate has been set to Calliope during creation, needs to be reset
+                state = .wrongMode
+            }
         } else {
-            // Delegate has been set to Calliope during creation, needs to be reset
-            state = .wrongMode
+            
         }
     }
 }
