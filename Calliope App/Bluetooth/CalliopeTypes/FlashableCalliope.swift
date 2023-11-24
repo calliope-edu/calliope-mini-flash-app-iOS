@@ -14,6 +14,8 @@ class FlashableCalliope: BLECalliope {
     
     private var rebootingForFirmwareUpgrade = false
     private var rebootingForPartialFlashing = false
+    public static var inDfuProcess = false
+    public static var isPartialFlashing = false
     
     internal private(set) var file: Hex?
     
@@ -22,16 +24,18 @@ class FlashableCalliope: BLECalliope {
     internal private(set) var logReceiver: LoggerDelegate?
     
     func notify(aboutState newState: DiscoveredBLEDDevice.CalliopeBLEDeviceState) {
-        LogNotify.log("Check the State Update")
-        if newState == .discovered && rebootingForFirmwareUpgrade {
+        LogNotify.log("Received notification about state change to \(newState)")
+        if newState == .connected && rebootingForFirmwareUpgrade {
             rebootingForFirmwareUpgrade = false
             transferFirmware()
         } else if newState == .usageReady && rebootingForPartialFlashing {
+            Self.isPartialFlashing = true
             rebootingForPartialFlashing = false
             updateQueue.async {
                 self.startPartialFlashing()
             }
-        } else if newState == .discovered && !isRebooting(){
+        } else if newState == .discovered && (!Self.inDfuProcess || Self.isPartialFlashing) {
+            // Abort if in discovered state but not in DfuProcess, however if is partial flashing
             DispatchQueue.main.async {
                 self.statusDelegate?.dfuStateDidChange(to: .aborted)
             }
@@ -66,6 +70,8 @@ class FlashableCalliope: BLECalliope {
         // the explanation is outdated though.
         
         //Partial flashing deactivated for now. Calliope mini disconnects from device with MakeCode Beta Hex File.
+        Self.inDfuProcess = true
+        LogNotify.log("Partial flashing service available: \(discoveredOptionalServices.contains(.partialFlashing))")
         if discoveredOptionalServices.contains(.partialFlashing) {
             startPartialFlashing()
         } else {
@@ -78,6 +84,10 @@ class FlashableCalliope: BLECalliope {
     
     public func isRebooting() -> Bool {
         return rebootingForFirmwareUpgrade || rebootingForPartialFlashing
+    }
+    
+    public func isRebootingForFirmwareUpgrade() -> Bool {
+        return rebootingForFirmwareUpgrade
     }
     
     internal func preparePairing() throws {
@@ -259,8 +269,6 @@ class FlashableCalliope: BLECalliope {
         if (needsRebootIntoBLEOnlyMode) {
             rebootingForPartialFlashing = true
             //calliope is in application state and needs to be rebooted
-            //TODO: Resete hier, muss die Info an die andere Seite weiterbringe, aber die hört nicht auf mich?
-            //Matrix ConnectionViewController kriegt hiervon nix mit
             send(command: .REBOOT, value: Data([.MODE_BLE]))
         } else {
             //calliope is already in bluetooth state

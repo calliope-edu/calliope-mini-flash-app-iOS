@@ -68,12 +68,18 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 			}
 			oldValue?.hasDisconnected()
 			connectedCalliope?.hasConnected()
-            if connectedCalliope != nil {
+            if let connectedCalliope = connectedCalliope {
                 connectingCalliope = nil
+                if let rebootingCalliope = rebootingCalliope{
+                    connectedCalliope.rebootingCalliope = rebootingCalliope
+                    self.rebootingCalliope = nil
+                }
             }
             redetermineState()
 		}
 	}
+    
+    private var rebootingCalliope: FlashableCalliope?
 
 	private let bluetoothQueue = DispatchQueue.global(qos: .userInitiated)
 	private lazy var centralManager: CBCentralManager = {
@@ -229,14 +235,18 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 
 	func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         LogNotify.log("disconnected from \(peripheral.name ?? "unknown device"), with error: \(error?.localizedDescription ?? "none")")
-        // If Usage Ready Calliope is rebooting change nothing
+        // If Usage Ready Calliope is rebooting, set state to .willReset this will trigger an automated reconnection
         if let connectedCalliope = connectedCalliope, let usageReadyCalliope = connectedCalliope.usageReadyCalliope, usageReadyCalliope.isRebooting() {
+            if !(connectedCalliope.state == .hasReset) {
+                rebootingCalliope = connectedCalliope.usageReadyCalliope
                 connectedCalliope.state = .willReset
                 return
             }
+        }
         connectingCalliope = nil
         connectedCalliope = nil
         lastConnected = nil
+        rebootingCalliope = nil
 	}
 
 	func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {

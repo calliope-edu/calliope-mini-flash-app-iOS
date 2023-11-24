@@ -163,7 +163,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 				LogNotify.log("Matrix view connecting to \(calliope)")
 				connector.connectToCalliope(calliope)
 			} else if calliope.state == .connected {
-				calliope.evaluateMode()
+                calliope.evaluateMode()
 			} else {
 				LogNotify.log("Connect button of matrix view should not be enabled in this state (\(self.connector.state), \(String(describing: self.discoveredCalliopeWithCurrentMatrix?.state)))")
 			}
@@ -224,23 +224,8 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 	}
     
     private func startDelayedDiscovery(delaySeconds:Int = 7) {
-        if delayedDiscovery { return }
-        delayedDiscovery = true
-        
-        LogNotify.log("adding delayed discovery to queue: \(delaySeconds)")
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delaySeconds)) {
-            self.delayedDiscovery = false
-            if self.collapseButton.expansionState == .closed {
-                if !self.matrixView.isBlank() && (self.connector.state == .initialized ||
-                    self.connector.state == .discoveredAll && self.connectButton.connectionState != .readyToPlay) {
-                    self.connector.startCalliopeDiscovery()
-                }
-            }
-            else {
-                // the matrix view is open so don't start a discovery as the connection attempt prevents user input to it
-                self.startDelayedDiscovery(delaySeconds: 2)
-            }
-        }
+        // remove Delayed Discovery for now, created endless loop of looking for Calliope, which is no longer required without an auto connect
+        return
     }
 
 	private func evaluateCalliopeState(_ calliope: DiscoveredBLEDDevice) {
@@ -289,6 +274,12 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 			matrixView.isUserInteractionEnabled = false
 			attemptReconnect = true
 			connectButton.connectionState = .testingMode
+            if let usageReadyCalliope = calliope.usageReadyCalliope, usageReadyCalliope.isRebooting() {
+                calliope.state = .hasReset
+            }
+            queue.asyncAfter(deadline: DispatchTime.now() + BluetoothConstants.restartDuration, execute: connect)
+        case .hasReset:
+            self.connector.disconnectFromCalliope()
 		}
 	}
 
@@ -299,7 +290,11 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
         } else if error.localizedDescription == NSLocalizedString("Connection to calliope timed out!", comment: "") {
             alertController = nil //ignore error
         } else {
-            alertController = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Encountered an error discovering or connecting calliope:", comment: "") + "\n\(error.localizedDescription)", preferredStyle: .alert)
+            if !FlashableCalliope.inDfuProcess {
+                alertController = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Encountered an error discovering or connecting calliope:", comment: "") + "\n\(error.localizedDescription)", preferredStyle: .alert)
+            } else {
+                return
+            }
         }
 
         guard let alertController = alertController else {
