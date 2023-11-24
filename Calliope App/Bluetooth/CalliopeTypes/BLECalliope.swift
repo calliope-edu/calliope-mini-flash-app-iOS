@@ -32,19 +32,44 @@ class BLECalliope: NSObject, CBPeripheralDelegate {
     let name : String
     let servicesChangedCallback: () -> ()?
     
-    required init?(peripheral: CBPeripheral, name: String, discoveredServices: Set<CalliopeService>, servicesToCharacteristicsMap: [CalliopeService:Set<CBUUID>], servicesChangedCallback: @escaping () -> ()?) {
+    required init?(peripheral: CBPeripheral, name: String, discoveredServices: Set<CalliopeService>, discoveredCharacteristicUUIDsForServiceUUID: [CBUUID : Set<CBUUID>], servicesChangedCallback: @escaping () -> ()?) {
         self.peripheral = peripheral
         self.name = name
         self.servicesChangedCallback = servicesChangedCallback
         super.init()
         
-        
         self.discoveredOptionalServices = discoveredServices.intersection(optionalServices)
-        if !FlashableCalliopeFactory.validateServicesAndCharacteristics(requiredServices: requiredServices, optionalServices: optionalServices, discoveredServices: discoveredServices, peripheral: peripheral, servicesToCharacteristicsMap: servicesToCharacteristicsMap) {
+        guard validateServicesAndCharacteristics(discoveredServices, peripheral, discoveredCharacteristicUUIDsForServiceUUID) else {
             LogNotify.log("failed to find required services or a way to activate them for \(String(describing: self))")
             return nil
         }
+        
         LogNotify.log("successfully validated Calliope Type \(String(describing: self))")
+    }
+    
+    private func validateServicesAndCharacteristics(_ discoveredServices: Set<CalliopeService>, _ peripheral: CBPeripheral, _ discoveredCharacteristicUUIDsForServiceUUID: [CBUUID : Set<CBUUID>]) -> Bool {
+        LogNotify.log("start validating optional and required services")
+        //Validate Services, are required Services discovered
+        let requiredServicesUUIDs = Set(requiredServices.map { return $0.uuid })
+        let discoveredOptionalServices = optionalServices.intersection(discoveredServices)
+        
+        guard requiredServices.isSubset(of: discoveredServices) else {
+            return false
+        }
+
+        LogNotify.log("found all of \(requiredServicesUUIDs.count) required services:\n\(requiredServices)")
+        LogNotify.log("found \(discoveredOptionalServices.count) of \(optionalServices.count) optional services")
+        
+        //Validate Characteristics, are characteristics discovered for all optional and required services
+        for service in requiredServices {
+            guard let foundCharacteristics = discoveredCharacteristicUUIDsForServiceUUID[service.uuid], foundCharacteristics.isSuperset(of: CalliopeBLEProfile.serviceCharacteristicUUIDMap[service.uuid] ?? []) else {
+                LogNotify.log("Some characteristics not found for service \(service.uuid)")
+                return false
+            }
+            LogNotify.log("All characteristics \(foundCharacteristics) found for service \(service.uuid)")
+        }
+    
+        return true
     }
 
     //MARK: reading and writing characteristics (asynchronously/ scheduled/ synchronously)
@@ -61,6 +86,9 @@ class BLECalliope: NSObject, CBPeripheralDelegate {
     var readingCharacteristic : CBCharacteristic? = nil
     var readValue : Data? = nil
     
+    var setNotifyError : Error? = nil
+    var setNotifyingCharacteristic: CBCharacteristic? = nil
+    
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
         if let writingCharac = writingCharacteristic, characteristic.uuid == writingCharac.uuid {
             explicitWriteResponse(error)
@@ -72,7 +100,10 @@ class BLECalliope: NSObject, CBPeripheralDelegate {
 
     func peripheral(_ peripheral: CBPeripheral, didModifyServices invalidatedServices: [CBService]) {
         LogNotify.log("Calliope \(peripheral.name ?? "[no name]") invalidated services \(invalidatedServices). Re-evaluate mode.")
-        servicesChangedCallback()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.servicesChangedCallback()
+        }
     }
 
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
@@ -97,6 +128,15 @@ class BLECalliope: NSObject, CBPeripheralDelegate {
         handleValueUpdateInternal(calliopeCharacteristic, value)
         handleValueUpdate(calliopeCharacteristic, value)
     }
+    
+    func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
+        if let writingCharac = writingCharacteristic, characteristic.uuid == writingCharac.uuid {
+            explicitSetNotifyResponse(error)
+            return
+        } else {
+            LogNotify.log("updated notification state for for characteristic that we did not subscribe to!")
+        }
+    }
 
     func handleValueUpdate(_ characteristic: CalliopeCharacteristic, _ value: Data) {
         LogNotify.log("value for \(characteristic) updated (\(value.hexEncodedString()))")
@@ -110,6 +150,18 @@ class BLECalliope: NSObject, CBPeripheralDelegate {
         writingCharacteristic = nil
         //set potential error and move on
         writeError = error
+        if let error = error {
+            LogNotify.log("received error from writing: \(error)")
+        } else {
+            LogNotify.log("received write success message")
+        }
+        readWriteGroup?.leave()
+    }
+
+    private func explicitSetNotifyResponse(_ error: Error?) {
+        setNotifyingCharacteristic = nil
+        //set potential error and move on
+        setNotifyError = error
         if let error = error {
             LogNotify.log("received error from writing: \(error)")
         } else {
@@ -220,6 +272,37 @@ class BLECalliope: NSObject, CBPeripheralDelegate {
             LogNotify.log("read \(String(describing: data)) from \(characteristic)")
             readValue = nil
             return data
+        }
+    }
+    
+    func setNotify(characteristic: CalliopeCharacteristic, _ activate: Bool) throws {
+        guard let cbCharacteristic = getCBCharacteristic(characteristic)
+            else { throw "no service that contains characteristic \(characteristic)" }
+        return try setNotify(characteristic: cbCharacteristic, activate)
+    }
+     
+    func setNotify(characteristic: CBCharacteristic, _ activate: Bool) throws {
+        return try applySemaphore(readWriteSem) {
+            setNotifyingCharacteristic = characteristic
+            
+            asyncAndWait(on: readWriteQueue) {
+                //read value and wait for delegate call (or error)
+                self.readWriteGroup = DispatchGroup();
+                self.readWriteGroup!.enter()
+                self.peripheral.setNotifyValue(activate, for: characteristic)
+                if self.readWriteGroup!.wait(timeout: DispatchTime.now() + BluetoothConstants.readTimeout) == .timedOut {
+                    LogNotify.log("read from \(characteristic) timed out")
+                    self.setNotifyError = CBError(.connectionTimeout)
+                }
+            }
+
+            guard setNotifyError == nil else {
+                LogNotify.log("read resulted in error: \(setNotifyError!)")
+                let error = setNotifyError!
+                //prepare for next read
+                setNotifyError = nil
+                throw error
+            }
         }
     }
 }

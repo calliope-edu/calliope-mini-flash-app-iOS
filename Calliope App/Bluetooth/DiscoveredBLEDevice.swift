@@ -25,7 +25,7 @@ class DiscoveredBLEDDevice: NSObject, CBPeripheralDelegate {
     
     var usageReadyCalliope: FlashableCalliope?
     
-    var serviceToDiscoveredCharacteristicsMap = [CalliopeService : Set<CBUUID>]()
+    var serviceToDiscoveredCharacteristicsMap = [CBUUID : Set<CBUUID>]()
 
     var rebootingCalliope: FlashableCalliope? = nil
 
@@ -36,7 +36,6 @@ class DiscoveredBLEDDevice: NSObject, CBPeripheralDelegate {
 		case usageReady //all required services and characteristics have been found, calliope ready to be programmed
 		case wrongMode //required services and characteristics not available, put into right mode
 		case willReset //when a reset is done to enable or disable services
-        case hasReset //initial state after reset has been triggered
 	}
 
 	var state : CalliopeBLEDeviceState = .discovered {
@@ -91,7 +90,7 @@ class DiscoveredBLEDDevice: NSObject, CBPeripheralDelegate {
 		peripheral.delegate = self
 	}
     
-    lazy var servicesLeftToDiscoverFor: Set<CBUUID> = {
+    lazy var servicesWithUndiscoveredCharacteristics: Set<CBUUID> = {
         return discoveredServicesUUIDs
     }()
 
@@ -107,6 +106,10 @@ class DiscoveredBLEDDevice: NSObject, CBPeripheralDelegate {
 			state = .discovered
 		}
 	}
+    
+    public func shouldReconnectAfterReboot() -> Bool {
+        return usageReadyCalliope?.shouldRebootOnDisconnect ?? false
+    }
 
 	// MARK: Services discovery
 
@@ -117,7 +120,7 @@ class DiscoveredBLEDDevice: NSObject, CBPeripheralDelegate {
         } else if let rebootingCalliope = rebootingCalliope, rebootingCalliope.isRebootingForFirmwareUpgrade() {
             LogNotify.log("RebootingCalliope exists do not evaluate mode")
         } else {
-            print(FlashableCalliope.inDfuProcess)
+            LogNotify.log("Evaluating mode of calliope")
             //service discovery
             state = .evaluateMode
             peripheral.discoverServices([] + Self.discoverableServicesUUIDs)
@@ -125,7 +128,11 @@ class DiscoveredBLEDDevice: NSObject, CBPeripheralDelegate {
 	}
 
 	func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+        
 		guard error == nil else {
+            
+            LogNotify.log("Error discovering services \(error!)")
+            
 			LogNotify.log(error!.localizedDescription)
 			state = .wrongMode
 			return
@@ -133,6 +140,8 @@ class DiscoveredBLEDDevice: NSObject, CBPeripheralDelegate {
 
         let services = peripheral.services ?? []
 		let uuidSet = Set(services.map { return $0.uuid })
+        
+        LogNotify.log("Did discover services \(services)")
 
         let discoveredServiceUUIDs = uuidSet
         discoveredServices = Set(discoveredServiceUUIDs.compactMap { CalliopeBLEProfile.uuidServiceMap[$0] })
@@ -148,34 +157,46 @@ class DiscoveredBLEDDevice: NSObject, CBPeripheralDelegate {
     // MARK: Characteristics discovery
 
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-        let requiredCharacteristicsUUIDs = Set(CalliopeBLEProfile.serviceCharacteristicUUIDMap[service.uuid] ?? [])
+        
+        guard error == nil else {
+            LogNotify.log("Error discovering characteristics \(error!)")
+            
+            LogNotify.log(error!.localizedDescription)
+            state = .wrongMode
+            return
+        }
+        
         let characteristics = service.characteristics ?? []
         let uuidSet = Set(characteristics.map { return $0.uuid })
+        serviceToDiscoveredCharacteristicsMap[service.uuid] = uuidSet
         
-        if uuidSet.isSuperset(of: requiredCharacteristicsUUIDs) {
-            let serviceDiscoveredFor = CalliopeBLEProfile.uuidServiceMap[service.uuid]
-            serviceToDiscoveredCharacteristicsMap[serviceDiscoveredFor!] = requiredCharacteristicsUUIDs
-        } else {
-            state = .wrongMode
-        }
+        LogNotify.log("Did discover characteristics \(uuidSet)")
+
         //Only continue once every discovered service has atleast been checked for characteristic
-        servicesLeftToDiscoverFor.remove(service.uuid)
-        if(servicesLeftToDiscoverFor.isEmpty) {
-            usageReadyCalliope = FlashableCalliopeFactory.getFlashableCalliopeForBLEDevice(device: self)
-            if usageReadyCalliope != nil {
-                if let rebootingCalliope = rebootingCalliope {
-                    usageReadyCalliope = rebootingCalliope
-                    self.peripheral.delegate = usageReadyCalliope
-                    self.rebootingCalliope = nil
-                }
-                
-                state = .usageReady
-            } else {
-                // Delegate has been set to Calliope during creation, needs to be reset
-                state = .wrongMode
-            }
-        } else {
+        servicesWithUndiscoveredCharacteristics.remove(service.uuid)
+        
+        if(servicesWithUndiscoveredCharacteristics.isEmpty) {
             
+            LogNotify.log("Did discover characteristics for all discovered services")
+                        
+            guard let usageReadyCalliope = FlashableCalliopeFactory.getFlashableCalliopeForBLEDevice(device: self) else {
+                state = .wrongMode
+                return
+            }
+            
+            if let rebootingCalliope = rebootingCalliope, type(of: rebootingCalliope) === type(of: usageReadyCalliope) {
+                LogNotify.log("Choose rebooting calliope for use")
+                // We saved a calliope in a reboot process, use that one
+                self.usageReadyCalliope = rebootingCalliope
+                self.peripheral.delegate = usageReadyCalliope
+            } else {
+                //new calliope found, delegate was set in initialization process
+                self.usageReadyCalliope = usageReadyCalliope
+            }
+            
+            rebootingCalliope = nil
+            
+            state = .usageReady
         }
     }
 }

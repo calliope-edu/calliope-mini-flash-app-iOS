@@ -169,6 +169,8 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
             updateQueue.async { self.errorBlock(NSLocalizedString("Activate Bluetooth!", comment: "")) }
 			state = .discoveryWaitingForBluetooth
 		} else if !centralManager.isScanning {
+            discoveredCalliopes = [:]
+            discoveredCalliopeUUIDNameMap = [:]
 			centralManager.scanForPeripherals(withServices: nil, options: nil)
 			//stop the search after some time. The user can invoke it again later.
 			bluetoothQueue.asyncAfter(deadline: DispatchTime.now() + BluetoothConstants.discoveryTimeout) {
@@ -236,17 +238,16 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 	func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         LogNotify.log("disconnected from \(peripheral.name ?? "unknown device"), with error: \(error?.localizedDescription ?? "none")")
         // If Usage Ready Calliope is rebooting, set state to .willReset this will trigger an automated reconnection
-        if let connectedCalliope = connectedCalliope, let usageReadyCalliope = connectedCalliope.usageReadyCalliope, usageReadyCalliope.isRebooting() {
-            if !(connectedCalliope.state == .hasReset) {
-                rebootingCalliope = connectedCalliope.usageReadyCalliope
+        if let connectedCalliope = connectedCalliope, connectedCalliope.shouldReconnectAfterReboot() {
                 connectedCalliope.state = .willReset
-                return
-            }
+                rebootingCalliope = connectedCalliope.usageReadyCalliope
+        } else {
+            rebootingCalliope = nil
         }
-        connectingCalliope = nil
-        connectedCalliope = nil
-        lastConnected = nil
-        rebootingCalliope = nil
+        
+        self.connectingCalliope = nil
+        self.connectedCalliope = nil
+        self.lastConnected = nil
 	}
 
 	func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
@@ -267,6 +268,9 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 			}
 		case .unknown, .resetting, .unsupported, .unauthorized, .poweredOff:
 			//bluetooth is in a state where we cannot do anything
+            rebootingCalliope = nil
+            connectingCalliope = nil
+            connectedCalliope = nil
 			discoveredCalliopes = [:]
 			discoveredCalliopeUUIDNameMap = [:]
 			state = .initialized

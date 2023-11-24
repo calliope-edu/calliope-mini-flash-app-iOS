@@ -6,16 +6,17 @@
 //
 
 import UIKit
+import CoreBluetooth
 import iOSDFULibrary
 
-class FlashableCalliope: BLECalliope {
+class FlashableCalliope: BLECalliope, DFUServiceDelegate {
     
     // MARK: common
     
     private var rebootingForFirmwareUpgrade = false
     private var rebootingForPartialFlashing = false
-    public static var inDfuProcess = false
-    public static var isPartialFlashing = false
+    private var isPartiallyFlashing = false
+    public internal(set) var shouldRebootOnDisconnect = false
     
     internal private(set) var file: Hex?
     
@@ -25,16 +26,13 @@ class FlashableCalliope: BLECalliope {
     
     func notify(aboutState newState: DiscoveredBLEDDevice.CalliopeBLEDeviceState) {
         LogNotify.log("Received notification about state change to \(newState)")
-        if newState == .connected && rebootingForFirmwareUpgrade {
-            rebootingForFirmwareUpgrade = false
-            transferFirmware()
-        } else if newState == .usageReady && rebootingForPartialFlashing {
-            Self.isPartialFlashing = true
+        if newState == .usageReady && rebootingForPartialFlashing {
             rebootingForPartialFlashing = false
             updateQueue.async {
                 self.startPartialFlashing()
             }
-        } else if newState == .discovered && (!Self.inDfuProcess || Self.isPartialFlashing) {
+        } else if newState == .discovered && isPartiallyFlashing {
+            LogNotify.log("Lost connection to calliope during flashing process")
             // Abort if in discovered state but not in DfuProcess, however if is partial flashing
             DispatchQueue.main.async {
                 self.statusDelegate?.dfuStateDidChange(to: .aborted)
@@ -70,11 +68,12 @@ class FlashableCalliope: BLECalliope {
         // the explanation is outdated though.
         
         //Partial flashing deactivated for now. Calliope mini disconnects from device with MakeCode Beta Hex File.
-        Self.inDfuProcess = true
         LogNotify.log("Partial flashing service available: \(discoveredOptionalServices.contains(.partialFlashing))")
         if discoveredOptionalServices.contains(.partialFlashing) {
-            startPartialFlashing()
+            shouldRebootOnDisconnect = true
+            startPartialFlashing(needsToBeRebooted: true)
         } else {
+            shouldRebootOnDisconnect = false
             try startFullFlashing()
         }
     }
@@ -99,7 +98,13 @@ class FlashableCalliope: BLECalliope {
     internal func triggerDfuMode() throws {
         let data = Data([0x01])
         rebootingForFirmwareUpgrade = true
-        try write(data, for: .dfuControl)
+        do {
+            try write(data, for: .dfuControl)
+        } catch {
+            dfuError(.failedToConnect, didOccurWithMessage: "Could not start DFU mode")
+            throw error
+        }
+            
     }
     
     internal func transferFirmware() {
@@ -193,7 +198,9 @@ class FlashableCalliope: BLECalliope {
         }
     }
     
-    internal func startPartialFlashing() {
+    internal func startPartialFlashing(needsToBeRebooted: Bool = false) {
+        
+        isPartiallyFlashing = true
         
         //reset variables in case we use the same calliope object twice
         
@@ -224,10 +231,17 @@ class FlashableCalliope: BLECalliope {
             return
         }
         
+        if (needsToBeRebooted) {
+            rebootingForPartialFlashing = true
+            //calliope is in application state and needs to be rebooted
+            send(command: .REBOOT, value: Data([.MODE_BLE]))
+        }
+
         hexFileHash = partialFlashingInfo.fileHash
         hexProgramHash = partialFlashingInfo.programHash
         partialFlashData = partialFlashingInfo.partialFlashData
         
+        //Triggers pairing, if not happened already
         peripheral.setNotifyValue(true, for: partialFlashingCharacteristic)
         
         // request dal hash
@@ -329,6 +343,8 @@ class FlashableCalliope: BLECalliope {
     }
     
     private func endTransmission() {
+        isPartiallyFlashing = false
+        shouldRebootOnDisconnect = false
         updateCallback("partial flashing done!")
         send(command: .TRANSMISSION_END)
     }
@@ -346,10 +362,12 @@ class FlashableCalliope: BLECalliope {
     
     
     private func fallbackToFullFlash() {
+        isPartiallyFlashing = false
         updateCallback("partial flash failed, resort to full flashing")
         do {
             try startFullFlashing()
         } catch {
+            LogNotify.log("full flashing failed, cancel upload")
             _ = cancelUpload()
         }
     }
@@ -367,6 +385,22 @@ class FlashableCalliope: BLECalliope {
         }
     }
     
+    //MARK: dfu delegate
+    
+    func dfuStateDidChange(to state: DFUState) {
+        if state == .starting {
+            rebootingForFirmwareUpgrade = false
+        }
+        statusDelegate?.dfuStateDidChange(to: state)
+    }
+    
+    
+    func dfuError(_ error: iOSDFULibrary.DFUError, didOccurWithMessage message: String) {
+        rebootingForFirmwareUpgrade = false
+        statusDelegate?.dfuError(error, didOccurWithMessage: message)
+    }
+    
+    
 }
 
 //MARK: Calliope V1 and V2
@@ -379,6 +413,22 @@ class CalliopeV1AndV2: FlashableCalliope {
     
     override var optionalServices: Set<CalliopeService> {
         return [.partialFlashing]
+    }
+    
+    override func notify(aboutState newState: DiscoveredBLEDDevice.CalliopeBLEDeviceState) {
+        super.notify(aboutState: newState)
+        if newState == .usageReady {
+            //read to trigger pairing if necessary
+            shouldRebootOnDisconnect = true
+            do {
+                if discoveredOptionalServices.contains(.partialFlashing) {
+                    try setNotify(characteristic: .partialFlashing, true)
+                }
+                shouldRebootOnDisconnect = false
+            } catch {
+                
+            }
+        }
     }
     
     internal override func startFullFlashing() throws {
@@ -395,16 +445,34 @@ class CalliopeV1AndV2: FlashableCalliope {
         
         initiator = DFUServiceInitiator().with(firmware: firmware)
         initiator?.logger = logReceiver
-        initiator?.delegate = statusDelegate
+        initiator?.delegate = self
         initiator?.progressDelegate = progressReceiver
         
-        try triggerDfuMode()
+        try triggerDfuMode()        
+        
+        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: DispatchTime.now() + DispatchTimeInterval.seconds(4)) {
+            self.transferFirmware()
+        }
     }
 }
 
 //MARK: Calliope V3
 
 class CalliopeV3: FlashableCalliope {
+    
+    override func notify(aboutState newState: DiscoveredBLEDDevice.CalliopeBLEDeviceState) {
+        super.notify(aboutState: newState)
+        if newState == .usageReady {
+            //read to trigger pairing if necessary
+            shouldRebootOnDisconnect = true
+            do {
+                try setNotify(characteristic: .secureDfuCharacteristic, true)
+                shouldRebootOnDisconnect = false
+            } catch {
+                
+            }
+        }
+    }
     
     override var requiredServices: Set<CalliopeService> {
         return [.secureDfuService]
@@ -427,17 +495,18 @@ class CalliopeV3: FlashableCalliope {
 
         initiator = SecureDFUServiceInitiator().with(firmware: firmware)
         initiator?.logger = logReceiver
-        initiator?.delegate = statusDelegate
+        initiator?.delegate = self
         initiator?.progressDelegate = progressReceiver
 
         transferFirmware()
     }
     
-    internal override func startPartialFlashing() {
+    internal override func startPartialFlashing(needsToBeRebooted: Bool = false) {
         // TODO: Solve Partial Flashing Errors
         // Partial Flashing does not work entirely functional with the current Version of the Firmware. We therefor fallback to Full Flashing until this has been solved.
         // Partial Flashing starts, but the Calliope disconnects unexpectedly after around 6% have been transfered.
         do {
+            shouldRebootOnDisconnect = false
             try startFullFlashing()
         } catch {
             LogNotify.log("Tried reverting to Full Flashing, but failed")

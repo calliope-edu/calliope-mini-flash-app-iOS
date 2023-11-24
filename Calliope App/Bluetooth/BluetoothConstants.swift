@@ -14,7 +14,8 @@ struct BluetoothConstants {
 	static let readTimeout = 10.0
 	static let writeTimeout = 10.0
 
-	//set this to 0 of coupling is not necessary
+	//set this to 0 if coupling is not necessary
+    //TODO do we need coupling now?
 	static let couplingDelay = 0.0
 	//this should be a little longer than the duration (in seconds)
 	//that the calliope needs for restarting in program 5

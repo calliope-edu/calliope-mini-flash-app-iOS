@@ -98,6 +98,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 		matrixView.updateBlock = {
 			//matrix has been changed manually, this always triggers a disconnect
 			self.connector.disconnectFromCalliope()
+            self.connector.startCalliopeDiscovery()
 			self.updateDiscoveryState()
 		}
         restoreLastMatrix()
@@ -274,12 +275,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 			matrixView.isUserInteractionEnabled = false
 			attemptReconnect = true
 			connectButton.connectionState = .testingMode
-            if let usageReadyCalliope = calliope.usageReadyCalliope, usageReadyCalliope.isRebooting() {
-                calliope.state = .hasReset
-            }
             queue.asyncAfter(deadline: DispatchTime.now() + BluetoothConstants.restartDuration, execute: connect)
-        case .hasReset:
-            self.connector.disconnectFromCalliope()
 		}
 	}
 
@@ -290,11 +286,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
         } else if error.localizedDescription == NSLocalizedString("Connection to calliope timed out!", comment: "") {
             alertController = nil //ignore error
         } else {
-            if !FlashableCalliope.inDfuProcess {
-                alertController = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Encountered an error discovering or connecting calliope:", comment: "") + "\n\(error.localizedDescription)", preferredStyle: .alert)
-            } else {
-                return
-            }
+            alertController = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Encountered an error discovering or connecting calliope:", comment: "") + "\n\(error.localizedDescription)", preferredStyle: .alert)
         }
 
         guard let alertController = alertController else {
