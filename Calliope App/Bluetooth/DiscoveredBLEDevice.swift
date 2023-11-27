@@ -35,7 +35,6 @@ class DiscoveredBLEDDevice: NSObject, CBPeripheralDelegate {
 		case evaluateMode //connected, looking for services and characteristics
 		case usageReady //all required services and characteristics have been found, calliope ready to be programmed
 		case wrongMode //required services and characteristics not available, put into right mode
-		case willReset //when a reset is done to enable or disable services
 	}
 
 	var state : CalliopeBLEDeviceState = .discovered {

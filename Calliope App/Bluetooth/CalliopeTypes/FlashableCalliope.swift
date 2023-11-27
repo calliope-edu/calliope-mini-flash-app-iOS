@@ -191,12 +191,16 @@ class FlashableCalliope: BLECalliope, DFUServiceDelegate {
     }
     
     internal func initiatePartialFlashing() {
-        guard let cbCharacteristic = getCBCharacteristic(.partialFlashing)
-            else {
+        
+        updateCallback("start partial flashing")
+        guard let file = file,
+              let partialFlashingInfo = file.partialFlashingInfo,
+              let partialFlashingCharacteristic = getCBCharacteristic(.partialFlashing) else {
+            LogNotify.log("partialFlashing not found")
             fallbackToFullFlash()
             return
         }
-        peripheral.setNotifyValue(true, for: cbCharacteristic)
+        peripheral.setNotifyValue(true, for: partialFlashingCharacteristic)
         //request mode (application running or BLE only)
         send(command: .STATUS)
     }
@@ -440,7 +444,7 @@ class CalliopeV1AndV2: FlashableCalliope {
         
         try triggerDfuMode()        
         
-        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: DispatchTime.now() + DispatchTimeInterval.seconds(4)) {
+        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: DispatchTime.now() + BluetoothConstants.startDfuProcessDelay) {
             self.transferFirmware()
         }
     }

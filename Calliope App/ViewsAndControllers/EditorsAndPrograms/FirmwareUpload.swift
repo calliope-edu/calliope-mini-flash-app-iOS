@@ -227,9 +227,13 @@ extension FirmwareUpload: DFUProgressDelegate, DFUServiceDelegate, LoggerDelegat
 
     func dfuStateDidChange(to state: DFUState) {
         LogNotify.log("DFU State change: \(state)")
-        if [DFUState.aborted, .completed].contains(state) {
+        if [DFUState.completed].contains(state) {
             self.finished()
         }
+        if [DFUState.aborted].contains(state) {
+            self.dfuError(.deviceDisconnected, didOccurWithMessage: "dfu process aborted")
+        }
+        
     }
 
     func dfuError(_ error: DFUError, didOccurWithMessage message: String) {

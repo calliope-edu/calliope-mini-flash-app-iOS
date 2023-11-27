@@ -158,7 +158,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 			|| self.discoveredCalliopeWithCurrentMatrix == nil && self.connector.state == .discoveredAll {
 			connector.startCalliopeDiscovery()
 		} else if let calliope = self.discoveredCalliopeWithCurrentMatrix {
-			if calliope.state == .discovered || calliope.state == .willReset {
+			if calliope.state == .discovered {
 				calliope.updateBlock = updateDiscoveryState
                 calliope.errorBlock = error
 				LogNotify.log("Matrix view connecting to \(calliope)")
@@ -231,13 +231,15 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 
 	private func evaluateCalliopeState(_ calliope: DiscoveredBLEDDevice) {
 
-		if calliope.state == .wrongMode || calliope.state == .discovered {
+        if let usageReadyCalliope = calliope.usageReadyCalliope, usageReadyCalliope.rebootingIntoDFUMode, calliope.state == .discovered {
+            self.collapseButton.connectionState = .connected
+        } else if calliope.state == .wrongMode || calliope.state == .discovered {
 			self.collapseButton.connectionState = attemptReconnect || reconnecting ? .connecting : .disconnected
 		} else if calliope.state == .usageReady {
 			self.collapseButton.connectionState = .connected
             LogNotify.log("last pattern:\r\(matrixView.getMatrixString())")
             UserDefaults.standard.set(matrixView.getMatrixString(), forKey: SettingsKey.lastMatrix.rawValue)
-		} else {
+        }  else {
 			self.collapseButton.connectionState = .connecting
 		}
 
@@ -271,11 +273,6 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 		case .wrongMode:
 			matrixView.isUserInteractionEnabled = true
 			connectButton.connectionState = .wrongProgram
-		case .willReset:
-			matrixView.isUserInteractionEnabled = false
-			attemptReconnect = true
-			connectButton.connectionState = .testingMode
-            queue.asyncAfter(deadline: DispatchTime.now() + BluetoothConstants.restartDuration, execute: connect)
 		}
 	}
 

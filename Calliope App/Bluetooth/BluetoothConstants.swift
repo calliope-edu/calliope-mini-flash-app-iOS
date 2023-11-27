@@ -13,6 +13,7 @@ struct BluetoothConstants {
     static let serviceDiscoveryTimeout = 10.0
 	static let readTimeout = 10.0
 	static let writeTimeout = 10.0
+    static let startDfuProcessDelay = 2.0
 
 	//set this to 0 if coupling is not necessary
     //TODO do we need coupling now?

@@ -231,7 +231,7 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 
 	func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         LogNotify.log("disconnected from \(peripheral.name ?? "unknown device"), with error: \(error?.localizedDescription ?? "none")")
-        // If Usage Ready Calliope is rebooting, set state to .willReset this will trigger an automated reconnection
+        // If Usage Ready Calliope is rebooting, automatically reconnect to the calliope
         if let connectedCalliope = connectedCalliope, connectedCalliope.shouldReconnectAfterReboot() {
             connectedCalliope.rebootingCalliope = connectedCalliope.usageReadyCalliope
             self.connectedCalliope = nil
