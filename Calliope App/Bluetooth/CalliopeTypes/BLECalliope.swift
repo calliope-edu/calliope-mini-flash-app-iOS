@@ -291,7 +291,7 @@ class BLECalliope: NSObject, CBPeripheralDelegate {
                 self.readWriteGroup!.enter()
                 self.peripheral.setNotifyValue(activate, for: characteristic)
                 if self.readWriteGroup!.wait(timeout: DispatchTime.now() + BluetoothConstants.readTimeout) == .timedOut {
-                    LogNotify.log("read from \(characteristic) timed out")
+                    LogNotify.log("activate notifications from \(characteristic) timed out")
                     self.setNotifyError = CBError(.connectionTimeout)
                 }
             }

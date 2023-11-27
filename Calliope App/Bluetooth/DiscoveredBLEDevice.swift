@@ -115,9 +115,9 @@ class DiscoveredBLEDDevice: NSObject, CBPeripheralDelegate {
 
 	/// evaluate whether calliope is in correct mode
     public func evaluateMode() {
-        if let usageReadyCalliope = usageReadyCalliope, usageReadyCalliope.isRebootingForFirmwareUpgrade() {
+        if let usageReadyCalliope = usageReadyCalliope, usageReadyCalliope.rebootingIntoDFUMode {
             LogNotify.log("Calliope is Rebooting For Firmwareupgrade, do not evaluate mode")
-        } else if let rebootingCalliope = rebootingCalliope, rebootingCalliope.isRebootingForFirmwareUpgrade() {
+        } else if let rebootingCalliope = rebootingCalliope, rebootingCalliope.rebootingIntoDFUMode {
             LogNotify.log("RebootingCalliope exists do not evaluate mode")
         } else {
             LogNotify.log("Evaluating mode of calliope")
