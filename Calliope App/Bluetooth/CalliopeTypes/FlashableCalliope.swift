@@ -36,7 +36,7 @@ class FlashableCalliope: BLECalliope, DFUServiceDelegate {
             LogNotify.log("Lost connection to calliope during flashing process")
             // Abort if in discovered state but not in DfuProcess, however if is partial flashing
             DispatchQueue.main.async {
-                self.statusDelegate?.dfuStateDidChange(to: .aborted)
+                self.statusDelegate?.dfuError(.deviceDisconnected, didOccurWithMessage: "connection to calliope lost")
             }
         }
     }
@@ -218,6 +218,7 @@ class FlashableCalliope: BLECalliope, DFUServiceDelegate {
     func startPartialFlashing() {
 
         rebootingForPartialFlashing = false
+        isPartiallyFlashing = true
 
         updateCallback("start partial flashing")
         guard let file = file,
