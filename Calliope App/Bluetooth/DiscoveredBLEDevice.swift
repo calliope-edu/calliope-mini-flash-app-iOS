@@ -179,20 +179,21 @@ class DiscoveredBLEDDevice: NSObject, CBPeripheralDelegate {
             
             LogNotify.log("Did discover characteristics for all discovered services")
                         
-            guard let usageReadyCalliope = FlashableCalliopeFactory.getFlashableCalliopeForBLEDevice(device: self) else {
+            guard let validBLECalliope = FlashableCalliopeFactory.getFlashableCalliopeForBLEDevice(device: self) else {
                 state = .wrongMode
                 return
             }
             
-            if let rebootingCalliope = rebootingCalliope, type(of: rebootingCalliope) === type(of: usageReadyCalliope) {
+            if let rebootingCalliope = rebootingCalliope, type(of: rebootingCalliope) === type(of: validBLECalliope) {
                 LogNotify.log("Choose rebooting calliope for use")
                 // We saved a calliope in a reboot process, use that one
-                self.usageReadyCalliope = rebootingCalliope
-                self.peripheral.delegate = usageReadyCalliope
+                usageReadyCalliope = rebootingCalliope
             } else {
                 //new calliope found, delegate was set in initialization process
-                self.usageReadyCalliope = usageReadyCalliope
+                usageReadyCalliope = validBLECalliope
             }
+            
+            self.peripheral.delegate = usageReadyCalliope
             
             rebootingCalliope = nil
             

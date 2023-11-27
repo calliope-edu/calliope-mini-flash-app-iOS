@@ -204,6 +204,7 @@ class FlashableCalliope: BLECalliope, DFUServiceDelegate {
     func receivedStatus(_ needsRebootIntoBLEOnlyMode: Bool) {
         updateCallback("received mode of calliope, needs reboot: \(needsRebootIntoBLEOnlyMode)")
         if (needsRebootIntoBLEOnlyMode) {
+            shouldRebootOnDisconnect = true
             rebootingForPartialFlashing = true
             //calliope is in application state and needs to be rebooted
             send(command: .REBOOT, value: Data([.MODE_BLE]))
@@ -226,6 +227,8 @@ class FlashableCalliope: BLECalliope, DFUServiceDelegate {
             fallbackToFullFlash()
             return
         }
+        
+        peripheral.setNotifyValue(true, for: partialFlashingCharacteristic)
 
         //reset variables in case we use the same calliope object twice
 

@@ -9,7 +9,7 @@
 import Foundation
 import CoreBluetooth
 
-class FlashableCalliopeFactory{
+class FlashableCalliopeFactory {
     
     static let calliopeTypes = [CalliopeV3.self, CalliopeV1AndV2.self]
     
@@ -21,7 +21,6 @@ class FlashableCalliopeFactory{
         let calliope = calliopeTypes.compactMap { calliopeType in
             return calliopeType.init(peripheral: device.peripheral, name: device.name, discoveredServices: device.discoveredServices, discoveredCharacteristicUUIDsForServiceUUID: device.serviceToDiscoveredCharacteristicsMap, servicesChangedCallback: servicesChangedCallback)
         }.first
-        device.peripheral.delegate = calliope
         return calliope
     }
 }
