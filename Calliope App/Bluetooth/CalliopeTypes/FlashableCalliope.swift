@@ -71,7 +71,7 @@ class FlashableCalliope: BLECalliope, DFUServiceDelegate {
         //Partial flashing deactivated for now. Calliope mini disconnects from device with MakeCode Beta Hex File.
         LogNotify.log("Partial flashing service available: \(discoveredOptionalServices.contains(.partialFlashing))")
         if discoveredOptionalServices.contains(.partialFlashing) {
-            initiatePartialFlashing()
+            startPartialFlashing()
         } else {
             shouldRebootOnDisconnect = false
             try startFullFlashing()
@@ -189,40 +189,10 @@ class FlashableCalliope: BLECalliope, DFUServiceDelegate {
             return
         }
     }
-    
-    internal func initiatePartialFlashing() {
-        
-        updateCallback("start partial flashing")
-        guard let file = file,
-              let partialFlashingInfo = file.partialFlashingInfo,
-              let partialFlashingCharacteristic = getCBCharacteristic(.partialFlashing) else {
-            LogNotify.log("partialFlashing not found")
-            fallbackToFullFlash()
-            return
-        }
-        peripheral.setNotifyValue(true, for: partialFlashingCharacteristic)
-        //request mode (application running or BLE only)
-        send(command: .STATUS)
-    }
-
-    func receivedStatus(_ needsRebootIntoBLEOnlyMode: Bool) {
-        updateCallback("received mode of calliope, needs reboot: \(needsRebootIntoBLEOnlyMode)")
-        if (needsRebootIntoBLEOnlyMode) {
-            shouldRebootOnDisconnect = true
-            rebootingForPartialFlashing = true
-            //calliope is in application state and needs to be rebooted
-            send(command: .REBOOT, value: Data([.MODE_BLE]))
-        } else {
-            //calliope is already in bluetooth state
-            startPartialFlashing()
-        }
-    }
 
 
     func startPartialFlashing() {
-
         rebootingForPartialFlashing = false
-        isPartiallyFlashing = true
 
         updateCallback("start partial flashing")
         guard let file = file,
@@ -268,8 +238,24 @@ class FlashableCalliope: BLECalliope, DFUServiceDelegate {
             fallbackToFullFlash()
             return
         }
-        // request embed hash
-        send(command: .REGION, value: Data([.EMBEDDED_REGION]))
+        
+        // request status
+        send(command: .STATUS)
+    }
+    
+    func receivedStatus(_ needsRebootIntoBLEOnlyMode: Bool) {
+        updateCallback("received mode of calliope, needs reboot: \(needsRebootIntoBLEOnlyMode)")
+        if (needsRebootIntoBLEOnlyMode) {
+            shouldRebootOnDisconnect = true
+            rebootingForPartialFlashing = true
+            //calliope is in application state and needs to be rebooted
+            send(command: .REBOOT, value: Data([.MODE_BLE]))
+        } else {
+            //calliope is already in bluetooth state
+            // request embedded hash
+            isPartiallyFlashing = true
+            send(command: .REGION, value: Data([.EMBEDDED_REGION]))
+        }
     }
     
     private func receivedEmbedHash() {
@@ -497,7 +483,7 @@ class CalliopeV3: FlashableCalliope {
         transferFirmware()
     }
     
-    internal override func initiatePartialFlashing() {
+    internal override func startPartialFlashing() {
         // TODO: Solve Partial Flashing Errors
         // Partial Flashing does not work entirely functional with the current Version of the Firmware. We therefor fallback to Full Flashing until this has been solved.
         // Partial Flashing starts, but the Calliope disconnects unexpectedly after around 6% have been transfered.
