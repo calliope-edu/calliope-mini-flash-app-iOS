@@ -5,7 +5,7 @@
 "4tg-pn-9If.text" = "Start";
 
 /* Class = "UIButton"; normalTitle = "First start"; ObjectID = "a1q-6T-PvS"; */
-"a1q-6T-PvS.normalTitle" = "Erster Start";
+"a1q-6T-PvS.normalTitle" = "Erste Informationen";
 
 /* Class = "UILabel"; text = "Connect to your calliope using its unique pattern signature"; ObjectID = "agm-gW-0YR"; */
 "agm-gW-0YR.text" = "Starte den Bluetooth Modus und verbinde deinen Calliope mini, indem du das ID-Muster auf die 5x5-Matrix überträgst.";
@@ -24,6 +24,9 @@
 
 /* Class = "UIButton"; normalTitle = "Upload Program Blinking Heart"; ObjectID = "KZP-Ey-EXu"; */
 "KZP-Ey-EXu.normalTitle" = "Blinkendes Herz";
+
+/* Class = "UILabel"; normalTitle = "To upload a program, go to the Editor and Programs Tab"; ObjectID = "0ZY-Uq-zc2"*/
+"0ZY-Uq-zc2.text" = "Um ein Program hochzuladen, wechsle in die Editoren und Programme Ansicht."
 
 /* Class = "UILabel"; text = "Greeting"; ObjectID = "M6T-cO-epA"; */
 "M6T-cO-epA.text" = "Begrüßung";
