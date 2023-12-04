@@ -1,9 +1,9 @@
 PODS:
   - DeepDiff (2.3.1)
   - Highlightr (2.1.0)
-  - iOSDFULibrary (4.11.0):
+  - iOSDFULibrary (4.13.0):
     - ZIPFoundation (= 0.9.11)
-  - SnapKit (5.0.1)
+  - SnapKit (5.6.0)
   - TPKeyboardAvoiding (1.3.5)
   - UICircularProgressRing (8.0.0)
   - ZIPFoundation (0.9.11)
@@ -29,12 +29,12 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   DeepDiff: e5ae6c50d0321568e4508cec5930b9f10bb293fc
   Highlightr: 595f3e100737c8de41113385da8bd0b5b65212c6
-  iOSDFULibrary: ca2a4da1f1680fe4957b0a33ad605c9e10f7ae7c
-  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  iOSDFULibrary: 3b9de67ed4bfb901b5f09c2fea843f65e152612d
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   TPKeyboardAvoiding: d55b3ea7b362540af8fcf36aa3ed2e87bf210cc6
   UICircularProgressRing: 19927375b2b21b5fa5fd9582f15ccdef9659da16
   ZIPFoundation: b1f0de4eed33e74a676f76e12559ab6b75990197
 
-PODFILE CHECKSUM: 2c4e9a9152b5b316fda3ba800df25b76d7d30550
+PODFILE CHECKSUM: 9109d34d228796cd9b2947d884e76dad116ec25a
 
-COCOAPODS: 1.10.2
+COCOAPODS: 1.13.0

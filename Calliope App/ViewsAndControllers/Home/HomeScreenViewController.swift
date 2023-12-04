@@ -13,7 +13,6 @@ class HomeScreenViewController: UIViewController {
     @IBOutlet weak var homeStackView: UIStackView!
     
     override func viewWillAppear(_ animated: Bool) {
-        navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewWillAppear(animated)
         self.rearrangeStackview(view.bounds.size)
         //MatrixConnectionViewController.instance?.calliopeClass = nil // is this needed?

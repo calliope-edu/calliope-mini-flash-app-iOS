@@ -126,7 +126,7 @@
 			<key>Type</key>
 			<string>PSTitleValueSpecifier</string>
 			<key>DefaultValue</key>
-			<string>Replace with version from code</string>
+			<string>$(MARKETING_VERSION)</string>
 			<key>Title</key>
 			<string>App Version</string>
 			<key>Key</key>

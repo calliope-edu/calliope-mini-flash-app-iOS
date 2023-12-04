@@ -151,15 +151,11 @@ import CoreBluetooth
     */
     func discoverCharacteristics(onSuccess success: @escaping Callback,
                                  onError report: @escaping ErrorCallback) {
-        // Get the peripheral object
-        #if swift(>=5.5)
-        guard let peripheral = service.peripheral else {
+        let optPeripheral: CBPeripheral? = service.peripheral
+        guard let peripheral = optPeripheral else {
             report(.invalidInternalState, "Assert service.peripheral != nil failed")
             return
         }
-        #else
-        let peripheral = service.peripheral
-        #endif
         
         // Save callbacks
         self.success = success
@@ -285,9 +281,9 @@ import CoreBluetooth
                 onSuccess: { [weak self] in
                     guard let self = self else { return }
                     if newValue > 0 {
-                        self.logger.a("Packet Receipt Notif enabled (Op Code = 2, Value = \(newValue))")
+                        self.logger.a("Packet Receipt Notif enabled (Value = \(newValue))")
                     } else {
-                        self.logger.a("Packet Receipt Notif disabled (Op Code = 2, Value = 0)")
+                        self.logger.a("Packet Receipt Notif disabled")
                     }
                     success()
                 },
@@ -305,7 +301,7 @@ import CoreBluetooth
     func calculateChecksumCommand(onSuccess response: @escaping SecureDFUResponseCallback,
                                   onError report: @escaping ErrorCallback) {
         if !aborted {
-            dfuControlPointCharacteristic?.send(SecureDFURequest.calculateChecksumCommand,
+            dfuControlPointCharacteristic?.send(.calculateChecksumCommand,
                                                 onResponse: response, onError: report)
         } else {
             sendReset(onError: report)
@@ -321,7 +317,7 @@ import CoreBluetooth
     func executeCommand(onSuccess success: @escaping Callback,
                         onError report: @escaping ErrorCallback) {
         if !aborted {
-            dfuControlPointCharacteristic?.send(SecureDFURequest.executeCommand,
+            dfuControlPointCharacteristic?.send(.executeCommand,
                                                 onSuccess: success, onError: report)
         } else {
             sendReset(onError: report)

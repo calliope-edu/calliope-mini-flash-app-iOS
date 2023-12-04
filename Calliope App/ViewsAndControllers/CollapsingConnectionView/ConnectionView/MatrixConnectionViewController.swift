@@ -49,18 +49,16 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
         didSet { connectionDescriptionLabel.text = connectionDescriptionText }
     }
 
-	public var calliopeWithCurrentMatrix: CalliopeBLEDevice? {
+	public var discoveredCalliopeWithCurrentMatrix: DiscoveredBLEDDevice? {
 		return connector.discoveredCalliopes[Matrix.matrix2friendly(matrixView.matrix) ?? ""]
 	}
 
-	public var usageReadyCalliope: CalliopeBLEDevice? {
-		guard let calliope = connector.connectedCalliope,
-			calliope.state == .usageReady
-			else { return nil }
+	public var usageReadyCalliope: FlashableCalliope? {
+        let calliope = connector.connectedCalliope?.usageReadyCalliope
 		return calliope
 	}
 
-    public var calliopeClass: CalliopeBLEDevice.Type? = nil {
+    public var calliopeClass: DiscoveredBLEDDevice.Type? = nil {
         didSet {
             guard calliopeClass != oldValue else {
                 return
@@ -69,7 +67,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
             guard let calliopeClass = calliopeClass else {
                 return
             }
-            let calliopeBuilder = { (_ peripheral: CBPeripheral, _ name: String) -> CalliopeBLEDevice in
+            let calliopeBuilder = { (_ peripheral: CBPeripheral, _ name: String) -> DiscoveredBLEDDevice in
                 return calliopeClass.init(peripheral: peripheral, name: name)
             }
             connector = CalliopeBLEDiscovery(calliopeBuilder)
@@ -87,7 +85,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     }
     
     private var connector: CalliopeBLEDiscovery = CalliopeBLEDiscovery({ peripheral, name in
-        FlashableCalliope(peripheral: peripheral, name: name) }) {
+        DiscoveredBLEDDevice(peripheral: peripheral, name: name) }) {
         didSet {
             self.changedConnector(oldValue)
         }
@@ -100,6 +98,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 		matrixView.updateBlock = {
 			//matrix has been changed manually, this always triggers a disconnect
 			self.connector.disconnectFromCalliope()
+            self.connector.startCalliopeDiscovery()
 			self.updateDiscoveryState()
 		}
         restoreLastMatrix()
@@ -113,7 +112,6 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     }
 
 	override public func viewDidLoad() {
-        navigationController?.setNavigationBarHidden(true, animated: false)
 		super.viewDidLoad()
 		MatrixConnectionViewController.instance = self
 		connectButton.imageView?.contentMode = .scaleAspectFit
@@ -157,22 +155,21 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 
 	@IBAction func connect() {
 		if self.connector.state == .initialized
-			|| self.calliopeWithCurrentMatrix == nil && self.connector.state == .discoveredAll {
+			|| self.discoveredCalliopeWithCurrentMatrix == nil && self.connector.state == .discoveredAll {
 			connector.startCalliopeDiscovery()
-		} else if let calliope = self.calliopeWithCurrentMatrix {
-			if calliope.state == .discovered || calliope.state == .willReset {
+		} else if let calliope = self.discoveredCalliopeWithCurrentMatrix {
+			if calliope.state == .discovered {
 				calliope.updateBlock = updateDiscoveryState
                 calliope.errorBlock = error
 				LogNotify.log("Matrix view connecting to \(calliope)")
 				connector.connectToCalliope(calliope)
-                calliope.autoConnect = false // prevent spamming "need to unpair first" if it should appear
 			} else if calliope.state == .connected {
-				calliope.evaluateMode()
+                calliope.evaluateMode()
 			} else {
-				LogNotify.log("Connect button of matrix view should not be enabled in this state (\(self.connector.state), \(String(describing: self.calliopeWithCurrentMatrix?.state)))")
+				LogNotify.log("Connect button of matrix view should not be enabled in this state (\(self.connector.state), \(String(describing: self.discoveredCalliopeWithCurrentMatrix?.state)))")
 			}
 		} else {
-			LogNotify.log("Connect button of matrix view should not be enabled in this state (\(self.connector.state), \(String(describing: self.calliopeWithCurrentMatrix?.state)))")
+			LogNotify.log("Connect button of matrix view should not be enabled in this state (\(self.connector.state), \(String(describing: self.discoveredCalliopeWithCurrentMatrix?.state)))")
 		}
 	}
 
@@ -192,7 +189,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 			connectButton.connectionState = .waitingForBluetooth
 			self.collapseButton.connectionState = .disconnected
 		case .discovering, .discovered:
-			if let calliope = self.calliopeWithCurrentMatrix {
+			if let calliope = self.discoveredCalliopeWithCurrentMatrix {
 				evaluateCalliopeState(calliope)
                 if connectButton.connectionState == .readyToConnect {
                     connect()
@@ -203,14 +200,8 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 				self.collapseButton.connectionState = .disconnected
 			}
 		case .discoveredAll:
-			if let matchingCalliope = calliopeWithCurrentMatrix {
+			if let matchingCalliope = discoveredCalliopeWithCurrentMatrix {
 				evaluateCalliopeState(matchingCalliope)
-                if connectButton.connectionState == .readyToConnect && matchingCalliope.autoConnect {
-                    connect()
-                }
-                else {
-                    startDelayedDiscovery()
-                }
 			} else {
 				matrixView.isUserInteractionEnabled = true
 				connectButton.connectionState = .notFoundRetry
@@ -224,44 +215,31 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 			connectButton.connectionState = .connecting
 			self.collapseButton.connectionState = .connecting
 		case .connected:
-			if let connectedCalliope = connector.connectedCalliope, calliopeWithCurrentMatrix != connector.connectedCalliope {
+			if let connectedCalliope = connector.connectedCalliope, discoveredCalliopeWithCurrentMatrix != connector.connectedCalliope {
 				//set matrix in case of auto-reconnect, where we do not have corresponding matrix yet
 				matrixView.matrix = Matrix.friendly2Matrix(connectedCalliope.name)
 				connectedCalliope.updateBlock = updateDiscoveryState
 			}
-			evaluateCalliopeState(calliopeWithCurrentMatrix!)
+			evaluateCalliopeState(discoveredCalliopeWithCurrentMatrix!)
 		}
 	}
     
     private func startDelayedDiscovery(delaySeconds:Int = 7) {
-        if delayedDiscovery { return }
-        delayedDiscovery = true
-        
-        LogNotify.log("adding delayed discovery to queue: \(delaySeconds)")
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delaySeconds)) {
-            self.delayedDiscovery = false
-            if self.collapseButton.expansionState == .closed {
-                if !self.matrixView.isBlank() && (self.connector.state == .initialized ||
-                    self.connector.state == .discoveredAll && self.connectButton.connectionState != .readyToPlay) {
-                    self.connector.startCalliopeDiscovery()
-                }
-            }
-            else {
-                // the matrix view is open so don't start a discovery as the connection attempt prevents user input to it
-                self.startDelayedDiscovery(delaySeconds: 2)
-            }
-        }
+        // remove Delayed Discovery for now, created endless loop of looking for Calliope, which is no longer required without an auto connect
+        return
     }
 
-	private func evaluateCalliopeState(_ calliope: CalliopeBLEDevice) {
+	private func evaluateCalliopeState(_ calliope: DiscoveredBLEDDevice) {
 
-		if calliope.state == .wrongMode || calliope.state == .discovered {
+        if let usageReadyCalliope = calliope.usageReadyCalliope, usageReadyCalliope.rebootingIntoDFUMode, calliope.state == .discovered {
+            self.collapseButton.connectionState = .connected
+        } else if calliope.state == .wrongMode || calliope.state == .discovered {
 			self.collapseButton.connectionState = attemptReconnect || reconnecting ? .connecting : .disconnected
 		} else if calliope.state == .usageReady {
 			self.collapseButton.connectionState = .connected
             LogNotify.log("last pattern:\r\(matrixView.getMatrixString())")
             UserDefaults.standard.set(matrixView.getMatrixString(), forKey: SettingsKey.lastMatrix.rawValue)
-		} else {
+        }  else {
 			self.collapseButton.connectionState = .connecting
 		}
 
@@ -288,13 +266,13 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 		case .usageReady:
 			matrixView.isUserInteractionEnabled = true
 			connectButton.connectionState = .readyToPlay
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+                self.parent?.view.removeGestureRecognizer(self.collapseGestureRecognizer)
+                self.animate(expand: false)
+            }
 		case .wrongMode:
 			matrixView.isUserInteractionEnabled = true
 			connectButton.connectionState = .wrongProgram
-		case .willReset:
-			matrixView.isUserInteractionEnabled = false
-			attemptReconnect = true
-			connectButton.connectionState = .testingMode
 		}
 	}
 

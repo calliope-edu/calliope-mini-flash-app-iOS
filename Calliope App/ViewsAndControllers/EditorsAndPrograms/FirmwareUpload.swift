@@ -12,7 +12,7 @@ import iOSDFULibrary
 class FirmwareUpload {
     
     public static func showUIForDownloadableProgram(controller: UIViewController, program: DownloadableHexFile, name: String = NSLocalizedString("the program", comment: ""), completion: ((_ success: Bool) -> ())? = nil) {
-        if (program.bin.count != 0) {
+        if (program.calliopeV1andV2Bin.count != 0) {
             DispatchQueue.main.async {
                 FirmwareUpload.showUploadUI(controller: controller, program: program) {
                     completion?(true)
@@ -27,7 +27,7 @@ class FirmwareUpload {
                 program.load { error in
                     let alert: UIAlertController
                     
-                    if error == nil, program.bin.count != 0 {
+                    if error == nil, program.calliopeV1andV2Bin.count != 0 {
                         let alertDone = UIAlertController(title: NSLocalizedString("Download finished", comment: ""), message: NSLocalizedString("The program is downloaded. Do you want to upload it now?", comment: ""), preferredStyle: .alert)
                         alertDone.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default) { _ in
                             DispatchQueue.main.async {
@@ -65,14 +65,14 @@ class FirmwareUpload {
         controller.present(alert, animated: true)
     }
 
-    public static func uploadWithoutConfirmation(controller: UIViewController, program: Hex, partialFlashing: Bool = true,
+    public static func uploadWithoutConfirmation(controller: UIViewController, program: Hex,
                                                  completion: (() -> ())? = nil) {
         let uploader = FirmwareUpload(file: program, controller: controller)
         controller.present(uploader.alertView, animated: true) {
             uploader.upload(finishedCallback: {
                 controller.dismiss(animated: true, completion: nil)
                 completion?()
-            }, partialFlashing: partialFlashing)
+            })
         }
     }
 
@@ -154,10 +154,10 @@ class FirmwareUpload {
 	private var finished: () -> () = {}
     private var failed: () -> () = {}
 
-	private var calliope = MatrixConnectionViewController.instance.usageReadyCalliope as? FlashableCalliope
+	private var calliope = MatrixConnectionViewController.instance.usageReadyCalliope
 
-    func upload(finishedCallback: @escaping () -> (), partialFlashing: Bool = true) {
-		FirmwareUpload.uploadingInstance = self
+    func upload(finishedCallback: @escaping () -> ()) {
+        FirmwareUpload.uploadingInstance = self
 
         let background_ident = UIApplication.shared.beginBackgroundTask(withName: "flashing", expirationHandler: {() -> Void in
             LogNotify.log("task expired?")
@@ -181,8 +181,7 @@ class FirmwareUpload {
 		}
 
 		do {
-            try calliope?.upload(file: file, progressReceiver: self, statusDelegate: self, logReceiver: self,
-                                 partialFlashing: partialFlashing)
+            try calliope?.upload(file: file, progressReceiver: self, statusDelegate: self, logReceiver: self)
 		}
 		catch {
 			DispatchQueue.main.async { [weak self] in
@@ -219,9 +218,6 @@ extension FirmwareUpload: DFUProgressDelegate, DFUServiceDelegate, LoggerDelegat
                 }
             }
 		}
-		if progress == 100 {
-			self.finished()
-		}
 	}
 
     func logWith(_ level: LogLevel, message: String) {
@@ -231,6 +227,13 @@ extension FirmwareUpload: DFUProgressDelegate, DFUServiceDelegate, LoggerDelegat
 
     func dfuStateDidChange(to state: DFUState) {
         LogNotify.log("DFU State change: \(state)")
+        if [DFUState.completed].contains(state) {
+            self.finished()
+        }
+        if [DFUState.aborted].contains(state) {
+            self.dfuError(.deviceDisconnected, didOccurWithMessage: "dfu process aborted")
+        }
+        
     }
 
     func dfuError(_ error: DFUError, didOccurWithMessage message: String) {

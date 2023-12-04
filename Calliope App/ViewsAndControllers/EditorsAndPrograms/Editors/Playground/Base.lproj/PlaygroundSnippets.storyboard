@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="93j-LA-Q6m">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="93j-LA-Q6m">
     <device id="ipad11_0rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L1q-WM-W3L">
-                                <rect key="frame" x="0.0" y="50" width="513.5" height="1084"/>
+                                <rect key="frame" x="0.0" y="50" width="513.5" height="1104"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <attributedString key="attributedText">
                                     <fragment>
@@ -29,7 +29,7 @@
 }</string>
                                         <attributes>
                                             <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <font key="NSFont" size="16" name="RobotoMono-Regular"/>
+                                            <font key="NSFont" metaFont="system" size="16"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -37,7 +37,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gTk-sL-RBi">
-                                <rect key="frame" x="0.0" y="1134" width="513.5" height="60"/>
+                                <rect key="frame" x="0.0" y="1154" width="513.5" height="40"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copied snippet!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7rw-qs-gzO">
                                         <rect key="frame" x="0.0" y="0.0" width="513.5" height="40"/>
@@ -89,20 +89,20 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="snippetOverviewCell" id="HYI-qk-Ict" customClass="PlaygroundSnippetTableViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44.5" width="420" height="59.5"/>
+                                <rect key="frame" x="0.0" y="50" width="420" height="66.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HYI-qk-Ict" id="GnZ-Nf-zya">
-                                    <rect key="frame" x="100" y="0.0" width="320" height="59.5"/>
+                                    <rect key="frame" x="100" y="0.0" width="320" height="66.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jZR-Hi-92E">
-                                            <rect key="frame" x="16" y="11" width="388" height="17"/>
+                                            <rect key="frame" x="16" y="11" width="388" height="20.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oCk-WD-9Kc">
-                                            <rect key="frame" x="16" y="31" width="388" height="17.5"/>
+                                            <rect key="frame" x="16" y="34.5" width="388" height="21"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -181,30 +181,30 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="snippetOverviewCell" id="fAq-65-61O" customClass="PlaygroundSnippetTableViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44.5" width="834" height="99"/>
+                                <rect key="frame" x="0.0" y="50" width="834" height="106"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fAq-65-61O" id="zPA-ln-gsu">
-                                    <rect key="frame" x="0.0" y="0.0" width="834" height="99"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="834" height="106"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mVL-Pc-a55">
-                                            <rect key="frame" x="20" y="11" width="794" height="17"/>
+                                            <rect key="frame" x="20" y="11" width="794" height="20.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Al-Qu-EWO">
-                                            <rect key="frame" x="20" y="31" width="794" height="17.5"/>
+                                            <rect key="frame" x="20" y="34.5" width="794" height="21"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" verticalHuggingPriority="252" verticalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="CQE-r4-aTu">
-                                            <rect key="frame" x="20" y="51.5" width="794" height="36.5"/>
+                                            <rect key="frame" x="20" y="58.5" width="794" height="36.5"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" verticalCompressionResistancePriority="752" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YGA-Ni-z9x">
                                                     <rect key="frame" x="8" y="8" width="778" height="20.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -226,19 +226,19 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                         <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AP8-Ad-iON">
-                                            <rect key="frame" x="0.0" y="0.0" width="834" height="99"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="834" height="106"/>
                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bQW-1C-7xd">
-                                                <rect key="frame" x="0.0" y="0.0" width="834" height="99"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="834" height="106"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="heg-XS-XiE">
-                                                        <rect key="frame" x="0.0" y="0.0" width="834" height="99"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="834" height="106"/>
                                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Trp-Mt-Jap">
-                                                            <rect key="frame" x="0.0" y="0.0" width="834" height="99"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="834" height="106"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copied snippet!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cIf-ra-SUA">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="834" height="99"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="834" height="106"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
@@ -347,17 +347,17 @@
                                                         <rect key="frame" x="107" y="0.0" width="600" height="560"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iNU-gK-Q8E">
-                                                                <rect key="frame" x="0.0" y="0.0" width="600" height="180"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="600" height="192.5"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sDg-74-hMi">
-                                                                        <rect key="frame" x="8" y="16" width="584" height="74"/>
+                                                                        <rect key="frame" x="8" y="16" width="584" height="86.5"/>
                                                                         <string key="text">Verwende die Snippet Library mit dem Swift Playground. Wenn du in dem Swift Playground "Calliope Mini - Vorlage" arbeitest, kannst du die Snippets Library neben der Playgrounds App öffnen und die Codesnippets ganz bequem von der App in den Playground kopieren.</string>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="zqc-Md-ScS">
-                                                                        <rect key="frame" x="190" y="110" width="220" height="50"/>
+                                                                        <rect key="frame" x="190" y="122.5" width="220" height="50"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="220" id="IyM-Qo-az1"/>
                                                                             <constraint firstAttribute="height" constant="50" id="ryi-j8-JWU"/>
@@ -379,7 +379,7 @@
                                                                 </constraints>
                                                             </view>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="playground_startscreen/calliope_multitasking" translatesAutoresizingMaskIntoConstraints="NO" id="qal-QC-PEH">
-                                                                <rect key="frame" x="0.0" y="180" width="600" height="380"/>
+                                                                <rect key="frame" x="0.0" y="192.5" width="600" height="367.5"/>
                                                             </imageView>
                                                         </subviews>
                                                         <constraints>

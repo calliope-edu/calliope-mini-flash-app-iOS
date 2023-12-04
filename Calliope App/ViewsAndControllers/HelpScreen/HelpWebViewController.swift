@@ -25,7 +25,6 @@ class HelpWebViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
     }
 
     override func viewDidLoad() {
-        navigationController?.setNavigationBarHidden(true, animated: false)
         webView.navigationDelegate = self
         webView.uiDelegate = self
         super.viewDidLoad()

@@ -6,8 +6,27 @@ protocol Hex {
     var name: String { get }
     var date: Date { get }
     var dateString: String { get }
-    var bin: Data { get }
+    var calliopeV1andV2Bin: Data { get }
+    var calliopeV3Bin: Data { get }
     var partialFlashingInfo: (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? { get }
+}
+
+struct InitPacket {
+    let appName = "microbit_app".data(using: .utf8) ?? Data()   // identify this struct "microbit_app"
+    let initPacketVersion: UInt32 = 1   // version of this struct == 1
+    let appSize: UInt32 // only used for DFU_FW_TYPE_APPLICATION, DFU_FW_TYPE_EXTERNAL_APPLICATION
+    let hashSize: UInt32 = 0    // 32 => DFU_HASH_TYPE_SHA256 or zero to bypass hash check
+    let hashBytes: [UInt8] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]    // hash of whole DFU download
+    
+    func encode() -> Data {
+        var initPacket = Data()
+        initPacket.append(appName)
+        initPacket.append(initPacketVersion.littleEndianData)
+        initPacket.append(appSize.littleEndianData)
+        initPacket.append(hashSize.bigEndianData)
+        initPacket.append(contentsOf: hashBytes)
+        return initPacket
+    }
 }
 
 extension Hex {
@@ -16,7 +35,13 @@ extension Hex {
         get { return HexFileManager.dateFormatter.string(from: date) }
     }
     
-    static func dat(_ data: Data) -> Data {
+    static func calliopeV3InitPacket(_ data: Data) throws -> Data  {
+        let initPacket = InitPacket(appSize: UInt32(data.count))
+        
+        return initPacket.encode()
+    }
+    
+    static func calliopeV1AndV2InitPacket(_ data: Data) -> Data {
         
         let deviceType: UInt16 = 0xffff
         let deviceRevision: UInt16 = 0xffff
@@ -62,7 +87,7 @@ struct HexFile: Hex, Equatable {
     
     let date: Date
 
-    var bin: Data {
+    var calliopeV1andV2Bin: Data {
         get {
             let parser = HexParser(url:url)
             var bin = Data()
@@ -75,7 +100,21 @@ struct HexFile: Hex, Equatable {
             return bin
         }
     }
-
+    
+    var calliopeV3Bin: Data {
+        get {
+            let parser = HexParser(url:url)
+            var bin = Data()
+            parser.parse { (address, data) in
+                if address >= 0x1C000 && address < 0x77000 {
+                    bin.append(data)
+                }
+            }
+            
+            return bin
+        }
+    }
+    
     var partialFlashingInfo: (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? {
         get {
             let parser = HexParser(url: url)

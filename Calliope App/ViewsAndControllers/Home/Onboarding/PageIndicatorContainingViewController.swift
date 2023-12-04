@@ -27,7 +27,6 @@ class PageIndicatorContainingViewController: UIViewController {
     }
 
     override func viewDidLoad() {
-        navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewDidLoad()
     }
 

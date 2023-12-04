@@ -42,7 +42,6 @@ class TutorialPageConnect: TutorialPageViewController, AnimatingTutorialViewCont
          (nil, nil, [#imageLiteral(resourceName: "blr_03")], nil)]
     
     override func viewDidLoad() {
-        navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewDidLoad()
     }
 
@@ -65,10 +64,10 @@ class TutorialPageConnect: TutorialPageViewController, AnimatingTutorialViewCont
         super.viewWillAppear(animated)
         checkHasConnected()
         readyCalliopeObservation = NotificationCenter.default
-            .addObserver(forName: CalliopeBLEDevice.usageReadyNotificationName, object: nil, queue: OperationQueue.main,
+            .addObserver(forName: DiscoveredBLEDDevice.usageReadyNotificationName, object: nil, queue: OperationQueue.main,
                          using: { _ in self.updateConnectionState() })
         disconnectedCalliopeObservation = NotificationCenter.default
-            .addObserver(forName: CalliopeBLEDevice.disconnectedNotificationName, object: nil, queue: OperationQueue.main,
+            .addObserver(forName: DiscoveredBLEDDevice.disconnectedNotificationName, object: nil, queue: OperationQueue.main,
                          using: { _ in self.updateConnectionState() })
         updateConnectionState()
     }

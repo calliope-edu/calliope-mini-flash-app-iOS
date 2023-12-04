@@ -14,7 +14,6 @@ class PlaygroundStartViewController: UIViewController {
     @IBOutlet weak var snippetLibraryButton: UIButton!
 
     override func viewDidLoad() {
-        navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewDidLoad()
         snippetLibraryButton.imageView?.contentMode = .scaleAspectFit
     }
@@ -22,7 +21,7 @@ class PlaygroundStartViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.rearrangeStackview(view.bounds.size)
-        MatrixConnectionViewController.instance?.calliopeClass = FlashableCalliope.self
+        MatrixConnectionViewController.instance?.calliopeClass = DiscoveredBLEDDevice.self
     }
 
     override func viewDidAppear(_ animated: Bool) {

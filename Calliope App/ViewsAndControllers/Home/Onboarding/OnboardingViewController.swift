@@ -45,7 +45,6 @@ class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSo
     }
     
     override func viewDidLoad() {
-        navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewDidLoad()
         
         viewControllersObservation = observe(\.viewControllers, changeHandler: { [weak self] (_, _) in
@@ -67,7 +66,7 @@ class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSo
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         MatrixConnectionViewController.instance?.connectionDescriptionText = NSLocalizedString("Connect to a calliope to finish the tutorial", comment: "")
-        MatrixConnectionViewController.instance?.calliopeClass = FlashableCalliope.self
+        MatrixConnectionViewController.instance?.calliopeClass = DiscoveredBLEDDevice.self
     }
     
     //MARK: pageviewcontroller data source

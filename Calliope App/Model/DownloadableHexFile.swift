@@ -25,8 +25,11 @@ extension DownloadableHexFile {
     var name: String {
         return downloadedHexFile?.name ?? loadableProgramName
     }
-    var bin: Data {
-        return downloadedHexFile?.bin ?? Data()
+    var calliopeV1andV2Bin: Data {
+        return downloadedHexFile?.calliopeV1andV2Bin ?? Data()
+    }
+    var calliopeV3Bin: Data {
+        return downloadedHexFile?.calliopeV3Bin ?? Data()
     }
     var partialFlashingInfo: (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? {
         return downloadedHexFile?.partialFlashingInfo 
@@ -35,7 +38,7 @@ extension DownloadableHexFile {
     public func load(completion: @escaping (Error?) -> ()) {
         let url = URL(string: loadableProgramURL)!
         let task = URLSession.shared.dataTask(with: url) {data, response, error in
-            guard error == nil, let data = data, data.count > 0, let hexFile = try? HexFileManager.store(name: self.loadableProgramName, data: data), hexFile.bin.count > 0 else {
+            guard error == nil, let data = data, data.count > 0, let hexFile = try? HexFileManager.store(name: self.loadableProgramName, data: data), hexFile.calliopeV1andV2Bin.count > 0 else {
                 //file saving or parsing issue!
                 completion(error ?? NSLocalizedString("Could not save file or download is not a proper hex file", comment: ""))
                 return
