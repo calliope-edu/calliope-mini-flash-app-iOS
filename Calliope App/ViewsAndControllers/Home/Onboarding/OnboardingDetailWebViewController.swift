@@ -11,6 +11,7 @@ import WebKit
 
 class OnboardingDetailWebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
     
+    var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var webView: WKWebView!
     
     public var url: URL!
@@ -20,13 +21,24 @@ class OnboardingDetailWebViewController: UIViewController, WKNavigationDelegate,
         
         webView.navigationDelegate = self
         webView.uiDelegate = self
+        webView.isHidden = true
         
         url = URL(string: "https://calliope.cc/programmieren/mobil/ipad")
+        
+        // add activity
+        activityIndicator = UIActivityIndicatorView()
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.style = UIActivityIndicatorView.Style.gray
+
+        view.addSubview(activityIndicator)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         webView.load(URLRequest(url: url))
+        webView.isHidden = false
     }
+
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url {
@@ -45,6 +57,32 @@ class OnboardingDetailWebViewController: UIViewController, WKNavigationDelegate,
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        webView.removeFromSuperview()
+        webView.isHidden = true
+        
+        let backItem = UIBarButtonItem()
+        backItem.title = "Zurück zur Online Ansicht"
+        navigationItem.backBarButtonItem = backItem
+        
+        performSegue(withIdentifier: "showOfflineFallback", sender: nil)
     }
+    
+    func showActivityIndicator(show: Bool) {
+        if show {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+        }
+    }
+
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        showActivityIndicator(show: false)
+    }
+
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        showActivityIndicator(show: true)
+    }
+
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        showActivityIndicator(show: false)
+        }
 }

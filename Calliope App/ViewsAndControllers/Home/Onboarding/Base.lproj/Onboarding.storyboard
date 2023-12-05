@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4It-yj-Yye">
-    <device id="retina4_0" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="36R-pX-sEj">
+    <device id="ipad11_0rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
@@ -9,27 +9,87 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Onboarding Detail Web View Controller-->
-        <scene sceneID="Eh1-iW-WCO">
+        <!--View Controller-->
+        <scene sceneID="3IT-8x-KBJ">
             <objects>
-                <viewController id="4It-yj-Yye" customClass="OnboardingDetailWebViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ALC-zC-IRU">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                <viewController id="im2-Km-TNH" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="e6h-69-p9Q">
+                        <rect key="frame" x="0.0" y="0.0" width="704" height="995.5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="p5V-Pc-AeS">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hDs-Z2-mlc">
+                                <rect key="frame" x="0.0" y="0.0" width="704" height="995.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NO INTERNET CONNECTION" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xtI-sk-DgQ">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <color key="textColor" systemColor="opaqueSeparatorColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="aUi-lT-EWs">
+                                        <rect key="frame" x="0.0" y="0.0" width="704" height="438"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Programmieren mit dem IPad" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qwg-kW-zYA">
+                                                <rect key="frame" x="0.0" y="0.0" width="704" height="26.5"/>
+                                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="22"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XZs-1p-JIk">
+                                                <rect key="frame" x="0.0" y="26.5" width="704" height="223.5"/>
+                                                <string key="text">3 Tipps für die optimierte Datenübertragung:
+
+1. Startprogramm auf dem Calliope mini:
+Der Calliope mini sollte mit der richtigen Version des Startprogram bespielt sein.
+
+2. Hardware Auswahl:
+Vor dem Überspielen sollte die richtige Hardware ausgewählt sein und somit die richtigen Bluetooth Einstellungen gesetzt sein.
+
+3. Tipps zu importierten programmen
+Das importierte Programm sollte kein Funk-Paket enthalten. </string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="AnimPressToPair/a" translatesAutoresizingMaskIntoConstraints="NO" id="aiU-fI-RrA">
+                                                <rect key="frame" x="0.0" y="250" width="704" height="188"/>
+                                            </imageView>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
-                            </stackView>
-                            <wkWebView contentMode="scaleToFill" customUserAgent="toOfflineView" translatesAutoresizingMaskIntoConstraints="NO" id="RHP-hm-KcS">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <constraints>
+                                    <constraint firstItem="aUi-lT-EWs" firstAttribute="trailing" secondItem="C14-BQ-NrH" secondAttribute="trailing" constant="673" id="Qqh-1Y-qzq"/>
+                                    <constraint firstItem="aUi-lT-EWs" firstAttribute="top" secondItem="C14-BQ-NrH" secondAttribute="top" id="ZHo-Wv-nse"/>
+                                    <constraint firstItem="aUi-lT-EWs" firstAttribute="leading" secondItem="C14-BQ-NrH" secondAttribute="leading" constant="49" id="cCq-P8-NEC"/>
+                                    <constraint firstItem="aUi-lT-EWs" firstAttribute="trailing" secondItem="C14-BQ-NrH" secondAttribute="trailing" constant="673" id="eUM-Gk-Fln"/>
+                                    <constraint firstItem="aUi-lT-EWs" firstAttribute="bottom" secondItem="C14-BQ-NrH" secondAttribute="bottom" constant="20.5" id="qwv-cC-l1z"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="C14-BQ-NrH"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="okR-eD-0u2"/>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="zBU-yY-nh3"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="zBU-yY-nh3" firstAttribute="bottom" secondItem="hDs-Z2-mlc" secondAttribute="bottom" id="0EB-CO-KrJ"/>
+                            <constraint firstItem="zBU-yY-nh3" firstAttribute="trailing" secondItem="aUi-lT-EWs" secondAttribute="trailing" id="Ejw-ap-oKt"/>
+                            <constraint firstItem="hDs-Z2-mlc" firstAttribute="leading" secondItem="zBU-yY-nh3" secondAttribute="leading" id="P3c-yt-5Xh"/>
+                            <constraint firstItem="hDs-Z2-mlc" firstAttribute="top" secondItem="zBU-yY-nh3" secondAttribute="top" id="fE8-fZ-QEL"/>
+                            <constraint firstItem="hDs-Z2-mlc" firstAttribute="trailing" secondItem="zBU-yY-nh3" secondAttribute="trailing" id="kY3-gt-REA"/>
+                            <constraint firstAttribute="trailing" secondItem="hDs-Z2-mlc" secondAttribute="trailing" id="q0q-u6-bGW"/>
+                            <constraint firstItem="aUi-lT-EWs" firstAttribute="leading" secondItem="zBU-yY-nh3" secondAttribute="leading" id="y3p-JL-HZI"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Qjm-fb-0AR"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5Aw-yq-tjz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3739.5683453237411" y="267.8391959798995"/>
+        </scene>
+        <!--Onboarding Detail Web View Controller-->
+        <scene sceneID="qtn-h2-MJD">
+            <objects>
+                <viewController id="36R-pX-sEj" customClass="OnboardingDetailWebViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Vui-DE-bpn">
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KEo-Ye-rtY">
+                                <rect key="frame" x="0.0" y="24" width="834" height="1150"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -37,36 +97,33 @@
                                 </wkWebViewConfiguration>
                             </wkWebView>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="8vb-hu-ihq"/>
+                        <viewLayoutGuide key="safeArea" id="0q0-C7-LZG"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="8vb-hu-ihq" firstAttribute="trailing" secondItem="p5V-Pc-AeS" secondAttribute="trailing" id="Dc8-sH-B5g"/>
-                            <constraint firstAttribute="bottom" secondItem="RHP-hm-KcS" secondAttribute="bottom" id="Fcp-Bl-OVQ"/>
-                            <constraint firstItem="8vb-hu-ihq" firstAttribute="bottom" secondItem="p5V-Pc-AeS" secondAttribute="bottom" id="P1K-ah-P1w"/>
-                            <constraint firstItem="p5V-Pc-AeS" firstAttribute="top" secondItem="ALC-zC-IRU" secondAttribute="top" id="Rx2-il-1dE"/>
-                            <constraint firstItem="RHP-hm-KcS" firstAttribute="top" secondItem="ALC-zC-IRU" secondAttribute="top" id="i0v-EA-enE"/>
-                            <constraint firstItem="RHP-hm-KcS" firstAttribute="trailing" secondItem="ALC-zC-IRU" secondAttribute="trailing" id="ltc-Tz-uZr"/>
-                            <constraint firstItem="p5V-Pc-AeS" firstAttribute="leading" secondItem="ALC-zC-IRU" secondAttribute="leading" id="nqg-l5-xcf"/>
-                            <constraint firstItem="RHP-hm-KcS" firstAttribute="leading" secondItem="ALC-zC-IRU" secondAttribute="leading" id="pEg-or-ZNc"/>
+                            <constraint firstItem="0q0-C7-LZG" firstAttribute="trailing" secondItem="KEo-Ye-rtY" secondAttribute="trailing" id="IWO-zy-lib"/>
+                            <constraint firstItem="KEo-Ye-rtY" firstAttribute="leading" secondItem="0q0-C7-LZG" secondAttribute="leading" id="cGG-zP-wAU"/>
+                            <constraint firstItem="KEo-Ye-rtY" firstAttribute="top" secondItem="0q0-C7-LZG" secondAttribute="top" id="e8N-QV-gcl"/>
+                            <constraint firstItem="0q0-C7-LZG" firstAttribute="bottom" secondItem="KEo-Ye-rtY" secondAttribute="bottom" id="nSl-9o-HRy"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="BYd-iQ-ySl"/>
                     <connections>
-                        <outlet property="webView" destination="RHP-hm-KcS" id="MhI-L6-utN"/>
+                        <outlet property="webView" destination="KEo-Ye-rtY" id="J2n-cr-mTm"/>
+                        <segue destination="im2-Km-TNH" kind="show" identifier="showOfflineFallback" id="POC-eY-g9I"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="xu5-Cf-XsR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HzT-pW-W3D" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2535" y="998"/>
+            <point key="canvasLocation" x="3028" y="268"/>
         </scene>
     </scenes>
     <color key="tintColor" name="calliope-lilablau"/>
     <resources>
+        <image name="AnimPressToPair/a" width="479" height="188"/>
         <namedColor name="calliope-lilablau">
             <color red="0.3919999897480011" green="0.46200001239776611" blue="0.99199998378753662" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="opaqueSeparatorColor">
-            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>
