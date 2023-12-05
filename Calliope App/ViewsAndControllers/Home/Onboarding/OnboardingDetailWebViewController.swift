@@ -23,21 +23,21 @@ class OnboardingDetailWebViewController: UIViewController, WKNavigationDelegate,
         
         webView.navigationDelegate = self
         webView.uiDelegate = self
-        webView.isHidden = true
         initialLoadPerformed = false
         
-        // add activity
+        // add activity indicator
         activityIndicator = UIActivityIndicatorView()
         activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true
         activityIndicator.style = UIActivityIndicatorView.Style.gray
-
+        
         view.addSubview(activityIndicator)
+        showActivityIndicator(show: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        showActivityIndicator(show: true)
         webView.load(URLRequest(url: url))
-        webView.isHidden = false
     }
 
     
@@ -58,8 +58,6 @@ class OnboardingDetailWebViewController: UIViewController, WKNavigationDelegate,
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        webView.isHidden = true
-        
         let backItem = UIBarButtonItem()
         backItem.title = "Zurück zur Online Ansicht"
         navigationItem.backBarButtonItem = backItem
@@ -76,16 +74,12 @@ class OnboardingDetailWebViewController: UIViewController, WKNavigationDelegate,
             activityIndicator.stopAnimating()
         }
     }
-
+    
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         showActivityIndicator(show: false)
     }
 
-    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        showActivityIndicator(show: true)
-    }
-
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         showActivityIndicator(show: false)
-        }
+    }
 }

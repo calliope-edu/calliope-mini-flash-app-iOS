@@ -1,15 +1,36 @@
-/* Class = "UILabel"; text = "Connect to your calliope using its unique pattern signature"; ObjectID = "agm-gW-0YR"; */
-"agm-gW-0YR.text" = "Start the Bluetooth mode and connect to your calliope using its unique pattern signature";
 
-/* Class = "UILabel"; text = "When connected with your calliope, you can easily upload programs.\nCheck it out!"; ObjectID = "f9R-2U-MF7"; */
-"f9R-2U-MF7.text" = "When connected with your calliope, you can upload programs.\nCheck it out!";
+/* Class = "UILabel"; text = "Calliope mini V2 / V1"; ObjectID = "0V7-vc-c22"; */
+"0V7-vc-c22.text" = "Calliope mini V2 / V1";
 
-/* Class = "UIButton"; normalTitle = "Upload Program Blinking Heart"; ObjectID = "KZP-Ey-EXu"; */
-"KZP-Ey-EXu.normalTitle" = "Blinking Heart";
+/* Class = "UIViewController"; title = "onboardingOnline"; ObjectID = "36R-pX-sEj"; */
+"36R-pX-sEj.title" = "onboardingOnline";
 
-/* Class = "UILabel"; normalTitle = "To upload a program, go to the Editor and Programs Tab"; ObjectID = "0ZY-Uq-zc2"*/
-"0ZY-Uq-zc2.text" = "To upload a program, go to the Editor and Programs Tab"
+/* Class = "UILabel"; text = "Verbinden"; ObjectID = "8hk-NK-t7M"; */
+"8hk-NK-t7M.text" = "Connect";
 
-/* Class = "UILabel"; text = "Get to know your Calliope Mini"; ObjectID = "ogi-fD-zPi"; */
-"ogi-fD-zPi.text" = "When you start the Calliope for the first time or reinstall the startup program, you will see the following sequence.Information about the startup program can be found in \"Help\" in the \"Programs\" section.";
+/* Class = "UILabel"; text = "Calliope mini V3"; ObjectID = "AsG-NS-umF"; */
+"AsG-NS-umF.text" = "Calliope mini V3";
 
+/* Class = "UILabel"; text = "- Verwende einen Editor, um ein Programm zu erstellen und zu übertragen\n- Ab jetzt kannst du Programme aus der App über Bluetooth übertragen. \n- Übertragung des Programms an den Calliope mini mit folgenden Schritten: Programm herunterladen, sichern und übertragen. Die Übertragung kann einige Sekunden dauern. Der Fortschritt wird angezeigt.\n- Nun erscheint das Programm auf dem Calliope mini!\n"; ObjectID = "CKb-3R-pP1"; */
+"CKb-3R-pP1.text" = "- Use an editor to create and transfer a program.\n- From now on you can transfer programs from the app via Bluetooth. \n-Transfer the program to the Calliope mini with the following steps: Download, save and transfer the program.\n- The transfer may take a few seconds. The progress is displayed.\n- The program now appears on the Calliope mini!\n";
+
+/* Class = "UILabel"; text = "Programm übertragen"; ObjectID = "GSK-P2-HMZ"; */
+"GSK-P2-HMZ.text" = "Transfer program";
+
+/* Class = "UILabel"; text = "- Reset Taste 3 x drücken\n- ID-Muster erscheint auf dem Calliope mini"; ObjectID = "Pnh-Fp-zv8"; */
+"Pnh-Fp-zv8.text" = "- Press the reset button 3 times\n- ID pattern appears on the Calliope mini";
+
+/* Class = "UILabel"; text = "Du bist leider offline. Dennoch haben wir ein paar Informationen für dich!"; ObjectID = "Qwg-kW-zYA"; */
+"Qwg-kW-zYA.text" = "Unfortunately you are offline. However we still have some information for you!";
+
+/* Class = "UILabel"; text = "Bluetooth Modus starten"; ObjectID = "XZs-1p-JIk"; */
+"XZs-1p-JIk.text" = "Starting Bluetooth mode";
+
+/* Class = "UIViewController"; title = "onboardingOffline"; ObjectID = "im2-Km-TNH"; */
+"im2-Km-TNH.title" = "onboardingOffline";
+
+/* Class = "UILabel"; text = "- Über das rote Calliope mini Icon im Bereich Editoren und Programme öffnet sich das Verbindungsfenster\n- Individuelles ID-Muster des Calliope mini auf die Matrix übertragen\n- Wird der Calliope mini gefunden, erscheint eine grüne Schaltfläche\n- Verbinden bestätigen über das Drücken der grünen Schaltfläche"; ObjectID = "p0t-n4-t9x"; */
+"p0t-n4-t9x.text" = "- Click on the red Calliope mini icon in the Editors and Programs section to open the connection window\n- Transfer individual ID patterns of the Calliope mini to the matrix\n- If the Calliope mini is found, a green button appears ";
+
+/* Class = "UILabel"; text = "- Tasten A+B gedrückt halten\n- Reset Taste für 1 Sekunde zusätzlich drücken\n- Tasten A+B gedrückt halten bis die Bluetooth-Animation beendet ist\n- ID-Muster erscheint auf dem Calliope mini"; ObjectID = "yvV-FM-ayf"; */
+"yvV-FM-ayf.text" = "- Press and hold buttons A+B\n- Press the reset button for an additional 1 second\n- Keep buttons A+B pressed until the Bluetooth animation is finished\n- ID pattern appears on the Calliope mini";

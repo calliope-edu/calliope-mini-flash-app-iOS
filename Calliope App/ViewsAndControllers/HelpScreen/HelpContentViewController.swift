@@ -63,25 +63,25 @@ class HelpContentViewController: UIViewController {
         }
         webViewController.setContentController(controller: self)
         if segue.identifier == "morebluetooth" {
-            webViewController.url = URL(string: NSLocalizedString("https://calliope.cc/programmieren/mobil", comment:"URL in Help screen"))
+            webViewController.url = URL(string: NSLocalizedString("https://calliope.cc/programmieren/mobil", comment:"URL in Help screen"))!
         }
         if segue.identifier == "moreFlash" {
-            webViewController.url = URL(string: NSLocalizedString("https://calliope.cc/start/tipps", comment:"URL in Help screen"))
+            webViewController.url = URL(string: NSLocalizedString("https://calliope.cc/start/tipps", comment:"URL in Help screen"))!
         }
         if segue.identifier == "moreEditors" {
-            webViewController.url = URL(string: NSLocalizedString("https://calliope.cc/programmieren/editoren", comment:"URL in Help screen"))
+            webViewController.url = URL(string: NSLocalizedString("https://calliope.cc/programmieren/editoren", comment:"URL in Help screen"))!
         }
         if segue.identifier == "moreCalliope" {
-            webViewController.url = URL(string: NSLocalizedString("https://calliope.cc", comment:"URL in Help screen"))
+            webViewController.url = URL(string: NSLocalizedString("https://calliope.cc", comment:"URL in Help screen"))!
         }
         if segue.identifier == "morePlayground" {
-            webViewController.url = URL(string: NSLocalizedString("https://calliope.cc/programmieren/playground", comment:"URL in Help screen"))
+            webViewController.url = URL(string: NSLocalizedString("https://calliope.cc/programmieren/playground", comment:"URL in Help screen"))!
         }
         if segue.identifier == "moreCalliopeMini" {
-            webViewController.url = URL(string: NSLocalizedString("https://calliope.cc/calliope-mini/uebersicht", comment:"URL in Help screen"))
+            webViewController.url = URL(string: NSLocalizedString("https://calliope.cc/calliope-mini/uebersicht", comment:"URL in Help screen"))!
         }
         if segue.identifier == "installstartprogram" {
-            webViewController.url = URL(string: NSLocalizedString("https://calliope.cc/programmieren/mobil/hilfe", comment:"URL in Help screen"))
+            webViewController.url = URL(string: NSLocalizedString("https://calliope.cc/programmieren/mobil/hilfe", comment:"URL in Help screen"))!
         }
         if segue.identifier == "onlineHelp" {
             webViewController.url = url_online_help

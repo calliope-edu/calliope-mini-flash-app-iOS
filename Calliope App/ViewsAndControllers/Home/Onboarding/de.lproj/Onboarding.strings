@@ -1,54 +1,36 @@
-/* Class = "UILabel"; text = "Select the program by pressing one of the buttons A and B"; ObjectID = "2Ws-hz-lPK"; */
-"2Ws-hz-lPK.text" = "Wähle ein Programm aus, indem du die Taste A oder B drückst";
 
-/* Class = "UILabel"; text = "Start"; ObjectID = "4tg-pn-9If"; */
-"4tg-pn-9If.text" = "Start";
+/* Class = "UILabel"; text = "Calliope mini V2 / V1"; ObjectID = "0V7-vc-c22"; */
+"0V7-vc-c22.text" = "Calliope mini V2 / V1";
 
-/* Class = "UIButton"; normalTitle = "First start"; ObjectID = "a1q-6T-PvS"; */
-"a1q-6T-PvS.normalTitle" = "Erste Informationen";
+/* Class = "UIViewController"; title = "onboardingOnline"; ObjectID = "36R-pX-sEj"; */
+"36R-pX-sEj.title" = "onboardingOnline";
 
-/* Class = "UILabel"; text = "Connect to your calliope using its unique pattern signature"; ObjectID = "agm-gW-0YR"; */
-"agm-gW-0YR.text" = "Starte den Bluetooth Modus und verbinde deinen Calliope mini, indem du das ID-Muster auf die 5x5-Matrix überträgst.";
+/* Class = "UILabel"; text = "Verbinden"; ObjectID = "8hk-NK-t7M"; */
+"8hk-NK-t7M.text" = "Verbinden";
 
-/* Class = "UILabel"; text = "Before you can begin, your Calliope needs energy!"; ObjectID = "F8L-Km-C5f"; */
-"F8L-Km-C5f.text" = "Bevor es losgeht, braucht dein Calliope mini Strom.";
+/* Class = "UILabel"; text = "Calliope mini V3"; ObjectID = "AsG-NS-umF"; */
+"AsG-NS-umF.text" = "Calliope mini V3";
 
-/* Class = "UILabel"; text = "When connected with your calliope, you can easily upload programs.\nCheck it out!"; ObjectID = "f9R-2U-MF7"; */
-"f9R-2U-MF7.text" = "Wenn du mit dem Calliope mini verbunden bist, kannst du Programme übertragen. Probiere es aus!";
+/* Class = "UILabel"; text = "- Verwende einen Editor, um ein Programm zu erstellen und zu übertragen\n- Ab jetzt kannst du Programme aus der App über Bluetooth übertragen. \n- Übertragung des Programms an den Calliope mini mit folgenden Schritten: Programm herunterladen, sichern und übertragen. Die Übertragung kann einige Sekunden dauern. Der Fortschritt wird angezeigt.\n- Nun erscheint das Programm auf dem Calliope mini!\n"; ObjectID = "CKb-3R-pP1"; */
+"CKb-3R-pP1.text" = "- Verwende einen Editor, um ein Programm zu erstellen und zu übertragen\n- Ab jetzt kannst du Programme aus der App über Bluetooth übertragen. \n- Übertragung des Programms an den Calliope mini mit folgenden Schritten: Programm herunterladen, sichern und übertragen. Die Übertragung kann einige Sekunden dauern. Der Fortschritt wird angezeigt.\n- Nun erscheint das Programm auf dem Calliope mini!\n";
 
-/* Class = "UILabel"; text = "Upload Program"; ObjectID = "fjc-AF-Uny"; */
-"fjc-AF-Uny.text" = "Programm übertragen";
+/* Class = "UILabel"; text = "Programm übertragen"; ObjectID = "GSK-P2-HMZ"; */
+"GSK-P2-HMZ.text" = "Programm übertragen";
 
-/* Class = "UIButton"; normalTitle = "Transfer your first program"; ObjectID = "It6-wP-cL1"; */
-"It6-wP-cL1.normalTitle" = "Erstes Programm übertragen";
+/* Class = "UILabel"; text = "- Reset Taste 3 x drücken\n- ID-Muster erscheint auf dem Calliope mini"; ObjectID = "Pnh-Fp-zv8"; */
+"Pnh-Fp-zv8.text" = "- Reset Taste 3 x drücken\n- ID-Muster erscheint auf dem Calliope mini";
 
-/* Class = "UIButton"; normalTitle = "Upload Program Blinking Heart"; ObjectID = "KZP-Ey-EXu"; */
-"KZP-Ey-EXu.normalTitle" = "Blinkendes Herz";
+/* Class = "UILabel"; text = "Du bist leider offline. Dennoch haben wir ein paar Informationen für dich!"; ObjectID = "Qwg-kW-zYA"; */
+"Qwg-kW-zYA.text" = "Du bist leider offline. Dennoch haben wir ein paar Informationen für dich!";
 
-/* Class = "UILabel"; normalTitle = "To upload a program, go to the Editor and Programs Tab"; ObjectID = "0ZY-Uq-zc2"*/
-"0ZY-Uq-zc2.text" = "Um ein Program hochzuladen, wechsle in die Editoren und Programme Ansicht."
+/* Class = "UILabel"; text = "Bluetooth Modus starten"; ObjectID = "XZs-1p-JIk"; */
+"XZs-1p-JIk.text" = "Bluetooth Modus starten";
 
-/* Class = "UILabel"; text = "Greeting"; ObjectID = "M6T-cO-epA"; */
-"M6T-cO-epA.text" = "Begrüßung";
+/* Class = "UIViewController"; title = "onboardingOffline"; ObjectID = "im2-Km-TNH"; */
+"im2-Km-TNH.title" = "onboardingOffline";
 
-/* Class = "UILabel"; text = "Rock, Paper, Scissor and some longer"; ObjectID = "O20-zt-E5c"; */
-"O20-zt-E5c.text" = "Schere, Stein, Papier …";
+/* Class = "UILabel"; text = "- Über das rote Calliope mini Icon im Bereich Editoren und Programme öffnet sich das Verbindungsfenster\n- Individuelles ID-Muster des Calliope mini auf die Matrix übertragen\n- Wird der Calliope mini gefunden, erscheint eine grüne Schaltfläche\n- Verbinden bestätigen über das Drücken der grünen Schaltfläche"; ObjectID = "p0t-n4-t9x"; */
+"p0t-n4-t9x.text" = "- Über das rote Calliope mini Icon im Bereich Editoren und Programme öffnet sich das Verbindungsfenster\n- Individuelles ID-Muster des Calliope mini auf die Matrix übertragen\n- Wird der Calliope mini gefunden, erscheint eine grüne Schaltfläche\n- Verbinden bestätigen über das Drücken der grünen Schaltfläche";
 
-/* Class = "UILabel"; text = "Get to know your Calliope Mini"; ObjectID = "ogi-fD-zPi"; */
-"ogi-fD-zPi.text" = "Wenn du den Calliope zum ersten Mal startest oder das Startprogramm neu installierst, siehst du folgende Sequenz. Infos zum Startprogramm findest du in \"Hilfe\" unter \"Programme\".";
-
-/* Class = "UILabel"; text = "Programs Menu"; ObjectID = "pnY-4s-lpT"; */
-"pnY-4s-lpT.text" = "Programmauswahl";
-
-/* Class = "UILabel"; text = "Hint: Be sure to have Bluetooth switched on and connections allowed."; ObjectID = "rMY-Qf-bUT"; */
-"rMY-Qf-bUT.text" = "Tipp: Überprüfe ob du Bluetooth an deinem Gerät aktiviert hast und eine Verbindung zu anderen Geräten erlaubst.";
-
-/* Class = "UILabel"; text = "Bluetooth Connection"; ObjectID = "rqj-yf-1xH"; */
-"rqj-yf-1xH.text" = "Bluetooth Verbindung";
-
-/* Class = "UILabel"; text = "Demosequence"; ObjectID = "vxr-bB-gsd"; */
-"vxr-bB-gsd.text" = "Demosequenz";
-
-/* Class = "UILabel"; text = "In the menu, you can navigate to 5 preinstalled programs"; ObjectID = "xcv-pQ-1ax"; */
-"xcv-pQ-1ax.text" = "In der Programmauswahl kannst du zwischen den 5 vorinstallierten Programmen navigieren.";
-
+/* Class = "UILabel"; text = "- Tasten A+B gedrückt halten\n- Reset Taste für 1 Sekunde zusätzlich drücken\n- Tasten A+B gedrückt halten bis die Bluetooth-Animation beendet ist\n- ID-Muster erscheint auf dem Calliope mini"; ObjectID = "yvV-FM-ayf"; */
+"yvV-FM-ayf.text" = "- Tasten A+B gedrückt halten\n- Reset Taste für 1 Sekunde zusätzlich drücken\n- Tasten A+B gedrückt halten bis die Bluetooth-Animation beendet ist\n- ID-Muster erscheint auf dem Calliope mini";
