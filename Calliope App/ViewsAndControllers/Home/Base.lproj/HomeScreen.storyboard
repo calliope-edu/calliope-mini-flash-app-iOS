@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="localizable" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="F4j-4J-3aW">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="F4j-4J-3aW">
     <device id="ipad9_7" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -58,7 +58,7 @@
                                                     <constraint firstAttribute="width" secondItem="pur-Pz-EQX" secondAttribute="height" multiplier="1.2:1" id="vcW-Ga-VVt"/>
                                                 </constraints>
                                                 <connections>
-                                                    <segue destination="CR7-et-PYf" kind="show" id="5q9-Mo-CkZ"/>
+                                                    <action selector="performSegueToIntro:" destination="9eT-f2-X1q" eventType="touchUpInside" id="v4R-VQ-6Cz"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -107,6 +107,8 @@
                     <navigationItem key="navigationItem" title="Home" id="w16-hI-VJ6"/>
                     <connections>
                         <outlet property="homeStackView" destination="S6w-BL-I6E" id="vLd-cD-j3s"/>
+                        <segue destination="37C-QD-ppT" kind="show" identifier="toOnlineView" id="z43-TA-ItL"/>
+                        <segue destination="CR7-et-PYf" kind="show" identifier="toOfflineView" id="nS7-Fg-LXL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xQY-Z1-230" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -132,15 +134,25 @@
             </objects>
             <point key="canvasLocation" x="1214.0625" y="-251.95312499999997"/>
         </scene>
-        <!--Onboarding-->
+        <!--onboardingOnline-->
+        <scene sceneID="QG4-sc-pb0">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Onboarding" referencedIdentifier="onboardingOnline" id="37C-QD-ppT" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="CjI-TY-1mD"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yjS-s1-rkY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2457" y="-455"/>
+        </scene>
+        <!--onboardingOffline-->
         <scene sceneID="tFo-S4-4vM">
             <objects>
-                <viewControllerPlaceholder storyboardName="Onboarding" id="CR7-et-PYf" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="Onboarding" referencedIdentifier="onboardingOffline" id="CR7-et-PYf" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="n71-E5-4cu"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="04G-h8-IRT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2487" y="-253"/>
+            <point key="canvasLocation" x="2457" y="-384"/>
         </scene>
         <!--News-->
         <scene sceneID="DgN-bL-6gZ">

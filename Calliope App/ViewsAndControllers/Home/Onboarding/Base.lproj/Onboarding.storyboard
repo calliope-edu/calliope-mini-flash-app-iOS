@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--onboardingOffline-->
         <scene sceneID="3IT-8x-KBJ">
             <objects>
-                <viewController id="im2-Km-TNH" sceneMemberID="viewController">
+                <viewController restorationIdentifier="onboardingOffline" storyboardIdentifier="onboardingOffline" title="onboardingOffline" id="im2-Km-TNH" customClass="OnboardingOfflineViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="e6h-69-p9Q">
                         <rect key="frame" x="0.0" y="0.0" width="704" height="995.5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -80,10 +80,10 @@ Das importierte Programm sollte kein Funk-Paket enthalten. </string>
             </objects>
             <point key="canvasLocation" x="3739.5683453237411" y="267.8391959798995"/>
         </scene>
-        <!--Onboarding Detail Web View Controller-->
+        <!--onboardingOnline-->
         <scene sceneID="qtn-h2-MJD">
             <objects>
-                <viewController id="36R-pX-sEj" customClass="OnboardingDetailWebViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="onboardingOnline" storyboardIdentifier="onboardingOnline" title="onboardingOnline" id="36R-pX-sEj" customClass="OnboardingDetailWebViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Vui-DE-bpn">
                         <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

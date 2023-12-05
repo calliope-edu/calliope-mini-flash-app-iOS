@@ -11,10 +11,12 @@ import WebKit
 
 class OnboardingDetailWebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
     
-    var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var webView: WKWebView!
+    var activityIndicator: UIActivityIndicatorView!
     
-    public var url: URL!
+    
+    private var url: URL = URL(string: "https://calliope.cc/programmieren/mobil/ipad")!
+    private var initialLoadPerformed: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,8 +24,7 @@ class OnboardingDetailWebViewController: UIViewController, WKNavigationDelegate,
         webView.navigationDelegate = self
         webView.uiDelegate = self
         webView.isHidden = true
-        
-        url = URL(string: "https://calliope.cc/programmieren/mobil/ipad")
+        initialLoadPerformed = false
         
         // add activity
         activityIndicator = UIActivityIndicatorView()
@@ -62,8 +63,10 @@ class OnboardingDetailWebViewController: UIViewController, WKNavigationDelegate,
         let backItem = UIBarButtonItem()
         backItem.title = "Zurück zur Online Ansicht"
         navigationItem.backBarButtonItem = backItem
-        
-        performSegue(withIdentifier: "showOfflineFallback", sender: nil)
+        if !initialLoadPerformed {
+            performSegue(withIdentifier: "showOfflineFallback", sender: nil)
+            initialLoadPerformed = true
+        }
     }
     
     func showActivityIndicator(show: Bool) {

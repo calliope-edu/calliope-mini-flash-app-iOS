@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import Network
 
 class HomeScreenViewController: UIViewController {
 
     @IBOutlet weak var homeStackView: UIStackView!
+    
+    var network: Network = Network()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -34,5 +37,13 @@ class HomeScreenViewController: UIViewController {
     override func size(forChildContentContainer container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
         let landscape: Bool = parentSize.width > parentSize.height
         return CGSize(width: landscape ? parentSize.width / 2.0 : parentSize.width, height: landscape ? parentSize.height : parentSize.height / 2.0)
+    }
+    
+    @IBAction func performSegueToIntro(_ sender: Any) {
+        if network.isNetworkAvailable() {
+            performSegue(withIdentifier: "toOnlineView", sender: sender)
+        } else {
+            performSegue(withIdentifier: "toOfflineView", sender: sender)
+        }
     }
 }
