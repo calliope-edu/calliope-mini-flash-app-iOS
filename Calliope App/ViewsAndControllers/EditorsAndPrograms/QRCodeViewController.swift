@@ -89,15 +89,6 @@ class QRCodeViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         }
     }
     
-    func getCameraDevice(position: AVCaptureDevice.Position) -> AVCaptureDevice? {
-        let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInDualCamera, .builtInTelephotoCamera, .builtInTrueDepthCamera, .builtInWideAngleCamera, ], mediaType: .video, position: .back)
-        
-        if let device = deviceDiscoverySession.devices.first {
-            return device
-        }
-        return nil
-    }
-    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         coordinator.animate(alongsideTransition: { (context) -> Void in
             self.previewLayer?.connection?.videoOrientation = self.transformOrientation(orientation: UIInterfaceOrientation(rawValue: UIApplication.shared.statusBarOrientation.rawValue)!)
@@ -143,14 +134,14 @@ class QRCodeViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
                 openMakeCodeButton.isHidden = false
                 downloadHexButton.isHidden = true
                 foundQrCodeString = stringValue
-                print("Found Metadata Object")
             } else if let stringValue = metadataObj.stringValue, stringValue.contains(".hex") {
                 openMakeCodeButton.isHidden = true
                 downloadHexButton.isHidden = false
+                foundQrCodeString = stringValue
             } else {
                 openMakeCodeButton.isHidden = true
                 downloadHexButton.isHidden = true
-                qrCodeFrameView?.frame = CGRect.zero
+                foundQrCodeString = ""
             }
         }
     }

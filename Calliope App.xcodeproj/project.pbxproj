@@ -110,7 +110,6 @@
 		604841D52B1F328A0037A825 /* OnboardingOfflineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604841D42B1F328A0037A825 /* OnboardingOfflineViewController.swift */; };
 		60C915932B1F442F00E4039D /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C915922B1F442F00E4039D /* Network.swift */; };
 		60D672522B283D0F00AB974B /* QRCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D672512B283D0F00AB974B /* QRCodeViewController.swift */; };
-		60D672542B2867F800AB974B /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D672532B2867F800AB974B /* PreviewView.swift */; };
 		60F1E8A62B1DEB5300CB3A07 /* OnboardingDetailWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F1E8A52B1DEB5300CB3A07 /* OnboardingDetailWebViewController.swift */; };
 		CE73348EEAB4EC5248A0716C /* libPods-Calliope App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D57D51A736B908EDE6355034 /* libPods-Calliope App.a */; };
 /* End PBXBuildFile section */
@@ -249,7 +248,6 @@
 		60C915962B1F5F5300E4039D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Onboarding.strings; sourceTree = "<group>"; };
 		60C915982B1F61C200E4039D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Onboarding.strings; sourceTree = "<group>"; };
 		60D672512B283D0F00AB974B /* QRCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeViewController.swift; sourceTree = "<group>"; };
-		60D672532B2867F800AB974B /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		60F1E8A52B1DEB5300CB3A07 /* OnboardingDetailWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingDetailWebViewController.swift; sourceTree = "<group>"; };
 		BD1AFC4008F992EADC1C557D /* Pods-Calliope App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.release.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.release.xcconfig"; sourceTree = "<group>"; };
 		D57D51A736B908EDE6355034 /* libPods-Calliope App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Calliope App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -557,7 +555,6 @@
 				2F526C2326E00696004BA8FF /* HexFileStoreDialog.swift */,
 				2F91665C2354062A0065AD81 /* Editors */,
 				2F91665D2354064C0065AD81 /* Programs */,
-				60D672532B2867F800AB974B /* PreviewView.swift */,
 			);
 			path = EditorsAndPrograms;
 			sourceTree = "<group>";
@@ -776,7 +773,6 @@
 				2F61458922BF761F001C2734 /* CollapsingViewControllerProtocol.swift in Sources */,
 				2F2B809A25A0E01500A7CCF7 /* CodeSnippets.swift in Sources */,
 				2F61458A22BF761F001C2734 /* CollapseButtonProtocol.swift in Sources */,
-				60D672542B2867F800AB974B /* PreviewView.swift in Sources */,
 				2F5E8F0426C9787400CE03CB /* PlaygroundStartViewController.swift in Sources */,
 				2FC2A12B22C962D100675C2F /* NewsDetailWebViewController.swift in Sources */,
 				2F61459522BF761F001C2734 /* ProgramCollectionViewCell.swift in Sources */,
