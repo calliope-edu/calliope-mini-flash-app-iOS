@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2lg-ER-tdw">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2lg-ER-tdw">
+    <device id="ipad12_9rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -16,14 +16,14 @@
             <objects>
                 <viewController title="Programs and Editors" id="rb5-ni-SG8" customClass="EditorAndProgramsContainerViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HCF-Ra-c4C">
-                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
+                        <rect key="frame" x="0.0" y="0.0" width="999" height="1000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentInsetAdjustmentBehavior="always" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="g5r-Xk-lED" customClass="TPKeyboardAvoidingScrollView">
-                                <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
+                                <rect key="frame" x="0.0" y="0.0" width="999" height="1000"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZAw-Ve-3Pb">
-                                        <rect key="frame" x="11" y="10" width="479" height="546.5"/>
+                                        <rect key="frame" x="11" y="10" width="478.5" height="546.5"/>
                                         <color key="backgroundColor" name="calliope-lightgray"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -32,7 +32,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2iD-Nq-XcD">
-                                        <rect key="frame" x="11" y="576.5" width="479" height="184.5"/>
+                                        <rect key="frame" x="11" y="576.5" width="478.5" height="184.5"/>
                                         <color key="backgroundColor" name="calliope-purple"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -41,7 +41,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y5a-Mz-x8I">
-                                        <rect key="frame" x="510" y="10" width="479" height="352.5"/>
+                                        <rect key="frame" x="509.5" y="10" width="478.5" height="481"/>
                                         <color key="backgroundColor" name="calliope-lightgray"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -50,22 +50,22 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="Dxt-9f-Z4u">
-                                        <rect key="frame" x="31" y="30" width="938" height="711"/>
+                                        <rect key="frame" x="31" y="30" width="937" height="711"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="5XM-Zd-KLN">
-                                                <rect key="frame" x="0.0" y="0.0" width="439" height="711"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="438.5" height="711"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bbz-2M-bft">
-                                                        <rect key="frame" x="0.0" y="0.0" width="439" height="0.0"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="438.5" height="0.0"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" priority="900" id="Q8H-O5-Zip"/>
                                                         </constraints>
                                                     </view>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="fYe-cI-9Hj">
-                                                        <rect key="frame" x="0.0" y="0.0" width="439" height="506.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="438.5" height="506.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hqp-zE-kfc">
-                                                                <rect key="frame" x="0.0" y="0.0" width="439" height="86.5"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="438.5" height="86.5"/>
                                                                 <string key="text">Editors.
 These editors allow you to write programs for showing text on the Calliope display, read its sensors or even build mini-robots yourself – Give it a try!</string>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
@@ -73,7 +73,7 @@ These editors allow you to write programs for showing text on the Calliope displ
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ypy-Nv-qUF">
-                                                                <rect key="frame" x="0.0" y="106.5" width="439" height="400"/>
+                                                                <rect key="frame" x="0.0" y="106.5" width="438.5" height="400"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" priority="999" constant="400" placeholder="YES" id="0pW-vW-nJG"/>
@@ -85,56 +85,56 @@ These editors allow you to write programs for showing text on the Calliope displ
                                                         </subviews>
                                                     </stackView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wK8-Cf-hwe">
-                                                        <rect key="frame" x="0.0" y="506.5" width="439" height="60"/>
+                                                        <rect key="frame" x="0.0" y="506.5" width="438.5" height="60"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="60" id="iQJ-EC-qaj"/>
                                                         </constraints>
                                                     </view>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="zjS-Vb-43h">
-                                                        <rect key="frame" x="0.0" y="566.5" width="439" height="144.5"/>
+                                                        <rect key="frame" x="0.0" y="566.5" width="438.5" height="144.5"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lYA-S0-b2D">
-                                                                <rect key="frame" x="0.0" y="0.0" width="439" height="64.5"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2pa-yb-EU6">
+                                                                <rect key="frame" x="0.0" y="0.0" width="438.5" height="64.5"/>
                                                                 <string key="text">Start program.
 Here you can download the original program of the Calliope mini.</string>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i7Q-1k-FHN">
-                                                                <rect key="frame" x="0.0" y="84.5" width="439" height="60"/>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H2m-rK-doz">
+                                                                <rect key="frame" x="0.0" y="84.5" width="438.5" height="60"/>
                                                                 <subviews>
-                                                                    <button opaque="NO" contentMode="scaleAspectFit" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Z3u-48-3Mt">
+                                                                    <button opaque="NO" contentMode="scaleAspectFit" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="RkY-N0-TEJ">
                                                                         <rect key="frame" x="94.5" y="0.0" width="250" height="60"/>
                                                                         <color key="backgroundColor" name="calliope-green"/>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="height" constant="60" id="LOn-TS-L8Z"/>
-                                                                            <constraint firstAttribute="width" constant="250" id="kuB-If-8Yd"/>
+                                                                            <constraint firstAttribute="width" constant="250" id="QwI-mo-Rdi"/>
+                                                                            <constraint firstAttribute="height" constant="60" id="vHh-I1-hIk"/>
                                                                         </constraints>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                         <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
                                                                         <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="40" maxY="0.0"/>
                                                                         <state key="normal" title="Start program" image="upload_button"/>
                                                                         <connections>
-                                                                            <action selector="uploadDefaultProgram:" destination="rb5-ni-SG8" eventType="touchUpInside" id="4as-T9-8R6"/>
+                                                                            <action selector="uploadDefaultProgram:" destination="rb5-ni-SG8" eventType="touchUpInside" id="XkX-wX-Hu9"/>
                                                                         </connections>
                                                                     </button>
                                                                 </subviews>
                                                                 <constraints>
-                                                                    <constraint firstItem="Z3u-48-3Mt" firstAttribute="centerX" secondItem="i7Q-1k-FHN" secondAttribute="centerX" id="8W0-Xn-HWf"/>
-                                                                    <constraint firstItem="Z3u-48-3Mt" firstAttribute="top" secondItem="i7Q-1k-FHN" secondAttribute="top" id="EUX-I4-sjI"/>
-                                                                    <constraint firstAttribute="bottom" secondItem="Z3u-48-3Mt" secondAttribute="bottom" id="GrA-Ub-tUq"/>
+                                                                    <constraint firstItem="RkY-N0-TEJ" firstAttribute="centerX" secondItem="H2m-rK-doz" secondAttribute="centerX" id="OEU-ns-1Xg"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="RkY-N0-TEJ" secondAttribute="bottom" id="Ycm-nY-aDW"/>
+                                                                    <constraint firstItem="RkY-N0-TEJ" firstAttribute="top" secondItem="H2m-rK-doz" secondAttribute="top" id="dds-UO-eSI"/>
                                                                 </constraints>
                                                             </view>
                                                         </subviews>
                                                     </stackView>
                                                 </subviews>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="4bN-ts-cX9">
-                                                <rect key="frame" x="499" y="0.0" width="439" height="312.5"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="4bN-ts-cX9">
+                                                <rect key="frame" x="498.5" y="0.0" width="438.5" height="441"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ips-vx-zky">
-                                                        <rect key="frame" x="0.0" y="0.0" width="439" height="42.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="438.5" height="42.5"/>
                                                         <string key="text">Programs.
 These are the programs you created so far.</string>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
@@ -142,7 +142,7 @@ These are the programs you created so far.</string>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KcT-G8-I8S">
-                                                        <rect key="frame" x="0.0" y="62.5" width="439" height="250"/>
+                                                        <rect key="frame" x="0.0" y="50.5" width="438.5" height="250"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" priority="999" constant="250" placeholder="YES" id="v3X-XW-ffa"/>
@@ -151,6 +151,45 @@ These are the programs you created so far.</string>
                                                             <segue destination="8hf-lH-tNj" kind="embed" identifier="embedPrograms" destinationCreationSelector="initializePrograms:" id="kJq-Z7-dT1"/>
                                                         </connections>
                                                     </containerView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JZf-cF-XX1">
+                                                        <rect key="frame" x="0.0" y="308.5" width="438.5" height="64.5"/>
+                                                        <string key="text">QR-Code
+Hier kannst du einen Makecode QR-Code Scannen um das Program zu öffnen. </string>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="ak6-Eh-Hed">
+                                                        <rect key="frame" x="0.0" y="381" width="438.5" height="60"/>
+                                                        <subviews>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uV2-w8-6f5">
+                                                                <rect key="frame" x="0.0" y="0.0" width="438.5" height="60"/>
+                                                                <subviews>
+                                                                    <button opaque="NO" contentMode="scaleAspectFit" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="jQh-M1-D9T">
+                                                                        <rect key="frame" x="94.5" y="0.0" width="250" height="60"/>
+                                                                        <color key="backgroundColor" name="calliope-green"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="height" constant="60" id="Bjh-IS-11e"/>
+                                                                            <constraint firstAttribute="width" constant="250" id="pjy-zR-7ad"/>
+                                                                        </constraints>
+                                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                                        <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
+                                                                        <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="40" maxY="0.0"/>
+                                                                        <state key="normal" title="Makecode QR-Code scannen" image="upload_button"/>
+                                                                        <connections>
+                                                                            <segue destination="Lev-CK-3Lf" kind="show" id="aFS-Nq-fFx"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                </subviews>
+                                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="bottom" secondItem="jQh-M1-D9T" secondAttribute="bottom" id="5HX-jn-ml9"/>
+                                                                    <constraint firstItem="jQh-M1-D9T" firstAttribute="top" secondItem="uV2-w8-6f5" secondAttribute="top" id="cGB-Ie-4kf"/>
+                                                                    <constraint firstItem="jQh-M1-D9T" firstAttribute="centerX" secondItem="uV2-w8-6f5" secondAttribute="centerX" id="sdv-qE-RiC"/>
+                                                                </constraints>
+                                                            </view>
+                                                        </subviews>
+                                                    </stackView>
                                                 </subviews>
                                             </stackView>
                                         </subviews>
@@ -164,12 +203,12 @@ These are the programs you created so far.</string>
                                     <constraint firstItem="fYe-cI-9Hj" firstAttribute="trailing" secondItem="ZAw-Ve-3Pb" secondAttribute="trailing" constant="-20" id="4kY-nd-fAc"/>
                                     <constraint firstItem="Y5a-Mz-x8I" firstAttribute="trailing" secondItem="4bN-ts-cX9" secondAttribute="trailing" constant="20" id="CYy-2P-Dcx"/>
                                     <constraint firstItem="Dxt-9f-Z4u" firstAttribute="bottom" secondItem="KGf-et-JnB" secondAttribute="bottom" constant="-30" id="FQX-Cd-Nmd"/>
+                                    <constraint firstItem="Y5a-Mz-x8I" firstAttribute="bottom" secondItem="ak6-Eh-Hed" secondAttribute="bottom" constant="20" id="Hbt-Y9-Jch"/>
                                     <constraint firstItem="akY-Sb-YXJ" firstAttribute="trailing" secondItem="Dxt-9f-Z4u" secondAttribute="trailing" constant="31" id="MiA-ra-3Ep"/>
                                     <constraint firstItem="2iD-Nq-XcD" firstAttribute="bottom" secondItem="zjS-Vb-43h" secondAttribute="bottom" constant="20" id="SXJ-p0-xHY"/>
                                     <constraint firstItem="zjS-Vb-43h" firstAttribute="top" secondItem="2iD-Nq-XcD" secondAttribute="top" constant="20" id="Up2-BU-9rN"/>
                                     <constraint firstItem="Y5a-Mz-x8I" firstAttribute="top" secondItem="4bN-ts-cX9" secondAttribute="top" constant="-20" id="aJ4-Rg-68C"/>
                                     <constraint firstItem="fYe-cI-9Hj" firstAttribute="top" secondItem="ZAw-Ve-3Pb" secondAttribute="top" constant="20" id="hX5-aj-Kbh"/>
-                                    <constraint firstItem="Y5a-Mz-x8I" firstAttribute="bottom" secondItem="4bN-ts-cX9" secondAttribute="bottom" constant="20" id="k39-EE-IeC"/>
                                     <constraint firstItem="Y5a-Mz-x8I" firstAttribute="leading" secondItem="4bN-ts-cX9" secondAttribute="leading" constant="-20" id="lEb-B7-kMK"/>
                                     <constraint firstItem="fYe-cI-9Hj" firstAttribute="bottom" secondItem="ZAw-Ve-3Pb" secondAttribute="bottom" constant="-20" id="mOz-WK-SlP"/>
                                     <constraint firstItem="Dxt-9f-Z4u" firstAttribute="trailing" secondItem="KGf-et-JnB" secondAttribute="trailing" constant="-31" id="oN3-W7-VEK"/>
@@ -196,7 +235,7 @@ These are the programs you created so far.</string>
                     </view>
                     <navigationItem key="navigationItem" title="Editors and Programs" id="uLO-aS-ZNS"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <size key="freeformSize" width="1000" height="1000"/>
+                    <size key="freeformSize" width="999" height="1000"/>
                     <connections>
                         <outlet property="editorBottomToSafeArea" destination="F1h-MT-La6" id="ybv-Uc-KWl"/>
                         <outlet property="editorContainerView" destination="ypy-Nv-qUF" id="S8S-Gd-g8f"/>
@@ -206,14 +245,14 @@ These are the programs you created so far.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t5x-PS-nsJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="744.92753623188412" y="29.464285714285712"/>
+            <point key="canvasLocation" x="744.43359375" y="29.428989751098094"/>
         </scene>
         <!--Editors Collection View Controller-->
         <scene sceneID="nxH-4H-qrq">
             <objects>
                 <collectionViewController automaticallyAdjustsScrollViewInsets="NO" id="ZH5-UW-Mjo" customClass="EditorsCollectionViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" bouncesZoom="NO" dataMode="prototypes" id="5hm-Wh-YfH">
-                        <rect key="frame" x="0.0" y="0.0" width="439" height="400"/>
+                        <rect key="frame" x="0.0" y="0.0" width="438.5" height="400"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Rsi-yi-Udp">
@@ -230,6 +269,12 @@ These are the programs you created so far.</string>
                                     <rect key="frame" x="0.0" y="0.0" width="160" height="185.5"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Makecode" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KGR-ef-bqG">
+                                            <rect key="frame" x="0.0" y="165" width="160" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="editors_makecode" translatesAutoresizingMaskIntoConstraints="NO" id="iI5-8F-WS6">
                                             <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
                                             <constraints>
@@ -237,12 +282,6 @@ These are the programs you created so far.</string>
                                                 <constraint firstAttribute="width" secondItem="iI5-8F-WS6" secondAttribute="height" multiplier="1:1" priority="999" id="PTq-t9-ILZ"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Makecode" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KGR-ef-bqG">
-                                            <rect key="frame" x="0.0" y="165" width="160" height="20.5"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="iI5-8F-WS6" firstAttribute="leading" secondItem="WBP-SR-R2U" secondAttribute="leading" id="06R-CF-Fuj"/>
@@ -261,7 +300,7 @@ These are the programs you created so far.</string>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="nepoEditorCell" id="ucV-gN-En2" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="279" y="0.0" width="160" height="186"/>
+                                <rect key="frame" x="278.5" y="0.0" width="160" height="186"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bVT-UD-yV5">
                                     <rect key="frame" x="0.0" y="0.0" width="160" height="186"/>
@@ -338,7 +377,7 @@ These are the programs you created so far.</string>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="localEditorCell" id="Yfn-uo-n4Y" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="279" y="196" width="160" height="185.5"/>
+                                <rect key="frame" x="278.5" y="196" width="160" height="185.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="kQB-BW-JJf">
                                     <rect key="frame" x="0.0" y="0.0" width="160" height="185.5"/>
@@ -394,11 +433,11 @@ These are the programs you created so far.</string>
             <objects>
                 <viewController title="Editor" modalPresentationStyle="fullScreen" id="eeY-2x-OZY" customClass="EditorViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="K81-X6-DtW">
-                        <rect key="frame" x="0.0" y="0.0" width="439" height="400"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="2LL-HR-2sL">
-                                <rect key="frame" x="199.5" y="180" width="40" height="40"/>
+                                <rect key="frame" x="492" y="663" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="6Y8-Pt-Nep"/>
                                     <constraint firstAttribute="width" constant="40" id="dzr-Np-Ap5"/>
@@ -539,6 +578,83 @@ These are the programs you created so far.</string>
             </objects>
             <point key="canvasLocation" x="400.72463768115944" y="583.92857142857144"/>
         </scene>
+        <!--Code View Controller-->
+        <scene sceneID="hol-wY-xHE">
+            <objects>
+                <viewController id="Lev-CK-3Lf" customClass="QRCodeViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="KME-yr-Mo4">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ae-M8-qnA">
+                                <rect key="frame" x="392" y="619" width="240" height="128"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bSu-f8-9Jh">
+                                <rect key="frame" x="0.0" y="74" width="1024" height="1222"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleAspectFit" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="I45-jL-SNF">
+                                <rect key="frame" x="387" y="1206" width="250" height="60"/>
+                                <color key="backgroundColor" name="calliope-green"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="250" id="Ii6-8f-W9P"/>
+                                    <constraint firstAttribute="height" constant="60" id="ke3-l9-w67"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
+                                <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="40" maxY="0.0"/>
+                                <state key="normal" title="In Makecode öffnen" image="upload_button"/>
+                                <connections>
+                                    <segue destination="eeY-2x-OZY" kind="show" destinationCreationSelector="createMakecodeEditor:sender:" id="PmA-cL-pMf"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleAspectFit" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="YG1-Xl-TFp">
+                                <rect key="frame" x="387" y="1206" width="250" height="60"/>
+                                <color key="backgroundColor" name="calliope-green"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="0Tn-ag-ix3"/>
+                                    <constraint firstAttribute="width" constant="250" id="G5e-N3-X0F"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
+                                <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="40" maxY="0.0"/>
+                                <state key="normal" title="Download Hex" image="upload_button"/>
+                                <connections>
+                                    <action selector="uploadDefaultProgram:" destination="Lev-CK-3Lf" eventType="touchUpInside" id="axR-Sh-bUi"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="bOb-4T-5Fm"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="I45-jL-SNF" firstAttribute="centerX" secondItem="bOb-4T-5Fm" secondAttribute="centerX" id="1rT-5I-Wqg"/>
+                            <constraint firstItem="bOb-4T-5Fm" firstAttribute="bottom" secondItem="3ae-M8-qnA" secondAttribute="bottom" constant="549" id="5Oz-zA-1l7"/>
+                            <constraint firstItem="bSu-f8-9Jh" firstAttribute="top" secondItem="bOb-4T-5Fm" secondAttribute="top" id="8bq-aP-yV1"/>
+                            <constraint firstItem="I45-jL-SNF" firstAttribute="bottom" secondItem="bOb-4T-5Fm" secondAttribute="bottom" constant="-30" id="KTm-4s-o19"/>
+                            <constraint firstItem="3ae-M8-qnA" firstAttribute="leading" secondItem="bOb-4T-5Fm" secondAttribute="leading" constant="392" id="SFg-gN-ZsS"/>
+                            <constraint firstItem="bOb-4T-5Fm" firstAttribute="bottom" secondItem="bSu-f8-9Jh" secondAttribute="bottom" id="ZZv-7m-HET"/>
+                            <constraint firstItem="3ae-M8-qnA" firstAttribute="height" secondItem="bOb-4T-5Fm" secondAttribute="height" multiplier="0.104746" id="f8z-8n-NyH"/>
+                            <constraint firstItem="bOb-4T-5Fm" firstAttribute="trailing" secondItem="bSu-f8-9Jh" secondAttribute="trailing" id="g2L-ok-FxP"/>
+                            <constraint firstItem="bSu-f8-9Jh" firstAttribute="leading" secondItem="bOb-4T-5Fm" secondAttribute="leading" id="ieM-mx-GDH"/>
+                            <constraint firstItem="3ae-M8-qnA" firstAttribute="top" secondItem="bOb-4T-5Fm" secondAttribute="top" constant="545" id="jgr-8b-uSu"/>
+                            <constraint firstItem="3ae-M8-qnA" firstAttribute="width" secondItem="bOb-4T-5Fm" secondAttribute="width" multiplier="0.234375" id="jmr-zb-Bvy"/>
+                            <constraint firstItem="bOb-4T-5Fm" firstAttribute="bottom" secondItem="YG1-Xl-TFp" secondAttribute="bottom" constant="30" id="mGa-0r-1ZY"/>
+                            <constraint firstItem="bOb-4T-5Fm" firstAttribute="trailing" secondItem="3ae-M8-qnA" secondAttribute="trailing" constant="392" id="pIg-2r-phH"/>
+                            <constraint firstItem="YG1-Xl-TFp" firstAttribute="centerX" secondItem="bSu-f8-9Jh" secondAttribute="centerX" id="y88-3J-mIA"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="jEy-Lc-b6J"/>
+                    <connections>
+                        <outlet property="cameraView" destination="bSu-f8-9Jh" id="6NJ-Qm-U0b"/>
+                        <outlet property="downloadHexButton" destination="YG1-Xl-TFp" id="vhu-Bj-pP7"/>
+                        <outlet property="openMakeCodeButton" destination="I45-jL-SNF" id="KB0-yt-rEc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Gu-wX-dHR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-526" y="833"/>
+        </scene>
         <!--Editors and Programs-->
         <scene sceneID="UDA-pj-7B3">
             <objects>
@@ -547,7 +663,7 @@ These are the programs you created so far.</string>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="FFb-Pa-Fjw">
-                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="24" width="1024" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -571,7 +687,7 @@ These are the programs you created so far.</string>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="pQc-nr-8N0"/>
+        <segue reference="PmA-cL-pMf"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="calliope-lilablau"/>
     <resources>

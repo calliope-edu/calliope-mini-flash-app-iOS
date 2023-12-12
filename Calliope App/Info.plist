@@ -160,5 +160,7 @@
 			</dict>
 		</dict>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>To read a QR Code this app uses the camera. </string>
 </dict>
 </plist>

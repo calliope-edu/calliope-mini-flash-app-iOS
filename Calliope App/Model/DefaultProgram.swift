@@ -19,3 +19,17 @@ class DefaultProgram: DownloadableHexFile {
     
     private init() {}
 }
+
+
+class QRCodeHexFile: DownloadableHexFile {
+    var downloadedHexFile: HexFile?
+    
+    var loadableProgramName: String
+    
+    var loadableProgramURL: String
+    
+    init (url: String) {
+        loadableProgramName = "Test_File"
+        loadableProgramURL = url
+    }
+}
