@@ -23,7 +23,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="999" height="1000"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZAw-Ve-3Pb">
-                                        <rect key="frame" x="11" y="10" width="478.5" height="546.5"/>
+                                        <rect key="frame" x="11" y="10" width="717" height="524.5"/>
                                         <color key="backgroundColor" name="calliope-lightgray"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -32,16 +32,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2iD-Nq-XcD">
-                                        <rect key="frame" x="11" y="576.5" width="478.5" height="184.5"/>
-                                        <color key="backgroundColor" name="calliope-purple"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="7"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y5a-Mz-x8I">
-                                        <rect key="frame" x="509.5" y="10" width="478.5" height="481"/>
+                                        <rect key="frame" x="11" y="554.5" width="717" height="140.5"/>
                                         <color key="backgroundColor" name="calliope-lightgray"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -49,31 +40,46 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y5a-Mz-x8I">
+                                        <rect key="frame" x="748" y="10" width="240" height="390.5"/>
+                                        <color key="backgroundColor" red="0.50319892170000002" green="0.45198273659999999" blue="0.8974402547" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" name="calliope-lightgray"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="7"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Zk-Xu-R0A">
+                                        <rect key="frame" x="748" y="416.5" width="240" height="320"/>
+                                        <color key="backgroundColor" red="0.50319892170000002" green="0.45198273659999999" blue="0.8974402547" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" name="calliope-lightgray"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="7"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="Dxt-9f-Z4u">
-                                        <rect key="frame" x="31" y="30" width="937" height="711"/>
+                                        <rect key="frame" x="31" y="30" width="937" height="686.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="5XM-Zd-KLN">
-                                                <rect key="frame" x="0.0" y="0.0" width="438.5" height="711"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="677" height="645"/>
                                                 <subviews>
-                                                    <view contentMode="scaleToFill" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bbz-2M-bft">
-                                                        <rect key="frame" x="0.0" y="0.0" width="438.5" height="0.0"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" priority="900" id="Q8H-O5-Zip"/>
-                                                        </constraints>
-                                                    </view>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="fYe-cI-9Hj">
-                                                        <rect key="frame" x="0.0" y="0.0" width="438.5" height="506.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="677" height="484.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hqp-zE-kfc">
-                                                                <rect key="frame" x="0.0" y="0.0" width="438.5" height="86.5"/>
-                                                                <string key="text">Editors.
-These editors allow you to write programs for showing text on the Calliope display, read its sensors or even build mini-robots yourself – Give it a try!</string>
+                                                                <rect key="frame" x="0.0" y="0.0" width="677" height="64.5"/>
+                                                                <string key="text">You can program your Calliope mini with the help of the editors.
+MakeCode works with Calliope mini 3 and all previous Calliope mini versions. 
+Open Roberta Lab works with Calliope mini 1 and 2.</string>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ypy-Nv-qUF">
-                                                                <rect key="frame" x="0.0" y="106.5" width="438.5" height="400"/>
+                                                                <rect key="frame" x="0.0" y="84.5" width="677" height="400"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" priority="999" constant="400" placeholder="YES" id="0pW-vW-nJG"/>
@@ -85,45 +91,44 @@ These editors allow you to write programs for showing text on the Calliope displ
                                                         </subviews>
                                                     </stackView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wK8-Cf-hwe">
-                                                        <rect key="frame" x="0.0" y="506.5" width="438.5" height="60"/>
+                                                        <rect key="frame" x="0.0" y="484.5" width="677" height="60"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="60" id="iQJ-EC-qaj"/>
                                                         </constraints>
                                                     </view>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="zjS-Vb-43h">
-                                                        <rect key="frame" x="0.0" y="566.5" width="438.5" height="144.5"/>
+                                                        <rect key="frame" x="0.0" y="544.5" width="677" height="100.5"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2pa-yb-EU6">
-                                                                <rect key="frame" x="0.0" y="0.0" width="438.5" height="64.5"/>
-                                                                <string key="text">Start program.
-Here you can download the original program of the Calliope mini.</string>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Open a program in MakeCode using a QR code. Simply scan it and off you go!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2pa-yb-EU6">
+                                                                <rect key="frame" x="0.0" y="0.0" width="677" height="20.5"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H2m-rK-doz">
-                                                                <rect key="frame" x="0.0" y="84.5" width="438.5" height="60"/>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pmP-yd-KbT">
+                                                                <rect key="frame" x="0.0" y="40.5" width="677" height="60"/>
                                                                 <subviews>
-                                                                    <button opaque="NO" contentMode="scaleAspectFit" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="RkY-N0-TEJ">
-                                                                        <rect key="frame" x="94.5" y="0.0" width="250" height="60"/>
+                                                                    <button opaque="NO" contentMode="scaleAspectFit" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="49i-Ve-lcm">
+                                                                        <rect key="frame" x="213.5" y="0.0" width="250" height="60"/>
                                                                         <color key="backgroundColor" name="calliope-green"/>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="width" constant="250" id="QwI-mo-Rdi"/>
-                                                                            <constraint firstAttribute="height" constant="60" id="vHh-I1-hIk"/>
+                                                                            <constraint firstAttribute="height" constant="60" id="CXQ-Ml-PF7"/>
+                                                                            <constraint firstAttribute="width" constant="250" id="UnL-Cu-HRK"/>
                                                                         </constraints>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                                        <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
-                                                                        <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="40" maxY="0.0"/>
-                                                                        <state key="normal" title="Start program" image="upload_button"/>
+                                                                        <state key="normal" title="Scan QR code" image="qr_code_scan_button">
+                                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        </state>
                                                                         <connections>
-                                                                            <action selector="uploadDefaultProgram:" destination="rb5-ni-SG8" eventType="touchUpInside" id="XkX-wX-Hu9"/>
+                                                                            <segue destination="Lev-CK-3Lf" kind="show" id="AiM-tj-icn"/>
                                                                         </connections>
                                                                     </button>
                                                                 </subviews>
+                                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
-                                                                    <constraint firstItem="RkY-N0-TEJ" firstAttribute="centerX" secondItem="H2m-rK-doz" secondAttribute="centerX" id="OEU-ns-1Xg"/>
-                                                                    <constraint firstAttribute="bottom" secondItem="RkY-N0-TEJ" secondAttribute="bottom" id="Ycm-nY-aDW"/>
-                                                                    <constraint firstItem="RkY-N0-TEJ" firstAttribute="top" secondItem="H2m-rK-doz" secondAttribute="top" id="dds-UO-eSI"/>
+                                                                    <constraint firstItem="49i-Ve-lcm" firstAttribute="centerX" secondItem="pmP-yd-KbT" secondAttribute="centerX" id="14x-Gc-a1g"/>
+                                                                    <constraint firstItem="49i-Ve-lcm" firstAttribute="top" secondItem="pmP-yd-KbT" secondAttribute="top" id="CY0-nh-3eD"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="49i-Ve-lcm" secondAttribute="bottom" id="a87-DT-PJs"/>
                                                                 </constraints>
                                                             </view>
                                                         </subviews>
@@ -131,53 +136,92 @@ Here you can download the original program of the Calliope mini.</string>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="4bN-ts-cX9">
-                                                <rect key="frame" x="498.5" y="0.0" width="438.5" height="441"/>
+                                                <rect key="frame" x="737" y="0.0" width="200" height="686.5"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ips-vx-zky">
-                                                        <rect key="frame" x="0.0" y="0.0" width="438.5" height="42.5"/>
-                                                        <string key="text">Programs.
-These are the programs you created so far.</string>
-                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KcT-G8-I8S">
-                                                        <rect key="frame" x="0.0" y="50.5" width="438.5" height="250"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="nwK-R8-inx">
+                                                        <rect key="frame" x="0.0" y="0.0" width="200" height="350.5"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nWb-Ra-8Xg">
+                                                                <rect key="frame" x="0.0" y="0.0" width="200" height="130.5"/>
+                                                                <string key="text">Calliope mini 3: Download the original program of the Calliope mini 3. 
+Connect and transfer the program!</string>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="startprogramm3" translatesAutoresizingMaskIntoConstraints="NO" id="fT8-gp-qtG">
+                                                                <rect key="frame" x="0.0" y="150.5" width="200" height="120"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="120" id="lse-qC-Nlj"/>
+                                                                </constraints>
+                                                            </imageView>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yxq-Ip-D30">
+                                                                <rect key="frame" x="0.0" y="290.5" width="200" height="60"/>
+                                                                <subviews>
+                                                                    <button opaque="NO" contentMode="scaleAspectFit" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="HyP-3y-Mpt">
+                                                                        <rect key="frame" x="-25" y="0.0" width="250" height="60"/>
+                                                                        <color key="backgroundColor" name="calliope-green"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" constant="250" id="fWG-qn-Bd9"/>
+                                                                            <constraint firstAttribute="height" constant="60" id="iLv-MN-gaE"/>
+                                                                        </constraints>
+                                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                                        <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
+                                                                        <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="40" maxY="0.0"/>
+                                                                        <state key="normal" title="Start program" image="upload_button"/>
+                                                                        <connections>
+                                                                            <action selector="uploadDefaultV3Program:" destination="rb5-ni-SG8" eventType="touchUpInside" id="wfF-5x-Ley"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                </subviews>
+                                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="bottom" secondItem="HyP-3y-Mpt" secondAttribute="bottom" id="8eu-US-YRO"/>
+                                                                    <constraint firstItem="HyP-3y-Mpt" firstAttribute="top" secondItem="yxq-Ip-D30" secondAttribute="top" id="CoC-Bh-cmT"/>
+                                                                    <constraint firstItem="HyP-3y-Mpt" firstAttribute="centerX" secondItem="yxq-Ip-D30" secondAttribute="centerX" id="m44-Qi-K0k"/>
+                                                                </constraints>
+                                                            </view>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cct-Ta-krg">
+                                                        <rect key="frame" x="0.0" y="358.5" width="200" height="40"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" priority="999" constant="250" placeholder="YES" id="v3X-XW-ffa"/>
+                                                            <constraint firstAttribute="height" constant="40" id="thP-4U-Szm"/>
                                                         </constraints>
-                                                        <connections>
-                                                            <segue destination="8hf-lH-tNj" kind="embed" identifier="embedPrograms" destinationCreationSelector="initializePrograms:" id="kJq-Z7-dT1"/>
-                                                        </connections>
-                                                    </containerView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JZf-cF-XX1">
-                                                        <rect key="frame" x="0.0" y="308.5" width="438.5" height="64.5"/>
-                                                        <string key="text">QR-Code
-Hier kannst du einen Makecode QR-Code Scannen um das Program zu öffnen. </string>
-                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
+                                                    </view>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="ak6-Eh-Hed">
-                                                        <rect key="frame" x="0.0" y="381" width="438.5" height="60"/>
+                                                        <rect key="frame" x="0.0" y="406.5" width="200" height="280"/>
                                                         <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Calliope mini 1+2: Download the original program of the Calliope mini 1 and Calliope min 2. Connect and transfer the program!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JZf-cF-XX1">
+                                                                <rect key="frame" x="0.0" y="0.0" width="200" height="60"/>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="startprogramm1+2" translatesAutoresizingMaskIntoConstraints="NO" id="EK0-RX-ooW">
+                                                                <rect key="frame" x="0.0" y="80" width="200" height="120"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="120" id="KT7-nM-DD3"/>
+                                                                    <constraint firstAttribute="width" constant="200" id="Kje-g6-lrA"/>
+                                                                </constraints>
+                                                            </imageView>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uV2-w8-6f5">
-                                                                <rect key="frame" x="0.0" y="0.0" width="438.5" height="60"/>
+                                                                <rect key="frame" x="0.0" y="220" width="200" height="60"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleAspectFit" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="jQh-M1-D9T">
-                                                                        <rect key="frame" x="94.5" y="0.0" width="250" height="60"/>
+                                                                        <rect key="frame" x="-25" y="0.0" width="250" height="60"/>
                                                                         <color key="backgroundColor" name="calliope-green"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="60" id="Bjh-IS-11e"/>
                                                                             <constraint firstAttribute="width" constant="250" id="pjy-zR-7ad"/>
                                                                         </constraints>
-                                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="18"/>
                                                                         <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
                                                                         <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="40" maxY="0.0"/>
-                                                                        <state key="normal" title="Makecode QR-Code scannen" image="upload_button"/>
+                                                                        <state key="normal" title="Start program" image="upload_button"/>
                                                                         <connections>
-                                                                            <segue destination="Lev-CK-3Lf" kind="show" id="aFS-Nq-fFx"/>
+                                                                            <action selector="uploadDefaultV2And1ProgramWith_sender:" destination="rb5-ni-SG8" eventType="touchUpInside" id="cOZ-zR-Lxm"/>
                                                                         </connections>
                                                                     </button>
                                                                 </subviews>
@@ -189,30 +233,34 @@ Hier kannst du einen Makecode QR-Code Scannen um das Program zu öffnen. </strin
                                                                 </constraints>
                                                             </view>
                                                         </subviews>
+                                                        <constraints>
+                                                            <constraint firstItem="EK0-RX-ooW" firstAttribute="centerY" secondItem="ak6-Eh-Hed" secondAttribute="centerY" id="OGq-ey-vdI"/>
+                                                        </constraints>
                                                     </stackView>
                                                 </subviews>
                                             </stackView>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstItem="ypy-Nv-qUF" firstAttribute="width" secondItem="KcT-G8-I8S" secondAttribute="width" id="ARC-2H-16H"/>
-                                        </constraints>
                                     </stackView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="2iD-Nq-XcD" firstAttribute="trailing" secondItem="zjS-Vb-43h" secondAttribute="trailing" constant="20" id="00i-fY-9wo"/>
                                     <constraint firstItem="fYe-cI-9Hj" firstAttribute="trailing" secondItem="ZAw-Ve-3Pb" secondAttribute="trailing" constant="-20" id="4kY-nd-fAc"/>
-                                    <constraint firstItem="Y5a-Mz-x8I" firstAttribute="trailing" secondItem="4bN-ts-cX9" secondAttribute="trailing" constant="20" id="CYy-2P-Dcx"/>
+                                    <constraint firstItem="5Zk-Xu-R0A" firstAttribute="top" secondItem="ak6-Eh-Hed" secondAttribute="top" constant="-20" id="6X7-Wn-86m"/>
                                     <constraint firstItem="Dxt-9f-Z4u" firstAttribute="bottom" secondItem="KGf-et-JnB" secondAttribute="bottom" constant="-30" id="FQX-Cd-Nmd"/>
-                                    <constraint firstItem="Y5a-Mz-x8I" firstAttribute="bottom" secondItem="ak6-Eh-Hed" secondAttribute="bottom" constant="20" id="Hbt-Y9-Jch"/>
+                                    <constraint firstItem="Y5a-Mz-x8I" firstAttribute="leading" secondItem="nwK-R8-inx" secondAttribute="leading" constant="-20" id="Ffs-oy-gzp"/>
+                                    <constraint firstItem="5Zk-Xu-R0A" firstAttribute="leading" secondItem="ak6-Eh-Hed" secondAttribute="leading" constant="-20" id="Mfp-mg-Vy1"/>
+                                    <constraint firstItem="Y5a-Mz-x8I" firstAttribute="bottom" secondItem="nwK-R8-inx" secondAttribute="bottom" constant="20" id="Mgm-uc-xvQ"/>
                                     <constraint firstItem="akY-Sb-YXJ" firstAttribute="trailing" secondItem="Dxt-9f-Z4u" secondAttribute="trailing" constant="31" id="MiA-ra-3Ep"/>
+                                    <constraint firstItem="Y5a-Mz-x8I" firstAttribute="top" secondItem="nwK-R8-inx" secondAttribute="top" constant="-20" id="PZ2-eJ-phV"/>
+                                    <constraint firstItem="5Zk-Xu-R0A" firstAttribute="bottom" secondItem="ak6-Eh-Hed" secondAttribute="bottom" constant="20" id="QEV-do-JT1"/>
                                     <constraint firstItem="2iD-Nq-XcD" firstAttribute="bottom" secondItem="zjS-Vb-43h" secondAttribute="bottom" constant="20" id="SXJ-p0-xHY"/>
                                     <constraint firstItem="zjS-Vb-43h" firstAttribute="top" secondItem="2iD-Nq-XcD" secondAttribute="top" constant="20" id="Up2-BU-9rN"/>
-                                    <constraint firstItem="Y5a-Mz-x8I" firstAttribute="top" secondItem="4bN-ts-cX9" secondAttribute="top" constant="-20" id="aJ4-Rg-68C"/>
+                                    <constraint firstItem="Y5a-Mz-x8I" firstAttribute="trailing" secondItem="nwK-R8-inx" secondAttribute="trailing" constant="20" id="cZw-BC-9h8"/>
                                     <constraint firstItem="fYe-cI-9Hj" firstAttribute="top" secondItem="ZAw-Ve-3Pb" secondAttribute="top" constant="20" id="hX5-aj-Kbh"/>
-                                    <constraint firstItem="Y5a-Mz-x8I" firstAttribute="leading" secondItem="4bN-ts-cX9" secondAttribute="leading" constant="-20" id="lEb-B7-kMK"/>
                                     <constraint firstItem="fYe-cI-9Hj" firstAttribute="bottom" secondItem="ZAw-Ve-3Pb" secondAttribute="bottom" constant="-20" id="mOz-WK-SlP"/>
                                     <constraint firstItem="Dxt-9f-Z4u" firstAttribute="trailing" secondItem="KGf-et-JnB" secondAttribute="trailing" constant="-31" id="oN3-W7-VEK"/>
                                     <constraint firstItem="Dxt-9f-Z4u" firstAttribute="leading" secondItem="KGf-et-JnB" secondAttribute="leading" constant="31" id="r3P-9j-Xgl"/>
+                                    <constraint firstItem="5Zk-Xu-R0A" firstAttribute="trailing" secondItem="ak6-Eh-Hed" secondAttribute="trailing" constant="20" id="t4V-HS-ehf"/>
                                     <constraint firstItem="Dxt-9f-Z4u" firstAttribute="top" secondItem="KGf-et-JnB" secondAttribute="top" constant="30" id="tFq-nf-355"/>
                                     <constraint firstItem="fYe-cI-9Hj" firstAttribute="leading" secondItem="ZAw-Ve-3Pb" secondAttribute="leading" constant="20" id="uJQ-gf-l8L"/>
                                     <constraint firstItem="zjS-Vb-43h" firstAttribute="leading" secondItem="2iD-Nq-XcD" secondAttribute="leading" constant="20" id="xmB-jP-Ix6"/>
@@ -230,6 +278,7 @@ Hier kannst du einen Makecode QR-Code Scannen um das Program zu öffnen. </strin
                             <constraint firstAttribute="bottom" secondItem="g5r-Xk-lED" secondAttribute="bottom" id="ZGW-ug-Ugt"/>
                             <constraint firstItem="g5r-Xk-lED" firstAttribute="top" secondItem="HCF-Ra-c4C" secondAttribute="top" id="lro-nx-HdM"/>
                             <constraint firstAttribute="trailing" secondItem="g5r-Xk-lED" secondAttribute="trailing" id="ovF-8C-Al7"/>
+                            <constraint firstItem="8uy-BZ-wk7" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ak6-Eh-Hed" secondAttribute="bottom" constant="18" id="urA-KX-VWP"/>
                             <constraint firstItem="Dxt-9f-Z4u" firstAttribute="centerX" secondItem="8uy-BZ-wk7" secondAttribute="centerX" id="wCx-4H-S6h"/>
                         </constraints>
                     </view>
@@ -238,7 +287,7 @@ Hier kannst du einen Makecode QR-Code Scannen um das Program zu öffnen. </strin
                     <connections>
                         <outlet property="editorBottomToSafeArea" destination="F1h-MT-La6" id="ybv-Uc-KWl"/>
                         <outlet property="editorContainerView" destination="ypy-Nv-qUF" id="S8S-Gd-g8f"/>
-                        <outlet property="programContainerView" destination="KcT-G8-I8S" id="hIq-cf-pj5"/>
+                        <outlet property="scanButton" destination="49i-Ve-lcm" id="3fR-h6-9cM"/>
                         <outlet property="stackView" destination="Dxt-9f-Z4u" id="j6H-TX-rQZ"/>
                     </connections>
                 </viewController>
@@ -251,7 +300,7 @@ Hier kannst du einen Makecode QR-Code Scannen um das Program zu öffnen. </strin
             <objects>
                 <collectionViewController automaticallyAdjustsScrollViewInsets="NO" id="ZH5-UW-Mjo" customClass="EditorsCollectionViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" bouncesZoom="NO" dataMode="prototypes" id="5hm-Wh-YfH">
-                        <rect key="frame" x="0.0" y="0.0" width="438.5" height="400"/>
+                        <rect key="frame" x="0.0" y="0.0" width="677" height="400"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Rsi-yi-Udp">
@@ -299,7 +348,7 @@ Hier kannst du einen Makecode QR-Code Scannen um das Program zu öffnen. </strin
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="nepoEditorCell" id="ucV-gN-En2" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="278.5" y="0.0" width="160" height="186"/>
+                                <rect key="frame" x="170" y="0.0" width="160" height="186"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bVT-UD-yV5">
                                     <rect key="frame" x="0.0" y="0.0" width="160" height="186"/>
@@ -336,7 +385,7 @@ Hier kannst du einen Makecode QR-Code Scannen um das Program zu öffnen. </strin
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="playgroundCell" id="X1H-Rl-bCL" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="196" width="160" height="185.5"/>
+                                <rect key="frame" x="340" y="0.5" width="160" height="185.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="PXU-mA-kNy">
                                     <rect key="frame" x="0.0" y="0.0" width="160" height="185.5"/>
@@ -376,7 +425,7 @@ Hier kannst du einen Makecode QR-Code Scannen um das Program zu öffnen. </strin
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="localEditorCell" id="Yfn-uo-n4Y" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="278.5" y="196" width="160" height="185.5"/>
+                                <rect key="frame" x="510" y="0.5" width="160" height="185.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="kQB-BW-JJf">
                                     <rect key="frame" x="0.0" y="0.0" width="160" height="185.5"/>
@@ -594,7 +643,7 @@ Hier kannst du einen Makecode QR-Code Scannen um das Program zu öffnen. </strin
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleAspectFit" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="vrY-jH-Gu4">
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="vrY-jH-Gu4">
                                 <rect key="frame" x="387" y="1216" width="250" height="60"/>
                                 <color key="backgroundColor" name="calliope-green"/>
                                 <constraints>
@@ -604,24 +653,10 @@ Hier kannst du einen Makecode QR-Code Scannen um das Program zu öffnen. </strin
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
                                 <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="40" maxY="0.0"/>
-                                <state key="normal" title="In Makecode öffnen" image="upload_button"/>
+                                <size key="titleShadowOffset" width="-23" height="0.0"/>
+                                <state key="normal" title="Open program"/>
                                 <connections>
                                     <segue destination="eeY-2x-OZY" kind="show" destinationCreationSelector="createMakecodeEditor:sender:" id="7ZG-zz-cOm"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleAspectFit" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="xnV-fS-nhN">
-                                <rect key="frame" x="387" y="1216" width="250" height="60"/>
-                                <color key="backgroundColor" name="calliope-green"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="hSU-TT-ldo"/>
-                                    <constraint firstAttribute="width" constant="250" id="zgg-Jo-C0X"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
-                                <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="40" maxY="0.0"/>
-                                <state key="normal" title="Download Hex" image="upload_button"/>
-                                <connections>
-                                    <action selector="downloadScannedProgram:" destination="Lev-CK-3Lf" eventType="touchUpInside" id="lth-kh-KDM"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -629,10 +664,8 @@ Hier kannst du einen Makecode QR-Code Scannen um das Program zu öffnen. </strin
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="lzo-3g-ITh" firstAttribute="top" secondItem="ikL-Ji-UIA" secondAttribute="top" id="0cE-uq-5gf"/>
-                            <constraint firstItem="ikL-Ji-UIA" firstAttribute="bottom" secondItem="xnV-fS-nhN" secondAttribute="bottom" constant="20" id="2US-pw-BRj"/>
                             <constraint firstItem="ikL-Ji-UIA" firstAttribute="trailing" secondItem="lzo-3g-ITh" secondAttribute="trailing" id="768-ca-juX"/>
                             <constraint firstItem="lzo-3g-ITh" firstAttribute="leading" secondItem="ikL-Ji-UIA" secondAttribute="leading" id="8AH-OO-zZW"/>
-                            <constraint firstItem="xnV-fS-nhN" firstAttribute="centerX" secondItem="lzo-3g-ITh" secondAttribute="centerX" id="TTg-5b-e2L"/>
                             <constraint firstItem="ikL-Ji-UIA" firstAttribute="bottom" secondItem="lzo-3g-ITh" secondAttribute="bottom" id="Yj0-wB-7jy"/>
                             <constraint firstItem="ikL-Ji-UIA" firstAttribute="bottom" secondItem="vrY-jH-Gu4" secondAttribute="bottom" constant="20" id="gHx-Rr-P8E"/>
                             <constraint firstItem="vrY-jH-Gu4" firstAttribute="centerX" secondItem="ikL-Ji-UIA" secondAttribute="centerX" id="i70-dR-w1S"/>
@@ -641,7 +674,6 @@ Hier kannst du einen Makecode QR-Code Scannen um das Program zu öffnen. </strin
                     <navigationItem key="navigationItem" id="jEy-Lc-b6J"/>
                     <connections>
                         <outlet property="cameraView" destination="lzo-3g-ITh" id="cVp-qS-gMB"/>
-                        <outlet property="downloadHexButton" destination="xnV-fS-nhN" id="wkN-dq-m0K"/>
                         <outlet property="openMakeCodeButton" destination="vrY-jH-Gu4" id="YJi-at-XUZ"/>
                         <outlet property="qrCodeFrameView" destination="hvq-7y-WCW" id="2Vl-0D-YRE"/>
                         <outlet property="view" destination="lpQ-Il-Dj9" id="ET3-cE-ee3"/>
@@ -695,6 +727,9 @@ Hier kannst du einen Makecode QR-Code Scannen um das Program zu öffnen. </strin
         <image name="editors_makecode" width="320" height="320"/>
         <image name="editors_nepo" width="320" height="320"/>
         <image name="editors_swift" width="320" height="320"/>
+        <image name="qr_code_scan_button" width="81.669998168945312" height="81.669998168945312"/>
+        <image name="startprogramm1+2" width="244.38999938964844" height="215.89999389648438"/>
+        <image name="startprogramm3" width="242.36000061035156" height="213.94000244140625"/>
         <image name="upload_button" width="25" height="33"/>
         <namedColor name="calliope-darkgray">
             <color red="0.11400000005960464" green="0.11400000005960464" blue="0.10599999874830246" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -710,9 +745,6 @@ Hier kannst du einen Makecode QR-Code Scannen um das Program zu öffnen. </strin
         </namedColor>
         <namedColor name="calliope-lilablau">
             <color red="0.3919999897480011" green="0.46200001239776611" blue="0.99199998378753662" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="calliope-purple">
-            <color red="0.50199997425079346" green="0.45100000500679016" blue="0.89800000190734863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

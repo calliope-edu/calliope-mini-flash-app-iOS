@@ -16,6 +16,8 @@ class EditorAndProgramsContainerViewController: UIViewController {
     
     @IBOutlet weak var programContainerView: UIView?
     
+    @IBOutlet weak var scanButton: UIButton?
+    
     @objc var editorsCollectionViewController: EditorsCollectionViewController?
     @IBOutlet var editorTopToSafeArea: NSLayoutConstraint?
     @IBOutlet var editorBottomToSafeArea: NSLayoutConstraint?
@@ -59,6 +61,8 @@ class EditorAndProgramsContainerViewController: UIViewController {
         programsHeightConstraint?.isActive = true
         
         configureLayout(UIApplication.shared.keyWindow!.frame.size)
+        scanButton?.imageView?.contentMode = UIView.ContentMode.scaleAspectFit
+        scanButton?.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
     
     @IBSegueAction func initializeEditor(_ coder: NSCoder) -> EditorsCollectionViewController? {
@@ -100,8 +104,13 @@ class EditorAndProgramsContainerViewController: UIViewController {
         return CGSize(width: parentSize.width - 62, height: parentSize.height)
     }
     
-    @IBAction func uploadDefaultProgram(_ sender: Any) {
-        let program = DefaultProgram.defaultProgram
+    @IBAction func uploadDefaultV3Program(_ sender: Any) {
+        let program = DefaultProgram(programName: NSLocalizedString("Calliope mini V3", comment:""), url: UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV3Url.rawValue)!)
+        FirmwareUpload.showUIForDownloadableProgram(controller: self, program: program)
+    }
+    
+    @IBAction func uploadDefaultV2And1Program(_sender: Any) {
+        let program = DefaultProgram(programName: NSLocalizedString("Calliope mini V1 + 2", comment:""), url: UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV1AndV2Url.rawValue)!)
         FirmwareUpload.showUIForDownloadableProgram(controller: self, program: program)
     }
     

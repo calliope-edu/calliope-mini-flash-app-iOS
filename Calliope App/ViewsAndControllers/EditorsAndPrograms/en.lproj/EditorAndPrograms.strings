@@ -1,21 +1,54 @@
-/* Class = "UILabel"; text = "Editors.\nThese editors allow you to write programs for showing text on the Calliope display, read its sensors or even build mini-robots yourself – Give it a try!"; ObjectID = "Hqp-zE-kfc"; */
-"Hqp-zE-kfc.text" = "These editors allow you to write programs for showing text on the Calliope display, read its sensors or even build mini-robots yourself – Give it a try!";
 
-/* Class = "UILabel"; text = "Programs.\nThese are the programs you created so far."; ObjectID = "ips-vx-zky"; */
-"ips-vx-zky.text" = "These are the programs you created so far.";
+/* Class = "UILabel"; text = "Open a program in MakeCode using a QR code. Simply scan it and off you go!"; ObjectID = "2pa-yb-EU6"; */
+"2pa-yb-EU6.text" = "Open a program in MakeCode using a QR code. Simply scan it and off you go!";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "DpH-x4-88I"; */
+"DpH-x4-88I.text" = "Label";
+
+/* Class = "UILabel"; text = "You can program your Calliope mini with the help of the editors.\nMakeCode works with Calliope mini 3 and all previous Calliope mini versions. \nOpen Roberta Lab works with Calliope mini 1 and 2."; ObjectID = "Hqp-zE-kfc"; */
+"Hqp-zE-kfc.text" = "You can program your Calliope mini with the help of the editors.\nMakeCode works with Calliope mini 3 and all previous Calliope mini versions. \nOpen Roberta Lab works with Calliope mini 1 and 2.";
+
+/* Class = "UIButton"; normalTitle = "Startprogramm"; ObjectID = "HyP-3y-Mpt"; */
+"HyP-3y-Mpt.normalTitle" = "Start program";
+
+/* Class = "UILabel"; text = "Calliope mini 1+2: Lade hier das Startprogramm für den Calliope mini 1 und Calliope mini 2. Einfach verbinden und Programm übertragen! "; ObjectID = "JZf-cF-XX1"; */
+"JZf-cF-XX1.text" = "Calliope mini 1+2: Download the original program of the Calliope mini 1 and Calliope min 2. Connect and transfer the program!";
+
+/* Class = "UILabel"; text = "Makecode"; ObjectID = "KGR-ef-bqG"; */
+"KGR-ef-bqG.text" = "Makecode";
 
 /* Class = "UILabel"; text = "Local editor"; ObjectID = "Ked-z3-CdC"; */
-"Ked-z3-CdC.text" = "Local Editor";
+"Ked-z3-CdC.text" = "Local editor";
 
-/* Class = "UILabel"; text = "Start program.\nHere you can download the original program of the Calliope mini."; ObjectID = "lYA-S0-b2D"; */
-"lYA-S0-b2D.text" = "Here you can upload the original start program to the Calliope mini.";
+/* Class = "UIButton"; normalTitle = "Scan QR code"; ObjectID = "49i-Ve-lcm"; */
+"49i-Ve-lcm.normalTitle" = "Scan QR code";
 
 /* Class = "UILabel"; text = "Playground"; ObjectID = "NWk-nx-U7c"; */
-"NWk-nx-U7c.text" = "Swift Playground";
+"NWk-nx-U7c.text" = "Playground";
+
+/* Class = "UIViewController"; title = "Editor"; ObjectID = "eeY-2x-OZY"; */
+"eeY-2x-OZY.title" = "Editor";
+
+/* Class = "UITabBarItem"; title = "Editors and Programs"; ObjectID = "fat-Jr-Mna"; */
+"fat-Jr-Mna.title" = "Editors and Programs";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "g6h-Vu-QEH"; */
+"g6h-Vu-QEH.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Startprogramm"; ObjectID = "jQh-M1-D9T"; */
+"jQh-M1-D9T.normalTitle" = "Start program";
+
+/* Class = "UILabel"; text = "Calliope mini 3: Download the original program of the Calliope mini 3. \nConnect and transfer the program!"; ObjectID = "nWb-Ra-8Xg"; */
+"nWb-Ra-8Xg.text" = "Calliope mini 3: Download the original program of the Calliope mini 3. \nConnect and transfer the program!";
+
+/* Class = "UILabel"; text = "Open Roberta Lab"; ObjectID = "pm2-Za-VcF"; */
+"pm2-Za-VcF.text" = "Open Roberta Lab";
 
 /* Class = "UIViewController"; title = "Programs and Editors"; ObjectID = "rb5-ni-SG8"; */
-"rb5-ni-SG8.title" = "Editors and Programs";
+"rb5-ni-SG8.title" = "Programs and Editors";
 
 /* Class = "UINavigationItem"; title = "Editors and Programs"; ObjectID = "uLO-aS-ZNS"; */
-"uLO-aS-ZNS.title" = "Programs and Editors";
+"uLO-aS-ZNS.title" = "Editors and Programs";
 
+/* Class = "UIButton"; normalTitle = "Programm öffnen"; ObjectID = "vrY-jH-Gu4"; */
+"vrY-jH-Gu4.normalTitle" = "Open program";

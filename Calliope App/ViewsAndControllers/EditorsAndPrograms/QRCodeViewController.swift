@@ -13,7 +13,6 @@ class QRCodeViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
     
     @IBOutlet var cameraView: PreviewView!
     @IBOutlet var openMakeCodeButton: UIButton!
-    @IBOutlet var downloadHexButton: UIButton!
     @IBOutlet var qrCodeFrameView: UIView!
     
     var foundQrCodeString: String = ""
@@ -26,7 +25,6 @@ class QRCodeViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
             self.navigationController?.popViewController(animated: true)
         }
         openMakeCodeButton.isHidden = true
-        downloadHexButton.isHidden = true
         qrCodeFrameView.isHidden = true
     }
     
@@ -42,7 +40,6 @@ class QRCodeViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         qrCodeFrameView.layer.borderWidth = 2
         view.addSubview(qrCodeFrameView)
         openMakeCodeButton.isHidden = true
-        downloadHexButton.isHidden = true
     }
     
     public func changeQrCodeFrameViewStaten(isHidden: Bool) {
@@ -86,15 +83,12 @@ class QRCodeViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
             // ToDo: Extend Validation of URLs
             if let stringValue = metadataObj.stringValue, stringValue.lowercased().contains("makecode"){
                 openMakeCodeButton.isHidden = false
-                downloadHexButton.isHidden = true
                 foundQrCodeString = stringValue
             } else if let stringValue = metadataObj.stringValue, stringValue.contains(".hex") {
                 openMakeCodeButton.isHidden = true
-                downloadHexButton.isHidden = false
                 foundQrCodeString = stringValue
             } else {
                 openMakeCodeButton.isHidden = true
-                downloadHexButton.isHidden = true
                 foundQrCodeString = ""
             }
         }

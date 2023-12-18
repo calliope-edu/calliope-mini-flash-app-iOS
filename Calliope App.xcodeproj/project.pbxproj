@@ -28,7 +28,6 @@
 		2F526C4526E9698B004BA8FF /* News.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F526C4726E9698B004BA8FF /* News.storyboard */; };
 		2F526C5D26E96FC7004BA8FF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2F526C5F26E96FC7004BA8FF /* Localizable.strings */; };
 		2F57C3B42394F78B008B0D69 /* DownloadableHexFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3B32394F78B008B0D69 /* DownloadableHexFile.swift */; };
-		2F57C3B62394F935008B0D69 /* BlinkingHeartProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3B52394F935008B0D69 /* BlinkingHeartProgram.swift */; };
 		2F5E8F0226C94F5F00CE03CB /* PlaygroundInstructionsCollectionCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5E8F0126C94F5F00CE03CB /* PlaygroundInstructionsCollectionCollectionViewController.swift */; };
 		2F5E8F0426C9787400CE03CB /* PlaygroundStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5E8F0326C9787400CE03CB /* PlaygroundStartViewController.swift */; };
 		2F61451022BF75DE001C2734 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61450F22BF75DE001C2734 /* AppDelegate.swift */; };
@@ -127,8 +126,6 @@
 		2F2B809F25A1100800A7CCF7 /* PlaygroundCodeSnippetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundCodeSnippetViewController.swift; sourceTree = "<group>"; };
 		2F375ABA237F28BC004ED8D7 /* DefaultProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultProgram.swift; sourceTree = "<group>"; };
 		2F4B8D8D25978D9D0026B480 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/EditorAndPrograms.storyboard; sourceTree = "<group>"; };
-		2F4B8D9B2598D0F60026B480 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
-		2F4B8D9D2598D1250026B480 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
 		2F4B8DA02598D7980026B480 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/HomeScreen.storyboard; sourceTree = "<group>"; };
 		2F4B8DA42598D79D0026B480 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/HomeScreen.strings; sourceTree = "<group>"; };
 		2F4B8DA62598D7CC0026B480 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/HomeScreen.strings; sourceTree = "<group>"; };
@@ -156,7 +153,6 @@
 		2F526C6726E970DE004BA8FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Settings.strings; sourceTree = "<group>"; };
 		2F526C6F26E976A2004BA8FF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2F57C3B32394F78B008B0D69 /* DownloadableHexFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadableHexFile.swift; sourceTree = "<group>"; };
-		2F57C3B52394F935008B0D69 /* BlinkingHeartProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkingHeartProgram.swift; sourceTree = "<group>"; };
 		2F5E8F0126C94F5F00CE03CB /* PlaygroundInstructionsCollectionCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundInstructionsCollectionCollectionViewController.swift; sourceTree = "<group>"; };
 		2F5E8F0326C9787400CE03CB /* PlaygroundStartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundStartViewController.swift; sourceTree = "<group>"; };
 		2F61450C22BF75DE001C2734 /* Calliope App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Calliope App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -241,6 +237,8 @@
 		2FCB70E526C7FCA300DF79B7 /* HelpContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpContentViewController.swift; sourceTree = "<group>"; };
 		2FCB70E726C7FD5300DF79B7 /* HelpWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpWebViewController.swift; sourceTree = "<group>"; };
 		3849EA7340C0FAB5DB1A4000 /* Pods-Calliope App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.debug.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.debug.xcconfig"; sourceTree = "<group>"; };
+		601A19142B30658200E98E69 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
+		601A19162B30658400E98E69 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
 		60316BF72B01FEC300130C0D /* BLECalliope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLECalliope.swift; sourceTree = "<group>"; };
 		60316BF92B0210CC00130C0D /* CalliopeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeFactory.swift; sourceTree = "<group>"; };
 		604841D42B1F328A0037A825 /* OnboardingOfflineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingOfflineViewController.swift; sourceTree = "<group>"; };
@@ -429,7 +427,6 @@
 				2FC2A12822C8FA6F00675C2F /* News.swift */,
 				2F57C3B32394F78B008B0D69 /* DownloadableHexFile.swift */,
 				2F375ABA237F28BC004ED8D7 /* DefaultProgram.swift */,
-				2F57C3B52394F935008B0D69 /* BlinkingHeartProgram.swift */,
 				2F2B809925A0E01500A7CCF7 /* CodeSnippets.swift */,
 			);
 			path = Model;
@@ -780,7 +777,6 @@
 				2F61459622BF761F001C2734 /* LocalEditorViewController.swift in Sources */,
 				2F1BD9972674D804006A47F2 /* AutoHeightCollectionViewCell.swift in Sources */,
 				2F5E8F0226C94F5F00CE03CB /* PlaygroundInstructionsCollectionCollectionViewController.swift in Sources */,
-				2F57C3B62394F935008B0D69 /* BlinkingHeartProgram.swift in Sources */,
 				2F61457322BF761F001C2734 /* BluetoothConstants.swift in Sources */,
 				2F6145A222C7B3C2001C2734 /* NewsCollectionViewController.swift in Sources */,
 				60F1E8A62B1DEB5300CB3A07 /* OnboardingDetailWebViewController.swift in Sources */,
@@ -804,8 +800,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				2F4B8D8D25978D9D0026B480 /* Base */,
-				2F4B8D9B2598D0F60026B480 /* en */,
-				2F4B8D9D2598D1250026B480 /* de */,
+				601A19142B30658200E98E69 /* en */,
+				601A19162B30658400E98E69 /* de */,
 			);
 			name = EditorAndPrograms.storyboard;
 			sourceTree = "<group>";

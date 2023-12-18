@@ -9,15 +9,16 @@
 import Foundation
 
 class DefaultProgram: DownloadableHexFile {
-    
-    static var defaultProgram: DefaultProgram = DefaultProgram()
-    
-    let loadableProgramName = NSLocalizedString("Start Program", comment:"")
-    let loadableProgramURL = UserDefaults.standard.string(forKey: SettingsKey.defaultHexFileURL.rawValue)!
+
+    var loadableProgramName = NSLocalizedString("Calliope mini 3", comment:"")
+    var loadableProgramURL = UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV3Url.rawValue)!
     
     lazy var downloadedHexFile: HexFile? = storedHexFileInitializer()
     
-    private init() {}
+    init(programName: String, url: String) {
+        loadableProgramName = programName
+        loadableProgramURL = url
+    }
 }
 
 
