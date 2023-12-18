@@ -23,7 +23,7 @@ MakeCode funktioniert mit dem Calliope mini 3 und allen vorherigen Calliope mini
 "Ked-z3-CdC.text" = "Local editor";
 
 /* Class = "UIButton"; normalTitle = "Scan QR code"; ObjectID = "49i-Ve-lcm"; */
-"49i-Ve-lcm.normalTitle" = "QR-Code scannen";
+"49i-Ve-lcm.normalTitle" = "Scannen";
 
 /* Class = "UILabel"; text = "Playground"; ObjectID = "NWk-nx-U7c"; */
 "NWk-nx-U7c.text" = "Playground";

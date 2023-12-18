@@ -21,7 +21,7 @@
 "Ked-z3-CdC.text" = "Local editor";
 
 /* Class = "UIButton"; normalTitle = "Scan QR code"; ObjectID = "49i-Ve-lcm"; */
-"49i-Ve-lcm.normalTitle" = "Scan QR code";
+"49i-Ve-lcm.normalTitle" = "Scan";
 
 /* Class = "UILabel"; text = "Playground"; ObjectID = "NWk-nx-U7c"; */
 "NWk-nx-U7c.text" = "Playground";
