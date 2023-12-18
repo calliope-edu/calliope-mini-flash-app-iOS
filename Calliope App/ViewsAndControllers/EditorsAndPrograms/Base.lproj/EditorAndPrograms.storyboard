@@ -278,7 +278,6 @@ Connect and transfer the program!</string>
                             <constraint firstAttribute="bottom" secondItem="g5r-Xk-lED" secondAttribute="bottom" id="ZGW-ug-Ugt"/>
                             <constraint firstItem="g5r-Xk-lED" firstAttribute="top" secondItem="HCF-Ra-c4C" secondAttribute="top" id="lro-nx-HdM"/>
                             <constraint firstAttribute="trailing" secondItem="g5r-Xk-lED" secondAttribute="trailing" id="ovF-8C-Al7"/>
-                            <constraint firstItem="8uy-BZ-wk7" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ak6-Eh-Hed" secondAttribute="bottom" constant="18" id="urA-KX-VWP"/>
                             <constraint firstItem="Dxt-9f-Z4u" firstAttribute="centerX" secondItem="8uy-BZ-wk7" secondAttribute="centerX" id="wCx-4H-S6h"/>
                         </constraints>
                     </view>
