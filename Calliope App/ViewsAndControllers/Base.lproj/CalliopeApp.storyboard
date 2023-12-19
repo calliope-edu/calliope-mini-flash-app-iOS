@@ -55,16 +55,6 @@
             </objects>
             <point key="canvasLocation" x="-104" y="211"/>
         </scene>
-        <!--CarRemote-->
-        <scene sceneID="qAH-41-EEu">
-            <objects>
-                <viewControllerPlaceholder storyboardName="CarRemote" id="qdf-eW-UAA" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="JMf-lJ-R5Y"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8aW-h4-Sc4" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-88" y="332"/>
-        </scene>
     </scenes>
     <color key="tintColor" name="calliope-lilablau"/>
     <resources>

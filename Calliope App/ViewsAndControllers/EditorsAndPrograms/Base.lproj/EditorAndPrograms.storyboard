@@ -16,14 +16,14 @@
             <objects>
                 <viewController title="Programs and Editors" id="rb5-ni-SG8" customClass="EditorAndProgramsContainerViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HCF-Ra-c4C">
-                        <rect key="frame" x="0.0" y="0.0" width="999" height="1000"/>
+                        <rect key="frame" x="0.0" y="0.0" width="699" height="1000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentInsetAdjustmentBehavior="always" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="g5r-Xk-lED" customClass="TPKeyboardAvoidingScrollView">
-                                <rect key="frame" x="0.0" y="0.0" width="999" height="1000"/>
+                                <rect key="frame" x="0.0" y="0.0" width="699" height="1000"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZAw-Ve-3Pb">
-                                        <rect key="frame" x="11" y="10" width="717" height="524.33333333333337"/>
+                                        <rect key="frame" x="11" y="10" width="417" height="590.33333333333337"/>
                                         <color key="backgroundColor" name="calliope-lightgray"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -32,7 +32,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2iD-Nq-XcD">
-                                        <rect key="frame" x="11" y="554.33333333333337" width="717" height="140.33333333333337"/>
+                                        <rect key="frame" x="11" y="620.33333333333337" width="417" height="162.33333333333337"/>
                                         <color key="backgroundColor" name="calliope-lightgray"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -41,8 +41,8 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y5a-Mz-x8I">
-                                        <rect key="frame" x="748" y="10" width="240" height="390.33333333333331"/>
-                                        <color key="backgroundColor" red="0.50319892170000002" green="0.45198273659999999" blue="0.8974402547" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <rect key="frame" x="448" y="10" width="240" height="390.33333333333331"/>
+                                        <color key="backgroundColor" name="calliope-brightturquoise"/>
                                         <color key="tintColor" name="calliope-lightgray"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -51,8 +51,8 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Zk-Xu-R0A">
-                                        <rect key="frame" x="748" y="416.33333333333326" width="240" height="320"/>
-                                        <color key="backgroundColor" red="0.50319892170000002" green="0.45198273659999999" blue="0.8974402547" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <rect key="frame" x="448" y="416.33333333333337" width="240" height="390.33333333333337"/>
+                                        <color key="backgroundColor" name="calliope-pink"/>
                                         <color key="tintColor" name="calliope-lightgray"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -61,16 +61,16 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="Dxt-9f-Z4u">
-                                        <rect key="frame" x="31" y="30" width="937" height="686.33333333333337"/>
+                                        <rect key="frame" x="31" y="30" width="637" height="756.66666666666663"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="5XM-Zd-KLN">
-                                                <rect key="frame" x="0.0" y="0.0" width="677" height="644.66666666666663"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="377" height="732.66666666666663"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="fYe-cI-9Hj">
-                                                        <rect key="frame" x="0.0" y="0.0" width="677" height="484.33333333333331"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="377" height="550.33333333333337"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hqp-zE-kfc">
-                                                                <rect key="frame" x="0.0" y="0.0" width="677" height="64.333333333333329"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="377" height="130.33333333333334"/>
                                                                 <string key="text">You can program your Calliope mini with the help of the editors.
 MakeCode works with Calliope mini 3 and all previous Calliope mini versions. 
 Open Roberta Lab works with Calliope mini 1 and 2.</string>
@@ -79,7 +79,7 @@ Open Roberta Lab works with Calliope mini 1 and 2.</string>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ypy-Nv-qUF">
-                                                                <rect key="frame" x="0.0" y="84.333333333333314" width="677" height="400"/>
+                                                                <rect key="frame" x="0.0" y="150.33333333333337" width="377" height="400"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" priority="999" constant="400" placeholder="YES" id="0pW-vW-nJG"/>
@@ -91,25 +91,25 @@ Open Roberta Lab works with Calliope mini 1 and 2.</string>
                                                         </subviews>
                                                     </stackView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wK8-Cf-hwe">
-                                                        <rect key="frame" x="0.0" y="484.33333333333337" width="677" height="60"/>
+                                                        <rect key="frame" x="0.0" y="550.33333333333337" width="377" height="60"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="60" id="iQJ-EC-qaj"/>
                                                         </constraints>
                                                     </view>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="zjS-Vb-43h">
-                                                        <rect key="frame" x="0.0" y="544.33333333333337" width="677" height="100.33333333333337"/>
+                                                        <rect key="frame" x="0.0" y="610.33333333333337" width="377" height="122.33333333333337"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Open a program in MakeCode using a QR code. Simply scan it and off you go!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2pa-yb-EU6">
-                                                                <rect key="frame" x="0.0" y="0.0" width="677" height="20.333333333333332"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="377" height="42.333333333333336"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pmP-yd-KbT">
-                                                                <rect key="frame" x="0.0" y="40.333333333333258" width="677" height="60"/>
+                                                                <rect key="frame" x="0.0" y="62.333333333333258" width="377" height="60"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleAspectFit" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="49i-Ve-lcm">
-                                                                        <rect key="frame" x="213.66666666666663" y="0.0" width="250" height="60"/>
+                                                                        <rect key="frame" x="63.666666666666686" y="0.0" width="250" height="60"/>
                                                                         <color key="backgroundColor" name="calliope-green"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="60" id="CXQ-Ml-PF7"/>
@@ -136,7 +136,7 @@ Open Roberta Lab works with Calliope mini 1 and 2.</string>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="4bN-ts-cX9">
-                                                <rect key="frame" x="737" y="0.0" width="200" height="686.33333333333337"/>
+                                                <rect key="frame" x="437" y="0.0" width="200" height="756.66666666666663"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="nwK-R8-inx">
                                                         <rect key="frame" x="0.0" y="0.0" width="200" height="350.33333333333331"/>
@@ -191,23 +191,23 @@ Connect and transfer the program!</string>
                                                         </constraints>
                                                     </view>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="ak6-Eh-Hed">
-                                                        <rect key="frame" x="0.0" y="406.33333333333326" width="200" height="280"/>
+                                                        <rect key="frame" x="0.0" y="406.33333333333337" width="200" height="350.33333333333337"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Calliope mini 1+2: Download the original program of the Calliope mini 1 and Calliope min 2. Connect and transfer the program!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JZf-cF-XX1">
-                                                                <rect key="frame" x="0.0" y="0.0" width="200" height="60"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="200" height="130.33333333333334"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="startprogramm1+2" translatesAutoresizingMaskIntoConstraints="NO" id="EK0-RX-ooW">
-                                                                <rect key="frame" x="0.0" y="80.000000000000057" width="200" height="120"/>
+                                                                <rect key="frame" x="0.0" y="150.33333333333331" width="200" height="120"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="120" id="KT7-nM-DD3"/>
                                                                     <constraint firstAttribute="width" constant="200" id="Kje-g6-lrA"/>
                                                                 </constraints>
                                                             </imageView>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uV2-w8-6f5">
-                                                                <rect key="frame" x="0.0" y="220.00000000000006" width="200" height="60"/>
+                                                                <rect key="frame" x="0.0" y="290.33333333333331" width="200" height="60"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleAspectFit" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="jQh-M1-D9T">
                                                                         <rect key="frame" x="-25" y="0.0" width="250" height="60"/>
@@ -233,9 +233,6 @@ Connect and transfer the program!</string>
                                                                 </constraints>
                                                             </view>
                                                         </subviews>
-                                                        <constraints>
-                                                            <constraint firstItem="EK0-RX-ooW" firstAttribute="centerY" secondItem="ak6-Eh-Hed" secondAttribute="centerY" id="OGq-ey-vdI"/>
-                                                        </constraints>
                                                     </stackView>
                                                 </subviews>
                                             </stackView>
@@ -282,7 +279,7 @@ Connect and transfer the program!</string>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Editors and Programs" id="uLO-aS-ZNS"/>
-                    <size key="freeformSize" width="999" height="1000"/>
+                    <size key="freeformSize" width="699" height="1000"/>
                     <connections>
                         <outlet property="editorBottomToSafeArea" destination="F1h-MT-La6" id="ybv-Uc-KWl"/>
                         <outlet property="editorContainerView" destination="ypy-Nv-qUF" id="S8S-Gd-g8f"/>
@@ -292,14 +289,14 @@ Connect and transfer the program!</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t5x-PS-nsJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="744.43359375" y="29.428989751098094"/>
+            <point key="canvasLocation" x="657.90697674418607" y="28.969957081545065"/>
         </scene>
         <!--Editors Collection View Controller-->
         <scene sceneID="nxH-4H-qrq">
             <objects>
                 <collectionViewController automaticallyAdjustsScrollViewInsets="NO" id="ZH5-UW-Mjo" customClass="EditorsCollectionViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" bouncesZoom="NO" dataMode="prototypes" id="5hm-Wh-YfH">
-                        <rect key="frame" x="0.0" y="0.0" width="677" height="400"/>
+                        <rect key="frame" x="0.0" y="0.0" width="377" height="400"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Rsi-yi-Udp">
@@ -347,10 +344,10 @@ Connect and transfer the program!</string>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="nepoEditorCell" id="ucV-gN-En2" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="170" y="0.0" width="160.00000000000003" height="186"/>
+                                <rect key="frame" x="217" y="0.0" width="160" height="186"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bVT-UD-yV5">
-                                    <rect key="frame" x="0.0" y="0.0" width="160.00000000000003" height="186"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="160" height="186"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="editors_nepo" translatesAutoresizingMaskIntoConstraints="NO" id="1Ks-qN-EOY">
@@ -384,10 +381,10 @@ Connect and transfer the program!</string>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="playgroundCell" id="X1H-Rl-bCL" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="340" y="0.0" width="160" height="185.66666666666669"/>
+                                <rect key="frame" x="0.0" y="196" width="160" height="185.66666666666663"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="PXU-mA-kNy">
-                                    <rect key="frame" x="0.0" y="0.0" width="160" height="185.66666666666669"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="160" height="185.66666666666663"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="editors_swift" translatesAutoresizingMaskIntoConstraints="NO" id="qAp-AG-KqZ">
@@ -424,10 +421,10 @@ Connect and transfer the program!</string>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="localEditorCell" id="Yfn-uo-n4Y" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="510" y="0.0" width="160" height="185.66666666666669"/>
+                                <rect key="frame" x="217" y="196" width="160" height="185.66666666666663"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="kQB-BW-JJf">
-                                    <rect key="frame" x="0.0" y="0.0" width="160" height="185.66666666666669"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="160" height="185.66666666666663"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WelcomeLogo" translatesAutoresizingMaskIntoConstraints="NO" id="faN-Mj-y3e">
@@ -727,9 +724,12 @@ Connect and transfer the program!</string>
         <image name="editors_nepo" width="320" height="320"/>
         <image name="editors_swift" width="320" height="320"/>
         <image name="qr_code_scan_button" width="81.669998168945312" height="81.669998168945312"/>
-        <image name="startprogramm1+2" width="244.38999938964844" height="215.89999389648438"/>
-        <image name="startprogramm3" width="242.36000061035156" height="213.94000244140625"/>
+        <image name="startprogramm1+2" width="488.33999633789062" height="215.89999389648438"/>
+        <image name="startprogramm3" width="465.33999633789062" height="213.94000244140625"/>
         <image name="upload_button" width="25" height="33"/>
+        <namedColor name="calliope-brightturquoise">
+            <color red="0.40799999237060547" green="0.83099997043609619" blue="0.83099997043609619" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="calliope-darkgray">
             <color red="0.11400000005960464" green="0.11400000005960464" blue="0.10599999874830246" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -744,6 +744,9 @@ Connect and transfer the program!</string>
         </namedColor>
         <namedColor name="calliope-lilablau">
             <color red="0.3919999897480011" green="0.46200001239776611" blue="0.99199998378753662" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="calliope-pink">
+            <color red="0.90200001001358032" green="0.0" blue="0.49000000953674316" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
