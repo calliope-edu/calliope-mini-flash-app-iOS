@@ -12,6 +12,7 @@ protocol DownloadableHexFile: Hex, AnyObject {
     var downloadedHexFile: HexFile? { get set }
     var loadableProgramName: String { get }
     var loadableProgramURL: String { get }
+    var downloadFile: Bool { get set }
 }
 
 extension DownloadableHexFile {
@@ -38,14 +39,26 @@ extension DownloadableHexFile {
     public func load(completion: @escaping (Error?) -> ()) {
         let url = URL(string: loadableProgramURL)!
         let task = URLSession.shared.dataTask(with: url) {data, response, error in
-            guard error == nil, let data = data, data.count > 0, let hexFile = try? HexFileManager.store(name: self.loadableProgramName, data: data), hexFile.calliopeV1andV2Bin.count > 0 else {
-                //file saving or parsing issue!
-                completion(error ?? NSLocalizedString("Could not save file or download is not a proper hex file", comment: ""))
-                return
+            if (self.downloadFile) {
+                guard error == nil, let data = data, data.count > 0, let hexFile = try? HexFileManager.store(name: self.loadableProgramName, data: data), hexFile.calliopeV1andV2Bin.count > 0 else {
+                    //file saving or parsing issue!
+                    completion(error ?? NSLocalizedString("Could not save file or download is not a proper hex file", comment: ""))
+                    return
+                }
+                //everything went smooth
+                self.downloadedHexFile = hexFile
+                completion(nil)
+            } else {
+                guard error == nil, let data = data, data.count > 0 else {
+                    //file saving or parsing issue!
+                    completion(error ?? NSLocalizedString("Could not save file or download is not a proper hex file", comment: ""))
+                    return
+                }
+                let hexFile = HexFile(url: url, name: self.name, date: Date())
+                //everything went smooth
+                self.downloadedHexFile = hexFile
+                completion(nil)
             }
-            //everything went smooth
-            self.downloadedHexFile = hexFile
-            completion(nil)
         }
         task.resume()
     }

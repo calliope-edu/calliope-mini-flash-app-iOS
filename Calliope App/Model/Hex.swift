@@ -121,6 +121,8 @@ struct HexFile: Hex, Equatable {
             return parser.retrievePartialFlashingInfo()
         }
     }
+    
+    var downloadFile: Bool = true
 
 	static func == (lhs: HexFile, rhs: HexFile) -> Bool {
 		return lhs.url == rhs.url && lhs.name == rhs.name
@@ -146,6 +148,9 @@ final class HexFileManager {
 	}()
 
     private static func dir() throws -> URL {
+        if let defaultFilePath = UserDefaults.standard.string(forKey: SettingsKey.defaultFilePath.rawValue), defaultFilePath != "" {
+            return URL(string: defaultFilePath)!
+        }
         return try FileManager.default.url(
             for: .documentDirectory,
             in: .userDomainMask,
@@ -200,7 +205,11 @@ final class HexFileManager {
         if !overrideDuplicate && FileManager.default.fileExists(atPath: file.path) {
             throw NSLocalizedString("File already exists", comment: "")
         }
-        try data.write(to: file)
+        do {
+            try data.write(to: file)
+        } catch {
+            print(error)
+        }
 		let date = Date()
 		let hexFile = HexFile(url: file, name: name, date: date)
 		notifyChange()
