@@ -238,7 +238,6 @@
 		2FCB70E726C7FD5300DF79B7 /* HelpWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpWebViewController.swift; sourceTree = "<group>"; };
 		3849EA7340C0FAB5DB1A4000 /* Pods-Calliope App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.debug.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.debug.xcconfig"; sourceTree = "<group>"; };
 		601A19142B30658200E98E69 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
-		601A19162B30658400E98E69 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
 		60316BF72B01FEC300130C0D /* BLECalliope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLECalliope.swift; sourceTree = "<group>"; };
 		60316BF92B0210CC00130C0D /* CalliopeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeFactory.swift; sourceTree = "<group>"; };
 		604841D42B1F328A0037A825 /* OnboardingOfflineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingOfflineViewController.swift; sourceTree = "<group>"; };
@@ -247,6 +246,7 @@
 		60C915982B1F61C200E4039D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Onboarding.strings; sourceTree = "<group>"; };
 		60D672512B283D0F00AB974B /* QRCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeViewController.swift; sourceTree = "<group>"; };
 		60F1E8A52B1DEB5300CB3A07 /* OnboardingDetailWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingDetailWebViewController.swift; sourceTree = "<group>"; };
+		60F889132B50225000B6C1F5 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
 		BD1AFC4008F992EADC1C557D /* Pods-Calliope App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.release.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.release.xcconfig"; sourceTree = "<group>"; };
 		D57D51A736B908EDE6355034 /* libPods-Calliope App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Calliope App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -801,7 +801,7 @@
 			children = (
 				2F4B8D8D25978D9D0026B480 /* Base */,
 				601A19142B30658200E98E69 /* en */,
-				601A19162B30658400E98E69 /* de */,
+				60F889132B50225000B6C1F5 /* de */,
 			);
 			name = EditorAndPrograms.storyboard;
 			sourceTree = "<group>";

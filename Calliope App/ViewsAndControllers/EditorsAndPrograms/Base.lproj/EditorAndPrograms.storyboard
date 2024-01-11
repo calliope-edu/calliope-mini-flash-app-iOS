@@ -23,7 +23,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="699" height="1000"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZAw-Ve-3Pb">
-                                        <rect key="frame" x="11" y="10" width="417" height="590.33333333333337"/>
+                                        <rect key="frame" x="11" y="10" width="240" height="678.33333333333337"/>
                                         <color key="backgroundColor" name="calliope-lightgray"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -32,7 +32,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2iD-Nq-XcD">
-                                        <rect key="frame" x="11" y="620.33333333333337" width="417" height="162.33333333333337"/>
+                                        <rect key="frame" x="271" y="10" width="417" height="162.33333333333334"/>
                                         <color key="backgroundColor" name="calliope-lightgray"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -41,7 +41,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y5a-Mz-x8I">
-                                        <rect key="frame" x="448" y="374.66666666666674" width="240" height="390.33333333333326"/>
+                                        <rect key="frame" x="11" y="708.33333333333337" width="240" height="390.33333333333337"/>
                                         <color key="backgroundColor" name="calliope-brightturquoise"/>
                                         <color key="tintColor" name="calliope-lightgray"/>
                                         <userDefinedRuntimeAttributes>
@@ -51,8 +51,8 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UOs-4x-zfO">
-                                        <rect key="frame" x="448" y="10" width="240" height="348.66666666666669"/>
-                                        <color key="backgroundColor" name="calliope-brightturquoise"/>
+                                        <rect key="frame" x="271" y="188.33333333333331" width="417" height="162.33333333333331"/>
+                                        <color key="backgroundColor" name="calliope-gray"/>
                                         <color key="tintColor" name="calliope-lightgray"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -61,7 +61,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Zk-Xu-R0A">
-                                        <rect key="frame" x="448" y="781" width="240" height="390.33333333333326"/>
+                                        <rect key="frame" x="11" y="1118.6666666666667" width="240" height="390.33333333333326"/>
                                         <color key="backgroundColor" name="calliope-pink"/>
                                         <color key="tintColor" name="calliope-lightgray"/>
                                         <userDefinedRuntimeAttributes>
@@ -70,17 +70,26 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E2a-1X-DUv">
+                                        <rect key="frame" x="271" y="366.66666666666674" width="417" height="364.33333333333326"/>
+                                        <color key="backgroundColor" name="calliope-lightgray"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="8"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="Dxt-9f-Z4u">
-                                        <rect key="frame" x="31" y="30" width="637" height="1121.3333333333333"/>
+                                        <rect key="frame" x="31" y="30" width="637" height="1459"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="5XM-Zd-KLN">
-                                                <rect key="frame" x="0.0" y="0.0" width="377" height="732.66666666666663"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="200" height="1459"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="fYe-cI-9Hj">
-                                                        <rect key="frame" x="0.0" y="0.0" width="377" height="550.33333333333337"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="200" height="638.33333333333337"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hqp-zE-kfc">
-                                                                <rect key="frame" x="0.0" y="0.0" width="377" height="130.33333333333334"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="200" height="218.33333333333334"/>
                                                                 <string key="text">You can program your Calliope mini with the help of the editors.
 MakeCode works with Calliope mini 3 and all previous Calliope mini versions. 
 Open Roberta Lab works with Calliope mini 1 and 2.</string>
@@ -89,7 +98,7 @@ Open Roberta Lab works with Calliope mini 1 and 2.</string>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ypy-Nv-qUF">
-                                                                <rect key="frame" x="0.0" y="150.33333333333337" width="377" height="400"/>
+                                                                <rect key="frame" x="0.0" y="238.33333333333331" width="200" height="399.99999999999994"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" priority="999" constant="400" placeholder="YES" id="0pW-vW-nJG"/>
@@ -101,131 +110,13 @@ Open Roberta Lab works with Calliope mini 1 and 2.</string>
                                                         </subviews>
                                                     </stackView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wK8-Cf-hwe">
-                                                        <rect key="frame" x="0.0" y="550.33333333333337" width="377" height="60"/>
+                                                        <rect key="frame" x="0.0" y="638.33333333333337" width="200" height="60"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="60" id="iQJ-EC-qaj"/>
                                                         </constraints>
                                                     </view>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="zjS-Vb-43h">
-                                                        <rect key="frame" x="0.0" y="610.33333333333337" width="377" height="122.33333333333337"/>
-                                                        <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Open a program in MakeCode using a QR code. Simply scan it and off you go!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2pa-yb-EU6">
-                                                                <rect key="frame" x="0.0" y="0.0" width="377" height="42.333333333333336"/>
-                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pmP-yd-KbT">
-                                                                <rect key="frame" x="0.0" y="62.333333333333258" width="377" height="60"/>
-                                                                <subviews>
-                                                                    <button opaque="NO" contentMode="scaleAspectFit" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="49i-Ve-lcm">
-                                                                        <rect key="frame" x="63.666666666666686" y="0.0" width="250" height="60"/>
-                                                                        <color key="backgroundColor" name="calliope-green"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="height" constant="60" id="CXQ-Ml-PF7"/>
-                                                                            <constraint firstAttribute="width" constant="250" id="UnL-Cu-HRK"/>
-                                                                        </constraints>
-                                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                                        <state key="normal" title="Scannen" image="qr_code_scan_button">
-                                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <segue destination="Lev-CK-3Lf" kind="show" id="AiM-tj-icn"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                </subviews>
-                                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <constraints>
-                                                                    <constraint firstItem="49i-Ve-lcm" firstAttribute="centerX" secondItem="pmP-yd-KbT" secondAttribute="centerX" id="14x-Gc-a1g"/>
-                                                                    <constraint firstItem="49i-Ve-lcm" firstAttribute="top" secondItem="pmP-yd-KbT" secondAttribute="top" id="CY0-nh-3eD"/>
-                                                                    <constraint firstAttribute="bottom" secondItem="49i-Ve-lcm" secondAttribute="bottom" id="a87-DT-PJs"/>
-                                                                </constraints>
-                                                            </view>
-                                                        </subviews>
-                                                    </stackView>
-                                                </subviews>
-                                            </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="4bN-ts-cX9">
-                                                <rect key="frame" x="437" y="0.0" width="200" height="1121.3333333333333"/>
-                                                <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="W2g-8j-bmG">
-                                                        <rect key="frame" x="0.0" y="0.0" width="200" height="308.66666666666669"/>
-                                                        <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Wähle ein bestehendes Programm um dieses zu übertragen." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5dO-ZD-bhg">
-                                                                <rect key="frame" x="0.0" y="0.0" width="200" height="64.333333333333329"/>
-                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IE2-hc-bLN">
-                                                                <rect key="frame" x="0.0" y="84.333333333333329" width="200" height="59.999999999999986"/>
-                                                                <subviews>
-                                                                    <button opaque="NO" contentMode="scaleAspectFit" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="9WU-0m-vf9">
-                                                                        <rect key="frame" x="-25" y="0.0" width="250" height="60"/>
-                                                                        <color key="backgroundColor" name="calliope-green"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" constant="250" id="9Ek-Tp-j52"/>
-                                                                            <constraint firstAttribute="height" constant="60" id="HqN-Jb-jCe"/>
-                                                                        </constraints>
-                                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                                        <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
-                                                                        <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="40" maxY="0.0"/>
-                                                                        <state key="normal" title="Programm übertragen" image="upload_button"/>
-                                                                        <connections>
-                                                                            <action selector="navigateToImportFile" destination="rb5-ni-SG8" eventType="touchUpInside" id="yrh-oG-3t2"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                </subviews>
-                                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <constraints>
-                                                                    <constraint firstItem="9WU-0m-vf9" firstAttribute="centerX" secondItem="IE2-hc-bLN" secondAttribute="centerX" id="4hL-VL-Sw7"/>
-                                                                    <constraint firstAttribute="bottom" secondItem="9WU-0m-vf9" secondAttribute="bottom" id="YgR-OL-xUr"/>
-                                                                    <constraint firstItem="9WU-0m-vf9" firstAttribute="top" secondItem="IE2-hc-bLN" secondAttribute="top" id="roE-bx-qAD"/>
-                                                                </constraints>
-                                                            </view>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Der Standard Speicherort kann hier angepasst werden." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pdd-Yf-k3d">
-                                                                <rect key="frame" x="0.0" y="164.33333333333334" width="200" height="64.333333333333343"/>
-                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ngN-Yb-IVT">
-                                                                <rect key="frame" x="0.0" y="248.66666666666669" width="200" height="60"/>
-                                                                <subviews>
-                                                                    <button opaque="NO" contentMode="scaleAspectFit" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="fWg-f8-m1k">
-                                                                        <rect key="frame" x="-25" y="0.0" width="250" height="60"/>
-                                                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" constant="250" id="CqZ-w0-IBS"/>
-                                                                            <constraint firstAttribute="height" constant="60" id="nCS-9R-mI0"/>
-                                                                        </constraints>
-                                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                                        <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
-                                                                        <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="40" maxY="0.0"/>
-                                                                        <state key="normal" title="Speicherort anpassen" image="upload_button"/>
-                                                                        <connections>
-                                                                            <action selector="openChangeDirectoryView" destination="rb5-ni-SG8" eventType="touchUpInside" id="1a5-tJ-u3y"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                </subviews>
-                                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <constraints>
-                                                                    <constraint firstItem="fWg-f8-m1k" firstAttribute="top" secondItem="ngN-Yb-IVT" secondAttribute="top" id="PEN-ch-KQF"/>
-                                                                    <constraint firstAttribute="bottom" secondItem="fWg-f8-m1k" secondAttribute="bottom" id="Rhm-Rz-Uxt"/>
-                                                                    <constraint firstItem="fWg-f8-m1k" firstAttribute="centerX" secondItem="ngN-Yb-IVT" secondAttribute="centerX" id="ZnM-xp-QkH"/>
-                                                                </constraints>
-                                                            </view>
-                                                        </subviews>
-                                                    </stackView>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cct-Ta-krg">
-                                                        <rect key="frame" x="0.0" y="316.66666666666669" width="200" height="40"/>
-                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="40" id="thP-4U-Szm"/>
-                                                        </constraints>
-                                                    </view>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="nwK-R8-inx">
-                                                        <rect key="frame" x="0.0" y="364.66666666666674" width="200" height="350.33333333333326"/>
+                                                        <rect key="frame" x="0.0" y="698.33333333333337" width="200" height="350.33333333333337"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nWb-Ra-8Xg">
                                                                 <rect key="frame" x="0.0" y="0.0" width="200" height="130.33333333333334"/>
@@ -236,13 +127,13 @@ Connect and transfer the program!</string>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="startprogramm3" translatesAutoresizingMaskIntoConstraints="NO" id="fT8-gp-qtG">
-                                                                <rect key="frame" x="0.0" y="150.33333333333331" width="200" height="120"/>
+                                                                <rect key="frame" x="0.0" y="150.33333333333326" width="200" height="120"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="120" id="lse-qC-Nlj"/>
                                                                 </constraints>
                                                             </imageView>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yxq-Ip-D30">
-                                                                <rect key="frame" x="0.0" y="290.33333333333331" width="200" height="60"/>
+                                                                <rect key="frame" x="0.0" y="290.33333333333326" width="200" height="60"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleAspectFit" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="HyP-3y-Mpt">
                                                                         <rect key="frame" x="-25" y="0.0" width="250" height="60"/>
@@ -270,14 +161,14 @@ Connect and transfer the program!</string>
                                                         </subviews>
                                                     </stackView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gqr-eV-vmB">
-                                                        <rect key="frame" x="0.0" y="723" width="200" height="40"/>
+                                                        <rect key="frame" x="0.0" y="1048.6666666666667" width="200" height="60"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="40" id="xv2-h8-YRS"/>
+                                                            <constraint firstAttribute="height" constant="60" id="xv2-h8-YRS"/>
                                                         </constraints>
                                                     </view>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="ak6-Eh-Hed">
-                                                        <rect key="frame" x="0.0" y="771" width="200" height="350.33333333333326"/>
+                                                        <rect key="frame" x="0.0" y="1108.6666666666667" width="200" height="350.33333333333326"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Calliope mini 1+2: Download the original program of the Calliope mini 1 and Calliope min 2. Connect and transfer the program!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JZf-cF-XX1">
                                                                 <rect key="frame" x="0.0" y="0.0" width="200" height="130.33333333333334"/>
@@ -286,7 +177,7 @@ Connect and transfer the program!</string>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="startprogramm1+2" translatesAutoresizingMaskIntoConstraints="NO" id="EK0-RX-ooW">
-                                                                <rect key="frame" x="0.0" y="150.33333333333337" width="200" height="120"/>
+                                                                <rect key="frame" x="0.0" y="150.33333333333326" width="200" height="120"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="120" id="KT7-nM-DD3"/>
                                                                     <constraint firstAttribute="width" constant="200" id="Kje-g6-lrA"/>
@@ -322,35 +213,157 @@ Connect and transfer the program!</string>
                                                     </stackView>
                                                 </subviews>
                                             </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="4bN-ts-cX9">
+                                                <rect key="frame" x="260" y="0.0" width="377" height="681"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="zjS-Vb-43h">
+                                                        <rect key="frame" x="0.0" y="0.0" width="377" height="122.33333333333333"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Öffne ein Programm in MakeCode über einen QR-Code. Einfach scannen und los geht's!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2pa-yb-EU6">
+                                                                <rect key="frame" x="0.0" y="0.0" width="377" height="42.333333333333336"/>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pmP-yd-KbT">
+                                                                <rect key="frame" x="0.0" y="62.333333333333329" width="377" height="60"/>
+                                                                <subviews>
+                                                                    <button opaque="NO" contentMode="scaleAspectFit" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="49i-Ve-lcm">
+                                                                        <rect key="frame" x="63.666666666666686" y="0.0" width="250" height="60"/>
+                                                                        <color key="backgroundColor" name="calliope-green"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="height" constant="60" id="CXQ-Ml-PF7"/>
+                                                                            <constraint firstAttribute="width" constant="250" id="UnL-Cu-HRK"/>
+                                                                        </constraints>
+                                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                                        <state key="normal" title="Scannen" image="qr_code_scan_button">
+                                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        </state>
+                                                                        <connections>
+                                                                            <segue destination="Lev-CK-3Lf" kind="show" id="AiM-tj-icn"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                </subviews>
+                                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstItem="49i-Ve-lcm" firstAttribute="centerX" secondItem="pmP-yd-KbT" secondAttribute="centerX" id="14x-Gc-a1g"/>
+                                                                    <constraint firstItem="49i-Ve-lcm" firstAttribute="top" secondItem="pmP-yd-KbT" secondAttribute="top" id="CY0-nh-3eD"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="49i-Ve-lcm" secondAttribute="bottom" id="a87-DT-PJs"/>
+                                                                </constraints>
+                                                            </view>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kfm-IX-8ad">
+                                                        <rect key="frame" x="0.0" y="130.33333333333334" width="377" height="40"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="40" id="boY-Mg-Z6e"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="W2g-8j-bmG">
+                                                        <rect key="frame" x="0.0" y="178.33333333333334" width="377" height="122.33333333333334"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Öffne Programme in MakeCode oder übertrage sie direkt auf deinen Calliope mini." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5dO-ZD-bhg">
+                                                                <rect key="frame" x="0.0" y="0.0" width="377" height="42.333333333333336"/>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IE2-hc-bLN">
+                                                                <rect key="frame" x="0.0" y="62.333333333333343" width="377" height="60"/>
+                                                                <subviews>
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bzf-ki-nbR">
+                                                                        <rect key="frame" x="63.666666666666686" y="0.0" width="250" height="60"/>
+                                                                        <color key="backgroundColor" name="calliope-green"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" constant="250" id="Wig-1r-cgS"/>
+                                                                            <constraint firstAttribute="height" constant="60" id="eHv-pN-UB9"/>
+                                                                        </constraints>
+                                                                        <state key="normal" title="Button"/>
+                                                                        <buttonConfiguration key="configuration" style="plain" title="Datei auswählen">
+                                                                            <fontDescription key="titleFontDescription" style="UICTFontTextStyleBody"/>
+                                                                            <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        </buttonConfiguration>
+                                                                        <connections>
+                                                                            <action selector="navigateToImportFile" destination="rb5-ni-SG8" eventType="touchUpInside" id="2if-tF-Ip7"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                </subviews>
+                                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstItem="bzf-ki-nbR" firstAttribute="centerX" secondItem="IE2-hc-bLN" secondAttribute="centerX" id="6HJ-gs-2tA"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="bzf-ki-nbR" secondAttribute="bottom" id="Qjc-vz-6sf"/>
+                                                                    <constraint firstItem="bzf-ki-nbR" firstAttribute="top" secondItem="IE2-hc-bLN" secondAttribute="top" id="SpN-G7-cV2"/>
+                                                                </constraints>
+                                                            </view>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cuc-eq-ABn">
+                                                        <rect key="frame" x="0.0" y="308.66666666666669" width="377" height="40"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="40" id="M4S-c5-zRt"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Ls7-yW-hXq">
+                                                        <rect key="frame" x="0.0" y="356.66666666666674" width="377" height="324.33333333333326"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Gespeicherte Programme in deinem Calliope mini Ordner können geöffnet, übertragen und geteilt werden." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V6G-YI-Xec">
+                                                                <rect key="frame" x="0.0" y="0.0" width="377" height="64.333333333333329"/>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HV9-lW-Faa">
+                                                                <rect key="frame" x="0.0" y="74.333333333333314" width="377" height="250"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" priority="999" constant="250" placeholder="YES" id="AAq-Nm-pKr"/>
+                                                                </constraints>
+                                                                <connections>
+                                                                    <segue destination="8hf-lH-tNj" kind="embed" identifier="embedPrograms" destinationCreationSelector="initializePrograms:" id="1rQ-5t-ctG"/>
+                                                                </connections>
+                                                            </containerView>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                            </stackView>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstItem="ypy-Nv-qUF" firstAttribute="width" secondItem="HV9-lW-Faa" secondAttribute="width" id="7YB-W1-KQb"/>
+                                        </constraints>
                                     </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="2iD-Nq-XcD" firstAttribute="trailing" secondItem="zjS-Vb-43h" secondAttribute="trailing" constant="20" id="00i-fY-9wo"/>
+                                    <constraint firstItem="2iD-Nq-XcD" firstAttribute="top" secondItem="zjS-Vb-43h" secondAttribute="top" constant="-20" id="1j8-v7-kfj"/>
                                     <constraint firstItem="UOs-4x-zfO" firstAttribute="top" secondItem="W2g-8j-bmG" secondAttribute="top" constant="-20" id="40l-b2-fxz"/>
                                     <constraint firstItem="fYe-cI-9Hj" firstAttribute="trailing" secondItem="ZAw-Ve-3Pb" secondAttribute="trailing" constant="-20" id="4kY-nd-fAc"/>
-                                    <constraint firstItem="5Zk-Xu-R0A" firstAttribute="top" secondItem="ak6-Eh-Hed" secondAttribute="top" constant="-20" id="6X7-Wn-86m"/>
+                                    <constraint firstItem="2iD-Nq-XcD" firstAttribute="bottom" secondItem="zjS-Vb-43h" secondAttribute="bottom" constant="20" id="80A-3j-nDH"/>
+                                    <constraint firstItem="Y5a-Mz-x8I" firstAttribute="bottom" secondItem="nwK-R8-inx" secondAttribute="bottom" constant="20" id="9Ku-6V-8uj"/>
+                                    <constraint firstItem="5Zk-Xu-R0A" firstAttribute="trailing" secondItem="ak6-Eh-Hed" secondAttribute="trailing" constant="20" id="Di9-Hv-cHQ"/>
                                     <constraint firstItem="Dxt-9f-Z4u" firstAttribute="bottom" secondItem="KGf-et-JnB" secondAttribute="bottom" constant="-30" id="FQX-Cd-Nmd"/>
-                                    <constraint firstItem="Y5a-Mz-x8I" firstAttribute="leading" secondItem="nwK-R8-inx" secondAttribute="leading" constant="-20" id="Ffs-oy-gzp"/>
-                                    <constraint firstItem="5Zk-Xu-R0A" firstAttribute="leading" secondItem="ak6-Eh-Hed" secondAttribute="leading" constant="-20" id="Mfp-mg-Vy1"/>
-                                    <constraint firstItem="Y5a-Mz-x8I" firstAttribute="bottom" secondItem="nwK-R8-inx" secondAttribute="bottom" constant="20" id="Mgm-uc-xvQ"/>
+                                    <constraint firstItem="Y5a-Mz-x8I" firstAttribute="trailing" secondItem="nwK-R8-inx" secondAttribute="trailing" constant="20" id="Hh3-I6-iMA"/>
+                                    <constraint firstItem="Y5a-Mz-x8I" firstAttribute="leading" secondItem="nwK-R8-inx" secondAttribute="leading" constant="-20" id="LHk-bT-xgP"/>
                                     <constraint firstItem="akY-Sb-YXJ" firstAttribute="trailing" secondItem="Dxt-9f-Z4u" secondAttribute="trailing" constant="31" id="MiA-ra-3Ep"/>
                                     <constraint firstItem="UOs-4x-zfO" firstAttribute="trailing" secondItem="W2g-8j-bmG" secondAttribute="trailing" constant="20" id="N86-dw-q3f"/>
-                                    <constraint firstItem="Y5a-Mz-x8I" firstAttribute="top" secondItem="nwK-R8-inx" secondAttribute="top" constant="-20" id="PZ2-eJ-phV"/>
-                                    <constraint firstItem="5Zk-Xu-R0A" firstAttribute="bottom" secondItem="ak6-Eh-Hed" secondAttribute="bottom" constant="20" id="QEV-do-JT1"/>
-                                    <constraint firstItem="2iD-Nq-XcD" firstAttribute="bottom" secondItem="zjS-Vb-43h" secondAttribute="bottom" constant="20" id="SXJ-p0-xHY"/>
-                                    <constraint firstItem="zjS-Vb-43h" firstAttribute="top" secondItem="2iD-Nq-XcD" secondAttribute="top" constant="20" id="Up2-BU-9rN"/>
                                     <constraint firstItem="UOs-4x-zfO" firstAttribute="leading" secondItem="W2g-8j-bmG" secondAttribute="leading" constant="-20" id="VNs-QO-fVr"/>
+                                    <constraint firstItem="2iD-Nq-XcD" firstAttribute="leading" secondItem="zjS-Vb-43h" secondAttribute="leading" constant="-20" id="WMf-Le-SfI"/>
                                     <constraint firstItem="UOs-4x-zfO" firstAttribute="bottom" secondItem="W2g-8j-bmG" secondAttribute="bottom" constant="20" id="WXz-HR-bPH"/>
-                                    <constraint firstItem="Y5a-Mz-x8I" firstAttribute="trailing" secondItem="nwK-R8-inx" secondAttribute="trailing" constant="20" id="cZw-BC-9h8"/>
+                                    <constraint firstItem="Y5a-Mz-x8I" firstAttribute="top" secondItem="nwK-R8-inx" secondAttribute="top" constant="-20" id="XJ9-yR-9PB"/>
+                                    <constraint firstItem="E2a-1X-DUv" firstAttribute="leading" secondItem="Ls7-yW-hXq" secondAttribute="leading" constant="-20" id="dIA-5v-8rZ"/>
+                                    <constraint firstItem="5Zk-Xu-R0A" firstAttribute="bottom" secondItem="ak6-Eh-Hed" secondAttribute="bottom" constant="20" id="fNE-IG-lsh"/>
+                                    <constraint firstItem="5Zk-Xu-R0A" firstAttribute="top" secondItem="ak6-Eh-Hed" secondAttribute="top" constant="-20" id="h2K-YI-pIj"/>
                                     <constraint firstItem="fYe-cI-9Hj" firstAttribute="top" secondItem="ZAw-Ve-3Pb" secondAttribute="top" constant="20" id="hX5-aj-Kbh"/>
+                                    <constraint firstItem="E2a-1X-DUv" firstAttribute="bottom" secondItem="Ls7-yW-hXq" secondAttribute="bottom" constant="20" id="klP-TF-hu8"/>
                                     <constraint firstItem="fYe-cI-9Hj" firstAttribute="bottom" secondItem="ZAw-Ve-3Pb" secondAttribute="bottom" constant="-20" id="mOz-WK-SlP"/>
                                     <constraint firstItem="Dxt-9f-Z4u" firstAttribute="trailing" secondItem="KGf-et-JnB" secondAttribute="trailing" constant="-31" id="oN3-W7-VEK"/>
                                     <constraint firstItem="Dxt-9f-Z4u" firstAttribute="leading" secondItem="KGf-et-JnB" secondAttribute="leading" constant="31" id="r3P-9j-Xgl"/>
-                                    <constraint firstItem="5Zk-Xu-R0A" firstAttribute="trailing" secondItem="ak6-Eh-Hed" secondAttribute="trailing" constant="20" id="t4V-HS-ehf"/>
+                                    <constraint firstItem="E2a-1X-DUv" firstAttribute="trailing" secondItem="Ls7-yW-hXq" secondAttribute="trailing" constant="20" id="sNb-2W-YU3"/>
                                     <constraint firstItem="Dxt-9f-Z4u" firstAttribute="top" secondItem="KGf-et-JnB" secondAttribute="top" constant="30" id="tFq-nf-355"/>
                                     <constraint firstItem="fYe-cI-9Hj" firstAttribute="leading" secondItem="ZAw-Ve-3Pb" secondAttribute="leading" constant="20" id="uJQ-gf-l8L"/>
-                                    <constraint firstItem="zjS-Vb-43h" firstAttribute="leading" secondItem="2iD-Nq-XcD" secondAttribute="leading" constant="20" id="xmB-jP-Ix6"/>
+                                    <constraint firstItem="E2a-1X-DUv" firstAttribute="top" secondItem="Ls7-yW-hXq" secondAttribute="top" constant="-20" id="uXj-IX-Kdi"/>
+                                    <constraint firstItem="2iD-Nq-XcD" firstAttribute="trailing" secondItem="zjS-Vb-43h" secondAttribute="trailing" constant="20" id="w7X-Ur-e67"/>
+                                    <constraint firstItem="5Zk-Xu-R0A" firstAttribute="leading" secondItem="ak6-Eh-Hed" secondAttribute="leading" constant="-20" id="x3z-Zs-6Qn"/>
                                     <constraint firstItem="Dxt-9f-Z4u" firstAttribute="leading" secondItem="akY-Sb-YXJ" secondAttribute="leading" constant="31" id="zf1-fn-sVU"/>
                                 </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="KGf-et-JnB"/>
@@ -361,7 +374,6 @@ Connect and transfer the program!</string>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="g5r-Xk-lED" firstAttribute="leading" secondItem="HCF-Ra-c4C" secondAttribute="leading" id="4Ov-ON-JWv"/>
-                            <constraint firstItem="8uy-BZ-wk7" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="zjS-Vb-43h" secondAttribute="bottom" priority="991" constant="18" id="F1h-MT-La6"/>
                             <constraint firstAttribute="bottom" secondItem="g5r-Xk-lED" secondAttribute="bottom" id="ZGW-ug-Ugt"/>
                             <constraint firstItem="g5r-Xk-lED" firstAttribute="top" secondItem="HCF-Ra-c4C" secondAttribute="top" id="lro-nx-HdM"/>
                             <constraint firstAttribute="trailing" secondItem="g5r-Xk-lED" secondAttribute="trailing" id="ovF-8C-Al7"/>
@@ -371,8 +383,8 @@ Connect and transfer the program!</string>
                     <navigationItem key="navigationItem" title="Editors and Programs" id="uLO-aS-ZNS"/>
                     <size key="freeformSize" width="699" height="1000"/>
                     <connections>
-                        <outlet property="editorBottomToSafeArea" destination="F1h-MT-La6" id="ybv-Uc-KWl"/>
                         <outlet property="editorContainerView" destination="ypy-Nv-qUF" id="S8S-Gd-g8f"/>
+                        <outlet property="programContainerView" destination="HV9-lW-Faa" id="zrs-ZN-zc5"/>
                         <outlet property="scanButton" destination="49i-Ve-lcm" id="3fR-h6-9cM"/>
                         <outlet property="stackView" destination="Dxt-9f-Z4u" id="j6H-TX-rQZ"/>
                     </connections>
@@ -386,7 +398,7 @@ Connect and transfer the program!</string>
             <objects>
                 <collectionViewController automaticallyAdjustsScrollViewInsets="NO" id="ZH5-UW-Mjo" customClass="EditorsCollectionViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" bouncesZoom="NO" dataMode="prototypes" id="5hm-Wh-YfH">
-                        <rect key="frame" x="0.0" y="0.0" width="377" height="400"/>
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="400"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Rsi-yi-Udp">
@@ -397,7 +409,7 @@ Connect and transfer the program!</string>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="makecodeEditorCell" id="LQt-dC-ueL" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.33333333333333331" width="160" height="185.66666666666666"/>
+                                <rect key="frame" x="20" y="0.0" width="160" height="185.66666666666666"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="WBP-SR-R2U">
                                     <rect key="frame" x="0.0" y="0.0" width="160" height="185.66666666666666"/>
@@ -434,7 +446,7 @@ Connect and transfer the program!</string>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="nepoEditorCell" id="ucV-gN-En2" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="217" y="0.0" width="160" height="186"/>
+                                <rect key="frame" x="20" y="195.66666666666666" width="160" height="186"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bVT-UD-yV5">
                                     <rect key="frame" x="0.0" y="0.0" width="160" height="186"/>
@@ -471,7 +483,7 @@ Connect and transfer the program!</string>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="playgroundCell" id="X1H-Rl-bCL" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="196" width="160" height="185.66666666666669"/>
+                                <rect key="frame" x="20" y="391.66666666666669" width="160" height="185.66666666666669"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="PXU-mA-kNy">
                                     <rect key="frame" x="0.0" y="0.0" width="160" height="185.66666666666669"/>
@@ -511,7 +523,7 @@ Connect and transfer the program!</string>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="localEditorCell" id="Yfn-uo-n4Y" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="170" y="264" width="50" height="50"/>
+                                <rect key="frame" x="75" y="587.33333333333337" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="kQB-BW-JJf">
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -620,17 +632,17 @@ Connect and transfer the program!</string>
                                             <rect key="frame" x="0.0" y="0.0" width="300" height="70"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="iMS-hH-QU0" userLabel="programLabelContainer">
-                                                    <rect key="frame" x="8" y="8.0000000000000018" width="243" height="30.666666666666671"/>
+                                                    <rect key="frame" x="8" y="8" width="243" height="34"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="200" verticalHuggingPriority="251" horizontalCompressionResistancePriority="740" text="Label" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DpH-x4-88I">
-                                                            <rect key="frame" x="8" y="5.3333333333333339" width="41.666666666666664" height="20.666666666666664"/>
+                                                            <rect key="frame" x="8" y="7.0000000000000018" width="41.666666666666664" height="20.666666666666671"/>
                                                             <accessibility key="accessibilityConfiguration" identifier="programLabel"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <textField hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="240" verticalHuggingPriority="260" horizontalCompressionResistancePriority="700" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="eex-Tk-Fko">
-                                                            <rect key="frame" x="0.0" y="0.0" width="243" height="30.666666666666668"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="243" height="34"/>
                                                             <accessibility key="accessibilityConfiguration" identifier="programNameEditField"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <textInputTraits key="textInputTraits"/>
@@ -651,8 +663,8 @@ Connect and transfer the program!</string>
                                                         <constraint firstItem="DpH-x4-88I" firstAttribute="leading" secondItem="iMS-hH-QU0" secondAttribute="leading" constant="8" id="iho-77-q4z"/>
                                                     </constraints>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g6h-Vu-QEH">
-                                                    <rect key="frame" x="15.999999999999996" y="35.666666666666664" width="41.666666666666657" height="20.333333333333336"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g6h-Vu-QEH">
+                                                    <rect key="frame" x="15.999999999999996" y="39" width="41.666666666666657" height="17"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -703,6 +715,7 @@ Connect and transfer the program!</string>
                         </connections>
                     </collectionView>
                     <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="6VK-Mj-bGc"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -710,7 +723,7 @@ Connect and transfer the program!</string>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SRn-bB-H5q" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="400.72463768115944" y="583.92857142857144"/>
+            <point key="canvasLocation" x="2000" y="29"/>
         </scene>
         <!--Code View Controller-->
         <scene sceneID="hol-wY-xHE">

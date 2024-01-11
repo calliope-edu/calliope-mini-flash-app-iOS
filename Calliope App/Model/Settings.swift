@@ -25,8 +25,6 @@ public enum SettingsKey: String, CaseIterable {
     case appVersion = "appVersionInformationPreference"
 
     case newsURL = "calliopeNewsUrlPreference"
-    
-    case defaultFilePath = "defaultFilePath"
 
     case defaultProgramV3Url = "calliopeDefaultProgramV3HexPreference"
     case defaultProgramV1AndV2Url = "calliopeDefaultProgramV1andV2HexPreference"
@@ -45,7 +43,6 @@ public struct Settings {
     static var defaultProgramV3 = "https://calliope.cc/downloads/miniV3_start.hex"
     static var defaultProgramV2andV1 = "https://calliope.cc/downloads/calliope-demo.hex"
     static var defaultPlaygroundTemplateUrl = NSLocalizedString("https://calliope.cc/forumassets/snippets.json", comment: "The url for the snippets json")
-    static var defaultFilePath: String = ""
 
     static var defaultLocalEditorEnabled = false
     static var defaultMakeCodeEnabled = true
@@ -89,8 +86,6 @@ public struct Settings {
             return defaultProgramV3
         case .defaultProgramV1AndV2Url:
             return defaultProgramV2andV1
-        case .defaultFilePath:
-            return defaultFilePath
         case .restoreLastMatrix:
             return defaultRestoreLastMatrixEnabled
         case .lastMatrix:

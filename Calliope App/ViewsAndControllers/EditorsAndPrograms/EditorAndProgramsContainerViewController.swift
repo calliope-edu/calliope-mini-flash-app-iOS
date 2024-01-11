@@ -126,62 +126,38 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
         var types: [String] = [String]()
         types.append("com.intel.hex")
         
-        if !(UserDefaults.standard.string(forKey: SettingsKey.defaultFilePath.rawValue) == "") {
-            let documentPickerController = UIDocumentPickerViewController(documentTypes: types, in: .import)
-            if #available(iOS 13.0, *) {
-                documentPickerController.directoryURL = URL(string: UserDefaults.standard.string(forKey: SettingsKey.defaultFilePath.rawValue)!)
-            }
-            documentPickerController.delegate = self
-            present(documentPickerController, animated: true, completion: nil)
-        } else {
-            let alertStart = UIAlertController(title: NSLocalizedString("Kein Speicherort", comment: ""), message: NSLocalizedString("Bitte wähle einen Speicherort für deine Programme aus", comment: ""), preferredStyle: .alert)
-            alertStart.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
-                self.openChangeDirectoryView()
-            })
-            
-            present(alertStart, animated: true)
-        }
+        let documentPickerController = UIDocumentPickerViewController(documentTypes: types, in: .import)
+        documentPickerController.delegate = self
+        present(documentPickerController, animated: true, completion: nil)
     }
 
-
-    /// Called when pdf to import is selected
     func documentPicker(_ controller: UIDocumentPickerViewController,
               didPickDocumentAt url: URL) {
         if !(url.lastPathComponent.isEmpty) {
-            if !(UserDefaults.standard.string(forKey: SettingsKey.defaultFilePath.rawValue)!.lowercased().contains("*.hex")) {
-                let oldUrl = UserDefaults.standard.string(forKey: SettingsKey.defaultFilePath.rawValue)!
-                UserDefaults.standard.set(url.relativeString, forKey: SettingsKey.defaultFilePath.rawValue)
-                Settings.defaultFilePath = url.relativeString
-                let fileManager = FileManager.default
-                do {
-                    let fileManagerUrl = try fileManager.url(
-                        for: .documentDirectory,
-                        in: .userDomainMask,
-                        appropriateFor:nil,
-                        create:false)
-                    let fileUrl = oldUrl != "" ? oldUrl : fileManagerUrl.relativeString
-                    let items = try fileManager.contentsOfDirectory(atPath: fileUrl)
-
-                        for item in items {
-                            print("Found \(item)")
-                        }
-                    try fileManager.copyItem(atPath: fileUrl, toPath: url.relativeString)
-                } catch {
-                    LogNotify.log("Moving of files failed")
-                    print(error)
-                }
-            }
             // Dismiss this view
             dismiss(animated: true, completion: nil)
 
-            if (try? Data(contentsOf: url)) != nil {
-                if let fileName: String = url.lastPathComponent.components(separatedBy: ".").first {
-                    let program = DefaultProgram(programName: NSLocalizedString(fileName, comment:""), url: url.standardizedFileURL.absoluteString)
-                    program.downloadFile = false
-                    FirmwareUpload.showUIForDownloadableProgram(controller: self, program: program)
-                } else {
-                    LogNotify.log("Failed loading File")
-                }
+            let alertStart = UIAlertController(title: NSLocalizedString("Öffnen", comment: ""), message: NSLocalizedString("Möchtest du die Datei in MakeCode öffnen oder direkt auf deinen Calliope mini übertragen?", comment: ""), preferredStyle: .alert)
+            alertStart.addAction(UIAlertAction(title: NSLocalizedString("Öffnen", comment: ""), style: .default) { _ in
+                // TODO: Needs to open MakeCode instead
+                self.uploadFile(url: url)
+            })
+            alertStart.addAction(UIAlertAction(title: NSLocalizedString("Übertragen", comment: ""), style: .default) { _ in
+                self.uploadFile(url: url)
+            })
+            alertStart.addAction(UIAlertAction(title: NSLocalizedString("Schließen", comment: ""), style: .cancel) )
+            present(alertStart, animated: true)
+        }
+    }
+    
+    func uploadFile(url: URL) {
+        if (try? Data(contentsOf: url)) != nil {
+            if let fileName: String = url.lastPathComponent.components(separatedBy: ".").first {
+                let program = DefaultProgram(programName: NSLocalizedString(fileName, comment:""), url: url.standardizedFileURL.absoluteString)
+                program.downloadFile = false
+                FirmwareUpload.showUIForDownloadableProgram(controller: self, program: program)
+            } else {
+                LogNotify.log("Failed loading File")
             }
         }
     }

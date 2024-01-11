@@ -59,9 +59,6 @@
 "Delete?" = "Delete?";
 
 /* No comment provided by engineer. */
-"Do you want to delete %@?" = "Could not rename %@";
-
-/* No comment provided by engineer. */
 "Do you want to upload %@ to your calliope?" = "Do you want to upload %@ to your Calliope mini?";
 
 /* No comment provided by engineer. */
@@ -243,3 +240,16 @@
 
 /* No comment provided by engineer. */
 "Save and thorough upload" = "Save and thorough upload";
+
+/* No comment provided by engineer. */
+"Möchtest du die Datei in MakeCode öffnen oder direkt auf deinen Calliope mini übertragen?" = "Would you like to open the file in MakeCode or transfer it directly to your Calliope mini?";
+
+/* No comment provided by engineer. */
+"Öffnen" = "Open";
+
+/* No comment provided by engineer. */
+"Übertragen" = "Transfer";
+
+/* No comment provided by engineer. */
+"Schließen" = "Close";
+

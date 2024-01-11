@@ -104,7 +104,11 @@ class ProgramsCollectionViewController: UICollectionViewController, ProgramCellD
     override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedMenuElements -> UIMenu? in
             let actions: [UIMenuElement] = [
-                UIAction(title: NSLocalizedString("Edit", comment: ""), image: UIImage(systemName: "rectangle.and.pencil.and.ellipsis"), handler: { (action) in (
+                UIAction(title: NSLocalizedString("Open", comment: ""), image: UIImage(systemName: "envelope.open"), handler: { (action) in (
+                            print("TODO: Needs to open MakeCode")) }),
+                UIAction(title: NSLocalizedString("Transfer", comment: ""), image: UIImage(systemName: "arrow.left.arrow.right"), handler: { (action) in (
+                    self.uploadProgram(of: collectionView.cellForItem(at: indexPath) as! ProgramCollectionViewCell)) }),
+                UIAction(title: NSLocalizedString("Rename", comment: ""), image: UIImage(systemName: "rectangle.and.pencil.and.ellipsis"), handler: { (action) in (
                             self.collectionView.cellForItem(at: indexPath) as? ProgramCollectionViewCell)?.edit() }),
                 UIAction(title: NSLocalizedString("Share", comment: ""), image: UIImage(systemName: "square.and.arrow.up"), handler: { (action) in (
                             self.collectionView.cellForItem(at: indexPath) as? ProgramCollectionViewCell)?.share() }),

@@ -50,6 +50,12 @@
 "Delete" = "Löschen";
 
 /* No comment provided by engineer. */
+"Transfer" = "Übertragen";
+
+/* No comment provided by engineer. */
+"Open" = "Öffnen";
+
+/* No comment provided by engineer. */
 "Delete failed" = "Löschen fehlgeschlagen";
 
 /* No comment provided by engineer. */
@@ -71,7 +77,7 @@
 "Download the Swift Playgrounds App" = "Lade die Swift Playgrounds App";
 
 /* No comment provided by engineer. */
-"Edit" = "Bearbeiten";
+"Rename" = "Bearbeiten";
 
 /* No comment provided by engineer. */
 "Encountered an error discovering or connecting calliope:" = "Es ist ein Fehler beim Erkennen oder Verbinden aufgetreten:";

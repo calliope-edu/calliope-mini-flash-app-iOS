@@ -148,9 +148,6 @@ final class HexFileManager {
 	}()
 
     private static func dir() throws -> URL {
-        if let defaultFilePath = UserDefaults.standard.string(forKey: SettingsKey.defaultFilePath.rawValue), defaultFilePath != "" {
-            return URL(string: defaultFilePath)!
-        }
         return try FileManager.default.url(
             for: .documentDirectory,
             in: .userDomainMask,
