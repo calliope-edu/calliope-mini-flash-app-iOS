@@ -115,20 +115,22 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
         FirmwareUpload.showUIForDownloadableProgram(controller: self, program: program)
     }
     
-    @IBAction func openChangeDirectoryView() {
-        let folderPickerController = UIDocumentPickerViewController(documentTypes: [kUTTypeFolder as String],
-                                           in: .open)
-        folderPickerController.delegate = self
-        self.present(folderPickerController, animated: true, completion: nil)
-    }
-    
     @IBAction func navigateToImportFile() {
-        var types: [String] = [String]()
-        types.append("com.intel.hex")
+        var types: [String] = getFileTypesFor(fileEnding: "hex")
         
         let documentPickerController = UIDocumentPickerViewController(documentTypes: types, in: .import)
         documentPickerController.delegate = self
         present(documentPickerController, animated: true, completion: nil)
+    }
+    
+    func getFileTypesFor(fileEnding: String) -> [String] {
+        let typeArray = UTTypeCreateAllIdentifiersForTag(
+                         kUTTagClassFilenameExtension,
+                         fileEnding as CFString,
+                         nil
+                      )?.takeRetainedValue()
+        let types: [String] = typeArray as? [String] ?? []
+        return types;
     }
 
     func documentPicker(_ controller: UIDocumentPickerViewController,
@@ -136,29 +138,7 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
         if !(url.lastPathComponent.isEmpty) {
             // Dismiss this view
             dismiss(animated: true, completion: nil)
-
-            let alertStart = UIAlertController(title: NSLocalizedString("Öffnen", comment: ""), message: NSLocalizedString("Möchtest du die Datei in MakeCode öffnen oder direkt auf deinen Calliope mini übertragen?", comment: ""), preferredStyle: .alert)
-            alertStart.addAction(UIAlertAction(title: NSLocalizedString("Öffnen", comment: ""), style: .default) { _ in
-                // TODO: Needs to open MakeCode instead
-                self.uploadFile(url: url)
-            })
-            alertStart.addAction(UIAlertAction(title: NSLocalizedString("Übertragen", comment: ""), style: .default) { _ in
-                self.uploadFile(url: url)
-            })
-            alertStart.addAction(UIAlertAction(title: NSLocalizedString("Schließen", comment: ""), style: .cancel) )
-            present(alertStart, animated: true)
-        }
-    }
-    
-    func uploadFile(url: URL) {
-        if (try? Data(contentsOf: url)) != nil {
-            if let fileName: String = url.lastPathComponent.components(separatedBy: ".").first {
-                let program = DefaultProgram(programName: NSLocalizedString(fileName, comment:""), url: url.standardizedFileURL.absoluteString)
-                program.downloadFile = false
-                FirmwareUpload.showUIForDownloadableProgram(controller: self, program: program)
-            } else {
-                LogNotify.log("Failed loading File")
-            }
+            HexFileStoreDialog.showStoreHexUI(controller: self, hexFile: url, notSaved: {_ in })
         }
     }
     

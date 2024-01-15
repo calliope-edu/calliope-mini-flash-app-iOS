@@ -51,7 +51,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UOs-4x-zfO">
-                                        <rect key="frame" x="271" y="188.33333333333331" width="417" height="162.33333333333331"/>
+                                        <rect key="frame" x="271" y="188.33333333333331" width="417" height="184.33333333333331"/>
                                         <color key="backgroundColor" name="calliope-gray"/>
                                         <color key="tintColor" name="calliope-lightgray"/>
                                         <userDefinedRuntimeAttributes>
@@ -71,7 +71,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E2a-1X-DUv">
-                                        <rect key="frame" x="271" y="366.66666666666674" width="417" height="364.33333333333326"/>
+                                        <rect key="frame" x="271" y="388.66666666666674" width="417" height="364.33333333333326"/>
                                         <color key="backgroundColor" name="calliope-lightgray"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -214,7 +214,7 @@ Connect and transfer the program!</string>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="4bN-ts-cX9">
-                                                <rect key="frame" x="260" y="0.0" width="377" height="681"/>
+                                                <rect key="frame" x="260" y="0.0" width="377" height="703"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="zjS-Vb-43h">
                                                         <rect key="frame" x="0.0" y="0.0" width="377" height="122.33333333333333"/>
@@ -261,16 +261,16 @@ Connect and transfer the program!</string>
                                                         </constraints>
                                                     </view>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="W2g-8j-bmG">
-                                                        <rect key="frame" x="0.0" y="178.33333333333334" width="377" height="122.33333333333334"/>
+                                                        <rect key="frame" x="0.0" y="178.33333333333331" width="377" height="144.33333333333331"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Öffne Programme in MakeCode oder übertrage sie direkt auf deinen Calliope mini." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5dO-ZD-bhg">
-                                                                <rect key="frame" x="0.0" y="0.0" width="377" height="42.333333333333336"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Öffne Programme um Sie zu sichern, oder übertrage Programme direkt auf deinen Calliope mini." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5dO-ZD-bhg">
+                                                                <rect key="frame" x="0.0" y="0.0" width="377" height="64.333333333333329"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IE2-hc-bLN">
-                                                                <rect key="frame" x="0.0" y="62.333333333333343" width="377" height="60"/>
+                                                                <rect key="frame" x="0.0" y="84.333333333333343" width="377" height="60"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bzf-ki-nbR">
                                                                         <rect key="frame" x="63.666666666666686" y="0.0" width="250" height="60"/>
@@ -299,14 +299,14 @@ Connect and transfer the program!</string>
                                                         </subviews>
                                                     </stackView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cuc-eq-ABn">
-                                                        <rect key="frame" x="0.0" y="308.66666666666669" width="377" height="40"/>
+                                                        <rect key="frame" x="0.0" y="330.66666666666669" width="377" height="40"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="M4S-c5-zRt"/>
                                                         </constraints>
                                                     </view>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Ls7-yW-hXq">
-                                                        <rect key="frame" x="0.0" y="356.66666666666674" width="377" height="324.33333333333326"/>
+                                                        <rect key="frame" x="0.0" y="378.66666666666674" width="377" height="324.33333333333326"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Gespeicherte Programme in deinem Calliope mini Ordner können geöffnet, übertragen und geteilt werden." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V6G-YI-Xec">
                                                                 <rect key="frame" x="0.0" y="0.0" width="377" height="64.333333333333329"/>
@@ -387,11 +387,12 @@ Connect and transfer the program!</string>
                         <outlet property="programContainerView" destination="HV9-lW-Faa" id="zrs-ZN-zc5"/>
                         <outlet property="scanButton" destination="49i-Ve-lcm" id="3fR-h6-9cM"/>
                         <outlet property="stackView" destination="Dxt-9f-Z4u" id="j6H-TX-rQZ"/>
+                        <segue destination="eeY-2x-OZY" kind="show" identifier="openHexFile" destinationCreationSelector="openHexFile:" id="COy-xJ-NpQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t5x-PS-nsJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="657.90697674418607" y="28.969957081545065"/>
+            <point key="canvasLocation" x="677" y="23"/>
         </scene>
         <!--Editors Collection View Controller-->
         <scene sceneID="nxH-4H-qrq">
@@ -817,7 +818,7 @@ Connect and transfer the program!</string>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="7ZG-zz-cOm"/>
+        <segue reference="COy-xJ-NpQ"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="calliope-lilablau"/>
     <resources>

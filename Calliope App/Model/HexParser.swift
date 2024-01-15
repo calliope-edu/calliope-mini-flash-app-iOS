@@ -21,9 +21,11 @@ struct HexParser {
 
     func parse(f: (UInt32,Data) -> ()) {
 
+        url.startAccessingSecurityScopedResource()
         guard let reader = StreamReader(path: url.path) else {
             return
         }
+        url.stopAccessingSecurityScopedResource()
 
         defer {
             reader.close()

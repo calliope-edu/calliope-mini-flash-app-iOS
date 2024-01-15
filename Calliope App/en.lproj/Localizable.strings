@@ -161,7 +161,7 @@
 "Program exported" = "Program exported";
 
 /* No comment provided by engineer. */
-"Program exported message" = "The program was saved under \"Documents/Calliope mini\" on your device.";
+"Program exported message" = "The program was saved in the Calliope mini folder on your device.";
 
 /* No comment provided by engineer. */
 "Push the button and follow the instructions for connecting to your Calliope" = "Display ID pattern on the Calliope mini: Press and hold A+B+Reset, release reset after 1 second. OR: Press Reset 3 Times. More info under \"Help“.";
@@ -253,3 +253,11 @@
 /* No comment provided by engineer. */
 "Schließen" = "Close";
 
+/* No comment provided by engineer. */
+"Möchtest du die Datei sichern oder auf deinen Calliope mini übertragen?" = "Do you want to save the file or transfer it to your Calliope mini";
+
+/* No comment provided by engineer. */
+"Datei geöffnet" = "Opened file";
+
+/* No comment provided by engineer. */
+"Sichern" = "Save";

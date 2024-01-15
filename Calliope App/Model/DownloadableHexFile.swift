@@ -27,13 +27,26 @@ extension DownloadableHexFile {
         return downloadedHexFile?.name ?? loadableProgramName
     }
     var calliopeV1andV2Bin: Data {
-        return downloadedHexFile?.calliopeV1andV2Bin ?? Data()
+        return downloadedHexFile?.calliopeV1andV2Bin ?? loadExternalData()
     }
     var calliopeV3Bin: Data {
-        return downloadedHexFile?.calliopeV3Bin ?? Data()
+        return downloadedHexFile?.calliopeV3Bin ?? loadExternalData()
     }
+    
     var partialFlashingInfo: (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? {
         return downloadedHexFile?.partialFlashingInfo 
+    }
+    
+    private func loadExternalData() -> Data {
+        let url = URL(string: loadableProgramURL) ?? URL(string: "/")!
+        let parser = HexParser(url:url)
+        var bin = Data()
+        parser.parse { (address, data) in
+            if address >= 0x1C000 && address < 0x77000 {
+                bin.append(data)
+            }
+        }
+        return bin
     }
     
     public func load(completion: @escaping (Error?) -> ()) {

@@ -77,7 +77,7 @@
 "Download the Swift Playgrounds App" = "Lade die Swift Playgrounds App";
 
 /* No comment provided by engineer. */
-"Rename" = "Bearbeiten";
+"Rename" = "Umbenennen";
 
 /* No comment provided by engineer. */
 "Encountered an error discovering or connecting calliope:" = "Es ist ein Fehler beim Erkennen oder Verbinden aufgetreten:";
@@ -167,7 +167,7 @@
 "Program exported" = "Program exportiert";
 
 /* No comment provided by engineer. */
-"Program exported message" = "Das Program wurde in \"Dokumente/Calliope mini\" auf dem Gerät gespeichert.";
+"Program exported message" = "Das Program wurde im Calliope mini Ordner auf dem Gerät gespeichert.";
 
 /* No comment provided by engineer. */
 "Push the button and follow the instructions for connecting to your Calliope" = "Muster auf dem Calliope mini anzeigen: 
@@ -249,3 +249,12 @@ Weitere Infos unter „Hilfe”.";
 
 /* No comment provided by engineer. */
 "Save and thorough upload" = "Speichern und gründliches Übertragen";
+
+/* No comment provided by engineer. */
+"Möchtest du die Datei sichern oder auf deinen Calliope mini übertragen?" = "Möchtest du die Datei sichern oder auf deinen Calliope mini übertragen?";
+
+/* No comment provided by engineer. */
+"Datei geöffnet" = "Datei geöffnet";
+
+/* No comment provided by engineer. */
+"Sichern" = "Sichern";
