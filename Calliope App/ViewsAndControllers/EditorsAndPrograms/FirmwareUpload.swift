@@ -181,13 +181,10 @@ class FirmwareUpload {
 
     func upload(finishedCallback: @escaping () -> ()) throws {
         // Validating for the correct Version of the Hex File
-        let fileHexVersion = file.getHexVersion()
-        if (calliope is CalliopeV3) && !(fileHexVersion.contains(where: [.v3, .universal].contains)) {
-            throw "Invalid Hex Version, should be for v3, but is not"
-        } else if (calliope is CalliopeV1AndV2 && !(fileHexVersion.contains(where: [.v2, .universal].contains))) {
-            throw "Invalid Hex Version, should be for v1 or v2, but is not"
+        let fileHexTypes = file.getHexTypes()
+        if !calliope!.compatibleHexTypes.contains(where: fileHexTypes.contains) {
+            throw "Unexpected Hex file version"
         }
-        
         
         FirmwareUpload.uploadingInstance = self
 

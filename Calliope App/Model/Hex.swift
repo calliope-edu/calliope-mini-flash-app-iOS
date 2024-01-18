@@ -10,7 +10,7 @@ protocol Hex {
     var calliopeV3Bin: Data { get }
     var partialFlashingInfo: (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? { get }
     
-    func getHexVersion() -> Set<HexParser.HexVersion>
+    func getHexTypes() -> Set<HexParser.HexVersion>
 }
 
 struct InitPacket {
@@ -130,7 +130,7 @@ struct HexFile: Hex, Equatable {
 		return lhs.url == rhs.url && lhs.name == rhs.name
 	}
     
-    func getHexVersion() -> Set<HexParser.HexVersion>{
+    func getHexTypes() -> Set<HexParser.HexVersion>{
         return HexParser(url: url).getHexVersion()
     }
 }

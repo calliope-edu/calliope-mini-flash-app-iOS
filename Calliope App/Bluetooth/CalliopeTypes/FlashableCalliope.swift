@@ -19,6 +19,8 @@ class FlashableCalliope: BLECalliope, DFUServiceDelegate {
     private var isPartiallyFlashing = false
     
     public internal(set) var shouldRebootOnDisconnect = false
+    
+    public var compatibleHexTypes : Set<HexParser.HexVersion> { [] }
 
     internal private(set) var file: Hex?
     
@@ -391,6 +393,10 @@ class FlashableCalliope: BLECalliope, DFUServiceDelegate {
 
 class CalliopeV1AndV2: FlashableCalliope {
     
+    override var compatibleHexTypes: Set<HexParser.HexVersion> {
+        return [.universal, .v2]
+    }
+    
     override var requiredServices: Set<CalliopeService> {
         return [.dfuControlService]
     }
@@ -454,6 +460,10 @@ class CalliopeV3: FlashableCalliope {
                 
             }
         }
+    }
+    
+    override var compatibleHexTypes: Set<HexParser.HexVersion> {
+        return [.universal, .v3]
     }
     
     override var requiredServices: Set<CalliopeService> {

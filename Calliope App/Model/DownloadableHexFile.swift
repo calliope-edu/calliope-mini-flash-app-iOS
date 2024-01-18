@@ -86,7 +86,7 @@ extension DownloadableHexFile {
         }
     }
     
-    func getHexVersion() -> Set<HexParser.HexVersion>{
+    func getHexTypes() -> Set<HexParser.HexVersion>{
         var hexVersion = HexParser(url: url).getHexVersion()
         return HexParser(url: url).getHexVersion()
     }

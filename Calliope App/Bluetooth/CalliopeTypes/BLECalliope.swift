@@ -16,6 +16,7 @@ class BLECalliope: NSObject, CBPeripheralDelegate {
     var requiredServices : Set<CalliopeService> {
         []
     }
+    
     //servcies that are not strictly necessary
     var optionalServices : Set<CalliopeService> { [] }
     
