@@ -104,6 +104,7 @@
 		2FC2A12B22C962D100675C2F /* NewsDetailWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC2A12A22C962D100675C2F /* NewsDetailWebViewController.swift */; };
 		2FCB70E626C7FCA300DF79B7 /* HelpContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCB70E526C7FCA300DF79B7 /* HelpContentViewController.swift */; };
 		2FCB70E826C7FD5300DF79B7 /* HelpWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCB70E726C7FD5300DF79B7 /* HelpWebViewController.swift */; };
+		601040AC2B592B7300526735 /* HexFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601040AB2B592B7300526735 /* HexFileManager.swift */; };
 		60316BF82B01FEC300130C0D /* BLECalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60316BF72B01FEC300130C0D /* BLECalliope.swift */; };
 		60316BFA2B0210CC00130C0D /* CalliopeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60316BF92B0210CC00130C0D /* CalliopeFactory.swift */; };
 		604841D52B1F328A0037A825 /* OnboardingOfflineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604841D42B1F328A0037A825 /* OnboardingOfflineViewController.swift */; };
@@ -237,6 +238,7 @@
 		2FCB70E526C7FCA300DF79B7 /* HelpContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpContentViewController.swift; sourceTree = "<group>"; };
 		2FCB70E726C7FD5300DF79B7 /* HelpWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpWebViewController.swift; sourceTree = "<group>"; };
 		3849EA7340C0FAB5DB1A4000 /* Pods-Calliope App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.debug.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.debug.xcconfig"; sourceTree = "<group>"; };
+		601040AB2B592B7300526735 /* HexFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexFileManager.swift; sourceTree = "<group>"; };
 		601A19142B30658200E98E69 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
 		60316BF72B01FEC300130C0D /* BLECalliope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLECalliope.swift; sourceTree = "<group>"; };
 		60316BF92B0210CC00130C0D /* CalliopeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeFactory.swift; sourceTree = "<group>"; };
@@ -428,6 +430,7 @@
 				2F57C3B32394F78B008B0D69 /* DownloadableHexFile.swift */,
 				2F375ABA237F28BC004ED8D7 /* DefaultProgram.swift */,
 				2F2B809925A0E01500A7CCF7 /* CodeSnippets.swift */,
+				601040AB2B592B7300526735 /* HexFileManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -762,6 +765,7 @@
 				2F61459922BF761F001C2734 /* Hex.swift in Sources */,
 				2F763FE625A607A400C2029D /* SwiftCodeSnippetHighlighter.swift in Sources */,
 				2F1BD9952674D48C006A47F2 /* AutoHeightCollectionViewFlowLayout.swift in Sources */,
+				601040AC2B592B7300526735 /* HexFileManager.swift in Sources */,
 				2F61458E22BF761F001C2734 /* Matrix.swift in Sources */,
 				2F61457A22BF761F001C2734 /* ExtURL.swift in Sources */,
 				60316BFA2B0210CC00130C0D /* CalliopeFactory.swift in Sources */,

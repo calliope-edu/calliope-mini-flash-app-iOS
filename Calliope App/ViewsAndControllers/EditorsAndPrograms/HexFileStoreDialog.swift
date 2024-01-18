@@ -21,7 +21,9 @@ enum HexFileStoreDialog {
         alertStart.addAction(UIAlertAction(title: NSLocalizedString("Übertragen", comment: ""), style: .default) { _ in
             let program = DefaultProgram(programName: NSLocalizedString(hexFile.deletingPathExtension().lastPathComponent, comment:""), url: hexFile.standardizedFileURL.relativeString)
             program.downloadFile = false
-            FirmwareUpload.showUploadUI(controller: controller, program: program)
+            FirmwareUpload.showUploadUI(controller: controller, program: program) {
+                MatrixConnectionViewController.instance.connect()
+            }
         })
         alertStart.addAction(UIAlertAction(title: NSLocalizedString("Schließen", comment: ""), style: .cancel) )
         controller.present(alertStart, animated: true)

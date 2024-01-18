@@ -67,12 +67,35 @@ class FirmwareUpload {
 
     public static func uploadWithoutConfirmation(controller: UIViewController, program: Hex,
                                                  completion: (() -> ())? = nil) {
+        
+        let informationLink: String = "https://calliope.cc/programmieren/mobil/ipad#hardware"
+        
         let uploader = FirmwareUpload(file: program, controller: controller)
         controller.present(uploader.alertView, animated: true) {
-            uploader.upload(finishedCallback: {
-                controller.dismiss(animated: true, completion: nil)
-                completion?()
-            })
+            do {
+                try uploader.upload(finishedCallback: {
+                    controller.dismiss(animated: true, completion: nil)
+                    completion?()
+                })
+            } catch {
+                FirmwareUpload.uploadingInstance = nil
+                UIApplication.shared.isIdleTimerDisabled = false
+                
+                
+                
+                let alert = UIAlertController(title: NSLocalizedString("Upload failed", comment: ""), message: String(format:NSLocalizedString("The program does not seem to match the version of your Calliope mini. Please check the hardware selection in your editor again.", comment: "")), preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel) {
+                    _ in uploader.alertView.dismiss(animated: true)
+                })
+                alert.addAction(UIAlertAction(title: NSLocalizedString("Further Information", comment: ""), style: .default) { _ in
+                    if let url = URL(string: informationLink) {
+                        UIApplication.shared.open(url)
+                    }
+                    uploader.alertView.dismiss(animated: true)
+                })
+                uploader.alertView.present(alert, animated: true)
+            }
+            
         }
     }
 
@@ -156,7 +179,16 @@ class FirmwareUpload {
 
 	private var calliope = MatrixConnectionViewController.instance.usageReadyCalliope
 
-    func upload(finishedCallback: @escaping () -> ()) {
+    func upload(finishedCallback: @escaping () -> ()) throws {
+        // Validating for the correct Version of the Hex File
+        let fileHexVersion = file.getHexVersion()
+        if (calliope is CalliopeV3) && !(fileHexVersion.contains(where: [.v3, .universal].contains)) {
+            throw "Invalid Hex Version, should be for v3, but is not"
+        } else if (calliope is CalliopeV1AndV2 && !(fileHexVersion.contains(where: [.v2, .universal].contains))) {
+            throw "Invalid Hex Version, should be for v1 or v2, but is not"
+        }
+        
+        
         FirmwareUpload.uploadingInstance = self
 
         let background_ident = UIApplication.shared.beginBackgroundTask(withName: "flashing", expirationHandler: {() -> Void in

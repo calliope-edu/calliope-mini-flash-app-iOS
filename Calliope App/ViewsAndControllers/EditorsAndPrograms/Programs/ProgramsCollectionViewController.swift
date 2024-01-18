@@ -83,7 +83,7 @@ class ProgramsCollectionViewController: UICollectionViewController, ProgramCellD
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        uploadProgram(of: collectionView.cellForItem(at: indexPath) as! ProgramCollectionViewCell)
+        return
     }
 
     // menu

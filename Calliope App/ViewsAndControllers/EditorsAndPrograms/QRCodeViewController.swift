@@ -99,14 +99,6 @@ class QRCodeViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         editor.url = URL.init(string: foundQrCodeString)
         return EditorViewController(coder: coder, editor: editor)
     }
-    
-    @IBAction func downloadScannedProgram(_ sender: Any) {
-        if foundQrCodeString.isEmpty {
-            return
-        }
-        let program = QRCodeHexFile.init(url: foundQrCodeString)
-        FirmwareUpload.showUIForDownloadableProgram(controller: self, program: program)
-    }
 }
 
 

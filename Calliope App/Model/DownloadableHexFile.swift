@@ -85,4 +85,9 @@ extension DownloadableHexFile {
             return nil
         }
     }
+    
+    func getHexVersion() -> Set<HexParser.HexVersion>{
+        var hexVersion = HexParser(url: url).getHexVersion()
+        return HexParser(url: url).getHexVersion()
+    }
 }

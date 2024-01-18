@@ -258,3 +258,12 @@ Weitere Infos unter „Hilfe”.";
 
 /* No comment provided by engineer. */
 "Sichern" = "Sichern";
+
+/* No comment provided by engineer. */
+"The program does not seem to match the version of your Calliope mini. Please check the hardware selection in your editor again." = "Das Programm scheint nicht zu der Version des Calliope mini zu passen. Bitte überprüfe die Hardware Auswahl in deinem Editor nochmal.";
+
+/* No comment provided by engineer, */
+"Further Information" = "Weitere Informationen";
+
+/* No comment provided by engineer, */
+"Upload failed" = "Übertragen fehlgeschlagen";

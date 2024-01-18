@@ -10,7 +10,7 @@ import Foundation
 
 class DefaultProgram: DownloadableHexFile {
 
-    var loadableProgramName = NSLocalizedString("Calliope mini 3", comment:"")
+    var loadableProgramName: String
     var loadableProgramURL = UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV3Url.rawValue)!
     var downloadFile: Bool = true
     
@@ -19,22 +19,5 @@ class DefaultProgram: DownloadableHexFile {
     init(programName: String, url: String) {
         loadableProgramName = programName
         loadableProgramURL = url
-    }
-}
-
-
-class QRCodeHexFile: DownloadableHexFile {
-    var downloadFile: Bool
-    
-    var downloadedHexFile: HexFile?
-    
-    var loadableProgramName: String
-    
-    var loadableProgramURL: String
-    
-    init (url: String) {
-        loadableProgramName = "Test_File"
-        loadableProgramURL = url
-        downloadFile = true
     }
 }
