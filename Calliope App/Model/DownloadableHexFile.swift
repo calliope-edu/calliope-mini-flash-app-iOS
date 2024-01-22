@@ -21,7 +21,7 @@ extension DownloadableHexFile {
         return downloadedHexFile?.date ?? Date()
     }
     var url: URL {
-        downloadedHexFile?.url ?? URL(string: "/")!
+        downloadedHexFile?.url ?? (URL(string: loadableProgramURL) ?? URL(string: "/")!)
     }
     var name: String {
         return downloadedHexFile?.name ?? loadableProgramName
@@ -87,7 +87,6 @@ extension DownloadableHexFile {
     }
     
     func getHexTypes() -> Set<HexParser.HexVersion>{
-        var hexVersion = HexParser(url: url).getHexVersion()
         return HexParser(url: url).getHexVersion()
     }
 }

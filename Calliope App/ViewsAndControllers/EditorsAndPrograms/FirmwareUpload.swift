@@ -182,7 +182,11 @@ class FirmwareUpload {
     func upload(finishedCallback: @escaping () -> ()) throws {
         // Validating for the correct Version of the Hex File
         let fileHexTypes = file.getHexTypes()
-        if !calliope!.compatibleHexTypes.contains(where: fileHexTypes.contains) {
+        
+        guard let calliope else {
+            return
+        }
+        if !calliope.compatibleHexTypes.contains(where: fileHexTypes.contains) {
             throw "Unexpected Hex file version"
         }
         
@@ -210,7 +214,7 @@ class FirmwareUpload {
 		}
 
 		do {
-            try calliope?.upload(file: file, progressReceiver: self, statusDelegate: self, logReceiver: self)
+            try calliope.upload(file: file, progressReceiver: self, statusDelegate: self, logReceiver: self)
 		}
 		catch {
 			DispatchQueue.main.async { [weak self] in

@@ -61,6 +61,10 @@
 	<string>To connect to the calliope, this app uses bluetooth!</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>To connect to the calliope, this app uses bluetooth!</string>
+	<key>NSCameraUsageDescription</key>
+	<string>To read a QR Code this app uses the camera. </string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>To use Open Roberta, this app uses the Microphone</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>RobotoMono-ThinItalic.ttf</string>
@@ -160,7 +164,5 @@
 			</dict>
 		</dict>
 	</array>
-	<key>NSCameraUsageDescription</key>
-	<string>To read a QR Code this app uses the camera. </string>
 </dict>
 </plist>
