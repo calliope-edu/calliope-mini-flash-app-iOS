@@ -8,8 +8,11 @@
 
 import UIKit
 import DeepDiff
+import ExternalAccessory
+import CoreServices
+import UniformTypeIdentifiers
 
-class ProgramsCollectionViewController: UICollectionViewController, ProgramCellDelegate {
+class ProgramsCollectionViewController: UICollectionViewController, ProgramCellDelegate, UIDocumentPickerDelegate {
 
     private let reuseIdentifierProgram = "uploadProgramCell"
 
@@ -111,9 +114,63 @@ class ProgramsCollectionViewController: UICollectionViewController, ProgramCellD
                 UIAction(title: NSLocalizedString("Rename", comment: ""), image: UIImage(systemName: "rectangle.and.pencil.and.ellipsis"), handler: { (action) in (
                             self.collectionView.cellForItem(at: indexPath) as? ProgramCollectionViewCell)?.edit() }),
                 UIAction(title: NSLocalizedString("Delete", comment: ""), image: UIImage(systemName: "trash"), handler: { (action) in (
-                            self.collectionView.cellForItem(at: indexPath) as? ProgramCollectionViewCell)?.delete(nil) })
+                            self.collectionView.cellForItem(at: indexPath) as? ProgramCollectionViewCell)?.delete(nil) }),
+                UIAction(title: NSLocalizedString("USB", comment: ""), image: UIImage(systemName: "arrow.left.arrow.right"), handler: { (action) in (
+                    self.handleUsbCalliope(of: collectionView.cellForItem(at: indexPath) as! ProgramCollectionViewCell) ) })
             ]
             return UIMenu(title: "", children: actions)
+        }
+    }
+    
+    static var selectedUsbMiniLocationUrl: URL?
+    private var transferURL: URL?
+
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+       let selectedURL = urls[0]
+       ProgramsCollectionViewController.selectedUsbMiniLocationUrl = selectedURL
+    }
+
+    fileprivate func writeToCalliope(_ selectedMiniUsbLocationUrl: URL?) {
+        LogNotify.log("Calliope mini URL already set, starting to write to Calliope mini")
+        do {
+            let tempUrl = URL(string: selectedMiniUsbLocationUrl!.relativeString + transferURL!.lastPathComponent.replacingOccurrences(of: " ", with: ""))
+            let sourceUrlAccess = selectedMiniUsbLocationUrl?.startAccessingSecurityScopedResource() ?? false
+            let tempUrlAccess = tempUrl?.startAccessingSecurityScopedResource() ?? false
+            
+            defer {
+                if sourceUrlAccess {
+                    selectedMiniUsbLocationUrl?.stopAccessingSecurityScopedResource()
+                }
+                if tempUrlAccess {
+                    tempUrl?.stopAccessingSecurityScopedResource()
+                }
+            }
+            let data = try Data(contentsOf: transferURL!)
+            
+            while(!FileManager.default.isReadableFile(atPath:selectedMiniUsbLocationUrl!.path)) {
+                print("Waiting")
+            }
+            try data.write(to: tempUrl!)
+        } catch {
+            LogNotify.log("Writing to Calliope failed with: \(error.localizedDescription)")
+            print(error)
+        }
+    }
+    
+    func handleUsbCalliope(of cell: ProgramCollectionViewCell) {
+        transferURL = cell.program.url
+        let selectedUsbMiniLocationUrl = ProgramsCollectionViewController.selectedUsbMiniLocationUrl
+        if selectedUsbMiniLocationUrl != nil {
+            writeToCalliope(selectedUsbMiniLocationUrl)
+        } else {
+            if #available(iOS 14.0, *) {
+                let documentPicker = UIDocumentPickerViewController(documentTypes: [UTType.folder.identifier], in: .open)
+                documentPicker.delegate = self
+                present(documentPicker, animated: true, completion: nil)
+            } else {
+                // Fallback on earlier versions
+                //TODO: Alert saying this is only available to Devices using iOS 14 or later
+            }
         }
     }
 

@@ -28,7 +28,7 @@ struct HexParser {
     }
     
     func getHexVersion() -> Set<HexVersion> {
-        _ = url.startAccessingSecurityScopedResource()
+        let urlAccess = url.startAccessingSecurityScopedResource()
         guard let reader = StreamReader(path: url.path) else {
             var enumSet: Set<HexVersion> = Set.init()
             enumSet.insert(.invalid)
@@ -37,7 +37,9 @@ struct HexParser {
 
         defer {
             reader.close()
-            url.stopAccessingSecurityScopedResource()
+            if urlAccess {
+                url.stopAccessingSecurityScopedResource()
+            }
         }
         
         var relevantLines: Set<String> = Set.init()
@@ -58,14 +60,16 @@ struct HexParser {
 
     func parse(f: (UInt32,Data) -> ()) {
 
-        _ = url.startAccessingSecurityScopedResource()
+        let urlAccess = url.startAccessingSecurityScopedResource()
         guard let reader = StreamReader(path: url.path) else {
             return
         }
 
         defer {
             reader.close()
-            url.stopAccessingSecurityScopedResource()
+            if urlAccess {
+                url.stopAccessingSecurityScopedResource()
+            }
         }
 
         var addressHi: UInt32 = 0
