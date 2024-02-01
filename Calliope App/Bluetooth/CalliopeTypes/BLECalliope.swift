@@ -10,7 +10,7 @@ import UIKit
 import iOSDFULibrary
 import CoreBluetooth
 
-class BLECalliope: NSObject, CBPeripheralDelegate {
+class BLECalliope: Calliope {
     
     //the services required for the usage
     var requiredServices : Set<CalliopeService> {
