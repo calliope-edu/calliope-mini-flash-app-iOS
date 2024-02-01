@@ -335,6 +335,7 @@
 		2F61450E22BF75DE001C2734 /* Calliope App */ = {
 			isa = PBXGroup;
 			children = (
+				60D1FD692B6BCF3D00BC6202 /* CalliopeModels */,
 				2F763FE125A1F4A100C2029D /* Calliope App.entitlements */,
 				2F61450F22BF75DE001C2734 /* AppDelegate.swift */,
 				2F61451A22BF75DF001C2734 /* LaunchScreen.storyboard */,
@@ -356,18 +357,10 @@
 		2F61452D22BF761F001C2734 /* Bluetooth */ = {
 			isa = PBXGroup;
 			children = (
-				609D9BD52B67AD2200F2ECAE /* Calliope.swift */,
-				609D9BD32B67A15500F2ECAE /* USBCalliope.swift */,
 				2F61452E22BF761F001C2734 /* CalliopeBLEProfile.swift */,
-				2F61452F22BF761F001C2734 /* CalliopeDiscovery.swift */,
 				2F61453022BF761F001C2734 /* Extension_CBUUID.swift */,
-				2F82DCA325C6FE5E00F00EE8 /* CalliopeTypes */,
 				2F61453222BF761F001C2734 /* BLEDataTypes.swift */,
 				2F61453322BF761F001C2734 /* BluetoothConstants.swift */,
-				2F61453522BF761F001C2734 /* DiscoveredBLEDevice.swift */,
-				60316BF92B0210CC00130C0D /* CalliopeFactory.swift */,
-				60BBDB852B6B90C2003AD3CE /* DiscoveredDevice.swift */,
-				60BBDB872B6BA16F003AD3CE /* DiscoveredUSBDevice.swift */,
 			);
 			path = Bluetooth;
 			sourceTree = "<group>";
@@ -445,15 +438,6 @@
 				601040AB2B592B7300526735 /* HexFileManager.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		2F82DCA325C6FE5E00F00EE8 /* CalliopeTypes */ = {
-			isa = PBXGroup;
-			children = (
-				2F61453122BF761F001C2734 /* FlashableBLECalliope.swift */,
-				60316BF72B01FEC300130C0D /* BLECalliope.swift */,
-			);
-			path = CalliopeTypes;
 			sourceTree = "<group>";
 		};
 		2F91665C2354062A0065AD81 /* Editors */ = {
@@ -586,6 +570,38 @@
 				BD1AFC4008F992EADC1C557D /* Pods-Calliope App.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		60D1FD692B6BCF3D00BC6202 /* CalliopeModels */ = {
+			isa = PBXGroup;
+			children = (
+				60D1FD6B2B6BCF9800BC6202 /* ConnectedCalliopes */,
+				60D1FD6A2B6BCF8700BC6202 /* DiscoveryCalliopes */,
+				60316BF92B0210CC00130C0D /* CalliopeFactory.swift */,
+				2F61452F22BF761F001C2734 /* CalliopeDiscovery.swift */,
+			);
+			path = CalliopeModels;
+			sourceTree = "<group>";
+		};
+		60D1FD6A2B6BCF8700BC6202 /* DiscoveryCalliopes */ = {
+			isa = PBXGroup;
+			children = (
+				2F61453522BF761F001C2734 /* DiscoveredBLEDevice.swift */,
+				60BBDB852B6B90C2003AD3CE /* DiscoveredDevice.swift */,
+				60BBDB872B6BA16F003AD3CE /* DiscoveredUSBDevice.swift */,
+			);
+			path = DiscoveryCalliopes;
+			sourceTree = "<group>";
+		};
+		60D1FD6B2B6BCF9800BC6202 /* ConnectedCalliopes */ = {
+			isa = PBXGroup;
+			children = (
+				60316BF72B01FEC300130C0D /* BLECalliope.swift */,
+				609D9BD52B67AD2200F2ECAE /* Calliope.swift */,
+				609D9BD32B67A15500F2ECAE /* USBCalliope.swift */,
+				2F61453122BF761F001C2734 /* FlashableBLECalliope.swift */,
+			);
+			path = ConnectedCalliopes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
