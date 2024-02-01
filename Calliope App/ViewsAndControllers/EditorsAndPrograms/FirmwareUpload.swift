@@ -221,6 +221,9 @@ class FirmwareUpload {
                 self?.showUploadError(error)
 			}
 		}
+        if calliope is USBCalliope {
+            MatrixConnectionViewController.instance.disconnectedUSBCalliope()
+        }
 	}
 
     func showUploadError(_ error: Error) {
@@ -266,7 +269,6 @@ extension FirmwareUpload: DFUProgressDelegate, DFUServiceDelegate, LoggerDelegat
         if [DFUState.aborted].contains(state) {
             self.dfuError(.deviceDisconnected, didOccurWithMessage: "dfu process aborted")
         }
-        
     }
 
     func dfuError(_ error: DFUError, didOccurWithMessage message: String) {

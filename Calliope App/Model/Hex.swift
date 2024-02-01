@@ -8,6 +8,7 @@ protocol Hex {
     var dateString: String { get }
     var calliopeV1andV2Bin: Data { get }
     var calliopeV3Bin: Data { get }
+    var callioeUSBUrl: URL { get }
     var partialFlashingInfo: (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? { get }
     
     func getHexTypes() -> Set<HexParser.HexVersion>
@@ -114,6 +115,12 @@ struct HexFile: Hex, Equatable {
             }
             
             return bin
+        }
+    }
+    
+    var callioeUSBUrl: URL {
+        get {
+            return url
         }
     }
     
