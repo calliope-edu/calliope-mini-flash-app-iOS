@@ -39,6 +39,13 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
     }
     
     func isConnected() -> Bool {
+        let accessResource = USBCalliope.calliopeLocation?.startAccessingSecurityScopedResource()
+        defer {
+            if accessResource ?? false {
+                USBCalliope.calliopeLocation?.stopAccessingSecurityScopedResource()
+            }
+        }
+        
         if (USBCalliope.calliopeLocation == nil) {
             return false
         } else {
@@ -47,8 +54,13 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
     }
     
     override func upload(file: Hex, progressReceiver: DFUProgressDelegate? = nil, statusDelegate: DFUServiceDelegate? = nil, logReceiver: LoggerDelegate? = nil) throws {
-        writeToCalliope(file)
-        statusDelegate?.dfuStateDidChange(to: .completed)
+        if isConnected(){
+            writeToCalliope(file)
+            statusDelegate?.dfuStateDidChange(to: .completed)
+        } else {
+            statusDelegate?.dfuStateDidChange(to: .aborted)
+        }
+        
     }
 
     fileprivate func writeToCalliope(_ file: Hex?) {
@@ -60,8 +72,6 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
                 }
             }
             try FileManager.default.copyItem(at: file!.callioeUSBUrl, to: USBCalliope.calliopeLocation!.appendingPathComponent(file!.callioeUSBUrl.lastPathComponent))
-            USBCalliope.calliopeLocation?.stopAccessingSecurityScopedResource()
-            print("Writing not implemented yet")
         } catch {
             print(error)
         }

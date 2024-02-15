@@ -253,6 +253,11 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
 			self.centralManager.cancelPeripheralConnection(connectedCalliope.peripheral)
 		}
 		//preemptively update connected calliope, in case delegate call does not happen
+        if connectedUSBCalliope != nil {
+            connectedCalliope = nil
+            discoveredCalliopes.removeValue(forKey: "USB_CALLIOPE")
+        }
+        self.connectedUSBCalliope = nil
 		self.connectedCalliope = nil
 	}
     
@@ -271,9 +276,13 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]){
         let url = urls.first
-        var discoveredCalliope = DiscoveredUSBDevice(url: url!, name: "USB_CALLIOPE")
-        discoveredCalliope.state = DiscoveredDevice.CalliopeBLEDeviceState.discovered
-        self.discoveredCalliopes.updateValue(discoveredCalliope, forKey: "USB_CALLIOPE")
+        let discoveredCalliope = DiscoveredUSBDevice(url: url!, name: "USB_CALLIOPE")
+        if (discoveredCalliope == nil) {
+            LogNotify.log("validation of location failed")
+        } else {
+            discoveredCalliope!.state = DiscoveredDevice.CalliopeBLEDeviceState.discovered
+            self.discoveredCalliopes.updateValue(discoveredCalliope!, forKey: "USB_CALLIOPE")
+        }
     }
     
 

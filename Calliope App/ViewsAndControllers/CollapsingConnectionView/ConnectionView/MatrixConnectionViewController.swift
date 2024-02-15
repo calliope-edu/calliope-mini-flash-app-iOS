@@ -163,8 +163,8 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     
     func handleHeightConstraint()  {
         if (usbSwitch.isOn) {
-            self.expandedHeight = 240
-            self.collapseHeightConstraint.constant = 240
+            self.expandedHeight = 250
+            self.collapseHeightConstraint.constant = 250
         } else {
             self.expandedHeight = 430
             self.collapseHeightConstraint.constant = 430
@@ -183,6 +183,9 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     
     public func disconnectedUSBCalliope() {
         connector.disconnectFromCalliope()
+        let alert = UIAlertController(title: NSLocalizedString("Automated disconnected", comment: ""), message: "USB Calliope has automatically disconnected after flashing process, please unplug the calliope", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in })
+        self.present(alert, animated: true)
     }
 
 	func animationCompletions(expand: Bool) {
