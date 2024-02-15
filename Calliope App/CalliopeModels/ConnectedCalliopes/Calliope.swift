@@ -34,6 +34,5 @@ class Calliope: NSObject, DFUServiceDelegate, CBPeripheralDelegate {
     }
     
     func notify(aboutState newState: DiscoveredDevice.CalliopeBLEDeviceState) {
-        LogNotify.log("Notify not implemented yet")
     }
 }

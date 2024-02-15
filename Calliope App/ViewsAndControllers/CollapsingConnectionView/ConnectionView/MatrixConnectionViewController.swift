@@ -178,14 +178,17 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     
     @IBAction func startUSBconnect(_ sender: Any) {
         print("Start connection to USB Device")
-        self.connector.setupUSBCalliope(view: self)
+        self.connector.initializeConnectionToUsbCalliope(view: self)
     }
     
-    public func disconnectedUSBCalliope() {
-        connector.disconnectFromCalliope()
+    func showFalseLocationAlert() {
         let alert = UIAlertController(title: NSLocalizedString("Automated disconnected", comment: ""), message: "USB Calliope has automatically disconnected after flashing process, please unplug the calliope", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in })
         self.present(alert, animated: true)
+    }
+    
+    public func disconnectFromCalliope() {
+        connector.disconnectFromCalliope()
     }
 
 	func animationCompletions(expand: Bool) {
@@ -291,18 +294,13 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
                 self.connector.disconnectFromCalliope()
             }
 			
-        case .usbDisconnected:
-            print("USB Calliope disconnected")
         case .usbConnecting:
             connectButton.connectionState = .connecting
-            
-            print("USB Calliope connecting")
         case .usbConnected:
             if let connectedCalliope = connector.connectedCalliope, discoveredCalliopeWithCurrentMatrix != connector.connectedCalliope {
                 connectedCalliope.updateBlock = updateDiscoveryState
             }
             evaluateCalliopeState(discoveredCalliopeWithCurrentMatrix!)
-            print("USB Calliope connected")
         }
 	}
     

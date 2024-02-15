@@ -19,10 +19,11 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
 		case discoveredAll //discovery has finished with discovered calliopes
 		case connecting //connecting to some calliope
 		case connected //connected to some calliope
-        case usbDisconnected
-        case usbConnecting
-        case usbConnected
+        case usbConnecting // connecting to a usb calliope
+        case usbConnected // connected to a usb calliope
 	}
+    
+    private static let usbCalliopeName = "USB_CALLIOPE"
 
 	var updateQueue = DispatchQueue.main
 	var updateBlock: () -> () = {}
@@ -255,13 +256,13 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
 		//preemptively update connected calliope, in case delegate call does not happen
         if connectedUSBCalliope != nil {
             connectedCalliope = nil
-            discoveredCalliopes.removeValue(forKey: "USB_CALLIOPE")
+            discoveredCalliopes.removeValue(forKey: CalliopeDiscovery.usbCalliopeName)
         }
         self.connectedUSBCalliope = nil
 		self.connectedCalliope = nil
 	}
     
-    func setupUSBCalliope(view: UIViewController) {
+    func initializeConnectionToUsbCalliope(view: UIViewController) {
         state = .usbConnecting
         if #available(iOS 14.0, *) {
             let documentPicker = UIDocumentPickerViewController(documentTypes: [UTType.folder.identifier], in: .open)
@@ -276,15 +277,15 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]){
         let url = urls.first
-        let discoveredCalliope = DiscoveredUSBDevice(url: url!, name: "USB_CALLIOPE")
+        let discoveredCalliope = DiscoveredUSBDevice(url: url!, name: CalliopeDiscovery.usbCalliopeName)
         if (discoveredCalliope == nil) {
-            LogNotify.log("validation of location failed")
+            MatrixConnectionViewController.instance.showFalseLocationAlert()
+            state = .initialized
         } else {
             discoveredCalliope!.state = DiscoveredDevice.CalliopeBLEDeviceState.discovered
-            self.discoveredCalliopes.updateValue(discoveredCalliope!, forKey: "USB_CALLIOPE")
+            self.discoveredCalliopes.updateValue(discoveredCalliope!, forKey: CalliopeDiscovery.usbCalliopeName)
         }
     }
-    
 
 	func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
 		guard let name = discoveredCalliopeUUIDNameMap[peripheral.identifier],
@@ -329,7 +330,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
                 self.attemptReconnect()
 			}
 		case .unknown, .resetting, .unsupported, .unauthorized, .poweredOff:
-            if (state == .usbConnected || state == .usbConnecting || state == .usbDisconnected) {
+            if (state == .usbConnected || state == .usbConnecting) {
                 return
             }
 			//bluetooth is in a state where we cannot do anything

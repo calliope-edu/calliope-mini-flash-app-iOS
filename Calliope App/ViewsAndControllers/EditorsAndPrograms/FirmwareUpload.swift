@@ -71,10 +71,16 @@ class FirmwareUpload {
         let informationLink: String = "https://calliope.cc/programmieren/mobil/ipad#hardware"
         
         let uploader = FirmwareUpload(file: program, controller: controller)
+        let tempCalliope = MatrixConnectionViewController.instance.usageReadyCalliope
         controller.present(uploader.alertView, animated: true) {
             do {
                 try uploader.upload(finishedCallback: {
                     controller.dismiss(animated: true, completion: nil)
+                    if tempCalliope is USBCalliope {
+                        let alert = UIAlertController(title: NSLocalizedString("Automated disconnected", comment: ""), message: "USB Calliope has automatically disconnected after flashing process, please unplug the calliope", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in })
+                        controller.present(alert, animated: true)
+                    }
                     completion?()
                 })
             } catch {
@@ -222,7 +228,7 @@ class FirmwareUpload {
 			}
 		}
         if calliope is USBCalliope {
-            MatrixConnectionViewController.instance.disconnectedUSBCalliope()
+            MatrixConnectionViewController.instance.disconnectFromCalliope()
         }
 	}
 
