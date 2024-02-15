@@ -155,7 +155,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
             state = .usbConnected
         } else if connectingCalliope != nil {
 			state = .connecting
-		} else if centralManager.isScanning {
+        } else if centralManager.isScanning && !MatrixConnectionViewController.instance.isInUsbMode(){
 			state = discoveredCalliopes.isEmpty ? .discovering : .discovered
 		} else {
 			state = discoveredCalliopes.isEmpty ? .initialized : .discoveredAll
@@ -197,8 +197,10 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
 		//start scan only if central manger already connected to bluetooth system service (=poweredOn)
 		//alternatively, this is invoked after the state of the central mananger changed to poweredOn.
 		if centralManager.state != .poweredOn {
-            updateQueue.async { self.errorBlock(NSLocalizedString("Activate Bluetooth!", comment: "")) }
-			state = .discoveryWaitingForBluetooth
+            if !MatrixConnectionViewController.instance.isInUsbMode() {
+                updateQueue.async { self.errorBlock(NSLocalizedString("Activate Bluetooth!", comment: "")) }
+                state = .discoveryWaitingForBluetooth
+            }
 		} else if !centralManager.isScanning {
             discoveredCalliopes = [:]
             discoveredCalliopeUUIDNameMap = [:]

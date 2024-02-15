@@ -15,6 +15,7 @@ class DiscoveredUSBDevice: DiscoveredDevice {
         self.url = url
         super.init(name: name)
         if !validateCalliope(url: url) {
+
             return nil
         }
        

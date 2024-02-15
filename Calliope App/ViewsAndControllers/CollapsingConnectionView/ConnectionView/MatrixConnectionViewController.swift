@@ -182,7 +182,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     }
     
     func showFalseLocationAlert() {
-        let alert = UIAlertController(title: NSLocalizedString("Automated disconnected", comment: ""), message: "USB Calliope has automatically disconnected after flashing process, please unplug the calliope", preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("Wrong location selected", comment: ""), message: "USB Location is not a USB Calliope folder", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in })
         self.present(alert, animated: true)
     }
@@ -222,7 +222,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     private var delayedDiscovery = false
 
 	@IBAction func connect() {
-		if self.connector.state == .initialized
+        if self.connector.state == .initialized && !isInUsbMode()
 			|| self.discoveredCalliopeWithCurrentMatrix == nil && self.connector.state == .discoveredAll {
 			connector.startCalliopeDiscovery()
 		} else if let calliope = self.discoveredCalliopeWithCurrentMatrix {
@@ -372,5 +372,9 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 
         alertController.addAction(UIAlertAction(title: "OK", style: .default))
         self.show(alertController, sender: nil)
+    }
+    
+    public func isInUsbMode() -> Bool{
+        return usbSwitch.isOn
     }
 }
