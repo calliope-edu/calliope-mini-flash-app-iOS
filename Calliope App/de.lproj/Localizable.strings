@@ -262,8 +262,14 @@ Weitere Infos unter „Hilfe”.";
 /* No comment provided by engineer. */
 "The program does not seem to match the version of your Calliope mini. Please check the hardware selection in your editor again." = "Das Programm scheint nicht zu der Version des Calliope mini zu passen. Bitte überprüfe die Hardware Auswahl in deinem Editor nochmal.";
 
-/* No comment provided by engineer, */
+/* No comment provided by engineer. */
 "Further Information" = "Weitere Informationen";
 
-/* No comment provided by engineer, */
+/* No comment provided by engineer. */
 "Upload failed" = "Übertragen fehlgeschlagen";
+
+/* No comment provided by engineer. */
+"Wrong location selected" = "Falschen Speicherort ausgewählt";
+
+/* No comment provided by engineer. */
+"USB Location is not a USB Calliope folder" = "Speicherort ist kein USB Ordner des Calliope mini, bitte wähle den korrekten Ordner";

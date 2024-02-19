@@ -1,3 +1,5 @@
 /* Class = "UILabel"; text = "1. Programm 5 starten\n2. Schütteln\n3. LED-Muster eingeben"; ObjectID = "ABo-Y2-qxl"; */
 "ABo-Y2-qxl.text" = "1. Press A+B and 1 Sek Reset \n2. Keep A+B pressed\n3. Transfer ID pattern";
 
+/* Class = "UIBUTTON"; text = "USB Calliope einrichten"; ObjectID = "Xhu-PJ-3s9"; */
+"Xhu-PJ-3s9.title" = "Set up USB Calliope"
