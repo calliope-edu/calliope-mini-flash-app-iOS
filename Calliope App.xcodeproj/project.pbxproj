@@ -206,8 +206,6 @@
 		2F684E3126E977FC008A39CD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2F684E3326E97801008A39CD /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2F6C1B88258FC7C600F4B5AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ConnectionView.storyboard; sourceTree = "<group>"; };
-		2F6C1B8C258FC7D000F4B5AC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ConnectionView.strings; sourceTree = "<group>"; };
-		2F6C1B8E258FC7FE00F4B5AC /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ConnectionView.strings; sourceTree = "<group>"; };
 		2F6C1B99258FC90300F4B5AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Onboarding.storyboard; sourceTree = "<group>"; };
 		2F763FE125A1F4A100C2029D /* Calliope App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Calliope App.entitlements"; sourceTree = "<group>"; };
 		2F763FE525A607A400C2029D /* SwiftCodeSnippetHighlighter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftCodeSnippetHighlighter.swift; sourceTree = "<group>"; };
@@ -247,6 +245,8 @@
 		60316BF72B01FEC300130C0D /* BLECalliope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLECalliope.swift; sourceTree = "<group>"; };
 		60316BF92B0210CC00130C0D /* CalliopeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeFactory.swift; sourceTree = "<group>"; };
 		604841D42B1F328A0037A825 /* OnboardingOfflineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingOfflineViewController.swift; sourceTree = "<group>"; };
+		607E71C52B8E30D8008EC146 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ConnectionView.strings; sourceTree = "<group>"; };
+		607E71C72B8E30DA008EC146 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ConnectionView.strings; sourceTree = "<group>"; };
 		609D9BD32B67A15500F2ECAE /* USBCalliope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USBCalliope.swift; sourceTree = "<group>"; };
 		609D9BD52B67AD2200F2ECAE /* Calliope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calliope.swift; sourceTree = "<group>"; };
 		60BBDB852B6B90C2003AD3CE /* DiscoveredDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredDevice.swift; sourceTree = "<group>"; };
@@ -944,8 +944,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				2F6C1B88258FC7C600F4B5AC /* Base */,
-				2F6C1B8C258FC7D000F4B5AC /* en */,
-				2F6C1B8E258FC7FE00F4B5AC /* de */,
+				607E71C52B8E30D8008EC146 /* de */,
+				607E71C72B8E30DA008EC146 /* en */,
 			);
 			name = ConnectionView.storyboard;
 			sourceTree = "<group>";
@@ -1095,6 +1095,7 @@
 				DEVELOPMENT_TEAM = GKA87N33H4;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "Calliope App/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1118,6 +1119,7 @@
 				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_TEAM = GKA87N33H4;
 				INFOPLIST_FILE = "Calliope App/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

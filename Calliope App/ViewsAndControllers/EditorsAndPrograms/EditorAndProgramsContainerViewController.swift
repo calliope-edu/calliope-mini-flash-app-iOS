@@ -90,7 +90,7 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
             containerVC.programsCollectionViewController?.collectionView.layoutIfNeeded()
         }
         
-        MatrixConnectionViewController.instance?.connectionDescriptionText = NSLocalizedString("Connect to enable uploading programs", comment: "")
+        MatrixConnectionViewController.instance?.connectionDescriptionText = NSLocalizedString("Verbinde deinen Calliope \n mini", comment: "")
         MatrixConnectionViewController.instance?.calliopeClass = DiscoveredBLEDDevice.self
     }
     
@@ -116,7 +116,7 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
     }
     
     @IBAction func navigateToImportFile() {
-        var types: [String] = getFileTypesFor(fileEnding: "hex")
+        let types: [String] = getFileTypesFor(fileEnding: "hex")
         
         let documentPickerController = UIDocumentPickerViewController(documentTypes: types, in: .import)
         documentPickerController.delegate = self

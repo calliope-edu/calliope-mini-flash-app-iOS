@@ -261,3 +261,16 @@
 
 /* No comment provided by engineer. */
 "Sichern" = "Save";
+
+/* No comment provided by engineer. */
+"Der Calliope mini startet das Programm, sobald die Übertragung beendet ist." = "The Calliope mini starts the programme as soon as the transmission is finished.";
+
+/* No comment provided by engineer. */
+"Übertragung läuft" = "Transmission running";
+
+/* No comment provided by engineer. */
+"Vor der nächsten Übertragung: \n 1. USB-Verbindung trennen \n 2. Batteriefach ausschalten" = "Before the next transfer: \n 1. Disconnect the USB connection \n 2. Switch off the battery compartment";
+
+"Übertragung abgeschlossen" = "Transfer completed";
+
+"Verbinde deinen Calliope \n mini" = "Connect your Calliope mini";

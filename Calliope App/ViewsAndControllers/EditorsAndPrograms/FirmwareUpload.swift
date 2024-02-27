@@ -77,7 +77,7 @@ class FirmwareUpload {
                 try uploader.upload(finishedCallback: {
                     controller.dismiss(animated: true, completion: nil)
                     if tempCalliope is USBCalliope {
-                        let alert = UIAlertController(title: NSLocalizedString("Automated disconnected", comment: ""), message: "USB Calliope has automatically disconnected after flashing process, please unplug the calliope", preferredStyle: .alert)
+                        let alert = UIAlertController(title: NSLocalizedString("Übertragung abgeschlossen", comment: ""), message: NSLocalizedString("Vor der nächsten Übertragung: \n 1. USB-Verbindung trennen \n 2. Batteriefach ausschalten", comment: ""), preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in })
                         controller.present(alert, animated: true)
                     }
@@ -126,21 +126,28 @@ class FirmwareUpload {
 			return alertController
 		}
 		
-        let uploadController = UIAlertController(title: NSLocalizedString("Uploading", comment: ""), message: "", preferredStyle: .alert)
-
-		let progressView = progressRing
-		progressView.translatesAutoresizingMaskIntoConstraints = false
-		uploadController.view.addSubview(progressView)
-
-
-        uploadController.view.addSubview(logTextView)
+        let uploadController = UIAlertController(title: NSLocalizedString("Übertragung läuft", comment: ""), message: "", preferredStyle: .alert)
+        
+        let progressView: UIView
         let logHeight = 0 //TODO: differenciate debug / production
-
-		uploadController.view.addConstraints(
+        
+        if calliope is USBCalliope {
+            uploadController.message = NSLocalizedString("Der Calliope mini startet das Programm, sobald die Übertragung beendet ist.", comment: "")
+            let activityIndicator = UIActivityIndicatorView(style: .large)
+            activityIndicator.startAnimating()
+            progressView = activityIndicator
+        } else {
+            progressView = progressRing
+        }
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+        
+        uploadController.view.addSubview(progressView)
+        uploadController.view.addSubview(logTextView)
+        uploadController.view.addConstraints(
             NSLayoutConstraint.constraints(withVisualFormat: "V:|-(80)-[progressView(120)]-(8)-[logTextView(logHeight)]-(50)-|", options: [], metrics: ["logHeight": logHeight], views: ["progressView" : progressView, "logTextView": logTextView]))
-		uploadController.view.addConstraints(
-			NSLayoutConstraint.constraints(withVisualFormat: "H:|-(80@900)-[progressView(120)]-(80@900)-|",
-										   options: [], metrics: nil, views: ["progressView" : progressView]))
+        uploadController.view.addConstraints(
+            NSLayoutConstraint.constraints(withVisualFormat: "H:|-(80@900)-[progressView(120)]-(80@900)-|",
+                                           options: [], metrics: nil, views: ["progressView" : progressView]))
 
         uploadController.view.addConstraints(
             NSLayoutConstraint.constraints(withVisualFormat: "H:|-(8@900)-[logTextView(264)]-(8@900)-|",
@@ -211,15 +218,20 @@ class FirmwareUpload {
             UIApplication.shared.endBackgroundTask(background_ident)
         }
 
-        self.failed = downloadCompletion
+        self.failed = {
+            downloadCompletion()
+            MatrixConnectionViewController.instance.enableDfuMode(mode: false)
+        }
 		self.finished = {
 			downloadCompletion()
 			DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.0) {
 				finishedCallback()
 			}
+            MatrixConnectionViewController.instance.enableDfuMode(mode: false)
 		}
 
 		do {
+            MatrixConnectionViewController.instance.enableDfuMode(mode: true)
             try calliope.upload(file: file, progressReceiver: self, statusDelegate: self, logReceiver: self)
 		}
 		catch {

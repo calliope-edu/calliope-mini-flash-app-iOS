@@ -33,6 +33,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     @IBOutlet var usbCalliopeButton: UIButton!
     
     @IBOutlet var usbSwitch: UISwitch!
+    var isInUsbMode: Bool = false
 
 	/// the matrix in which to draw the calliope name pattern
 	@IBOutlet var matrixView: MatrixView!
@@ -56,7 +57,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     }
 
 	public var discoveredCalliopeWithCurrentMatrix: DiscoveredDevice? {
-        if (usbSwitch.isOn) {
+        if (isInUsbMode) {
             return connector.discoveredCalliopes["USB_CALLIOPE"]
         } else {
             return connector.discoveredCalliopes[Matrix.matrix2friendly(matrixView.matrix) ?? ""]
@@ -64,7 +65,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 	}
 
     public var usageReadyCalliope: Calliope? {
-        if (usbSwitch.isOn) {
+        if (isInUsbMode) {
             return connector.connectedUSBCalliope?.usageReadyCalliope
         } else {
             return connector.connectedCalliope?.usageReadyCalliope
@@ -138,23 +139,33 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     
     @objc func switchChanged(usbSwitch: UISwitch) {
         
+        self.isInUsbMode = usbSwitch.isOn
+        
         self.connector.disconnectFromCalliope()
         
-        let viewToHide = (usbSwitch.isOn ? self.matrixSuperView : self.usbCalliopeButton)!
-        let viewToShow = (usbSwitch.isOn ? self.usbCalliopeButton : self.matrixSuperView)!
+        let viewToHide = (isInUsbMode ? self.matrixSuperView : self.usbCalliopeButton)!
+        let viewToShow = (isInUsbMode ? self.usbCalliopeButton : self.matrixSuperView)!
+        let buttonToHide = (isInUsbMode ? self.connectButton : nil)
+        let buttonToShow = (isInUsbMode ? nil : self.connectButton)
         viewToShow.alpha = 0.0
+        buttonToShow?.alpha = 0.0
         viewToHide.alpha = 1.0
+        buttonToHide?.alpha = 1.0
         viewToShow.isHidden = false
+        buttonToShow?.isHidden = false
         UIView.animate(withDuration: 0.1, animations: {
             viewToHide.alpha = 0.0
+            buttonToHide?.alpha = 0.0
         }) { completed in
             viewToHide.isHidden = true
+            buttonToHide?.isHidden = true
             self.handleHeightConstraint()
             UIView.animate(withDuration: 0.2) {
                 self.view.layoutIfNeeded()
             } completion: { _ in
                 UIView.animate(withDuration: 0.1) {
                     viewToShow.alpha = 1.0
+                    buttonToShow?.alpha = 1.0
                 }
             }
         }
@@ -162,9 +173,9 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     }
     
     func handleHeightConstraint()  {
-        if (usbSwitch.isOn) {
-            self.expandedHeight = 250
-            self.collapseHeightConstraint.constant = 250
+        if (isInUsbMode) {
+            self.expandedHeight = 200
+            self.collapseHeightConstraint.constant = 200
         } else {
             self.expandedHeight = 430
             self.collapseHeightConstraint.constant = 430
@@ -182,7 +193,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     }
     
     func showFalseLocationAlert() {
-        let alert = UIAlertController(title: NSLocalizedString("Wrong location selected", comment: ""), message: "USB Location is not a USB Calliope folder", preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("Falscher Speicherort", comment: ""), message: "Du hast keinen Calliope Ordner als Speicherort gewählt", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in })
         self.present(alert, animated: true)
     }
@@ -222,7 +233,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     private var delayedDiscovery = false
 
 	@IBAction func connect() {
-        if self.connector.state == .initialized && !isInUsbMode()
+        if self.connector.state == .initialized && !isInUsbMode
 			|| self.discoveredCalliopeWithCurrentMatrix == nil && self.connector.state == .discoveredAll {
 			connector.startCalliopeDiscovery()
 		} else if let calliope = self.discoveredCalliopeWithCurrentMatrix {
@@ -259,7 +270,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 		case .discovering, .discovered:
 			if let calliope = self.discoveredCalliopeWithCurrentMatrix {
 				evaluateCalliopeState(calliope)
-                if connectButton.connectionState == .readyToConnect {
+                if connectButton.connectionState == .readyToConnect || calliope is DiscoveredUSBDevice {
                     connect()
                 }
 			} else {
@@ -268,13 +279,17 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 				self.collapseButton.connectionState = .disconnected
 			}
 		case .discoveredAll:
-			if let matchingCalliope = discoveredCalliopeWithCurrentMatrix {
-				evaluateCalliopeState(matchingCalliope)
-			} else {
-				matrixView.isUserInteractionEnabled = true
-				connectButton.connectionState = .notFoundRetry
-				self.collapseButton.connectionState = .disconnected
-                startDelayedDiscovery()
+            if let calliope = self.discoveredCalliopeWithCurrentMatrix, calliope is DiscoveredUSBDevice {
+                connect()
+            } else {
+                if let matchingCalliope = discoveredCalliopeWithCurrentMatrix {
+                    evaluateCalliopeState(matchingCalliope)
+                } else {
+                    matrixView.isUserInteractionEnabled = true
+                    connectButton.connectionState = .notFoundRetry
+                    self.collapseButton.connectionState = .disconnected
+                    startDelayedDiscovery()
+                }
             }
 		case .connecting:
 			matrixView.isUserInteractionEnabled = false
@@ -308,9 +323,22 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
         // remove Delayed Discovery for now, created endless loop of looking for Calliope, which is no longer required without an auto connect
         return
     }
+    
+    var isInDfuMode: Bool = false
+    
+    public func enableDfuMode(mode: Bool) {
+        isInDfuMode = mode
+        if isInDfuMode {
+            UIView.animate(withDuration: 0.1, animations: {
+                MatrixConnectionViewController.instance.collapseButton.connectionState = .connected
+            })
+        }
+    }
 
 	private func evaluateCalliopeState(_ calliope: DiscoveredDevice) {
-
+        if isInDfuMode {
+            return
+        }
         if let usageReadyCalliope = calliope.usageReadyCalliope, usageReadyCalliope.rebootingIntoDFUMode, calliope.state == .discovered {
             self.collapseButton.connectionState = .connected
         } else if calliope.state == .wrongMode || calliope.state == .discovered {
@@ -372,9 +400,5 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 
         alertController.addAction(UIAlertAction(title: "OK", style: .default))
         self.show(alertController, sender: nil)
-    }
-    
-    public func isInUsbMode() -> Bool{
-        return usbSwitch.isOn
     }
 }
