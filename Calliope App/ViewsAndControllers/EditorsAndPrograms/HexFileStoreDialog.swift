@@ -57,7 +57,9 @@ enum HexFileStoreDialog {
             do {
                 let enteredName = alert.textFields?[0].text ?? name
                 //TODO clean up name
-                let file = try HexFileManager.store(name: enteredName, data: data)
+                guard let file = try HexFileManager.store(name: enteredName, data: data) else {
+                    return
+                }
                 //TODO watch for file name duplicates
                 saveCompleted?(file)
             } catch {

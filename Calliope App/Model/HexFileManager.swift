@@ -66,9 +66,10 @@ final class HexFileManager {
         })
     }
     
-    public static func store(name: String, data: Data, overrideDuplicate: Bool = true) throws -> HexFile {
+    public static func store(name: String, data: Data, overrideDuplicate: Bool = true, isHexFile: Bool = true) throws -> HexFile? {
         let dir = try self.dir()
-        let file = dir.appendingPathComponent(name + ".hex")
+        let fileSuffix = isHexFile ? ".hex" : ".png"
+        let file = dir.appendingPathComponent(name + fileSuffix)
         LogNotify.log("writing file \(file)")
         if !overrideDuplicate && FileManager.default.fileExists(atPath: file.path) {
             throw NSLocalizedString("File already exists", comment: "")
@@ -77,6 +78,9 @@ final class HexFileManager {
             try data.write(to: file)
         } catch {
             print(error)
+        }
+        if !isHexFile {
+            return nil
         }
         let date = Date()
         let hexFile = HexFile(url: file, name: name, date: date)

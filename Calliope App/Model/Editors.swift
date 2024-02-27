@@ -3,6 +3,7 @@ import Foundation
 struct EditorDownload {
     let name: String
     let url: URL
+    let isHex: Bool
 }
 
 protocol Editor {
@@ -33,7 +34,7 @@ final class MiniEditor: Editor {
         let s = url.absoluteString
         let matches = s.matches(regex: "https://[^/]+/(\\w+-\\w+-\\w+-\\w+-\\w+)")
         guard matches.count == 2 else { return nil }
-        return EditorDownload(name: "mini-" + matches[1], url: url)
+        return EditorDownload(name: "mini-" + matches[1], url: url, isHex: true)
     }
 
     func isBackNavigation(_ request: URLRequest) -> Bool {
@@ -48,12 +49,15 @@ final class MakeCode: Editor {
 	}()
 
     func download(_ request: URLRequest) -> EditorDownload? {
-        guard
-			let s = request.url?.absoluteString,
-			s.matches(regex: "^([^:]*://)?data:application/x-calliope-hex").count
+        print(request)
+        guard let s = request.url?.absoluteString, s.matches(regex: "^([^:]*://)?data:application/octet-streamng").count == 1, let url = URL(string:s) else { guard
+            let s = request.url?.absoluteString,
+            s.matches(regex: "^([^:]*://)?data:application/x-calliope-hex").count
                 + s.matches(regex: "^([^:]*://)?data:application/x-microbit-hex").count == 1,
-			let url = URL(string:s) else { return nil }
-        return EditorDownload(name: "makecode-" + UUID().uuidString, url: url)
+            let url = URL(string:s) else { return nil }
+            return EditorDownload(name: "makecode-" + UUID().uuidString, url: url, isHex: true)
+        }
+        return EditorDownload(name: "makecode-" + UUID().uuidString, url: url, isHex: false)
     }
 
     func isBackNavigation(_ request: URLRequest) -> Bool {
@@ -80,7 +84,7 @@ final class RobertaEditor: Editor {
         let s = url.absoluteString
         let matches = s.matches(regex: "^data:text/(?:hex|xml)")
         guard matches.count == 1 else { return nil }
-        return EditorDownload(name: "roberta-" + UUID().uuidString, url: url)
+        return EditorDownload(name: "roberta-" + UUID().uuidString, url: url, isHex: true)
     }
 
     func isBackNavigation(_ request: URLRequest) -> Bool {
