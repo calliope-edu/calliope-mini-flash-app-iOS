@@ -30,8 +30,6 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 	/// constraint to collapse view vertically
 	@IBOutlet var collapseHeightConstraint: NSLayoutConstraint!
     
-    @IBOutlet var usbCalliopeButton: UIButton!
-    
     @IBOutlet var usbSwitch: UISwitch!
     var isInUsbMode: Bool = false
 
@@ -39,6 +37,12 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 	@IBOutlet var matrixView: MatrixView!
     
     @IBOutlet var matrixSuperView: UIView!
+    
+    @IBOutlet var bluetoothSuperView: UIView!
+    
+    @IBOutlet var usbSuperView: UIView!
+    
+    @IBOutlet var overallStackView: UIStackView!
 
 	/// button to trigger the connection with the calliope
 	@IBOutlet var connectButton: ConnectionButton!
@@ -46,7 +50,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 	let collapsedWidth: CGFloat = 28
 	let collapsedHeight: CGFloat = 28
 	let expandedWidth: CGFloat = 274
-	var expandedHeight: CGFloat = 430
+	var expandedHeight: CGFloat = 500
 
     let restoreLastMatrixEnabled = UserDefaults.standard.bool(forKey: SettingsKey.restoreLastMatrix.rawValue)
 
@@ -129,58 +133,39 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 		super.viewDidLoad()
 		MatrixConnectionViewController.instance = self
 		connectButton.imageView?.contentMode = .scaleAspectFit
-        usbSwitch.addTarget(self, action: #selector(switchChanged), for: UIControl.Event.valueChanged)
-        usbSwitch.isOn = false
-        usbCalliopeButton.isHidden = true
-        handleHeightConstraint()
-        self.view.layoutIfNeeded()
-		animate(expand: false)
+        bluetoothSuperView.isHidden = true
+        bluetoothSuperView.alpha = 0.0
+        usbSwitch.isOn = true
+		//animate(expand: false)
 	}
     
-    @objc func switchChanged(usbSwitch: UISwitch) {
+    @IBAction @objc public func switchChanged(usbSwitch: UISwitch) {
         
         self.isInUsbMode = usbSwitch.isOn
-        
         self.connector.disconnectFromCalliope()
         
-        let viewToHide = (isInUsbMode ? self.matrixSuperView : self.usbCalliopeButton)!
-        let viewToShow = (isInUsbMode ? self.usbCalliopeButton : self.matrixSuperView)!
-        let buttonToHide = (isInUsbMode ? self.connectButton : nil)
-        let buttonToShow = (isInUsbMode ? nil : self.connectButton)
+        let oldHeight = view.frame.height
+        let viewToHide = (isInUsbMode ? self.bluetoothSuperView : self.usbSuperView)!
+        let viewToShow = (isInUsbMode ? self.usbSuperView : self.bluetoothSuperView)!
+        
         viewToShow.alpha = 0.0
-        buttonToShow?.alpha = 0.0
         viewToHide.alpha = 1.0
-        buttonToHide?.alpha = 1.0
-        viewToShow.isHidden = false
-        buttonToShow?.isHidden = false
-        UIView.animate(withDuration: 0.1, animations: {
+        
+        UIView.animate(withDuration: 1, animations: {
             viewToHide.alpha = 0.0
-            buttonToHide?.alpha = 0.0
         }) { completed in
-            viewToHide.isHidden = true
-            buttonToHide?.isHidden = true
-            self.handleHeightConstraint()
-            UIView.animate(withDuration: 0.2) {
+            UIView.animate(withDuration: 1) {
+                viewToHide.isHidden = true
+                viewToShow.isHidden = false
                 self.view.layoutIfNeeded()
             } completion: { _ in
-                UIView.animate(withDuration: 0.1) {
+                UIView.animate(withDuration: 1) {
                     viewToShow.alpha = 1.0
-                    buttonToShow?.alpha = 1.0
                 }
             }
         }
-        
     }
     
-    func handleHeightConstraint()  {
-        if (isInUsbMode) {
-            self.expandedHeight = 200
-            self.collapseHeightConstraint.constant = 200
-        } else {
-            self.expandedHeight = 430
-            self.collapseHeightConstraint.constant = 430
-        }
-    }
 
 	@IBAction func toggleOpen(_ sender: Any) {
         self.parent?.view.removeGestureRecognizer(collapseGestureRecognizer)

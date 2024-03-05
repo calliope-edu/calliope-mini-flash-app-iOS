@@ -241,6 +241,7 @@ class FirmwareUpload {
 		}
         if calliope is USBCalliope {
             MatrixConnectionViewController.instance.disconnectFromCalliope()
+            MatrixConnectionViewController.instance.usbSwitch.setOn(false, animated: true)
         }
 	}
 
