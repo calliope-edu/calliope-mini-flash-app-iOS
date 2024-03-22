@@ -14,6 +14,9 @@ class NewsCollectionViewController: UICollectionViewController, UICollectionView
 
     let widthRatio: CGFloat = 1.2
     
+    
+    var loadedOnlineContent: Bool = false
+    
 	var news: [NewsItemProtocol] = [] {
 		didSet {
 			DispatchQueue.main.async {
@@ -21,10 +24,12 @@ class NewsCollectionViewController: UICollectionViewController, UICollectionView
 			}
 		}
 	}
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        loadNews()
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if !loadedOnlineContent {
+            loadNews()
+        }
     }
 
     func loadNews() {
@@ -32,8 +37,10 @@ class NewsCollectionViewController: UICollectionViewController, UICollectionView
             switch result {
             case .success(let news):
                 self?.news = news
+                self?.loadedOnlineContent = true
             case .failure(_):
                 self?.news = NewsManager.getDefaultNews()
+                self?.loadedOnlineContent = false
                 //TODO: show offline status or restart news discovery
                 break
             }

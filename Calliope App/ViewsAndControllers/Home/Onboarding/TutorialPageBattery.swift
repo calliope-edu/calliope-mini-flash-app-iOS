@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Network
 
 class TutorialPageBattery: UIViewController {
     
@@ -69,5 +70,24 @@ class TutorialPageBattery: UIViewController {
         } else if segue.identifier == "showUploadPages" {
             vc.pages = pagesUpload
         }
+    }
+    
+    
+    func checkWebsite() -> Bool{
+        guard let url = URL(string: "https://calliope.cc/programmieren/mobil/ipad") else { return false }
+
+        var request = URLRequest(url: url)
+        request.timeoutInterval = 1.0
+        var isAvailable: Bool = false
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("\(error.localizedDescription)")
+            }
+            if let httpResponse = response as? HTTPURLResponse {
+                isAvailable = true
+            }
+        }
+        task.resume()
+        return isAvailable
     }
 }

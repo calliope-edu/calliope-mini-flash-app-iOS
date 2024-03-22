@@ -1,0 +1,21 @@
+{
+  "images" : [
+    {
+      "filename" : "CalliopeApp_Verbinden_Uebertragung_DE.svg",
+      "idiom" : "universal"
+    },
+    {
+      "filename" : "CalliopeApp_Verbinden_Uebertragung_EN.svg",
+      "idiom" : "universal",
+      "locale" : "en"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "localizable" : true,
+    "preserves-vector-representation" : true
+  }
+}

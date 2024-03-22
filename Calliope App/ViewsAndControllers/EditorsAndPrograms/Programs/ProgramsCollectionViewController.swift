@@ -8,8 +8,11 @@
 
 import UIKit
 import DeepDiff
+import ExternalAccessory
+import CoreServices
+import UniformTypeIdentifiers
 
-class ProgramsCollectionViewController: UICollectionViewController, ProgramCellDelegate {
+class ProgramsCollectionViewController: UICollectionViewController, ProgramCellDelegate, UIDocumentPickerDelegate {
 
     private let reuseIdentifierProgram = "uploadProgramCell"
 
@@ -83,7 +86,7 @@ class ProgramsCollectionViewController: UICollectionViewController, ProgramCellD
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        uploadProgram(of: collectionView.cellForItem(at: indexPath) as! ProgramCollectionViewCell)
+        return
     }
 
     // menu
@@ -104,10 +107,12 @@ class ProgramsCollectionViewController: UICollectionViewController, ProgramCellD
     override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedMenuElements -> UIMenu? in
             let actions: [UIMenuElement] = [
-                UIAction(title: NSLocalizedString("Edit", comment: ""), image: UIImage(systemName: "rectangle.and.pencil.and.ellipsis"), handler: { (action) in (
-                            self.collectionView.cellForItem(at: indexPath) as? ProgramCollectionViewCell)?.edit() }),
+                UIAction(title: NSLocalizedString("Transfer", comment: ""), image: UIImage(systemName: "arrow.left.arrow.right"), handler: { (action) in (
+                    self.uploadProgram(of: collectionView.cellForItem(at: indexPath) as! ProgramCollectionViewCell)) }),
                 UIAction(title: NSLocalizedString("Share", comment: ""), image: UIImage(systemName: "square.and.arrow.up"), handler: { (action) in (
                             self.collectionView.cellForItem(at: indexPath) as? ProgramCollectionViewCell)?.share() }),
+                UIAction(title: NSLocalizedString("Rename", comment: ""), image: UIImage(systemName: "rectangle.and.pencil.and.ellipsis"), handler: { (action) in (
+                            self.collectionView.cellForItem(at: indexPath) as? ProgramCollectionViewCell)?.edit() }),
                 UIAction(title: NSLocalizedString("Delete", comment: ""), image: UIImage(systemName: "trash"), handler: { (action) in (
                             self.collectionView.cellForItem(at: indexPath) as? ProgramCollectionViewCell)?.delete(nil) })
             ]

@@ -12,6 +12,7 @@ import WebKit
 class NewsDetailWebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
 
 	@IBOutlet weak var webView: WKWebView!
+    var activityIndicator: UIActivityIndicatorView!
 
 	public var url: URL!
 
@@ -22,6 +23,15 @@ class NewsDetailWebViewController: UIViewController, WKNavigationDelegate, WKUID
         webView.uiDelegate = self
 
 		webView.load(URLRequest(url: url))
+        
+        // add activity indicator
+        activityIndicator = UIActivityIndicatorView()
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.style = UIActivityIndicatorView.Style.gray
+        
+        view.addSubview(activityIndicator)
+        showActivityIndicator(show: true)
     }
 
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -38,5 +48,21 @@ class NewsDetailWebViewController: UIViewController, WKNavigationDelegate, WKUID
             UIApplication.shared.open(url)
         }
         return nil
+    }
+    
+    func showActivityIndicator(show: Bool) {
+        if show {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+        }
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        showActivityIndicator(show: false)
+    }
+
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        showActivityIndicator(show: false)
     }
 }

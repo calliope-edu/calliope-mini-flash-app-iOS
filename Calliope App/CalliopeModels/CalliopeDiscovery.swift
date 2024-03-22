@@ -7,8 +7,9 @@
 
 import UIKit
 import CoreBluetooth
+import UniformTypeIdentifiers
 
-class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
+class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDelegate {
 
 	enum CalliopeDiscoveryState {
 		case initialized //no discovered calliopes, doing nothing
@@ -18,7 +19,11 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 		case discoveredAll //discovery has finished with discovered calliopes
 		case connecting //connecting to some calliope
 		case connected //connected to some calliope
+        case usbConnecting // connecting to a usb calliope
+        case usbConnected // connected to a usb calliope
 	}
+    
+    private static let usbCalliopeName = "USB_CALLIOPE"
 
 	var updateQueue = DispatchQueue.main
 	var updateBlock: () -> () = {}
@@ -33,7 +38,7 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 		}
 	}
 
-	private(set) var discoveredCalliopes : [String : DiscoveredBLEDDevice] = [:] {
+	private(set) var discoveredCalliopes : [String : DiscoveredDevice] = [:] {
 		didSet {
 			LogNotify.log("discovered: \(discoveredCalliopes)")
 			redetermineState()
@@ -42,19 +47,37 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 
 	private var discoveredCalliopeUUIDNameMap : [UUID : String] = [:]
 
-	private(set) var connectingCalliope: DiscoveredBLEDDevice? {
+	private(set) var connectingCalliope: DiscoveredDevice? {
 		didSet {
 			if let connectingCalliope = self.connectingCalliope {
-				connectedCalliope = nil
-				self.centralManager.connect(connectingCalliope.peripheral, options: nil)
-				//manual timeout (system timeout is too long)
-				bluetoothQueue.asyncAfter(deadline: DispatchTime.now() + BluetoothConstants.connectTimeout) {
-					if self.connectedCalliope == nil {
-                        LogNotify.log("disabling auto connect for \(connectingCalliope)")
-                        self.centralManager.cancelPeripheralConnection(connectingCalliope.peripheral)
-                        self.updateQueue.async { self.errorBlock( NSLocalizedString("Connection to calliope timed out!", comment: "") ) }
-					}
-				}
+                if connectingCalliope is DiscoveredBLEDDevice {
+                    LogNotify.log("Connect to Bluetooth Calliope")
+                    let connectingBLECalliope = connectingCalliope as! DiscoveredBLEDDevice
+                    connectedCalliope = nil
+                    self.centralManager.connect(connectingBLECalliope.peripheral, options: nil)
+                    //manual timeout (system timeout is too long)
+                    bluetoothQueue.asyncAfter(deadline: DispatchTime.now() + BluetoothConstants.connectTimeout) {
+                        if self.connectedCalliope == nil {
+                            LogNotify.log("disabling auto connect for \(connectingCalliope)")
+                            self.centralManager.cancelPeripheralConnection(connectingBLECalliope.peripheral)
+                            self.updateQueue.async { self.errorBlock( NSLocalizedString("Connection to calliope timed out!", comment: "") ) }
+                        }
+                    }
+                } 
+                if connectingCalliope is DiscoveredUSBDevice {
+                    LogNotify.log("Connect to USB Calliope")
+                    let connectingUSBCalliope = connectingCalliope as! DiscoveredUSBDevice
+                    do {
+                        connectedUSBCalliope = connectingUSBCalliope
+                        connectedUSBCalliope?.usageReadyCalliope = try USBCalliope(calliopeLocation: connectingUSBCalliope.url)
+                        print("Calliope Discovery State now: ")
+                        print(state)
+                    } catch {
+                        LogNotify.log("Connecting to USB Calliope failed")
+                    }
+                    
+                }
+				
 			}
 			redetermineState()
 		}
@@ -74,6 +97,18 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
             redetermineState()
 		}
 	}
+    
+    private(set) var connectedUSBCalliope: DiscoveredUSBDevice? {
+        didSet {
+            oldValue?.hasDisconnected()
+            connectedUSBCalliope?.hasConnected()
+            connectedUSBCalliope?.state = .usageReady
+            if let connectedUSBCalliope = connectedUSBCalliope {
+                connectingCalliope = nil
+            }
+            redetermineState()
+        }
+    }
 
 	private let bluetoothQueue = DispatchQueue.global(qos: .userInitiated)
 	private lazy var centralManager: CBCentralManager = {
@@ -116,9 +151,11 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 	private func redetermineState() {
 		if connectedCalliope != nil {
 			state = .connected
-		} else if connectingCalliope != nil {
+        } else if connectedUSBCalliope != nil {
+            state = .usbConnected
+        } else if connectingCalliope != nil {
 			state = .connecting
-		} else if centralManager.isScanning {
+        } else if centralManager.isScanning && MatrixConnectionViewController.instance != nil && !MatrixConnectionViewController.instance.isInUsbMode{
 			state = discoveredCalliopes.isEmpty ? .discovering : .discovered
 		} else {
 			state = discoveredCalliopes.isEmpty ? .initialized : .discoveredAll
@@ -160,8 +197,10 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 		//start scan only if central manger already connected to bluetooth system service (=poweredOn)
 		//alternatively, this is invoked after the state of the central mananger changed to poweredOn.
 		if centralManager.state != .poweredOn {
-            updateQueue.async { self.errorBlock(NSLocalizedString("Activate Bluetooth!", comment: "")) }
-			state = .discoveryWaitingForBluetooth
+            if !MatrixConnectionViewController.instance.isInUsbMode {
+                updateQueue.async { self.errorBlock(NSLocalizedString("Activate Bluetooth!", comment: "")) }
+                state = .discoveryWaitingForBluetooth
+            }
 		} else if !centralManager.isScanning {
             discoveredCalliopes = [:]
             discoveredCalliopeUUIDNameMap = [:]
@@ -202,7 +241,7 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 
 	// MARK: connection
 
-	func connectToCalliope(_ calliope: DiscoveredBLEDDevice) {
+	func connectToCalliope(_ calliope: DiscoveredDevice) {
 		//when we first connect, we stop searching further
 		stopCalliopeDiscovery()
 		//do not connect twice
@@ -217,8 +256,38 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
 			self.centralManager.cancelPeripheralConnection(connectedCalliope.peripheral)
 		}
 		//preemptively update connected calliope, in case delegate call does not happen
+        if connectedUSBCalliope != nil {
+            connectedCalliope = nil
+            discoveredCalliopes.removeValue(forKey: CalliopeDiscovery.usbCalliopeName)
+        }
+        self.connectedUSBCalliope = nil
 		self.connectedCalliope = nil
 	}
+    
+    func initializeConnectionToUsbCalliope(view: UIViewController) {
+        state = .usbConnecting
+        if #available(iOS 14.0, *) {
+            let documentPicker = UIDocumentPickerViewController(documentTypes: [UTType.folder.identifier], in: .open)
+            documentPicker.delegate = self
+            documentPicker.allowsMultipleSelection = false
+            view.present(documentPicker, animated: true, completion: nil)
+        } else {
+            fatalError("This function is only available for iOS 14 or later")
+        }
+        
+    }
+    
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]){
+        let url = urls.first
+        let discoveredCalliope = DiscoveredUSBDevice(url: url!, name: CalliopeDiscovery.usbCalliopeName)
+        if (discoveredCalliope == nil) {
+            MatrixConnectionViewController.instance.showFalseLocationAlert()
+            state = .initialized
+        } else {
+            discoveredCalliope!.state = DiscoveredDevice.CalliopeBLEDeviceState.discovered
+            self.discoveredCalliopes.updateValue(discoveredCalliope!, forKey: CalliopeDiscovery.usbCalliopeName)
+        }
+    }
 
 	func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
 		guard let name = discoveredCalliopeUUIDNameMap[peripheral.identifier],
@@ -226,7 +295,7 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
             updateQueue.async { self.errorBlock(NSLocalizedString("Could not find connected calliope in discovered calliopes", comment: "")) }
             return
 		}
-		connectedCalliope = calliope
+        connectedCalliope = calliope as? DiscoveredBLEDDevice
 	}
 
 	func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
@@ -244,8 +313,6 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
             connectedCalliope = nil
             lastConnected = nil
         }
-        
-        
 	}
 
 	func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
@@ -265,6 +332,9 @@ class CalliopeBLEDiscovery: NSObject, CBCentralManagerDelegate {
                 self.attemptReconnect()
 			}
 		case .unknown, .resetting, .unsupported, .unauthorized, .poweredOff:
+            if (state == .usbConnected || state == .usbConnecting) {
+                return
+            }
 			//bluetooth is in a state where we cannot do anything
             connectingCalliope = nil
             connectedCalliope = nil
