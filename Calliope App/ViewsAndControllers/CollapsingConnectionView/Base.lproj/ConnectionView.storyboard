@@ -20,7 +20,7 @@
                             <view contentMode="scaleToFill" placeholderIntrinsicWidth="300" placeholderIntrinsicHeight="300" translatesAutoresizingMaskIntoConstraints="NO" id="fve-Pq-Ujl" userLabel="zoomView">
                                 <rect key="frame" x="126" y="0.0" width="274" height="500"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ABo-Y2-qxl">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ABo-Y2-qxl">
                                         <rect key="frame" x="20" y="20" width="176.5" height="61.5"/>
                                         <string key="text">1. Programm 5 starten
 2. Schütteln
@@ -29,41 +29,44 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="SJw-ye-Zoy">
-                                        <rect key="frame" x="65.5" y="96.5" width="143" height="31"/>
+                                    <stackView opaque="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" alignment="center" spacing="5" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SJw-ye-Zoy">
+                                        <rect key="frame" x="45" y="96.5" width="184" height="31"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Enable USB" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NJ1-SW-3EC">
-                                                <rect key="frame" x="0.0" y="0.0" width="89" height="31"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="749" text="USB verwenden" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NJ1-SW-3EC">
+                                                <rect key="frame" x="0.0" y="5.5" width="130" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" title="Enable USB" translatesAutoresizingMaskIntoConstraints="NO" id="XYJ-C1-vhJ">
-                                                <rect key="frame" x="94" y="0.0" width="51" height="31"/>
-                                                <connections>
-                                                    <action selector="switchChangedWithUsbSwitch:" destination="XZv-gG-dt8" eventType="valueChanged" id="SwV-dG-XyU"/>
-                                                </connections>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="751" verticalHuggingPriority="749" horizontalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" title="Enable USB" translatesAutoresizingMaskIntoConstraints="NO" id="XYJ-C1-vhJ">
+                                                <rect key="frame" x="135" y="0.0" width="51" height="31"/>
                                             </switch>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="998" constant="30" id="jiP-1E-UYE"/>
+                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="31" id="LSS-6t-dFJ"/>
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="jzs-P9-1bj">
                                         <rect key="frame" x="0.0" y="142.5" width="274" height="337.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="57V-Gq-iOc">
-                                                <rect key="frame" x="0.0" y="0.0" width="274" height="54.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="274" height="50"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uly-Zt-Dwr">
-                                                        <rect key="frame" x="27.5" y="0.0" width="219" height="54.5"/>
+                                                        <rect key="frame" x="27.5" y="0.0" width="219" height="50"/>
                                                         <color key="backgroundColor" name="calliope-green"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" priority="998" constant="50" id="PSz-M4-3sz"/>
+                                                        </constraints>
                                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                         <state key="normal" title="Button"/>
-                                                        <buttonConfiguration key="configuration" style="plain" title="Test Button Test Button Test Button">
+                                                        <buttonConfiguration key="configuration" style="plain" title="Calliope mini auswählen">
                                                             <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </buttonConfiguration>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="10"/>
+                                                        </userDefinedRuntimeAttributes>
                                                         <connections>
                                                             <action selector="startUSBconnect:" destination="XZv-gG-dt8" eventType="touchUpInside" id="rZ2-GB-s29"/>
                                                         </connections>
@@ -77,7 +80,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i6x-PK-te0">
-                                                <rect key="frame" x="0.0" y="54.5" width="274" height="283"/>
+                                                <rect key="frame" x="0.0" y="50" width="274" height="287.5"/>
                                                 <subviews>
                                                     <view opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="200" placeholderIntrinsicHeight="200" translatesAutoresizingMaskIntoConstraints="NO" id="F14-l5-EiT">
                                                         <rect key="frame" x="10" y="0.0" width="254" height="254"/>
@@ -89,7 +92,7 @@
                                                         </subviews>
                                                         <color key="backgroundColor" white="1" alpha="0.20051384229999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="bottom" secondItem="Rez-7s-fDx" secondAttribute="bottom" constant="10" id="8Qf-gR-EQu"/>
+                                                            <constraint firstAttribute="bottom" secondItem="Rez-7s-fDx" secondAttribute="bottom" priority="999" constant="10" id="8Qf-gR-EQu"/>
                                                             <constraint firstItem="Rez-7s-fDx" firstAttribute="top" secondItem="F14-l5-EiT" secondAttribute="top" constant="10" id="FhE-E6-3Pe"/>
                                                             <constraint firstAttribute="trailing" secondItem="Rez-7s-fDx" secondAttribute="trailing" constant="10" id="G7q-7b-vYl"/>
                                                             <constraint firstItem="Rez-7s-fDx" firstAttribute="leading" secondItem="F14-l5-EiT" secondAttribute="leading" constant="10" id="Wrz-Wh-yL5"/>
@@ -97,7 +100,7 @@
                                                         </constraints>
                                                     </view>
                                                     <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="650" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="Zyc-gu-u4s" customClass="ConnectionButton" customModule="Calliope_App" customModuleProvider="target">
-                                                        <rect key="frame" x="55" y="262" width="164" height="21"/>
+                                                        <rect key="frame" x="55" y="262" width="164" height="25.5"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="50" id="E2M-Tt-pHT"/>
                                                         </constraints>
@@ -113,7 +116,7 @@
                                                 <constraints>
                                                     <constraint firstItem="Zyc-gu-u4s" firstAttribute="top" secondItem="F14-l5-EiT" secondAttribute="bottom" constant="8" id="2gM-K7-qZn"/>
                                                     <constraint firstAttribute="bottom" secondItem="Zyc-gu-u4s" secondAttribute="bottom" id="7HU-uR-4uM"/>
-                                                    <constraint firstItem="F14-l5-EiT" firstAttribute="leading" secondItem="i6x-PK-te0" secondAttribute="leading" constant="10" id="Iis-s9-JwA"/>
+                                                    <constraint firstItem="F14-l5-EiT" firstAttribute="leading" secondItem="i6x-PK-te0" secondAttribute="leading" priority="999" constant="10" id="Iis-s9-JwA"/>
                                                     <constraint firstItem="Zyc-gu-u4s" firstAttribute="centerX" secondItem="Rez-7s-fDx" secondAttribute="centerX" id="RGO-tc-Z5e"/>
                                                     <constraint firstItem="Zyc-gu-u4s" firstAttribute="width" secondItem="Rez-7s-fDx" secondAttribute="width" multiplier="0.7" id="Vy3-zR-NIx"/>
                                                     <constraint firstAttribute="trailing" secondItem="F14-l5-EiT" secondAttribute="trailing" constant="10" id="j6x-9x-EnF"/>
@@ -126,17 +129,16 @@
                                 <color key="backgroundColor" name="calliope-yellow"/>
                                 <constraints>
                                     <constraint firstItem="jzs-P9-1bj" firstAttribute="top" secondItem="SJw-ye-Zoy" secondAttribute="bottom" constant="15" id="4M9-sO-SN7"/>
-                                    <constraint firstItem="SJw-ye-Zoy" firstAttribute="centerX" secondItem="fve-Pq-Ujl" secondAttribute="centerX" id="4yz-fO-IMB"/>
+                                    <constraint firstItem="SJw-ye-Zoy" firstAttribute="centerX" secondItem="fve-Pq-Ujl" secondAttribute="centerX" priority="999" id="4yz-fO-IMB"/>
                                     <constraint firstAttribute="bottom" secondItem="jzs-P9-1bj" secondAttribute="bottom" constant="20" id="5PV-LM-eM3"/>
                                     <constraint firstAttribute="width" constant="274" id="7Ms-GT-4Gg"/>
-                                    <constraint firstItem="SJw-ye-Zoy" firstAttribute="leading" secondItem="fve-Pq-Ujl" secondAttribute="leading" constant="65.5" id="Acp-rS-laB"/>
+                                    <constraint firstItem="SJw-ye-Zoy" firstAttribute="leading" relation="lessThanOrEqual" secondItem="fve-Pq-Ujl" secondAttribute="leading" constant="45" id="Acp-rS-laB"/>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" priority="999" constant="500" id="B5e-yL-cNE"/>
                                     <constraint firstItem="ABo-Y2-qxl" firstAttribute="top" secondItem="fve-Pq-Ujl" secondAttribute="top" constant="20" id="C9m-4b-xQg"/>
                                     <constraint firstAttribute="trailing" secondItem="jzs-P9-1bj" secondAttribute="trailing" id="Ix8-Vs-Nsc"/>
-                                    <constraint firstAttribute="trailing" secondItem="SJw-ye-Zoy" secondAttribute="trailing" constant="65.5" id="WMx-FH-wsd"/>
+                                    <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="SJw-ye-Zoy" secondAttribute="trailing" priority="999" constant="45" id="WMx-FH-wsd"/>
                                     <constraint firstItem="jzs-P9-1bj" firstAttribute="width" secondItem="fve-Pq-Ujl" secondAttribute="width" id="XS2-3G-MXa"/>
                                     <constraint firstItem="jzs-P9-1bj" firstAttribute="leading" secondItem="fve-Pq-Ujl" secondAttribute="leading" id="ccU-Fw-Lwb"/>
-                                    <constraint firstItem="jzs-P9-1bj" firstAttribute="centerX" secondItem="fve-Pq-Ujl" secondAttribute="centerX" id="dBr-vO-Wmo"/>
                                     <constraint firstItem="i6x-PK-te0" firstAttribute="centerX" secondItem="fve-Pq-Ujl" secondAttribute="centerX" id="fci-kl-NJo"/>
                                     <constraint firstItem="SJw-ye-Zoy" firstAttribute="top" secondItem="ABo-Y2-qxl" secondAttribute="bottom" constant="15" id="fuq-1K-4KV"/>
                                     <constraint firstItem="ABo-Y2-qxl" firstAttribute="leading" secondItem="fve-Pq-Ujl" secondAttribute="leading" constant="20" id="o2g-rY-bD4"/>
@@ -168,7 +170,7 @@
                             <constraint firstItem="f6r-M2-oVO" firstAttribute="trailing" secondItem="fve-Pq-Ujl" secondAttribute="trailing" id="Hhg-YG-uUs"/>
                             <constraint firstItem="ilK-df-gtj" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="f6r-M2-oVO" secondAttribute="bottom" id="JFT-kw-Tni"/>
                             <constraint firstItem="fve-Pq-Ujl" firstAttribute="leading" secondItem="ilK-df-gtj" secondAttribute="leading" priority="998" id="RrH-EB-eL7"/>
-                            <constraint firstItem="f6r-M2-oVO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ABo-Y2-qxl" secondAttribute="trailing" constant="8" id="SC1-Uh-17S"/>
+                            <constraint firstItem="f6r-M2-oVO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ABo-Y2-qxl" secondAttribute="trailing" priority="999" constant="8" id="SC1-Uh-17S"/>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="fve-Pq-Ujl" secondAttribute="bottom" id="ZjT-3a-3IC"/>
                             <constraint firstItem="ilK-df-gtj" firstAttribute="bottom" secondItem="fve-Pq-Ujl" secondAttribute="bottom" priority="998" id="cLh-no-TgU"/>
                             <constraint firstItem="fve-Pq-Ujl" firstAttribute="top" secondItem="f6r-M2-oVO" secondAttribute="top" id="eI0-tU-ZqL"/>
@@ -191,6 +193,8 @@
                         <outlet property="overallStackView" destination="jzs-P9-1bj" id="mjP-Od-xbd"/>
                         <outlet property="usbSuperView" destination="57V-Gq-iOc" id="phC-2r-F2a"/>
                         <outlet property="usbSwitch" destination="XYJ-C1-vhJ" id="iAS-e3-yRr"/>
+                        <outlet property="usbSwitchHeightConstraint" destination="LSS-6t-dFJ" id="tel-Wg-e2d"/>
+                        <outlet property="usbSwitchSuperView" destination="SJw-ye-Zoy" id="4FC-B8-oEN"/>
                         <outlet property="zoomView" destination="fve-Pq-Ujl" id="1sh-j4-HCY"/>
                     </connections>
                 </viewController>

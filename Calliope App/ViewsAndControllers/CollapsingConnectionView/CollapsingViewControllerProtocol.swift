@@ -35,7 +35,7 @@ extension CollapsingViewControllerProtocol {
 		}
 	}
 
-	public func animate(expand: Bool) {
+    public func animate(expand: Bool, animate: Bool = true) {
 
 		view.layer.masksToBounds = false
 		view.layer.shadowColor = UIColor.darkGray.cgColor
@@ -77,18 +77,30 @@ extension CollapsingViewControllerProtocol {
 			}
 		}
 
-		UIView.animate(withDuration: TimeInterval(0.3), animations: {
-			animations()
-			if let superview = self.view.superview?.superview {
-				//if used in storyboard embedded view
-				superview.layoutIfNeeded()
-			} else {
-				//if used plain
-				self.view.superview?.layoutIfNeeded()
-			}
-		}) { _ in
-			completion()
-			self.animationCompletions(expand: expand)
-		}
+        if !animate {
+            animations()
+            completion()
+            if let superview = self.view.superview?.superview {
+                //if used in storyboard embedded view
+                superview.layoutIfNeeded()
+            } else {
+                //if used plain
+                self.view.superview?.layoutIfNeeded()
+            }
+        } else {
+            UIView.animate(withDuration: TimeInterval(0.3), animations: {
+                animations()
+                if let superview = self.view.superview?.superview {
+                    //if used in storyboard embedded view
+                    superview.layoutIfNeeded()
+                } else {
+                    //if used plain
+                    self.view.superview?.layoutIfNeeded()
+                }
+            }) { _ in
+                completion()
+                self.animationCompletions(expand: expand)
+            }
+        }
 	}
 }

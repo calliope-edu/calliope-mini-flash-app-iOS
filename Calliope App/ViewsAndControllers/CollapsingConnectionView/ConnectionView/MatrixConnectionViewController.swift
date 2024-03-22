@@ -30,6 +30,8 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 	/// constraint to collapse view vertically
 	@IBOutlet var collapseHeightConstraint: NSLayoutConstraint!
     
+    @IBOutlet var usbSwitchHeightConstraint: NSLayoutConstraint!
+    
     @IBOutlet var usbSwitch: UISwitch!
     var isInUsbMode: Bool = false
 
@@ -43,12 +45,14 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     @IBOutlet var usbSuperView: UIView!
     
     @IBOutlet var overallStackView: UIStackView!
+    
+    @IBOutlet var usbSwitchSuperView: UIView!
 
 	/// button to trigger the connection with the calliope
 	@IBOutlet var connectButton: ConnectionButton!
 
-	let collapsedWidth: CGFloat = 28
-	let collapsedHeight: CGFloat = 28
+	let collapsedWidth: CGFloat = 50
+	let collapsedHeight: CGFloat = 50
 	let expandedWidth: CGFloat = 274
 	var expandedHeight: CGFloat = 500
 
@@ -133,10 +137,15 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 		super.viewDidLoad()
 		MatrixConnectionViewController.instance = self
 		connectButton.imageView?.contentMode = .scaleAspectFit
-        bluetoothSuperView.isHidden = true
-        bluetoothSuperView.alpha = 0.0
-        usbSwitch.isOn = true
-		//animate(expand: false)
+        usbSuperView.isHidden = true
+        usbSwitch.isOn = false
+        usbSwitchSuperView.isHidden = false
+        usbSwitch.addTarget(self, action: #selector(switchChanged), for: UIControl.Event.valueChanged)
+        if (UIDevice.current.userInterfaceIdiom == .phone) {
+            usbSwitchSuperView.isHidden = true
+            usbSwitchHeightConstraint.constant = 0
+        }
+        self.animate(expand: false, animate: false)
 	}
     
     @IBAction @objc public func switchChanged(usbSwitch: UISwitch) {
@@ -144,22 +153,21 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
         self.isInUsbMode = usbSwitch.isOn
         self.connector.disconnectFromCalliope()
         
-        let oldHeight = view.frame.height
         let viewToHide = (isInUsbMode ? self.bluetoothSuperView : self.usbSuperView)!
         let viewToShow = (isInUsbMode ? self.usbSuperView : self.bluetoothSuperView)!
         
         viewToShow.alpha = 0.0
         viewToHide.alpha = 1.0
         
-        UIView.animate(withDuration: 1, animations: {
+        UIView.animate(withDuration: 0.1, animations: {
             viewToHide.alpha = 0.0
         }) { completed in
-            UIView.animate(withDuration: 1) {
+            UIView.animate(withDuration: 0.2) {
                 viewToHide.isHidden = true
                 viewToShow.isHidden = false
                 self.view.layoutIfNeeded()
             } completion: { _ in
-                UIView.animate(withDuration: 1) {
+                UIView.animate(withDuration: 0.1) {
                     viewToShow.alpha = 1.0
                 }
             }
