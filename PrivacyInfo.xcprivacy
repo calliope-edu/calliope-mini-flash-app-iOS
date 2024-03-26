@@ -7,18 +7,10 @@
 		<dict>
 			<key>NSPrivacyAccessedAPITypeReasons</key>
 			<array>
-				<string>To enable flashing, this app requires the user defaults</string>
+				<string>CA92.1</string>
 			</array>
 			<key>NSPrivacyAccessedAPIType</key>
 			<string>NSPrivacyAccessedAPICategoryUserDefaults</string>
-		</dict>
-		<dict>
-			<key>NSPrivacyAccessedAPITypeReasons</key>
-			<array>
-				<string>To enable flashing, this app requires the file timestamp</string>
-			</array>
-			<key>NSPrivacyAccessedAPIType</key>
-			<string>NSPrivacyAccessedAPICategoryFileTimestamp</string>
 		</dict>
 	</array>
 </dict>
