@@ -90,7 +90,7 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
             containerVC.programsCollectionViewController?.collectionView.layoutIfNeeded()
         }
         
-        MatrixConnectionViewController.instance?.connectionDescriptionText = NSLocalizedString("Verbinde deinen Calliope \n mini", comment: "")
+        MatrixConnectionViewController.instance?.connectionDescriptionText = NSLocalizedString("Calliope mini verbinden", comment: "")
         MatrixConnectionViewController.instance?.calliopeClass = DiscoveredBLEDDevice.self
     }
     
