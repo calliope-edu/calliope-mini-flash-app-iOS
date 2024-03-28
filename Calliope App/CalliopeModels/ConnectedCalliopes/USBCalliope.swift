@@ -29,13 +29,19 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
         let pathComponent = url.appendingPathComponent("DETAILS.TXT")
         let filePath = pathComponent.path
         let fileManager = FileManager.default
-        url.startAccessingSecurityScopedResource()
+        let access = url.startAccessingSecurityScopedResource()
+        
+        defer {
+            if access {
+                url.stopAccessingSecurityScopedResource()
+            }
+        }
+        
         if fileManager.fileExists(atPath: filePath) {
             print("Validated Calliope folder")
         } else {
             LogNotify.log("Failed to Validate calliope")
         }
-        url.stopAccessingSecurityScopedResource()
     }
     
     func isConnected() -> Bool {
@@ -55,6 +61,7 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
     
     override func upload(file: Hex, progressReceiver: DFUProgressDelegate? = nil, statusDelegate: DFUServiceDelegate? = nil, logReceiver: LoggerDelegate? = nil) throws {
         if isConnected(){
+            progressReceiver?.dfuProgressDidChange(for: 50, outOf: 100, to: 51, currentSpeedBytesPerSecond: 0.0, avgSpeedBytesPerSecond: 0.0)
             writeToCalliope(file) {
                 statusDelegate?.dfuStateDidChange(to: .completed)
             }
@@ -63,61 +70,81 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
         }
         
     }
-
+    
+    /** Flashing process for USB Flashing
+            1. Send "erase.act" to clean flash of Calliope
+            2. Send "auto_rst.cfg" to enable auto restart after programming
+            3. Send "start_if.act" to start interface mode
+            4. Start flashing by copying file to calliope folder
+        Between the different stages, Timeouts to allow for completion of processing
+        For further information on the different commands, visit: https://github.com/ARMmbed/DAPLink/blob/main/docs/MSD_COMMANDS.md
+     */
     fileprivate func writeToCalliope(_ file: Hex?, _ completion: @escaping () -> Void) {
+        let accessResource = USBCalliope.calliopeLocation?.startAccessingSecurityScopedResource()
+        defer {
+            if accessResource ?? false {
+                USBCalliope.calliopeLocation?.stopAccessingSecurityScopedResource()
+            }
+        }
+        
+        let data = Data()
+        let startInterfaceCommand = "start_if.act"
+        let autoRestartConfigurationCommand = "auto_rst.cfg"
+        let eraseCommand = "erase.act"
+        let startInterfaceCommandFile = USBCalliope.calliopeLocation!.appendingPathComponent(startInterfaceCommand)
+        let autoRestartConfigurationCommandFile = USBCalliope.calliopeLocation!.appendingPathComponent(autoRestartConfigurationCommand)
+        let eraseCommandFile = USBCalliope.calliopeLocation!.appendingPathComponent(eraseCommand)
         do {
+            try data.write(to: eraseCommandFile)
+        } catch {
+            print(error)
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
             let accessResource = USBCalliope.calliopeLocation?.startAccessingSecurityScopedResource()
             defer {
                 if accessResource ?? false {
                     USBCalliope.calliopeLocation?.stopAccessingSecurityScopedResource()
                 }
             }
-            
-            let data = Data()
-            let startInterfaceCommand = "start_if.act"
-            let resetCommand = "auto_rst.cfg"
-            let startInterfaceCommandFile = USBCalliope.calliopeLocation!.appendingPathComponent(startInterfaceCommand)
-            let resetCommandFile = USBCalliope.calliopeLocation!.appendingPathComponent(resetCommand)
+            do {
+                try data.write(to: autoRestartConfigurationCommandFile)
+            } catch {
+                print(error)
+            }
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 7) {
+            let accessResource = USBCalliope.calliopeLocation?.startAccessingSecurityScopedResource()
+            defer {
+                if accessResource ?? false {
+                    USBCalliope.calliopeLocation?.stopAccessingSecurityScopedResource()
+                }
+            }
             do {
                 try data.write(to: startInterfaceCommandFile)
             } catch {
                 print(error)
             }
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-                let accessResource = USBCalliope.calliopeLocation?.startAccessingSecurityScopedResource()
-                defer {
-                    if accessResource ?? false {
-                        USBCalliope.calliopeLocation?.stopAccessingSecurityScopedResource()
-                    }
-                }
-                do {
-                    try data.write(to: resetCommandFile)
-                } catch {
-                    print(error)
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 9) {
+            let accessResource = USBCalliope.calliopeLocation?.startAccessingSecurityScopedResource()
+            defer {
+                if accessResource ?? false {
+                    USBCalliope.calliopeLocation?.stopAccessingSecurityScopedResource()
                 }
             }
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 8) {
-                let accessResource = USBCalliope.calliopeLocation?.startAccessingSecurityScopedResource()
-                defer {
-                    if accessResource ?? false {
-                        USBCalliope.calliopeLocation?.stopAccessingSecurityScopedResource()
-                    }
-                }
-                do {
-                    let data = try Data(contentsOf: file!.calliopeUSBUrl)
-                    try data.write(to: USBCalliope.calliopeLocation!.appendingPathComponent(file!.calliopeUSBUrl.lastPathComponent))
-                } catch {
-                    print(error)
-                }
+            do {
+                let data = try Data(contentsOf: file!.calliopeUSBUrl)
+                try data.write(to: USBCalliope.calliopeLocation!.appendingPathComponent(file!.calliopeUSBUrl.lastPathComponent))
+            } catch {
+                print(error)
             }
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 25) {
-                completion()
-            }
-        } catch {
-            print(error)
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+            completion()
         }
     }
 }

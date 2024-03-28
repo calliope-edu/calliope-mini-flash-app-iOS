@@ -444,14 +444,10 @@ class CalliopeV3: FlashableBLECalliope {
         if newState == .usageReady {
             //read to trigger pairing if necessary
             shouldRebootOnDisconnect = true
-            do {
-                if let cbCharacteristic = getCBCharacteristic(.secureDfuCharacteristic) {
-                    peripheral.setNotifyValue(true, for: cbCharacteristic)
-                }
-                shouldRebootOnDisconnect = false
-            } catch {
-                
+            if let cbCharacteristic = getCBCharacteristic(.secureDfuCharacteristic) {
+                peripheral.setNotifyValue(true, for: cbCharacteristic)
             }
+            shouldRebootOnDisconnect = false
         }
     }
     

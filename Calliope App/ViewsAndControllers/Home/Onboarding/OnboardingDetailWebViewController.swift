@@ -29,7 +29,7 @@ class OnboardingDetailWebViewController: UIViewController, WKNavigationDelegate,
         activityIndicator = UIActivityIndicatorView()
         activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true
-        activityIndicator.style = UIActivityIndicatorView.Style.gray
+        activityIndicator.style = UIActivityIndicatorView.Style.medium
         
         view.addSubview(activityIndicator)
         showActivityIndicator(show: true)
