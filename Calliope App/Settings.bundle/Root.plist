@@ -170,7 +170,7 @@
 			<key>Key</key>
 			<string>calliopeDefaultProgramV3HexPreference</string>
 			<key>DefaultValue</key>
-			<string>http://calliope.cc/downloads/miniV3_start_mobil.hex</string>
+			<string>https://calliope.cc/downloads/miniV3_start.hex</string>
 			<key>IsSecure</key>
 			<false/>
 			<key>KeyboardType</key>

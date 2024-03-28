@@ -40,8 +40,8 @@ public struct Settings {
     static var defaultNewsUrl = NSLocalizedString("https://calliope.cc/forumassets/news.json", comment: "The url for the news json");
     static var defaultRobertaUrl = "https://lab.open-roberta.org?loadSystem=calliope2017"
     static var defaultMakecodeUrl = "https://makecode.calliope.cc"
-    static var defaultProgramV3 = "http://calliope.cc/downloads/miniV3_start_mobil.hex"
-    static var defaultProgramV2andV1 = "http://calliope.cc/downloads/calliope-demo_mobil.hex"
+    static var defaultProgramV3 = "https://calliope.cc/downloads/miniV3_start.hex"
+    static var defaultProgramV2andV1 = "https://calliope.cc/downloads/calliope-demo.hex"
     static var defaultPlaygroundTemplateUrl = NSLocalizedString("https://calliope.cc/forumassets/snippets.json", comment: "The url for the snippets json")
 
     static var defaultLocalEditorEnabled = false

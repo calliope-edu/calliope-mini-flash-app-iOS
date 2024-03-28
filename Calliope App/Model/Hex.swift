@@ -1,5 +1,5 @@
 import UIKit
-import iOSDFULibrary
+import NordicDFU
 import DeepDiff
 
 protocol Hex {
@@ -8,7 +8,7 @@ protocol Hex {
     var dateString: String { get }
     var calliopeV1andV2Bin: Data { get }
     var calliopeV3Bin: Data { get }
-    var callioeUSBUrl: URL { get }
+    var calliopeUSBUrl: URL { get }
     var partialFlashingInfo: (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? { get }
     
     func getHexTypes() -> Set<HexParser.HexVersion>
@@ -118,7 +118,7 @@ struct HexFile: Hex, Equatable {
         }
     }
     
-    var callioeUSBUrl: URL {
+    var calliopeUSBUrl: URL {
         get {
             return url
         }

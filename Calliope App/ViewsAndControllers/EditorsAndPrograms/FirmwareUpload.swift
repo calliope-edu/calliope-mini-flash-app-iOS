@@ -7,7 +7,7 @@
 
 import UIKit
 import UICircularProgressRing
-import iOSDFULibrary
+import NordicDFU
 
 class FirmwareUpload {
     

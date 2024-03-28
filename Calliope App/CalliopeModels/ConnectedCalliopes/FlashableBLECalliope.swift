@@ -7,7 +7,7 @@
 
 import UIKit
 import CoreBluetooth
-import iOSDFULibrary
+import NordicDFU
 
 class FlashableBLECalliope: BLECalliope {
     
@@ -374,7 +374,7 @@ class FlashableBLECalliope: BLECalliope {
     }
     
     
-    override func dfuError(_ error: iOSDFULibrary.DFUError, didOccurWithMessage message: String) {
+    override func dfuError(_ error: NordicDFU.DFUError, didOccurWithMessage message: String) {
         rebootingIntoDFUMode = false
         statusDelegate?.dfuError(error, didOccurWithMessage: message)
     }

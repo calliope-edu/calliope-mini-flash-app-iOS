@@ -33,8 +33,8 @@ extension DownloadableHexFile {
         return downloadedHexFile?.calliopeV3Bin ?? loadExternalData()
     }
     
-    var callioeUSBUrl: URL {
-        return downloadedHexFile?.callioeUSBUrl ?? URL(string: "/")!
+    var calliopeUSBUrl: URL {
+        return downloadedHexFile?.calliopeUSBUrl ?? URL(string: "/")!
     }
     
     var partialFlashingInfo: (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? {

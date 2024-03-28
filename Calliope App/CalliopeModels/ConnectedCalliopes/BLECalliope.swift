@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import iOSDFULibrary
+import NordicDFU
 import CoreBluetooth
 
 class BLECalliope: Calliope {

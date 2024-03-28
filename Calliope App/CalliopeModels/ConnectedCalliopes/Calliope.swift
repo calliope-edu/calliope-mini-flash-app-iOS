@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import iOSDFULibrary
+import NordicDFU
 import CoreBluetooth
 
 class Calliope: NSObject, DFUServiceDelegate, CBPeripheralDelegate {
@@ -17,11 +17,11 @@ class Calliope: NSObject, DFUServiceDelegate, CBPeripheralDelegate {
     internal var rebootingIntoDFUMode = false
     public internal(set) var shouldRebootOnDisconnect = false
     
-    func dfuStateDidChange(to state: iOSDFULibrary.DFUState) {
+    func dfuStateDidChange(to state: NordicDFU.DFUState) {
         return
     }
     
-    func dfuError(_ error: iOSDFULibrary.DFUError, didOccurWithMessage message: String) {
+    func dfuError(_ error: NordicDFU.DFUError, didOccurWithMessage message: String) {
         return
     }
     
