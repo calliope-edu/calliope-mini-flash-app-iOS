@@ -62,7 +62,7 @@
 "Do you want to delete %@?" = "Datei entgültig löschen %@?";
 
 /* No comment provided by engineer. */
-"Do you want to upload %@ to your calliope?" = "Möchtest du %@ auf deinen Calliope laden?";
+"Do you want to upload %@ to your Calliope mini?" = "Möchtest du %@ auf deinen Calliope mini laden?";
 
 /* No comment provided by engineer. */
 "Don´t save" = "Nicht sichern";
@@ -200,7 +200,7 @@ Weitere Infos unter „Hilfe”.";
 "The name %@ could not be given to %@. The name for a program must be unique and not empty." = "Der Name %@ konnte nicht an %@ vergeben werden. Der Name für ein Programm muss eindeutig sein und darf nicht leer sein.";
 
 /* No comment provided by engineer. */
-"the program" = "Das Programm";
+"the program" = "das Programm";
 
 /* No comment provided by engineer. */
 "The program is being downloaded. Please wait a little." = "Das Programm wird geladen. Einen Augenblick Geduld.";
