@@ -160,17 +160,17 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
-			<string>Default Hex Files</string>
+			<string>Start Program</string>
 		</dict>
 		<dict>
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
 			<key>Title</key>
-			<string>Start Program</string>
+			<string>Calliope mini V3</string>
 			<key>Key</key>
-			<string>calliopeDefaultHexFilePreference</string>
+			<string>calliopeDefaultProgramV3HexPreference</string>
 			<key>DefaultValue</key>
-			<string>http://calliope.cc/downloads/calliope-demo.hex</string>
+			<string>https://calliope.cc/downloads/miniV3_start.hex</string>
 			<key>IsSecure</key>
 			<false/>
 			<key>KeyboardType</key>
@@ -184,11 +184,11 @@
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
 			<key>Title</key>
-			<string>Blinking Heart</string>
+			<string>Calliope mini V1+2</string>
 			<key>Key</key>
-			<string>calliopeBlinkingHeartHexPreference</string>
+			<string>calliopeDefaultProgramV1andV2HexPreference</string>
 			<key>DefaultValue</key>
-			<string>http://calliope.cc/downloads/blinkendes_herz_calliope_mini.hex</string>
+			<string>http://calliope.cc/downloads/calliope-demo_mobil.hex</string>
 			<key>IsSecure</key>
 			<false/>
 			<key>KeyboardType</key>

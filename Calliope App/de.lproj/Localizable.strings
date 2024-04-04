@@ -5,9 +5,6 @@
 "Activate Bluetooth!" = "Bitte Bluetooth aktivieren!";
 
 /* No comment provided by engineer. */
-"Blinking Heart" = "Blinkendes Herz";
-
-/* No comment provided by engineer. */
 "Bluetooth" = "Bluetooth Swift Playground";
 
 /* No comment provided by engineer. */
@@ -35,9 +32,6 @@
 "Connect to a calliope to finish the tutorial" = "Verbinde dich hier mit dem Calliope mini.";
 
 /* No comment provided by engineer. */
-"Connect to enable uploading programs" = "Verbinde dich hier mit dem Calliope mini.";
-
-/* No comment provided by engineer. */
 "Connection to calliope timed out!" = "Zeitüberschreitung bei der Übertragung";
 
 /* No comment provided by engineer. */
@@ -53,6 +47,12 @@
 "Delete" = "Löschen";
 
 /* No comment provided by engineer. */
+"Transfer" = "Übertragen";
+
+/* No comment provided by engineer. */
+"Open" = "Öffnen";
+
+/* No comment provided by engineer. */
 "Delete failed" = "Löschen fehlgeschlagen";
 
 /* No comment provided by engineer. */
@@ -62,7 +62,7 @@
 "Do you want to delete %@?" = "Datei entgültig löschen %@?";
 
 /* No comment provided by engineer. */
-"Do you want to upload %@ to your calliope?" = "Möchtest du %@ auf deinen Calliope laden?";
+"Do you want to upload %@ to your Calliope mini?" = "Möchtest du %@ auf deinen Calliope mini laden?";
 
 /* No comment provided by engineer. */
 "Don´t save" = "Nicht sichern";
@@ -74,7 +74,7 @@
 "Download the Swift Playgrounds App" = "Lade die Swift Playgrounds App";
 
 /* No comment provided by engineer. */
-"Edit" = "Bearbeiten";
+"Rename" = "Umbenennen";
 
 /* No comment provided by engineer. */
 "Encountered an error discovering or connecting calliope:" = "Es ist ein Fehler beim Erkennen oder Verbinden aufgetreten:";
@@ -164,10 +164,13 @@
 "Program exported" = "Program exportiert";
 
 /* No comment provided by engineer. */
-"Program exported message" = "Das Program wurde in \"Dokumente/Calliope mini\" auf dem Gerät gespeichert.";
+"Program exported message" = "Das Program wurde im Calliope mini Ordner auf dem Gerät gespeichert.";
 
 /* No comment provided by engineer. */
-"Push the button and follow the instructions for connecting to your Calliope" = "ID-Muster auf dem Calliope mini anzeigen: A+B+Reset gedrückt halten, nach 1 Sekunde Reset loslassen. Weitere Infos unter „Hilfe”.";
+"Push the button and follow the instructions for connecting to your Calliope" = "Muster auf dem Calliope mini anzeigen: 
+V3: Reset Button 3-Mal drücken
+V2: A+B+Reset gedrückt halten, nach 1 Sekunde Reset loslassen.
+Weitere Infos unter „Hilfe”.";
 
 /* No comment provided by engineer. */
 "Ready!" = "Fertig!";
@@ -197,7 +200,7 @@
 "The name %@ could not be given to %@. The name for a program must be unique and not empty." = "Der Name %@ konnte nicht an %@ vergeben werden. Der Name für ein Programm muss eindeutig sein und darf nicht leer sein.";
 
 /* No comment provided by engineer. */
-"the program" = "Das Programm";
+"the program" = "das Programm";
 
 /* No comment provided by engineer. */
 "The program is being downloaded. Please wait a little." = "Das Programm wird geladen. Einen Augenblick Geduld.";
@@ -243,3 +246,27 @@
 
 /* No comment provided by engineer. */
 "Save and thorough upload" = "Speichern und gründliches Übertragen";
+
+/* No comment provided by engineer. */
+"Möchtest du die Datei sichern oder auf deinen Calliope mini übertragen?" = "Möchtest du die Datei sichern oder auf deinen Calliope mini übertragen?";
+
+/* No comment provided by engineer. */
+"Datei geöffnet" = "Datei geöffnet";
+
+/* No comment provided by engineer. */
+"Sichern" = "Sichern";
+
+/* No comment provided by engineer. */
+"The program does not seem to match the version of your Calliope mini. Please check the hardware selection in your editor again." = "Das Programm scheint nicht zu der Version des Calliope mini zu passen. Bitte überprüfe die Hardware Auswahl in deinem Editor nochmal.";
+
+/* No comment provided by engineer. */
+"Further Information" = "Weitere Informationen";
+
+/* No comment provided by engineer. */
+"Upload failed" = "Übertragen fehlgeschlagen";
+
+/* No comment provided by engineer. */
+"Wrong location selected" = "Falschen Speicherort ausgewählt";
+
+/* No comment provided by engineer. */
+"USB Location is not a USB Calliope folder" = "Speicherort ist kein USB Ordner des Calliope mini, bitte wähle den korrekten Ordner";

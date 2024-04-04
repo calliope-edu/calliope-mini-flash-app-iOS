@@ -59,10 +59,7 @@
 "Delete?" = "Delete?";
 
 /* No comment provided by engineer. */
-"Do you want to delete %@?" = "Could not rename %@";
-
-/* No comment provided by engineer. */
-"Do you want to upload %@ to your calliope?" = "Do you want to upload %@ to your Calliope mini?";
+"Do you want to upload %@ to your Calliope mini?" = "Do you want to upload %@ to your Calliope mini?";
 
 /* No comment provided by engineer. */
 "Don´t save" = "Don´t save";
@@ -164,10 +161,10 @@
 "Program exported" = "Program exported";
 
 /* No comment provided by engineer. */
-"Program exported message" = "The program was saved under \"Documents/Calliope mini\" on your device.";
+"Program exported message" = "The program was saved in the Calliope mini folder on your device.";
 
 /* No comment provided by engineer. */
-"Push the button and follow the instructions for connecting to your Calliope" = "Display ID pattern on the Calliope mini: Press and hold A+B+Reset, release reset after 1 second. More info under \"Help“.";
+"Push the button and follow the instructions for connecting to your Calliope" = "Display ID pattern on the Calliope mini: Press and hold A+B+Reset, release reset after 1 second. OR: Press Reset 3 Times. More info under \"Help“.";
 
 /* No comment provided by engineer. */
 "Ready!" = "Done!";
@@ -243,3 +240,37 @@
 
 /* No comment provided by engineer. */
 "Save and thorough upload" = "Save and thorough upload";
+
+/* No comment provided by engineer. */
+"Möchtest du die Datei in MakeCode öffnen oder direkt auf deinen Calliope mini übertragen?" = "Would you like to open the file in MakeCode or transfer it directly to your Calliope mini?";
+
+/* No comment provided by engineer. */
+"Öffnen" = "Open";
+
+/* No comment provided by engineer. */
+"Übertragen" = "Transfer";
+
+/* No comment provided by engineer. */
+"Schließen" = "Close";
+
+/* No comment provided by engineer. */
+"Möchtest du die Datei sichern oder auf deinen Calliope mini übertragen?" = "Do you want to save the file or transfer it to your Calliope mini";
+
+/* No comment provided by engineer. */
+"Datei geöffnet" = "Opened file";
+
+/* No comment provided by engineer. */
+"Sichern" = "Save";
+
+/* No comment provided by engineer. */
+"Der Calliope mini startet das Programm, sobald die Übertragung beendet ist." = "The Calliope mini starts the programme as soon as the transmission is finished.";
+
+/* No comment provided by engineer. */
+"Übertragung läuft" = "Transmission running";
+
+/* No comment provided by engineer. */
+"Vor der nächsten Übertragung: \n 1. USB-Verbindung trennen \n 2. Batteriefach ausschalten" = "Before the next transfer: \n 1. Disconnect the USB connection \n 2. Switch off the battery compartment";
+
+"Übertragung abgeschlossen" = "Transfer completed";
+
+"Calliope mini verbinden" = "Connect a Calliope mini";

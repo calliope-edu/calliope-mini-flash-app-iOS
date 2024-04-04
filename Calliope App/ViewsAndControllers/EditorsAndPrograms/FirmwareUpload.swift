@@ -7,7 +7,7 @@
 
 import UIKit
 import UICircularProgressRing
-import iOSDFULibrary
+import NordicDFU
 
 class FirmwareUpload {
     
@@ -57,7 +57,7 @@ class FirmwareUpload {
     }
 
     public static func showUploadUI(controller: UIViewController, program: Hex, name: String = NSLocalizedString("the program", comment: ""), completion: (() -> ())? = nil) {
-        let alert = UIAlertController(title: NSLocalizedString("Upload?", comment: ""), message: String(format:NSLocalizedString("Do you want to upload %@ to your calliope?", comment: ""), name), preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("Upload?", comment: ""), message: String(format:NSLocalizedString("Do you want to upload %@ to your Calliope mini?", comment: ""), name), preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("Upload", comment: ""), style: .default) { _ in
             uploadWithoutConfirmation(controller: controller, program: program, completion: completion)
         })
@@ -67,12 +67,41 @@ class FirmwareUpload {
 
     public static func uploadWithoutConfirmation(controller: UIViewController, program: Hex,
                                                  completion: (() -> ())? = nil) {
+        
+        let informationLink: String = "https://calliope.cc/programmieren/mobil/ipad#hardware"
+        
         let uploader = FirmwareUpload(file: program, controller: controller)
+        let tempCalliope = MatrixConnectionViewController.instance.usageReadyCalliope
         controller.present(uploader.alertView, animated: true) {
-            uploader.upload(finishedCallback: {
-                controller.dismiss(animated: true, completion: nil)
-                completion?()
-            })
+            do {
+                try uploader.upload(finishedCallback: {
+                    controller.dismiss(animated: true, completion: nil)
+                    if tempCalliope is USBCalliope {
+                        let alert = UIAlertController(title: NSLocalizedString("Übertragung abgeschlossen", comment: ""), message: NSLocalizedString("Vor der nächsten Übertragung: \n 1. USB-Verbindung trennen \n 2. Batteriefach ausschalten", comment: ""), preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in })
+                        controller.present(alert, animated: true)
+                    }
+                    completion?()
+                })
+            } catch {
+                FirmwareUpload.uploadingInstance = nil
+                UIApplication.shared.isIdleTimerDisabled = false
+                
+                
+                
+                let alert = UIAlertController(title: NSLocalizedString("Upload failed", comment: ""), message: String(format:NSLocalizedString("The program does not seem to match the version of your Calliope mini. Please check the hardware selection in your editor again.", comment: "")), preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel) {
+                    _ in uploader.alertView.dismiss(animated: true)
+                })
+                alert.addAction(UIAlertAction(title: NSLocalizedString("Further Information", comment: ""), style: .default) { _ in
+                    if let url = URL(string: informationLink) {
+                        UIApplication.shared.open(url)
+                    }
+                    uploader.alertView.dismiss(animated: true)
+                })
+                uploader.alertView.present(alert, animated: true)
+            }
+            
         }
     }
 
@@ -97,21 +126,28 @@ class FirmwareUpload {
 			return alertController
 		}
 		
-        let uploadController = UIAlertController(title: NSLocalizedString("Uploading", comment: ""), message: "", preferredStyle: .alert)
-
-		let progressView = progressRing
-		progressView.translatesAutoresizingMaskIntoConstraints = false
-		uploadController.view.addSubview(progressView)
-
-
-        uploadController.view.addSubview(logTextView)
+        let uploadController = UIAlertController(title: NSLocalizedString("Übertragung läuft", comment: ""), message: "", preferredStyle: .alert)
+        
+        let progressView: UIView
         let logHeight = 0 //TODO: differenciate debug / production
-
-		uploadController.view.addConstraints(
+        
+        if calliope is USBCalliope {
+            uploadController.message = NSLocalizedString("Der Calliope mini startet das Programm, sobald die Übertragung beendet ist.", comment: "")
+            let activityIndicator = UIActivityIndicatorView(style: .large)
+            activityIndicator.startAnimating()
+            progressView = activityIndicator
+        } else {
+            progressView = progressRing
+        }
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+        
+        uploadController.view.addSubview(progressView)
+        uploadController.view.addSubview(logTextView)
+        uploadController.view.addConstraints(
             NSLayoutConstraint.constraints(withVisualFormat: "V:|-(80)-[progressView(120)]-(8)-[logTextView(logHeight)]-(50)-|", options: [], metrics: ["logHeight": logHeight], views: ["progressView" : progressView, "logTextView": logTextView]))
-		uploadController.view.addConstraints(
-			NSLayoutConstraint.constraints(withVisualFormat: "H:|-(80@900)-[progressView(120)]-(80@900)-|",
-										   options: [], metrics: nil, views: ["progressView" : progressView]))
+        uploadController.view.addConstraints(
+            NSLayoutConstraint.constraints(withVisualFormat: "H:|-(80@900)-[progressView(120)]-(80@900)-|",
+                                           options: [], metrics: nil, views: ["progressView" : progressView]))
 
         uploadController.view.addConstraints(
             NSLayoutConstraint.constraints(withVisualFormat: "H:|-(8@900)-[logTextView(264)]-(8@900)-|",
@@ -156,7 +192,17 @@ class FirmwareUpload {
 
 	private var calliope = MatrixConnectionViewController.instance.usageReadyCalliope
 
-    func upload(finishedCallback: @escaping () -> ()) {
+    func upload(finishedCallback: @escaping () -> ()) throws {
+        // Validating for the correct Version of the Hex File
+        let fileHexTypes = file.getHexTypes()
+        
+        guard let calliope else {
+            return
+        }
+        if !calliope.compatibleHexTypes.contains(where: fileHexTypes.contains) {
+            throw "Unexpected Hex file version"
+        }
+        
         FirmwareUpload.uploadingInstance = self
 
         let background_ident = UIApplication.shared.beginBackgroundTask(withName: "flashing", expirationHandler: {() -> Void in
@@ -172,22 +218,32 @@ class FirmwareUpload {
             UIApplication.shared.endBackgroundTask(background_ident)
         }
 
-        self.failed = downloadCompletion
+        self.failed = {
+            downloadCompletion()
+            MatrixConnectionViewController.instance.enableDfuMode(mode: false)
+        }
 		self.finished = {
 			downloadCompletion()
 			DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.0) {
 				finishedCallback()
 			}
+            MatrixConnectionViewController.instance.enableDfuMode(mode: false)
 		}
 
 		do {
-            try calliope?.upload(file: file, progressReceiver: self, statusDelegate: self, logReceiver: self)
+            MatrixConnectionViewController.instance.enableDfuMode(mode: true)
+            try calliope.upload(file: file, progressReceiver: self, statusDelegate: self, logReceiver: self)
 		}
 		catch {
 			DispatchQueue.main.async { [weak self] in
                 self?.showUploadError(error)
 			}
 		}
+        if calliope is USBCalliope {
+            MatrixConnectionViewController.instance.disconnectFromCalliope()
+            MatrixConnectionViewController.instance.usbSwitch.setOn(false, animated: true)
+            MatrixConnectionViewController.instance.switchChanged(usbSwitch: MatrixConnectionViewController.instance.usbSwitch)
+        }
 	}
 
     func showUploadError(_ error: Error) {
@@ -233,7 +289,6 @@ extension FirmwareUpload: DFUProgressDelegate, DFUServiceDelegate, LoggerDelegat
         if [DFUState.aborted].contains(state) {
             self.dfuError(.deviceDisconnected, didOccurWithMessage: "dfu process aborted")
         }
-        
     }
 
     func dfuError(_ error: DFUError, didOccurWithMessage message: String) {

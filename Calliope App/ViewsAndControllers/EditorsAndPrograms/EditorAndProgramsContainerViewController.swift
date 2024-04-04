@@ -7,14 +7,17 @@
 //
 
 import UIKit
+import CoreServices
 
-class EditorAndProgramsContainerViewController: UIViewController {
+class EditorAndProgramsContainerViewController: UIViewController, UINavigationControllerDelegate, UIDocumentPickerDelegate {
     
     @IBOutlet weak var stackView: UIStackView?
     
     @IBOutlet weak var editorContainerView: UIView?
     
     @IBOutlet weak var programContainerView: UIView?
+    
+    @IBOutlet weak var scanButton: UIButton?
     
     @objc var editorsCollectionViewController: EditorsCollectionViewController?
     @IBOutlet var editorTopToSafeArea: NSLayoutConstraint?
@@ -59,6 +62,8 @@ class EditorAndProgramsContainerViewController: UIViewController {
         programsHeightConstraint?.isActive = true
         
         configureLayout(UIApplication.shared.keyWindow!.frame.size)
+        scanButton?.imageView?.contentMode = UIView.ContentMode.scaleAspectFit
+        scanButton?.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
     
     @IBSegueAction func initializeEditor(_ coder: NSCoder) -> EditorsCollectionViewController? {
@@ -85,7 +90,7 @@ class EditorAndProgramsContainerViewController: UIViewController {
             containerVC.programsCollectionViewController?.collectionView.layoutIfNeeded()
         }
         
-        MatrixConnectionViewController.instance?.connectionDescriptionText = NSLocalizedString("Connect to enable uploading programs", comment: "")
+        MatrixConnectionViewController.instance?.connectionDescriptionText = NSLocalizedString("Calliope mini verbinden", comment: "")
         MatrixConnectionViewController.instance?.calliopeClass = DiscoveredBLEDDevice.self
     }
     
@@ -100,11 +105,42 @@ class EditorAndProgramsContainerViewController: UIViewController {
         return CGSize(width: parentSize.width - 62, height: parentSize.height)
     }
     
-    @IBAction func uploadDefaultProgram(_ sender: Any) {
-        let program = DefaultProgram.defaultProgram
+    @IBAction func uploadDefaultV3Program(_ sender: Any) {
+        let program = DefaultProgram(programName: NSLocalizedString("Calliope mini V3", comment:""), url: UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV3Url.rawValue)!)
         FirmwareUpload.showUIForDownloadableProgram(controller: self, program: program)
     }
     
+    @IBAction func uploadDefaultV2And1Program(_sender: Any) {
+        let program = DefaultProgram(programName: NSLocalizedString("Calliope mini V1 + 2", comment:""), url: UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV1AndV2Url.rawValue)!)
+        FirmwareUpload.showUIForDownloadableProgram(controller: self, program: program)
+    }
+    
+    @IBAction func navigateToImportFile() {
+        let types: [String] = getFileTypesFor(fileEnding: "hex")
+        
+        let documentPickerController = UIDocumentPickerViewController(documentTypes: types, in: .import)
+        documentPickerController.delegate = self
+        present(documentPickerController, animated: true, completion: nil)
+    }
+    
+    func getFileTypesFor(fileEnding: String) -> [String] {
+        let typeArray = UTTypeCreateAllIdentifiersForTag(
+                         kUTTagClassFilenameExtension,
+                         fileEnding as CFString,
+                         nil
+                      )?.takeRetainedValue()
+        let types: [String] = typeArray as? [String] ?? []
+        return types;
+    }
+
+    func documentPicker(_ controller: UIDocumentPickerViewController,
+              didPickDocumentAt url: URL) {
+        if !(url.lastPathComponent.isEmpty) {
+            // Dismiss this view
+            dismiss(animated: true, completion: nil)
+            HexFileStoreDialog.showStoreHexUI(controller: self, hexFile: url, notSaved: {_ in })
+        }
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         //we use segue initialization for ios13.

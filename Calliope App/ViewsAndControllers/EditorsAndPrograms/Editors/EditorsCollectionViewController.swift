@@ -23,11 +23,11 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
         if settings.bool(forKey: SettingsKey.localEditor.rawValue) {
             keys.append(.localEditor)
         }
-        if settings.bool(forKey: SettingsKey.roberta.rawValue) {
-            keys.append(.roberta)
-        }
         if settings.bool(forKey: SettingsKey.makeCode.rawValue) {
             keys.append(.makeCode)
+        }
+        if settings.bool(forKey: SettingsKey.roberta.rawValue) {
+            keys.append(.roberta)
         }
         if settings.bool(forKey: SettingsKey.playgrounds.rawValue) {
             keys.append(.playgrounds)
@@ -68,10 +68,10 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
         let editorKey = activatedEditors[indexPath.row]
         
         switch editorKey {
-        case .roberta:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierNepo, for: indexPath) as! EditorCollectionViewCell
         case .makeCode:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierMakeCode, for: indexPath) as! EditorCollectionViewCell
+        case .roberta:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierNepo, for: indexPath) as! EditorCollectionViewCell
         case .playgrounds:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierPlayground, for: indexPath) as! EditorCollectionViewCell
         case .localEditor:

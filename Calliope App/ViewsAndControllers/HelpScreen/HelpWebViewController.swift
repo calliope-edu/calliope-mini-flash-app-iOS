@@ -12,13 +12,13 @@ import WebKit
 class HelpWebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
 
     @IBOutlet weak var webView: WKWebView!
+    var activityIndicator: UIActivityIndicatorView!
+    
     private var contentController: HelpContentViewController?
     
-    var url: URL? = nil {
-        didSet {
-            loadUrl()
-        }
-    }
+    private var initialLoadPerformed: Bool = false
+    
+    var url: URL = URL(string: "https://calliope.cc/programmieren/mobil/hilfe#top")!
     
     func setContentController(controller:HelpContentViewController) {
         contentController = controller
@@ -28,18 +28,35 @@ class HelpWebViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
         webView.navigationDelegate = self
         webView.uiDelegate = self
         super.viewDidLoad()
-        loadUrl()
+        initialLoadPerformed = false
+        
+        // add activity indicator
+        activityIndicator = UIActivityIndicatorView()
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.style = UIActivityIndicatorView.Style.gray
+        
+        view.addSubview(activityIndicator)
+        showActivityIndicator(show: true)
     }
-
-    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError: Error) {
-        handleError(title: "Error - DF", error: withError.localizedDescription)
+    
+    override func viewDidAppear(_ animated: Bool) {
+        initialLoadPerformed = false
+        showActivityIndicator(show: true)
+        webView.load(URLRequest(url: url))
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError: Error) {
-        handleError(title: "Error - DFPN", error: withError.localizedDescription)
+        let backItem = UIBarButtonItem()
+        backItem.title = "Zurück zur Online Ansicht"
+        navigationItem.backBarButtonItem = backItem
+        if !initialLoadPerformed {
+            performSegue(withIdentifier: "showOfflineFallback", sender: nil)
+            initialLoadPerformed = true
+        }
     }
 
-    func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {
+    func webView(webView: WKWebView, didFailLoadWithError error: NSError?) {
         if error != nil {
             handleError(title: "Error - DFLWE", error: error?.localizedDescription ?? "wtf")
         }
@@ -55,12 +72,21 @@ class HelpWebViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in })
         self.present(alert, animated: true)
     }
-
-    private func loadUrl() {
-        guard let webView = webView else {
-            return
+    
+    func showActivityIndicator(show: Bool) {
+        if show {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
         }
-        let blankUrl = URL(string: "about:blank")!
-        webView.load(URLRequest(url: url ?? blankUrl))
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        showActivityIndicator(show: false)
+    }
+
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        handleError(title: "Error - DF", error: error.localizedDescription)
+        showActivityIndicator(show: false)
     }
 }

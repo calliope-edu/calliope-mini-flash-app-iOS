@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="localizable" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="XZv-gG-dt8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="XZv-gG-dt8">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -14,69 +14,134 @@
             <objects>
                 <viewController id="XZv-gG-dt8" customClass="MatrixConnectionViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="l7L-r3-07w">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="800"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" placeholderIntrinsicWidth="300" placeholderIntrinsicHeight="300" translatesAutoresizingMaskIntoConstraints="NO" id="fve-Pq-Ujl" userLabel="zoomView">
-                                <rect key="frame" x="101" y="0.0" width="274" height="450"/>
+                                <rect key="frame" x="126" y="0.0" width="274" height="500"/>
                                 <subviews>
-                                    <view opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="200" placeholderIntrinsicHeight="200" translatesAutoresizingMaskIntoConstraints="NO" id="F14-l5-EiT">
-                                        <rect key="frame" x="20" y="138" width="234" height="234"/>
-                                        <subviews>
-                                            <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Rez-7s-fDx" customClass="MatrixView" customModule="Calliope_App" customModuleProvider="target">
-                                                <rect key="frame" x="5" y="5" width="224" height="224"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            </view>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="0.20051384229999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="Rez-7s-fDx" secondAttribute="bottom" constant="5" id="8Qf-gR-EQu"/>
-                                            <constraint firstItem="Rez-7s-fDx" firstAttribute="top" secondItem="F14-l5-EiT" secondAttribute="top" constant="5" id="FhE-E6-3Pe"/>
-                                            <constraint firstAttribute="trailing" secondItem="Rez-7s-fDx" secondAttribute="trailing" constant="5" id="G7q-7b-vYl"/>
-                                            <constraint firstItem="Rez-7s-fDx" firstAttribute="leading" secondItem="F14-l5-EiT" secondAttribute="leading" constant="5" id="Wrz-Wh-yL5"/>
-                                            <constraint firstAttribute="width" secondItem="F14-l5-EiT" secondAttribute="height" multiplier="1:1" id="Y4p-2V-8JM"/>
-                                        </constraints>
-                                    </view>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="600" verticalCompressionResistancePriority="600" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ABo-Y2-qxl">
-                                        <rect key="frame" x="20" y="20" width="147.5" height="110"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ABo-Y2-qxl">
+                                        <rect key="frame" x="20" y="20" width="192.5" height="61.5"/>
                                         <string key="text">1. Programm 5 starten
 2. Schütteln
 3. LED-Muster eingeben</string>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="650" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="Zyc-gu-u4s" customClass="ConnectionButton" customModule="Calliope_App" customModuleProvider="target">
-                                        <rect key="frame" x="58.5" y="380" width="157" height="50"/>
+                                    <stackView opaque="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" alignment="center" spacing="5" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SJw-ye-Zoy">
+                                        <rect key="frame" x="45" y="96.5" width="184" height="31"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="749" text="USB verwenden" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NJ1-SW-3EC">
+                                                <rect key="frame" x="0.0" y="5.5" width="130" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="751" verticalHuggingPriority="749" horizontalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" title="Enable USB" translatesAutoresizingMaskIntoConstraints="NO" id="XYJ-C1-vhJ">
+                                                <rect key="frame" x="135" y="0.0" width="51" height="31"/>
+                                            </switch>
+                                        </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="50" id="E2M-Tt-pHT"/>
+                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="31" id="LSS-6t-dFJ"/>
                                         </constraints>
-                                        <state key="normal" image="liveviewconnect/mini_refresh"/>
-                                        <state key="disabled">
-                                            <color key="titleColor" systemColor="darkTextColor"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="connect" destination="XZv-gG-dt8" eventType="touchUpInside" id="sEd-A7-UpC"/>
-                                        </connections>
-                                    </button>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="jzs-P9-1bj">
+                                        <rect key="frame" x="0.0" y="142.5" width="274" height="337.5"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="57V-Gq-iOc">
+                                                <rect key="frame" x="0.0" y="0.0" width="274" height="50"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uly-Zt-Dwr">
+                                                        <rect key="frame" x="27.5" y="0.0" width="219" height="50"/>
+                                                        <color key="backgroundColor" name="calliope-green"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" priority="998" constant="50" id="PSz-M4-3sz"/>
+                                                        </constraints>
+                                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="plain" title="Calliope mini auswählen">
+                                                            <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </buttonConfiguration>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="10"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="startUSBconnect:" destination="XZv-gG-dt8" eventType="touchUpInside" id="rZ2-GB-s29"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="Uly-Zt-Dwr" firstAttribute="top" secondItem="57V-Gq-iOc" secondAttribute="top" id="GP6-jB-0Yc"/>
+                                                    <constraint firstItem="Uly-Zt-Dwr" firstAttribute="centerX" secondItem="57V-Gq-iOc" secondAttribute="centerX" id="LUz-q9-sGo"/>
+                                                    <constraint firstItem="Uly-Zt-Dwr" firstAttribute="width" secondItem="57V-Gq-iOc" secondAttribute="width" multiplier="0.8" id="f5l-Pn-WeG"/>
+                                                    <constraint firstAttribute="bottom" secondItem="Uly-Zt-Dwr" secondAttribute="bottom" id="oc9-J2-SWm"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i6x-PK-te0">
+                                                <rect key="frame" x="0.0" y="50" width="274" height="287.5"/>
+                                                <subviews>
+                                                    <view opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="200" placeholderIntrinsicHeight="200" translatesAutoresizingMaskIntoConstraints="NO" id="F14-l5-EiT">
+                                                        <rect key="frame" x="10" y="0.0" width="254" height="254"/>
+                                                        <subviews>
+                                                            <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Rez-7s-fDx" customClass="MatrixView" customModule="Calliope_App" customModuleProvider="target">
+                                                                <rect key="frame" x="10" y="10" width="234" height="234"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </view>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="0.20051384229999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="bottom" secondItem="Rez-7s-fDx" secondAttribute="bottom" priority="999" constant="10" id="8Qf-gR-EQu"/>
+                                                            <constraint firstItem="Rez-7s-fDx" firstAttribute="top" secondItem="F14-l5-EiT" secondAttribute="top" constant="10" id="FhE-E6-3Pe"/>
+                                                            <constraint firstAttribute="trailing" secondItem="Rez-7s-fDx" secondAttribute="trailing" constant="10" id="G7q-7b-vYl"/>
+                                                            <constraint firstItem="Rez-7s-fDx" firstAttribute="leading" secondItem="F14-l5-EiT" secondAttribute="leading" constant="10" id="Wrz-Wh-yL5"/>
+                                                            <constraint firstAttribute="width" secondItem="F14-l5-EiT" secondAttribute="height" multiplier="1:1" id="Y4p-2V-8JM"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="650" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="Zyc-gu-u4s" customClass="ConnectionButton" customModule="Calliope_App" customModuleProvider="target">
+                                                        <rect key="frame" x="55" y="262" width="164" height="25.5"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="50" id="E2M-Tt-pHT"/>
+                                                        </constraints>
+                                                        <state key="normal" image="liveviewconnect/mini_refresh"/>
+                                                        <state key="disabled">
+                                                            <color key="titleColor" systemColor="darkTextColor"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="connect" destination="XZv-gG-dt8" eventType="touchUpInside" id="sEd-A7-UpC"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="Zyc-gu-u4s" firstAttribute="top" secondItem="F14-l5-EiT" secondAttribute="bottom" constant="8" id="2gM-K7-qZn"/>
+                                                    <constraint firstAttribute="bottom" secondItem="Zyc-gu-u4s" secondAttribute="bottom" id="7HU-uR-4uM"/>
+                                                    <constraint firstItem="F14-l5-EiT" firstAttribute="leading" secondItem="i6x-PK-te0" secondAttribute="leading" priority="999" constant="10" id="Iis-s9-JwA"/>
+                                                    <constraint firstItem="Zyc-gu-u4s" firstAttribute="centerX" secondItem="Rez-7s-fDx" secondAttribute="centerX" id="RGO-tc-Z5e"/>
+                                                    <constraint firstItem="Zyc-gu-u4s" firstAttribute="width" secondItem="Rez-7s-fDx" secondAttribute="width" multiplier="0.7" id="Vy3-zR-NIx"/>
+                                                    <constraint firstAttribute="trailing" secondItem="F14-l5-EiT" secondAttribute="trailing" constant="10" id="j6x-9x-EnF"/>
+                                                    <constraint firstItem="F14-l5-EiT" firstAttribute="top" secondItem="i6x-PK-te0" secondAttribute="top" id="lAz-AE-fhd"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                                 <color key="backgroundColor" name="calliope-yellow"/>
                                 <constraints>
-                                    <constraint firstItem="Zyc-gu-u4s" firstAttribute="centerX" secondItem="Rez-7s-fDx" secondAttribute="centerX" id="1CF-TZ-VcY"/>
-                                    <constraint firstAttribute="width" priority="999" constant="274" id="7Ms-GT-4Gg"/>
-                                    <constraint firstAttribute="height" priority="999" constant="450" id="B5e-yL-cNE"/>
-                                    <constraint firstItem="ABo-Y2-qxl" firstAttribute="top" secondItem="fve-Pq-Ujl" secondAttribute="top" priority="751" constant="20" id="C9m-4b-xQg"/>
-                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="F14-l5-EiT" secondAttribute="trailing" id="G81-L7-fWX"/>
-                                    <constraint firstItem="F14-l5-EiT" firstAttribute="top" relation="greaterThanOrEqual" secondItem="fve-Pq-Ujl" secondAttribute="top" id="GRJ-KG-hN8"/>
-                                    <constraint firstItem="F14-l5-EiT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fve-Pq-Ujl" secondAttribute="leading" id="KYr-Tz-E1h"/>
-                                    <constraint firstItem="F14-l5-EiT" firstAttribute="top" secondItem="ABo-Y2-qxl" secondAttribute="bottom" priority="750" constant="8" id="PTn-mr-pIT"/>
-                                    <constraint firstAttribute="trailing" secondItem="F14-l5-EiT" secondAttribute="trailing" priority="700" constant="20" id="RaX-di-09c"/>
-                                    <constraint firstItem="Zyc-gu-u4s" firstAttribute="width" secondItem="Rez-7s-fDx" secondAttribute="width" multiplier="0.7" priority="500" id="SFl-Bg-Fx8"/>
-                                    <constraint firstAttribute="bottom" secondItem="Zyc-gu-u4s" secondAttribute="bottom" priority="700" constant="20" id="Wks-5f-5tb"/>
-                                    <constraint firstItem="Zyc-gu-u4s" firstAttribute="top" secondItem="F14-l5-EiT" secondAttribute="bottom" priority="710" constant="8" id="cvz-22-YYv"/>
-                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="F14-l5-EiT" secondAttribute="bottom" id="efo-zp-iif"/>
-                                    <constraint firstItem="F14-l5-EiT" firstAttribute="leading" secondItem="fve-Pq-Ujl" secondAttribute="leading" priority="700" constant="20" id="nh8-Sa-lbi"/>
-                                    <constraint firstItem="ABo-Y2-qxl" firstAttribute="leading" secondItem="fve-Pq-Ujl" secondAttribute="leading" priority="755" constant="20" id="o2g-rY-bD4"/>
+                                    <constraint firstItem="jzs-P9-1bj" firstAttribute="top" secondItem="SJw-ye-Zoy" secondAttribute="bottom" constant="15" id="4M9-sO-SN7"/>
+                                    <constraint firstItem="SJw-ye-Zoy" firstAttribute="centerX" secondItem="fve-Pq-Ujl" secondAttribute="centerX" priority="999" id="4yz-fO-IMB"/>
+                                    <constraint firstAttribute="bottom" secondItem="jzs-P9-1bj" secondAttribute="bottom" constant="20" id="5PV-LM-eM3"/>
+                                    <constraint firstAttribute="width" constant="274" id="7Ms-GT-4Gg"/>
+                                    <constraint firstItem="SJw-ye-Zoy" firstAttribute="leading" relation="lessThanOrEqual" secondItem="fve-Pq-Ujl" secondAttribute="leading" constant="45" id="Acp-rS-laB"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" priority="999" constant="500" id="B5e-yL-cNE"/>
+                                    <constraint firstItem="ABo-Y2-qxl" firstAttribute="top" secondItem="fve-Pq-Ujl" secondAttribute="top" constant="20" id="C9m-4b-xQg"/>
+                                    <constraint firstAttribute="trailing" secondItem="jzs-P9-1bj" secondAttribute="trailing" id="Ix8-Vs-Nsc"/>
+                                    <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="SJw-ye-Zoy" secondAttribute="trailing" priority="999" constant="45" id="WMx-FH-wsd"/>
+                                    <constraint firstItem="jzs-P9-1bj" firstAttribute="width" secondItem="fve-Pq-Ujl" secondAttribute="width" id="XS2-3G-MXa"/>
+                                    <constraint firstItem="jzs-P9-1bj" firstAttribute="leading" secondItem="fve-Pq-Ujl" secondAttribute="leading" id="ccU-Fw-Lwb"/>
+                                    <constraint firstItem="i6x-PK-te0" firstAttribute="centerX" secondItem="fve-Pq-Ujl" secondAttribute="centerX" id="fci-kl-NJo"/>
+                                    <constraint firstItem="SJw-ye-Zoy" firstAttribute="top" secondItem="ABo-Y2-qxl" secondAttribute="bottom" constant="15" id="fuq-1K-4KV"/>
+                                    <constraint firstItem="ABo-Y2-qxl" firstAttribute="leading" secondItem="fve-Pq-Ujl" secondAttribute="leading" constant="20" id="o2g-rY-bD4"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -86,7 +151,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f6r-M2-oVO" customClass="ConnectionViewCollapseButton" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="325" y="0.0" width="50" height="50"/>
+                                <rect key="frame" x="350" y="0.0" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="hO2-iY-xGJ"/>
                                     <constraint firstAttribute="width" secondItem="f6r-M2-oVO" secondAttribute="height" multiplier="1:1" id="ioW-gs-FT4"/>
@@ -105,7 +170,7 @@
                             <constraint firstItem="f6r-M2-oVO" firstAttribute="trailing" secondItem="fve-Pq-Ujl" secondAttribute="trailing" id="Hhg-YG-uUs"/>
                             <constraint firstItem="ilK-df-gtj" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="f6r-M2-oVO" secondAttribute="bottom" id="JFT-kw-Tni"/>
                             <constraint firstItem="fve-Pq-Ujl" firstAttribute="leading" secondItem="ilK-df-gtj" secondAttribute="leading" priority="998" id="RrH-EB-eL7"/>
-                            <constraint firstItem="f6r-M2-oVO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ABo-Y2-qxl" secondAttribute="trailing" priority="755" constant="8" id="SC1-Uh-17S"/>
+                            <constraint firstItem="f6r-M2-oVO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ABo-Y2-qxl" secondAttribute="trailing" priority="999" constant="8" id="SC1-Uh-17S"/>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="fve-Pq-Ujl" secondAttribute="bottom" id="ZjT-3a-3IC"/>
                             <constraint firstItem="ilK-df-gtj" firstAttribute="bottom" secondItem="fve-Pq-Ujl" secondAttribute="bottom" priority="998" id="cLh-no-TgU"/>
                             <constraint firstItem="fve-Pq-Ujl" firstAttribute="top" secondItem="f6r-M2-oVO" secondAttribute="top" id="eI0-tU-ZqL"/>
@@ -115,20 +180,27 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="375" height="667"/>
+                    <size key="freeformSize" width="400" height="800"/>
                     <connections>
+                        <outlet property="bluetoothSuperView" destination="i6x-PK-te0" id="H5s-me-J8K"/>
                         <outlet property="collapseButton" destination="f6r-M2-oVO" id="CGw-4B-kgt"/>
                         <outlet property="collapseHeightConstraint" destination="B5e-yL-cNE" id="y7M-86-74O"/>
                         <outlet property="collapseWidthConstraint" destination="7Ms-GT-4Gg" id="uQa-QA-Zgn"/>
                         <outlet property="connectButton" destination="Zyc-gu-u4s" id="28j-lq-Rjr"/>
                         <outlet property="connectionDescriptionLabel" destination="ABo-Y2-qxl" id="Tez-PV-yEJ"/>
+                        <outlet property="matrixSuperView" destination="F14-l5-EiT" id="SEz-5A-fDl"/>
                         <outlet property="matrixView" destination="Rez-7s-fDx" id="Myv-kV-dAN"/>
+                        <outlet property="overallStackView" destination="jzs-P9-1bj" id="mjP-Od-xbd"/>
+                        <outlet property="usbSuperView" destination="57V-Gq-iOc" id="phC-2r-F2a"/>
+                        <outlet property="usbSwitch" destination="XYJ-C1-vhJ" id="iAS-e3-yRr"/>
+                        <outlet property="usbSwitchHeightConstraint" destination="LSS-6t-dFJ" id="tel-Wg-e2d"/>
+                        <outlet property="usbSwitchSuperView" destination="SJw-ye-Zoy" id="4FC-B8-oEN"/>
                         <outlet property="zoomView" destination="fve-Pq-Ujl" id="1sh-j4-HCY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s2h-Zj-3ns" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-754" y="-540"/>
+            <point key="canvasLocation" x="-754.39999999999998" y="-540.62968515742136"/>
         </scene>
     </scenes>
     <color key="tintColor" name="calliope-lilablau"/>
@@ -136,6 +208,9 @@
         <image name="liveviewconnect/mini_button_circle_red" width="75" height="75"/>
         <image name="liveviewconnect/mini_mini" width="75" height="75"/>
         <image name="liveviewconnect/mini_refresh" width="75" height="75"/>
+        <namedColor name="calliope-green">
+            <color red="0.27500000596046448" green="0.875" blue="0.4309999942779541" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="calliope-lilablau">
             <color red="0.3919999897480011" green="0.46200001239776611" blue="0.99199998378753662" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

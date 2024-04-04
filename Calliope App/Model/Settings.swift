@@ -26,8 +26,8 @@ public enum SettingsKey: String, CaseIterable {
 
     case newsURL = "calliopeNewsUrlPreference"
 
-    case defaultHexFileURL = "calliopeDefaultHexFilePreference"
-    case blinkingHeartURL = "calliopeBlinkingHeartHexPreference"
+    case defaultProgramV3Url = "calliopeDefaultProgramV3HexPreference"
+    case defaultProgramV1AndV2Url = "calliopeDefaultProgramV1andV2HexPreference"
     
     case restoreLastMatrix = "restoreLastMatrixPreference" // key for IF to restore the matrix
     case lastMatrix = "lastMatrix" // key for storing the matrix
@@ -38,11 +38,11 @@ public enum SettingsKey: String, CaseIterable {
 public struct Settings {
 
     static var defaultNewsUrl = NSLocalizedString("https://calliope.cc/forumassets/news.json", comment: "The url for the news json");
-    static var defaultRobertaUrl = "https://lab.open-roberta.org/#loadSystem&&calliope2017"
+    static var defaultRobertaUrl = "https://lab.open-roberta.org?loadSystem=calliope2017"
     static var defaultMakecodeUrl = "https://makecode.calliope.cc"
-    static var defaultHexFileUrl = "http://calliope.cc/downloads/calliope-demo.hex"
-    static var defaultBlinkingHeartUrl = "http://calliope.cc/downloads/blinkendes_herz_calliope_mini.hex"
-    static var defaultPlaygroundTemplateUrl = NSLocalizedString("https://calliope.cc/forumassets/snippets.json", comment: "The url for the snippets json");
+    static var defaultProgramV3 = "https://calliope.cc/downloads/miniV3_start.hex"
+    static var defaultProgramV2andV1 = "https://calliope.cc/downloads/calliope-demo.hex"
+    static var defaultPlaygroundTemplateUrl = NSLocalizedString("https://calliope.cc/forumassets/snippets.json", comment: "The url for the snippets json")
 
     static var defaultLocalEditorEnabled = false
     static var defaultMakeCodeEnabled = true
@@ -82,11 +82,10 @@ public struct Settings {
         case .newsURL:
             return defaultNewsUrl
 
-        case .defaultHexFileURL:
-            return defaultHexFileUrl
-        case .blinkingHeartURL:
-            return defaultBlinkingHeartUrl
-            
+        case .defaultProgramV3Url:
+            return defaultProgramV3
+        case .defaultProgramV1AndV2Url:
+            return defaultProgramV2andV1
         case .restoreLastMatrix:
             return defaultRestoreLastMatrixEnabled
         case .lastMatrix:
@@ -110,6 +109,7 @@ static func registerDefaults() {
         let versionString: String? = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         UserDefaults.standard.set(versionString, forKey: SettingsKey.appVersion.rawValue)
     }
+    
 
     static func resetSettingsIfRequired() {
         if UserDefaults.standard.bool(forKey: SettingsKey.resetSettings.rawValue) {

@@ -35,25 +35,25 @@ pod install
 
 - Open the newly created `.xcworkspace`
 
-- Import the library to any of your classes by using `import iOSDFULibrary` and begin working on your project
+- Import the library to any of your classes by using `import NordicDFU` and begin working on your project
 
 
 **For Carthage:**
 
 - Create a new **Cartfile** in your project's root with the following contents
 
-```ogld
-github "NordicSemiconductor/IOS-DFU-Library" ~> x.y //Replace x.y with your required version
+```
+github "NordicSemiconductor/IOS-DFU-Library" ~> x.y // Replace x.y with your required version
 ```
 
 - Build with carthage
 
 ```sh
-carthage update --platform iOS //also OSX platform is available for macOS builds
+carthage update --use-xcframeworks --platform iOS // other supported platforms: macOS, tvOS, watchOS
 ```
 
 - Carthage will build the **iOSDFULibrary.framework** and **ZipFramework.framework** files in **Carthage/Build/**, 
-you may now copy all those files to your project and use the library, additionally, carthade also builds **\*.dsym** files 
+you may now copy all those files to your project and use the library, additionally, carthage also builds **\*.dsym** files 
 if you need to resymbolicate crash logs. you may want to keep those files bundled with your builds for future use.
 
 **For Swift Package Manager:**
@@ -67,7 +67,7 @@ let package = Package(
   dependencies: [
     .package(
       url: "https://github.com/NordicSemiconductor/IOS-DFU-Library", 
-      .upToNextMajor(from: "<Desired Version, e.g. 4.13.0>")
+      .upToNextMajor(from: "<Desired Version>")
     )
   ],
   targets: [.target(name: "<Your Target Name>", dependencies: ["NordicDFU"])]
@@ -99,7 +99,7 @@ In order the DFU to work with iOS, the target device MUST have the **Service Cha
 Indicate property in the **Generic Attribute** service. Without this characteristic iOS will assume that services of
 this device will never change and will not invalidate them after switching to DFU bootloader mode.
 
-##### Service Changed characteristic behaviour:
+##### Service Changed characteristic behavior:
 
 - On paired devices a change of the attribute table must be indicated using an indication to the Service Changed characteristic. 
 iOS automatically enables the CCC and handles this indication and performs a service discovery. 
@@ -111,7 +111,7 @@ This indication is handled correctly in Legacy DFU since SDK 8.0.
 - The Secure DFU implementation from SDK 12 does not support bonding (experimental buttonless sample does not 
 pass bond information when switching to DFU bootloader mode and the bootloader does not send S-C indication). 
 As a workaround, the bootloader starts to advertise with MAC address incremented by 1, so from the phone's perspective 
-it's a completly new device and a fresh service discovery will be done. When your new firmware is going to change 
+it's a completely new device and a fresh service discovery will be done. When your new firmware is going to change 
 the list of services you may consider adding another 1 to the MAC address for the new application to make sure 
 the cache will not conflict (unless the device is not bonded and you have Service Changed characteristic, then no 
 caching is used as written above). Be aware, that adding 1 to a public address is not possible (unless you register a new one). 
@@ -128,7 +128,7 @@ indication when entered DFU mode and app mode. For bonded devices it is recommen
 
 ## Documentation
 
-See the [documentation](documentation.md) for more information.
+See the [documentation](https://nordicsemiconductor.github.io/IOS-DFU-Library/documentation/nordicdfu) for more information.
 
 ---
 
@@ -168,17 +168,17 @@ Check platform folders for mode details about compatibility for each library.
 
 ### React Native
 
-An unofficial library for both iOS and Android that is based on this library is available for React Native: [react-native-nordic-dfu](https://github.com/Pilloxa/react-native-nordic-dfu)
+An unofficial library for both iOS and Android that is based on this library is available for React Native: [react-native-nordic-dfu](https://github.com/Salt-PepperEngineering/react-native-nordic-dfu)
 
 ### Flutter
 
 A library for both iOS and Android that is based on this library is available for Flutter: 
-[flutter-nordic-dfu](https://github.com/fengqiangboy/flutter-nordic-dfu) 
+[nordic_dfu](https://pub.dev/packages/nordic_dfu)
 
 ### Xamarin
 
 Simple binding library for iOS is available on nuget:
-[Laerdal.Xamarin.Dfu.iOS](https://www.nuget.org/packages/Laerdal.Xamarin.Dfu.iOS/)
+[Laerdal.Dfu](https://www.nuget.org/packages/Laerdal.Dfu/)
 
 ---
 

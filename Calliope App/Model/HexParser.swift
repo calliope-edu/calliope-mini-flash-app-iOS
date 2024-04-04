@@ -18,15 +18,58 @@ struct HexParser {
         }
         return UInt8((0x100 - UInt16(crc)))
     }
+    
+    enum HexVersion: String, CaseIterable {
+        
+        case v3 = ":1000000000040020810A000015070000610A0000BA"
+        case v2 = ":020000040000FA"
+        case universal = ":0400000A9900C0DEBB"
+        case invalid = ""
+    }
+    
+    func getHexVersion() -> Set<HexVersion> {
+        let urlAccess = url.startAccessingSecurityScopedResource()
+        guard let reader = StreamReader(path: url.path) else {
+            var enumSet: Set<HexVersion> = Set.init()
+            enumSet.insert(.invalid)
+            return enumSet
+        }
+
+        defer {
+            reader.close()
+            if urlAccess {
+                url.stopAccessingSecurityScopedResource()
+            }
+        }
+        
+        var relevantLines: Set<String> = Set.init()
+        relevantLines.insert(reader.nextLine()?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "")
+        relevantLines.insert(reader.nextLine()?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "")
+        
+        var enumSet: Set<HexVersion> = Set.init()
+        for version in HexVersion.allCases {
+            if relevantLines.contains(version.rawValue) {
+                enumSet.insert(version)
+            }
+        }
+        if enumSet.isEmpty {
+            enumSet.insert(.invalid)
+        }
+        return enumSet
+    }
 
     func parse(f: (UInt32,Data) -> ()) {
 
+        let urlAccess = url.startAccessingSecurityScopedResource()
         guard let reader = StreamReader(path: url.path) else {
             return
         }
 
         defer {
             reader.close()
+            if urlAccess {
+                url.stopAccessingSecurityScopedResource()
+            }
         }
 
         var addressHi: UInt32 = 0

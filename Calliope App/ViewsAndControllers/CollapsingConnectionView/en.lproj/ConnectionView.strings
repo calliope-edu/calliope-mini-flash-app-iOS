@@ -1,3 +1,15 @@
-/* Class = "UILabel"; text = "1. Programm 5 starten\n2. Schütteln\n3. LED-Muster eingeben"; ObjectID = "ABo-Y2-qxl"; */
-"ABo-Y2-qxl.text" = "1. Press A+B and 1 Sek Reset \n2. Keep A+B pressed\n3. Transfer ID pattern";
 
+/* Class = "UILabel"; text = "USB verwenden"; ObjectID = "65U-Jg-l1c"; */
+"NJ1-SW-3EC.text" = "Use USB-C";
+
+/* Class = "UISwitch"; title = "USB"; ObjectID = "WY5-hC-Tgz"; */
+"WY5-hC-Tgz.title" = "USB";
+
+/* Class = "UIButton"; configuration.title = "Calliope mini auswählen"; ObjectID = "Xhu-PJ-3s9"; */
+"Uly-Zt-Dwr.configuration.title" = "Select Calliope mini";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Xhu-PJ-3s9"; */
+"Uly-Zt-Dwr.normalTitle" = "Select Calliope mini";
+
+/* Class = "UILabel"; text = "1. Programm 5 starten\n2. Schütteln\n3. LED-Muster eingeben"; ObjectID = "lTg-DP-YaK"; */
+"lTg-DP-YaK.text" = "Connect a Calliope mini";

@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="JSJ-uf-MRY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="JSJ-uf-MRY">
     <device id="ipad11_0rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="RobotoMono-Regular.ttf">
-            <string>RobotoMono-Regular</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--Verbindung-->
         <scene sceneID="Yto-qY-mIN">
@@ -54,9 +49,6 @@ Koppeln-Symbol (fünf Balken) auf dem LED-Display.</string>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DMN-vs-YaT">
                                                 <rect key="frame" x="0.0" y="598.5" width="600" height="30"/>
                                                 <state key="normal" title="Weiteres zur Verwendung von Bluetooth"/>
-                                                <connections>
-                                                    <segue destination="cWl-mP-Xkh" kind="show" identifier="morebluetooth" id="ftY-XM-sUL"/>
-                                                </connections>
                                             </button>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" restorationIdentifier="CC8-d7-LIv" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CC8-d7-LIv">
                                                 <rect key="frame" x="0.0" y="633.5" width="600" height="522"/>
@@ -88,9 +80,6 @@ Auf das Startprogramm kann über den Flash zugegriffen werden.
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Ig-w3-fGp">
                                                 <rect key="frame" x="0.0" y="1408" width="600" height="30"/>
                                                 <state key="normal" title="Weitere Informationen zum Flash"/>
-                                                <connections>
-                                                    <segue destination="cWl-mP-Xkh" kind="show" identifier="moreFlash" id="t8l-mE-HbW"/>
-                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
@@ -123,7 +112,7 @@ Auf das Startprogramm kann über den Flash zugegriffen werden.
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jws-9O-7yG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3740" y="67"/>
+            <point key="canvasLocation" x="1493" y="-1218"/>
         </scene>
         <!--Help-->
         <scene sceneID="ghl-IB-trR">
@@ -137,47 +126,12 @@ Auf das Startprogramm kann über den Flash zugegriffen werden.
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="km0-IP-BB6" kind="relationship" relationship="rootViewController" id="OJU-nH-w6i"/>
+                        <segue destination="heD-1d-5dc" kind="relationship" relationship="rootViewController" id="aOI-wN-Pea"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QNs-cz-Thf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="175.36231884057972" y="-5.3571428571428568"/>
-        </scene>
-        <!--Help Web View Controller-->
-        <scene sceneID="W92-Wk-9yI">
-            <objects>
-                <viewController id="cWl-mP-Xkh" customClass="HelpWebViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="zw9-ke-GHd">
-                        <rect key="frame" x="0.0" y="0.0" width="704" height="995.5"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XOy-8x-rMc">
-                                <rect key="frame" x="0.0" y="0.0" width="704" height="995.5"/>
-                                <wkWebViewConfiguration key="configuration">
-                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
-                                    <wkPreferences key="preferences"/>
-                                </wkWebViewConfiguration>
-                            </wkWebView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="UPt-sZ-hWE"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstAttribute="bottom" secondItem="XOy-8x-rMc" secondAttribute="bottom" id="6ZQ-g9-EBQ"/>
-                            <constraint firstAttribute="trailing" secondItem="XOy-8x-rMc" secondAttribute="trailing" id="Aqc-st-RWD"/>
-                            <constraint firstItem="XOy-8x-rMc" firstAttribute="leading" secondItem="zw9-ke-GHd" secondAttribute="leading" id="WJP-2u-Ez2"/>
-                            <constraint firstItem="XOy-8x-rMc" firstAttribute="top" secondItem="zw9-ke-GHd" secondAttribute="top" id="z9R-jy-s8p"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="YWK-uU-cGH"/>
-                    <connections>
-                        <outlet property="webView" destination="XOy-8x-rMc" id="ux0-zR-Jov"/>
-                        <segue destination="km0-IP-BB6" kind="show" identifier="leave_online_help" animates="NO" id="l4N-Na-gFU"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="FqK-fk-6dz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2097" y="1365"/>
         </scene>
         <!--Programme-->
         <scene sceneID="Aps-e4-lgz">
@@ -230,9 +184,6 @@ Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="et5-hg-kob">
                                                 <rect key="frame" x="0.0" y="931" width="600" height="30"/>
                                                 <state key="normal" title="Informationen zum Installieren des Startprogramms"/>
-                                                <connections>
-                                                    <segue destination="cWl-mP-Xkh" kind="show" identifier="installstartprogram" id="MJR-n3-wyg"/>
-                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
@@ -265,7 +216,7 @@ Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tdC-JB-7Hg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2883" y="-137"/>
+            <point key="canvasLocation" x="833" y="-1218"/>
         </scene>
         <!--Editoren-->
         <scene sceneID="Zug-xF-UlB">
@@ -296,9 +247,6 @@ Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pz2-S5-d2S">
                                                 <rect key="frame" x="0.0" y="191" width="600" height="30"/>
                                                 <state key="normal" title="Mehr zu den Editoren"/>
-                                                <connections>
-                                                    <segue destination="cWl-mP-Xkh" kind="show" identifier="moreEditors" id="BJw-AB-Dyt"/>
-                                                </connections>
                                             </button>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="258" verticalHuggingPriority="258" horizontalCompressionResistancePriority="758" verticalCompressionResistancePriority="758" restorationIdentifier="Fkr-N8-Pu3" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fkr-N8-Pu3">
                                                 <rect key="frame" x="0.0" y="226" width="600" height="82"/>
@@ -329,9 +277,6 @@ Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cQi-Mj-MB3">
                                                 <rect key="frame" x="0.0" y="931.5" width="600" height="30"/>
                                                 <state key="normal" title="Mehr zum Calliope mini Swift Playground"/>
-                                                <connections>
-                                                    <segue destination="cWl-mP-Xkh" kind="show" identifier="morePlayground" id="I0Q-ym-Ipc"/>
-                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
@@ -364,7 +309,7 @@ Die gelöschten Dateien sind nicht mehr in der App verfügbar.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FYi-gQ-97Z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2142.4460431654679" y="-450.25125628140705"/>
+            <point key="canvasLocation" x="175" y="-1218"/>
         </scene>
         <!--Kontakt-->
         <scene sceneID="hem-qC-S7N">
@@ -407,9 +352,6 @@ Raumerstraße 11
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FOM-5E-71J">
                                                 <rect key="frame" x="0.0" y="455" width="600" height="30"/>
                                                 <state key="normal" title="calliope.cc"/>
-                                                <connections>
-                                                    <segue destination="cWl-mP-Xkh" kind="show" identifier="moreCalliope" id="PtW-fq-q7G"/>
-                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
@@ -442,54 +384,91 @@ Raumerstraße 11
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yKU-Qd-QJa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4628.985507246377" y="247.76785714285714"/>
+            <point key="canvasLocation" x="2137" y="-1218"/>
         </scene>
-        <!--Verbindung-->
-        <scene sceneID="gvR-ix-uDG">
+        <!--Help Web View Controller-->
+        <scene sceneID="upg-BM-eCN">
             <objects>
-                <viewController title="Verbindung" id="km0-IP-BB6" customClass="HelpContentViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="fkN-jk-OqP">
-                        <rect key="frame" x="0.0" y="0.0" width="704" height="995.5"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VlR-Kl-XgU">
-                                <rect key="frame" x="0.0" y="0.0" width="704" height="995.5"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="NO INTERNET CONNECTION" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SJT-mp-mcA">
-                                        <rect key="frame" x="0.0" y="0.0" width="704" height="995"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <fontDescription key="fontDescription" name="RobotoMono-Regular" family="Roboto Mono" pointSize="32"/>
-                                        <color key="textColor" systemColor="opaqueSeparatorColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <viewLayoutGuide key="contentLayoutGuide" id="GU1-gw-Vse"/>
-                                <viewLayoutGuide key="frameLayoutGuide" id="OBJ-aW-1iY"/>
-                            </scrollView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="fwM-b7-rT8"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstAttribute="bottom" secondItem="VlR-Kl-XgU" secondAttribute="bottom" id="3X4-wW-dEz"/>
-                            <constraint firstItem="VlR-Kl-XgU" firstAttribute="trailing" secondItem="fwM-b7-rT8" secondAttribute="trailing" id="g1M-OG-B9R"/>
-                            <constraint firstItem="VlR-Kl-XgU" firstAttribute="top" secondItem="fkN-jk-OqP" secondAttribute="top" id="gTH-5a-XOC"/>
-                            <constraint firstItem="VlR-Kl-XgU" firstAttribute="leading" secondItem="fwM-b7-rT8" secondAttribute="leading" id="hdm-IQ-89Y"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Help" id="8Dh-5e-PlT"/>
+                <viewController id="heD-1d-5dc" customClass="HelpWebViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <wkWebView key="view" contentMode="scaleToFill" id="icn-Vs-jLD">
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <wkWebViewConfiguration key="configuration">
+                            <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                            <wkPreferences key="preferences"/>
+                        </wkWebViewConfiguration>
+                    </wkWebView>
+                    <navigationItem key="navigationItem" id="NWH-mp-5K3"/>
                     <connections>
-                        <segue destination="cWl-mP-Xkh" kind="show" identifier="onlineHelp" animates="NO" id="vff-VN-tQL"/>
+                        <outlet property="webView" destination="icn-Vs-jLD" id="3dh-1a-A1T"/>
+                        <segue destination="FYs-vd-jgb" kind="show" identifier="showOfflineFallback" id="bBN-OF-nQF"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="kuT-e7-SRh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aKq-UK-ePP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1013.6690647482015" y="-6.0301507537688446"/>
+            <point key="canvasLocation" x="671" y="687"/>
+        </scene>
+        <!--onboardingOffline-->
+        <scene sceneID="QMM-4s-PCv">
+            <objects>
+                <viewController restorationIdentifier="onboardingOffline" storyboardIdentifier="onboardingOffline" title="onboardingOffline" id="FYs-vd-jgb" customClass="OnboardingOfflineViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gal-2M-bAx">
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QNd-9I-4aS">
+                                <rect key="frame" x="0.0" y="74" width="834" height="1100"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="bel-hd-wTh">
+                                        <rect key="frame" x="30" y="0.0" width="714" height="125.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Du bist leider offline. Dennoch haben wir ein paar Informationen für dich!" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KhZ-kE-mKD">
+                                                <rect key="frame" x="0.0" y="0.0" width="714" height="82"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Diese Seite ist zurzeit noch in Arbeit." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pyJ-dY-Vya">
+                                                <rect key="frame" x="0.0" y="92" width="714" height="33.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="bel-hd-wTh" firstAttribute="leading" secondItem="ObE-Fj-sWU" secondAttribute="leading" id="4Hh-SI-0ZV"/>
+                                    <constraint firstItem="bel-hd-wTh" firstAttribute="top" secondItem="ObE-Fj-sWU" secondAttribute="top" id="Ir9-hF-tYe"/>
+                                    <constraint firstItem="bel-hd-wTh" firstAttribute="trailing" secondItem="ObE-Fj-sWU" secondAttribute="trailing" id="MNu-En-f87"/>
+                                    <constraint firstItem="bel-hd-wTh" firstAttribute="bottom" secondItem="ObE-Fj-sWU" secondAttribute="bottom" id="fQb-XS-BRe"/>
+                                    <constraint firstItem="bel-hd-wTh" firstAttribute="trailing" secondItem="ObE-Fj-sWU" secondAttribute="trailing" id="oTN-da-IT5"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="ObE-Fj-sWU"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="sMY-2V-w2e"/>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6uy-id-jAB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="6uy-id-jAB" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bel-hd-wTh" secondAttribute="trailing" constant="30" id="24I-P1-OEx"/>
+                            <constraint firstItem="QNd-9I-4aS" firstAttribute="trailing" secondItem="6uy-id-jAB" secondAttribute="trailing" id="AwR-PI-qAG"/>
+                            <constraint firstItem="QNd-9I-4aS" firstAttribute="top" secondItem="6uy-id-jAB" secondAttribute="top" id="O7T-EV-Fhc"/>
+                            <constraint firstItem="QNd-9I-4aS" firstAttribute="leading" secondItem="6uy-id-jAB" secondAttribute="leading" id="S1r-ad-uDn"/>
+                            <constraint firstItem="bel-hd-wTh" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6uy-id-jAB" secondAttribute="leading" constant="30" id="VQM-H9-5fm"/>
+                            <constraint firstAttribute="trailing" secondItem="QNd-9I-4aS" secondAttribute="trailing" id="c2Y-dX-nRv"/>
+                            <constraint firstItem="QNd-9I-4aS" firstAttribute="centerY" secondItem="6uy-id-jAB" secondAttribute="centerY" id="cFu-zC-rpL"/>
+                            <constraint firstItem="6uy-id-jAB" firstAttribute="bottom" secondItem="QNd-9I-4aS" secondAttribute="bottom" id="zTH-qa-97u"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="zej-DQ-1pF"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UDV-TU-cRR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1356" y="-6"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="l4N-Na-gFU"/>
-        <segue reference="BJw-AB-Dyt"/>
-    </inferredMetricsTieBreakers>
     <color key="tintColor" name="calliope-lilablau"/>
     <resources>
         <image name="IconHelp" width="30" height="33"/>
@@ -510,9 +489,6 @@ Raumerstraße 11
         <namedColor name="calliope-pink">
             <color red="0.90200001001358032" green="0.0" blue="0.49000000953674316" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="opaqueSeparatorColor">
-            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
