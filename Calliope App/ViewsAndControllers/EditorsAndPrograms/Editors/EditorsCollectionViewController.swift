@@ -16,6 +16,7 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
     private let reuseIdentifierNepo = "nepoEditorCell"
     private let reuseIdentifierOfflineEditor = "localEditorCell"
     private let reuseIdentifierPlayground = "playgroundCell"
+    private let reuseIdentifierCalliopeBlocks = "calliopeBlocksCell"
 
     private lazy var activatedEditors: [SettingsKey] = {
         var keys: [SettingsKey] = []
@@ -32,6 +33,7 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
         if settings.bool(forKey: SettingsKey.playgrounds.rawValue) {
             keys.append(.playgrounds)
         }
+        keys.append(.calliopeBlocks)
         return keys
         }()
     
@@ -76,6 +78,8 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierPlayground, for: indexPath) as! EditorCollectionViewCell
         case .localEditor:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierOfflineEditor, for: indexPath) as! EditorCollectionViewCell
+        case .calliopeBlocks:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierCalliopeBlocks, for: indexPath) as! EditorCollectionViewCell
         default:
             fatalError("invalid key found in active editors array")
         }

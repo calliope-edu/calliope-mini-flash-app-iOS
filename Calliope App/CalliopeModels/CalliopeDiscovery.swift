@@ -91,7 +91,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
 			}
 			oldValue?.hasDisconnected()
 			connectedCalliope?.hasConnected()
-            if let connectedCalliope = connectedCalliope {
+            if (connectedCalliope != nil) {
                 connectingCalliope = nil
             }
             redetermineState()
@@ -103,7 +103,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
             oldValue?.hasDisconnected()
             connectedUSBCalliope?.hasConnected()
             connectedUSBCalliope?.state = .usageReady
-            if let connectedUSBCalliope = connectedUSBCalliope {
+            if (connectedUSBCalliope != nil) {
                 connectingCalliope = nil
             }
             redetermineState()

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="e3B-Cb-Nlk">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Home-->
+        <scene sceneID="yr8-KO-LCB">
+            <objects>
+                <viewController title="Home" id="e3B-Cb-Nlk" customClass="CalliopeBlocksStartViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="iU9-K8-dYK">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Udh-Gm-lH1">
+                                <rect key="frame" x="0.0" y="69" width="393" height="739"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KvX-vf-3Fm">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="364.66666666666669"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QVJ-o5-vKL">
+                                                <rect key="frame" x="10" y="0.0" width="373" height="364.66666666666669"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="eeq-TJ-ihr">
+                                                        <rect key="frame" x="10" y="10" width="353" height="344.66666666666669"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Downloade hier die Firmware um Calliope Blocks ausführen zu können." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y7h-Qv-1Ya">
+                                                                <rect key="frame" x="0.0" y="0.0" width="353" height="40.666666666666664"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5at-4M-VOo">
+                                                                <rect key="frame" x="0.0" y="40.666666666666686" width="353" height="304"/>
+                                                                <subviews>
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vJC-qq-AjX">
+                                                                        <rect key="frame" x="76.666666666666686" y="122" width="200" height="60"/>
+                                                                        <color key="backgroundColor" name="calliope-green"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" constant="200" id="9rn-7a-dmc"/>
+                                                                            <constraint firstAttribute="height" constant="60" id="f1t-6t-eeH"/>
+                                                                        </constraints>
+                                                                        <state key="normal" title="Button"/>
+                                                                        <buttonConfiguration key="configuration" style="plain" image="upload_button" title="Firmware" imagePadding="10">
+                                                                            <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        </buttonConfiguration>
+                                                                    </button>
+                                                                </subviews>
+                                                                <constraints>
+                                                                    <constraint firstItem="vJC-qq-AjX" firstAttribute="centerY" secondItem="5at-4M-VOo" secondAttribute="centerY" id="cv1-BH-MDz"/>
+                                                                    <constraint firstItem="vJC-qq-AjX" firstAttribute="centerX" secondItem="5at-4M-VOo" secondAttribute="centerX" id="u5C-QW-o5a"/>
+                                                                </constraints>
+                                                            </view>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                                <color key="backgroundColor" name="calliope-lightgray"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="eeq-TJ-ihr" secondAttribute="bottom" constant="10" id="2gq-af-XNr"/>
+                                                    <constraint firstItem="eeq-TJ-ihr" firstAttribute="top" secondItem="QVJ-o5-vKL" secondAttribute="top" constant="10" id="7jm-FD-Kcs"/>
+                                                    <constraint firstAttribute="trailing" secondItem="eeq-TJ-ihr" secondAttribute="trailing" constant="10" id="jVz-0S-jDc"/>
+                                                    <constraint firstItem="eeq-TJ-ihr" firstAttribute="leading" secondItem="QVJ-o5-vKL" secondAttribute="leading" constant="10" id="xUd-ek-ed5"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="15"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="QVJ-o5-vKL" firstAttribute="top" secondItem="KvX-vf-3Fm" secondAttribute="top" id="7Oc-we-mpc"/>
+                                            <constraint firstAttribute="trailing" secondItem="QVJ-o5-vKL" secondAttribute="trailing" constant="10" id="JeL-Cu-IPG"/>
+                                            <constraint firstItem="QVJ-o5-vKL" firstAttribute="centerX" secondItem="KvX-vf-3Fm" secondAttribute="centerX" id="Xcz-py-Mjq"/>
+                                            <constraint firstAttribute="bottom" secondItem="QVJ-o5-vKL" secondAttribute="bottom" id="eO5-Rx-DhR"/>
+                                            <constraint firstItem="QVJ-o5-vKL" firstAttribute="leading" secondItem="KvX-vf-3Fm" secondAttribute="leading" constant="10" id="xQ0-Uh-Jgg"/>
+                                        </constraints>
+                                    </view>
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xrR-z3-1ly">
+                                        <rect key="frame" x="0.0" y="374.66666666666674" width="393" height="364.33333333333326"/>
+                                        <connections>
+                                            <segue destination="QcL-uN-Ey7" kind="embed" id="YWk-ey-Hup"/>
+                                        </connections>
+                                    </containerView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="jOk-T1-Lrr"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="jOk-T1-Lrr" firstAttribute="bottom" secondItem="Udh-Gm-lH1" secondAttribute="bottom" constant="10" id="S1v-fj-Ziw"/>
+                            <constraint firstItem="Udh-Gm-lH1" firstAttribute="trailing" secondItem="jOk-T1-Lrr" secondAttribute="trailing" id="cme-BE-GwF"/>
+                            <constraint firstItem="Udh-Gm-lH1" firstAttribute="top" secondItem="jOk-T1-Lrr" secondAttribute="top" constant="10" id="dQl-1P-UyM"/>
+                            <constraint firstItem="Udh-Gm-lH1" firstAttribute="leading" secondItem="jOk-T1-Lrr" secondAttribute="leading" id="iey-zh-Nqa"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Home" id="k7O-Oe-xTf"/>
+                    <connections>
+                        <outlet property="mainStackView" destination="Udh-Gm-lH1" id="K1e-jr-P1T"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SBX-aX-24R" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-338.12949640287775" y="1058.2914572864322"/>
+        </scene>
+        <!--Calliope Blocks Collection View Controller-->
+        <scene sceneID="43S-VV-OTh">
+            <objects>
+                <collectionViewController id="QcL-uN-Ey7" customClass="CalliopeBlocksCollectionViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" id="0kE-vY-fVh">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dF9-9a-mFG">
+                            <size key="itemSize" width="290" height="260"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="newsCell" id="fzg-cc-Pb7" customClass="NewsCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="70" width="290" height="260"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                    <rect key="frame" x="0.0" y="0.0" width="290" height="260"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cLS-Y1-NwW">
+                                            <rect key="frame" x="0.0" y="0.0" width="290" height="193.33333333333334"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="cLS-Y1-NwW" secondAttribute="height" multiplier="3:2" priority="998" id="BxJ-cq-nsW"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There is veeery long text which could end up in two lines" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="ume-4y-VRn">
+                                            <rect key="frame" x="16" y="198.33333333333334" width="258" height="53.666666666666657"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bsk-0n-T9n">
+                                            <rect key="frame" x="16" y="193.33333333333334" width="258" height="2"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="2" id="jDV-u8-xS1"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                </view>
+                                <color key="backgroundColor" name="calliope-turqoise"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="ume-4y-VRn" secondAttribute="trailing" priority="999" constant="16" id="4FO-rM-xjV"/>
+                                    <constraint firstAttribute="bottom" secondItem="ume-4y-VRn" secondAttribute="bottom" priority="999" constant="8" id="8a4-hh-TUa"/>
+                                    <constraint firstItem="ume-4y-VRn" firstAttribute="leading" secondItem="fzg-cc-Pb7" secondAttribute="leading" constant="16" id="9Fx-ir-sMy"/>
+                                    <constraint firstItem="cLS-Y1-NwW" firstAttribute="width" secondItem="fzg-cc-Pb7" secondAttribute="width" id="D8x-Xg-OVw"/>
+                                    <constraint firstItem="Bsk-0n-T9n" firstAttribute="leading" secondItem="fzg-cc-Pb7" secondAttribute="leading" constant="16" id="Fh9-wN-seh"/>
+                                    <constraint firstItem="Bsk-0n-T9n" firstAttribute="top" secondItem="cLS-Y1-NwW" secondAttribute="bottom" id="NrH-eI-TLK"/>
+                                    <constraint firstItem="cLS-Y1-NwW" firstAttribute="top" secondItem="fzg-cc-Pb7" secondAttribute="top" id="OvB-QM-PLP"/>
+                                    <constraint firstAttribute="trailing" secondItem="Bsk-0n-T9n" secondAttribute="trailing" constant="16" id="p0t-UJ-WLa"/>
+                                    <constraint firstItem="cLS-Y1-NwW" firstAttribute="leading" secondItem="fzg-cc-Pb7" secondAttribute="leading" id="qTg-k3-sJW"/>
+                                    <constraint firstAttribute="trailing" secondItem="cLS-Y1-NwW" secondAttribute="trailing" priority="999" constant="8" id="tFn-Pv-JP5"/>
+                                    <constraint firstItem="ume-4y-VRn" firstAttribute="top" secondItem="cLS-Y1-NwW" secondAttribute="bottom" constant="5" id="vMj-6M-h7o"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="7"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="newsImageView" destination="cLS-Y1-NwW" id="WQq-wJ-rNy"/>
+                                    <outlet property="newsTitle" destination="ume-4y-VRn" id="CMS-Ma-MA7"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="QcL-uN-Ey7" id="qte-jd-jA1"/>
+                            <outlet property="delegate" destination="QcL-uN-Ey7" id="3lQ-Dp-eEn"/>
+                        </connections>
+                    </collectionView>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="600" height="400"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="a0P-96-fy5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-338" y="1688"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="upload_button" width="25" height="33"/>
+        <namedColor name="calliope-green">
+            <color red="0.27500000596046448" green="0.875" blue="0.4309999942779541" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="calliope-lightgray">
+            <color red="0.92900002002716064" green="0.93300002813339233" blue="0.93699997663497925" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="calliope-turqoise">
+            <color red="0.25900000333786011" green="0.78799998760223389" blue="0.78799998760223389" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
