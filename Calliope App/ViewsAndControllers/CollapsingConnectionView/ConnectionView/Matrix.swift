@@ -52,10 +52,10 @@ final class Matrix {
         let brackets = CharacterSet(charactersIn: "[]")
         let scanner = Scanner(string: fullName)
         scanner.charactersToBeSkipped = brackets
-        var maybefriendly: NSString?
+        var maybefriendly: String?
         
-        scanner.scanUpToCharacters(from: bracket, into: nil)
-        scanner.scanUpToCharacters(from: brackets, into: &maybefriendly)
+        _ = scanner.scanUpToCharacters(from: bracket)
+        maybefriendly = scanner.scanUpToCharacters(from: brackets)
         
         guard let friendly:String = maybefriendly as String? else {
             print("no friendly name found")
