@@ -14,7 +14,9 @@ class CalliopeBlocksCollectionViewController: NewsCollectionViewController {
 
     override var news: [NewsItemProtocol] {
         get { [
-            NewsItemWithStaticImage(image: #imageLiteral(resourceName: "playground_startscreen/calliope_playgrounds_appshop"), text: NSLocalizedString("Lade die Calliope Blocks App herunter", comment: ""), url: URL(string: "https://itunes.apple.com/gb/app/swift-playgrounds/id908519492")!, color: "#FFFFFF", textcolor: "#000000"),
+            NewsItemWithStaticImage(image: #imageLiteral(resourceName: "blr_03"), text: NSLocalizedString("Verbinde deinen Calliope mini mit dem Ipad", comment: ""), url: URL(string: "https://itunes.apple.com/gb/app/swift-playgrounds/id908519492")!, color: "#03adfc", textcolor: "#FFFFFF"),
+            NewsItemWithStaticImage(image: #imageLiteral(resourceName: "playground_startscreen/calliope_playgrounds_appshop"), text: NSLocalizedString("Übertrage das Scratch Startprogramm, um deinen Calliope mini programmierbar zu machen. ", comment: ""), url: URL(string: "https://itunes.apple.com/gb/app/swift-playgrounds/id908519492")!, color: "#03adfc", textcolor: "#FFFFFF"),
+            NewsItemWithStaticImage(image: #imageLiteral(resourceName: "playground_startscreen/calliope_playgrounds_appshop"), text: NSLocalizedString("Lade die Calliope mini Blocks App aus dem App Store und lege direkt los!", comment: ""), url: URL(string: "https://itunes.apple.com/gb/app/swift-playgrounds/id908519492")!, color: "#03adfc", textcolor: "#FFFFFF"),
         ] }
         set {
             fatalError("these are not really news, but static content")

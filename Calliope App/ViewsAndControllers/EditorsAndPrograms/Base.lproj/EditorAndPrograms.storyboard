@@ -537,7 +537,7 @@ Connect and transfer the program!</string>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="menu_item_editor" translatesAutoresizingMaskIntoConstraints="NO" id="4Rc-L6-bEy">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="editors_blocks" translatesAutoresizingMaskIntoConstraints="NO" id="4Rc-L6-bEy">
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="45"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="4Rc-L6-bEy" secondAttribute="height" multiplier="1:1" priority="999" id="LN0-mb-RzT"/>
@@ -832,15 +832,15 @@ Connect and transfer the program!</string>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="pQc-nr-8N0"/>
+        <segue reference="yKh-rV-xrX"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="calliope-lilablau"/>
     <resources>
         <image name="IconCode" width="36" height="33"/>
+        <image name="editors_blocks" width="128" height="128"/>
         <image name="editors_makecode" width="320" height="320"/>
         <image name="editors_nepo" width="320" height="320"/>
         <image name="editors_swift" width="320" height="320"/>
-        <image name="menu_item_editor" width="80" height="80"/>
         <image name="qr_code_scan_button" width="81.669998168945312" height="81.669998168945312"/>
         <image name="startprogramm1+2" width="488.33999633789062" height="215.89999389648438"/>
         <image name="startprogramm3" width="465.33999633789062" height="213.94000244140625"/>
