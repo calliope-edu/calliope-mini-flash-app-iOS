@@ -1,22 +1,18 @@
 
 /* Class = "UILabel"; text = "Übertrage das Scratch Startprogramm, um deinen Calliope mini programmierbar zu machen."; ObjectID = "1pn-RN-v3B"; */
-"1pn-RN-v3B.text" = "Transfer the Scratch base program in order to ready your calliope mini for programming.";
+"1pn-RN-v3B.text" = "First transfer the Scratch Start program to your Calliope mini to run the Scratch programs directly.";
 
 /* Class = "UILabel"; text = "Verbinde deinen Calliope mini mit dem iPad."; ObjectID = "3Mp-gE-6S1"; */
 "3Mp-gE-6S1.text" = "Connect your calliope mini with the iPad.";
 
-/* Class = "UILabel"; text = "Eine Einführung in die Scratch Programmierung mit der Calliope mini Blocks App, Anleitungen und Projektideen findest du auf der Webseite."; ObjectID = "5Ot-KO-WeM"; */
-"5Ot-KO-WeM.text" = "An introduction to scratch programming with the Calliope mini blocks app, guidance and project ideas can be found on the website.";
+/* Class = "UILabel"; text = "Eine Einführung in die Scratch Programmierung mit der Calliope mini Blocks App, Anleitungen und Projektideen findest du auf der Webseite."; ObjectID = "jLK-BP-fl1"; */
+"jLK-BP-fl1.text" = "An introduction to Scratch programming with the Calliope mini Blocks app, instructions and project ideas can be found on the website.";
 
 /* Class = "UILabel"; text = "Lade die Calliope mini Blocks App aus dem App Store und lege direkt los!"; ObjectID = "arp-ou-dSV"; */
 "arp-ou-dSV.text" = "Load the Calliope mini blocks app from the app store and get started!";
 
-/* Class = "UINavigationItem"; title = "Editors and Programs"; ObjectID = "bDJ-Lj-9ei"; */
-"bDJ-Lj-9ei.title" = "Editors and Programs";
-
-/* Class = "UIButton"; configuration.title = "Los geht's!"; ObjectID = "dil-dm-12y"; */
-"dil-dm-12y.configuration.title" = "Let's go!";
-
+/* Class = "UIButton"; configuration.title = "Los geht's!"; ObjectID = "pHa-mM-14B"; */
+"pHa-mM-14B.normalTitle" = "Let's get started!";
 
 /* Class = "UILabel"; text = "Scratch is a project of the Scratch Foundation, in collaboration with the Lifelong Kindergarten Group at the MIT Media Lab. It is available for free at https://scratch.mit.edu."; ObjectID = "j4T-gw-7rn"; */
 "j4T-gw-7rn.text" = "Scratch is a project of the Scratch Foundation, in collaboration with the Lifelong Kindergarten Group at the MIT Media Lab. It is available for free at https://scratch.mit.edu.";
@@ -24,8 +20,8 @@
 /* Class = "UIViewController"; title = "Programs and Editors"; ObjectID = "o4x-rk-KvC"; */
 "o4x-rk-KvC.title" = "Programs and Editors";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "vQt-Dn-rWE"; */
-"vQt-Dn-rWE.normalTitle" = "Transfer";
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "BFG-S8-jhv"; */
+"BFG-S8-jhv.normalTitle" = "Start program";
 
 /* Class = "UILabel"; text = "Programmiere deinen Calliope mini mit Scratch! "; ObjectID = "wgS-ky-ppb"; */
 "wgS-ky-ppb.text" = "Program your Calliope mini with Scratch! ";

@@ -27,13 +27,16 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
         if settings.bool(forKey: SettingsKey.makeCode.rawValue) {
             keys.append(.makeCode)
         }
-        if settings.bool(forKey: SettingsKey.roberta.rawValue) {
-            keys.append(.roberta)
+        if settings.bool(forKey: SettingsKey.calliopeBlocks.rawValue) {
+            keys.append(.calliopeBlocks)
         }
         if settings.bool(forKey: SettingsKey.playgrounds.rawValue) {
             keys.append(.playgrounds)
         }
-        keys.append(.calliopeBlocks)
+        if settings.bool(forKey: SettingsKey.roberta.rawValue) {
+            keys.append(.roberta)
+        }
+       
         return keys
         }()
     

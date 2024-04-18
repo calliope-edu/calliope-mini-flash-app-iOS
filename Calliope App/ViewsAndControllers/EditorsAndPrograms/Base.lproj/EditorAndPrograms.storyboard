@@ -142,10 +142,15 @@ Connect and transfer the program!</string>
                                                                             <constraint firstAttribute="width" constant="250" id="fWG-qn-Bd9"/>
                                                                             <constraint firstAttribute="height" constant="60" id="iLv-MN-gaE"/>
                                                                         </constraints>
-                                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                         <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
                                                                         <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="40" maxY="0.0"/>
                                                                         <state key="normal" title="Start program" image="upload_button"/>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                                <integer key="value" value="10"/>
+                                                                            </userDefinedRuntimeAttribute>
+                                                                        </userDefinedRuntimeAttributes>
                                                                         <connections>
                                                                             <action selector="uploadDefaultV3Program:" destination="rb5-ni-SG8" eventType="touchUpInside" id="wfF-5x-Ley"/>
                                                                         </connections>
@@ -193,10 +198,15 @@ Connect and transfer the program!</string>
                                                                             <constraint firstAttribute="height" constant="60" id="Bjh-IS-11e"/>
                                                                             <constraint firstAttribute="width" constant="250" id="pjy-zR-7ad"/>
                                                                         </constraints>
-                                                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="18"/>
+                                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                         <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
                                                                         <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="40" maxY="0.0"/>
                                                                         <state key="normal" title="Start program" image="upload_button"/>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                                <integer key="value" value="10"/>
+                                                                            </userDefinedRuntimeAttribute>
+                                                                        </userDefinedRuntimeAttributes>
                                                                         <connections>
                                                                             <action selector="uploadDefaultV2And1ProgramWith_sender:" destination="rb5-ni-SG8" eventType="touchUpInside" id="cOZ-zR-Lxm"/>
                                                                         </connections>
@@ -235,10 +245,15 @@ Connect and transfer the program!</string>
                                                                             <constraint firstAttribute="height" constant="60" id="CXQ-Ml-PF7"/>
                                                                             <constraint firstAttribute="width" constant="250" id="UnL-Cu-HRK"/>
                                                                         </constraints>
-                                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                         <state key="normal" title="Scannen" image="qr_code_scan_button">
                                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         </state>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                                <integer key="value" value="10"/>
+                                                                            </userDefinedRuntimeAttribute>
+                                                                        </userDefinedRuntimeAttributes>
                                                                         <connections>
                                                                             <segue destination="Lev-CK-3Lf" kind="show" id="AiM-tj-icn"/>
                                                                         </connections>
@@ -279,11 +294,16 @@ Connect and transfer the program!</string>
                                                                             <constraint firstAttribute="width" constant="250" id="Wig-1r-cgS"/>
                                                                             <constraint firstAttribute="height" constant="60" id="eHv-pN-UB9"/>
                                                                         </constraints>
-                                                                        <state key="normal" title="Button"/>
-                                                                        <buttonConfiguration key="configuration" style="plain" title="Datei auswählen">
-                                                                            <fontDescription key="titleFontDescription" style="UICTFontTextStyleBody"/>
-                                                                            <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        </buttonConfiguration>
+                                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                        <state key="normal" title="Datei auswählen">
+                                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        </state>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                                <integer key="value" value="10"/>
+                                                                            </userDefinedRuntimeAttribute>
+                                                                        </userDefinedRuntimeAttributes>
                                                                         <connections>
                                                                             <action selector="navigateToImportFile" destination="rb5-ni-SG8" eventType="touchUpInside" id="2if-tF-Ip7"/>
                                                                         </connections>
@@ -485,7 +505,7 @@ Connect and transfer the program!</string>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="playgroundCell" id="X1H-Rl-bCL" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="391.5" width="160" height="185.5"/>
+                                <rect key="frame" x="64.5" y="391.5" width="160" height="185.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="PXU-mA-kNy">
                                     <rect key="frame" x="0.0" y="0.0" width="160" height="185.5"/>
@@ -525,24 +545,30 @@ Connect and transfer the program!</string>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="calliopeBlocksCell" id="Uov-es-KDS" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="170" y="459.5" width="50" height="50"/>
+                                <rect key="frame" x="64.5" y="587" width="160" height="160"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Nwx-rx-8wA">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calliope Blocks" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nWc-AL-4YR">
-                                            <rect key="frame" x="0.0" y="50" width="50" height="0.0"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calliope mini Blocks" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nWc-AL-4YR">
+                                            <rect key="frame" x="0.0" y="160" width="160" height="0.0"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="editors_blocks" translatesAutoresizingMaskIntoConstraints="NO" id="4Rc-L6-bEy">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="45"/>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="editors_blocks_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="4Rc-L6-bEy">
+                                            <rect key="frame" x="0.0" y="-12" width="160" height="160"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="4Rc-L6-bEy" secondAttribute="height" multiplier="1:1" priority="999" id="LN0-mb-RzT"/>
                                                 <constraint firstAttribute="width" priority="999" constant="160" id="YLc-8n-Tsi"/>
                                             </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="15"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
                                         </imageView>
                                     </subviews>
                                     <constraints>
@@ -558,6 +584,7 @@ Connect and transfer the program!</string>
                                         <constraint firstItem="4Rc-L6-bEy" firstAttribute="leading" secondItem="Nwx-rx-8wA" secondAttribute="leading" id="bMc-V6-8gR"/>
                                     </constraints>
                                 </collectionViewCellContentView>
+                                <size key="customSize" width="160" height="160"/>
                                 <connections>
                                     <outlet property="logo" destination="4Rc-L6-bEy" id="P7C-ol-gSr"/>
                                     <outlet property="name" destination="nWc-AL-4YR" id="Shy-eU-490"/>
@@ -577,7 +604,7 @@ Connect and transfer the program!</string>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FrV-jw-8Vf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1394.6511627906978" y="635.40772532188851"/>
+            <point key="canvasLocation" x="1049.70703125" y="636.89604685212294"/>
         </scene>
         <!--Editor-->
         <scene sceneID="pG3-lK-9uC">
@@ -649,7 +676,7 @@ Connect and transfer the program!</string>
                                                         <textField hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="240" verticalHuggingPriority="260" horizontalCompressionResistancePriority="700" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="eex-Tk-Fko">
                                                             <rect key="frame" x="0.0" y="0.0" width="243" height="34"/>
                                                             <accessibility key="accessibilityConfiguration" identifier="programNameEditField"/>
-                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                             <textInputTraits key="textInputTraits"/>
                                                             <connections>
                                                                 <action selector="editButtonClicked:" destination="2S9-7Q-qui" eventType="editingDidEnd" id="8s6-VZ-1ep"/>
@@ -706,6 +733,11 @@ Connect and transfer the program!</string>
                                     </constraints>
                                 </collectionViewCellContentView>
                                 <color key="backgroundColor" name="calliope-gray"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="containerView" destination="S9O-yD-dPi" id="Vbe-ho-uTy"/>
                                     <outlet property="dateLabel" destination="g6h-Vu-QEH" id="3hO-Yt-Y4s"/>
@@ -837,7 +869,7 @@ Connect and transfer the program!</string>
     <color key="tintColor" name="calliope-lilablau"/>
     <resources>
         <image name="IconCode" width="36" height="33"/>
-        <image name="editors_blocks" width="1080" height="1080"/>
+        <image name="editors_blocks_transparent" width="1024" height="1024"/>
         <image name="editors_makecode" width="320" height="320"/>
         <image name="editors_nepo" width="320" height="320"/>
         <image name="editors_swift" width="320" height="320"/>

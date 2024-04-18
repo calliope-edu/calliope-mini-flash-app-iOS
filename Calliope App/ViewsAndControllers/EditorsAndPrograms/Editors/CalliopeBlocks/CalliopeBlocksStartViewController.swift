@@ -11,17 +11,33 @@ import UIKit
 class CalliopeBlocksStartViewController: UIViewController {
 
     @IBOutlet weak var mainStackView: UIStackView!
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var appStoreImageView: UIImageView!
+    @IBOutlet weak var calliopeBlocksImageView: UIImageView!
+    @IBOutlet weak var connectionImageView: UIImageView!
+    @IBOutlet weak var scratchInformationFooterLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // create tap gesture recognizer
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.imageTapped(gesture:)))
-
-        // add it to the image view;
-        imageView.addGestureRecognizer(tapGesture)
-        // make sure imageView can be interacted with by user
-        imageView.isUserInteractionEnabled = true
+        
+        let appStoreTabGesture1 = UITapGestureRecognizer(target: self, action: #selector(self.openLinkToAppStorePage(gesture:)))
+        let appStoreTabGesture2 = UITapGestureRecognizer(target: self, action: #selector(self.openLinkToAppStorePage(gesture:)))
+        appStoreImageView.addGestureRecognizer(appStoreTabGesture1)
+        appStoreImageView.isUserInteractionEnabled = true
+        calliopeBlocksImageView.addGestureRecognizer(appStoreTabGesture2)
+        calliopeBlocksImageView.isUserInteractionEnabled = true
+        
+        let attributedString = NSMutableAttributedString(string: "Scratch is a project of the Scratch Foundation, in collaboration with the Lifelong Kindergarten Group at the MIT Media Lab. It is available for free at https://scratch.mit.edu.")
+        attributedString.addAttribute(.link, value: "", range: NSRange(location: 151, length: 24))
+        scratchInformationFooterLabel.attributedText = attributedString
+        scratchInformationFooterLabel.isUserInteractionEnabled = true
+        
+        let linkToScratchTapGesture = UITapGestureRecognizer(target: self, action: #selector(openLinkToScratch(_:)))
+        scratchInformationFooterLabel.addGestureRecognizer(linkToScratchTapGesture)
+        
+        connectionImageView.layer.masksToBounds = false
+        connectionImageView.layer.shadowColor = UIColor.darkGray.cgColor
+        connectionImageView.layer.shadowOpacity = 0.5
+        connectionImageView.layer.shadowOffset = CGSize(width: 0, height: 0)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -53,16 +69,26 @@ class CalliopeBlocksStartViewController: UIViewController {
         return CGSize(width: landscape ? parentSize.width / 2.0 : parentSize.width, height: landscape ? parentSize.height : parentSize.height / 2.0)
     }
     
-    @objc func imageTapped(gesture: UIGestureRecognizer) {
-        // if the tapped view is a UIImageView then set it to imageview
+    @objc func openLinkToAppStorePage(gesture: UIGestureRecognizer) {
         if let url = URL(string: "https://apps.apple.com/de/app/scrub-web-browser/id1569777095") {
             UIApplication.shared.open(url)
         }
     }
     
-    @IBAction func showGetStartedSite(_ sender: Any) {
-        if let url = URL(string: "https://calliope.cc") {
+    @objc func openLinkToScratch(_ gesture: UITapGestureRecognizer) {
+        if let url = URL(string: "https://scratch.mit.edu") {
             UIApplication.shared.open(url)
         }
+    }
+    
+    @IBAction func openLinkToCalliopeBlocksGetStatedPage(_ sender: Any) {
+        if let url = URL(string: "https://calliope.cc/programmieren/editoren/calliope-mini-blocks-scratch-programmieren") {
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    @IBAction func uploadCalliopeMiniBlocksStandardProgram(_sender: Any) {
+        let program = DefaultProgram(programName: NSLocalizedString("Calliope mini Blocks", comment:""), url: UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV1AndV2Url.rawValue)!)
+        FirmwareUpload.showUIForDownloadableProgram(controller: self, program: program)
     }
 }

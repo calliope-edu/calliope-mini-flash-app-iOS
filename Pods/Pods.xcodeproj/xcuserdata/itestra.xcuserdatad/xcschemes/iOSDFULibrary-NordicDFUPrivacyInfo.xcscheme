@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0D10D66854407CAA2A9EEB0EA85C2BA7"
-               BuildableName = "PrivacyInfo.bundle"
-               BlueprintName = "iOSDFULibrary-PrivacyInfo"
+               BlueprintIdentifier = "593440025C0DE6BCC1F0AC48E8946FBB"
+               BuildableName = "NordicDFUPrivacyInfo.bundle"
+               BlueprintName = "iOSDFULibrary-NordicDFUPrivacyInfo"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

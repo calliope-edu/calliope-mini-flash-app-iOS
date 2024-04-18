@@ -108,7 +108,6 @@
 		60316BF82B01FEC300130C0D /* BLECalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60316BF72B01FEC300130C0D /* BLECalliope.swift */; };
 		60316BFA2B0210CC00130C0D /* CalliopeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60316BF92B0210CC00130C0D /* CalliopeFactory.swift */; };
 		604841D52B1F328A0037A825 /* OnboardingOfflineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604841D42B1F328A0037A825 /* OnboardingOfflineViewController.swift */; };
-		6055CDB42BBEE1C70007F6B0 /* CalliopeBlocksCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6055CDB32BBEE1C70007F6B0 /* CalliopeBlocksCollectionViewController.swift */; };
 		6055CDB62BBEE1E50007F6B0 /* CalliopeBlocksStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6055CDB52BBEE1E50007F6B0 /* CalliopeBlocksStartViewController.swift */; };
 		609D9BD42B67A15500F2ECAE /* USBCalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609D9BD32B67A15500F2ECAE /* USBCalliope.swift */; };
 		609D9BD62B67AD2200F2ECAE /* Calliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609D9BD52B67AD2200F2ECAE /* Calliope.swift */; };
@@ -248,7 +247,6 @@
 		60316BF72B01FEC300130C0D /* BLECalliope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLECalliope.swift; sourceTree = "<group>"; };
 		60316BF92B0210CC00130C0D /* CalliopeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeFactory.swift; sourceTree = "<group>"; };
 		604841D42B1F328A0037A825 /* OnboardingOfflineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingOfflineViewController.swift; sourceTree = "<group>"; };
-		6055CDB32BBEE1C70007F6B0 /* CalliopeBlocksCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeBlocksCollectionViewController.swift; sourceTree = "<group>"; };
 		6055CDB52BBEE1E50007F6B0 /* CalliopeBlocksStartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeBlocksStartViewController.swift; sourceTree = "<group>"; };
 		607E71C52B8E30D8008EC146 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ConnectionView.strings; sourceTree = "<group>"; };
 		607E71C72B8E30DA008EC146 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ConnectionView.strings; sourceTree = "<group>"; };
@@ -587,7 +585,6 @@
 			isa = PBXGroup;
 			children = (
 				609F74C82BC587A600FE35E2 /* CalliopeBlocks.storyboard */,
-				6055CDB32BBEE1C70007F6B0 /* CalliopeBlocksCollectionViewController.swift */,
 				6055CDB52BBEE1E50007F6B0 /* CalliopeBlocksStartViewController.swift */,
 			);
 			path = CalliopeBlocks;
@@ -804,7 +801,6 @@
 				2F2B80A025A1100800A7CCF7 /* PlaygroundCodeSnippetViewController.swift in Sources */,
 				2F1BD99A2674E378006A47F2 /* ProgramsCollectionViewFlowLayout.swift in Sources */,
 				2F08A0E1234AC7400088A8D6 /* EditorAndProgramsContainerViewController.swift in Sources */,
-				6055CDB42BBEE1C70007F6B0 /* CalliopeBlocksCollectionViewController.swift in Sources */,
 				60C915932B1F442F00E4039D /* Network.swift in Sources */,
 				2F2B809D25A0F25700A7CCF7 /* PlaygroundSnippetTableViewCell.swift in Sources */,
 				2F91665B235405AA0065AD81 /* EditorCollectionViewCell.swift in Sources */,
@@ -1134,7 +1130,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.2.3;
+				MARKETING_VERSION = 3.2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "cc.calliope.ios.flash-debug";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1158,7 +1154,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.2.3;
+				MARKETING_VERSION = 3.2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = cc.calliope.ios.flash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
