@@ -787,10 +787,12 @@ Connect and transfer the program!</string>
                                     <constraint firstAttribute="width" constant="250" id="G5R-hL-b1I"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
-                                <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="40" maxY="0.0"/>
-                                <size key="titleShadowOffset" width="-23" height="0.0"/>
                                 <state key="normal" title="Open program"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <segue destination="eeY-2x-OZY" kind="show" destinationCreationSelector="createMakecodeEditor:sender:" id="7ZG-zz-cOm"/>
                                 </connections>
@@ -864,7 +866,7 @@ Connect and transfer the program!</string>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="COy-xJ-NpQ"/>
+        <segue reference="7ZG-zz-cOm"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="calliope-lilablau"/>
     <resources>

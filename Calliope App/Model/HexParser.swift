@@ -236,6 +236,10 @@ struct PartialFlashData: Sequence, IteratorProtocol {
 }
 
 struct HexReader {
+    
+    static let MAGIC_START_NUMBER = "708E3B92C615A841C49866C975EE5197"
+    static let MAGIC_END_NUMBER = "41140E2FB82FA2B"
+    
     static func readSegmentAddress(_ record: String) -> UInt16? {
         if let length = length(of: record), length == 2,
                    validate(record, length),
@@ -281,11 +285,11 @@ struct HexReader {
     }
 
     static func isMagicStart(_ record: String) -> Bool {
-        record.count >= 41 && record[9..<41] == "708E3B92C615A841C49866C975EE5197"
+        record.count >= 41 && record[9..<41] == MAGIC_START_NUMBER
     }
 
     static func isMagicEnd(_ record: String) -> Bool {
         //magic end of program data (start of embedded source)
-        return record.count >= 24 && record[9..<24] == "41140E2FB82FA2B"
+        return record.count >= 24 && record[9..<24] == MAGIC_END_NUMBER
     }
 }
