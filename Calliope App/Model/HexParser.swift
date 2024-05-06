@@ -146,8 +146,10 @@ struct HexParser {
 
         _ = forwardToMagicNumber(reader)
         var numLinesToFlash = 0
-        while let line = reader.nextLine(), !HexReader.isMagicEnd(line) {
-            numLinesToFlash += 1
+        while let line = reader.nextLine(), !HexReader.isEndOfFileOrMagicEnd(line) {
+            if line.starts(with: ":") && HexReader.type(of: line) == 0  {
+                numLinesToFlash += 1
+            } 
         }
         reader.rewind()
 
@@ -215,15 +217,21 @@ struct PartialFlashData: Sequence, IteratorProtocol {
     }
 
     mutating private func read(_ record: String) {
-        if HexReader.isMagicEnd(record) {
+        if HexReader.isEndOfFileOrMagicEnd(record) {
             reader?.close()
             reader = nil
             return
         }
         switch HexReader.type(of: record) {
             case 0: //record type 0 means data for program
-                if let data = HexReader.readData(record) {
+                if record.contains("00000001FF") {
+                    break
+                } else if let data = HexReader.readData(record) {
                     nextData.append(data)
+                }
+            case 2: // extended segment adress
+                if let segmentAddress = HexReader.readSegmentAddress(record) {
+                    currentSegmentAddress = segmentAddress
                 }
             case 4: //segment address type
                 if let segmentAddress = HexReader.readSegmentAddress(record) {
@@ -239,6 +247,7 @@ struct HexReader {
     
     static let MAGIC_START_NUMBER = "708E3B92C615A841C49866C975EE5197"
     static let MAGIC_END_NUMBER = "41140E2FB82FA2B"
+    static let EOF_NUMBER = "00000001FF"
     
     static func readSegmentAddress(_ record: String) -> UInt16? {
         if let length = length(of: record), length == 2,
@@ -267,7 +276,13 @@ struct HexReader {
     }
 
     static func type(of record: String) -> Int? {
-        return Int(record[7..<9], radix: 16)
+        do {
+            return Int(record[7..<9], radix: 16)
+        } catch {
+            // Keep this, because an error can throw
+            LogNotify.log("Error caused by empty record catched")
+            return -1
+        }
     }
 
     static func length(of record: String) -> Int? {
@@ -288,8 +303,8 @@ struct HexReader {
         record.count >= 41 && record[9..<41] == MAGIC_START_NUMBER
     }
 
-    static func isMagicEnd(_ record: String) -> Bool {
+    static func isEndOfFileOrMagicEnd(_ record: String) -> Bool {
         //magic end of program data (start of embedded source)
-        return record.count >= 24 && record[9..<24] == MAGIC_END_NUMBER
+        return record.count >= 24 && record[9..<24] == MAGIC_END_NUMBER || record.contains("00000001FF")
     }
 }
