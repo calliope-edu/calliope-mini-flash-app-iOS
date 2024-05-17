@@ -56,7 +56,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
                     connectedCalliope = nil
                     self.centralManager.connect(connectingBLECalliope.peripheral, options: nil)
                     //manual timeout (system timeout is too long)
-                    bluetoothQueue.asyncAfter(deadline: DispatchTime.now() + BluetoothConstants.connectTimeout) {
+                    bluetoothQueue.asyncAfter(deadline: DispatchTime.now() + .seconds(BluetoothConstants.connectTimeout)) {
                         if self.connectedCalliope == nil {
                             LogNotify.log("disabling auto connect for \(connectingCalliope)")
                             self.centralManager.cancelPeripheralConnection(connectingBLECalliope.peripheral)
