@@ -1,4 +1,4 @@
-module Highlightr {
+framework module Highlightr {
   umbrella header "Highlightr-umbrella.h"
 
   export *
