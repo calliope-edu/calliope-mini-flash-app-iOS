@@ -473,6 +473,16 @@ class CalliopeV3: FlashableBLECalliope {
 
         transferFirmware()
     }
+    
+    internal override func startPartialFlashing() {
+        // Disable Full Flashing for v3 for now
+        do {
+            try startFullFlashing()
+        } catch {
+            LogNotify.log("Full Flashing failed")
+        }
+        
+    }
 }
 
 

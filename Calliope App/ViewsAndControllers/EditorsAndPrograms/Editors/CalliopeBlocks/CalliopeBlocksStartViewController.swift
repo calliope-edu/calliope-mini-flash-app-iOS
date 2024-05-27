@@ -88,7 +88,7 @@ class CalliopeBlocksStartViewController: UIViewController {
     }
     
     @IBAction func uploadCalliopeMiniBlocksStandardProgram(_sender: Any) {
-        let program = DefaultProgram(programName: NSLocalizedString("Calliope mini Blocks", comment:""), url: UserDefaults.standard.string(forKey: SettingsKey.calliopeBlocksUrl.rawValue)!)
+        let program = DefaultProgram(programName: NSLocalizedString("Mini_Blocks_Program", comment:""), url: UserDefaults.standard.string(forKey: SettingsKey.calliopeBlocksUrl.rawValue)!)
         FirmwareUpload.showUIForDownloadableProgram(controller: self, program: program)
     }
 }

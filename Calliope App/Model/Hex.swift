@@ -94,8 +94,8 @@ struct HexFile: Hex, Equatable {
         get {
             let parser = HexParser(url:url)
             var bin = Data()
-            parser.parse { (address, data) in
-                if address >= 0x18000 && address < 0x3C000 {
+            parser.parse { (address, data, dataType, isUniversal) in
+                if address >= 0x18000 && address < 0x3C000 && ( dataType == 1 || !isUniversal ) {
                     bin.append(data)
                 }
             }
@@ -108,8 +108,8 @@ struct HexFile: Hex, Equatable {
         get {
             let parser = HexParser(url:url)
             var bin = Data()
-            parser.parse { (address, data) in
-                if address >= 0x1C000 && address < 0x77000 {
+            parser.parse { (address, data, dataType, isUniversal) in
+                if address >= 0x1C000 && address < 0x77000 && ( dataType == 2 || !isUniversal ) {
                     bin.append(data)
                 }
             }
