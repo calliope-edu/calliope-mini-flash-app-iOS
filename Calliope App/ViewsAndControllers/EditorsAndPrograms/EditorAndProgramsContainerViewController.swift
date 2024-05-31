@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreServices
+import SwiftUI
 
 class EditorAndProgramsContainerViewController: UIViewController, UINavigationControllerDelegate, UIDocumentPickerDelegate {
     

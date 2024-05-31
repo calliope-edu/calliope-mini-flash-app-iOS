@@ -45,7 +45,7 @@ extension DownloadableHexFile {
         let url = URL(string: loadableProgramURL) ?? URL(string: "/")!
         let parser = HexParser(url:url)
         var bin = Data()
-        parser.parse { (address, data) in
+        parser.parse { (address, data, dataType, isUniversal) in
             if address >= 0x1C000 && address < 0x77000 {
                 bin.append(data)
             }
@@ -57,7 +57,7 @@ extension DownloadableHexFile {
         let url = URL(string: loadableProgramURL)!
         let task = URLSession.shared.dataTask(with: url) {data, response, error in
             if (self.downloadFile) {
-                guard error == nil, let data = data, data.count > 0, let hexFile = try? HexFileManager.store(name: self.loadableProgramName, data: data), hexFile.calliopeV1andV2Bin.count > 0 else {
+                guard error == nil, let data = data, data.count > 0, let hexFile = try? HexFileManager.store(name: self.loadableProgramName, data: data), hexFile.calliopeV1andV2Bin.count > 0 || hexFile.calliopeV3Bin.count > 0 else {
                     //file saving or parsing issue!
                     completion(error ?? NSLocalizedString("Could not save file or download is not a proper hex file", comment: ""))
                     return

@@ -33,6 +33,9 @@ public enum SettingsKey: String, CaseIterable {
     case lastMatrix = "lastMatrix" // key for storing the matrix
 
     case resetSettings = "resetSettingsPreference"
+    
+    case calliopeBlocks = "calliopeBlocksOnPreference"
+    case calliopeBlocksUrl = "calliopeBlocksUrlPreference"
 }
 
 public struct Settings {
@@ -43,7 +46,9 @@ public struct Settings {
     static var defaultProgramV3 = "https://calliope.cc/downloads/miniV3_start.hex"
     static var defaultProgramV2andV1 = "https://calliope.cc/downloads/calliope-demo.hex"
     static var defaultPlaygroundTemplateUrl = NSLocalizedString("https://calliope.cc/forumassets/snippets.json", comment: "The url for the snippets json")
-
+    static var defaultCalliopeBlocksUrl = "https://calliope.cc/downloads/blocks.hex"
+    
+    
     static var defaultLocalEditorEnabled = false
     static var defaultMakeCodeEnabled = true
     static var defaultRobertaEnabled = true
@@ -93,6 +98,10 @@ public struct Settings {
 
         case .resetSettings:
             return false
+        case .calliopeBlocks:
+            return true
+        case .calliopeBlocksUrl:
+            return defaultCalliopeBlocksUrl
         }
 }
 

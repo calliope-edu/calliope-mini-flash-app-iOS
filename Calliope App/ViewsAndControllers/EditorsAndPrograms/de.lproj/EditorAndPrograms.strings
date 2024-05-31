@@ -32,7 +32,7 @@ MakeCode funktioniert mit dem Calliope mini 3 und allen vorherigen Calliope mini
 "eeY-2x-OZY.title" = "Editor";
 
 /* Class = "UITabBarItem"; title = "Editors and Programs"; ObjectID = "fat-Jr-Mna"; */
-"fat-Jr-Mna.title" = "Editoren and Programme";
+"fat-Jr-Mna.title" = "Editoren und Programme";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "g6h-Vu-QEH"; */
 "g6h-Vu-QEH.text" = "Label";
@@ -48,10 +48,10 @@ MakeCode funktioniert mit dem Calliope mini 3 und allen vorherigen Calliope mini
 "pm2-Za-VcF.text" = "Open Roberta Lab";
 
 /* Class = "UIViewController"; title = "Programs and Editors"; ObjectID = "rb5-ni-SG8"; */
-"rb5-ni-SG8.title" = "Editoren and Programme";
+"rb5-ni-SG8.title" = "Editoren und Programme";
 
 /* Class = "UINavigationItem"; title = "Editors and Programs"; ObjectID = "uLO-aS-ZNS"; */
-"uLO-aS-ZNS.title" = "Editoren and Programme";
+"uLO-aS-ZNS.title" = "Editoren und Programme";
 
 /* Class = "UIButton"; normalTitle = "Programm öffnen"; ObjectID = "vrY-jH-Gu4"; */
 "vrY-jH-Gu4.normalTitle" = "Programm öffnen";

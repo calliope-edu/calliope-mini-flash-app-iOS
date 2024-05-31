@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="o4x-rk-KvC">
+    <device id="retina6_72" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Calliope mini Blocks-->
+        <scene sceneID="eTx-2G-ZUi">
+            <objects>
+                <viewController title="Calliope mini Blocks" id="o4x-rk-KvC" customClass="CalliopeBlocksStartViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3XI-uH-IA2">
+                        <rect key="frame" x="0.0" y="0.0" width="699" height="1000"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentInsetAdjustmentBehavior="always" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="01X-oT-JWC" customClass="TPKeyboardAvoidingScrollView">
+                                <rect key="frame" x="0.0" y="0.0" width="699" height="1000"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="top" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="XwY-vt-2ZX">
+                                        <rect key="frame" x="20" y="20" width="659" height="5875.333333333333"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AmA-jN-vNI">
+                                                <rect key="frame" x="0.0" y="0.0" width="314.66666666666669" height="5875.333333333333"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="SWT-EC-HPU">
+                                                        <rect key="frame" x="10" y="10" width="294.66666666666669" height="5855.333333333333"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Programmiere deinen Calliope mini mit Scratch! " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wgS-ky-ppb">
+                                                                <rect key="frame" x="0.0" y="0.0" width="294.66666666666669" height="1959.6666666666667"/>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <view contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kq2-zY-yf9">
+                                                                <rect key="frame" x="0.0" y="1969.6666666666667" width="294.66666666666669" height="730.66666666666674"/>
+                                                                <subviews>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="num_01_red" translatesAutoresizingMaskIntoConstraints="NO" id="FhT-OX-dQR">
+                                                                        <rect key="frame" x="0.0" y="360.33333333333326" width="30" height="30"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="height" constant="30" id="mj0-W8-Scp"/>
+                                                                            <constraint firstAttribute="width" secondItem="FhT-OX-dQR" secondAttribute="height" multiplier="1:1" id="wGH-Y4-nDo"/>
+                                                                        </constraints>
+                                                                    </imageView>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="252" verticalHuggingPriority="252" verticalCompressionResistancePriority="1000" text="Verbinde deinen Calliope mini mit dem iPad." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Mp-gE-6S1" userLabel="Verbinde deinen Calliope  mini mit dem iPad.">
+                                                                        <rect key="frame" x="49.999999999999986" y="20" width="244.66666666666663" height="710.66666666666663"/>
+                                                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                                <constraints>
+                                                                    <constraint firstItem="3Mp-gE-6S1" firstAttribute="leading" secondItem="FhT-OX-dQR" secondAttribute="trailing" constant="20" id="0on-HK-XNt"/>
+                                                                    <constraint firstItem="FhT-OX-dQR" firstAttribute="leading" secondItem="kq2-zY-yf9" secondAttribute="leading" id="ItM-ca-g30"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="3Mp-gE-6S1" secondAttribute="bottom" id="NdX-bp-0vx"/>
+                                                                    <constraint firstItem="3Mp-gE-6S1" firstAttribute="top" secondItem="kq2-zY-yf9" secondAttribute="top" constant="20" symbolic="YES" id="kLP-Wf-XEv"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="3Mp-gE-6S1" secondAttribute="trailing" id="pss-63-tVt"/>
+                                                                    <constraint firstItem="FhT-OX-dQR" firstAttribute="centerY" secondItem="3Mp-gE-6S1" secondAttribute="centerY" id="sA9-GE-vnC"/>
+                                                                </constraints>
+                                                            </view>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blr_03" translatesAutoresizingMaskIntoConstraints="NO" id="dCb-L5-oXV">
+                                                                <rect key="frame" x="0.0" y="2710.3333333333335" width="294.66666666666669" height="50"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="50" id="cjj-Jy-ak5"/>
+                                                                </constraints>
+                                                            </imageView>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2tL-CS-nga">
+                                                                <rect key="frame" x="0.0" y="2770.3333333333335" width="294.66666666666669" height="1542.0000000000005"/>
+                                                                <subviews>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="num_02_red" translatesAutoresizingMaskIntoConstraints="NO" id="nF5-2R-Q5u">
+                                                                        <rect key="frame" x="0.0" y="766" width="30" height="30"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" secondItem="nF5-2R-Q5u" secondAttribute="height" multiplier="1:1" id="OxZ-wm-JET"/>
+                                                                            <constraint firstAttribute="height" constant="30" id="UH0-BP-LLC"/>
+                                                                        </constraints>
+                                                                    </imageView>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" verticalCompressionResistancePriority="1000" text="Übertrage zuerst das Scratch Startprogramm auf deinen Calliope mini, um die Scratch Programme direkt auszuführen." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1pn-RN-v3B" userLabel="Verbinde deinen Calliope  mini mit dem iPad.">
+                                                                        <rect key="frame" x="49.999999999999986" y="20" width="244.66666666666663" height="1522"/>
+                                                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="trailing" secondItem="1pn-RN-v3B" secondAttribute="trailing" id="EuL-AV-vOl"/>
+                                                                    <constraint firstItem="nF5-2R-Q5u" firstAttribute="leading" secondItem="2tL-CS-nga" secondAttribute="leading" id="FqY-T7-GfV"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="1pn-RN-v3B" secondAttribute="bottom" id="Ps7-TX-m8N"/>
+                                                                    <constraint firstItem="1pn-RN-v3B" firstAttribute="leading" secondItem="nF5-2R-Q5u" secondAttribute="trailing" constant="20" id="gFe-WH-0Fd"/>
+                                                                    <constraint firstItem="nF5-2R-Q5u" firstAttribute="centerY" secondItem="1pn-RN-v3B" secondAttribute="centerY" id="kmc-bx-ZbO"/>
+                                                                    <constraint firstItem="1pn-RN-v3B" firstAttribute="top" secondItem="2tL-CS-nga" secondAttribute="top" constant="20" symbolic="YES" id="n1l-bS-vHY"/>
+                                                                </constraints>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gFb-CS-Z12">
+                                                                <rect key="frame" x="0.0" y="4322.333333333333" width="294.66666666666669" height="100"/>
+                                                                <subviews>
+                                                                    <button opaque="NO" contentMode="scaleAspectFit" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="BFG-S8-jhv">
+                                                                        <rect key="frame" x="22.333333333333343" y="20" width="250.00000000000003" height="60"/>
+                                                                        <color key="backgroundColor" name="calliope-green"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" constant="250" id="iFR-59-gOO"/>
+                                                                            <constraint firstAttribute="height" constant="60" id="uX3-e5-6eT"/>
+                                                                        </constraints>
+                                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                                        <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
+                                                                        <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="40" maxY="0.0"/>
+                                                                        <state key="normal" title="Startprogramm" image="upload_button"/>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                                <integer key="value" value="10"/>
+                                                                            </userDefinedRuntimeAttribute>
+                                                                        </userDefinedRuntimeAttributes>
+                                                                        <connections>
+                                                                            <action selector="uploadCalliopeMiniBlocksStandardProgramWith_sender:" destination="o4x-rk-KvC" eventType="touchUpInside" id="jH5-p4-BrY"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                </subviews>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="bottom" secondItem="BFG-S8-jhv" secondAttribute="bottom" constant="20" id="1iL-7r-Tez"/>
+                                                                    <constraint firstItem="BFG-S8-jhv" firstAttribute="top" secondItem="gFb-CS-Z12" secondAttribute="top" constant="20" id="8eV-rK-K73"/>
+                                                                    <constraint firstItem="BFG-S8-jhv" firstAttribute="centerX" secondItem="gFb-CS-Z12" secondAttribute="centerX" id="Cao-w7-Dd9"/>
+                                                                </constraints>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Khk-33-b7P">
+                                                                <rect key="frame" x="0.0" y="4432.333333333333" width="294.66666666666669" height="1176.333333333333"/>
+                                                                <subviews>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="num_03_red" translatesAutoresizingMaskIntoConstraints="NO" id="rdb-dj-BUz">
+                                                                        <rect key="frame" x="0.0" y="583.33333333333394" width="30" height="30"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="height" constant="30" id="A2k-5w-RJs"/>
+                                                                            <constraint firstAttribute="width" secondItem="rdb-dj-BUz" secondAttribute="height" multiplier="1:1" id="icn-qU-Yit"/>
+                                                                        </constraints>
+                                                                    </imageView>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" verticalCompressionResistancePriority="1000" text="Lade die Calliope mini Blocks App aus dem App Store und lege direkt los!" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="arp-ou-dSV" userLabel="Verbinde deinen Calliope  mini mit dem iPad.">
+                                                                        <rect key="frame" x="49.999999999999986" y="20" width="244.66666666666663" height="1156.3333333333333"/>
+                                                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                                <constraints>
+                                                                    <constraint firstItem="rdb-dj-BUz" firstAttribute="leading" secondItem="Khk-33-b7P" secondAttribute="leading" id="2km-uV-mzq"/>
+                                                                    <constraint firstItem="arp-ou-dSV" firstAttribute="top" secondItem="Khk-33-b7P" secondAttribute="top" constant="20" symbolic="YES" id="CbA-YX-Uxv"/>
+                                                                    <constraint firstItem="rdb-dj-BUz" firstAttribute="centerY" secondItem="arp-ou-dSV" secondAttribute="centerY" id="Mqv-Cf-GRU"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="arp-ou-dSV" secondAttribute="trailing" id="Pw5-M8-8VK"/>
+                                                                    <constraint firstItem="arp-ou-dSV" firstAttribute="leading" secondItem="rdb-dj-BUz" secondAttribute="trailing" constant="20" id="jIr-Go-b4o"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="arp-ou-dSV" secondAttribute="bottom" id="oC7-Mq-2pV"/>
+                                                                </constraints>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JcL-ap-Qd6">
+                                                                <rect key="frame" x="0.0" y="5618.666666666667" width="294.66666666666669" height="236.66666666666697"/>
+                                                                <subviews>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="editors_blocks_rounded" translatesAutoresizingMaskIntoConstraints="NO" id="oOU-sh-eLG">
+                                                                        <rect key="frame" x="72.333333333333314" y="0.0" width="150" height="150"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" secondItem="oOU-sh-eLG" secondAttribute="height" multiplier="1:1" id="7hl-La-YaR"/>
+                                                                            <constraint firstAttribute="width" constant="150" id="fCk-mX-AkX"/>
+                                                                        </constraints>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                                <integer key="value" value="20"/>
+                                                                            </userDefinedRuntimeAttribute>
+                                                                        </userDefinedRuntimeAttributes>
+                                                                    </imageView>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="app_store_badge" translatesAutoresizingMaskIntoConstraints="NO" id="8eh-Uc-9Nf">
+                                                                        <rect key="frame" x="47.333333333333314" y="160" width="200" height="66.666666666666686"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" secondItem="8eh-Uc-9Nf" secondAttribute="height" multiplier="3:1" id="XH4-ZQ-aCC"/>
+                                                                            <constraint firstAttribute="width" constant="200" id="qlG-WY-Az0"/>
+                                                                        </constraints>
+                                                                    </imageView>
+                                                                </subviews>
+                                                                <constraints>
+                                                                    <constraint firstItem="oOU-sh-eLG" firstAttribute="bottom" secondItem="8eh-Uc-9Nf" secondAttribute="top" constant="-10" id="2ep-kG-Tsy"/>
+                                                                    <constraint firstItem="oOU-sh-eLG" firstAttribute="top" secondItem="JcL-ap-Qd6" secondAttribute="top" id="8VN-4J-hhh"/>
+                                                                    <constraint firstItem="oOU-sh-eLG" firstAttribute="centerX" secondItem="JcL-ap-Qd6" secondAttribute="centerX" id="BEn-kO-7WX"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="8eh-Uc-9Nf" secondAttribute="bottom" constant="10" id="WJ0-bg-mE7"/>
+                                                                    <constraint firstItem="8eh-Uc-9Nf" firstAttribute="centerX" secondItem="JcL-ap-Qd6" secondAttribute="centerX" id="tef-F3-LbC"/>
+                                                                </constraints>
+                                                            </view>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstItem="wgS-ky-ppb" firstAttribute="leading" secondItem="SWT-EC-HPU" secondAttribute="leading" id="LvC-vq-nkD"/>
+                                                            <constraint firstAttribute="trailing" secondItem="wgS-ky-ppb" secondAttribute="trailing" id="vLd-fM-42o"/>
+                                                        </constraints>
+                                                    </stackView>
+                                                </subviews>
+                                                <color key="backgroundColor" name="calliope-lightgray"/>
+                                                <constraints>
+                                                    <constraint firstItem="SWT-EC-HPU" firstAttribute="top" secondItem="AmA-jN-vNI" secondAttribute="top" constant="10" id="4mr-q9-hRi"/>
+                                                    <constraint firstAttribute="trailing" secondItem="SWT-EC-HPU" secondAttribute="trailing" constant="10" id="OSp-Ub-YBV"/>
+                                                    <constraint firstAttribute="bottom" secondItem="SWT-EC-HPU" secondAttribute="bottom" constant="10" id="PWI-Kt-65Q"/>
+                                                    <constraint firstItem="SWT-EC-HPU" firstAttribute="leading" secondItem="AmA-jN-vNI" secondAttribute="leading" constant="10" id="sUy-ig-tig"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="15"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fxX-zR-jN1">
+                                                <rect key="frame" x="344.66666666666674" y="0.0" width="314.33333333333326" height="944"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="70" translatesAutoresizingMaskIntoConstraints="NO" id="tHl-sJ-tDR">
+                                                        <rect key="frame" x="10" y="10" width="294.33333333333331" height="924"/>
+                                                        <subviews>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="editors_blocks_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="Hd6-mQ-U4X">
+                                                                <rect key="frame" x="0.0" y="0.0" width="294.33333333333331" height="250"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="250" id="wnd-WN-cFl"/>
+                                                                </constraints>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                        <integer key="value" value="30"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </imageView>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ECy-NT-Knc">
+                                                                <rect key="frame" x="0.0" y="320" width="294.33333333333331" height="454.33333333333326"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jLK-BP-fl1">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="294.33333333333331" height="354.33333333333331"/>
+                                                                        <string key="text">Eine Einführung in die Scratch Programmierung mit der Calliope mini Blocks App, Anleitungen und Projektideen findest du auf der Webseite.</string>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eFX-nM-wef">
+                                                                        <rect key="frame" x="0.0" y="354.33333333333337" width="294.33333333333331" height="100"/>
+                                                                        <subviews>
+                                                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pHa-mM-14B">
+                                                                                <rect key="frame" x="47" y="30" width="200" height="60"/>
+                                                                                <color key="backgroundColor" name="calliope-pink"/>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="width" constant="200" id="6Ct-if-P1d"/>
+                                                                                    <constraint firstAttribute="height" constant="60" id="rIU-mZ-Yg5"/>
+                                                                                </constraints>
+                                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                                <state key="normal" title="Los geht's!">
+                                                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                </state>
+                                                                                <userDefinedRuntimeAttributes>
+                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                                        <integer key="value" value="10"/>
+                                                                                    </userDefinedRuntimeAttribute>
+                                                                                </userDefinedRuntimeAttributes>
+                                                                                <connections>
+                                                                                    <action selector="openLinkToCalliopeBlocksGetStatedPage:" destination="o4x-rk-KvC" eventType="touchUpInside" id="ovV-tY-Vba"/>
+                                                                                </connections>
+                                                                            </button>
+                                                                        </subviews>
+                                                                        <constraints>
+                                                                            <constraint firstItem="pHa-mM-14B" firstAttribute="centerX" secondItem="eFX-nM-wef" secondAttribute="centerX" id="2yQ-aD-vOe"/>
+                                                                            <constraint firstAttribute="bottom" secondItem="pHa-mM-14B" secondAttribute="bottom" constant="10" id="8LF-fg-L62"/>
+                                                                            <constraint firstItem="pHa-mM-14B" firstAttribute="top" secondItem="eFX-nM-wef" secondAttribute="top" constant="30" id="ORy-JR-90V"/>
+                                                                        </constraints>
+                                                                    </view>
+                                                                </subviews>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="trailing" secondItem="eFX-nM-wef" secondAttribute="trailing" id="AV3-AU-l7n"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="eFX-nM-wef" secondAttribute="bottom" id="GUr-yX-51e"/>
+                                                                    <constraint firstItem="eFX-nM-wef" firstAttribute="top" secondItem="jLK-BP-fl1" secondAttribute="bottom" id="Vt5-ei-6fd"/>
+                                                                    <constraint firstItem="jLK-BP-fl1" firstAttribute="leading" secondItem="ECy-NT-Knc" secondAttribute="leading" id="aHX-Q1-Fmv"/>
+                                                                    <constraint firstItem="jLK-BP-fl1" firstAttribute="top" secondItem="ECy-NT-Knc" secondAttribute="top" id="eSI-OU-8oA"/>
+                                                                    <constraint firstItem="eFX-nM-wef" firstAttribute="centerX" secondItem="ECy-NT-Knc" secondAttribute="centerX" id="lD3-qM-nNe"/>
+                                                                    <constraint firstItem="eFX-nM-wef" firstAttribute="leading" secondItem="ECy-NT-Knc" secondAttribute="leading" id="lcb-X1-ehn"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="jLK-BP-fl1" secondAttribute="trailing" id="oCp-ba-abn"/>
+                                                                </constraints>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="PyV-im-zgJ">
+                                                                <rect key="frame" x="0.0" y="844.33333333333337" width="294.33333333333331" height="79.666666666666629"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j4T-gw-7rn">
+                                                                        <rect key="frame" x="5" y="5" width="284.33333333333331" height="69.666666666666671"/>
+                                                                        <string key="text">Scratch is a project of the Scratch Foundation, in collaboration with the Lifelong Kindergarten Group at the MIT Media Lab. It is available for free at https://scratch.mit.edu.</string>
+                                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                                <constraints>
+                                                                    <constraint firstItem="j4T-gw-7rn" firstAttribute="leading" secondItem="PyV-im-zgJ" secondAttribute="leading" constant="5" id="6HI-Eh-K3w"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="j4T-gw-7rn" secondAttribute="bottom" constant="5" id="9Zb-6D-H1Q"/>
+                                                                    <constraint firstItem="j4T-gw-7rn" firstAttribute="top" secondItem="PyV-im-zgJ" secondAttribute="top" constant="5" id="c0j-A0-ZNn"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="j4T-gw-7rn" secondAttribute="trailing" constant="5" id="m13-6T-YJF"/>
+                                                                </constraints>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                        <integer key="value" value="5"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </view>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstItem="tHl-sJ-tDR" firstAttribute="leading" secondItem="fxX-zR-jN1" secondAttribute="leading" constant="10" id="FLa-2n-cWw"/>
+                                                    <constraint firstAttribute="trailing" secondItem="tHl-sJ-tDR" secondAttribute="trailing" constant="10" id="bDz-i0-R6y"/>
+                                                    <constraint firstItem="tHl-sJ-tDR" firstAttribute="top" secondItem="fxX-zR-jN1" secondAttribute="top" constant="10" id="cd8-aw-vGU"/>
+                                                    <constraint firstAttribute="bottom" secondItem="tHl-sJ-tDR" secondAttribute="bottom" constant="10" id="fSr-tk-3PK"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="XwY-vt-2ZX" firstAttribute="top" secondItem="rc2-Uu-FbR" secondAttribute="top" constant="20" id="4SB-7k-9AY"/>
+                                    <constraint firstItem="XwY-vt-2ZX" firstAttribute="leading" secondItem="rc2-Uu-FbR" secondAttribute="leading" constant="20" id="BrD-G3-Fuc"/>
+                                    <constraint firstItem="XwY-vt-2ZX" firstAttribute="trailing" secondItem="rc2-Uu-FbR" secondAttribute="trailing" constant="20" id="DU5-VR-7g0"/>
+                                    <constraint firstItem="RGO-QX-AHA" firstAttribute="trailing" secondItem="XwY-vt-2ZX" secondAttribute="trailing" constant="20" id="FjG-6I-WDO"/>
+                                    <constraint firstItem="XwY-vt-2ZX" firstAttribute="bottom" secondItem="rc2-Uu-FbR" secondAttribute="bottom" id="jLJ-fW-hQn"/>
+                                    <constraint firstItem="XwY-vt-2ZX" firstAttribute="leading" secondItem="RGO-QX-AHA" secondAttribute="leading" constant="20" id="tG1-mh-zfs"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="rc2-Uu-FbR"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="RGO-QX-AHA"/>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="uoY-rp-aYY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="XwY-vt-2ZX" firstAttribute="centerX" secondItem="uoY-rp-aYY" secondAttribute="centerX" id="MCy-Nj-tWv"/>
+                            <constraint firstAttribute="trailing" secondItem="01X-oT-JWC" secondAttribute="trailing" id="P00-H4-21r"/>
+                            <constraint firstAttribute="bottom" secondItem="01X-oT-JWC" secondAttribute="bottom" id="WOw-ex-i1P"/>
+                            <constraint firstItem="01X-oT-JWC" firstAttribute="leading" secondItem="3XI-uH-IA2" secondAttribute="leading" id="cAY-Rf-vks"/>
+                            <constraint firstItem="01X-oT-JWC" firstAttribute="top" secondItem="3XI-uH-IA2" secondAttribute="top" id="liP-yl-u0Z"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Calliope mini Blocks" id="bDJ-Lj-9ei"/>
+                    <size key="freeformSize" width="699" height="1000"/>
+                    <connections>
+                        <outlet property="appStoreImageView" destination="8eh-Uc-9Nf" id="xaA-Go-Tdf"/>
+                        <outlet property="calliopeBlocksImageView" destination="oOU-sh-eLG" id="NE9-dy-ugn"/>
+                        <outlet property="connectionImageView" destination="dCb-L5-oXV" id="dX8-ou-kYs"/>
+                        <outlet property="mainStackView" destination="XwY-vt-2ZX" id="Co8-7Q-fUK"/>
+                        <outlet property="scratchInformationFooterLabel" destination="j4T-gw-7rn" id="rSf-ar-whH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="um4-Ps-brD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1640.2325581395348" y="976.60944206008594"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="app_store_badge" width="119.66407012939453" height="40"/>
+        <image name="blr_03" width="100" height="100"/>
+        <image name="editors_blocks_rounded" width="1024" height="1024"/>
+        <image name="editors_blocks_transparent" width="1024" height="1024"/>
+        <image name="num_01_red" width="62.509998321533203" height="62.509998321533203"/>
+        <image name="num_02_red" width="62.509998321533203" height="62.509998321533203"/>
+        <image name="num_03_red" width="62.509998321533203" height="62.509998321533203"/>
+        <image name="upload_button" width="25" height="33"/>
+        <namedColor name="calliope-green">
+            <color red="0.27500000596046448" green="0.875" blue="0.4309999942779541" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="calliope-lightgray">
+            <color red="0.92900002002716064" green="0.93300002813339233" blue="0.93699997663497925" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="calliope-pink">
+            <color red="0.90200001001358032" green="0.0" blue="0.49000000953674316" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

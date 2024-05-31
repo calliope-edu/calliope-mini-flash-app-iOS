@@ -91,4 +91,4 @@ ${PODS_ROOT}/Highlightr/Pod/Assets/styles/xt256.min.css
 ${PODS_ROOT}/Highlightr/Pod/Assets/styles/zenburn.min.css
 ${PODS_CONFIGURATION_BUILD_DIR}/SnapKit/SnapKit_Privacy.bundle
 ${PODS_ROOT}/ZIPFoundation/Sources/ZIPFoundation/Resources/PrivacyInfo.xcprivacy
-${PODS_CONFIGURATION_BUILD_DIR}/iOSDFULibrary/PrivacyInfo.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/iOSDFULibrary/NordicDFUPrivacyInfo.bundle

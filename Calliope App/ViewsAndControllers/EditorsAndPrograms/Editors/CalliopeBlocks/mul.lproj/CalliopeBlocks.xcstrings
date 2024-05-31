@@ -1,0 +1,216 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "1pn-RN-v3B.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Übertrage das Scratch Startprogramm, um deinen Calliope mini programmierbar zu machen.\"; ObjectID = \"1pn-RN-v3B\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Übertrage das Scratch Startprogramm, um deinen Calliope mini programmierbar zu machen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Übertrage das Scratch Startprogramm, um deinen Calliope mini programmierbar zu machen."
+          }
+        }
+      }
+    },
+    "3Mp-gE-6S1.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Verbinde deinen Calliope mini mit dem iPad.\"; ObjectID = \"3Mp-gE-6S1\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbinde deinen Calliope mini mit dem iPad."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Verbinde deinen Calliope mini mit dem iPad."
+          }
+        }
+      }
+    },
+    "5Ot-KO-WeM.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Eine Einführung in die Scratch Programmierung mit der Calliope mini Blocks App, Anleitungen und Projektideen findest du auf der Webseite.\"; ObjectID = \"5Ot-KO-WeM\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eine Einführung in die Scratch Programmierung mit der Calliope mini Blocks App, Anleitungen und Projektideen findest du auf der Webseite."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Eine Einführung in die Scratch Programmierung mit der Calliope mini Blocks App, Anleitungen und Projektideen findest du auf der Webseite."
+          }
+        }
+      }
+    },
+    "arp-ou-dSV.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Lade die Calliope mini Blocks App aus dem App Store und lege direkt los!\"; ObjectID = \"arp-ou-dSV\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lade die Calliope mini Blocks App aus dem App Store und lege direkt los!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Lade die Calliope mini Blocks App aus dem App Store und lege direkt los!"
+          }
+        }
+      }
+    },
+    "bDJ-Lj-9ei.title" : {
+      "comment" : "Class = \"UINavigationItem\"; title = \"Editors and Programs\"; ObjectID = \"bDJ-Lj-9ei\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Editors and Programs"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Editors and Programs"
+          }
+        }
+      }
+    },
+    "dil-dm-12y.configuration.title" : {
+      "comment" : "Class = \"UIButton\"; configuration.title = \"Los geht's!\"; ObjectID = \"dil-dm-12y\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los geht's!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Los geht's!"
+          }
+        }
+      }
+    },
+    "dil-dm-12y.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"dil-dm-12y\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Button"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Button"
+          }
+        }
+      }
+    },
+    "j4T-gw-7rn.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Scratch is a project of the Scratch Foundation, in collaboration with the Lifelong Kindergarten Group at the MIT Media Lab. It is available for free at https://scratch.mit.edu.\"; ObjectID = \"j4T-gw-7rn\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scratch is a project of the Scratch Foundation, in collaboration with the Lifelong Kindergarten Group at the MIT Media Lab. It is available for free at https://scratch.mit.edu."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Scratch is a project of the Scratch Foundation, in collaboration with the Lifelong Kindergarten Group at the MIT Media Lab. It is available for free at https://scratch.mit.edu."
+          }
+        }
+      }
+    },
+    "o4x-rk-KvC.title" : {
+      "comment" : "Class = \"UIViewController\"; title = \"Programs and Editors\"; ObjectID = \"o4x-rk-KvC\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programs and Editors"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Programs and Editors"
+          }
+        }
+      }
+    },
+    "vQt-Dn-rWE.configuration.title" : {
+      "comment" : "Class = \"UIButton\"; configuration.title = \"Übertragen\"; ObjectID = \"vQt-Dn-rWE\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Übertragen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Übertragen"
+          }
+        }
+      }
+    },
+    "vQt-Dn-rWE.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"vQt-Dn-rWE\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Button"
+          }
+        }
+      }
+    },
+    "wgS-ky-ppb.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Programmiere deinen Calliope mini mit Scratch! \"; ObjectID = \"wgS-ky-ppb\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programmiere deinen Calliope mini mit Scratch! "
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Programmiere deinen Calliope mini mit Scratch! "
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
