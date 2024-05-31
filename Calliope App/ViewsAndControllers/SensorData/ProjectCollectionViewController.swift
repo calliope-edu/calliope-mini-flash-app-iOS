@@ -90,8 +90,8 @@ class ProjectCollectionViewController: UICollectionViewController, ProjectCellDe
         performSegue(withIdentifier: "showProjectSegue", sender: selectedItem.id)
     }
 
-    @IBSegueAction func initializeProjects(coder: NSCoder, sender: Any?, segueIdentifier: String?) -> ProjectController? {
-        let projectController = ProjectController(coder: coder, project: DatabaseManager.shared.fetchProject(id: sender as! Int)!)
+    @IBSegueAction func initializeProjects(coder: NSCoder, sender: Any?, segueIdentifier: String?) -> ProjectViewController? {
+        let projectController = ProjectViewController(coder: coder, project: DatabaseManager.shared.fetchProject(id: sender as! Int)!)
         return projectController
     }
     
@@ -136,7 +136,7 @@ class ProjectCollectionViewController: UICollectionViewController, ProjectCellDe
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetailSegue" {
-            if let detailVC = segue.destination as? ProjectController, let selectedItem = sender as? Int {
+            if let detailVC = segue.destination as? ProjectViewController, let selectedItem = sender as? Int {
                 detailVC.projectId = selectedItem
             }
         }

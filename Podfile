@@ -18,6 +18,7 @@ target 'Calliope App' do
   pod 'SnapKit'
   pod 'SQLite.swift', '~> 0.14.0'
   pod 'GRDB.swift', '~> 6.24'
+  pod 'DGCharts'
 
   post_install do |installer|
     installer.pods_project.targets.each do |target|

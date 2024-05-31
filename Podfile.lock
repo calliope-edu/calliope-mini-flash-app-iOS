@@ -1,5 +1,8 @@
 PODS:
   - DeepDiff (2.3.1)
+  - DGCharts (5.1.0):
+    - DGCharts/Core (= 5.1.0)
+  - DGCharts/Core (5.1.0)
   - GRDB.swift (6.24.1):
     - GRDB.swift/standard (= 6.24.1)
   - GRDB.swift/standard (6.24.1)
@@ -662,6 +665,7 @@ PODS:
 
 DEPENDENCIES:
   - DeepDiff
+  - DGCharts
   - GRDB.swift (~> 6.24)
   - Highlightr
   - iOSDFULibrary
@@ -675,6 +679,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - DeepDiff
+    - DGCharts
     - GRDB.swift
     - Highlightr
     - iOSDFULibrary
@@ -692,6 +697,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   DeepDiff: e5ae6c50d0321568e4508cec5930b9f10bb293fc
+  DGCharts: 1c6daf585b6cfc78807af44ea690d357c410627f
   GRDB.swift: 136dcb5d8dddca50aae3ba7d77475f79e7232cd8
   Highlightr: 595f3e100737c8de41113385da8bd0b5b65212c6
   iOSDFULibrary: ef7e1fbb3fc7a5fabd106297a9cd0e775bcfcec6
@@ -707,6 +713,6 @@ SPEC CHECKSUMS:
   UICircularProgressRing: 19927375b2b21b5fa5fd9582f15ccdef9659da16
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
 
-PODFILE CHECKSUM: 4f5a7160e58d40f385113918f24cb539bdc156f5
+PODFILE CHECKSUM: f46342cb02d06421f24aecee375a2f7e50bb7505
 
 COCOAPODS: 1.15.2

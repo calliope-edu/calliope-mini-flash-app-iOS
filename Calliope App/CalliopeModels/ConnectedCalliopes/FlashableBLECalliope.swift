@@ -9,7 +9,7 @@ import UIKit
 import CoreBluetooth
 import NordicDFU
 
-class FlashableBLECalliope: BLECalliope {
+class FlashableBLECalliope: CalliopeAPI {
     
     // MARK: common
     private var rebootingForPartialFlashing = false
@@ -449,10 +449,6 @@ class CalliopeV3: FlashableBLECalliope {
     
     override var requiredServices: Set<CalliopeService> {
         return [.secureDfuService]
-    }
-    
-    override var optionalServices: Set<CalliopeService> {
-        return [.partialFlashing]
     }
     
     internal override func startFullFlashing() throws {

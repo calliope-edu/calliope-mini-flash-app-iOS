@@ -10,7 +10,7 @@ import UIKit
 import CoreServices
 import SwiftUI
 
-class SensorRecordingsController: UIViewController, UINavigationControllerDelegate, UIDocumentPickerDelegate {
+class ProjectOverviewController: UIViewController, UINavigationControllerDelegate, UIDocumentPickerDelegate {
     
     @IBOutlet weak var stackView: UIStackView?
     
@@ -66,11 +66,11 @@ class SensorRecordingsController: UIViewController, UINavigationControllerDelega
     
     static var number: Int = 0
     
-    @IBSegueAction func createNewProject(_ coder: NSCoder) -> ProjectController? {
-        let project: Project = try DatabaseManager.shared.insertProject(name: "NewProject" + String(SensorRecordingsController.number), values: "NewProject")!
-        (SensorRecordingsController.number+=1)
+    @IBSegueAction func createNewProject(_ coder: NSCoder) -> ProjectViewController? {
+        let project: Project = try DatabaseManager.shared.insertProject(name: "NewProject" + String(ProjectOverviewController.number), values: "NewProject")!
+        (ProjectOverviewController.number+=1)
         projectCollectionViewController?.reloadInputViews()
-        return ProjectController(coder: coder, project: project)
+        return ProjectViewController(coder: coder, project: project)
     }
     
     

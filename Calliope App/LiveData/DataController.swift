@@ -12,4 +12,16 @@ class DataController {
     
     var availableSensors: [Sensor] = []
     
+    
+    var connectedCalliope: CalliopeAPI
+    
+    init(availableCharacteristics: [CalliopeService], connectedCalliope: CalliopeAPI) {
+        availableSensors = availableCharacteristics.compactMap { key in
+            return SensorUtility.serviceSensorMap[key]
+        }
+        self.connectedCalliope = connectedCalliope
+        print(connectedCalliope.brightness)
+        print(connectedCalliope.discoveredOptionalServices)
+    }
+    
 }

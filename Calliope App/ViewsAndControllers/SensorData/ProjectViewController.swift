@@ -8,13 +8,17 @@
 
 import Foundation
 import UIKit
+import DGCharts
 
-class ProjectController: UIViewController {
+class ProjectViewController: UIViewController, ChartViewDelegate {
     
+    @IBOutlet weak var lineChartView: LineChartView!
     
-    @IBOutlet var mainView: UIView!
     var project: Project?
     var projectId: Int?
+    
+    var dataEntries: [ChartDataEntry] = []
+    
     
     init?(coder: NSCoder, project: Project) {
         self.project = project
@@ -26,8 +30,6 @@ class ProjectController: UIViewController {
     }
     
     override func viewDidLoad() {
-        print("View did Load LEL")
-        print(project?.name)
         super.viewDidLoad()
     }
 }

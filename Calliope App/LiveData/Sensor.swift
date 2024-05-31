@@ -10,6 +10,12 @@ import Foundation
 
 class Sensor {
     
+    let calliopeService: CalliopeService
+    
+    init(calliopeService: CalliopeService) {
+        self.calliopeService = calliopeService
+    }
+    
     var liveData: [Int] = []
     
     func startRecording() {

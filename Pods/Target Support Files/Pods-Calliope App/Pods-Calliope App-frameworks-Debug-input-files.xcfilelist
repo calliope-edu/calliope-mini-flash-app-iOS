@@ -1,4 +1,5 @@
 ${PODS_ROOT}/Target Support Files/Pods-Calliope App/Pods-Calliope App-frameworks.sh
+${BUILT_PRODUCTS_DIR}/DGCharts/DGCharts.framework
 ${BUILT_PRODUCTS_DIR}/DeepDiff/DeepDiff.framework
 ${BUILT_PRODUCTS_DIR}/GRDB.swift/GRDB.framework
 ${BUILT_PRODUCTS_DIR}/Highlightr/Highlightr.framework
