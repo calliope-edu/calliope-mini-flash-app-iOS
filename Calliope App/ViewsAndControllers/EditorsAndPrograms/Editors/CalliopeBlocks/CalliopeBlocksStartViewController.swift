@@ -70,7 +70,7 @@ class CalliopeBlocksStartViewController: UIViewController {
     }
     
     @objc func openLinkToAppStorePage(gesture: UIGestureRecognizer) {
-        if let url = URL(string: "https://apps.apple.com/de/app/scrub-web-browser/id1569777095") {
+        if let url = URL(string: "https://apps.apple.com/de/app/calliope-mini-blocks/id6480199471") {
             UIApplication.shared.open(url)
         }
     }
