@@ -17,7 +17,7 @@ class ProjectCollectionViewController: UICollectionViewController, ProjectCellDe
     private let reuseIdentifierProgram = "uploadProjectCell"
 
     private lazy var projects: [Project] = { () -> [Project] in
-        do { return try DatabaseManager.shared.fetchProjects() }
+        do { return try Project.fetchProjects() }
         catch { fatalError("could not load files \(error)") }
     }()
 
@@ -26,7 +26,7 @@ class ProjectCollectionViewController: UICollectionViewController, ProjectCellDe
     override func viewDidLoad() {
         super.viewDidLoad()
         programSubscription = NotificationCenter.default.addObserver(
-            forName: NotificationConstants.hexFileChanged, object: nil, queue: nil,
+            forName: NotificationConstants.projectsChanged, object: nil, queue: nil,
             using: { [weak self] (_) in
                 DispatchQueue.main.async {
                     self?.animateFileChange()
@@ -64,7 +64,7 @@ class ProjectCollectionViewController: UICollectionViewController, ProjectCellDe
     
     private func animateFileChange() {
         let oldItems = projects
-        let newItems = (try? DatabaseManager.shared.fetchProjects()) ?? []
+        let newItems = (try? Project.fetchProjects()) ?? []
         let changes = diff(old: oldItems, new: newItems)
         collectionView.reload(changes: changes, section: 0, updateData: {
             self.projects = newItems
@@ -90,8 +90,9 @@ class ProjectCollectionViewController: UICollectionViewController, ProjectCellDe
         performSegue(withIdentifier: "showProjectSegue", sender: selectedItem.id)
     }
 
-    @IBSegueAction func initializeProjects(coder: NSCoder, sender: Any?, segueIdentifier: String?) -> ProjectViewController? {
-        let projectController = ProjectViewController(coder: coder, project: DatabaseManager.shared.fetchProject(id: sender as! Int)!)
+    @IBSegueAction func initializeProject(coder: NSCoder, sender: Any?, segueIdentifier: String?) -> ProjectViewController? {
+        print("Opening project \(sender as! Int)")
+        let projectController = ProjectViewController(coder: coder, project: Project.fetchProject(id: sender as! Int)!)
         return projectController
     }
     
@@ -107,23 +108,6 @@ class ProjectCollectionViewController: UICollectionViewController, ProjectCellDe
             UIMenuItem(title: NSLocalizedString("Share", comment: ""), action: Selector(("share")))
         ]
         return true
-    }
-
-    @available(iOS 13.0, *)
-    override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedMenuElements -> UIMenu? in
-            let actions: [UIMenuElement] = [
-                UIAction(title: NSLocalizedString("Transfer", comment: ""), image: UIImage(systemName: "arrow.left.arrow.right"), handler: { (action) in (
-                    self.uploadProgram(of: collectionView.cellForItem(at: indexPath) as! ProjectCollectionViewCell)) }),
-                UIAction(title: NSLocalizedString("Share", comment: ""), image: UIImage(systemName: "square.and.arrow.up"), handler: { (action) in (
-                            self.collectionView.cellForItem(at: indexPath) as? ProjectCollectionViewCell)?.share() }),
-                UIAction(title: NSLocalizedString("Rename", comment: ""), image: UIImage(systemName: "rectangle.and.pencil.and.ellipsis"), handler: { (action) in (
-                            self.collectionView.cellForItem(at: indexPath) as? ProjectCollectionViewCell)?.edit() }),
-                UIAction(title: NSLocalizedString("Delete", comment: ""), image: UIImage(systemName: "trash"), handler: { (action) in (
-                            self.collectionView.cellForItem(at: indexPath) as? ProjectCollectionViewCell)?.delete(nil) })
-            ]
-            return UIMenu(title: "", children: actions)
-        }
     }
 
     override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {

@@ -13,7 +13,7 @@ class CalliopeAPI: BLECalliope {
 	private var updateListeners: [CalliopeCharacteristic: Any] = [:]
 
 	static let services: Set<CalliopeService> =
-    [.partialFlashing, .led, .touchPin, .rgbLed, .microphone, .speaker, .brightness, .button, .temperature, .gesture]
+    [.partialFlashing, .led, .touchPin, .accelerometer, .uart, .rgbLed, .microphone, .speaker, .brightness, .button, .temperature, .gesture]
 
     override var optionalServices: Set<CalliopeService> {
         return CalliopeAPI.services

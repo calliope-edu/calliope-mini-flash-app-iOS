@@ -123,10 +123,10 @@ enum CalliopeCharacteristic: String, CaseIterable {
 	//MARK: characteristics from microbit ble profile
 
 	/// X, Y and Z axes as 3 signed 16 bit values in that order and in little endian format. X, Y and Z values should be divided by 1000.
-	case accelerometerData = "E95DCA4B251D470AA062FA1922DFA9A8"
+	case accelerometerData = "E95DCA4B-251D-470A-A062-FA1922DFA9A8"
 	/// frequency with which accelerometer data is reported in milliseconds. Valid values are 1, 2, 5, 10, 20, 80, 160 and 640.
 	/// TODO: possible periods do not match with documentation
-	case accelerometerPeriod = "E95DFB24251D470AA062FA1922DFA9A8"
+	case accelerometerPeriod = "E95DFB24-251D-470A-A062-FA1922DFA9A8"
 
 	/// X, Y and Z axes as 3 signed 16 bit values in that order and in little endian format.
 	case magnetometerData = "E95DFB11251D470AA062FA1922DFA9A8"

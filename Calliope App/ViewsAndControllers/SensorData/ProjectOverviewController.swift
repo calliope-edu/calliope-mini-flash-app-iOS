@@ -16,16 +16,10 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
     
     @IBOutlet weak var projectContainerView: UIView?
     
-    @IBOutlet var editorTopToSafeArea: NSLayoutConstraint?
-    @IBOutlet var editorBottomToSafeArea: NSLayoutConstraint?
-    var editorsHeightConstraint: NSLayoutConstraint?
-    
     @objc var projectCollectionViewController: ProjectCollectionViewController?
     var projectHeightConstraint: NSLayoutConstraint?
     
-    var editorsKvo: Any?
-    var programsKvo: Any?
-    var bottomInsetKvo: Any?
+    var projectKvo: Any?
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
@@ -41,24 +35,35 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
         stackView?.distribution = landscape ? .fillEqually : .fill
         stackView?.alignment = landscape ? .top : .fill
         stackView?.axis = landscape ? .horizontal : .vertical
-        editorTopToSafeArea?.isActive = landscape
-        editorBottomToSafeArea?.isActive = landscape
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        editorsHeightConstraint?.isActive = true
-        
         projectContainerView?.translatesAutoresizingMaskIntoConstraints = false
-        projectHeightConstraint = projectContainerView?.heightAnchor.constraint(equalToConstant: 300)
+        projectHeightConstraint = projectContainerView?.heightAnchor.constraint(equalToConstant: 10)
         projectHeightConstraint?.isActive = true
         
         configureLayout(UIApplication.shared.keyWindow!.frame.size)
     }
     
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        projectKvo = observe(\.projectCollectionViewController?.collectionView.contentSize) { (containerVC, _) in
+            containerVC.projectHeightConstraint!.constant = containerVC.projectCollectionViewController!.collectionView.contentSize.height
+            containerVC.projectCollectionViewController?.collectionView.layoutIfNeeded()
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        projectKvo = nil
+    }
+    
     @IBSegueAction func initializeProjects(_ coder: NSCoder) -> ProjectCollectionViewController? {
+        print("setting project collection view controller")
         projectCollectionViewController = ProjectCollectionViewController(coder: coder)
         self.reloadInputViews()
         return projectCollectionViewController
@@ -67,30 +72,10 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
     static var number: Int = 0
     
     @IBSegueAction func createNewProject(_ coder: NSCoder) -> ProjectViewController? {
-        let project: Project = try DatabaseManager.shared.insertProject(name: "NewProject" + String(ProjectOverviewController.number), values: "NewProject")!
+        let project: Project = try Project.insertProject(name: "NewProject" + String(ProjectOverviewController.number))!
         (ProjectOverviewController.number+=1)
         projectCollectionViewController?.reloadInputViews()
         return ProjectViewController(coder: coder, project: project)
-    }
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        programsKvo = observe(\.projectCollectionViewController?.collectionView.contentSize) { (containerVC, _) in
-            containerVC.projectHeightConstraint!.constant = containerVC.projectCollectionViewController!.collectionView.contentSize.height
-            containerVC.projectCollectionViewController?.collectionView.layoutIfNeeded()
-        }
-        
-        MatrixConnectionViewController.instance?.connectionDescriptionText = NSLocalizedString("Calliope mini verbinden", comment: "")
-        MatrixConnectionViewController.instance?.calliopeClass = DiscoveredBLEDDevice.self
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        editorsKvo = nil
-        programsKvo = nil
-        bottomInsetKvo = nil
     }
     
     override func size(forChildContentContainer container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {

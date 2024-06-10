@@ -9,4 +9,5 @@ import Foundation
 
 public struct NotificationConstants {
 	public static let hexFileChanged = NSNotification.Name(rawValue: "calliope.hexfiles.changed")
+    public static let projectsChanged = NSNotification.Name(rawValue: "calliope.projects.changed")
 }

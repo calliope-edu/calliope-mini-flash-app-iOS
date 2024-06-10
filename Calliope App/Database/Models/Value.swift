@@ -11,10 +11,36 @@ import GRDB
 
 struct Value: Codable, FetchableRecord, PersistableRecord {
     var id: Int64?
-    var recordingId: Int64
     var value: Double
+    var timeStep: Double
+    var chartsId: Int64
     
     static let databaseTableName = "value"
+    
+    static func insertValue(value: Double, timeStep: Double, chartsId: Int64) {
+        do {
+            try DatabaseManager.shared.dbQueue?.write { db in
+                try Value(value: value, timeStep: timeStep, chartsId: chartsId).insert(db)
+            }
+        } catch {
+            print("Failed to insert value: \(error)")
+        }
+        DatabaseManager.notifyChange()
+    }
+    
+    static func fetchValueforChart(chartId: Int64?) -> [Value]? {
+        var retrievedValues: [Value]?
+        do {
+            try DatabaseManager.shared.dbQueue?.read { db in
+                retrievedValues = try Value.fetchAll(db).filter({ value in
+                    return value.chartsId == chartId
+                })
+            }
+        } catch {
+            LogNotify.log("Error fetching charts data from database: \(error)")
+        }
+        return retrievedValues
+    }
 }
 
 extension Value {
@@ -22,8 +48,11 @@ extension Value {
     static func createTable(in db: Database) throws {
         try db.create(table: databaseTableName) { t in
             t.autoIncrementedPrimaryKey("id")
-            t.column("recordingId", .text).notNull()
             t.column("value", .text).notNull()
+            t.column("timeStep", .text).notNull()
+            t.column("chartsId", .text).notNull()
+            t.foreignKey(["chartsId"], references: "charts", onDelete: .cascade)
+            
         }
         LogNotify.log("value table created")
     }

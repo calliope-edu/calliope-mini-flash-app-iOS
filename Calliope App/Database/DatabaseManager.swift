@@ -42,55 +42,17 @@ class DatabaseManager {
                 // Create a table for users as an example
                 try Project.createTable(in: db)
                 try SensorRecording.createTable(in: db)
+                try Chart.createTable(in: db)
                 try Value.createTable(in: db)
             }
         } catch {
-            LogNotify.log("Creating tables failed, they might already exist.")
+            LogNotify.log("Creating tables failed, they might already exist. \(error)")
         }
         
     }
-
-    func insertProject(name: String, values: String) -> Project? {
-        var tempProject: Project? = nil
-        do {
-            try DatabaseManager.shared.dbQueue?.write { db in
-                var project = Project(name: name, values: values)
-                try project.insert(db)
-                tempProject = project
-            }
-        } catch {
-            print("Failed to insert project: \(error)")
-        }
-        notifyChange()
-        return tempProject
-    }
     
-    func fetchProjects() -> [Project] {
-        var retrievedProjects: [Project] = []
-        do {
-            try DatabaseManager.shared.dbQueue?.read { db in
-                retrievedProjects = try Project.fetchAll(db)
-            }
-        } catch {
-            LogNotify.log("Error fetching project data from database: \(error)")
-        }
-        return retrievedProjects
-    }
-    
-    func fetchProject(id: Int) -> Project? {
-        var retrievedProjects: Project?
-        do {
-            try DatabaseManager.shared.dbQueue?.read { db in
-                retrievedProjects = try Project.fetchOne(db, key: id)
-            }
-        } catch {
-            LogNotify.log("Error fetching project data from database: \(error)")
-        }
-        return retrievedProjects
-    }
-    
-    func notifyChange() {
-        NotificationCenter.default.post(name: NotificationConstants.hexFileChanged, object: self)
+    static func notifyChange() {
+        NotificationCenter.default.post(name: NotificationConstants.projectsChanged, object: self)
     }
 }
 

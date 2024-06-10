@@ -11,14 +11,14 @@ import UIKit
 import DGCharts
 
 class ProjectViewController: UIViewController, ChartViewDelegate {
-    
-    @IBOutlet weak var lineChartView: LineChartView!
-    
     var project: Project?
     var projectId: Int?
     
-    var dataEntries: [ChartDataEntry] = []
+    @IBOutlet weak var chartsContainerView: UIView?
     
+    @objc var chartCollectionViewController: ChartCollectionViewController?
+    var chartHeightConstraint: NSLayoutConstraint?
+    var chartsKvo: Any?
     
     init?(coder: NSCoder, project: Project) {
         self.project = project
@@ -31,5 +31,37 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        chartsContainerView?.translatesAutoresizingMaskIntoConstraints = false
+        chartHeightConstraint = chartsContainerView?.heightAnchor.constraint(equalToConstant: 10)
+        chartHeightConstraint?.isActive = true
+        
+        chartCollectionViewController?.project = project
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        chartsKvo = observe(\.chartCollectionViewController?.collectionView.contentSize) { (containerVC, _) in
+            containerVC.chartHeightConstraint!.constant = containerVC.chartCollectionViewController!.collectionView.contentSize.height
+            containerVC.chartCollectionViewController?.collectionView.layoutIfNeeded()
+        }
+        
+        chartsContainerView?.backgroundColor = .red
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        chartsKvo = nil
+    }
+    
+    @IBSegueAction func initializeCharts(_ coder: NSCoder) -> ChartCollectionViewController? {
+        chartCollectionViewController = ChartCollectionViewController(coder: coder)
+        self.reloadInputViews()
+        return chartCollectionViewController
+    }
+    
+    @IBAction func recordNewSensor() {
+        chartCollectionViewController?.addChart()
     }
 }

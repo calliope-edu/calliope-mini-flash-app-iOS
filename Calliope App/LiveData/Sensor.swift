@@ -7,11 +7,14 @@
 //
 
 import Foundation
+import DGCharts
 
 class Sensor {
     
     let calliopeService: CalliopeService
     
+    
+    let calliope : CalliopeAPI = MatrixConnectionViewController.instance.usageReadyCalliope as! CalliopeAPI
     init(calliopeService: CalliopeService) {
         self.calliopeService = calliopeService
     }

@@ -15,7 +15,7 @@ protocol ProjectCellDelegate {
     func deleteProgram(of cell: ProjectCollectionViewCell)
 }
 
-class ProjectCollectionViewCell: AutoHeightCollectionViewCell {
+class ProjectCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var image: UIImageView?
     @IBOutlet weak var descriptionText: UITextView?
     @IBOutlet weak var name: UILabel!

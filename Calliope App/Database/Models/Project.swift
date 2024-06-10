@@ -14,14 +14,53 @@ struct Project: Codable, FetchableRecord, PersistableRecord, DiffAware {
     var diffId: DiffId { return name }
     
     static func compareContent(_ a: Project, _ b: Project) -> Bool {
-        a.name == b.name && a.values == b.values
+        a.name == b.name
     }
     
     var id: Int64?
     var name: String
-    var values: String
     
     static let databaseTableName = "projects"
+    
+    static func insertProject(name: String) -> Project? {
+        var tempProject: Project? = nil
+        do {
+            try DatabaseManager.shared.dbQueue?.write { db in
+                var project = Project(name: name)
+                try project.insert(db)
+                tempProject = project
+                tempProject?.id = db.lastInsertedRowID
+            }
+        } catch {
+            print("Failed to insert project: \(error)")
+        }
+        DatabaseManager.notifyChange()
+        return tempProject
+    }
+    
+    static func fetchProjects() -> [Project] {
+        var retrievedProjects: [Project] = []
+        do {
+            try DatabaseManager.shared.dbQueue?.read { db in
+                retrievedProjects = try Project.fetchAll(db)
+            }
+        } catch {
+            LogNotify.log("Error fetching project data from database: \(error)")
+        }
+        return retrievedProjects
+    }
+    
+    static func fetchProject(id: Int) -> Project? {
+        var retrievedProjects: Project?
+        do {
+            try DatabaseManager.shared.dbQueue?.read { db in
+                retrievedProjects = try Project.fetchOne(db, key: id)
+            }
+        } catch {
+            LogNotify.log("Error fetching project data from database: \(error)")
+        }
+        return retrievedProjects
+    }
 }
 
 extension Project {
@@ -30,7 +69,6 @@ extension Project {
         try db.create(table: databaseTableName) { t in
             t.autoIncrementedPrimaryKey("id")
             t.column("name", .text).notNull()
-            t.column("values", .text).notNull()
         }
         LogNotify.log("project table created")
     }
