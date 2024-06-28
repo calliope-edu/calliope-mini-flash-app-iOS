@@ -20,28 +20,29 @@ class DatabaseManager {
     }
 
     private func setupDatabase() {
-            do {
-                // Define the path to the database file
-                let fileManager = FileManager.default
-                let documentDirectory = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-                let dbPath = documentDirectory.appendingPathComponent("CalliopeDatabase.sqlite").path
-                
-                // Create the database queue
-                dbQueue = try DatabaseQueue(path: dbPath)
-                
-                // Perform the initial setup (e.g., creating tables)
-                createTables()
-            } catch {
-                print("Database setup failed: \(error)")
-            }
+        do {
+            // Define the path to the database file
+            let fileManager = FileManager.default
+            let documentDirectory = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            let dbPath = documentDirectory.appendingPathComponent("CalliopeDatabase.sqlite").path
+            
+            // Create the database queue
+            var config = Configuration()
+            config.readonly = false
+            dbQueue = try DatabaseQueue(path: dbPath, configuration: config)
+            
+            // Perform the initial setup (e.g., creating tables)
+            createTables()
+        } catch {
+            print("Database setup failed: \(error)")
         }
+    }
 
     func createTables() {
         do {
             try dbQueue?.write { db in
                 // Create a table for users as an example
                 try Project.createTable(in: db)
-                try SensorRecording.createTable(in: db)
                 try Chart.createTable(in: db)
                 try Value.createTable(in: db)
             }

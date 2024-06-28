@@ -42,7 +42,6 @@ final class HexFileManager {
                 throw "invalid url"
             }
             let date = try dateFor(url:url)
-            //TODO: load description from file somehow
             return HexFile(url: url, name: name, date: date)
         })
     }
@@ -59,7 +58,6 @@ final class HexFileManager {
         .map { url -> HexFile in
             let name = String(url.lastPathComponent.dropLast(4))
             let date = try dateFor(url:url)
-            //TODO: load description from file somehow
             return HexFile(url: url, name: name, date: date)
         }.sorted(by: { (a,b) -> Bool in
             return a.date > b.date

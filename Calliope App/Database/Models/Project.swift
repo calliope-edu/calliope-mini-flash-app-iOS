@@ -61,6 +61,27 @@ struct Project: Codable, FetchableRecord, PersistableRecord, DiffAware {
         }
         return retrievedProjects
     }
+    
+    static func deleteProject(id: Int64?) {
+        do {
+            try DatabaseManager.shared.dbQueue?.write { db in
+                try Project.deleteOne(db, key: id)
+                LogNotify.log("Deleted project with id \(id ?? nil)")
+            }
+        } catch {
+            LogNotify.log("Error deleting project: \(error)")
+        }
+    }
+    
+    static func updateProject(project: Project) {
+        do {
+            try DatabaseManager.shared.dbQueue?.write { db in
+                try project.update(db)
+            }
+        } catch {
+            LogNotify.log("Error updating project: \(error)")
+        }
+    }
 }
 
 extension Project {

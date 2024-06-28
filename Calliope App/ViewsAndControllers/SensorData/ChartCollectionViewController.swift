@@ -14,8 +14,7 @@ import DGCharts
 class ChartCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIDocumentPickerDelegate, ChartCellDelegate {
 
     private lazy var charts: [Chart] = { () -> [Chart] in
-        do { return Chart.fetchChartsBy(projectsId: project?.id)! }
-        catch { fatalError("could not load files \(error)") }
+       return Chart.fetchChartsBy(projectsId: project?.id)!
     }()
 
 
@@ -26,7 +25,6 @@ class ChartCollectionViewController: UICollectionViewController, UICollectionVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                    
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -44,11 +42,10 @@ class ChartCollectionViewController: UICollectionViewController, UICollectionVie
     }
     
     private func createChartCell(_ collectionView: UICollectionView, _ indexPath: IndexPath) -> UICollectionViewCell {
-        //TODO: Configure the cell
-        let cell: ChartViewController
-        cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierProgram, for: indexPath) as! ChartViewController
+        let cell: ChartViewCell
+        cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierProgram, for: indexPath) as! ChartViewCell
         cell.chart = charts[indexPath.item]
-        cell.setChart(values: [])
+        cell.setupChartView()
         cell.delegate = self
         return cell
     }
@@ -57,28 +54,30 @@ class ChartCollectionViewController: UICollectionViewController, UICollectionVie
             return CGSize(width: collectionView.frame.width - 40, height: 400)
     }
     
-    func deleteChart(of cell: ChartViewController, chart: Chart?) {
+    func deleteChart(of cell: ChartViewCell, chart: Chart?) {
         guard let chartId = chart?.id else {
             return
         }
         Chart.deleteChart(id: chartId)
-        charts.removeAll { deleteChart in
-            guard let deleteId = deleteChart.id else {
-                return false
-            }
-            return deleteId == chartId
+        guard let project = project else {
+            LogNotify.log("No project found")
+            return
         }
+        charts = Chart.fetchChartsBy(projectsId: project.id)!
+
         // Remove chart from UI
         guard let newIndexPath = collectionView.indexPath(for: cell) else {
             print("ERROR")
             return
         }
+        
         collectionView.deleteItems(at: [newIndexPath])
     }
     
     func addChart() {
         print("Adding New Sensor")
-        guard let chart = Chart.insertChart(name: "New chart", values: "", projectsId: project!.id) else {
+        //TODO: Hier noch einen vernünftigen default sensorType setzen
+        guard let chart = Chart.insertChart(sensorType: .accelerometer, projectsId: project!.id) else {
             return
         }
         let newIndexPath = IndexPath(item: charts.count, section: 0)

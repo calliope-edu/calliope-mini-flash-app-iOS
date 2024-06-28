@@ -24,7 +24,7 @@ class DiscoveredDevice: NSObject, CBPeripheralDelegate {
     var rebootingCalliope: Calliope? = nil
     
     //discoverable Services of the BLE Devices
-    static var discoverableServices: Set<CalliopeService> = [.secureDfuService, .dfuControlService, .partialFlashing, .accelerometer, .led]
+    static var discoverableServices: Set<CalliopeService> = [.secureDfuService, .dfuControlService, .partialFlashing, .accelerometer, .led, .temperature, .uart]
     static var discoverableServicesUUIDs: Set<CBUUID> = Set(discoverableServices.map { $0.uuid })
     
     //discovered Services of the BLE Device

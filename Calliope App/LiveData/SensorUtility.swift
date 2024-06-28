@@ -8,33 +8,33 @@
 
 import Foundation
 
-let rgbLed = Sensor(calliopeService: .rgbLed)
+let rgbLed = Sensor(calliopeService: .rgbLed, name: "RGB Led")
 
-let microphone = Sensor(calliopeService: .microphone)
+let microphone = Sensor(calliopeService: .microphone, name: "microphone")
 
-let speaker = Sensor(calliopeService: .speaker)
+let speaker = Sensor(calliopeService: .speaker, name: "Lautsprecher")
 
-let brightness = Sensor(calliopeService: .brightness)
+let brightness = Sensor(calliopeService: .brightness, name: "Helligkeit")
 
-let touchPin = Sensor(calliopeService: .touchPin)
+let touchPin = Sensor(calliopeService: .touchPin, name: "Touch Pin")
 
-let gesture = Sensor(calliopeService: .gesture)
+let gesture = Sensor(calliopeService: .gesture, name: "Gesture")
 
-let accelerometer = Sensor(calliopeService: .accelerometer)
+let accelerometer = Sensor(calliopeService: .accelerometer, name: "Accelerometer")
 
-let magnetometer = Sensor(calliopeService: .magnetometer)
+let magnetometer = Sensor(calliopeService: .magnetometer, name: "Magetometer")
     
-let button = Sensor(calliopeService: .button)
+let button = Sensor(calliopeService: .button, name: "Button")
 
-let ioPin = Sensor(calliopeService: .ioPin)
+let ioPin = Sensor(calliopeService: .ioPin, name: "io Pin")
 
-let led = Sensor(calliopeService: .led)
+//let led = Sensor(calliopeService: .led, name: "LED")
 
-let event = Sensor(calliopeService: .event)
+let event = Sensor(calliopeService: .event, name: "Event")
 
-let temperature = Sensor(calliopeService: .temperature)
+let temperature = Sensor(calliopeService: .temperature, name: "Temperature")
     
-let uart = Sensor(calliopeService: .uart)
+let uart = Sensor(calliopeService: .uart, name: "Brightness (Uart)")
 
 struct SensorUtility {
     static let serviceSensorMap : [CalliopeService : Sensor] = [
@@ -48,7 +48,7 @@ struct SensorUtility {
         .magnetometer : magnetometer,
         .button : button,
         .ioPin: ioPin,
-        .led: led,
+        //.led: led,
         .event: event,
         .temperature: temperature,
         .uart: uart,

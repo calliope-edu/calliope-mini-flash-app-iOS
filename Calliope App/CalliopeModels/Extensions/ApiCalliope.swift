@@ -19,11 +19,6 @@ class CalliopeAPI: BLECalliope {
         return CalliopeAPI.services
     }
 
-	//MARK: Convenient way to synchronously access calliope via Bluetooth
-	//TODO: Missing: parts of Event Service (we only receive events from calliope, cannot write
-	//TODO: Missing: PWMControl (part of Pin Service, which we currently ignore because it is not safe to use)
-	//TODO: cannot control motors yet (api not exposed via bluetooth and pins not exposed as well)
-
 	/// action that is done to button A
 	public var buttonAAction: BLEDataTypes.ButtonPressAction? {
 		return read(.buttonAState)
@@ -56,7 +51,6 @@ class CalliopeAPI: BLECalliope {
 		}
 	}
 
-
 	/// scrolls a string on the display of the calliope
 	/// - Parameter string: the string to display,
 	///                     can contain all latin letters and some symbols
@@ -64,7 +58,6 @@ class CalliopeAPI: BLECalliope {
 		write(string, .ledText)
 		//TODO postSensorUpdateNotification(.Display, 0)
 	}
-
 
 	/// the delay in ms between showing successive characters of the led text
 	public var scrollingDelay: UInt16 {
@@ -159,6 +152,11 @@ class CalliopeAPI: BLECalliope {
 	public func sendSerialData(_ data: Data) {
 		write(data, .rxCharacteristic)
 	}
+    
+    public var getTemperatureData: ((Int?) -> ())? {
+        get { return getNotifyListener(for: .txCharacteristic) }
+        set { setNotifyListener(for: .txCharacteristic, newValue) }
+    }
 
 	//MARK: calliope specialities
 
@@ -346,6 +344,9 @@ class CalliopeAPI: BLECalliope {
 			let temperature: Int8? = characteristic.interpret(dataBytes: value)
 			temperatureNotification?(temperature)
 			//TODO postThermometerNotification(Int(temperature ?? 0))
+        case .txCharacteristic:
+            let value: String? = characteristic.interpret(dataBytes: value)
+            getTemperatureData?(Int(value ?? "10"))
 		default:
 			return
 		}
@@ -401,7 +402,7 @@ extension CalliopeCharacteristic {
 				return (event, value)
 				} as? T
 		case .txCharacteristic:
-			return data as? T
+            return String(data: data, encoding: .utf8) as? T
 		case .temperature:
 			let localized = Int8(ValueLocalizer.current.localizeTemperature(unlocalized: Double(Int8(littleEndianData: data) ?? 42)))
 			return localized as? T

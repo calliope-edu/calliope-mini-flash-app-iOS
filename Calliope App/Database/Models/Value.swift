@@ -37,7 +37,7 @@ struct Value: Codable, FetchableRecord, PersistableRecord {
                 })
             }
         } catch {
-            LogNotify.log("Error fetching charts data from database: \(error)")
+            LogNotify.log("Error fetching values from database: \(error)")
         }
         return retrievedValues
     }
@@ -52,7 +52,6 @@ extension Value {
             t.column("timeStep", .text).notNull()
             t.column("chartsId", .text).notNull()
             t.foreignKey(["chartsId"], references: "charts", onDelete: .cascade)
-            
         }
         LogNotify.log("value table created")
     }

@@ -12,25 +12,11 @@ import DGCharts
 class Sensor {
     
     let calliopeService: CalliopeService
+    let name: String
     
     
-    let calliope : CalliopeAPI = MatrixConnectionViewController.instance.usageReadyCalliope as! CalliopeAPI
-    init(calliopeService: CalliopeService) {
+    init(calliopeService: CalliopeService, name: String) {
         self.calliopeService = calliopeService
-    }
-    
-    var liveData: [Int] = []
-    
-    func startRecording() {
-        // Notify Calliope
-    }
-    
-    func stopRecording() {
-        // Notify Calliope to stop sending
-    }
-    
-    
-    private func receiveData() {
-        liveData.append(0)
+        self.name = name
     }
 }

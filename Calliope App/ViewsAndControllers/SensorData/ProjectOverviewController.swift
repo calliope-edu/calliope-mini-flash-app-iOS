@@ -14,6 +14,7 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
     
     @IBOutlet weak var stackView: UIStackView?
     
+    @IBOutlet weak var addProjectButton: UIButton!
     @IBOutlet weak var projectContainerView: UIView?
     
     @objc var projectCollectionViewController: ProjectCollectionViewController?
@@ -39,12 +40,10 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        addProjectButton.setTitle("", for: .normal)
         projectContainerView?.translatesAutoresizingMaskIntoConstraints = false
         projectHeightConstraint = projectContainerView?.heightAnchor.constraint(equalToConstant: 10)
         projectHeightConstraint?.isActive = true
-        
-        configureLayout(UIApplication.shared.keyWindow!.frame.size)
     }
     
     
@@ -55,6 +54,9 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
             containerVC.projectHeightConstraint!.constant = containerVC.projectCollectionViewController!.collectionView.contentSize.height
             containerVC.projectCollectionViewController?.collectionView.layoutIfNeeded()
         }
+        
+        MatrixConnectionViewController.instance?.connectionDescriptionText = NSLocalizedString("Calliope mini verbinden", comment: "")
+        MatrixConnectionViewController.instance?.calliopeClass = DiscoveredBLEDDevice.self
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -69,22 +71,37 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
         return projectCollectionViewController
     }
     
-    static var number: Int = 0
-    
-    @IBSegueAction func createNewProject(_ coder: NSCoder) -> ProjectViewController? {
-        let project: Project = try Project.insertProject(name: "NewProject" + String(ProjectOverviewController.number))!
-        (ProjectOverviewController.number+=1)
-        projectCollectionViewController?.reloadInputViews()
-        return ProjectViewController(coder: coder, project: project)
-    }
-    
-    override func size(forChildContentContainer container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
-        return CGSize(width: parentSize.width - 62, height: parentSize.height)
+    @IBAction func createNewProject(_ coder: NSCoder) {
+        LogNotify.log("Starting to create a new Project")
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title: "Enter Project Name", message: nil, preferredStyle: .alert)
+            alertController.addTextField { (textField) in
+                textField.placeholder = "Calliope Project"
+            }
+
+            let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+                if let textField = alertController.textFields?.first, let name = textField.text {
+                    let normalizedName = name.isEmpty ? "Calliope Project" : name
+                    let project = Project.insertProject(name: normalizedName)
+                    self.performSegue(withIdentifier: "showNewlyCreatedProject", sender: project?.id)
+                }
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+            alertController.addAction(okAction)
+            alertController.addAction(cancelAction)
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        //we use segue initialization for ios13.
-        // When ios11 compatibility is dropped, this method can be deleted.
+        if segue.identifier == "showNewlyCreatedProject" {
+            print("Preparing for segue showNewlyCreatedProject")
+            guard let destinationVC = segue.destination as? ProjectViewController else {
+                return
+            }
+            destinationVC.project = Project.fetchProject(id: sender as! Int)!
+        }
+        
         if #available(iOS 13.0, *) { return }
         
         if segue.identifier == "embedPrograms" {

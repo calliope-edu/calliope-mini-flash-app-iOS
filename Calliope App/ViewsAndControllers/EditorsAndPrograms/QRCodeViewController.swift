@@ -80,7 +80,7 @@ class QRCodeViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
             }
             changeQrCodeFrameViewStaten(isHidden: false)
             qrCodeFrameView.frame = self.view.convert(barCodeObject.bounds, from: cameraView.coordinateSpace)
-            // ToDo: Extend Validation of URLs
+            
             if let stringValue = metadataObj.stringValue, stringValue.lowercased().contains("makecode"){
                 openMakeCodeButton.isHidden = false
                 foundQrCodeString = stringValue

@@ -126,6 +126,7 @@ class FlashableBLECalliope: CalliopeAPI {
     
     override func handleValueUpdate(_ characteristic: CalliopeCharacteristic, _ value: Data) {
         guard characteristic == .partialFlashing else {
+            super.handleValueUpdate(characteristic, value)
             return
         }
         //dispatch from ble queue to update queue to avoid deadlock
