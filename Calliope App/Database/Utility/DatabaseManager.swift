@@ -21,18 +21,23 @@ class DatabaseManager {
 
     private func setupDatabase() {
         do {
-            // Define the path to the database file
             let fileManager = FileManager.default
             let documentDirectory = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             let dbPath = documentDirectory.appendingPathComponent("CalliopeDatabase.sqlite").path
-            
-            // Create the database queue
             var config = Configuration()
+            
             config.readonly = false
             dbQueue = try DatabaseQueue(path: dbPath, configuration: config)
             
-            // Perform the initial setup (e.g., creating tables)
+            var migrator = DatabaseMigrator()
+            registerMigrations(migrator: migrator)
+            
+            #if DEBUG
+            migrator.eraseDatabaseOnSchemaChange = true
+            #endif
+            
             createTables()
+            try migrator.migrate(dbQueue!)
         } catch {
             print("Database setup failed: \(error)")
         }
@@ -49,7 +54,10 @@ class DatabaseManager {
         } catch {
             LogNotify.log("Creating tables failed, they might already exist. \(error)")
         }
-        
+    }
+    
+    private func registerMigrations(migrator: DatabaseMigrator) {
+        LogNotify.log("Performing Migrations")
     }
     
     static func notifyChange() {

@@ -1,5 +1,5 @@
 //
-//  ChartView.swift
+//  ChartViewCell.swift
 //  Calliope App
 //
 //  Created by itestra on 27.05.24.
@@ -17,25 +17,28 @@ protocol ChartCellDelegate {
 class ChartViewCell: UICollectionViewCell, ChartViewDelegate {
     
     var chart: Chart?
+    var lineChartDataSet: LineChartDataSet?
+    var lineChartData: LineChartData?
+    var sensor: Sensor?
+    var timestep = 1.0
+    var isRecordingData: Bool = false
+    var calliope: Calliope?
     
     @IBOutlet weak var lineChartView: LineChartView!
     @IBOutlet weak var recordingButton: UIButton!
-    
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var sensorTypeMenu: UIMenu!
     @IBOutlet weak var sensorTypeButton: ContextMenuButton!
     @IBOutlet weak var maxValueLabel: UILabel!
     @IBOutlet weak var minValueLabel: UILabel!
     @IBOutlet weak var avgValueLabel: UILabel!
-    
-    var lineChartDataSet: LineChartDataSet?
-    var lineChartData: LineChartData?
-    var sensor: Sensor?
-    var timeIter = 1.0
-    var isRecording: Bool = false
+    @IBOutlet weak var currentValueLabel: UILabel!
     
     public var delegate: ChartCellDelegate!
     public var dataController: DataController
+    
+    private var calliopeConnectedSubcription: NSObjectProtocol!
+    private var calliopeDisconnectedSubscription: NSObjectProtocol!
     
     required init?(coder: NSCoder) {
         dataController = DataController()
@@ -43,10 +46,38 @@ class ChartViewCell: UICollectionViewCell, ChartViewDelegate {
     }
     
     func setupChartView() {
-        setupSensorMenu()
         deleteButton.setTitle("", for: .normal)
         setupChart()
-        setLabelValues()
+        setDataLabelValues()
+        
+        calliopeConnectedSubcription = NotificationCenter.default.addObserver(
+            forName: DiscoveredBLEDDevice.usageReadyNotificationName, object: nil, queue: nil,
+            using: { [weak self] (_) in
+                DispatchQueue.main.async {
+                    self?.recordingButton.isEnabled = true
+                    self?.sensorTypeButton.isEnabled = true
+                    self?.setupSensorMenu()
+                }
+        })
+        
+        calliopeDisconnectedSubscription = NotificationCenter.default.addObserver(
+            forName: DiscoveredBLEDDevice.disconnectedNotificationName, object: nil, queue: nil,
+            using: { [weak self] (_) in
+                DispatchQueue.main.async {
+                    self?.recordingButton.isEnabled = false
+                    self?.sensorTypeButton.isEnabled = false
+                    self?.stopDataRecording()
+                }
+        })
+        
+        setupSensorMenu()
+        
+        guard let calliope = MatrixConnectionViewController.instance.usageReadyCalliope else {
+            recordingButton.isEnabled = false
+            sensorTypeButton.isEnabled = false
+            return
+        }
+        self.calliope = calliope
     }
     
     func setupChart() {
@@ -55,34 +86,32 @@ class ChartViewCell: UICollectionViewCell, ChartViewDelegate {
         lineChartData.setDrawValues(false)
         layoutLineChartView()
         lineChartView.data = lineChartData
-        guard let rawChartData = Value.fetchValueforChart(chartId: chart?.id), rawChartData.isEmpty else {
-            addDatapoint(values: [0])
+        guard let rawChartData = Value.fetchValuesBy(chartId: chart?.id), !rawChartData.isEmpty else {
+            sensorTypeButton.isEnabled = true
+            addDataEntriesToChart(values: [0])
             return
         }
-        addDatapoint(values: [0])
-        addDatapoint(values: rawChartData.compactMap({ value in
+        sensorTypeButton.isEnabled = false
+        addDataEntriesToChart(values: rawChartData.compactMap({ value in
             value.value
         }))
     }
     
     fileprivate func layoutLineChartDataSet(_ lineChartDataSet: LineChartDataSet) -> LineChartDataSet{
-        // chart main settings
         lineChartDataSet.setColor(.calliopeGreen)
         lineChartDataSet.lineWidth = 3
-        lineChartDataSet.mode = .linear //curve smoothing
-        lineChartDataSet.drawValuesEnabled = false //disble values
-        lineChartDataSet.drawCirclesEnabled = false //disable circles
-        lineChartDataSet.drawFilledEnabled = false // gradient setting
+        lineChartDataSet.mode = .linear
+        lineChartDataSet.drawValuesEnabled = false
+        lineChartDataSet.drawCirclesEnabled = false
+        lineChartDataSet.drawFilledEnabled = false
         
-        // settings for picking values on graph
-        lineChartDataSet.drawHorizontalHighlightIndicatorEnabled = false // leave only vertical line
-        lineChartDataSet.highlightLineWidth = 2 // vertical line width
+        lineChartDataSet.drawHorizontalHighlightIndicatorEnabled = false
+        lineChartDataSet.highlightLineWidth = 2
         lineChartDataSet.highlightColor = .calliopeGreen
         return lineChartDataSet
     }
     
     fileprivate func layoutLineChartView() {
-        // disable grid
         lineChartView.xAxis.enabled = false
         lineChartView.xAxis.drawGridLinesEnabled = false
         lineChartView.xAxis.drawLabelsEnabled = false
@@ -97,61 +126,60 @@ class ChartViewCell: UICollectionViewCell, ChartViewDelegate {
         lineChartView.rightAxis.drawLabelsEnabled = true
         
         lineChartView.drawGridBackgroundEnabled = false
-        
         lineChartView.legend.enabled = false
-        //remove artifacts around chart area
         lineChartView.drawBordersEnabled = true
         lineChartView.minOffset = 20
-        //setting up delegate needed for touches handling
         lineChartView.delegate = self
         lineChartView.backgroundColor = .white
         lineChartView.borderColor = .white
     }
     
-    fileprivate func clearView() {
+    func setupSensorMenu() {
+        var sensors : [UIAction] = []
+        for sensor in dataController.getAvailableSensors() {
+            let isDefault = (sensor.calliopeService == chart?.sensorType)
+            sensors.append(UIAction(title: sensor.name, state: isDefault ? .on : .off) { _ in
+                self.resetLineChartView(sensor: sensor)
+            })
+        }
+        self.sensor = SensorUtility.serviceSensorMap[chart?.sensorType ?? .accelerometer]
+        
+        if sensors.isEmpty {
+            sensorTypeButton.isEnabled = false
+            if let count = lineChartView.data?.count, count > 0 {
+                sensors.append(UIAction(title: self.sensor!.name, state: .on) { _ in })
+            } else {
+                sensors.append(UIAction(title: "No Sensor Available") { _ in })
+            }
+        } else {
+            sensorTypeButton.isEnabled = true
+        }
+        
+        sensorTypeButton.menu = UIMenu(title: "Sensors", children: sensors)
+    }
+    
+    private func resetLineChartView(sensor: Sensor) {
+        self.sensor = sensor
         self.lineChartData?.clearValues()
         self.lineChartDataSet = nil
         guard let chart = chart else {
             return
         }
         Chart.deleteChart(id: chart.id)
-        self.chart = Chart.insertChart(sensorType: sensor?.calliopeService ?? .accelerometer, projectsId: chart.projectsId)
+        self.chart = Chart.insertChart(sensorType: sensor.calliopeService, projectsId: chart.projectsId)
+        self.setupChart()
+        self.timestep = 1.0
     }
     
-    func setupSensorMenu() {
-        var elements : [UIAction] = []
-        for element in dataController.getAvailableSensors() {
-            let isDefault = (element.calliopeService == chart?.sensorType)
-            elements.append(UIAction(title: element.name, state: isDefault ? .on : .off) { _ in
-                self.sensor = element
-                self.clearView()
-                self.setupChart()
-                self.timeIter = 1.0
-            })
-        }
-        //TODO: Hier noch vernünftigen Standard setzen
-        self.sensor = SensorUtility.serviceSensorMap[chart?.sensorType ?? .accelerometer]
-        
-        if elements.isEmpty {
-            elements.append(UIAction(title: "NO SENSORS AVAILABLE") { _ in print("NO ACTION") })
-        }
-        
-        let menu = UIMenu(title: "Available Sensors", children: elements)
-        if #available(iOS 14.0, *) {
-            sensorTypeButton.menu = menu
-        } else {
-            // Fallback on earlier versions
-        }
-    }
-    
-    func addDatapoint(values: [Double]) {
+    func addDataEntriesToChart(values: [Double]) {
         for value in values {
-            let dataEntry = ChartDataEntry(x: timeIter, y: value)
+            let dataEntry = ChartDataEntry(x: timestep, y: value)
             lineChartDataSet?.append(dataEntry)
-            timeIter += 1
+            timestep += 1
         }
         lineChartView.data?.notifyDataChanged()
         lineChartView.notifyDataSetChanged()
+        
         if let lineChartDataSet = self.lineChartDataSet, !lineChartDataSet.isEmpty {
             lineChartView.setVisibleXRangeMaximum(300)
             lineChartView.moveViewToX(Double(lineChartDataSet.count-1))
@@ -161,57 +189,73 @@ class ChartViewCell: UICollectionViewCell, ChartViewDelegate {
     @IBAction func startRecording(_ sender: Any) {
         sensorTypeButton.isEnabled = false
         deleteButton.isEnabled = false
-        sensorStartRecording()
+        startDataRecording()
     }
     
-    func sensorStartRecording() {
-        if isRecording {
-            sensorStopRecording()
+    func startDataRecording() {
+        if isRecordingData {
+            stopDataRecording()
             return
         }
-        guard let selectedSensor = sensor else { return }
+        guard let selectedSensor = sensor else {
+            let alertController = UIAlertController(title: "No Sensor selected or connected", message: nil, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default) { _ in }
+            alertController.addAction(okAction)
+            self.inputViewController?.parent?.present(alertController, animated: true, completion: nil)
+            return
+        }
         dataController.sensorStartRecording(sensor: selectedSensor) { value in
             let newValue = Double(value)
-            Value.insertValue(value: newValue, timeStep: self.timeIter, chartsId: (self.chart?.id)!)
-            self.addDatapoint(values: [newValue])
-            self.setLabelValues()
-            self.timeIter += 1
+            Value.insertValue(value: newValue, timeStep: self.timestep, chartsId: (self.chart?.id)!)
+            self.addDataEntriesToChart(values: [newValue])
+            self.setDataLabelValues()
+            self.timestep += 1
+            self.currentValueLabel.text = "\(newValue.rounded(toPlaces: 2))"
         }
         recordingButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-        isRecording = true
+        isRecordingData = true
     }
     
-    func sensorStopRecording() {
+    func stopDataRecording() {
         dataController.sensorStopRecording(sensor: sensor)
-        isRecording = false
+        isRecordingData = false
         deleteButton.isEnabled = true
         recordingButton.setImage(UIImage(systemName: "circle.fill"), for: .normal)
+        currentValueLabel.text = ""
     }
     
-    @IBAction func removeChartView(_ sender: Any) {
-        sensorStopRecording()
+    @IBAction func deleteChartView(_ sender: Any) {
+        stopDataRecording()
         delegate.deleteChart(of: self, chart: chart)
         lineChartDataSet?.removeAll()
     }
     
-    func setLabelValues() {
+    func setDataLabelValues() {
         guard let lineChartDataSet = lineChartDataSet, !lineChartDataSet.isEmpty else {
             minValueLabel.text = "0.0"
             maxValueLabel.text = "0.0"
             avgValueLabel.text = "0.0"
             return
         }
+        
         minValueLabel.text = "\(lineChartDataSet.yMin.rounded(toPlaces: 2))"
         maxValueLabel.text = "\(lineChartDataSet.yMax.rounded(toPlaces: 2))"
-        avgValueLabel.text = "\(calculateAverageValue(of: lineChartDataSet).rounded(toPlaces: 2))"
+        avgValueLabel.text = "\(lineChartDataSet.calculateAverageValue().rounded(toPlaces: 2))"
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(calliopeConnectedSubcription!)
+        NotificationCenter.default.removeObserver(calliopeDisconnectedSubscription!)
     }
 }
 
-func calculateAverageValue(of dataSet: LineChartDataSet) -> Double {
-        let yValues = dataSet.entries.map { $0.y }
+extension LineChartDataSet {
+    func calculateAverageValue() -> Double {
+        let yValues = self.entries.map { $0.y }
         let sum = yValues.reduce(0, +)
         return sum / Double(yValues.count)
     }
+}
 
 extension Double {
     func rounded(toPlaces places:Int) -> Double {
@@ -219,7 +263,6 @@ extension Double {
         return (self * divisor).rounded() / divisor
     }
 }
-
 
 class ContextMenuButton: UIButton {
     var previewProvider: UIContextMenuContentPreviewProvider?
@@ -236,13 +279,8 @@ class ContextMenuButton: UIButton {
     }
 
     func setup() {
-        if #available(iOS 14.0, *) {
-            let interaction = UIContextMenuInteraction(delegate: self)
-            addInteraction(interaction)
-        } else {
-            //TODO: Context Menu for older IOS versions
-            // Fallback on earlier versions
-        }
+        let interaction = UIContextMenuInteraction(delegate: self)
+        addInteraction(interaction)
     }
 
     public override func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {

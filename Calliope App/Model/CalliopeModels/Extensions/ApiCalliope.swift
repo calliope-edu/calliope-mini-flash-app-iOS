@@ -276,6 +276,7 @@ class CalliopeAPI: BLECalliope {
 	private func read<T>(_ characteristic: CalliopeCharacteristic) -> T? {
 		guard let dataBytes = try? read(characteristic: characteristic) else {
 			LogNotify.log("read nothing from \(characteristic)")
+            NotificationCenter.default.post(name: DiscoveredBLEDDevice.disconnectedNotificationName, object: self)
 			return nil }
 		LogNotify.log("read \(dataBytes.hexEncodedString()) from \(characteristic)")
 		return characteristic.interpret(dataBytes: dataBytes)

@@ -266,15 +266,10 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
     
     func initializeConnectionToUsbCalliope(view: UIViewController) {
         state = .usbConnecting
-        if #available(iOS 14.0, *) {
-            let documentPicker = UIDocumentPickerViewController(documentTypes: [UTType.folder.identifier], in: .open)
-            documentPicker.delegate = self
-            documentPicker.allowsMultipleSelection = false
-            view.present(documentPicker, animated: true, completion: nil)
-        } else {
-            fatalError("This function is only available for iOS 14 or later")
-        }
-        
+        let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.folder])
+        documentPicker.delegate = self
+        documentPicker.allowsMultipleSelection = false
+        view.present(documentPicker, animated: true, completion: nil)
     }
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]){

@@ -10,6 +10,13 @@ import GRDB
 import DeepDiff
 
 struct Chart: Codable, FetchableRecord, PersistableRecord, DiffAware {
+    
+    static let databaseTableName = "charts"
+    
+    var id: Int64?
+    var sensorType: CalliopeService
+    var projectsId: Int64?
+
     typealias DiffId = String
     var diffId: DiffId { return "" }
     
@@ -17,17 +24,11 @@ struct Chart: Codable, FetchableRecord, PersistableRecord, DiffAware {
         a.sensorType == b.sensorType && a.id == b.id
     }
     
-    var id: Int64?
-    var sensorType: CalliopeService
-    var projectsId: Int64?
-    
-    static let databaseTableName = "charts"
-    
     static func insertChart(sensorType: CalliopeService, projectsId: Int64?) -> Chart? {
         var tmpChart: Chart? = nil
         do {
             try DatabaseManager.shared.dbQueue?.write { db in
-                var chart = Chart(sensorType: sensorType, projectsId: projectsId)
+                let chart = Chart(sensorType: sensorType, projectsId: projectsId)
                 tmpChart = try chart.inserted(db)
                 tmpChart?.id = db.lastInsertedRowID
             }

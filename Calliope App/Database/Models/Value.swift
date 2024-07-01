@@ -10,12 +10,13 @@ import Foundation
 import GRDB
 
 struct Value: Codable, FetchableRecord, PersistableRecord {
+    
+    static let databaseTableName = "value"
+    
     var id: Int64?
     var value: Double
     var timeStep: Double
     var chartsId: Int64
-    
-    static let databaseTableName = "value"
     
     static func insertValue(value: Double, timeStep: Double, chartsId: Int64) {
         do {
@@ -28,7 +29,7 @@ struct Value: Codable, FetchableRecord, PersistableRecord {
         DatabaseManager.notifyChange()
     }
     
-    static func fetchValueforChart(chartId: Int64?) -> [Value]? {
+    static func fetchValuesBy(chartId: Int64?) -> [Value]? {
         var retrievedValues: [Value]?
         do {
             try DatabaseManager.shared.dbQueue?.read { db in

@@ -1,5 +1,5 @@
 //
-//  SensorRecordingsController.swift
+//  ProjectOverviewController.swift
 //  Calliope App
 //
 //  Created by itestra on 21.05.24.
@@ -13,13 +13,12 @@ import SwiftUI
 class ProjectOverviewController: UIViewController, UINavigationControllerDelegate, UIDocumentPickerDelegate {
     
     @IBOutlet weak var stackView: UIStackView?
-    
     @IBOutlet weak var addProjectButton: UIButton!
     @IBOutlet weak var projectContainerView: UIView?
     
     @objc var projectCollectionViewController: ProjectCollectionViewController?
-    var projectHeightConstraint: NSLayoutConstraint?
     
+    var projectHeightConstraint: NSLayoutConstraint?
     var projectKvo: Any?
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -45,7 +44,6 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
         projectHeightConstraint = projectContainerView?.heightAnchor.constraint(equalToConstant: 10)
         projectHeightConstraint?.isActive = true
     }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -108,7 +106,4 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
             projectCollectionViewController = segue.destination as? ProjectCollectionViewController
         }
     }
-    
-    
-    
 }

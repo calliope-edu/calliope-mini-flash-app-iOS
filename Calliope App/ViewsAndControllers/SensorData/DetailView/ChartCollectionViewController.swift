@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import DGCharts
+import SwiftUI
 
 
 class ChartCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIDocumentPickerDelegate, ChartCellDelegate {
@@ -83,6 +84,5 @@ class ChartCollectionViewController: UICollectionViewController, UICollectionVie
         let newIndexPath = IndexPath(item: charts.count, section: 0)
         charts.append(chart)
         collectionView.insertItems(at: [newIndexPath])
-        
     }
 }

@@ -10,6 +10,12 @@ import GRDB
 import DeepDiff
 
 struct Project: Codable, FetchableRecord, PersistableRecord, DiffAware {
+    
+    static let databaseTableName = "projects"
+    
+    var id: Int64?
+    var name: String
+    
     typealias DiffId = String
     var diffId: DiffId { return name }
     
@@ -17,16 +23,11 @@ struct Project: Codable, FetchableRecord, PersistableRecord, DiffAware {
         a.name == b.name
     }
     
-    var id: Int64?
-    var name: String
-    
-    static let databaseTableName = "projects"
-    
     static func insertProject(name: String) -> Project? {
         var tempProject: Project? = nil
         do {
             try DatabaseManager.shared.dbQueue?.write { db in
-                var project = Project(name: name)
+                let project = Project(name: name)
                 try project.insert(db)
                 tempProject = project
                 tempProject?.id = db.lastInsertedRowID
@@ -66,7 +67,7 @@ struct Project: Codable, FetchableRecord, PersistableRecord, DiffAware {
         do {
             try DatabaseManager.shared.dbQueue?.write { db in
                 try Project.deleteOne(db, key: id)
-                LogNotify.log("Deleted project with id \(id ?? nil)")
+                LogNotify.log("Deleted project with id \(String(describing: id ?? nil))")
             }
         } catch {
             LogNotify.log("Error deleting project: \(error)")

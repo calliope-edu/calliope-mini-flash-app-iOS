@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -252,97 +253,54 @@ kleine Anleitung</string>
                                 <rect key="frame" x="0.0" y="74" width="1024" height="1222"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" restorationIdentifier="ViewWithStuff" translatesAutoresizingMaskIntoConstraints="NO" id="kDM-uC-cBa">
-                                        <rect key="frame" x="0.0" y="0.0" width="1024" height="483"/>
+                                        <rect key="frame" x="0.0" y="20" width="1024" height="435"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="vUU-vN-0qS">
-                                                <rect key="frame" x="0.0" y="0.0" width="1024" height="483"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="1024" height="435"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JHA-Lt-lTq">
-                                                        <rect key="frame" x="20" y="0.0" width="984" height="128"/>
+                                                        <rect key="frame" x="20" y="0.0" width="984" height="80"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Project Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dgf-wX-T07">
-                                                                <rect key="frame" x="20" y="20" width="196" height="33.5"/>
+                                                                <rect key="frame" x="20" y="20" width="196" height="40"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Rr4-Ww-H2D">
-                                                                <rect key="frame" x="20" y="73.5" width="944" height="34.5"/>
-                                                                <subviews>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hhr-Ue-XPa">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="283" height="34.5"/>
-                                                                        <color key="backgroundColor" systemColor="systemTealColor"/>
-                                                                        <state key="normal" title="Button"/>
-                                                                        <buttonConfiguration key="configuration" style="plain" title="Delete">
-                                                                            <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        </buttonConfiguration>
-                                                                        <userDefinedRuntimeAttributes>
-                                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                                                <integer key="value" value="5"/>
-                                                                            </userDefinedRuntimeAttribute>
-                                                                        </userDefinedRuntimeAttributes>
-                                                                        <connections>
-                                                                            <action selector="deleteProject" destination="xWF-af-2iy" eventType="touchUpInside" id="lvg-mA-rlh"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ffy-wQ-HWp">
-                                                                        <rect key="frame" x="330.5" y="0.0" width="283" height="34.5"/>
-                                                                        <color key="backgroundColor" systemColor="systemTealColor"/>
-                                                                        <state key="normal" title="Button"/>
-                                                                        <buttonConfiguration key="configuration" style="plain" title="Export">
-                                                                            <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        </buttonConfiguration>
-                                                                        <userDefinedRuntimeAttributes>
-                                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                                                <integer key="value" value="5"/>
-                                                                            </userDefinedRuntimeAttribute>
-                                                                        </userDefinedRuntimeAttributes>
-                                                                    </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I2H-pt-6Dt">
-                                                                        <rect key="frame" x="661" y="0.0" width="283" height="34.5"/>
-                                                                        <color key="backgroundColor" systemColor="systemTealColor"/>
-                                                                        <state key="normal" title="Button"/>
-                                                                        <buttonConfiguration key="configuration" style="plain" title="Rename">
-                                                                            <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        </buttonConfiguration>
-                                                                        <userDefinedRuntimeAttributes>
-                                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                                                <integer key="value" value="5"/>
-                                                                            </userDefinedRuntimeAttribute>
-                                                                        </userDefinedRuntimeAttributes>
-                                                                        <connections>
-                                                                            <action selector="renameProject" destination="xWF-af-2iy" eventType="touchUpInside" id="0oQ-dV-pMx"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                </subviews>
+                                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CUr-KV-a61">
+                                                                <rect key="frame" x="904" y="15" width="66" height="50"/>
                                                                 <constraints>
-                                                                    <constraint firstItem="Hhr-Ue-XPa" firstAttribute="width" secondItem="Rr4-Ww-H2D" secondAttribute="width" multiplier="0.3" id="1Km-kQ-g9r"/>
-                                                                    <constraint firstItem="ffy-wQ-HWp" firstAttribute="width" secondItem="Rr4-Ww-H2D" secondAttribute="width" multiplier="0.3" id="Tim-Er-Vqy"/>
-                                                                    <constraint firstItem="I2H-pt-6Dt" firstAttribute="width" secondItem="Rr4-Ww-H2D" secondAttribute="width" multiplier="0.3" id="pjG-XR-SY7"/>
+                                                                    <constraint firstAttribute="width" constant="50" id="5fL-nn-SfJ"/>
+                                                                    <constraint firstAttribute="height" constant="50" id="w9v-pJ-6jV"/>
                                                                 </constraints>
-                                                                <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                                        <integer key="value" value="15"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                </userDefinedRuntimeAttributes>
-                                                            </stackView>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kag-pG-nkI">
-                                                                <rect key="frame" x="877" y="8" width="87" height="34.5"/>
-                                                                <state key="normal" title="Button"/>
-                                                                <buttonConfiguration key="configuration" style="filled" title="Settings"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="51"/>
+                                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <menu key="menu" id="smg-5l-4pL">
+                                                                    <children>
+                                                                        <command title="Item 1" id="Y6a-Xn-IV9"/>
+                                                                        <command title="Item 2" id="hTK-ZH-RqL"/>
+                                                                    </children>
+                                                                </menu>
+                                                                <state key="normal">
+                                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <imageReference key="image" image="gearshape.fill" catalog="system" symbolScale="large"/>
+                                                                </state>
+                                                                <buttonConfiguration key="configuration" style="plain">
+                                                                    <imageReference key="image" image="gearshape.fill" catalog="system" symbolScale="large"/>
+                                                                    <fontDescription key="titleFontDescription" type="system" pointSize="51"/>
+                                                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </buttonConfiguration>
                                                             </button>
                                                         </subviews>
                                                         <color key="backgroundColor" name="calliope-brightturquoise"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="bottom" secondItem="Rr4-Ww-H2D" secondAttribute="bottom" constant="20" id="AmI-IE-Fzk"/>
-                                                            <constraint firstItem="Rr4-Ww-H2D" firstAttribute="top" secondItem="Dgf-wX-T07" secondAttribute="bottom" constant="20" id="Hjd-M7-cXw"/>
+                                                            <constraint firstAttribute="trailing" secondItem="CUr-KV-a61" secondAttribute="trailing" constant="20" id="CHO-wY-7Ci"/>
                                                             <constraint firstItem="Dgf-wX-T07" firstAttribute="leading" secondItem="JHA-Lt-lTq" secondAttribute="leading" constant="20" id="Iui-AH-fWq"/>
-                                                            <constraint firstItem="kag-pG-nkI" firstAttribute="top" secondItem="JHA-Lt-lTq" secondAttribute="top" constant="8" id="L4s-Mr-Acf"/>
-                                                            <constraint firstAttribute="trailing" secondItem="kag-pG-nkI" secondAttribute="trailing" constant="20" symbolic="YES" id="cKc-wl-yL3"/>
-                                                            <constraint firstAttribute="trailing" secondItem="Rr4-Ww-H2D" secondAttribute="trailing" constant="20" id="dCy-lb-Yvl"/>
-                                                            <constraint firstAttribute="height" constant="128" id="evg-gA-Yrf"/>
-                                                            <constraint firstItem="Rr4-Ww-H2D" firstAttribute="leading" secondItem="JHA-Lt-lTq" secondAttribute="leading" constant="20" id="p3o-w1-QLn"/>
+                                                            <constraint firstAttribute="height" constant="80" id="evg-gA-Yrf"/>
+                                                            <constraint firstAttribute="bottom" secondItem="Dgf-wX-T07" secondAttribute="bottom" constant="20" id="jb4-nE-dtB"/>
                                                             <constraint firstItem="Dgf-wX-T07" firstAttribute="top" secondItem="JHA-Lt-lTq" secondAttribute="top" constant="20" id="qT8-20-I7f"/>
+                                                            <constraint firstItem="CUr-KV-a61" firstAttribute="centerY" secondItem="Dgf-wX-T07" secondAttribute="centerY" id="r09-Gj-rOc"/>
                                                         </constraints>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -351,7 +309,7 @@ kleine Anleitung</string>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sZc-JZ-dOz">
-                                                        <rect key="frame" x="0.0" y="138" width="1024" height="300"/>
+                                                        <rect key="frame" x="0.0" y="90" width="1024" height="300"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="300" placeholder="YES" id="xYq-iz-0WU"/>
                                                         </constraints>
@@ -360,7 +318,7 @@ kleine Anleitung</string>
                                                         </connections>
                                                     </containerView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bkL-vr-KqE">
-                                                        <rect key="frame" x="392" y="448" width="240.5" height="35"/>
+                                                        <rect key="frame" x="392" y="400" width="240.5" height="35"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="35" id="g2O-mf-rLE"/>
                                                         </constraints>
@@ -393,7 +351,7 @@ kleine Anleitung</string>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="kDM-uC-cBa" firstAttribute="trailing" secondItem="2dB-nR-JCY" secondAttribute="trailing" id="2Kr-Jd-CLV"/>
-                                    <constraint firstItem="kDM-uC-cBa" firstAttribute="top" secondItem="2dB-nR-JCY" secondAttribute="top" id="3Qz-o5-0q2"/>
+                                    <constraint firstItem="kDM-uC-cBa" firstAttribute="top" secondItem="2dB-nR-JCY" secondAttribute="top" constant="20" id="3Qz-o5-0q2"/>
                                     <constraint firstItem="kDM-uC-cBa" firstAttribute="bottom" secondItem="2dB-nR-JCY" secondAttribute="bottom" id="3fq-YD-WhQ"/>
                                     <constraint firstItem="kDM-uC-cBa" firstAttribute="leading" secondItem="2dB-nR-JCY" secondAttribute="leading" id="BLR-1c-tkI"/>
                                     <constraint firstItem="qvh-eW-1Gj" firstAttribute="trailing" secondItem="kDM-uC-cBa" secondAttribute="trailing" id="Fub-rM-qEk"/>
@@ -414,9 +372,10 @@ kleine Anleitung</string>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="addChartButton" destination="bkL-vr-KqE" id="JVg-bB-0fT"/>
                         <outlet property="chartsContainerView" destination="sZc-JZ-dOz" id="Ip5-3j-aAU"/>
                         <outlet property="projectNameLabel" destination="Dgf-wX-T07" id="SWS-9S-yYg"/>
-                        <outlet property="settingsButton" destination="kag-pG-nkI" id="xpf-oo-0dB"/>
+                        <outlet property="settingsButton" destination="CUr-KV-a61" id="P2i-qi-ADb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UuD-ux-mgZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -482,7 +441,7 @@ kleine Anleitung</string>
                                                 <color key="baseBackgroundColor" systemColor="systemTealColor"/>
                                             </buttonConfiguration>
                                             <connections>
-                                                <action selector="removeChartView:" destination="yal-Fn-6CG" eventType="touchUpInside" id="GNv-7i-Sp9"/>
+                                                <action selector="deleteChartView:" destination="yal-Fn-6CG" eventType="touchUpInside" id="GNv-7i-Sp9"/>
                                             </connections>
                                         </button>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Owr-Bx-mhz">
@@ -557,8 +516,8 @@ kleine Anleitung</string>
                                                 <color key="titleShadowColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </state>
                                             <buttonConfiguration key="configuration" style="filled" image="circle.fill" catalog="system" cornerStyle="capsule">
-                                                <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <color key="baseBackgroundColor" systemColor="systemTealColor"/>
+                                                <color key="baseForegroundColor" name="calliope-orange"/>
+                                                <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </buttonConfiguration>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -585,11 +544,18 @@ kleine Anleitung</string>
                                                 <color key="baseBackgroundColor" systemColor="systemTealColor"/>
                                             </buttonConfiguration>
                                         </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nBn-0t-SZp">
+                                            <rect key="frame" x="390" y="260" width="24" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <color key="backgroundColor" name="calliope-brightturquoise"/>
                                     <color key="tintColor" name="calliope-brightturquoise"/>
                                     <constraints>
                                         <constraint firstItem="k32-SG-WvS" firstAttribute="top" secondItem="it0-Za-2gA" secondAttribute="top" constant="20" id="0X4-Pm-g73"/>
+                                        <constraint firstItem="nBn-0t-SZp" firstAttribute="leading" secondItem="JaA-8r-ocG" secondAttribute="trailing" constant="20" id="3Nz-y7-plW"/>
                                         <constraint firstItem="Owr-Bx-mhz" firstAttribute="top" secondItem="it0-Za-2gA" secondAttribute="top" constant="20" id="CYr-NS-ZbT"/>
                                         <constraint firstItem="Owr-Bx-mhz" firstAttribute="centerX" secondItem="it0-Za-2gA" secondAttribute="centerX" id="Fal-qC-LyL"/>
                                         <constraint firstItem="JaA-8r-ocG" firstAttribute="centerX" secondItem="it0-Za-2gA" secondAttribute="centerX" id="GD9-bf-R7w"/>
@@ -598,6 +564,7 @@ kleine Anleitung</string>
                                         <constraint firstItem="vNv-X5-tfZ" firstAttribute="top" secondItem="it0-Za-2gA" secondAttribute="top" constant="20" id="HvU-Nh-MIS"/>
                                         <constraint firstItem="k32-SG-WvS" firstAttribute="leading" secondItem="it0-Za-2gA" secondAttribute="leading" constant="20" id="L4G-5p-VrP"/>
                                         <constraint firstItem="LCA-Un-tnf" firstAttribute="leading" secondItem="it0-Za-2gA" secondAttribute="leading" constant="20" id="NYb-Hf-0ha"/>
+                                        <constraint firstItem="nBn-0t-SZp" firstAttribute="centerY" secondItem="JaA-8r-ocG" secondAttribute="centerY" id="PE8-St-gwj"/>
                                         <constraint firstAttribute="trailing" secondItem="LCA-Un-tnf" secondAttribute="trailing" constant="20" id="Sp9-t4-lKi"/>
                                         <constraint firstAttribute="trailing" secondItem="vNv-X5-tfZ" secondAttribute="trailing" constant="20" id="YWW-pT-b1o"/>
                                         <constraint firstItem="Owr-Bx-mhz" firstAttribute="bottom" secondItem="LCA-Un-tnf" secondAttribute="top" constant="-10" id="qFk-Na-518"/>
@@ -611,6 +578,7 @@ kleine Anleitung</string>
                                 <size key="customSize" width="700" height="300"/>
                                 <connections>
                                     <outlet property="avgValueLabel" destination="rN9-hs-kc2" id="ZiX-wi-NLD"/>
+                                    <outlet property="currentValueLabel" destination="nBn-0t-SZp" id="F8K-lO-0Fh"/>
                                     <outlet property="deleteButton" destination="vNv-X5-tfZ" id="wjD-av-wwq"/>
                                     <outlet property="lineChartView" destination="LCA-Un-tnf" id="rYA-2G-c3x"/>
                                     <outlet property="maxValueLabel" destination="wtX-TM-5dr" id="wlQ-mz-lRB"/>
@@ -637,11 +605,12 @@ kleine Anleitung</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wjf-Tv-hzz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2524.51171875" y="525.54904831625174"/>
+            <point key="canvasLocation" x="2857" y="561"/>
         </scene>
     </scenes>
     <resources>
         <image name="circle.fill" catalog="system" width="128" height="123"/>
+        <image name="gearshape.fill" catalog="system" width="128" height="123"/>
         <image name="menubar.rectangle" catalog="system" width="128" height="93"/>
         <image name="play.fill" catalog="system" width="117" height="128"/>
         <image name="plus" catalog="system" width="128" height="113"/>
@@ -661,6 +630,9 @@ kleine Anleitung</string>
         </namedColor>
         <namedColor name="calliope-lightgray">
             <color red="0.92900002002716064" green="0.93300002813339233" blue="0.93699997663497925" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="calliope-orange">
+            <color red="1" green="0.3059999942779541" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -28,7 +28,9 @@ class DataController {
     }
     
     func getAvailableSensors() -> [Sensor] {
-        return availableSensors
+        return apiCalliope?.discoveredOptionalServices.compactMap { key in
+            return SensorUtility.serviceSensorMap[key]
+        } ?? []
     }
     
     func sensorStartRecording(sensor : Sensor, response: @escaping (Int) -> ()) {
@@ -43,7 +45,6 @@ class DataController {
                 let newValue = self.getValue(sensor: sensor)
                 response(newValue)
             }
-            
             self.isRecording = true
         }
     }
@@ -60,7 +61,7 @@ class DataController {
         asyncAndWait(on: DispatchQueue.global(qos: .userInitiated)) {
             switch sensor.calliopeService {
             case .accelerometer:
-                return Int(self.apiCalliope?.accelerometerValue!.0 ?? 0)
+                return Int(self.apiCalliope?.accelerometerValue?.0 ?? 0)
             case .temperature:
                 return Int(self.apiCalliope?.temperature ?? 0)
             case .uart:
