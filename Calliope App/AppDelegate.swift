@@ -20,8 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Styles.setupGlobalFont()
         Styles.setGlobalTint()
         
-        // Setting up Database
-        let _ = DatabaseManager.shared
 		return true
 	}
 

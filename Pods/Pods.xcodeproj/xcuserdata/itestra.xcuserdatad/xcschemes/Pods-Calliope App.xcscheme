@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B161232B03995821A334EEF13E4D45B7"
-               BuildableName = "Pods_Calliope_App.framework"
+               BuildableName = "libPods-Calliope App.a"
                BlueprintName = "Pods-Calliope App"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>

@@ -1,4 +1,4 @@
-framework module Pods_Calliope_App {
+module Pods_Calliope_App {
   umbrella header "Pods-Calliope App-umbrella.h"
 
   export *

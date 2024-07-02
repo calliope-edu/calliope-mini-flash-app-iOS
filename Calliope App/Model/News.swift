@@ -77,6 +77,8 @@ struct NewsItem: NewsItemProtocol, Codable {
 	}
 }
 
+
+
 struct NewsItemWithStaticImage: NewsItemProtocol {
     var image: UIImage?
     var text: String

@@ -1,4 +1,4 @@
-framework module NordicDFU {
+module NordicDFU {
   umbrella header "iOSDFULibrary-umbrella.h"
 
   export *

@@ -22,6 +22,7 @@
 		2F4B8D9F2598D7980026B480 /* HomeScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F4B8DA12598D7980026B480 /* HomeScreen.storyboard */; };
 		2F526C2426E00696004BA8FF /* HexFileStoreDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F526C2326E00696004BA8FF /* HexFileStoreDialog.swift */; };
 		2F526C2926E9688B004BA8FF /* CalliopeApp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F526C2B26E9688B004BA8FF /* CalliopeApp.storyboard */; };
+		2F526C3026E9689A004BA8FF /* CarRemote.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F526C3226E9689A004BA8FF /* CarRemote.storyboard */; };
 		2F526C3726E968A2004BA8FF /* Help.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F526C3926E968A2004BA8FF /* Help.storyboard */; };
 		2F526C3E26E9694D004BA8FF /* PlaygroundSnippets.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F526C4026E9694D004BA8FF /* PlaygroundSnippets.storyboard */; };
 		2F526C4526E9698B004BA8FF /* News.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F526C4726E9698B004BA8FF /* News.storyboard */; };
@@ -103,38 +104,20 @@
 		2FC2A12B22C962D100675C2F /* NewsDetailWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC2A12A22C962D100675C2F /* NewsDetailWebViewController.swift */; };
 		2FCB70E626C7FCA300DF79B7 /* HelpContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCB70E526C7FCA300DF79B7 /* HelpContentViewController.swift */; };
 		2FCB70E826C7FD5300DF79B7 /* HelpWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCB70E726C7FD5300DF79B7 /* HelpWebViewController.swift */; };
-		600E63262C2EBF810027AE61 /* CSVHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600E63252C2EBF810027AE61 /* CSVHandler.swift */; };
-		600E632C2C33D0750027AE61 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600E632B2C33D0750027AE61 /* ChartView.swift */; };
-		600E632E2C33D7BB0027AE61 /* DataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600E632D2C33D7BB0027AE61 /* DataParser.swift */; };
 		601040AC2B592B7300526735 /* HexFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601040AB2B592B7300526735 /* HexFileManager.swift */; };
 		60316BF82B01FEC300130C0D /* BLECalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60316BF72B01FEC300130C0D /* BLECalliope.swift */; };
 		60316BFA2B0210CC00130C0D /* CalliopeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60316BF92B0210CC00130C0D /* CalliopeFactory.swift */; };
 		604841D52B1F328A0037A825 /* OnboardingOfflineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604841D42B1F328A0037A825 /* OnboardingOfflineViewController.swift */; };
 		6055CDB62BBEE1E50007F6B0 /* CalliopeBlocksStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6055CDB52BBEE1E50007F6B0 /* CalliopeBlocksStartViewController.swift */; };
-		6094C3912C045FA9006F4CB4 /* ApiCalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6094C3902C045FA9006F4CB4 /* ApiCalliope.swift */; };
-		6094C3962C047549006F4CB4 /* ChartViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6094C3952C047549006F4CB4 /* ChartViewCell.swift */; };
-		6094C3992C048201006F4CB4 /* DGCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6094C3972C048201006F4CB4 /* DGCharts.framework */; };
-		6094C39F2C04A869006F4CB4 /* ChartCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6094C39E2C04A869006F4CB4 /* ChartCollectionViewController.swift */; };
 		609D9BD42B67A15500F2ECAE /* USBCalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609D9BD32B67A15500F2ECAE /* USBCalliope.swift */; };
 		609D9BD62B67AD2200F2ECAE /* Calliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609D9BD52B67AD2200F2ECAE /* Calliope.swift */; };
 		609F74C92BC587A600FE35E2 /* CalliopeBlocks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 609F74C82BC587A600FE35E2 /* CalliopeBlocks.storyboard */; };
-		60B58BCE2C132ABA00050FE3 /* Chart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B58BCD2C132ABA00050FE3 /* Chart.swift */; };
 		60BBDB862B6B90C2003AD3CE /* DiscoveredDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BBDB852B6B90C2003AD3CE /* DiscoveredDevice.swift */; };
 		60BBDB882B6BA16F003AD3CE /* DiscoveredUSBDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BBDB872B6BA16F003AD3CE /* DiscoveredUSBDevice.swift */; };
 		60C915932B1F442F00E4039D /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C915922B1F442F00E4039D /* Network.swift */; };
-		60CF0EA92BFCBE1E00CB2A38 /* ProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CF0EA82BFCBE1E00CB2A38 /* ProjectViewController.swift */; };
-		60CF0EAD2BFCD25300CB2A38 /* Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CF0EAC2BFCD25300CB2A38 /* Value.swift */; };
-		60CF0EB02BFCD59D00CB2A38 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CF0EAF2BFCD59D00CB2A38 /* DataController.swift */; };
-		60CF0EB22BFCD5D400CB2A38 /* Sensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CF0EB12BFCD5D400CB2A38 /* Sensor.swift */; };
-		60D02D792BFC84BC00D3C34A /* ProjectAndSensors.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60D02D782BFC84BC00D3C34A /* ProjectAndSensors.storyboard */; };
-		60D02D7B2BFC864900D3C34A /* ProjectOverviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D02D7A2BFC864900D3C34A /* ProjectOverviewController.swift */; };
-		60D02D7E2BFC8FE400D3C34A /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D02D7D2BFC8FE400D3C34A /* DatabaseManager.swift */; };
-		60D02D812BFC95E000D3C34A /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D02D802BFC95E000D3C34A /* Project.swift */; };
-		60D02D832BFCA0C400D3C34A /* ProjectCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D02D822BFCA0C400D3C34A /* ProjectCollectionViewController.swift */; };
-		60D02D852BFCA41400D3C34A /* ProjectCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D02D842BFCA41400D3C34A /* ProjectCollectionViewCell.swift */; };
 		60D672522B283D0F00AB974B /* QRCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D672512B283D0F00AB974B /* QRCodeViewController.swift */; };
 		60F1E8A62B1DEB5300CB3A07 /* OnboardingDetailWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F1E8A52B1DEB5300CB3A07 /* OnboardingDetailWebViewController.swift */; };
-		B16DD0D6E28647BDAC9EA8CB /* Pods_Calliope_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B15F9E6DE42C49A76EC47B /* Pods_Calliope_App.framework */; };
+		CE73348EEAB4EC5248A0716C /* libPods-Calliope App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D57D51A736B908EDE6355034 /* libPods-Calliope App.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -159,6 +142,9 @@
 		2F526C2A26E9688B004BA8FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/CalliopeApp.storyboard; sourceTree = "<group>"; };
 		2F526C2D26E96890004BA8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CalliopeApp.strings; sourceTree = "<group>"; };
 		2F526C2F26E96891004BA8FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/CalliopeApp.strings; sourceTree = "<group>"; };
+		2F526C3126E9689A004BA8FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/CarRemote.storyboard; sourceTree = "<group>"; };
+		2F526C3426E9689C004BA8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CarRemote.strings; sourceTree = "<group>"; };
+		2F526C3626E9689D004BA8FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/CarRemote.strings; sourceTree = "<group>"; };
 		2F526C3826E968A2004BA8FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Help.storyboard; sourceTree = "<group>"; };
 		2F526C3B26E968D2004BA8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Help.strings; sourceTree = "<group>"; };
 		2F526C3D26E96905004BA8FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Help.strings; sourceTree = "<group>"; };
@@ -255,11 +241,7 @@
 		2FC2A12A22C962D100675C2F /* NewsDetailWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDetailWebViewController.swift; sourceTree = "<group>"; };
 		2FCB70E526C7FCA300DF79B7 /* HelpContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpContentViewController.swift; sourceTree = "<group>"; };
 		2FCB70E726C7FD5300DF79B7 /* HelpWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpWebViewController.swift; sourceTree = "<group>"; };
-		36B15F9E6DE42C49A76EC47B /* Pods_Calliope_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Calliope_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3849EA7340C0FAB5DB1A4000 /* Pods-Calliope App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.debug.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.debug.xcconfig"; sourceTree = "<group>"; };
-		600E63252C2EBF810027AE61 /* CSVHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVHandler.swift; sourceTree = "<group>"; };
-		600E632B2C33D0750027AE61 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
-		600E632D2C33D7BB0027AE61 /* DataParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataParser.swift; sourceTree = "<group>"; };
 		601040AB2B592B7300526735 /* HexFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexFileManager.swift; sourceTree = "<group>"; };
 		601A19142B30658200E98E69 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
 		60316BF72B01FEC300130C0D /* BLECalliope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLECalliope.swift; sourceTree = "<group>"; };
@@ -268,37 +250,22 @@
 		6055CDB52BBEE1E50007F6B0 /* CalliopeBlocksStartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeBlocksStartViewController.swift; sourceTree = "<group>"; };
 		607E71C52B8E30D8008EC146 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ConnectionView.strings; sourceTree = "<group>"; };
 		607E71C72B8E30DA008EC146 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ConnectionView.strings; sourceTree = "<group>"; };
-		6094C3902C045FA9006F4CB4 /* ApiCalliope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiCalliope.swift; sourceTree = "<group>"; };
-		6094C3952C047549006F4CB4 /* ChartViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewCell.swift; sourceTree = "<group>"; };
-		6094C3972C048201006F4CB4 /* DGCharts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DGCharts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6094C3982C048201006F4CB4 /* DGCharts.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = DGCharts.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		6094C39E2C04A869006F4CB4 /* ChartCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartCollectionViewController.swift; sourceTree = "<group>"; };
 		609D9BD32B67A15500F2ECAE /* USBCalliope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USBCalliope.swift; sourceTree = "<group>"; };
 		609D9BD52B67AD2200F2ECAE /* Calliope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calliope.swift; sourceTree = "<group>"; };
 		609F74C72BC587A600FE35E2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/CalliopeBlocks.storyboard; sourceTree = "<group>"; };
 		609F74CC2BC5885F00FE35E2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CalliopeBlocks.strings; sourceTree = "<group>"; };
 		609F74CE2BC5886000FE35E2 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/CalliopeBlocks.strings; sourceTree = "<group>"; };
-		60B58BCD2C132ABA00050FE3 /* Chart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chart.swift; sourceTree = "<group>"; };
 		60BBDB852B6B90C2003AD3CE /* DiscoveredDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredDevice.swift; sourceTree = "<group>"; };
 		60BBDB872B6BA16F003AD3CE /* DiscoveredUSBDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredUSBDevice.swift; sourceTree = "<group>"; };
 		60C915922B1F442F00E4039D /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		60C915962B1F5F5300E4039D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Onboarding.strings; sourceTree = "<group>"; };
 		60C915982B1F61C200E4039D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Onboarding.strings; sourceTree = "<group>"; };
-		60CF0EA82BFCBE1E00CB2A38 /* ProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewController.swift; sourceTree = "<group>"; };
-		60CF0EAC2BFCD25300CB2A38 /* Value.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Value.swift; sourceTree = "<group>"; };
-		60CF0EAF2BFCD59D00CB2A38 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
-		60CF0EB12BFCD5D400CB2A38 /* Sensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sensor.swift; sourceTree = "<group>"; };
-		60D02D782BFC84BC00D3C34A /* ProjectAndSensors.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProjectAndSensors.storyboard; sourceTree = "<group>"; };
-		60D02D7A2BFC864900D3C34A /* ProjectOverviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectOverviewController.swift; sourceTree = "<group>"; };
-		60D02D7D2BFC8FE400D3C34A /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
-		60D02D802BFC95E000D3C34A /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
-		60D02D822BFCA0C400D3C34A /* ProjectCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCollectionViewController.swift; sourceTree = "<group>"; };
-		60D02D842BFCA41400D3C34A /* ProjectCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCollectionViewCell.swift; sourceTree = "<group>"; };
 		60D672512B283D0F00AB974B /* QRCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeViewController.swift; sourceTree = "<group>"; };
 		60F1E8A52B1DEB5300CB3A07 /* OnboardingDetailWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingDetailWebViewController.swift; sourceTree = "<group>"; };
 		60F889132B50225000B6C1F5 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
 		60FF510C2BB55324002B24A2 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = "Calliope App/PrivacyInfo.xcprivacy"; sourceTree = SOURCE_ROOT; };
 		BD1AFC4008F992EADC1C557D /* Pods-Calliope App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.release.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.release.xcconfig"; sourceTree = "<group>"; };
+		D57D51A736B908EDE6355034 /* libPods-Calliope App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Calliope App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -306,8 +273,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6094C3992C048201006F4CB4 /* DGCharts.framework in Frameworks */,
-				B16DD0D6E28647BDAC9EA8CB /* Pods_Calliope_App.framework in Frameworks */,
+				CE73348EEAB4EC5248A0716C /* libPods-Calliope App.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -317,9 +283,7 @@
 		2521C112B48B4BBD7252C3D2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6094C3972C048201006F4CB4 /* DGCharts.framework */,
-				6094C3982C048201006F4CB4 /* DGCharts.bundle */,
-				36B15F9E6DE42C49A76EC47B /* Pods_Calliope_App.framework */,
+				D57D51A736B908EDE6355034 /* libPods-Calliope App.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -347,14 +311,14 @@
 			path = Playground;
 			sourceTree = "<group>";
 		};
-		2F4B8DA82598D8330026B480 /* Help */ = {
+		2F4B8DA82598D8330026B480 /* HelpScreen */ = {
 			isa = PBXGroup;
 			children = (
 				2F526C3926E968A2004BA8FF /* Help.storyboard */,
 				2FCB70E526C7FCA300DF79B7 /* HelpContentViewController.swift */,
 				2FCB70E726C7FD5300DF79B7 /* HelpWebViewController.swift */,
 			);
-			path = Help;
+			path = HelpScreen;
 			sourceTree = "<group>";
 		};
 		2F61450322BF75DE001C2734 = {
@@ -378,10 +342,11 @@
 		2F61450E22BF75DE001C2734 /* Calliope App */ = {
 			isa = PBXGroup;
 			children = (
+				60D1FD692B6BCF3D00BC6202 /* CalliopeModels */,
 				2F763FE125A1F4A100C2029D /* Calliope App.entitlements */,
 				2F61450F22BF75DE001C2734 /* AppDelegate.swift */,
+				2F61451A22BF75DF001C2734 /* LaunchScreen.storyboard */,
 				2F61459D22BFE607001C2734 /* Assets.xcassets */,
-				60D02D7C2BFC8FDA00D3C34A /* Database */,
 				2F61453722BF761F001C2734 /* GeneralUtilities */,
 				2F61452D22BF761F001C2734 /* Bluetooth */,
 				2F61456122BF761F001C2734 /* Model */,
@@ -424,7 +389,6 @@
 				2F61454322BF761F001C2734 /* Checksum.swift */,
 				2F61454E22BF761F001C2734 /* Extension_Data.swift */,
 				60C915922B1F442F00E4039D /* Network.swift */,
-				600E63252C2EBF810027AE61 /* CSVHandler.swift */,
 			);
 			path = GeneralUtilities;
 			sourceTree = "<group>";
@@ -432,15 +396,14 @@
 		2F61454F22BF761F001C2734 /* ViewsAndControllers */ = {
 			isa = PBXGroup;
 			children = (
-				2F61451A22BF75DF001C2734 /* LaunchScreen.storyboard */,
+				2F1BD9982674D910006A47F2 /* Common */,
 				2F526C2B26E9688B004BA8FF /* CalliopeApp.storyboard */,
 				2F61455A22BF761F001C2734 /* MainContainerViewController.swift */,
-				2FAA2D0822DB3C2500BC1A5F /* Home */,
-				2FAA2D0922DB3C4D00BC1A5F /* EditorsAndPrograms */,
-				2F4B8DA82598D8330026B480 /* Help */,
-				60A40DED2BF782C80069A3B5 /* ProjectAndSensors */,
+				2FAA2D0A22DB3CCB00BC1A5F /* CarRemote */,
+				2F4B8DA82598D8330026B480 /* HelpScreen */,
 				2F61455122BF761F001C2734 /* CollapsingConnectionView */,
-				2F1BD9982674D910006A47F2 /* Common */,
+				2FAA2D0922DB3C4D00BC1A5F /* EditorsAndPrograms */,
+				2FAA2D0822DB3C2500BC1A5F /* Home */,
 			);
 			path = ViewsAndControllers;
 			sourceTree = "<group>";
@@ -471,14 +434,16 @@
 		2F61456122BF761F001C2734 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				600E632A2C328EA50027AE61 /* Hex */,
-				60D1FD692B6BCF3D00BC6202 /* CalliopeModels */,
-				60CF0EAE2BFCD58E00CB2A38 /* LiveData */,
 				2F61456222BF761F001C2734 /* Editors.swift */,
 				2F61456322BF761F001C2734 /* StreamReader.swift */,
+				2F61456422BF761F001C2734 /* Hex.swift */,
+				2F61456522BF761F001C2734 /* HexParser.swift */,
 				2F6145A522C7D71B001C2734 /* Settings.swift */,
 				2FC2A12822C8FA6F00675C2F /* News.swift */,
+				2F57C3B32394F78B008B0D69 /* DownloadableHexFile.swift */,
+				2F375ABA237F28BC004ED8D7 /* DefaultProgram.swift */,
 				2F2B809925A0E01500A7CCF7 /* CodeSnippets.swift */,
+				601040AB2B592B7300526735 /* HexFileManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -599,6 +564,14 @@
 			path = EditorsAndPrograms;
 			sourceTree = "<group>";
 		};
+		2FAA2D0A22DB3CCB00BC1A5F /* CarRemote */ = {
+			isa = PBXGroup;
+			children = (
+				2F526C3226E9689A004BA8FF /* CarRemote.storyboard */,
+			);
+			path = CarRemote;
+			sourceTree = "<group>";
+		};
 		5764819361F6510AB656C448 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -606,47 +579,6 @@
 				BD1AFC4008F992EADC1C557D /* Pods-Calliope App.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		600E63272C328D4A0027AE61 /* Utility */ = {
-			isa = PBXGroup;
-			children = (
-				60D02D7D2BFC8FE400D3C34A /* DatabaseManager.swift */,
-			);
-			path = Utility;
-			sourceTree = "<group>";
-		};
-		600E63282C328D700027AE61 /* Overview */ = {
-			isa = PBXGroup;
-			children = (
-				60D02D7A2BFC864900D3C34A /* ProjectOverviewController.swift */,
-				60D02D822BFCA0C400D3C34A /* ProjectCollectionViewController.swift */,
-				60D02D842BFCA41400D3C34A /* ProjectCollectionViewCell.swift */,
-			);
-			path = Overview;
-			sourceTree = "<group>";
-		};
-		600E63292C328DAE0027AE61 /* DetailView */ = {
-			isa = PBXGroup;
-			children = (
-				60CF0EA82BFCBE1E00CB2A38 /* ProjectViewController.swift */,
-				6094C3952C047549006F4CB4 /* ChartViewCell.swift */,
-				6094C39E2C04A869006F4CB4 /* ChartCollectionViewController.swift */,
-				600E632B2C33D0750027AE61 /* ChartView.swift */,
-			);
-			path = DetailView;
-			sourceTree = "<group>";
-		};
-		600E632A2C328EA50027AE61 /* Hex */ = {
-			isa = PBXGroup;
-			children = (
-				601040AB2B592B7300526735 /* HexFileManager.swift */,
-				2F57C3B32394F78B008B0D69 /* DownloadableHexFile.swift */,
-				2F375ABA237F28BC004ED8D7 /* DefaultProgram.swift */,
-				2F61456522BF761F001C2734 /* HexParser.swift */,
-				2F61456422BF761F001C2734 /* Hex.swift */,
-			);
-			path = Hex;
 			sourceTree = "<group>";
 		};
 		6055CDB02BBED7D90007F6B0 /* CalliopeBlocks */ = {
@@ -658,57 +590,9 @@
 			path = CalliopeBlocks;
 			sourceTree = "<group>";
 		};
-		6094C3922C045FBF006F4CB4 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				6094C3902C045FA9006F4CB4 /* ApiCalliope.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		60A40DED2BF782C80069A3B5 /* ProjectAndSensors */ = {
-			isa = PBXGroup;
-			children = (
-				60D02D782BFC84BC00D3C34A /* ProjectAndSensors.storyboard */,
-				600E63292C328DAE0027AE61 /* DetailView */,
-				600E63282C328D700027AE61 /* Overview */,
-			);
-			path = ProjectAndSensors;
-			sourceTree = "<group>";
-		};
-		60CF0EAE2BFCD58E00CB2A38 /* LiveData */ = {
-			isa = PBXGroup;
-			children = (
-				60CF0EAF2BFCD59D00CB2A38 /* DataController.swift */,
-				60CF0EB12BFCD5D400CB2A38 /* Sensor.swift */,
-				600E632D2C33D7BB0027AE61 /* DataParser.swift */,
-			);
-			path = LiveData;
-			sourceTree = "<group>";
-		};
-		60D02D7C2BFC8FDA00D3C34A /* Database */ = {
-			isa = PBXGroup;
-			children = (
-				600E63272C328D4A0027AE61 /* Utility */,
-				60D02D7F2BFC95CE00D3C34A /* Models */,
-			);
-			path = Database;
-			sourceTree = "<group>";
-		};
-		60D02D7F2BFC95CE00D3C34A /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				60D02D802BFC95E000D3C34A /* Project.swift */,
-				60CF0EAC2BFCD25300CB2A38 /* Value.swift */,
-				60B58BCD2C132ABA00050FE3 /* Chart.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		60D1FD692B6BCF3D00BC6202 /* CalliopeModels */ = {
 			isa = PBXGroup;
 			children = (
-				6094C3922C045FBF006F4CB4 /* Extensions */,
 				60D1FD6B2B6BCF9800BC6202 /* ConnectedCalliopes */,
 				60D1FD6A2B6BCF8700BC6202 /* DiscoveryCalliopes */,
 				60316BF92B0210CC00130C0D /* CalliopeFactory.swift */,
@@ -749,7 +633,7 @@
 				2F61450822BF75DE001C2734 /* Sources */,
 				2F61450922BF75DE001C2734 /* Frameworks */,
 				2F61450A22BF75DE001C2734 /* Resources */,
-				B5A7FEA0A7651CADF61E9B39 /* [CP] Embed Pods Frameworks */,
+				B0191446C4CC16DC83E3A309 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -784,118 +668,6 @@
 				en,
 				Base,
 				de,
-				de_AT,
-				es_PR,
-				he,
-				"es-SV",
-				en_AU,
-				ar,
-				el,
-				"zh-Hans",
-				ja,
-				"es-GT",
-				en_ZA,
-				"en-CA",
-				"zh-Hant-HK",
-				uk,
-				"es-PY",
-				es_419,
-				es_MX,
-				zh_CN,
-				mo,
-				es_DO,
-				nb,
-				"es-US",
-				"en-GB",
-				es,
-				"es-VE",
-				"es-CL",
-				sl,
-				pt_BR,
-				da,
-				"es-419",
-				it,
-				bg,
-				de_CH,
-				sk,
-				es_EC,
-				pt_PT,
-				fr_CH,
-				"es-PA",
-				"en-SG",
-				es_NI,
-				sr,
-				"es-CR",
-				sv,
-				cs,
-				"bs-BA",
-				"es-AR",
-				"es-PE",
-				en_IN,
-				ko,
-				"en-IE",
-				fil,
-				es_BO,
-				es_UY,
-				"zh-Hant",
-				es_HN,
-				"es-CO",
-				gsw,
-				"en-ZA",
-				es_GT,
-				en_CA,
-				hu,
-				es_PY,
-				"hi-IN",
-				zh_HK,
-				"es-PR",
-				"de-AT",
-				es_SV,
-				"en-AU",
-				tr,
-				pl,
-				zh_TW,
-				es_US,
-				en_GB,
-				es_VE,
-				es_CL,
-				"pt-BR",
-				vi,
-				lv,
-				"es-MX",
-				lt,
-				ru,
-				"es-DO",
-				"fr-CH",
-				en_SG,
-				"es-NI",
-				es_PA,
-				fr,
-				es_CR,
-				fi,
-				id,
-				nl,
-				th,
-				pt,
-				"de-CH",
-				"es-EC",
-				"pt-PT",
-				en_IE,
-				"es-BO",
-				ro,
-				ln,
-				"es-UY",
-				es_CO,
-				"es-HN",
-				bs,
-				tl,
-				hr,
-				hi,
-				ca,
-				zh,
-				es_PE,
-				"en-IN",
-				es_AR,
 			);
 			mainGroup = 2F61450322BF75DE001C2734;
 			productRefGroup = 2F61450D22BF75DE001C2734 /* Products */;
@@ -935,10 +707,10 @@
 				2F9B2A00233F0456009496DD /* Roboto-ThinItalic.ttf in Resources */,
 				609F74C92BC587A600FE35E2 /* CalliopeBlocks.storyboard in Resources */,
 				2F9B2A1A233F045D009496DD /* RobotoMono-Light.ttf in Resources */,
+				2F526C3026E9689A004BA8FF /* CarRemote.storyboard in Resources */,
 				2F9B2A16233F045D009496DD /* RobotoMono-Regular.ttf in Resources */,
 				2F4B8D9F2598D7980026B480 /* HomeScreen.storyboard in Resources */,
 				2F9B29FF233F0456009496DD /* Roboto-MediumItalic.ttf in Resources */,
-				60D02D792BFC84BC00D3C34A /* ProjectAndSensors.storyboard in Resources */,
 				2F9B2A02233F0456009496DD /* Roboto-LightItalic.ttf in Resources */,
 				2F9B2A05233F0456009496DD /* Roboto-BlackItalic.ttf in Resources */,
 				2F9B29FE233F0456009496DD /* Roboto-Regular.ttf in Resources */,
@@ -977,21 +749,21 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B5A7FEA0A7651CADF61E9B39 /* [CP] Embed Pods Frameworks */ = {
+		B0191446C4CC16DC83E3A309 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Calliope App/Pods-Calliope App-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Calliope App/Pods-Calliope App-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Calliope App/Pods-Calliope App-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Calliope App/Pods-Calliope App-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Calliope App/Pods-Calliope App-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Calliope App/Pods-Calliope App-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1004,12 +776,9 @@
 				2F61457B22BF761F001C2734 /* ValueLocalizer.swift in Sources */,
 				2FC2A12922C8FA6F00675C2F /* News.swift in Sources */,
 				2FCB70E826C7FD5300DF79B7 /* HelpWebViewController.swift in Sources */,
-				600E632E2C33D7BB0027AE61 /* DataParser.swift in Sources */,
-				60D02D832BFCA0C400D3C34A /* ProjectCollectionViewController.swift in Sources */,
 				60D672522B283D0F00AB974B /* QRCodeViewController.swift in Sources */,
 				2F61456E22BF761F001C2734 /* CalliopeBLEProfile.swift in Sources */,
 				2F57C3B42394F78B008B0D69 /* DownloadableHexFile.swift in Sources */,
-				600E632C2C33D0750027AE61 /* ChartView.swift in Sources */,
 				2F08A0E5234B11890088A8D6 /* ProgramsCollectionViewController.swift in Sources */,
 				2F526C2426E00696004BA8FF /* HexFileStoreDialog.swift in Sources */,
 				60BBDB862B6B90C2003AD3CE /* DiscoveredDevice.swift in Sources */,
@@ -1027,28 +796,22 @@
 				2F61456F22BF761F001C2734 /* CalliopeDiscovery.swift in Sources */,
 				2F61457822BF761F001C2734 /* ExtString.swift in Sources */,
 				604841D52B1F328A0037A825 /* OnboardingOfflineViewController.swift in Sources */,
-				6094C39F2C04A869006F4CB4 /* ChartCollectionViewController.swift in Sources */,
 				2F61459422BF761F001C2734 /* EditorViewController.swift in Sources */,
 				2F61458B22BF761F001C2734 /* MatrixView.swift in Sources */,
 				2F2B80A025A1100800A7CCF7 /* PlaygroundCodeSnippetViewController.swift in Sources */,
 				2F1BD99A2674E378006A47F2 /* ProgramsCollectionViewFlowLayout.swift in Sources */,
 				2F08A0E1234AC7400088A8D6 /* EditorAndProgramsContainerViewController.swift in Sources */,
 				60C915932B1F442F00E4039D /* Network.swift in Sources */,
-				6094C3912C045FA9006F4CB4 /* ApiCalliope.swift in Sources */,
 				2F2B809D25A0F25700A7CCF7 /* PlaygroundSnippetTableViewCell.swift in Sources */,
 				2F91665B235405AA0065AD81 /* EditorCollectionViewCell.swift in Sources */,
-				60D02D852BFCA41400D3C34A /* ProjectCollectionViewCell.swift in Sources */,
 				2F6145A622C7D71B001C2734 /* Settings.swift in Sources */,
-				60D02D7E2BFC8FE400D3C34A /* DatabaseManager.swift in Sources */,
 				2FCB70E626C7FCA300DF79B7 /* HelpContentViewController.swift in Sources */,
 				2F61457022BF761F001C2734 /* Extension_CBUUID.swift in Sources */,
-				6094C3962C047549006F4CB4 /* ChartViewCell.swift in Sources */,
 				2F61457122BF761F001C2734 /* FlashableBLECalliope.swift in Sources */,
 				2F61451022BF75DE001C2734 /* AppDelegate.swift in Sources */,
 				2F61457F22BF761F001C2734 /* Async.swift in Sources */,
 				2F61457C22BF761F001C2734 /* ExtColor.swift in Sources */,
 				2F61459922BF761F001C2734 /* Hex.swift in Sources */,
-				60CF0EB22BFCD5D400CB2A38 /* Sensor.swift in Sources */,
 				2F763FE625A607A400C2029D /* SwiftCodeSnippetHighlighter.swift in Sources */,
 				2F1BD9952674D48C006A47F2 /* AutoHeightCollectionViewFlowLayout.swift in Sources */,
 				601040AC2B592B7300526735 /* HexFileManager.swift in Sources */,
@@ -1056,17 +819,13 @@
 				6055CDB62BBEE1E50007F6B0 /* CalliopeBlocksStartViewController.swift in Sources */,
 				2F61457A22BF761F001C2734 /* ExtURL.swift in Sources */,
 				60316BFA2B0210CC00130C0D /* CalliopeFactory.swift in Sources */,
-				60D02D7B2BFC864900D3C34A /* ProjectOverviewController.swift in Sources */,
 				2F61458C22BF761F001C2734 /* ConnectionButton.swift in Sources */,
 				2F61457522BF761F001C2734 /* DiscoveredBLEDevice.swift in Sources */,
 				2F61458922BF761F001C2734 /* CollapsingViewControllerProtocol.swift in Sources */,
 				2F2B809A25A0E01500A7CCF7 /* CodeSnippets.swift in Sources */,
-				60CF0EA92BFCBE1E00CB2A38 /* ProjectViewController.swift in Sources */,
 				2F61458A22BF761F001C2734 /* CollapseButtonProtocol.swift in Sources */,
 				609D9BD42B67A15500F2ECAE /* USBCalliope.swift in Sources */,
 				2F5E8F0426C9787400CE03CB /* PlaygroundStartViewController.swift in Sources */,
-				60CF0EB02BFCD59D00CB2A38 /* DataController.swift in Sources */,
-				60CF0EAD2BFCD25300CB2A38 /* Value.swift in Sources */,
 				2FC2A12B22C962D100675C2F /* NewsDetailWebViewController.swift in Sources */,
 				2F61459522BF761F001C2734 /* ProgramCollectionViewCell.swift in Sources */,
 				2F00EAB822DA195A000B5FDE /* HomeScreenViewController.swift in Sources */,
@@ -1075,14 +834,11 @@
 				2F5E8F0226C94F5F00CE03CB /* PlaygroundInstructionsCollectionCollectionViewController.swift in Sources */,
 				2F61457322BF761F001C2734 /* BluetoothConstants.swift in Sources */,
 				2F6145A222C7B3C2001C2734 /* NewsCollectionViewController.swift in Sources */,
-				60D02D812BFC95E000D3C34A /* Project.swift in Sources */,
 				60F1E8A62B1DEB5300CB3A07 /* OnboardingDetailWebViewController.swift in Sources */,
 				2F61458022BF761F001C2734 /* NotificationConstants.swift in Sources */,
 				2F08A0E3234AD4320088A8D6 /* EditorsCollectionViewController.swift in Sources */,
 				2F61457222BF761F001C2734 /* BLEDataTypes.swift in Sources */,
-				600E63262C2EBF810027AE61 /* CSVHandler.swift in Sources */,
 				2F61458D22BF761F001C2734 /* ConnectionViewCollapseButton.swift in Sources */,
-				60B58BCE2C132ABA00050FE3 /* Chart.swift in Sources */,
 				2F9E404A259DFB00002FFE0B /* PlaygroundSnippetTableViewController.swift in Sources */,
 				2F6145A422C7BE3E001C2734 /* NewsCollectionViewCell.swift in Sources */,
 				2F61458122BF761F001C2734 /* Binary.swift in Sources */,
@@ -1124,6 +880,16 @@
 				2F526C2F26E96891004BA8FF /* de */,
 			);
 			name = CalliopeApp.storyboard;
+			sourceTree = "<group>";
+		};
+		2F526C3226E9689A004BA8FF /* CarRemote.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2F526C3126E9689A004BA8FF /* Base */,
+				2F526C3426E9689C004BA8FF /* en */,
+				2F526C3626E9689D004BA8FF /* de */,
+			);
+			name = CarRemote.storyboard;
 			sourceTree = "<group>";
 		};
 		2F526C3926E968A2004BA8FF /* Help.storyboard */ = {
@@ -1359,17 +1125,14 @@
 				DEVELOPMENT_TEAM = GKA87N33H4;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "Calliope App/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.2.5;
+				MARKETING_VERSION = 3.2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "cc.calliope.ios.flash-debug";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1386,17 +1149,14 @@
 				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_TEAM = GKA87N33H4;
 				INFOPLIST_FILE = "Calliope App/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.2.5;
+				MARKETING_VERSION = 3.2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = cc.calliope.ios.flash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

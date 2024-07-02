@@ -6,11 +6,10 @@
 //
 
 import CoreBluetooth
-import GRDB
 
 //Bluetooth profile of the Calliope
 
-enum CalliopeService: String, CaseIterable, Codable {
+enum CalliopeService: String, CaseIterable {
 
 	//MARK: DFU-Services
 
@@ -47,7 +46,7 @@ enum CalliopeService: String, CaseIterable, Codable {
 	//https://lancaster-university.github.io/microbit-docs/resources/bluetooth/bluetooth_profile.html
 
 	case accelerometer = "E95D0753251D470AA062FA1922DFA9A8"
-    
+
 	/// measures a magnetic field such as the earth's magnetic field in 3 axes.
 	case magnetometer = "E95DF2D8251D470AA062FA1922DFA9A8"
 
@@ -82,7 +81,7 @@ enum CalliopeService: String, CaseIterable, Codable {
 
 	/// This is an implementation of Nordic Semicondutor's UART/Serial Port Emulation over Bluetooth low energy.
 	/// See https://developer.nordicsemi.com/nRF5_SDK/nRF51_SDK_v8.x.x/doc/8.0.0/s110/html/a00072.html for the original Nordic Semiconductor documentation by way of background.
-	case uart = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E"
+	case uart = "6E400001B5A3F393E0A9E50E24DCCA9E"
 }
 
 
@@ -124,10 +123,10 @@ enum CalliopeCharacteristic: String, CaseIterable {
 	//MARK: characteristics from microbit ble profile
 
 	/// X, Y and Z axes as 3 signed 16 bit values in that order and in little endian format. X, Y and Z values should be divided by 1000.
-	case accelerometerData = "E95DCA4B-251D-470A-A062-FA1922DFA9A8"
+	case accelerometerData = "E95DCA4B251D470AA062FA1922DFA9A8"
 	/// frequency with which accelerometer data is reported in milliseconds. Valid values are 1, 2, 5, 10, 20, 80, 160 and 640.
 	/// TODO: possible periods do not match with documentation
-	case accelerometerPeriod = "E95DFB24-251D-470A-A062-FA1922DFA9A8"
+	case accelerometerPeriod = "E95DFB24251D470AA062FA1922DFA9A8"
 
 	/// X, Y and Z axes as 3 signed 16 bit values in that order and in little endian format.
 	case magnetometerData = "E95DFB11251D470AA062FA1922DFA9A8"
@@ -231,10 +230,10 @@ enum CalliopeCharacteristic: String, CaseIterable {
 
 	/// allows the micro:bit to transmit a byte array containing an arbitrary number of arbitrary octet values to a connected device.
 	/// The maximum number of bytes which may be transmitted in one PDU is limited to the MTU minus three or 20 octets to be precise.
-	case txCharacteristic = "6E400002-B5A3-F393-E0A9-E50E24DCCA9E"
+	case txCharacteristic = "6E400002B5A3F393E0A9E50E24DCCA9E"
 	/// This characteristic allows a connected client to send a byte array containing an arbitrary number of arbitrary octet values to a connected micro:bit.
 	/// The maximum number of bytes which may be transmitted in one PDU is limited to the MTU minus three or 20 octets to be precise.
-	case rxCharacteristic = "6E400003-B5A3-F393-E0A9-E50E24DCCA9E"
+	case rxCharacteristic = "6E400003B5A3F393E0A9E50E24DCCA9E"
 
 	var uuid: CBUUID {
 		return rawValue.uuid

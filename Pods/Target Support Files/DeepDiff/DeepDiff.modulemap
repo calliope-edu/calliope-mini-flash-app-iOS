@@ -1,4 +1,4 @@
-framework module DeepDiff {
+module DeepDiff {
   umbrella header "DeepDiff-umbrella.h"
 
   export *

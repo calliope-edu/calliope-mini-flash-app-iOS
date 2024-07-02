@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B0DFE582E64AE7298C59241B7B610B04"
-               BuildableName = "Highlightr.framework"
+               BuildableName = "libHighlightr.a"
                BlueprintName = "Highlightr"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
