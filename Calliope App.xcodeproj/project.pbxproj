@@ -104,6 +104,8 @@
 		2FCB70E626C7FCA300DF79B7 /* HelpContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCB70E526C7FCA300DF79B7 /* HelpContentViewController.swift */; };
 		2FCB70E826C7FD5300DF79B7 /* HelpWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCB70E726C7FD5300DF79B7 /* HelpWebViewController.swift */; };
 		600E63262C2EBF810027AE61 /* CSVHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600E63252C2EBF810027AE61 /* CSVHandler.swift */; };
+		600E632C2C33D0750027AE61 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600E632B2C33D0750027AE61 /* ChartView.swift */; };
+		600E632E2C33D7BB0027AE61 /* DataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600E632D2C33D7BB0027AE61 /* DataParser.swift */; };
 		601040AC2B592B7300526735 /* HexFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601040AB2B592B7300526735 /* HexFileManager.swift */; };
 		60316BF82B01FEC300130C0D /* BLECalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60316BF72B01FEC300130C0D /* BLECalliope.swift */; };
 		60316BFA2B0210CC00130C0D /* CalliopeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60316BF92B0210CC00130C0D /* CalliopeFactory.swift */; };
@@ -256,6 +258,8 @@
 		36B15F9E6DE42C49A76EC47B /* Pods_Calliope_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Calliope_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3849EA7340C0FAB5DB1A4000 /* Pods-Calliope App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.debug.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.debug.xcconfig"; sourceTree = "<group>"; };
 		600E63252C2EBF810027AE61 /* CSVHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVHandler.swift; sourceTree = "<group>"; };
+		600E632B2C33D0750027AE61 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
+		600E632D2C33D7BB0027AE61 /* DataParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataParser.swift; sourceTree = "<group>"; };
 		601040AB2B592B7300526735 /* HexFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexFileManager.swift; sourceTree = "<group>"; };
 		601A19142B30658200E98E69 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
 		60316BF72B01FEC300130C0D /* BLECalliope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLECalliope.swift; sourceTree = "<group>"; };
@@ -434,7 +438,7 @@
 				2FAA2D0822DB3C2500BC1A5F /* Home */,
 				2FAA2D0922DB3C4D00BC1A5F /* EditorsAndPrograms */,
 				2F4B8DA82598D8330026B480 /* Help */,
-				60A40DED2BF782C80069A3B5 /* SensorData */,
+				60A40DED2BF782C80069A3B5 /* ProjectAndSensors */,
 				2F61455122BF761F001C2734 /* CollapsingConnectionView */,
 				2F1BD9982674D910006A47F2 /* Common */,
 			);
@@ -628,6 +632,7 @@
 				60CF0EA82BFCBE1E00CB2A38 /* ProjectViewController.swift */,
 				6094C3952C047549006F4CB4 /* ChartViewCell.swift */,
 				6094C39E2C04A869006F4CB4 /* ChartCollectionViewController.swift */,
+				600E632B2C33D0750027AE61 /* ChartView.swift */,
 			);
 			path = DetailView;
 			sourceTree = "<group>";
@@ -661,14 +666,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		60A40DED2BF782C80069A3B5 /* SensorData */ = {
+		60A40DED2BF782C80069A3B5 /* ProjectAndSensors */ = {
 			isa = PBXGroup;
 			children = (
 				60D02D782BFC84BC00D3C34A /* ProjectAndSensors.storyboard */,
 				600E63292C328DAE0027AE61 /* DetailView */,
 				600E63282C328D700027AE61 /* Overview */,
 			);
-			path = SensorData;
+			path = ProjectAndSensors;
 			sourceTree = "<group>";
 		};
 		60CF0EAE2BFCD58E00CB2A38 /* LiveData */ = {
@@ -676,6 +681,7 @@
 			children = (
 				60CF0EAF2BFCD59D00CB2A38 /* DataController.swift */,
 				60CF0EB12BFCD5D400CB2A38 /* Sensor.swift */,
+				600E632D2C33D7BB0027AE61 /* DataParser.swift */,
 			);
 			path = LiveData;
 			sourceTree = "<group>";
@@ -998,10 +1004,12 @@
 				2F61457B22BF761F001C2734 /* ValueLocalizer.swift in Sources */,
 				2FC2A12922C8FA6F00675C2F /* News.swift in Sources */,
 				2FCB70E826C7FD5300DF79B7 /* HelpWebViewController.swift in Sources */,
+				600E632E2C33D7BB0027AE61 /* DataParser.swift in Sources */,
 				60D02D832BFCA0C400D3C34A /* ProjectCollectionViewController.swift in Sources */,
 				60D672522B283D0F00AB974B /* QRCodeViewController.swift in Sources */,
 				2F61456E22BF761F001C2734 /* CalliopeBLEProfile.swift in Sources */,
 				2F57C3B42394F78B008B0D69 /* DownloadableHexFile.swift in Sources */,
+				600E632C2C33D0750027AE61 /* ChartView.swift in Sources */,
 				2F08A0E5234B11890088A8D6 /* ProgramsCollectionViewController.swift in Sources */,
 				2F526C2426E00696004BA8FF /* HexFileStoreDialog.swift in Sources */,
 				60BBDB862B6B90C2003AD3CE /* DiscoveredDevice.swift in Sources */,
@@ -1359,6 +1367,9 @@
 				MARKETING_VERSION = 3.2.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "cc.calliope.ios.flash-debug";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1383,6 +1394,9 @@
 				MARKETING_VERSION = 3.2.5;
 				PRODUCT_BUNDLE_IDENTIFIER = cc.calliope.ios.flash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

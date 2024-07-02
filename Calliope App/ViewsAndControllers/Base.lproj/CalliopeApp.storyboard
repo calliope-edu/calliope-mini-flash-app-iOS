@@ -56,10 +56,10 @@
             </objects>
             <point key="canvasLocation" x="-120" y="151"/>
         </scene>
-        <!--ProjectOverviewPageView-->
+        <!--ProjectAndSensors-->
         <scene sceneID="cbC-vU-0Nu">
             <objects>
-                <viewControllerPlaceholder storyboardName="ProjectOverviewPageView" id="3fe-JX-xi2" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="ProjectAndSensors" id="3fe-JX-xi2" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="Eye-99-PMC"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Ct-Cb-uDp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

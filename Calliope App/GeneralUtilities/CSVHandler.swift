@@ -60,11 +60,10 @@ class CSVHandler {
         let charts = Chart.fetchChartsBy(projectsId: project)
         var dataValues: [[String]] = []
         for chart in charts! {
+            //TODO: Handle Axis Properly
             let values = Value.fetchValuesBy(chartId: chart.id)
-            for value in values! {
+            for value in values {
                 var entry: [String] = []
-                entry.append("\(value.timeStep)")
-                entry.append("\(value.value)")
                 dataValues.append(entry)
             }
             

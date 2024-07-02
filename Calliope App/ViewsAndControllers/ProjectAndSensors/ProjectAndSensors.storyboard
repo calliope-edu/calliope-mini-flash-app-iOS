@@ -267,8 +267,8 @@ kleine Anleitung</string>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CUr-KV-a61">
-                                                                <rect key="frame" x="904" y="15" width="66" height="50"/>
+                                                            <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CUr-KV-a61">
+                                                                <rect key="frame" x="914" y="15" width="50" height="50"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="50" id="5fL-nn-SfJ"/>
                                                                     <constraint firstAttribute="height" constant="50" id="w9v-pJ-6jV"/>
@@ -544,6 +544,22 @@ kleine Anleitung</string>
                                                 <color key="baseBackgroundColor" systemColor="systemTealColor"/>
                                             </buttonConfiguration>
                                         </button>
+                                        <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XBq-b6-ul5">
+                                            <rect key="frame" x="110.5" y="20" width="51.5" height="40"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="40" id="QQG-SW-Yil"/>
+                                            </constraints>
+                                            <menu key="menu" id="97l-HS-AiD">
+                                                <children>
+                                                    <command title="X" id="MwQ-F7-XGJ" userLabel="X"/>
+                                                    <command title="Y" id="MlM-W4-l4K" userLabel="Y"/>
+                                                </children>
+                                            </menu>
+                                            <state key="normal" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="filled" title="Button" cornerStyle="capsule">
+                                                <color key="baseBackgroundColor" systemColor="systemTealColor"/>
+                                            </buttonConfiguration>
+                                        </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nBn-0t-SZp">
                                             <rect key="frame" x="390" y="260" width="24" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -557,6 +573,7 @@ kleine Anleitung</string>
                                         <constraint firstItem="k32-SG-WvS" firstAttribute="top" secondItem="it0-Za-2gA" secondAttribute="top" constant="20" id="0X4-Pm-g73"/>
                                         <constraint firstItem="nBn-0t-SZp" firstAttribute="leading" secondItem="JaA-8r-ocG" secondAttribute="trailing" constant="20" id="3Nz-y7-plW"/>
                                         <constraint firstItem="Owr-Bx-mhz" firstAttribute="top" secondItem="it0-Za-2gA" secondAttribute="top" constant="20" id="CYr-NS-ZbT"/>
+                                        <constraint firstItem="XBq-b6-ul5" firstAttribute="leading" secondItem="k32-SG-WvS" secondAttribute="trailing" constant="5" id="DQN-xj-Nr7"/>
                                         <constraint firstItem="Owr-Bx-mhz" firstAttribute="centerX" secondItem="it0-Za-2gA" secondAttribute="centerX" id="Fal-qC-LyL"/>
                                         <constraint firstItem="JaA-8r-ocG" firstAttribute="centerX" secondItem="it0-Za-2gA" secondAttribute="centerX" id="GD9-bf-R7w"/>
                                         <constraint firstAttribute="bottom" secondItem="JaA-8r-ocG" secondAttribute="bottom" constant="10" id="HZv-7m-ew1"/>
@@ -568,6 +585,7 @@ kleine Anleitung</string>
                                         <constraint firstAttribute="trailing" secondItem="LCA-Un-tnf" secondAttribute="trailing" constant="20" id="Sp9-t4-lKi"/>
                                         <constraint firstAttribute="trailing" secondItem="vNv-X5-tfZ" secondAttribute="trailing" constant="20" id="YWW-pT-b1o"/>
                                         <constraint firstItem="Owr-Bx-mhz" firstAttribute="bottom" secondItem="LCA-Un-tnf" secondAttribute="top" constant="-10" id="qFk-Na-518"/>
+                                        <constraint firstItem="XBq-b6-ul5" firstAttribute="centerY" secondItem="k32-SG-WvS" secondAttribute="centerY" id="ulN-3O-wVx"/>
                                     </constraints>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -584,6 +602,8 @@ kleine Anleitung</string>
                                     <outlet property="maxValueLabel" destination="wtX-TM-5dr" id="wlQ-mz-lRB"/>
                                     <outlet property="minValueLabel" destination="k7z-ya-z6E" id="ypd-79-Uni"/>
                                     <outlet property="recordingButton" destination="JaA-8r-ocG" id="2M6-Qp-6rP"/>
+                                    <outlet property="sensorAxisButton" destination="XBq-b6-ul5" id="DfV-S9-5Tr"/>
+                                    <outlet property="sensorAxisMenu" destination="97l-HS-AiD" id="3ML-lt-PrT"/>
                                     <outlet property="sensorTypeButton" destination="k32-SG-WvS" id="k6e-Vw-feL"/>
                                     <outlet property="sensorTypeMenu" destination="KD8-sU-2tT" id="rR2-kZ-cSQ"/>
                                 </connections>
@@ -605,7 +625,7 @@ kleine Anleitung</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wjf-Tv-hzz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2857" y="561"/>
+            <point key="canvasLocation" x="2856.73828125" y="560.68814055636892"/>
         </scene>
     </scenes>
     <resources>

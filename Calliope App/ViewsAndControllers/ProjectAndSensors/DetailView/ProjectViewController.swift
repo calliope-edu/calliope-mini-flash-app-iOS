@@ -59,6 +59,8 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
                 self.view.layoutIfNeeded()
             }
         }
+        
+        addChartButton.isEnabled = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -71,7 +73,9 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
             forName: DiscoveredBLEDDevice.usageReadyNotificationName, object: nil, queue: nil,
             using: { [weak self] (_) in
                 DispatchQueue.main.async {
-                    self?.addChartButton.isEnabled = true
+                    UIView.animate(withDuration: 0.5) {
+                        self?.addChartButton.isEnabled = true
+                    }
                 }
         })
         
@@ -79,24 +83,23 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
             forName: DiscoveredBLEDDevice.disconnectedNotificationName, object: nil, queue: nil,
             using: { [weak self] (_) in
                 DispatchQueue.main.async {
-                    self?.addChartButton.isEnabled = false
+                    UIView.animate(withDuration: 0.5) {
+                        self?.addChartButton.isEnabled = false
+                    }
                 }
         })
         
         guard let calliope = MatrixConnectionViewController.instance.usageReadyCalliope else {
-            let alert = UIAlertController(title: "Kein Calliope verbunden!", message: "Verbinde einen Calliope um Daten aufzuzeichnen", preferredStyle: .alert)
-            
-            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            
-            alert.addAction(okAction)
-            alert.addAction(cancelAction)
-            
-            present(alert, animated: true, completion: nil)
-            
-            addChartButton.isEnabled = false
+            self.addChartButton.isEnabled = false
+            DispatchQueue.main.async {
+                let alert = UIAlertController(title: "Calliope mini verbinden!", message: "Verbindung notwendig, um Daten anzeigen zu lassen.", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                alert.addAction(okAction)
+                self.present(alert, animated: true, completion: nil)
+            }
             return
         }
+        self.addChartButton.isEnabled = true
     }
     
     @IBSegueAction func initializeCharts(_ coder: NSCoder) -> ChartCollectionViewController? {

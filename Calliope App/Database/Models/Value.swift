@@ -14,14 +14,14 @@ struct Value: Codable, FetchableRecord, PersistableRecord {
     static let databaseTableName = "value"
     
     var id: Int64?
-    var value: Double
-    var timeStep: Double
+    var value: String
+    var time: Int64
     var chartsId: Int64
     
-    static func insertValue(value: Double, timeStep: Double, chartsId: Int64) {
+    static func insertValue(value: String, chartsId: Int64) {
         do {
             try DatabaseManager.shared.dbQueue?.write { db in
-                try Value(value: value, timeStep: timeStep, chartsId: chartsId).insert(db)
+                try Value(value: value, time: Int64(Date().timeIntervalSinceNow * 1000), chartsId: chartsId).insert(db)
             }
         } catch {
             print("Failed to insert value: \(error)")
@@ -29,8 +29,8 @@ struct Value: Codable, FetchableRecord, PersistableRecord {
         DatabaseManager.notifyChange()
     }
     
-    static func fetchValuesBy(chartId: Int64?) -> [Value]? {
-        var retrievedValues: [Value]?
+    static func fetchValuesBy(chartId: Int64?) -> [Value] {
+        var retrievedValues: [Value] = []
         do {
             try DatabaseManager.shared.dbQueue?.read { db in
                 retrievedValues = try Value.fetchAll(db).filter({ value in
@@ -50,7 +50,7 @@ extension Value {
         try db.create(table: databaseTableName) { t in
             t.autoIncrementedPrimaryKey("id")
             t.column("value", .text).notNull()
-            t.column("timeStep", .text).notNull()
+            t.column("time", .text).notNull()
             t.column("chartsId", .text).notNull()
             t.foreignKey(["chartsId"], references: "charts", onDelete: .cascade)
         }

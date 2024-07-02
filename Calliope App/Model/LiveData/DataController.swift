@@ -33,44 +33,50 @@ class DataController {
         } ?? []
     }
     
-    func sensorStartRecording(sensor : Sensor, response: @escaping (Int) -> ()) {
+    func sensorStartRecordingFor(chart : Chart, response: @escaping (Any) -> ()) {
         if self.availableSensors.contains(where: { compSensor in
-            compSensor.calliopeService == sensor.calliopeService
+            compSensor.calliopeService == chart.sensorType
         }) {
             if self.isRecording {
-                self.sensorStopRecording(sensor: sensor)
+                self.sensorStopRecordingFor(chart: chart)
                 return
             }
             self.timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
-                let newValue = self.getValue(sensor: sensor)
+                let newValue = self.fetchValue(service: chart.sensorType)
+                let parsedValue = DataParser.encode(data: newValue, service: chart.sensorType)
+                Value.insertValue(value: parsedValue, chartsId: chart.id!)
                 response(newValue)
             }
             self.isRecording = true
         }
     }
     
-    func sensorStopRecording(sensor: Sensor?) {
+    func sensorStopRecordingFor(chart: Chart) {
         timer?.invalidate()
-        if let sensor = sensor, sensor.calliopeService == .uart {
+        if chart.sensorType == .uart {
             apiCalliope?.getTemperatureData = nil
         }
         isRecording = false
     }
     
-    func getValue(sensor : Sensor) -> Int {
+    func fetchValue(service : CalliopeService) -> Any {
         asyncAndWait(on: DispatchQueue.global(qos: .userInitiated)) {
-            switch sensor.calliopeService {
+            switch service {
             case .accelerometer:
-                return Int(self.apiCalliope?.accelerometerValue?.0 ?? 0)
+                let value = self.apiCalliope?.accelerometerValue ?? (0, 0, 0)
+                return ((Double(value.0) / 1000), (Double(value.1) / 1000), (Double(value.2) / 1000))
+            case .magnetometer:
+                let value = self.apiCalliope?.magnetometerValue ?? (0, 0, 0)
+                return (Double(value.0), Double(value.1), Double(value.2))
             case .temperature:
-                return Int(self.apiCalliope?.temperature ?? 0)
+                return Double(self.apiCalliope?.temperature ?? 0)
             case .uart:
                 if self.apiCalliope?.getTemperatureData == nil {
                     self.apiCalliope?.getTemperatureData = {value in self.value = value}
                 }
-                return self.value ?? 0
+                return Double(self.value ?? 0)
             default:
-                return Int(1)
+                return 0
             }
         }
     }

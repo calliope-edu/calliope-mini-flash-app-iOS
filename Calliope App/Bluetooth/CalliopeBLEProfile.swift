@@ -47,7 +47,7 @@ enum CalliopeService: String, CaseIterable, Codable {
 	//https://lancaster-university.github.io/microbit-docs/resources/bluetooth/bluetooth_profile.html
 
 	case accelerometer = "E95D0753251D470AA062FA1922DFA9A8"
-
+    
 	/// measures a magnetic field such as the earth's magnetic field in 3 axes.
 	case magnetometer = "E95DF2D8251D470AA062FA1922DFA9A8"
 

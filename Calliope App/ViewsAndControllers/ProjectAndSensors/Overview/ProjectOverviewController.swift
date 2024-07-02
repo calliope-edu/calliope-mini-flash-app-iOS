@@ -71,24 +71,22 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
     
     @IBAction func createNewProject(_ coder: NSCoder) {
         LogNotify.log("Starting to create a new Project")
-        DispatchQueue.main.async {
-            let alertController = UIAlertController(title: "Enter Project Name", message: nil, preferredStyle: .alert)
-            alertController.addTextField { (textField) in
-                textField.placeholder = "Calliope Project"
-            }
-
-            let okAction = UIAlertAction(title: "OK", style: .default) { _ in
-                if let textField = alertController.textFields?.first, let name = textField.text {
-                    let normalizedName = name.isEmpty ? "Calliope Project" : name
-                    let project = Project.insertProject(name: normalizedName)
-                    self.performSegue(withIdentifier: "showNewlyCreatedProject", sender: project?.id)
-                }
-            }
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-            alertController.addAction(okAction)
-            alertController.addAction(cancelAction)
-            self.present(alertController, animated: true, completion: nil)
+        let alertController = UIAlertController(title: "Enter Project Name", message: nil, preferredStyle: .alert)
+        alertController.addTextField { (textField) in
+            textField.placeholder = "Calliope Project"
         }
+
+        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+            if let textField = alertController.textFields?.first, let name = textField.text {
+                let normalizedName = name.isEmpty ? "Calliope Project" : name
+                let project = Project.insertProject(name: normalizedName)
+                self.performSegue(withIdentifier: "showNewlyCreatedProject", sender: project?.id)
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alertController.addAction(okAction)
+        alertController.addAction(cancelAction)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

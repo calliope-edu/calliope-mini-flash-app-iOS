@@ -47,7 +47,6 @@ class CalliopeAPI: BLECalliope {
 		get { return read(.ledMatrixState) }
 		set {
 			write(newValue, .ledMatrixState)
-			//TODO postSensorUpdateNotification(.Display, 0)
 		}
 	}
 
@@ -56,7 +55,6 @@ class CalliopeAPI: BLECalliope {
 	///                     can contain all latin letters and some symbols
 	public func displayLedText(_ string: String) {
 		write(string, .ledText)
-		//TODO postSensorUpdateNotification(.Display, 0)
 	}
 
 	/// the delay in ms between showing successive characters of the led text
@@ -127,7 +125,6 @@ class CalliopeAPI: BLECalliope {
 	/// temperature reading in celsius
 	public var temperature: Int8? {
 		guard let temperature: Int8? = read(.temperature) else { return nil }
-		//TODO postSensorUpdateNotification(.Thermometer, Int(temperature ?? 0))
 		return temperature
 	}
 
@@ -162,23 +159,19 @@ class CalliopeAPI: BLECalliope {
 
 	public func setSound(frequency: UInt16, duration: UInt16 = 30000) {
 		write((frequency, duration), .playTone)
-		//TODO postSensorUpdateNotification(.Sound, Int(frequency))
 	}
 
 	public func setColor(r: UInt8, g: UInt8, b: UInt8, a: UInt8 = 0) {
 		write((r, g, b, a), .color)
-		//TODO postSensorUpdateNotification(.RGB, (Int(r) << 16) + (Int(g) << 8) + Int(b))
 	}
 
 	public var noiseLevel: Int32? {
 		guard let level: Int32 = read(.noise) else { return nil }
-		//TODO postSensorUpdateNotification(.Noise, Int(level))
 		return level
 	}
 
 	public var brightness: UInt8? {
 		guard let light: UInt8 = read(.brightness) else { return nil }
-		//TODO postSensorUpdateNotification(.Brightness, Int(light))
 		return light
 	}
 
@@ -325,26 +318,16 @@ class CalliopeAPI: BLECalliope {
 		case .touchPin:
 			guard let state: (UInt8, BLEDataTypes.ButtonPressAction) = characteristic.interpret(dataBytes: value) else { return }
 			touchPinNotification?(state)
-			if state.1 != .Up {
-				//TODO postSensorUpdateNotification(.Pin, Int(state.0))
-			}
 		case .gesture:
 			guard let gesture: BLEDataTypes.AccelerometerGesture = characteristic.interpret(dataBytes: value) else { return }
 			gestureNotification?(gesture)
-			if gesture == .shake {
-				//TODO postSensorUpdateNotification(.Shake, 0)
-			}
 		case .microBitEvent:
 			guard let (source, value): (BLEDataTypes.EventSource, BLEDataTypes.EventValue) = characteristic.interpret(dataBytes: value)
 				else { return }
 			eventNotification?((source, value))
-			if (source == .MICROBIT_ID_ACCELEROMETER) {
-				//TODO postSensorUpdateNotification(.Shake, 0)
-			}
 		case .temperature:
 			let temperature: Int8? = characteristic.interpret(dataBytes: value)
 			temperatureNotification?(temperature)
-			//TODO postThermometerNotification(Int(temperature ?? 0))
         case .txCharacteristic:
             let value: String? = characteristic.interpret(dataBytes: value)
             getTemperatureData?(Int(value ?? "10"))
