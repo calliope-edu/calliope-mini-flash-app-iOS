@@ -13,14 +13,7 @@ class PlaygroundSnippetTableViewController: UITableViewController, UITableViewDr
 
     var secondary: CodeSnippetController? {
 
-        if #available(iOS 14.0, *) {
-            let secondary = splitViewController?.viewController(for: .secondary) as? CodeSnippetController
-            if secondary != nil {
-                return secondary
-            }
-        }
-
-        let secondary = (splitViewController?.viewControllers.last as? UINavigationController)?.viewControllers.first as? CodeSnippetController
+        let secondary = splitViewController?.viewController(for: .secondary) as? CodeSnippetController
         if secondary != nil {
             return secondary
         }

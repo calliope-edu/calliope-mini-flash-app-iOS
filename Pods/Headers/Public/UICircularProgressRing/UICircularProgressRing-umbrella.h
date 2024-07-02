@@ -1,1 +1,0 @@
-../../../Target Support Files/UICircularProgressRing/UICircularProgressRing-umbrella.h

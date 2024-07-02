@@ -52,13 +52,9 @@ class ProgramsCollectionViewController: UICollectionViewController, ProgramCellD
     
     private func createProgramCell(_ collectionView: UICollectionView, _ indexPath: IndexPath) -> UICollectionViewCell {
         let cell: ProgramCollectionViewCell
-        
-        //TODO: Configure the cell
         cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierProgram, for: indexPath) as! ProgramCollectionViewCell
-
         cell.program = hexFiles[indexPath.row]
         cell.delegate = self
-        
         return cell
     }
     

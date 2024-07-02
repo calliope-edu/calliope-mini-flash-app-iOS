@@ -646,25 +646,25 @@ Connect and transfer the program!</string>
                         <rect key="frame" x="0.0" y="0.0" width="439" height="290"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="4J7-YA-Y28" customClass="ProgramsCollectionViewFlowLayout" customModule="Calliope_App" customModuleProvider="target">
-                            <size key="itemSize" width="50" height="50"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="N89-6L-6xR">
+                            <size key="itemSize" width="263" height="83"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="uploadProgramCell" id="2S9-7Q-qui" customClass="ProgramCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="69.5" y="0.0" width="300" height="70"/>
+                                <rect key="frame" x="88" y="0.0" width="263" height="83"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="lqR-6Y-g8H">
-                                    <rect key="frame" x="0.0" y="0.0" width="300" height="70"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="263" height="83"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S9O-yD-dPi">
-                                            <rect key="frame" x="0.0" y="0.0" width="300" height="70"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="263" height="83"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="iMS-hH-QU0" userLabel="programLabelContainer">
-                                                    <rect key="frame" x="8" y="8" width="243" height="34"/>
+                                                    <rect key="frame" x="8" y="8" width="206" height="34"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="200" verticalHuggingPriority="251" horizontalCompressionResistancePriority="740" text="Label" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DpH-x4-88I">
                                                             <rect key="frame" x="8" y="7" width="41.5" height="20.5"/>
@@ -674,13 +674,13 @@ Connect and transfer the program!</string>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <textField hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="240" verticalHuggingPriority="260" horizontalCompressionResistancePriority="700" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="eex-Tk-Fko">
-                                                            <rect key="frame" x="0.0" y="0.0" width="243" height="34"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="206" height="34"/>
                                                             <accessibility key="accessibilityConfiguration" identifier="programNameEditField"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                             <textInputTraits key="textInputTraits"/>
                                                             <connections>
                                                                 <action selector="editButtonClicked:" destination="2S9-7Q-qui" eventType="editingDidEnd" id="8s6-VZ-1ep"/>
-                                                                <action selector="editButtonClicked:" destination="2S9-7Q-qui" eventType="editingDidEndOnExit" id="tg2-Tr-xYL"/>
+                                                                <action selector="shareButtonClicked:" destination="2S9-7Q-qui" eventType="editingDidEndOnExit" id="obP-VA-aWp"/>
                                                             </connections>
                                                         </textField>
                                                     </subviews>
@@ -696,13 +696,13 @@ Connect and transfer the program!</string>
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g6h-Vu-QEH">
-                                                    <rect key="frame" x="16" y="39" width="41.5" height="17"/>
+                                                    <rect key="frame" x="16" y="39" width="41.5" height="30"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="upload_button" translatesAutoresizingMaskIntoConstraints="NO" id="Qo4-4d-Nqj">
-                                                    <rect key="frame" x="259" y="8" width="25" height="54"/>
+                                                    <rect key="frame" x="222" y="8" width="25" height="67"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="25" id="rar-Qr-XAv"/>
                                                     </constraints>
@@ -733,6 +733,7 @@ Connect and transfer the program!</string>
                                     </constraints>
                                 </collectionViewCellContentView>
                                 <color key="backgroundColor" name="calliope-gray"/>
+                                <size key="customSize" width="263" height="83"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="10"/>
@@ -760,7 +761,7 @@ Connect and transfer the program!</string>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SRn-bB-H5q" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2000" y="29"/>
+            <point key="canvasLocation" x="1999.5117187499998" y="28.98975109809663"/>
         </scene>
         <!--Code View Controller-->
         <scene sceneID="hol-wY-xHE">
@@ -866,7 +867,7 @@ Connect and transfer the program!</string>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="7ZG-zz-cOm"/>
+        <segue reference="COy-xJ-NpQ"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="calliope-lilablau"/>
     <resources>
