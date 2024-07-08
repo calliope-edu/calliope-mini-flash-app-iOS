@@ -89,10 +89,10 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
                 }
         })
         
-        guard let calliope = MatrixConnectionViewController.instance.usageReadyCalliope else {
+        guard let _ = MatrixConnectionViewController.instance.usageReadyCalliope else {
             self.addChartButton.isEnabled = false
             DispatchQueue.main.async {
-                let alert = UIAlertController(title: "Calliope mini verbinden!", message: "Verbindung notwendig, um Daten anzeigen zu lassen.", preferredStyle: .alert)
+                let alert = UIAlertController(title: NSLocalizedString("Calliope mini verbinden!", comment: ""), message: NSLocalizedString("Verbindung notwendig, um Daten anzeigen zu lassen.", comment: ""), preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                 alert.addAction(okAction)
                 self.present(alert, animated: true, completion: nil)
@@ -113,12 +113,12 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
     }
     
     func renameProject() {
-        let alertController = UIAlertController(title: "Change project name", message: "Enter the new project name", preferredStyle: .alert)
+        let alertController = UIAlertController(title: NSLocalizedString("Change project name", comment: ""), message: NSLocalizedString("Enter the new project name", comment: ""), preferredStyle: .alert)
         alertController.addTextField { textField in
-            textField.placeholder = "New project name"
+            textField.placeholder = NSLocalizedString("New project", comment: "")
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil)
         let okAction = UIAlertAction(title: "OK", style: .default) { _ in
             if let textField = alertController.textFields?.first, let inputText = textField.text {
                 self.project?.name = inputText
@@ -143,19 +143,15 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
     
     func setupProjectSettingsMenu() {
         settingsButton.showsMenuAsPrimaryAction = true
-            
-        let optionClosure = {(action: UIAction) in
-            print("Pressed")
-        }
         
         settingsButton.menu = UIMenu(children: [
-            UIAction(title: "Delete", image: UIImage(systemName: "trash")) {(action: UIAction) in
+            UIAction(title: NSLocalizedString("Delete", comment: ""), image: UIImage(systemName: "trash")) {(action: UIAction) in
                 self.deleteProject()
             },
-            UIAction(title: "Export", image: UIImage(systemName: "square.and.arrow.up")) {(action: UIAction) in
+            UIAction(title: NSLocalizedString("Export (CSV)", comment: ""), image: UIImage(systemName: "square.and.arrow.up")) {(action: UIAction) in
                 self.exportToCSVFile()
             },
-            UIAction(title: "Rename", image: UIImage(systemName: "pencil")) {(action: UIAction) in
+            UIAction(title: NSLocalizedString("Rename", comment: ""), image: UIImage(systemName: "pencil")) {(action: UIAction) in
                 self.renameProject()
             }
         ])
@@ -182,6 +178,13 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
     deinit {
         NotificationCenter.default.removeObserver(calliopeConnectedSubcription!)
         NotificationCenter.default.removeObserver(calliopeDisconnectedSubscription!)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        for cell in chartCollectionViewController!.collectionView.visibleCells {
+            let dataCell = cell as! ChartViewCell
+            dataCell.stopDataRecording()
+        }
     }
 
 }

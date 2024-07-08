@@ -11,6 +11,7 @@ import Foundation
 class DataController {
     
     var availableSensors: [Sensor] = []
+    var activeServices: [CalliopeService] = []
     var apiCalliope: CalliopeAPI?
     var isRecording = false
     var timer : Timer?
@@ -28,13 +29,17 @@ class DataController {
     }
     
     func getAvailableSensors() -> [Sensor] {
+        apiCalliope = MatrixConnectionViewController.instance.usageReadyCalliope as? CalliopeAPI
         return apiCalliope?.discoveredOptionalServices.compactMap { key in
             return SensorUtility.serviceSensorMap[key]
         } ?? []
     }
     
     func sensorStartRecordingFor(chart : Chart, response: @escaping (Any) -> ()) {
-        if self.availableSensors.contains(where: { compSensor in
+        if !activeServices.contains(chart.sensorType) {
+            return
+        }
+        if self.getAvailableSensors().contains(where: { compSensor in
             compSensor.calliopeService == chart.sensorType
         }) {
             if self.isRecording {
@@ -48,6 +53,7 @@ class DataController {
                 response(newValue)
             }
             self.isRecording = true
+            activeServices.append(chart.sensorType)
         }
     }
     
@@ -57,6 +63,7 @@ class DataController {
             apiCalliope?.getTemperatureData = nil
         }
         isRecording = false
+        _ = activeServices.remove(object: chart.sensorType)
     }
     
     func fetchValue(service : CalliopeService) -> Any {

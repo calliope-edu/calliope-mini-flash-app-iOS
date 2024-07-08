@@ -71,7 +71,7 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
     
     @IBAction func createNewProject(_ coder: NSCoder) {
         LogNotify.log("Starting to create a new Project")
-        let alertController = UIAlertController(title: "Enter Project Name", message: nil, preferredStyle: .alert)
+        let alertController = UIAlertController(title: NSLocalizedString("Enter an Projectname for the new Project", comment: ""), message: nil, preferredStyle: .alert)
         alertController.addTextField { (textField) in
             textField.placeholder = "Calliope Project"
         }
@@ -96,12 +96,6 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
                 return
             }
             destinationVC.project = Project.fetchProject(id: sender as! Int)!
-        }
-        
-        if #available(iOS 13.0, *) { return }
-        
-        if segue.identifier == "embedPrograms" {
-            projectCollectionViewController = segue.destination as? ProjectCollectionViewController
         }
     }
 }

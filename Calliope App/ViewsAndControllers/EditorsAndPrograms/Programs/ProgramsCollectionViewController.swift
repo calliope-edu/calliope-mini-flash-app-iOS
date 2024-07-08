@@ -99,7 +99,6 @@ class ProgramsCollectionViewController: UICollectionViewController, ProgramCellD
         return true
     }
 
-    @available(iOS 13.0, *)
     override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedMenuElements -> UIMenu? in
             let actions: [UIMenuElement] = [

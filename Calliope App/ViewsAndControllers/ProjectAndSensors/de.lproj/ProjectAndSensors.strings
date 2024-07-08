@@ -1,0 +1,33 @@
+
+/* Class = "UINavigationItem"; title = "Sensoren und Projekte"; ObjectID = "DTy-e7-oGc"; */
+"DTy-e7-oGc.title" = "Sensoren und Projekte";
+
+/* Class = "UILabel"; text = "Project Name"; ObjectID = "Dgf-wX-T07"; */
+"Dgf-wX-T07.text" = "Projektname";
+
+/* Class = "UITabBarItem"; title = "Projects and Sensors"; ObjectID = "Kjn-CJ-sdt"; */
+"Kjn-CJ-sdt.title" = "Projekte und Sensoren";
+
+/* Class = "UILabel"; text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\nkleine Anleitung"; ObjectID = "Ov1-de-29k"; */
+"Ov1-de-29k.text" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\nkleine Anleitung";
+
+/* Class = "UILabel"; text = "Maximum"; ObjectID = "QgC-6o-TvH"; */
+"QgC-6o-TvH.text" = "Maximum";
+
+/* Class = "UILabel"; text = "Minimum"; ObjectID = "WEn-Va-AIJ"; */
+"WEn-Va-AIJ.text" = "Minimum";
+
+/* Class = "UIButton"; configuration.title = "Record Sensordata"; ObjectID = "bkL-vr-KqE"; */
+"bkL-vr-KqE.configuration.title" = "Sensordaten aufzeichnen";
+
+/* Class = "UINavigationController"; title = "Sensorendaten"; ObjectID = "cnw-wD-B2K"; */
+"cnw-wD-B2K.title" = "Sensorendaten";
+
+/* Class = "UILabel"; text = "Average"; ObjectID = "dqZ-FU-7Ks"; */
+"dqZ-FU-7Ks.text" = "Durchschnitt";
+
+/* Class = "UILabel"; text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."; ObjectID = "gYD-YY-Lxx"; */
+"gYD-YY-Lxx.text" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+
+/* Class = "UIViewController"; title = "Sensors and Projects"; ObjectID = "nJx-VD-M8y"; */
+"nJx-VD-M8y.title" = "Sensoren und Projekte";

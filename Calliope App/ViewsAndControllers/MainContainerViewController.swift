@@ -29,21 +29,22 @@ class MainContainerViewController: UITabBarController, UITabBarControllerDelegat
         }
 
         let window = (UIApplication.shared.delegate!.window!)!
+        
+        DispatchQueue.main.async {
+            let connectionVC = UIStoryboard(name: "ConnectionView", bundle: nil).instantiateInitialViewController() as! MatrixConnectionViewController
+            connectionVC.view.translatesAutoresizingMaskIntoConstraints = false
+            self.addChild(connectionVC)
+            window.addSubview(connectionVC.view)
 
-        let connectionVC = UIStoryboard(name: "ConnectionView", bundle: nil).instantiateInitialViewController() as! MatrixConnectionViewController
-        connectionVC.view.translatesAutoresizingMaskIntoConstraints = false
-        self.addChild(connectionVC)
-        window.addSubview(connectionVC.view)
+            NSLayoutConstraint.activate([
+                connectionVC.view.rightAnchor.constraint(equalTo: window.safeAreaLayoutGuide.rightAnchor, constant: -8.0),
+                connectionVC.view.topAnchor.constraint(equalTo: window.safeAreaLayoutGuide.topAnchor, constant: 8.0),
+                connectionVC.view.leftAnchor.constraint(greaterThanOrEqualTo: window.safeAreaLayoutGuide.leftAnchor, constant: 0.0),
+                connectionVC.view.bottomAnchor.constraint(lessThanOrEqualTo: window.safeAreaLayoutGuide.bottomAnchor, constant: 0.0)
+                ])
 
-        NSLayoutConstraint.activate([
-            connectionVC.view.rightAnchor.constraint(equalTo: window.safeAreaLayoutGuide.rightAnchor, constant: -8.0),
-            connectionVC.view.topAnchor.constraint(equalTo: window.safeAreaLayoutGuide.topAnchor, constant: 8.0),
-            connectionVC.view.leftAnchor.constraint(greaterThanOrEqualTo: window.safeAreaLayoutGuide.leftAnchor, constant: 0.0),
-            connectionVC.view.bottomAnchor.constraint(lessThanOrEqualTo: window.safeAreaLayoutGuide.bottomAnchor, constant: 0.0)
-            ])
-
-        connectionVC.didMove(toParent: self)
-
-        connectionViewController = connectionVC
+            connectionVC.didMove(toParent: self)
+            self.connectionViewController = connectionVC
+        }
     }
 }

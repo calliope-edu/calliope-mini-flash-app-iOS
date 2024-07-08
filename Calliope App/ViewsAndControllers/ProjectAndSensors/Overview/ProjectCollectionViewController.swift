@@ -31,6 +31,10 @@ class ProjectCollectionViewController: UICollectionViewController, UIDocumentPic
                 }
         })
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        animateFileChange()
+    }
 
     // MARK: UICollectionViewDataSource
 

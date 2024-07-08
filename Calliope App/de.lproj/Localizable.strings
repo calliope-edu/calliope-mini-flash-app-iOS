@@ -270,3 +270,23 @@ Weitere Infos unter „Hilfe”.";
 
 /* No comment provided by engineer. */
 "USB Location is not a USB Calliope folder" = "Speicherort ist kein USB Ordner des Calliope mini, bitte wähle den korrekten Ordner";
+
+"Enter an Projectname for the new Project" = "Projektnamen eingeben";
+
+"Change project name" = "Projectnamen ändern";
+
+"Enter the new project name" = "Gebe den neuen Projektnamen ein";
+
+"New project" = "Neues Projekt";
+
+"Microphone" = "Mikrofon";
+
+"Speaker" = "Lautsprecher";
+
+"Brightness" = "Helligkeit";
+
+"Temperature" = "Temperatur";
+
+"Accelerometer" = "Beschleunigungsmesser";
+
+"Magnetometer" = "Magnetfeldsensor";

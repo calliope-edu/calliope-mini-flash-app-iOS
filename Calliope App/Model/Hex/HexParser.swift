@@ -99,7 +99,7 @@ struct HexParser {
             beginIndex = endIndex
             
             endIndex = beginIndex + 2 * Int(length)
-            var payload = line[beginIndex..<endIndex]
+            let payload = line[beginIndex..<endIndex]
             beginIndex = endIndex
 
             
@@ -288,21 +288,24 @@ struct HexReader {
     }
 
     static func type(of record: String) -> Int? {
-        do {
-            return Int(record[7..<9], radix: 16)
-        } catch {
-            // Keep this, because an error can throw
-            LogNotify.log("Error caused by empty record catched")
-            return -1
+        guard record.count >= 9 else {
+            return nil
         }
+        return Int(record[7..<9], radix: 16)
     }
 
     static func length(of record: String) -> Int? {
+        guard record.count >= 3 else {
+            return nil
+        }
         return Int(record[1..<3], radix: 16)
     }
 
     static func address(of record: String) -> UInt16? {
         //address in the program is encoded with two bytes
+        guard record.count >= 7 else {
+            return nil
+        }
         return UInt16(record[3..<7], radix: 16)
     }
 

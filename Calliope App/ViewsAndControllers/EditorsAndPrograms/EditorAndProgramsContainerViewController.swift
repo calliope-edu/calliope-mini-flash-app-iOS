@@ -9,6 +9,7 @@
 import UIKit
 import CoreServices
 import SwiftUI
+import UniformTypeIdentifiers
 
 class EditorAndProgramsContainerViewController: UIViewController, UINavigationControllerDelegate, UIDocumentPickerDelegate {
     
@@ -62,9 +63,9 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
         programsHeightConstraint = programContainerView?.heightAnchor.constraint(equalToConstant: 10)
         programsHeightConstraint?.isActive = true
         
-        configureLayout(UIApplication.shared.keyWindow!.frame.size)
+        //configureLayout(UIApplication.shared.keyWindow!.frame.size)
         scanButton?.imageView?.contentMode = UIView.ContentMode.scaleAspectFit
-        scanButton?.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        //scanButton?.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
     
     @IBSegueAction func initializeEditor(_ coder: NSCoder) -> EditorsCollectionViewController? {
@@ -117,21 +118,20 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
     }
     
     @IBAction func navigateToImportFile() {
-        let types: [String] = getFileTypesFor(fileEnding: "hex")
+        let types: [UTType] = getFileTypesFor(fileEnding: "hex")
         
-        let documentPickerController = UIDocumentPickerViewController(documentTypes: types, in: .import)
-        documentPickerController.delegate = self
-        present(documentPickerController, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            let documentPickerController = UIDocumentPickerViewController(forOpeningContentTypes: types)
+            documentPickerController.delegate = self
+            self.present(documentPickerController, animated: true, completion: nil)
+        }
     }
-    
-    func getFileTypesFor(fileEnding: String) -> [String] {
-        let typeArray = UTTypeCreateAllIdentifiersForTag(
-                         kUTTagClassFilenameExtension,
-                         fileEnding as CFString,
-                         nil
-                      )?.takeRetainedValue()
-        let types: [String] = typeArray as? [String] ?? []
-        return types;
+
+    func getFileTypesFor(fileEnding: String) -> [UTType] {
+        if let utType = UTType(filenameExtension: fileEnding) {
+            return [utType]
+        }
+        return []
     }
 
     func documentPicker(_ controller: UIDocumentPickerViewController,
@@ -140,18 +140,6 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
             // Dismiss this view
             dismiss(animated: true, completion: nil)
             HexFileStoreDialog.showStoreHexUI(controller: self, hexFile: url, notSaved: {_ in })
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        //we use segue initialization for ios13.
-        // When ios11 compatibility is dropped, this method can be deleted.
-        if #available(iOS 13.0, *) { return }
-        
-        if segue.identifier == "embedEditors" {
-            editorsCollectionViewController = segue.destination as? EditorsCollectionViewController
-        } else if segue.identifier == "embedPrograms" {
-            programsCollectionViewController = segue.destination as? ProgramsCollectionViewController
         }
     }
 }

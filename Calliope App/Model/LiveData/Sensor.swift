@@ -23,33 +23,31 @@ class Sensor {
     }
 }
 
-let rgbLed = Sensor(calliopeService: .rgbLed, name: "RGB Led", numOfAxis: 1)
+let rgbLed = Sensor(calliopeService: .rgbLed, name: NSLocalizedString("RGB Led", comment: ""), numOfAxis: 1)
 
-let microphone = Sensor(calliopeService: .microphone, name: "microphone", numOfAxis: 1)
+let microphone = Sensor(calliopeService: .microphone, name: NSLocalizedString("Microphone", comment: ""), numOfAxis: 1)
 
-let speaker = Sensor(calliopeService: .speaker, name: "Lautsprecher", numOfAxis: 1)
+let speaker = Sensor(calliopeService: .speaker, name: NSLocalizedString("Speaker", comment: ""), numOfAxis: 1)
 
-let brightness = Sensor(calliopeService: .brightness, name: "Helligkeit", numOfAxis: 1)
+let brightness = Sensor(calliopeService: .brightness, name: NSLocalizedString("Brightness", comment: ""), numOfAxis: 1)
 
-let touchPin = Sensor(calliopeService: .touchPin, name: "Touch Pin", numOfAxis: 1)
+let touchPin = Sensor(calliopeService: .touchPin, name: NSLocalizedString("Touch Pin", comment: ""), numOfAxis: 1)
 
-let gesture = Sensor(calliopeService: .gesture, name: "Gesture", numOfAxis: 1)
+let gesture = Sensor(calliopeService: .gesture, name: NSLocalizedString("Gesture", comment: ""), numOfAxis: 1)
 
-let accelerometer = Sensor(calliopeService: .accelerometer, name: "Accelerometer", numOfAxis: 3)
+let accelerometer = Sensor(calliopeService: .accelerometer, name: NSLocalizedString("Accelerometer", comment: ""), numOfAxis: 3)
 
-let magnetometer = Sensor(calliopeService: .magnetometer, name: "Magetometer", numOfAxis: 1)
+let magnetometer = Sensor(calliopeService: .magnetometer, name: NSLocalizedString("Magnetometer", comment: ""), numOfAxis: 1)
     
-let button = Sensor(calliopeService: .button, name: "Button", numOfAxis: 1)
+let button = Sensor(calliopeService: .button, name: NSLocalizedString("Button", comment: ""), numOfAxis: 1)
 
-let ioPin = Sensor(calliopeService: .ioPin, name: "io Pin", numOfAxis: 1)
+let ioPin = Sensor(calliopeService: .ioPin, name: NSLocalizedString("IO Pin", comment: ""), numOfAxis: 1)
 
-//let led = Sensor(calliopeService: .led, name: "LED")
+let event = Sensor(calliopeService: .event, name: NSLocalizedString("Event", comment: ""), numOfAxis: 1)
 
-let event = Sensor(calliopeService: .event, name: "Event", numOfAxis: 1)
-
-let temperature = Sensor(calliopeService: .temperature, name: "Temperature", numOfAxis: 1)
+let temperature = Sensor(calliopeService: .temperature, name: NSLocalizedString("Temperature", comment: ""), numOfAxis: 1)
     
-let uart = Sensor(calliopeService: .uart, name: "Brightness (Uart)", numOfAxis: 1)
+let uart = Sensor(calliopeService: .uart, name: NSLocalizedString("User defined (UART)", comment: ""), numOfAxis: 1)
 
 struct SensorUtility {
     static let serviceSensorMap : [CalliopeService : Sensor] = [

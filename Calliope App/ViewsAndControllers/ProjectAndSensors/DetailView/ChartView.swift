@@ -36,6 +36,8 @@ extension LineChartView {
     }
     
     func setupView(service: CalliopeService) {
+        self.data?.clearValues()
+        self.notifyDataSetChanged()
         var lineChartDataSets: [LineChartDataSet] = []
         switch service {
         case .accelerometer:
