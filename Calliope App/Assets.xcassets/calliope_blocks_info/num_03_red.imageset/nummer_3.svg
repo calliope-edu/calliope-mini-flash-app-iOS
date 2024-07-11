@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Ebene_2" data-name="Ebene 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 62.51 62.51">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #d81d69;
+        stroke-width: 0px;
+      }
+
+      .cls-2 {
+        fill: #fff;
+        font-family: Roboto-Medium, Roboto;
+        font-size: 32px;
+        font-weight: 500;
+      }
+    </style>
+  </defs>
+  <g id="Ebene_2-2" data-name="Ebene 2">
+    <circle class="cls-1" cx="31.25" cy="31.25" r="31.25"/>
+    <text class="cls-2" transform="translate(21.51 42.29)"><tspan x="0" y="0">3</tspan></text>
+  </g>
+</svg>

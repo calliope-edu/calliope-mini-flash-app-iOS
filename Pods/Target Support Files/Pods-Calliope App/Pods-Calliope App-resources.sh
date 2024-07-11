@@ -189,7 +189,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "${PODS_ROOT}/Highlightr/Pod/Assets/styles/zenburn.min.css"
   install_resource "${PODS_CONFIGURATION_BUILD_DIR}/SnapKit/SnapKit_Privacy.bundle"
   install_resource "${PODS_ROOT}/ZIPFoundation/Sources/ZIPFoundation/Resources/PrivacyInfo.xcprivacy"
-  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/iOSDFULibrary/PrivacyInfo.bundle"
+  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/iOSDFULibrary/NordicDFUPrivacyInfo.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "${PODS_ROOT}/Highlightr/Pod/Assets/Highlighter/highlight.min.js"
@@ -284,7 +284,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "${PODS_ROOT}/Highlightr/Pod/Assets/styles/zenburn.min.css"
   install_resource "${PODS_CONFIGURATION_BUILD_DIR}/SnapKit/SnapKit_Privacy.bundle"
   install_resource "${PODS_ROOT}/ZIPFoundation/Sources/ZIPFoundation/Resources/PrivacyInfo.xcprivacy"
-  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/iOSDFULibrary/PrivacyInfo.bundle"
+  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/iOSDFULibrary/NordicDFUPrivacyInfo.bundle"
 fi
 
 mkdir -p "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

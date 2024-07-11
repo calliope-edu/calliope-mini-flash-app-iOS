@@ -174,6 +174,8 @@ class FlashableBLECalliope: BLECalliope {
         if value[0] == .WRITE {
             updateCallback("write status: \(Data([value[1]]).hexEncodedString())")
             if value[1] == .WRITE_FAIL {
+                LogNotify.log("Received error message, stopping transmission")
+                _ = cancelUpload()
                 resendPackages()
             } else if value[1] == .WRITE_SUCCESS {
                 sendNextPackages()
@@ -268,16 +270,14 @@ class FlashableBLECalliope: BLECalliope {
             statusDelegate?.dfuStateDidChange(to: .completed)
         }
         else {
-        updateCallback("partial flashing starts sending new program to calliope")
-        //start sending program part packages to calliope
-        startPackageNumber = 0
-        sendNextPackages()
-
+            updateCallback("partial flashing starts sending new program to calliope")
+            //start sending program part packages to calliope
+            startPackageNumber = 0
+            sendNextPackages()
         }
     }
     
     private func sendNextPackages() {
-        updateCallback("send 4 packages beginning at \(startPackageNumber)")
         guard var partialFlashData = partialFlashData else {
             fallbackToFullFlash()
             return
@@ -295,24 +295,20 @@ class FlashableBLECalliope: BLECalliope {
         if currentDataToFlash.count < 4 {
             endTransmission() //we did not have a full package to flash any more
         }
-        startPackageNumber = startPackageNumber.addingReportingOverflow(4).partialValue
-        linesFlashed += 4
+        startPackageNumber = startPackageNumber.addingReportingOverflow(UInt8(currentDataToFlash.count)).partialValue
+        linesFlashed += currentDataToFlash.count
+        
+        if linesFlashed + 4 > partialFlashData.lineCount {
+            statusDelegate?.dfuStateDidChange(to: .completed)
+        }
     }
     
     private func resendPackages() {
         fallbackToFullFlash()
-        /*
-         startPackageNumber -= 4
-         updateCallback("Needs to resend package \(startPackageNumber)")
-         //FIXME
-         let resetPackageData = Data()
-         send(command: .WRITE, value: resetPackageData)
-         sendCurrentPackages()
-         */
     }
     
     private func sendCurrentPackages() {
-        updateCallback("sending \(currentDataToFlash.count) packages")
+        updateCallback("sending \(currentDataToFlash.count) packages, beginning at \(startPackageNumber)")
         for (index, package) in currentDataToFlash.enumerated() {
             let packageAddress = index == 1 ? currentSegmentAddress.bigEndianData : package.address.bigEndianData
             let packageNumber = Data([startPackageNumber + UInt8(index)])
@@ -355,13 +351,9 @@ class FlashableBLECalliope: BLECalliope {
     
     private func updateCallback(_ logMessage: String) {
         logReceiver?.logWith(.info, message: logMessage)
-        let progressPerCent = Int(ceil(Double(linesFlashed * 100) / Double(partialFlashData?.lineCount ?? Int.max)))
+        let progressPerCent = Int(floor(Double(linesFlashed * 100) / Double(partialFlashData?.lineCount ?? Int.max)))
         LogNotify.log("partial flashing progress: \(progressPerCent)%")
         progressReceiver?.dfuProgressDidChange(for: 1, outOf: 1, to: progressPerCent, currentSpeedBytesPerSecond: 0, avgSpeedBytesPerSecond: 0)
-        //Notify statusDelegate of completed Progress
-        if progressPerCent == 100 {
-            statusDelegate?.dfuStateDidChange(to: .completed)
-        }
     }
     
     //MARK: dfu delegate
@@ -483,15 +475,13 @@ class CalliopeV3: FlashableBLECalliope {
     }
     
     internal override func startPartialFlashing() {
-        // TODO: Solve Partial Flashing Errors
-        // Partial Flashing does not work entirely functional with the current Version of the Firmware. We therefor fallback to Full Flashing until this has been solved.
-        // Partial Flashing starts, but the Calliope disconnects unexpectedly after around 6% have been transfered.
+        // Disable Full Flashing for v3 for now
         do {
-            shouldRebootOnDisconnect = false
             try startFullFlashing()
         } catch {
-            LogNotify.log("Tried reverting to Full Flashing, but failed")
+            LogNotify.log("Full Flashing failed")
         }
+        
     }
 }
 

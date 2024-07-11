@@ -37,7 +37,7 @@ class QRCodeViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         super.viewDidAppear(animated)
         
         qrCodeFrameView.layer.borderColor = UIColor.green.cgColor
-        qrCodeFrameView.layer.borderWidth = 2
+        qrCodeFrameView.layer.borderWidth = 4
         view.addSubview(qrCodeFrameView)
         openMakeCodeButton.isHidden = true
     }
@@ -45,7 +45,7 @@ class QRCodeViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
     public func changeQrCodeFrameViewStaten(isHidden: Bool) {
         UIView.animate(withDuration: 0.5) {
             self.qrCodeFrameView.alpha = isHidden ? 0.0 : 1.0
-            self.qrCodeFrameView.layer.borderWidth = isHidden ? 2 : 4
+            self.qrCodeFrameView.layer.borderWidth = isHidden ? 2 : 8
         } completion: { finished in
             if finished {
                 self.qrCodeFrameView.isHidden = isHidden

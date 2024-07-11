@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="93j-LA-Q6m">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="93j-LA-Q6m">
     <device id="ipad11_0rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -343,61 +343,53 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bKp-jF-jIw">
                                                 <rect key="frame" x="10" y="0.0" width="814" height="560"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="did-Lr-Ts3">
-                                                        <rect key="frame" x="107" y="0.0" width="600" height="560"/>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iNU-gK-Q8E">
+                                                        <rect key="frame" x="0.0" y="0.0" width="824" height="182.5"/>
                                                         <subviews>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iNU-gK-Q8E">
-                                                                <rect key="frame" x="0.0" y="0.0" width="600" height="192.5"/>
-                                                                <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sDg-74-hMi">
-                                                                        <rect key="frame" x="8" y="16" width="584" height="86.5"/>
-                                                                        <string key="text">Verwende die Snippet Library mit dem Swift Playground. Wenn du in dem Swift Playground "Calliope Mini - Vorlage" arbeitest, kannst du die Snippets Library neben der Playgrounds App öffnen und die Codesnippets ganz bequem von der App in den Playground kopieren.</string>
-                                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                                        <nil key="textColor"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="zqc-Md-ScS">
-                                                                        <rect key="frame" x="190" y="122.5" width="220" height="50"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" constant="220" id="IyM-Qo-az1"/>
-                                                                            <constraint firstAttribute="height" constant="50" id="ryi-j8-JWU"/>
-                                                                        </constraints>
-                                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                                        <state key="normal" title="Snippets Library" image="playground_startscreen/code_library_snippets" backgroundImage="playground_startscreen/mini_button_grey"/>
-                                                                        <connections>
-                                                                            <segue destination="Yvi-oC-R1z" kind="presentation" modalPresentationStyle="fullScreen" id="X9R-mB-qq0"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                </subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sDg-74-hMi">
+                                                                <rect key="frame" x="20" y="16" width="784" height="86.5"/>
+                                                                <string key="text">Verwende die Snippet Library mit dem Swift Playground. Wenn du in dem Swift Playground "Calliope Mini - Vorlage" arbeitest, kannst du die Snippets Library neben der Playgrounds App öffnen und die Codesnippets ganz bequem von der App in den Playground kopieren.</string>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="zqc-Md-ScS">
+                                                                <rect key="frame" x="302" y="122.5" width="220" height="50"/>
                                                                 <constraints>
-                                                                    <constraint firstItem="sDg-74-hMi" firstAttribute="leading" secondItem="iNU-gK-Q8E" secondAttribute="leading" constant="8" id="INL-ej-BVr"/>
-                                                                    <constraint firstItem="zqc-Md-ScS" firstAttribute="centerX" secondItem="sDg-74-hMi" secondAttribute="centerX" id="ald-8k-azs"/>
-                                                                    <constraint firstItem="sDg-74-hMi" firstAttribute="top" secondItem="iNU-gK-Q8E" secondAttribute="top" constant="16" id="eNz-fa-Qd3"/>
-                                                                    <constraint firstAttribute="bottom" secondItem="zqc-Md-ScS" secondAttribute="bottom" constant="20" id="ezc-ti-0cm"/>
-                                                                    <constraint firstAttribute="trailing" secondItem="sDg-74-hMi" secondAttribute="trailing" constant="8" id="gCA-IM-Joh"/>
-                                                                    <constraint firstItem="zqc-Md-ScS" firstAttribute="top" secondItem="sDg-74-hMi" secondAttribute="bottom" constant="20" id="mLb-NI-hjV"/>
+                                                                    <constraint firstAttribute="width" constant="220" id="IyM-Qo-az1"/>
+                                                                    <constraint firstAttribute="height" constant="50" id="ryi-j8-JWU"/>
                                                                 </constraints>
-                                                            </view>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="playground_startscreen/calliope_multitasking" translatesAutoresizingMaskIntoConstraints="NO" id="qal-QC-PEH">
-                                                                <rect key="frame" x="0.0" y="192.5" width="600" height="367.5"/>
-                                                            </imageView>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                                <state key="normal" title="Snippets Library" image="playground_startscreen/code_library_snippets" backgroundImage="playground_startscreen/mini_button_grey"/>
+                                                                <connections>
+                                                                    <segue destination="Yvi-oC-R1z" kind="presentation" modalPresentationStyle="fullScreen" id="X9R-mB-qq0"/>
+                                                                </connections>
+                                                            </button>
                                                         </subviews>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="600" id="AIg-1e-7ee"/>
+                                                            <constraint firstItem="sDg-74-hMi" firstAttribute="leading" secondItem="iNU-gK-Q8E" secondAttribute="leading" constant="20" id="INL-ej-BVr"/>
+                                                            <constraint firstItem="zqc-Md-ScS" firstAttribute="centerX" secondItem="sDg-74-hMi" secondAttribute="centerX" id="ald-8k-azs"/>
+                                                            <constraint firstItem="sDg-74-hMi" firstAttribute="top" secondItem="iNU-gK-Q8E" secondAttribute="top" constant="16" id="eNz-fa-Qd3"/>
+                                                            <constraint firstAttribute="bottom" secondItem="zqc-Md-ScS" secondAttribute="bottom" constant="10" id="ezc-ti-0cm"/>
+                                                            <constraint firstAttribute="trailing" secondItem="sDg-74-hMi" secondAttribute="trailing" constant="20" id="gCA-IM-Joh"/>
+                                                            <constraint firstItem="zqc-Md-ScS" firstAttribute="top" secondItem="sDg-74-hMi" secondAttribute="bottom" constant="20" id="mLb-NI-hjV"/>
                                                         </constraints>
-                                                        <variation key="widthClass=compact">
-                                                            <mask key="subviews">
-                                                                <exclude reference="qal-QC-PEH"/>
-                                                            </mask>
-                                                        </variation>
-                                                    </stackView>
+                                                    </view>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="playground_startscreen/calliope_multitasking" translatesAutoresizingMaskIntoConstraints="NO" id="qal-QC-PEH">
+                                                        <rect key="frame" x="159.5" y="182.5" width="505" height="363.5"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" secondItem="qal-QC-PEH" secondAttribute="height" multiplier="490:353" id="t1u-5G-8cZ"/>
+                                                        </constraints>
+                                                    </imageView>
                                                 </subviews>
                                                 <color key="backgroundColor" name="calliope-lightgray"/>
                                                 <constraints>
-                                                    <constraint firstItem="did-Lr-Ts3" firstAttribute="centerX" secondItem="bKp-jF-jIw" secondAttribute="centerX" id="8db-lQ-Vav"/>
-                                                    <constraint firstItem="did-Lr-Ts3" firstAttribute="top" secondItem="bKp-jF-jIw" secondAttribute="top" id="FQs-RW-NYd"/>
-                                                    <constraint firstAttribute="bottom" secondItem="did-Lr-Ts3" secondAttribute="bottom" id="PZU-L9-BBc"/>
-                                                    <constraint firstItem="did-Lr-Ts3" firstAttribute="width" relation="lessThanOrEqual" secondItem="bKp-jF-jIw" secondAttribute="width" id="Xsp-5G-Fgl"/>
+                                                    <constraint firstItem="qal-QC-PEH" firstAttribute="top" secondItem="iNU-gK-Q8E" secondAttribute="bottom" id="1BU-NU-IOz"/>
+                                                    <constraint firstAttribute="bottom" secondItem="qal-QC-PEH" secondAttribute="bottom" constant="14" id="1mb-1z-Etm"/>
+                                                    <constraint firstItem="qal-QC-PEH" firstAttribute="centerX" secondItem="iNU-gK-Q8E" secondAttribute="centerX" id="2qc-Ta-FVX"/>
+                                                    <constraint firstItem="iNU-gK-Q8E" firstAttribute="top" secondItem="bKp-jF-jIw" secondAttribute="top" id="9Ql-oQ-Le8"/>
+                                                    <constraint firstItem="qal-QC-PEH" firstAttribute="width" relation="lessThanOrEqual" secondItem="iNU-gK-Q8E" secondAttribute="width" id="Ppz-gg-OHu"/>
+                                                    <constraint firstItem="iNU-gK-Q8E" firstAttribute="leading" secondItem="bKp-jF-jIw" secondAttribute="leading" id="Tvm-SD-fz5"/>
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -413,6 +405,7 @@
                                             <constraint firstAttribute="trailing" secondItem="bKp-jF-jIw" secondAttribute="trailing" constant="10" id="U2k-jo-6dF"/>
                                             <constraint firstItem="bKp-jF-jIw" firstAttribute="leading" secondItem="cCG-ae-1G1" secondAttribute="leading" constant="10" id="ddQ-7h-nHz"/>
                                             <constraint firstItem="bKp-jF-jIw" firstAttribute="top" secondItem="cCG-ae-1G1" secondAttribute="top" id="gCd-bT-5RX"/>
+                                            <constraint firstAttribute="trailing" secondItem="iNU-gK-Q8E" secondAttribute="trailing" id="o0P-64-zMy"/>
                                         </constraints>
                                     </view>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sH8-TE-zVt">
@@ -441,7 +434,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wYO-wv-LFs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-337.5" y="1058.7890625"/>
+            <point key="canvasLocation" x="-338.12949640287775" y="1058.2914572864322"/>
         </scene>
         <!--Playground Instructions Collection Collection View Controller-->
         <scene sceneID="aY7-HF-UnF">

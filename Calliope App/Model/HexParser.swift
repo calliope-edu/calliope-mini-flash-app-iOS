@@ -2,8 +2,7 @@ import Foundation
 
 struct HexParser {
 
-    private let url: URL
-    private var address: UInt32 = 0
+    private var url: URL
 
     init(url: URL) {
         self.url = url
@@ -58,7 +57,7 @@ struct HexParser {
         return enumSet
     }
 
-    func parse(f: (UInt32,Data) -> ()) {
+    func parse(handleDataEntry: (UInt32,Data,Int,Bool) -> ()) {
 
         let urlAccess = url.startAccessingSecurityScopedResource()
         guard let reader = StreamReader(path: url.path) else {
@@ -71,35 +70,39 @@ struct HexParser {
                 url.stopAccessingSecurityScopedResource()
             }
         }
-
+        
+        var isUniversal: Bool = false
         var addressHi: UInt32 = 0
-        var n = 0
-        var b = 0
-        var e = 0
+        var beginIndex = 0
+        var endIndex = 0
+        // 0 = undefined, 1 = V1/2, 2 = V3
+        var dataType = 0
+        
         while let line = reader.nextLine() {
-
-            b = 0
-
-            e = b + 1
-            guard line[b] == ":" else { return }
-            b = e
-
-            e = b + 2
-            guard let length = UInt8(line[b..<e], radix: 16) else { return }
-            b = e
-
-            e = b + 4
-            guard let addressLo = UInt32(line[b..<e], radix: 16) else { return }
-            b = e
-
-            e = b + 2
+            
+            beginIndex = 0
+            
+            endIndex = beginIndex + 1
+            guard line[beginIndex] == ":" else { return }
+            beginIndex = endIndex
+            
+            endIndex = beginIndex + 2
+            guard let length = UInt8(line[beginIndex..<endIndex], radix: 16) else { return }
+            beginIndex = endIndex
+            
+            endIndex = beginIndex + 4
+            guard let addressLo = UInt32(line[beginIndex..<endIndex], radix: 16) else { return }
+            beginIndex = endIndex
+            
+            endIndex = beginIndex + 2
             guard let type = HexReader.type(of: line) else { return }
-            b = e
+            beginIndex = endIndex
+            
+            endIndex = beginIndex + 2 * Int(length)
+            var payload = line[beginIndex..<endIndex]
+            beginIndex = endIndex
 
-            e = b + 2 * Int(length)
-            let payload = line[b..<e]
-            b = e
-
+            
             // FIXME
             //                e = b + 2
             //                guard let checksum = UInt8(line[b..<e], radix: 16) else { return }
@@ -108,13 +111,14 @@ struct HexParser {
             //                guard checksum == calcChecksum(addressLo, type, data) else {
             //                    print("checksum", checksum, calcChecksum(addressLo, type, data))
             //                return }
-
+            
             switch(type) {
-            case 0: // DATA
+            case 0, 13: // Data
                 let position = addressHi + addressLo
                 guard let data = payload.toData(using: .hex) else { return }
                 guard data.count == Int(length) else { return }
-                f(position, data)
+                handleDataEntry(position, data, dataType, isUniversal)
+                break
             case 1: // EOF
                 return
             case 2: // EXT SEGEMENT ADDRESS
@@ -131,11 +135,19 @@ struct HexParser {
             case 5: // START LINEAR ADDRESS
                 // print("START LINEAR ADDRESS")
                 break
+            case 10: // Block Start Adress
+                isUniversal = true
+                let dataTypeField = line[9..<13]
+                if dataTypeField == "9900" {
+                    dataType = 1
+                }
+                if dataTypeField == "9903" {
+                    dataType = 2
+                }
+                break
             default:
-                return
+                break
             }
-
-            n += 1
         }
     }
 
@@ -146,8 +158,10 @@ struct HexParser {
 
         _ = forwardToMagicNumber(reader)
         var numLinesToFlash = 0
-        while let line = reader.nextLine(), !HexReader.isMagicEnd(line) {
-            numLinesToFlash += 1
+        while let line = reader.nextLine(), !HexReader.isEndOfFileOrMagicEnd(line) {
+            if line.starts(with: ":") && HexReader.type(of: line) == 0  {
+                numLinesToFlash += 1
+            } 
         }
         reader.rewind()
 
@@ -215,15 +229,21 @@ struct PartialFlashData: Sequence, IteratorProtocol {
     }
 
     mutating private func read(_ record: String) {
-        if HexReader.isMagicEnd(record) {
+        if HexReader.isEndOfFileOrMagicEnd(record) {
             reader?.close()
             reader = nil
             return
         }
         switch HexReader.type(of: record) {
             case 0: //record type 0 means data for program
-                if let data = HexReader.readData(record) {
+                if record.contains("00000001FF") {
+                    break
+                } else if let data = HexReader.readData(record) {
                     nextData.append(data)
+                }
+            case 2: // extended segment adress
+                if let segmentAddress = HexReader.readSegmentAddress(record) {
+                    currentSegmentAddress = segmentAddress
                 }
             case 4: //segment address type
                 if let segmentAddress = HexReader.readSegmentAddress(record) {
@@ -236,6 +256,11 @@ struct PartialFlashData: Sequence, IteratorProtocol {
 }
 
 struct HexReader {
+    
+    static let MAGIC_START_NUMBER = "708E3B92C615A841C49866C975EE5197"
+    static let MAGIC_END_NUMBER = "41140E2FB82FA2B"
+    static let EOF_NUMBER = "00000001FF"
+    
     static func readSegmentAddress(_ record: String) -> UInt16? {
         if let length = length(of: record), length == 2,
                    validate(record, length),
@@ -263,7 +288,13 @@ struct HexReader {
     }
 
     static func type(of record: String) -> Int? {
-        return Int(record[7..<9], radix: 16)
+        do {
+            return Int(record[7..<9], radix: 16)
+        } catch {
+            // Keep this, because an error can throw
+            LogNotify.log("Error caused by empty record catched")
+            return -1
+        }
     }
 
     static func length(of record: String) -> Int? {
@@ -281,11 +312,11 @@ struct HexReader {
     }
 
     static func isMagicStart(_ record: String) -> Bool {
-        record.count >= 41 && record[9..<41] == "708E3B92C615A841C49866C975EE5197"
+        record.count >= 41 && record[9..<41] == MAGIC_START_NUMBER
     }
 
-    static func isMagicEnd(_ record: String) -> Bool {
+    static func isEndOfFileOrMagicEnd(_ record: String) -> Bool {
         //magic end of program data (start of embedded source)
-        return record.count >= 24 && record[9..<24] == "41140E2FB82FA2B"
+        return record.count >= 24 && record[9..<24] == MAGIC_END_NUMBER || record.contains("00000001FF")
     }
 }
