@@ -248,7 +248,13 @@ Connect and transfer the program!</string>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                         <state key="normal" title="Scannen" image="qr_code_scan_button">
                                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
                                                                         </state>
+                                                                        <buttonConfiguration key="configuration" style="filled" image="qr_code_scan_button" title="Scannen" imagePadding="10">
+                                                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="1" scale="small" weight="ultraLight"/>
+                                                                            <fontDescription key="titleFontDescription" style="UICTFontTextStyleHeadline"/>
+                                                                            <color key="baseBackgroundColor" name="calliope-green"/>
+                                                                        </buttonConfiguration>
                                                                         <userDefinedRuntimeAttributes>
                                                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                                                 <integer key="value" value="10"/>
