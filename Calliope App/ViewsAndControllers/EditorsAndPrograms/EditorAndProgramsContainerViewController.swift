@@ -63,9 +63,10 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
         programsHeightConstraint = programContainerView?.heightAnchor.constraint(equalToConstant: 10)
         programsHeightConstraint?.isActive = true
         
-        //configureLayout(UIApplication.shared.keyWindow!.frame.size)
+        configureLayout(UIApplication.shared.keyWindow!.frame.size)
         scanButton?.imageView?.contentMode = UIView.ContentMode.scaleAspectFit
-        //scanButton?.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        scanButton?.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        scanButton?.tintColor = UIColor.white
     }
     
     @IBSegueAction func initializeEditor(_ coder: NSCoder) -> EditorsCollectionViewController? {

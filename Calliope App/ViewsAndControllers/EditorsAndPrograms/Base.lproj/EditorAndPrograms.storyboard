@@ -139,7 +139,7 @@ Connect and transfer the program!</string>
                                                                         <rect key="frame" x="19.5" y="0.0" width="250" height="60"/>
                                                                         <color key="backgroundColor" name="calliope-green"/>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="width" constant="250" id="fWG-qn-Bd9"/>
+                                                                            <constraint firstAttribute="width" priority="999" constant="250" id="fWG-qn-Bd9"/>
                                                                             <constraint firstAttribute="height" constant="60" id="iLv-MN-gaE"/>
                                                                         </constraints>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
@@ -196,7 +196,7 @@ Connect and transfer the program!</string>
                                                                         <color key="backgroundColor" name="calliope-green"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="60" id="Bjh-IS-11e"/>
-                                                                            <constraint firstAttribute="width" constant="250" id="pjy-zR-7ad"/>
+                                                                            <constraint firstAttribute="width" priority="999" constant="250" id="pjy-zR-7ad"/>
                                                                         </constraints>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                         <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
@@ -238,23 +238,20 @@ Connect and transfer the program!</string>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pmP-yd-KbT">
                                                                 <rect key="frame" x="0.0" y="84.5" width="288.5" height="60"/>
                                                                 <subviews>
-                                                                    <button opaque="NO" contentMode="scaleAspectFit" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="49i-Ve-lcm">
+                                                                    <button opaque="NO" contentMode="scaleAspectFit" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="49i-Ve-lcm">
                                                                         <rect key="frame" x="19.5" y="0.0" width="250" height="60"/>
                                                                         <color key="backgroundColor" name="calliope-green"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="60" id="CXQ-Ml-PF7"/>
-                                                                            <constraint firstAttribute="width" constant="250" id="UnL-Cu-HRK"/>
+                                                                            <constraint firstAttribute="width" priority="999" constant="250" id="UnL-Cu-HRK"/>
                                                                         </constraints>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
                                                                         <state key="normal" title="Scannen" image="qr_code_scan_button">
                                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
+                                                                            <color key="titleShadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         </state>
-                                                                        <buttonConfiguration key="configuration" style="filled" image="qr_code_scan_button" title="Scannen" imagePadding="10">
-                                                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="1" scale="small" weight="ultraLight"/>
-                                                                            <fontDescription key="titleFontDescription" style="UICTFontTextStyleHeadline"/>
-                                                                            <color key="baseBackgroundColor" name="calliope-green"/>
-                                                                        </buttonConfiguration>
                                                                         <userDefinedRuntimeAttributes>
                                                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                                                 <integer key="value" value="10"/>
@@ -297,7 +294,7 @@ Connect and transfer the program!</string>
                                                                         <rect key="frame" x="19.5" y="0.0" width="250" height="60"/>
                                                                         <color key="backgroundColor" name="calliope-green"/>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="width" constant="250" id="Wig-1r-cgS"/>
+                                                                            <constraint firstAttribute="width" priority="999" constant="250" id="Wig-1r-cgS"/>
                                                                             <constraint firstAttribute="height" constant="60" id="eHv-pN-UB9"/>
                                                                         </constraints>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
