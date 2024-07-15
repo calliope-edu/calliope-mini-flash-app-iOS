@@ -43,6 +43,9 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
         projectContainerView?.translatesAutoresizingMaskIntoConstraints = false
         projectHeightConstraint = projectContainerView?.heightAnchor.constraint(equalToConstant: 10)
         projectHeightConstraint?.isActive = true
+        
+        //let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openLinkToCalliopeInformation))
+        //openLinkLabel.addGestureRecognizer(tapGesture)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -63,7 +66,7 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
     }
     
     @IBSegueAction func initializeProjects(_ coder: NSCoder) -> ProjectCollectionViewController? {
-        print("setting project collection view controller")
+        LogNotify.log("setting project collection view controller")
         projectCollectionViewController = ProjectCollectionViewController(coder: coder)
         self.reloadInputViews()
         return projectCollectionViewController
@@ -91,11 +94,17 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showNewlyCreatedProject" {
-            print("Preparing for segue showNewlyCreatedProject")
+            LogNotify.log("Preparing for segue showNewlyCreatedProject")
             guard let destinationVC = segue.destination as? ProjectViewController else {
                 return
             }
             destinationVC.project = Project.fetchProject(id: sender as! Int)!
+        }
+    }
+    
+    @IBAction func openLinkToCalliopeInformation() {
+        if let url = URL(string: NSLocalizedString("https://calliope.cc/programmieren/mobil/ipad#sensordaten", comment: "")) {
+            UIApplication.shared.open(url)
         }
     }
 }

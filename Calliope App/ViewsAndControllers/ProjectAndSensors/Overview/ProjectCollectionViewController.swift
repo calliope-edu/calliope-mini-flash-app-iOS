@@ -92,7 +92,6 @@ class ProjectCollectionViewController: UICollectionViewController, UIDocumentPic
         }
         // Remove chart from UI
         guard let newIndexPath = collectionView.indexPath(for: cell) else {
-            print("ERROR")
             return
         }
         collectionView.deleteItems(at: [newIndexPath])

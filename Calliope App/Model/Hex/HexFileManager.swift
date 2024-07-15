@@ -75,7 +75,7 @@ final class HexFileManager {
         do {
             try data.write(to: file)
         } catch {
-            print(error)
+            LogNotify.log("\(error)")
         }
         if !isHexFile {
             return nil

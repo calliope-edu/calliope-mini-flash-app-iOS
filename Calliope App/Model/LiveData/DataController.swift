@@ -11,12 +11,12 @@ import Foundation
 class DataController {
     
     var availableSensors: [Sensor] = []
-    var activeServices: [CalliopeService] = []
+    static var activeServices: [CalliopeService] = []
     var apiCalliope: CalliopeAPI?
     var isRecording = false
     var timer : Timer?
     
-    var value: Int?
+    var value: Any?
     
     init() {
         guard let connectedCalliope = MatrixConnectionViewController.instance.usageReadyCalliope else {
@@ -35,8 +35,8 @@ class DataController {
         } ?? []
     }
     
-    func sensorStartRecordingFor(chart : Chart, response: @escaping (Any) -> ()) {
-        if !activeServices.contains(chart.sensorType) {
+    func sensorStartRecordingFor(chart : Chart, response: @escaping ((String, Double, Double)) -> ()) {
+        if DataController.activeServices.contains(chart.sensorType) {
             return
         }
         if self.getAvailableSensors().contains(where: { compSensor in
@@ -48,42 +48,62 @@ class DataController {
             }
             self.timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
                 let newValue = self.fetchValue(service: chart.sensorType)
-                let parsedValue = DataParser.encode(data: newValue, service: chart.sensorType)
-                Value.insertValue(value: parsedValue, chartsId: chart.id!)
-                response(newValue)
+                for (axis, time, value) in newValue {
+                    let parsedValue = DataParser.encode(data: [axis : value], service: chart.sensorType)
+                    Value.insertValue(value: parsedValue, chartsId: chart.id!)
+                    response((axis, time, value))
+                }
             }
             self.isRecording = true
-            activeServices.append(chart.sensorType)
+            DataController.activeServices.append(chart.sensorType)
         }
     }
     
     func sensorStopRecordingFor(chart: Chart) {
         timer?.invalidate()
         if chart.sensorType == .uart {
-            apiCalliope?.getTemperatureData = nil
+            apiCalliope?.uartValueNotification = nil
         }
         isRecording = false
-        _ = activeServices.remove(object: chart.sensorType)
+        _ = DataController.activeServices.remove(object: chart.sensorType)
     }
     
-    func fetchValue(service : CalliopeService) -> Any {
+    func fetchValue(service : CalliopeService) -> [(String, Double, Double)] {
         asyncAndWait(on: DispatchQueue.global(qos: .userInitiated)) {
+            let timestamp = (Date().timeIntervalSinceReferenceDate * 100).rounded(toPlaces: 0)
             switch service {
             case .accelerometer:
                 let value = self.apiCalliope?.accelerometerValue ?? (0, 0, 0)
-                return ((Double(value.0) / 1000), (Double(value.1) / 1000), (Double(value.2) / 1000))
+                return [
+                    ("X", timestamp, Double(value.0)),
+                    ("Y", timestamp, Double(value.1)),
+                    ("Z", timestamp, Double(value.2))
+                ]
             case .magnetometer:
                 let value = self.apiCalliope?.magnetometerValue ?? (0, 0, 0)
-                return (Double(value.0), Double(value.1), Double(value.2))
+                return [
+                    ("X", timestamp, Double(value.0)),
+                    ("Y", timestamp, Double(value.1)),
+                    ("Z", timestamp, Double(value.2))
+                ]
             case .temperature:
-                return Double(self.apiCalliope?.temperature ?? 0)
+                return [
+                    ("Temperature", timestamp, Double(self.apiCalliope?.temperature ?? 0))
+                ]
             case .uart:
-                if self.apiCalliope?.getTemperatureData == nil {
-                    self.apiCalliope?.getTemperatureData = {value in self.value = value}
+                guard self.apiCalliope?.uartValueNotification != nil else {
+                    self.apiCalliope?.uartValueNotification = {
+                        value in
+                        self.value = value }
+                    return [("",  0, 0.0)]
                 }
-                return Double(self.value ?? 0)
+                guard let value = self.value as? String else {
+                    return [("",  0, 0.0)]
+                }
+                let stringList = value.split(separator: ":")
+                return [(String(stringList[0]), timestamp, Double(stringList[1].trimmingCharacters(in: .whitespacesAndNewlines)) ?? 0.0)]
             default:
-                return 0
+                return [("",  0, 0.0)]
             }
         }
     }

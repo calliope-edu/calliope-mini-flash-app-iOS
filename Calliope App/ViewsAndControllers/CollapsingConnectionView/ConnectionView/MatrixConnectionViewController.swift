@@ -181,7 +181,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 	}
     
     @IBAction func startUSBconnect(_ sender: Any) {
-        print("Start connection to USB Device")
+        LogNotify.log("Start connection to USB Device")
         self.connector.initializeConnectionToUsbCalliope(view: self)
     }
     

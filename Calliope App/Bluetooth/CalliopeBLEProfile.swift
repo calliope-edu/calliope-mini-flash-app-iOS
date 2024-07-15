@@ -83,6 +83,8 @@ enum CalliopeService: String, CaseIterable, Codable {
 	/// This is an implementation of Nordic Semicondutor's UART/Serial Port Emulation over Bluetooth low energy.
 	/// See https://developer.nordicsemi.com/nRF5_SDK/nRF51_SDK_v8.x.x/doc/8.0.0/s110/html/a00072.html for the original Nordic Semiconductor documentation by way of background.
 	case uart = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E"
+    
+    case empty = "0000"
 }
 
 
@@ -231,7 +233,7 @@ enum CalliopeCharacteristic: String, CaseIterable {
 
 	/// allows the micro:bit to transmit a byte array containing an arbitrary number of arbitrary octet values to a connected device.
 	/// The maximum number of bytes which may be transmitted in one PDU is limited to the MTU minus three or 20 octets to be precise.
-	case txCharacteristic = "6E400002-B5A3-F393-E0A9-E50E24DCCA9E"
+	case uartCharacteristic = "6E400002-B5A3-F393-E0A9-E50E24DCCA9E"
 	/// This characteristic allows a connected client to send a byte array containing an arbitrary number of arbitrary octet values to a connected micro:bit.
 	/// The maximum number of bytes which may be transmitted in one PDU is limited to the MTU minus three or 20 octets to be precise.
 	case rxCharacteristic = "6E400003-B5A3-F393-E0A9-E50E24DCCA9E"
@@ -310,7 +312,7 @@ struct CalliopeBLEProfile {
 		.led: [.ledMatrixState, .ledText, .scrollingDelay],
 		.event: [.microBitRequirements, .microBitEvent, .clientRequirements, .clientEvent],
 		.temperature: [.temperature, .temperaturePeriod],
-		.uart: [.txCharacteristic, .rxCharacteristic],
+		.uart: [.uartCharacteristic, .rxCharacteristic],
 		.dfuControlService: [.dfuControl],
         .partialFlashing: [.partialFlashing],
         .secureDfuService: [.secureDfuCharacteristic],

@@ -129,7 +129,7 @@ class FirmwareUpload {
         let uploadController = UIAlertController(title: NSLocalizedString("Übertragung läuft", comment: ""), message: "", preferredStyle: .alert)
         
         let progressView: UIView
-        let logHeight = 0 //TODO: differenciate debug / production
+        let logHeight = 0
         
         if calliope is USBCalliope {
             uploadController.message = NSLocalizedString("Der Calliope mini startet das Programm, sobald die Übertragung beendet ist.", comment: "")

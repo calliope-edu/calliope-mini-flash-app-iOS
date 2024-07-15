@@ -142,7 +142,7 @@ class CalliopeAPI: BLECalliope {
 
 	/// data received via UART, 20 bytes max.
 	public func readSerialData() -> Data? {
-		return read(.txCharacteristic)
+		return read(.uartCharacteristic)
 	}
 
 	/// data sent via UART, 20 bytes max.
@@ -150,9 +150,9 @@ class CalliopeAPI: BLECalliope {
 		write(data, .rxCharacteristic)
 	}
     
-    public var getTemperatureData: ((Int?) -> ())? {
-        get { return getNotifyListener(for: .txCharacteristic) }
-        set { setNotifyListener(for: .txCharacteristic, newValue) }
+    public var uartValueNotification: ((String) -> ())? {
+        get { return getNotifyListener(for: .uartCharacteristic) }
+        set { setNotifyListener(for: .uartCharacteristic, newValue) }
     }
 
 	//MARK: calliope specialities
@@ -328,9 +328,11 @@ class CalliopeAPI: BLECalliope {
 		case .temperature:
 			let temperature: Int8? = characteristic.interpret(dataBytes: value)
 			temperatureNotification?(temperature)
-        case .txCharacteristic:
-            let value: String? = characteristic.interpret(dataBytes: value)
-            getTemperatureData?(Int(value ?? "10"))
+        case .uartCharacteristic:
+            guard let value: String = characteristic.interpret(dataBytes: value) else {
+                return
+            }
+            uartValueNotification?(value)
 		default:
 			return
 		}
@@ -385,7 +387,7 @@ extension CalliopeCharacteristic {
 					UInt16(littleEndian:uint16ptr.load(fromByteOffset: 2, as: UInt16.self)))
 				return (event, value)
 				} as? T
-		case .txCharacteristic:
+		case .uartCharacteristic:
             return String(data: data, encoding: .utf8) as? T
 		case .temperature:
 			let localized = Int8(ValueLocalizer.current.localizeTemperature(unlocalized: Double(Int8(littleEndianData: data) ?? 42)))

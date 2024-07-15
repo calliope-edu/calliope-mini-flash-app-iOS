@@ -33,23 +33,24 @@ struct Chart: Codable, FetchableRecord, PersistableRecord, DiffAware {
                 tmpChart?.id = db.lastInsertedRowID
             }
         } catch {
-            print("Failed to insert project: \(error)")
+            LogNotify.log("Failed to insert project: \(error)")
         }
         DatabaseManager.notifyChange()
         return tmpChart
     }
     
-    static func fetchChartsBy(projectsId: Int64?) -> [Chart]? {
-        var retrievedCharts: [Chart]?
+    static func fetchChartsBy(projectsId: Int64?) -> [Chart] {
+        var retrievedCharts: [Chart] = []
         do {
             try DatabaseManager.shared.dbQueue?.read { db in
                 retrievedCharts = try Chart.fetchAll(db)
-                retrievedCharts = retrievedCharts?.filter({ chart in
+                retrievedCharts = retrievedCharts.filter({ chart in
                     return chart.projectsId == projectsId
                 })
             }
         } catch {
             LogNotify.log("Error fetching charts data from database: \(error)")
+            return retrievedCharts
         }
         return retrievedCharts
     }

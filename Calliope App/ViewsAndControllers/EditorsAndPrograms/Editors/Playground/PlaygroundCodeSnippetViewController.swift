@@ -9,6 +9,7 @@
 import UIKit
 import Highlightr
 import MobileCoreServices
+import UniformTypeIdentifiers
 
 protocol CodeSnippetController: UIViewController {
     var codeSnippet: CodeSnippet? { get set }
@@ -62,7 +63,7 @@ class PlaygroundCodeSnippetViewController: UIViewController, CodeSnippetControll
         guard let codeSnippet = codeSnippet, let data = codeSnippet.content.data(using: .utf8) else {
             return []
         }
-        let itemProvider = NSItemProvider(item: data as NSData, typeIdentifier: kUTTypeUTF8PlainText as String)
+        let itemProvider = NSItemProvider(item: data as NSData, typeIdentifier: UTType.utf8PlainText.identifier)
         let dragItem = UIDragItem(itemProvider: itemProvider)
         return [dragItem]
     }

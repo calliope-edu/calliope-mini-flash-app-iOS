@@ -23,7 +23,7 @@ extension Editor {
 // https://miniedit.calliope.cc/86184610-93de-11e7-a0b1-cd0ef2962ca5
 final class MiniEditor: Editor {
     public let name = "Calliope mini Editor"
-    public let url = URL(string: "/") //TODO: if used again, have URL in defaults
+    public let url = URL(string: "/") 
 
     init() {
         fatalError("MiniEditor not implemented currently")
@@ -49,7 +49,7 @@ final class MakeCode: Editor {
 	}()
 
     func download(_ request: URLRequest) -> EditorDownload? {
-        print(request)
+        LogNotify.log("\(request)")
         guard let s = request.url?.absoluteString, s.matches(regex: "^([^:]*://)?data:application/octet-streamng").count == 1, let url = URL(string:s) else { guard
             let s = request.url?.absoluteString,
             s.matches(regex: "^([^:]*://)?data:application/x-calliope-hex").count

@@ -38,7 +38,7 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
         }
         
         if fileManager.fileExists(atPath: filePath) {
-            print("Validated Calliope folder")
+            LogNotify.log("Validated Calliope folder")
         } else {
             LogNotify.log("Failed to Validate calliope")
         }
@@ -97,7 +97,7 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
         do {
             try data.write(to: eraseCommandFile)
         } catch {
-            print(error)
+            LogNotify.log("Error: \(error)")
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
@@ -110,7 +110,7 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
             do {
                 try data.write(to: autoRestartConfigurationCommandFile)
             } catch {
-                print(error)
+                LogNotify.log("Error: \(error)")
             }
         }
         
@@ -124,7 +124,7 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
             do {
                 try data.write(to: startInterfaceCommandFile)
             } catch {
-                print(error)
+                LogNotify.log("Error: \(error)")
             }
         }
         
@@ -139,7 +139,7 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
                 let data = try Data(contentsOf: file!.calliopeUSBUrl)
                 try data.write(to: USBCalliope.calliopeLocation!.appendingPathComponent(file!.calliopeUSBUrl.lastPathComponent))
             } catch {
-                print(error)
+                LogNotify.log("Error: \(error)")
             }
         }
         

@@ -102,16 +102,6 @@ struct HexParser {
             let payload = line[beginIndex..<endIndex]
             beginIndex = endIndex
 
-            
-            // FIXME
-            //                e = b + 2
-            //                guard let checksum = UInt8(line[b..<e], radix: 16) else { return }
-            //                b = e
-            //
-            //                guard checksum == calcChecksum(addressLo, type, data) else {
-            //                    print("checksum", checksum, calcChecksum(addressLo, type, data))
-            //                return }
-            
             switch(type) {
             case 0, 13: // Data
                 let position = addressHi + addressLo
@@ -124,16 +114,12 @@ struct HexParser {
             case 2: // EXT SEGEMENT ADDRESS
                 guard let segment = UInt32(payload, radix:16) else { return }
                 addressHi = segment << 4
-            // print(String(format:"EXT SEGEMENT ADDRESS 0x%x", addressHi + addressLo))
             case 3: // START SEGMENT ADDRESS
-                // print("START SEGMENT ADDRESS")
                 break
             case 4: // EXT LINEAR ADDRESS
                 guard let segment = UInt32(payload, radix:16) else { return }
                 addressHi = segment << 16
-            // print(String(format:"EXT LINEAR ADDRESS 0x%x", addressHi + addressLo))
             case 5: // START LINEAR ADDRESS
-                // print("START LINEAR ADDRESS")
                 break
             case 10: // Block Start Adress
                 isUniversal = true

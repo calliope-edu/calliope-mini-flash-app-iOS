@@ -15,16 +15,16 @@ struct Value: Codable, FetchableRecord, PersistableRecord {
     
     var id: Int64?
     var value: String
-    var time: Int64
+    var time: Double
     var chartsId: Int64
     
     static func insertValue(value: String, chartsId: Int64) {
         do {
             try DatabaseManager.shared.dbQueue?.write { db in
-                try Value(value: value, time: Int64(Date().timeIntervalSinceNow * 1000), chartsId: chartsId).insert(db)
+                try Value(value: value, time: (Date().timeIntervalSinceReferenceDate * 100).rounded(toPlaces: 0), chartsId: chartsId).insert(db)
             }
         } catch {
-            print("Failed to insert value: \(error)")
+            LogNotify.log("Failed to insert value: \(error)")
         }
         DatabaseManager.notifyChange()
     }

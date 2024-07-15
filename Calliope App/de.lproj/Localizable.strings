@@ -290,3 +290,5 @@ Weitere Infos unter „Hilfe”.";
 "Accelerometer" = "Beschleunigungsmesser";
 
 "Magnetometer" = "Magnetfeldsensor";
+
+"User defined (UART)" = "Benutzerdefiniert (UART)";

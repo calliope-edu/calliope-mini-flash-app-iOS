@@ -69,13 +69,6 @@ class ProgramsCollectionViewController: UICollectionViewController, ProgramCellD
 
     // MARK: UICollectionViewDelegate
 
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
     // Uncomment this method to specify if the specified item should be selected
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         return true
@@ -179,7 +172,7 @@ class ProgramsCollectionViewController: UICollectionViewController, ProgramCellD
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         self.present(alert, animated: true)
     }
-
+    
     deinit {
         NotificationCenter.default.removeObserver(programSubscription!)
     }

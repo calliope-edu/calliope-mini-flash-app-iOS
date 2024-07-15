@@ -90,7 +90,6 @@ struct BLEDataTypes {
 	}
 
 	enum AccelerometerEventValue: EventValue {
-		//case MICROBIT_ACCELEROMETER_EVT_NONE         = 0 // TODO: why this?
 		case MICROBIT_ACCELEROMETER_EVT_TILT_UP      = 1
 		case MICROBIT_ACCELEROMETER_EVT_TILT_DOWN    = 2
 		case MICROBIT_ACCELEROMETER_EVT_TILT_LEFT    = 3
@@ -101,8 +100,7 @@ struct BLEDataTypes {
 		case MICROBIT_ACCELEROMETER_EVT_2G           = 8
 		case MICROBIT_ACCELEROMETER_EVT_3G           = 9
 		case MICROBIT_ACCELEROMETER_EVT_6G           = 10
-		//case MICROBIT_ACCELEROMETER_EVT_8G           = 11 // TODO: in one declaration, this is not defined
-		case MICROBIT_ACCELEROMETER_EVT_SHAKE        = 11 // TODO: in one declaration it´s 11, in the other 12
+		case MICROBIT_ACCELEROMETER_EVT_SHAKE        = 11 
 	}
 
 	enum ButtonEvent: EventValue {

@@ -25,7 +25,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="699" height="1000"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XBd-OB-Nlq">
-                                        <rect key="frame" x="11" y="10" width="328.5" height="148.5"/>
+                                        <rect key="frame" x="11" y="10" width="328.5" height="807.5"/>
                                         <color key="backgroundColor" name="calliope-lightgray"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -43,22 +43,65 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="XPz-7S-14H">
-                                        <rect key="frame" x="31" y="30" width="637" height="686.5"/>
+                                        <rect key="frame" x="31" y="30" width="637" height="767.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Xvk-5m-938">
-                                                <rect key="frame" x="0.0" y="0.0" width="288.5" height="108.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="288.5" height="767.5"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="VBO-5D-PIe">
-                                                        <rect key="frame" x="0.0" y="0.0" width="288.5" height="108.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="288.5" height="767.5"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ov1-de-29k">
-                                                                <rect key="frame" x="0.0" y="0.0" width="288.5" height="108.5"/>
-                                                                <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-kleine Anleitung</string>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Send sensor data directly from Calliope mini to the app" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ov1-de-29k">
+                                                                <rect key="frame" x="0.0" y="0.0" width="288.5" height="42.5"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N71-qD-IZn">
+                                                                <rect key="frame" x="0.0" y="62.5" width="288.5" height="64.5"/>
+                                                                <string key="text">1. Open MakeCode Editor
+2. Add the Bluetooth extension to your project</string>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y14-Q5-t3m">
+                                                                <rect key="frame" x="0.0" y="147" width="288.5" height="397"/>
+                                                                <subviews>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calliope_bluetooth_extension" translatesAutoresizingMaskIntoConstraints="NO" id="84M-Hz-aHe">
+                                                                        <rect key="frame" x="19.5" y="0.0" width="250" height="397"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" constant="250" id="fQb-eU-Gos"/>
+                                                                        </constraints>
+                                                                    </imageView>
+                                                                </subviews>
+                                                                <constraints>
+                                                                    <constraint firstItem="84M-Hz-aHe" firstAttribute="top" secondItem="y14-Q5-t3m" secondAttribute="top" id="IeS-qH-UBv"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="84M-Hz-aHe" secondAttribute="bottom" id="pFg-eu-Dcf"/>
+                                                                    <constraint firstItem="84M-Hz-aHe" firstAttribute="centerX" secondItem="y14-Q5-t3m" secondAttribute="centerX" id="xlg-x8-Z6L"/>
+                                                                </constraints>
+                                                            </view>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OaB-k3-pOM">
+                                                                <rect key="frame" x="0.0" y="564" width="288.5" height="86.5"/>
+                                                                <string key="text">3. Select the desired services for your program to view or record.
+4. Start the program on your Calliope mini.</string>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Detailed instructions can be found on the website:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cMt-qa-gH9">
+                                                                <rect key="frame" x="0.0" y="670.5" width="288.5" height="42.5"/>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j6E-jo-Y6K">
+                                                                <rect key="frame" x="0.0" y="733" width="288.5" height="34.5"/>
+                                                                <state key="normal" title="Button"/>
+                                                                <buttonConfiguration key="configuration" style="filled" title="Calliope.cc">
+                                                                    <color key="baseBackgroundColor" name="calliope-pink"/>
+                                                                </buttonConfiguration>
+                                                            </button>
                                                         </subviews>
                                                     </stackView>
                                                 </subviews>
@@ -69,7 +112,7 @@ kleine Anleitung</string>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="sjo-QK-BNp">
                                                         <rect key="frame" x="0.0" y="0.0" width="288.5" height="686.5"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gYD-YY-Lxx">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Here you will find your projects. You can view, process, and share the recorded data, as well as download it as a table." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gYD-YY-Lxx">
                                                                 <rect key="frame" x="0.0" y="0.0" width="288.5" height="86.5"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                 <nil key="textColor"/>
@@ -160,7 +203,7 @@ kleine Anleitung</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GtY-mM-QMm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1090" y="423"/>
+            <point key="canvasLocation" x="1089.55078125" y="422.9868228404099"/>
         </scene>
         <!--Project Collection View Controller-->
         <scene sceneID="xhp-1j-Ru9">
@@ -386,7 +429,7 @@ kleine Anleitung</string>
         <scene sceneID="uHp-mq-DKm">
             <objects>
                 <navigationController title="Sensorendaten" automaticallyAdjustsScrollViewInsets="NO" id="cnw-wD-B2K" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Projekte und Sensoren" image="menubar.rectangle" catalog="system" id="Kjn-CJ-sdt"/>
+                    <tabBarItem key="tabBarItem" title="Sensordaten" image="menubar.rectangle" catalog="system" id="Kjn-CJ-sdt"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="aBr-EN-0mF">
@@ -444,7 +487,7 @@ kleine Anleitung</string>
                                                 <action selector="deleteChartView:" destination="yal-Fn-6CG" eventType="touchUpInside" id="GNv-7i-Sp9"/>
                                             </connections>
                                         </button>
-                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Owr-Bx-mhz">
+                                        <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Owr-Bx-mhz">
                                             <rect key="frame" x="185" y="20" width="330.5" height="41"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="m4K-fl-Quy">
@@ -560,28 +603,39 @@ kleine Anleitung</string>
                                                 <color key="baseBackgroundColor" systemColor="systemTealColor"/>
                                             </buttonConfiguration>
                                         </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nBn-0t-SZp">
-                                            <rect key="frame" x="390" y="260" width="24" height="20.5"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="iJs-Ns-gGN">
+                                            <rect key="frame" x="564" y="19.5" width="61" height="41"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="On7-FU-yd0">
+                                                    <rect key="frame" x="0.0" y="0.0" width="61" height="20.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ok7-FQ-MgW">
+                                                    <rect key="frame" x="18.5" y="20.5" width="24" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
                                     </subviews>
                                     <color key="backgroundColor" name="calliope-brightturquoise"/>
                                     <color key="tintColor" name="calliope-brightturquoise"/>
                                     <constraints>
                                         <constraint firstItem="k32-SG-WvS" firstAttribute="top" secondItem="it0-Za-2gA" secondAttribute="top" constant="20" id="0X4-Pm-g73"/>
-                                        <constraint firstItem="nBn-0t-SZp" firstAttribute="leading" secondItem="JaA-8r-ocG" secondAttribute="trailing" constant="20" id="3Nz-y7-plW"/>
                                         <constraint firstItem="Owr-Bx-mhz" firstAttribute="top" secondItem="it0-Za-2gA" secondAttribute="top" constant="20" id="CYr-NS-ZbT"/>
+                                        <constraint firstItem="vNv-X5-tfZ" firstAttribute="leading" secondItem="iJs-Ns-gGN" secondAttribute="trailing" constant="15" id="DOG-Bq-YT9"/>
                                         <constraint firstItem="XBq-b6-ul5" firstAttribute="leading" secondItem="k32-SG-WvS" secondAttribute="trailing" constant="5" id="DQN-xj-Nr7"/>
                                         <constraint firstItem="Owr-Bx-mhz" firstAttribute="centerX" secondItem="it0-Za-2gA" secondAttribute="centerX" id="Fal-qC-LyL"/>
                                         <constraint firstItem="JaA-8r-ocG" firstAttribute="centerX" secondItem="it0-Za-2gA" secondAttribute="centerX" id="GD9-bf-R7w"/>
+                                        <constraint firstItem="iJs-Ns-gGN" firstAttribute="centerY" secondItem="vNv-X5-tfZ" secondAttribute="centerY" id="GSK-57-QdC"/>
                                         <constraint firstAttribute="bottom" secondItem="JaA-8r-ocG" secondAttribute="bottom" constant="10" id="HZv-7m-ew1"/>
                                         <constraint firstItem="JaA-8r-ocG" firstAttribute="top" secondItem="LCA-Un-tnf" secondAttribute="bottom" constant="10" id="HdV-PP-Tee"/>
                                         <constraint firstItem="vNv-X5-tfZ" firstAttribute="top" secondItem="it0-Za-2gA" secondAttribute="top" constant="20" id="HvU-Nh-MIS"/>
                                         <constraint firstItem="k32-SG-WvS" firstAttribute="leading" secondItem="it0-Za-2gA" secondAttribute="leading" constant="20" id="L4G-5p-VrP"/>
                                         <constraint firstItem="LCA-Un-tnf" firstAttribute="leading" secondItem="it0-Za-2gA" secondAttribute="leading" constant="20" id="NYb-Hf-0ha"/>
-                                        <constraint firstItem="nBn-0t-SZp" firstAttribute="centerY" secondItem="JaA-8r-ocG" secondAttribute="centerY" id="PE8-St-gwj"/>
                                         <constraint firstAttribute="trailing" secondItem="LCA-Un-tnf" secondAttribute="trailing" constant="20" id="Sp9-t4-lKi"/>
                                         <constraint firstAttribute="trailing" secondItem="vNv-X5-tfZ" secondAttribute="trailing" constant="20" id="YWW-pT-b1o"/>
                                         <constraint firstItem="Owr-Bx-mhz" firstAttribute="bottom" secondItem="LCA-Un-tnf" secondAttribute="top" constant="-10" id="qFk-Na-518"/>
@@ -596,7 +650,7 @@ kleine Anleitung</string>
                                 <size key="customSize" width="700" height="300"/>
                                 <connections>
                                     <outlet property="avgValueLabel" destination="rN9-hs-kc2" id="ZiX-wi-NLD"/>
-                                    <outlet property="currentValueLabel" destination="nBn-0t-SZp" id="F8K-lO-0Fh"/>
+                                    <outlet property="currentValueLabel" destination="Ok7-FQ-MgW" id="Dv0-hW-LbT"/>
                                     <outlet property="deleteButton" destination="vNv-X5-tfZ" id="wjD-av-wwq"/>
                                     <outlet property="lineChartView" destination="LCA-Un-tnf" id="rYA-2G-c3x"/>
                                     <outlet property="maxValueLabel" destination="wtX-TM-5dr" id="wlQ-mz-lRB"/>
@@ -629,12 +683,13 @@ kleine Anleitung</string>
         </scene>
     </scenes>
     <resources>
+        <image name="calliope_bluetooth_extension" width="486" height="357"/>
         <image name="circle.fill" catalog="system" width="128" height="123"/>
         <image name="gearshape.fill" catalog="system" width="128" height="123"/>
         <image name="menubar.rectangle" catalog="system" width="128" height="93"/>
         <image name="play.fill" catalog="system" width="117" height="128"/>
-        <image name="plus" catalog="system" width="128" height="113"/>
-        <image name="trash" catalog="system" width="117" height="128"/>
+        <image name="plus" catalog="system" width="32" height="32"/>
+        <image name="trash" catalog="system" width="32" height="32"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
         <namedColor name="calliope-brightturquoise">
             <color red="0.40799999237060547" green="0.83099997043609619" blue="0.83099997043609619" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -654,11 +709,14 @@ kleine Anleitung</string>
         <namedColor name="calliope-orange">
             <color red="1" green="0.3059999942779541" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="calliope-pink">
+            <color red="0.90200001001358032" green="0.0" blue="0.49000000953674316" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemTealColor">
-            <color red="0.18823529410000001" green="0.69019607839999997" blue="0.78039215689999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.18823529411764706" green="0.69019607843137254" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

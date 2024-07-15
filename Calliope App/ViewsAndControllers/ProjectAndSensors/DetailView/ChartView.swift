@@ -11,7 +11,6 @@ import DGCharts
 
 
 extension LineChartView {
-    
     func layoutChartView() {
         self.xAxis.enabled = false
         self.xAxis.drawGridLinesEnabled = false
@@ -30,33 +29,20 @@ extension LineChartView {
         self.legend.enabled = false
         self.drawBordersEnabled = true
         self.minOffset = 20
-        //self.delegate = self
         self.backgroundColor = .white
         self.borderColor = .white
+        self.drawMarkers = true
     }
     
     func setupView(service: CalliopeService) {
         self.data?.clearValues()
         self.notifyDataSetChanged()
-        var lineChartDataSets: [LineChartDataSet] = []
-        switch service {
-        case .accelerometer:
-            lineChartDataSets.append(LineChartDataSet().layoutDataSet(color: .calliopeGreen))
-            lineChartDataSets.append(LineChartDataSet().layoutDataSet(color: .calliopePink))
-            lineChartDataSets.append(LineChartDataSet().layoutDataSet(color: .calliopeOrange))
-        default:
-            lineChartDataSets.append(LineChartDataSet().layoutDataSet(color: .calliopeGreen))
-        }
-        
-        let lineChartData = LineChartData(dataSets: lineChartDataSets)
-        lineChartData.setDrawValues(false)
-        self.data = lineChartData
         self.layoutChartView()
     }
 }
 
 extension LineChartDataSet {
-    func layoutDataSet(color: NSUIColor) -> LineChartDataSet{
+    func layoutDataSet(color: NSUIColor) -> LineChartDataSet {
         self.setColor(color)
         self.lineWidth = 3
         self.mode = .linear
@@ -67,6 +53,18 @@ extension LineChartDataSet {
         self.drawHorizontalHighlightIndicatorEnabled = false
         self.highlightLineWidth = 2
         self.highlightColor = .calliopeGreen
+        self.visible = true
         return self
+    }
+}
+
+extension LineChartData {
+    func getLineChartDataSetForLabel(_ label: String) -> LineChartDataSet? {
+        for dataSet in self.dataSets {
+            if dataSet.label == label {
+                return dataSet as? LineChartDataSet
+            }
+        }
+        return nil
     }
 }

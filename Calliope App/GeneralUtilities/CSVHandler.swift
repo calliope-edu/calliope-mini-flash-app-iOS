@@ -15,7 +15,7 @@ class CSVHandler {
         
         // Get the documents directory URL
         guard let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
-            print("Error getting documents directory URL")
+            LogNotify.log("Error getting documents directory URL")
             return
         }
         
@@ -24,9 +24,9 @@ class CSVHandler {
         // Write the string to the file
         do {
             try contents.write(to: fileURL, atomically: true, encoding: .utf8)
-            print("File saved: \(fileURL)")
+            LogNotify.log("File saved: \(fileURL)")
         } catch {
-            print("Error writing to file: \(error)")
+            LogNotify.log("Error writing to file: \(error)")
         }
     }
     
@@ -37,18 +37,14 @@ class CSVHandler {
         var csvString = ""
         
         // Get the headers from the keys of the first dictionary
-        let headers = "timestep, value \n "
+        let headers = "timestep, value, sensor_type \n "
         csvString += headers
         
         let data = fetchDataFor(project: project)
         
         // Add the rows
         for row in data {
-            var rowString = ""
-            for value in row {
-                rowString += "\(value)"
-                rowString += ","
-            }
+            var rowString = "\(row.1), \(row.0), \(row.2)"
             csvString += rowString + "\n"
         }
         
@@ -56,14 +52,14 @@ class CSVHandler {
     }
 
     
-    static func fetchDataFor(project: Int64) -> [[String]]{
+    static func fetchDataFor(project: Int64) -> [(String, Double, CalliopeService)]{
         let charts = Chart.fetchChartsBy(projectsId: project)
-        var dataValues: [[String]] = []
-        for chart in charts! {
+        var dataValues: [(String, Double, CalliopeService)] = []
+        for chart in charts {
             //TODO: Handle Axis Properly
             let values = Value.fetchValuesBy(chartId: chart.id)
             for value in values {
-                var entry: [String] = []
+                var entry: (String, Double, CalliopeService) = (value.value, value.time, chart.sensorType)
                 dataValues.append(entry)
             }
             

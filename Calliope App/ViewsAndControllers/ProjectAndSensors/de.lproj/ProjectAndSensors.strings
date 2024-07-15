@@ -6,10 +6,7 @@
 "Dgf-wX-T07.text" = "Projektname";
 
 /* Class = "UITabBarItem"; title = "Projects and Sensors"; ObjectID = "Kjn-CJ-sdt"; */
-"Kjn-CJ-sdt.title" = "Projekte und Sensoren";
-
-/* Class = "UILabel"; text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\nkleine Anleitung"; ObjectID = "Ov1-de-29k"; */
-"Ov1-de-29k.text" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\nkleine Anleitung";
+"Kjn-CJ-sdt.title" = "Sensordaten";
 
 /* Class = "UILabel"; text = "Maximum"; ObjectID = "QgC-6o-TvH"; */
 "QgC-6o-TvH.text" = "Maximum";
@@ -27,7 +24,22 @@
 "dqZ-FU-7Ks.text" = "Durchschnitt";
 
 /* Class = "UILabel"; text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."; ObjectID = "gYD-YY-Lxx"; */
-"gYD-YY-Lxx.text" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+"gYD-YY-Lxx.text" = "Hier findest du bereits erstellte Projekte. Die aufgenommenen Daten kannst du dir anschauen, weiterverarbeiten und teilen sowie als Tabelle herunterladen.";
 
 /* Class = "UIViewController"; title = "Sensors and Projects"; ObjectID = "nJx-VD-M8y"; */
 "nJx-VD-M8y.title" = "Sensoren und Projekte";
+
+/**/
+"On7-FU-yd0.text" = "Aktuell";
+
+/**/
+"Ov1-de-29k.text" = "Sensordaten vom Calliope mini direkt an die App senden";
+
+/**/
+"N71-qD-IZn.text" = "1. Starte MakeCode. \n2. Lade die Bluetooth-Erweiterung in dein Projekt.";
+
+/**/
+"OaB-k3-pOM.text" = "3. Wähle die gewünschten Dienste für dein Programm aus, um diese anzusehen oder aufzunehmen.\n4. Starte das Programm auf deinem Calliope mini.";
+
+/**/
+"cMt-qa-gH9.text" = "Detaillierte Anweisungen findest du auf der Webseite: Calliope.cc";

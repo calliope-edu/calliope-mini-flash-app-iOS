@@ -39,7 +39,7 @@ class DatabaseManager {
             createTables()
             try migrator.migrate(dbQueue!)
         } catch {
-            print("Database setup failed: \(error)")
+            LogNotify.log("Database setup failed: \(error)")
         }
     }
 

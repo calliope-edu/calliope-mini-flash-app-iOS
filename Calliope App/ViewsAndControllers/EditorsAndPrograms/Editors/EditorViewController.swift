@@ -5,8 +5,7 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
 
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
-    //TODO: after ios11 is dropped, make this a LET constant and remove the exclamation mark
-    var editor: Editor!
+    let editor: Editor
 
     var webview: WKWebView! //webviews are buggy and cannot be placed via interface builder
     lazy var documentsPath: URL = { FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0] }()
@@ -181,18 +180,6 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
                 LogNotify.log(error.localizedDescription)
             }
         }
-        
-        /* do {
-            DispatchQueue.main.async {
-                HexFileStoreDialog.showStoreHexUI(controller: self, hexFile: download.url) { error in
-                    //TODO: some reaction
-                } saveCompleted: { file in
-                    FirmwareUpload.uploadWithoutConfirmation(controller: self, program: file, partialFlashing: true) {
-                        MatrixConnectionViewController.instance.connect()
-                    }
-                }
-            }
-        } */
     }
     
     private func saveFile(filename: String, data:Data, path:URL? = nil) -> (Bool, Error?) {

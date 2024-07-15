@@ -261,8 +261,6 @@
 		600E632D2C33D7BB0027AE61 /* DataParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataParser.swift; sourceTree = "<group>"; };
 		600E63312C3424580027AE61 /* BaseChartViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseChartViewCell.swift; sourceTree = "<group>"; };
 		600E63332C342DC10027AE61 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ProjectAndSensors.storyboard; sourceTree = "<group>"; };
-		600E63382C342FD60027AE61 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ProjectAndSensors.strings; sourceTree = "<group>"; };
-		600E633B2C34360E0027AE61 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ProjectAndSensors.strings; sourceTree = "<group>"; };
 		600E63432C343ABB0027AE61 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		601040AB2B592B7300526735 /* HexFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexFileManager.swift; sourceTree = "<group>"; };
 		601A19142B30658200E98E69 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
@@ -270,6 +268,8 @@
 		60316BF92B0210CC00130C0D /* CalliopeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeFactory.swift; sourceTree = "<group>"; };
 		604841D42B1F328A0037A825 /* OnboardingOfflineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingOfflineViewController.swift; sourceTree = "<group>"; };
 		6055CDB52BBEE1E50007F6B0 /* CalliopeBlocksStartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeBlocksStartViewController.swift; sourceTree = "<group>"; };
+		60676F4D2C41328600014388 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ProjectAndSensors.strings; sourceTree = "<group>"; };
+		60676F4E2C41328D00014388 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ProjectAndSensors.strings; sourceTree = "<group>"; };
 		607E71C52B8E30D8008EC146 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ConnectionView.strings; sourceTree = "<group>"; };
 		607E71C72B8E30DA008EC146 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ConnectionView.strings; sourceTree = "<group>"; };
 		6094C3902C045FA9006F4CB4 /* ApiCalliope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiCalliope.swift; sourceTree = "<group>"; };
@@ -662,14 +662,6 @@
 			path = CalliopeBlocks;
 			sourceTree = "<group>";
 		};
-		6094C3922C045FBF006F4CB4 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				6094C3902C045FA9006F4CB4 /* ApiCalliope.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
 		60A40DED2BF782C80069A3B5 /* ProjectAndSensors */ = {
 			isa = PBXGroup;
 			children = (
@@ -712,7 +704,6 @@
 		60D1FD692B6BCF3D00BC6202 /* CalliopeModels */ = {
 			isa = PBXGroup;
 			children = (
-				6094C3922C045FBF006F4CB4 /* Extensions */,
 				60D1FD6B2B6BCF9800BC6202 /* ConnectedCalliopes */,
 				60D1FD6A2B6BCF8700BC6202 /* DiscoveryCalliopes */,
 				60316BF92B0210CC00130C0D /* CalliopeFactory.swift */,
@@ -735,6 +726,7 @@
 			isa = PBXGroup;
 			children = (
 				60316BF72B01FEC300130C0D /* BLECalliope.swift */,
+				6094C3902C045FA9006F4CB4 /* ApiCalliope.swift */,
 				609D9BD52B67AD2200F2ECAE /* Calliope.swift */,
 				609D9BD32B67A15500F2ECAE /* USBCalliope.swift */,
 				2F61453122BF761F001C2734 /* FlashableBLECalliope.swift */,
@@ -1222,8 +1214,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				600E63332C342DC10027AE61 /* Base */,
-				600E63382C342FD60027AE61 /* en */,
-				600E633B2C34360E0027AE61 /* de */,
+				60676F4D2C41328600014388 /* en */,
+				60676F4E2C41328D00014388 /* de */,
 			);
 			name = ProjectAndSensors.storyboard;
 			sourceTree = "<group>";

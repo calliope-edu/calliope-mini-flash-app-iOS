@@ -58,7 +58,7 @@ final class Matrix {
         maybefriendly = scanner.scanUpToCharacters(from: brackets)
         
         guard let friendly:String = maybefriendly as String? else {
-            print("no friendly name found")
+            LogNotify.log("no friendly name found")
             return nil
         }
         
@@ -66,10 +66,10 @@ final class Matrix {
     }
     
     static func validateFriendly(_ friendly: String) -> Bool {
-        guard friendly.count == MICROBIT_NAME_LENGTH else { print("friendly count wrong"); return false }
+        guard friendly.count == MICROBIT_NAME_LENGTH else { LogNotify.log("friendly count wrong"); return false }
         let codeFlat = Array(Set(codebook.flatMap { return $0 })).joined(separator: "")
         let codeSet = CharacterSet(charactersIn: codeFlat)
-        guard friendly.trimmingCharacters(in: codeSet).count == 0 else { print("friendly contains false charaters"); return false }
+        guard friendly.trimmingCharacters(in: codeSet).count == 0 else { LogNotify.log("friendly contains false charaters"); return false }
         return true
     }
     

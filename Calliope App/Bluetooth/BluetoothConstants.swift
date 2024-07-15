@@ -16,7 +16,6 @@ struct BluetoothConstants {
     static let startDfuProcessDelay = 2.0
 
 	//set this to 0 if coupling is not necessary
-    //TODO do we need coupling now?
 	static let couplingDelay = 0.0
 	//this should be a little longer than the duration (in seconds)
 	//that the calliope needs for restarting in program 5

@@ -23,9 +23,6 @@
 /* Class = "UICommand"; title = "X"; ObjectID = "MwQ-F7-XGJ"; */
 "MwQ-F7-XGJ.title" = "X";
 
-/* Class = "UILabel"; text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\nkleine Anleitung"; ObjectID = "Ov1-de-29k"; */
-"Ov1-de-29k.text" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\nkleine Anleitung";
-
 /* Class = "UILabel"; text = "Maximum"; ObjectID = "QgC-6o-TvH"; */
 "QgC-6o-TvH.text" = "Maximum";
 
@@ -60,7 +57,7 @@
 "dqZ-FU-7Ks.text" = "Average";
 
 /* Class = "UILabel"; text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."; ObjectID = "gYD-YY-Lxx"; */
-"gYD-YY-Lxx.text" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+"gYD-YY-Lxx.text" = "Here you will find your projects. You can view, process, and share the recorded data, as well as download it as a table.";
 
 /* Class = "UICommand"; title = "Item 2"; ObjectID = "hTK-ZH-RqL"; */
 "hTK-ZH-RqL.title" = "Item 2";
@@ -97,3 +94,18 @@
 
 /* Class = "UIViewController"; title = "Project Overview"; ObjectID = "xWF-af-2iy"; */
 "xWF-af-2iy.title" = "Project Overview";
+
+/**/
+"On7-FU-yd0.text" = "Current";
+
+/**/
+"Ov1-de-29k.text" = "Send sensor data directly from Calliope mini to the app";
+
+/**/
+"N71-qD-IZn.text" = "1. Open MakeCode Editor \n2. Add the Bluetooth extension to your project";
+
+/**/
+"OaB-k3-pOM.text" = "3. Wähle die gewünschten Dienste für dein Programm aus, um diese anzusehen oder aufzunehmen. \n4. Starte das Programm auf deinem Calliope mini.";
+
+/**/
+"cMt-qa-gH9.text" = "Detaillierte Anweisungen findest du auf der Webseite: Calliope.cc";

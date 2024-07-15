@@ -33,7 +33,7 @@ struct Project: Codable, FetchableRecord, PersistableRecord, DiffAware {
                 tempProject?.id = db.lastInsertedRowID
             }
         } catch {
-            print("Failed to insert project: \(error)")
+            LogNotify.log("Failed to insert project: \(error)")
         }
         DatabaseManager.notifyChange()
         return tempProject

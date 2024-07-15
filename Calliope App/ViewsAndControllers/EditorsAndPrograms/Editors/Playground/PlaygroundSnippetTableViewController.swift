@@ -8,6 +8,7 @@
 
 import UIKit
 import MobileCoreServices
+import UniformTypeIdentifiers
 
 class PlaygroundSnippetTableViewController: UITableViewController, UITableViewDragDelegate {
 
@@ -102,7 +103,7 @@ class PlaygroundSnippetTableViewController: UITableViewController, UITableViewDr
         guard let codeSnippet = (tableView.cellForRow(at: indexPath) as? PlaygroundSnippetTableViewCell)?.snippet, let data = codeSnippet.content.data(using: .utf8) else {
             return []
         }
-        let itemProvider = NSItemProvider(item: data as NSData, typeIdentifier: kUTTypeUTF8PlainText as String)
+        let itemProvider = NSItemProvider(item: data as NSData, typeIdentifier: UTType.utf8PlainText.identifier as String)
         let dragItem = UIDragItem(itemProvider: itemProvider)
         return [dragItem]
     }

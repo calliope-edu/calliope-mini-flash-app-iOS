@@ -22,6 +22,7 @@ class ChartViewCell: BaseChartViewCell {
     }
     
     func setupChartView() {
+        lineChartView.delegate = self
         deleteButton.setTitle("", for: .normal)
         guard let chart = chart else {
             LogNotify.log("Setup of chart failed, no chart has been set")
@@ -62,132 +63,42 @@ class ChartViewCell: BaseChartViewCell {
             })
     }
     
-    fileprivate func setDefaultChartValues() {
-        let entries = [ChartDataEntry(x: 1, y: 0), ChartDataEntry(x: 1, y: 0), ChartDataEntry(x: 1, y: 0)]
-        addDataEntries(dataEntries: [entries])
-        hasDefaultValues = true
-    }
-    
     fileprivate func loadDatabaseDataIntoChart(_ chart: Chart) {
         LogNotify.log("Starting to load existing Data into Chart")
         let rawValues = Value.fetchValuesBy(chartId: chart.id)
-        var initialDataEntries: [[ChartDataEntry]] = []
         if !rawValues.isEmpty {
-            print(rawValues.count)
+            if baseTime == nil {
+                baseTime = rawValues.first?.time
+            }
             for value in rawValues {
                 let decodedValue = DataParser.decode(data: value.value, service: chart.sensorType)
-                initialDataEntries.append(getDataEntries(data: decodedValue, service: chart.sensorType))
+                getDataEntries(data: decodedValue, timestep: value.time, service: chart.sensorType)
             }
-            addDataEntries(dataEntries: initialDataEntries)
-        } else {
-            setDefaultChartValues()
-        }
-    }
-    
-    func setupSensorMenu() {
-        LogNotify.log("Setting up Sensor Menu")
-        var sensors : [UIAction] = []
-        for sensor in dataController.getAvailableSensors() {
-            let isDefault = (sensor.calliopeService == chart?.sensorType)
-            sensors.append(UIAction(title: sensor.name, state: isDefault ? .on : .off) { _ in
-                DispatchQueue.main.async {
-                    self.resetLineChartView(sensor: sensor)
-                }
-            })
-        }
-        self.sensor = SensorUtility.serviceSensorMap[chart?.sensorType ?? .accelerometer]
-        
-        if sensors.isEmpty {
+            addDataEntries(dataEntries: axisToData)
+            
             sensorTypeButton.isEnabled = false
-            if let count = lineChartView.data?.count, count > 1 {
-                sensors.append(UIAction(title: self.sensor!.name, state: .on) { _ in })
-            } else {
-                sensors.append(UIAction(title: "No Sensor Available") { _ in })
-            }
-        } else {
-            if let dataSets = lineChartView.data!.dataSets as? [ChartDataSet], dataSets[0].count > 1 {
-                sensorTypeButton.isEnabled = false
-            } else {
-                sensorTypeButton.isEnabled = true
-            }
-        }
-        
-        sensorAxisButton.menu = UIMenu(title: "Axis", children: [
-            UIAction(title: "XYZ") { _ in
-                self.lineChartView.data?.dataSets[0].visible = true
-                self.lineChartView.data?.dataSets[1].visible = true
-                self.lineChartView.data?.dataSets[2].visible = true
-                self.lineChartView.notifyDataSetChanged()
-            },
-            UIAction(title: "X") { _ in
-                self.lineChartView.data?.dataSets[0].visible = true
-                self.lineChartView.data?.dataSets[1].visible = false
-                self.lineChartView.data?.dataSets[2].visible = false
-                self.lineChartView.notifyDataSetChanged()
-            },
-            UIAction(title: "Y") { _ in
-                self.lineChartView.data?.dataSets[0].visible = false
-                self.lineChartView.data?.dataSets[1].visible = true
-                self.lineChartView.data?.dataSets[2].visible = false
-                self.lineChartView.notifyDataSetChanged()
-            },
-            UIAction(title: "Z") { _ in
-                self.lineChartView.data?.dataSets[0].visible = false
-                self.lineChartView.data?.dataSets[1].visible = false
-                self.lineChartView.data?.dataSets[2].visible = true
-                self.lineChartView.notifyDataSetChanged()
-            }
-        ])
-        
-        if chart?.sensorType == .accelerometer {
-            sensorAxisButton.isHidden = false
-        } else {
-            sensorAxisButton.isHidden = true
-        }
-        sensorTypeButton.menu = UIMenu(title: "Sensors", children: sensors)
-    }
-    
-    private func resetLineChartView(sensor: Sensor) {
-        self.sensor = sensor
-        self.lineChartView.data!.clearValues()
-        self.lineChartView.data = []
-        guard let chart = chart else {
-            return
-        }
-        Chart.deleteChart(id: chart.id)
-        self.chart = Chart.insertChart(sensorType: sensor.calliopeService, projectsId: chart.projectsId)
-        lineChartView.setupView(service: sensor.calliopeService)
-        setDefaultChartValues()
-        self.timestep = 1.0
-        
-        if sensor.calliopeService == .accelerometer {
-            self.sensorAxisButton.alpha = 0.0
-            self.sensorAxisButton.isHidden = false
-        } else {
-            self.sensorAxisButton.alpha = 1.0
-        }
-        UIView.animate(withDuration: 0.3) {
-            if sensor.calliopeService == .accelerometer {
-                self.sensorAxisButton.alpha = 1.0
-            } else {
-                self.sensorAxisButton.alpha = 0.0
-            }
-        }
-        if sensor.calliopeService != .accelerometer {
-            self.sensorAxisButton.isHidden = true
+            recordingButton.isEnabled = false
         }
     }
-    
     
     @IBAction func deleteChartView(_ sender: Any) {
         stopDataRecording()
         delegate.deleteChart(of: self, chart: chart)
     }
     
+    override func chartValueSelected(
+        _ chartView: ChartViewBase,
+        entry: ChartDataEntry,
+        highlight: Highlight
+    ) {
+        self.currentValueLabel.text = String(entry.y.rounded(toPlaces: 2))
+    }
+
     deinit {
         NotificationCenter.default.removeObserver(calliopeConnectedSubcription!)
         NotificationCenter.default.removeObserver(calliopeDisconnectedSubscription!)
     }
+    
 }
 
 extension LineChartDataSet {

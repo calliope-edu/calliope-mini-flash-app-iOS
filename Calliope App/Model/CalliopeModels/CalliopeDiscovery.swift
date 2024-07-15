@@ -70,8 +70,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
                     do {
                         connectedUSBCalliope = connectingUSBCalliope
                         connectedUSBCalliope?.usageReadyCalliope = try USBCalliope(calliopeLocation: connectingUSBCalliope.url)
-                        print("Calliope Discovery State now: ")
-                        print(state)
+                        LogNotify.log("Calliope Discovery State now: \(state)")
                     } catch {
                         LogNotify.log("Connecting to USB Calliope failed")
                     }

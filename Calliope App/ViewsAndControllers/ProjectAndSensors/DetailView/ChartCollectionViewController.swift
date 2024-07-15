@@ -14,8 +14,8 @@ import SwiftUI
 
 class ChartCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIDocumentPickerDelegate, ChartCellDelegate {
 
-    private lazy var charts: [Chart] = { () -> [Chart] in
-       return Chart.fetchChartsBy(projectsId: project?.id)!
+    private lazy var charts: [Chart] = {
+       return Chart.fetchChartsBy(projectsId: project?.id)
     }()
 
 
@@ -64,21 +64,18 @@ class ChartCollectionViewController: UICollectionViewController, UICollectionVie
             LogNotify.log("No project found")
             return
         }
-        charts = Chart.fetchChartsBy(projectsId: project.id)!
+        // Update charts list after deleting chart
+        charts = Chart.fetchChartsBy(projectsId: project.id)
 
         // Remove chart from UI
         guard let newIndexPath = collectionView.indexPath(for: cell) else {
-            print("ERROR")
             return
         }
-        
         collectionView.deleteItems(at: [newIndexPath])
     }
     
     func addChart() {
-        print("Adding New Sensor")
-        //TODO: Hier noch einen vernünftigen default sensorType setzen
-        guard let chart = Chart.insertChart(sensorType: .accelerometer, projectsId: project!.id) else {
+        guard let chart = Chart.insertChart(sensorType: .empty, projectsId: project!.id) else {
             return
         }
         let newIndexPath = IndexPath(item: charts.count, section: 0)
