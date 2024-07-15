@@ -43,9 +43,6 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
         projectContainerView?.translatesAutoresizingMaskIntoConstraints = false
         projectHeightConstraint = projectContainerView?.heightAnchor.constraint(equalToConstant: 10)
         projectHeightConstraint?.isActive = true
-        
-        //let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openLinkToCalliopeInformation))
-        //openLinkLabel.addGestureRecognizer(tapGesture)
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -9,7 +9,7 @@
 "5Mf-7E-FUy.normalTitle" = "Button";
 
 /* Class = "UINavigationItem"; title = "Sensoren und Projekte"; ObjectID = "DTy-e7-oGc"; */
-"DTy-e7-oGc.title" = "Sensoren und Projekte";
+"DTy-e7-oGc.title" = "Sensordaten";
 
 /* Class = "UILabel"; text = "Project Name"; ObjectID = "Dgf-wX-T07"; */
 "Dgf-wX-T07.text" = "Project Name";
@@ -105,7 +105,13 @@
 "N71-qD-IZn.text" = "1. Open MakeCode Editor \n2. Add the Bluetooth extension to your project";
 
 /**/
-"OaB-k3-pOM.text" = "3. Wähle die gewünschten Dienste für dein Programm aus, um diese anzusehen oder aufzunehmen. \n4. Starte das Programm auf deinem Calliope mini.";
+"OaB-k3-pOM.text" = "3. Select the desired services for your program to view or record. \n4. Start the program on your Calliope mini.";
 
 /**/
-"cMt-qa-gH9.text" = "Detaillierte Anweisungen findest du auf der Webseite: Calliope.cc";
+"cMt-qa-gH9.text" = "Detailed instructions can be found on the website:";
+
+"DTy-e7-oGc.title" = "Sensordata";
+
+"cnw-wD-B2K.title" = "Sensordata";
+
+"Kjn-CJ-sdt.title" = "Sensordata";

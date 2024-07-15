@@ -37,14 +37,14 @@ class CSVHandler {
         var csvString = ""
         
         // Get the headers from the keys of the first dictionary
-        let headers = "timestep, value, sensor_type \n "
+        let headers = "timestep, value, axisName, sensor_type \n "
         csvString += headers
         
         let data = fetchDataFor(project: project)
         
         // Add the rows
         for row in data {
-            var rowString = "\(row.1), \(row.0), \(row.2)"
+            var rowString = "\(row.0), \(row.1), \(row.2), \(row.3)"
             csvString += rowString + "\n"
         }
         
@@ -52,17 +52,18 @@ class CSVHandler {
     }
 
     
-    static func fetchDataFor(project: Int64) -> [(String, Double, CalliopeService)]{
+    static func fetchDataFor(project: Int64) -> [(Double, Double, String, CalliopeService)]{
         let charts = Chart.fetchChartsBy(projectsId: project)
-        var dataValues: [(String, Double, CalliopeService)] = []
+        var dataValues: [(Double, Double, String, CalliopeService)] = []
         for chart in charts {
-            //TODO: Handle Axis Properly
             let values = Value.fetchValuesBy(chartId: chart.id)
             for value in values {
-                var entry: (String, Double, CalliopeService) = (value.value, value.time, chart.sensorType)
-                dataValues.append(entry)
+                let decodedValue = DataParser.decode(data: value.value, service: chart.sensorType ?? .empty)
+                for entry in decodedValue {
+                    var entry: (Double, Double, String, CalliopeService) = (value.time, entry.value, entry.key, chart.sensorType ?? .empty)
+                    dataValues.append(entry)
+                }
             }
-            
         }
         return dataValues
     }

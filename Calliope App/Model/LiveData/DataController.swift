@@ -16,7 +16,7 @@ class DataController {
     var isRecording = false
     var timer : Timer?
     
-    var value: Any?
+    var uartValue: [Any] = []
     
     init() {
         guard let connectedCalliope = MatrixConnectionViewController.instance.usageReadyCalliope else {
@@ -36,7 +36,8 @@ class DataController {
     }
     
     func sensorStartRecordingFor(chart : Chart, response: @escaping ((String, Double, Double)) -> ()) {
-        if DataController.activeServices.contains(chart.sensorType) {
+        if DataController.activeServices.contains(chart.sensorType ?? .empty) {
+            isRecording = false
             return
         }
         if self.getAvailableSensors().contains(where: { compSensor in
@@ -47,15 +48,15 @@ class DataController {
                 return
             }
             self.timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
-                let newValue = self.fetchValue(service: chart.sensorType)
+                let newValue = self.fetchValue(service: chart.sensorType ?? .empty)
                 for (axis, time, value) in newValue {
-                    let parsedValue = DataParser.encode(data: [axis : value], service: chart.sensorType)
+                    let parsedValue = DataParser.encode(data: [axis : value], service: chart.sensorType ?? .empty)
                     Value.insertValue(value: parsedValue, chartsId: chart.id!)
                     response((axis, time, value))
                 }
             }
             self.isRecording = true
-            DataController.activeServices.append(chart.sensorType)
+            DataController.activeServices.append(chart.sensorType ?? .empty)
         }
     }
     
@@ -65,7 +66,7 @@ class DataController {
             apiCalliope?.uartValueNotification = nil
         }
         isRecording = false
-        _ = DataController.activeServices.remove(object: chart.sensorType)
+        _ = DataController.activeServices.remove(object: chart.sensorType ?? .empty)
     }
     
     func fetchValue(service : CalliopeService) -> [(String, Double, Double)] {
@@ -88,20 +89,25 @@ class DataController {
                 ]
             case .temperature:
                 return [
-                    ("Temperature", timestamp, Double(self.apiCalliope?.temperature ?? 0))
+                    (NSLocalizedString("Temperature", comment: ""), timestamp, Double(self.apiCalliope?.temperature ?? 0))
                 ]
             case .uart:
                 guard self.apiCalliope?.uartValueNotification != nil else {
                     self.apiCalliope?.uartValueNotification = {
                         value in
-                        self.value = value }
+                        self.uartValue.append(value) }
                     return [("",  0, 0.0)]
                 }
-                guard let value = self.value as? String else {
+                guard let uartValue = self.uartValue as? [String] else {
                     return [("",  0, 0.0)]
                 }
-                let stringList = value.split(separator: ":")
-                return [(String(stringList[0]), timestamp, Double(stringList[1].trimmingCharacters(in: .whitespacesAndNewlines)) ?? 0.0)]
+                var returnValues: [(String, Double, Double)] = []
+                for element in uartValue {
+                    let stringList = element.split(separator: ":")
+                    returnValues.append((String(stringList[0]), timestamp, Double(stringList[1].trimmingCharacters(in: .whitespacesAndNewlines)) ?? 0.0))
+                }
+                self.uartValue.removeAll()
+                return returnValues
             default:
                 return [("",  0, 0.0)]
             }

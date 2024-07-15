@@ -75,7 +75,7 @@ class ChartCollectionViewController: UICollectionViewController, UICollectionVie
     }
     
     func addChart() {
-        guard let chart = Chart.insertChart(sensorType: .empty, projectsId: project!.id) else {
+        guard let chart = Chart.insertChart(sensorType: nil, projectsId: project!.id) else {
             return
         }
         let newIndexPath = IndexPath(item: charts.count, section: 0)

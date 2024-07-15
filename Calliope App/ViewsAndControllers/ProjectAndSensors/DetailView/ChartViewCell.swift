@@ -22,13 +22,12 @@ class ChartViewCell: BaseChartViewCell {
     }
     
     func setupChartView() {
-        lineChartView.delegate = self
         deleteButton.setTitle("", for: .normal)
         guard let chart = chart else {
             LogNotify.log("Setup of chart failed, no chart has been set")
             return
         }
-        lineChartView.setupView(service: chart.sensorType)
+        lineChartView.setupView(service: chart.sensorType ?? .empty)
         addNotificationSubscriptions()
         loadDatabaseDataIntoChart(chart)
         setupSensorMenu()
@@ -71,22 +70,28 @@ class ChartViewCell: BaseChartViewCell {
                 baseTime = rawValues.first?.time
             }
             for value in rawValues {
-                let decodedValue = DataParser.decode(data: value.value, service: chart.sensorType)
-                getDataEntries(data: decodedValue, timestep: value.time, service: chart.sensorType)
+                let decodedValue = DataParser.decode(data: value.value, service: chart.sensorType ?? .empty)
+                getDataEntries(data: decodedValue, timestep: value.time, service: chart.sensorType ?? .empty)
             }
             addDataEntries(dataEntries: axisToData)
             
             sensorTypeButton.isEnabled = false
             recordingButton.isEnabled = false
+        } else {
+            sensorTypeButton.isEnabled = true
+            recordingButton.isEnabled = true
         }
     }
     
     @IBAction func deleteChartView(_ sender: Any) {
         stopDataRecording()
+        axisToData.removeAll()
+        axisToDataSet.removeAll()
+        baseTime = nil
         delegate.deleteChart(of: self, chart: chart)
     }
     
-    override func chartValueSelected(
+    func chartValueSelected(
         _ chartView: ChartViewBase,
         entry: ChartDataEntry,
         highlight: Highlight
@@ -98,7 +103,6 @@ class ChartViewCell: BaseChartViewCell {
         NotificationCenter.default.removeObserver(calliopeConnectedSubcription!)
         NotificationCenter.default.removeObserver(calliopeDisconnectedSubscription!)
     }
-    
 }
 
 extension LineChartDataSet {

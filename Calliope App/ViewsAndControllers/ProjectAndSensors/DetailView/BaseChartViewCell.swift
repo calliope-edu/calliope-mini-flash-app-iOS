@@ -90,7 +90,7 @@ class BaseChartViewCell: UICollectionViewCell, ChartViewDelegate {
                 guard let chart = self.chart else {
                     fatalError()
                 }
-                self.getDataEntries(data: [value.0 : value.2], timestep: value.1, service: chart.sensorType)
+                self.getDataEntries(data: [value.0 : value.2], timestep: value.1, service: chart.sensorType ?? .empty)
                 self.addDataEntries(dataEntries:  self.axisToData)
             }
         }
@@ -113,6 +113,7 @@ class BaseChartViewCell: UICollectionViewCell, ChartViewDelegate {
     
     func getDataEntries(data: [String : Double], timestep: Double, service: CalliopeService) {
         for key in data.keys {
+            if key == "" { break }
             var dataSet : [ChartDataEntry] = axisToData[key] ?? []
             guard let datapoint = data[key], let baseTime = baseTime else {
                 return
@@ -139,7 +140,7 @@ class BaseChartViewCell: UICollectionViewCell, ChartViewDelegate {
         let lineChartDataSets : [LineChartDataSet] = Array(axisToDataSet.values)
         lineChartView.data = LineChartData(dataSets: lineChartDataSets)
         if lineChartView.data!.count > 0 {
-            lineChartView.setVisibleXRangeMaximum(300)
+            lineChartView.setVisibleXRangeMaximum(3000)
             lineChartView.moveViewToX(((lineChartView.data?.xMax ?? 1)  - 1))
             updateDataLabels()
         }
@@ -164,27 +165,51 @@ class BaseChartViewCell: UICollectionViewCell, ChartViewDelegate {
             if let count = lineChartView.data?.count, count > 1 {
                 sensors.append(UIAction(title: self.sensor!.name, state: .on) { _ in })
             } else {
-                sensors.append(UIAction(title: "No Sensor Available") { _ in })
+                sensors.append(UIAction(title: NSLocalizedString("No Sensor Available", comment: "")) { _ in })
             }
         } else {
-            sensors.append(UIAction(title:"Select", state: .on) { _ in })
+            sensors.append(UIAction(title: NSLocalizedString("Select", comment: ""), state: .on) { _ in })
         }
         
         var axisButtonChildren : [UIAction] = []
-        axisButtonChildren.append(UIAction(title: "All") { _ in
-            self.lineChartView.notifyDataSetChanged()
-            self.selectedAxis = -1
-            self.updateDataLabels()
-        })
-        for key in axisToDataSet.keys {
-            axisButtonChildren.append(UIAction(title: key) { _ in
+        if axisToDataSet.keys.count > 1 {
+            axisButtonChildren.append(UIAction(title: NSLocalizedString("All", comment: "")) { _ in
+                guard let dataSets = self.lineChartView.data?.dataSets else {
+                    return
+                }
+                for dataSet in dataSets {
+                    dataSet.visible = true
+                }
                 self.lineChartView.notifyDataSetChanged()
-                self.selectedAxis = -1
                 self.updateDataLabels()
             })
+        } else if axisToDataSet.keys.isEmpty {
+            axisButtonChildren.append(UIAction(title: "-") { _ in
+                guard let dataSets = self.lineChartView.data?.dataSets else {
+                    return
+                }
+                for dataSet in dataSets {
+                    dataSet.visible = true
+                }
+                self.lineChartView.notifyDataSetChanged()
+                self.updateDataLabels()
+                self.lineChartView.notifyDataSetChanged()
+            })
         }
-        sensorAxisButton.menu = UIMenu(title: "Axis", children: axisButtonChildren)
-        sensorTypeButton.menu = UIMenu(title: "Sensors", children: sensors)
+        for key in axisToDataSet.keys {
+            axisButtonChildren.append(UIAction(title: key) { _ in
+                guard let dataSets = self.lineChartView.data?.dataSets else {
+                    return
+                }
+                for dataSet in dataSets {
+                    dataSet.visible = false
+                }
+                self.lineChartView.lineData?.getLineChartDataSetForLabel(key)?.visible = true
+                self.lineChartView.notifyDataSetChanged()
+            })
+        }
+        sensorAxisButton.menu = UIMenu(title: NSLocalizedString("Axis", comment: ""), children: axisButtonChildren)
+        sensorTypeButton.menu = UIMenu(title: NSLocalizedString("Sensors", comment: ""), children: sensors)
     }
     
     private func resetLineChartView(sensor: Sensor) {
@@ -197,37 +222,25 @@ class BaseChartViewCell: UICollectionViewCell, ChartViewDelegate {
         Chart.deleteChart(id: chart.id)
         self.chart = Chart.insertChart(sensorType: sensor.calliopeService, projectsId: chart.projectsId)
         lineChartView.setupView(service: sensor.calliopeService)
-        //setDefaultChartValues()
-        
-        if sensor.calliopeService == .accelerometer {
-            self.sensorAxisButton.alpha = 0.0
-            self.sensorAxisButton.isHidden = false
-        } else {
-            self.sensorAxisButton.alpha = 1.0
-        }
-        UIView.animate(withDuration: 0.3) {
-            if sensor.calliopeService == .accelerometer {
-                self.sensorAxisButton.alpha = 1.0
-            } else {
-                self.sensorAxisButton.alpha = 0.0
-            }
-        }
-        if sensor.calliopeService != .accelerometer {
-            self.sensorAxisButton.isHidden = true
-        }
-    }
-    
-    func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
-        let xValue = entry.x
-        let yValue = entry.y
-        print("Selected value: x = \(xValue), y = \(yValue)")
-    }
-    
-    func chartValueNothingSelected(_ chartView: ChartViewBase) {
-        print("Nothing selected")
     }
     
     func updateDataLabels() {
+        DispatchQueue.main.async {
+            guard let lineChartData = self.lineChartView.data, let lineChartDataSets = lineChartData.dataSets as? [LineChartDataSet], let lineChartDataSet = lineChartDataSets.first else {
+                return
+            }
+            if lineChartDataSets.count > 1 {
+                self.avgValueLabel.text = " - "
+                self.currentValueLabel.text = " - "
+            } else {
+                self.avgValueLabel.text = "\(lineChartDataSet.calculateAverageValue().rounded(toPlaces: 2))"
+                guard let value = lineChartDataSet.last?.y else {
+                    return
+                }
+                self.currentValueLabel.text = "\(value.rounded(toPlaces: 2))"
+            }
+            self.maxValueLabel.text = "\(lineChartData.yMax.rounded(toPlaces: 2))"
+            self.minValueLabel.text = "\(lineChartData.yMin.rounded(toPlaces: 2))"
+        }
     }
-    
 }

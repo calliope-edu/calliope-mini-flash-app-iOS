@@ -271,4 +271,11 @@
 /* No comment provided by engineer. */
 "Vor der nächsten Übertragung: \n 1. USB-Verbindung trennen \n 2. Batteriefach ausschalten" = "Before the next transfer: \n 1. Disconnect the USB connection \n 2. Switch off the battery compartment";
 
+/* No comment provided by engineer. */
 "https://calliope.cc/programmieren/mobil/ipad#sensordaten" = "https://calliope.cc/en/coding/mobile/ipad#sensordata";
+
+/* (No Comment) */
+"Calliope mini verbinden!" = "Connect a Calliope mini!";
+
+/* (No Comment) */
+"Verbindung notwendig, um Daten anzeigen zu lassen." = "Connection required for data collection.";

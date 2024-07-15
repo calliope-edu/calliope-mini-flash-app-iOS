@@ -1,6 +1,6 @@
 
 /* Class = "UINavigationItem"; title = "Sensoren und Projekte"; ObjectID = "DTy-e7-oGc"; */
-"DTy-e7-oGc.title" = "Sensoren und Projekte";
+"DTy-e7-oGc.title" = "Sensordaten";
 
 /* Class = "UILabel"; text = "Project Name"; ObjectID = "Dgf-wX-T07"; */
 "Dgf-wX-T07.text" = "Projektname";
@@ -42,4 +42,6 @@
 "OaB-k3-pOM.text" = "3. Wähle die gewünschten Dienste für dein Programm aus, um diese anzusehen oder aufzunehmen.\n4. Starte das Programm auf deinem Calliope mini.";
 
 /**/
-"cMt-qa-gH9.text" = "Detaillierte Anweisungen findest du auf der Webseite: Calliope.cc";
+"cMt-qa-gH9.text" = "Detaillierte Anweisungen findest du auf der Webseite:";
+
+"xWF-af-2iy.title" = "Projektübersicht";

@@ -292,3 +292,20 @@ Weitere Infos unter „Hilfe”.";
 "Magnetometer" = "Magnetfeldsensor";
 
 "User defined (UART)" = "Benutzerdefiniert (UART)";
+
+/* (No Comment) */
+"All" = "Alle";
+
+/* (No Comment) */
+"Select" = "Auswählen";
+
+/* (No Comment) */
+"No Sensor Available" = "Kein Sensor verfügbar";
+
+/* (No Comment) */
+"Axis" = "Achsen";
+
+/* (No Comment) */
+"Sensors" = "Sensoren";
+
+"Temperature" = "Temperatur";

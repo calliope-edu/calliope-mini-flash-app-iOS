@@ -14,7 +14,7 @@ struct Chart: Codable, FetchableRecord, PersistableRecord, DiffAware {
     static let databaseTableName = "charts"
     
     var id: Int64?
-    var sensorType: CalliopeService
+    var sensorType: CalliopeService?
     var projectsId: Int64?
 
     typealias DiffId = String
@@ -24,7 +24,7 @@ struct Chart: Codable, FetchableRecord, PersistableRecord, DiffAware {
         a.sensorType == b.sensorType && a.id == b.id
     }
     
-    static func insertChart(sensorType: CalliopeService, projectsId: Int64?) -> Chart? {
+    static func insertChart(sensorType: CalliopeService?, projectsId: Int64?) -> Chart? {
         var tmpChart: Chart? = nil
         do {
             try DatabaseManager.shared.dbQueue?.write { db in
@@ -72,7 +72,7 @@ extension Chart {
     static func createTable(in db: Database) throws {
         try db.create(table: databaseTableName) { t in
             t.autoIncrementedPrimaryKey("id")
-            t.column("sensorType", .any).notNull()
+            t.column("sensorType", .any)
             t.column("projectsId", .double).notNull()
             t.foreignKey(["projectsId"], references: "projects", onDelete: .cascade)
         }
