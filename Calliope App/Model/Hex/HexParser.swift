@@ -17,15 +17,15 @@ struct HexParser {
         }
         return UInt8((0x100 - UInt16(crc)))
     }
-    
+
     enum HexVersion: String, CaseIterable {
-        
+
         case v3 = ":1000000000040020810A000015070000610A0000BA"
         case v2 = ":020000040000FA"
         case universal = ":0400000A9900C0DEBB"
         case invalid = ""
     }
-    
+
     func getHexVersion() -> Set<HexVersion> {
         let urlAccess = url.startAccessingSecurityScopedResource()
         guard let reader = StreamReader(path: url.path) else {
@@ -40,11 +40,11 @@ struct HexParser {
                 url.stopAccessingSecurityScopedResource()
             }
         }
-        
+
         var relevantLines: Set<String> = Set.init()
         relevantLines.insert(reader.nextLine()?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "")
         relevantLines.insert(reader.nextLine()?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "")
-        
+
         var enumSet: Set<HexVersion> = Set.init()
         for version in HexVersion.allCases {
             if relevantLines.contains(version.rawValue) {
@@ -57,8 +57,7 @@ struct HexParser {
         return enumSet
     }
 
-    func parse(handleDataEntry: (UInt32,Data,Int,Bool) -> ()) {
-
+    func parse(handleDataEntry: (UInt32, Data, Int, Bool) -> ()) {
         let urlAccess = url.startAccessingSecurityScopedResource()
         guard let reader = StreamReader(path: url.path) else {
             return
@@ -70,54 +69,75 @@ struct HexParser {
                 url.stopAccessingSecurityScopedResource()
             }
         }
-        
+
         var isUniversal: Bool = false
         var addressHi: UInt32 = 0
         var beginIndex = 0
         var endIndex = 0
         // 0 = undefined, 1 = V1/2, 2 = V3
         var dataType = 0
-        
+
         while let line = reader.nextLine() {
-            
+
+            // https://en.wikipedia.org/wiki/Intel_HEX
+            // frame setup
+            // idx      [0, 1-2,            3-6,        7-8,    9 - (end-2), (end-2) - end]
+            // frame    [:, payload-length, address,    type,   payload,     checksum]
+            // example  [:  10              b3f0        00      00208..,     E9]
             beginIndex = 0
-            
-            endIndex = beginIndex + 1
-            guard line[beginIndex] == ":" else { return }
+
+            endIndex = beginIndex + 1 // begin 0 end 1
+            guard line[beginIndex] == ":" else {
+                return
+            }
             beginIndex = endIndex
-            
-            endIndex = beginIndex + 2
-            guard let length = UInt8(line[beginIndex..<endIndex], radix: 16) else { return }
+
+            endIndex = beginIndex + 2 // begin 1 end 3
+            guard let length = UInt8(line[beginIndex..<endIndex], radix: 16) else {
+                return
+            }
             beginIndex = endIndex
-            
-            endIndex = beginIndex + 4
-            guard let addressLo = UInt32(line[beginIndex..<endIndex], radix: 16) else { return }
+
+            endIndex = beginIndex + 4 // begin 3 end 7
+            guard let addressLo = UInt32(line[beginIndex..<endIndex], radix: 16) else {
+                return
+            }
             beginIndex = endIndex
-            
-            endIndex = beginIndex + 2
-            guard let type = HexReader.type(of: line) else { return }
+
+            endIndex = beginIndex + 2 // begin 7 end 9
+            guard let type = HexReader.type(of: line) else {
+                return
+            }
             beginIndex = endIndex
-            
-            endIndex = beginIndex + 2 * Int(length)
+
+            endIndex = beginIndex + 2 * Int(length) // begin 9 end 9 + 2 * payload length
             let payload = line[beginIndex..<endIndex]
             beginIndex = endIndex
 
-            switch(type) {
+            switch (type) {
             case 0, 13: // Data
                 let position = addressHi + addressLo
-                guard let data = payload.toData(using: .hex) else { return }
-                guard data.count == Int(length) else { return }
+                guard let data = payload.toData(using: .hex) else {
+                    return
+                }
+                guard data.count == Int(length) else {
+                    return
+                }
                 handleDataEntry(position, data, dataType, isUniversal)
                 break
             case 1: // EOF
                 return
             case 2: // EXT SEGEMENT ADDRESS
-                guard let segment = UInt32(payload, radix:16) else { return }
+                guard let segment = UInt32(payload, radix: 16) else {
+                    return
+                }
                 addressHi = segment << 4
             case 3: // START SEGMENT ADDRESS
                 break
             case 4: // EXT LINEAR ADDRESS
-                guard let segment = UInt32(payload, radix:16) else { return }
+                guard let segment = UInt32(payload, radix: 16) else {
+                    return
+                }
                 addressHi = segment << 16
             case 5: // START LINEAR ADDRESS
                 break
@@ -130,6 +150,10 @@ struct HexParser {
                 if dataTypeField == "9903" {
                     dataType = 2
                 }
+                break
+            case 12: // PADDED DATA
+                break
+            case 14: // CUSTOM DATA
                 break
             default:
                 break
@@ -145,9 +169,9 @@ struct HexParser {
         _ = forwardToMagicNumber(reader)
         var numLinesToFlash = 0
         while let line = reader.nextLine(), !HexReader.isEndOfFileOrMagicEnd(line) {
-            if line.starts(with: ":") && HexReader.type(of: line) == 0  {
+            if line.starts(with: ":") && HexReader.type(of: line) == 0 {
                 numLinesToFlash += 1
-            } 
+            }
         }
         reader.rewind()
 
@@ -161,12 +185,12 @@ struct HexParser {
            let templateHash = hashesLine[9..<25].toData(using: .hex),
            let programHash = (hashesLine[25..<41]).toData(using: .hex) {
             return (templateHash,
-                    programHash,
-                    PartialFlashData(
-                        nextLines: [hashesLine, magicLine],
-                        currentSegmentAddress: currentSegmentAddress,
-                        reader: reader,
-                        lineCount: numLinesToFlash))
+                programHash,
+                PartialFlashData(
+                    nextLines: [hashesLine, magicLine],
+                    currentSegmentAddress: currentSegmentAddress,
+                    reader: reader,
+                    lineCount: numLinesToFlash))
         }
         return nil
     }
@@ -202,13 +226,17 @@ struct PartialFlashData: Sequence, IteratorProtocol {
         self.currentSegmentAddress = currentSegmentAddress
         self.lineCount = lineCount
         //extract data from nextLines
-        nextLines.forEach { read($0) }
+        nextLines.forEach {
+            read($0)
+        }
     }
 
     mutating func next() -> (address: UInt16, data: Data)? {
         let line = nextData.popLast()
         while let reader = reader, nextData.count == 0 {
-            guard let record = reader.nextLine() else { break }
+            guard let record = reader.nextLine() else {
+                break
+            }
             read(record)
         }
         return line
@@ -221,36 +249,36 @@ struct PartialFlashData: Sequence, IteratorProtocol {
             return
         }
         switch HexReader.type(of: record) {
-            case 0: //record type 0 means data for program
-                if record.contains("00000001FF") {
-                    break
-                } else if let data = HexReader.readData(record) {
-                    nextData.append(data)
-                }
-            case 2: // extended segment adress
-                if let segmentAddress = HexReader.readSegmentAddress(record) {
-                    currentSegmentAddress = segmentAddress
-                }
-            case 4: //segment address type
-                if let segmentAddress = HexReader.readSegmentAddress(record) {
-                    currentSegmentAddress = segmentAddress
-                }
-            default:
+        case 0: //record type 0 means data for program
+            if record.contains("00000001FF") {
                 break
+            } else if let data = HexReader.readData(record) {
+                nextData.append(data)
+            }
+        case 2: // extended segment adress
+            if let segmentAddress = HexReader.readSegmentAddress(record) {
+                currentSegmentAddress = segmentAddress
+            }
+        case 4: //segment address type
+            if let segmentAddress = HexReader.readSegmentAddress(record) {
+                currentSegmentAddress = segmentAddress
+            }
+        default:
+            break
         }
     }
 }
 
 struct HexReader {
-    
+
     static let MAGIC_START_NUMBER = "708E3B92C615A841C49866C975EE5197"
     static let MAGIC_END_NUMBER = "41140E2FB82FA2B"
     static let EOF_NUMBER = "00000001FF"
-    
+
     static func readSegmentAddress(_ record: String) -> UInt16? {
         if let length = length(of: record), length == 2,
-                   validate(record, length),
-                   let data = data(of: record, length) {
+           validate(record, length),
+           let data = data(of: record, length) {
             return UInt16(bigEndianData: data)
         } else {
             return nil
@@ -270,7 +298,7 @@ struct HexReader {
 
     static func validate(_ record: String, _ length: Int) -> Bool {
         //string starting at 10th character must be 2*length characters long plus two characters for the checksum
-        return record.trimmingCharacters(in: .whitespacesAndNewlines).count == 9 + 2*length + 2
+        return record.trimmingCharacters(in: .whitespacesAndNewlines).count == 9 + 2 * length + 2
     }
 
     static func type(of record: String) -> Int? {
@@ -297,7 +325,7 @@ struct HexReader {
 
     static func data(of record: String, _ length: Int) -> Data? {
         //data area with given byte length
-        return record[9..<(9+2*length)].toData(using: .hex)
+        return record[9..<(9 + 2 * length)].toData(using: .hex)
     }
 
     static func isMagicStart(_ record: String) -> Bool {

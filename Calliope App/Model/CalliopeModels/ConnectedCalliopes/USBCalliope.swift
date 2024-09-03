@@ -12,38 +12,38 @@ import NordicDFU
 import UniformTypeIdentifiers
 
 class USBCalliope: Calliope, UIDocumentPickerDelegate {
-    
+
     static var calliopeLocation: URL?
-    
+
     override var compatibleHexTypes: Set<HexParser.HexVersion> {
         return [.universal, .v3, .v2]
     }
-    
+
     public init(calliopeLocation: URL) throws {
         super.init()
         try validateCalliope(url: calliopeLocation)
         USBCalliope.calliopeLocation = calliopeLocation
     }
-    
+
     func validateCalliope(url: URL) throws {
         let pathComponent = url.appendingPathComponent("DETAILS.TXT")
         let filePath = pathComponent.path
         let fileManager = FileManager.default
         let access = url.startAccessingSecurityScopedResource()
-        
+
         defer {
             if access {
                 url.stopAccessingSecurityScopedResource()
             }
         }
-        
+
         if fileManager.fileExists(atPath: filePath) {
             LogNotify.log("Validated Calliope folder")
         } else {
             LogNotify.log("Failed to Validate calliope")
         }
     }
-    
+
     func isConnected() -> Bool {
         let accessResource = USBCalliope.calliopeLocation?.startAccessingSecurityScopedResource()
         defer {
@@ -51,16 +51,16 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
                 USBCalliope.calliopeLocation?.stopAccessingSecurityScopedResource()
             }
         }
-        
+
         if (USBCalliope.calliopeLocation == nil) {
             return false
         } else {
             return FileManager.default.isWritableFile(atPath: USBCalliope.calliopeLocation!.path)
         }
     }
-    
+
     override func upload(file: Hex, progressReceiver: DFUProgressDelegate? = nil, statusDelegate: DFUServiceDelegate? = nil, logReceiver: LoggerDelegate? = nil) throws {
-        if isConnected(){
+        if isConnected() {
             progressReceiver?.dfuProgressDidChange(for: 50, outOf: 100, to: 51, currentSpeedBytesPerSecond: 0.0, avgSpeedBytesPerSecond: 0.0)
             writeToCalliope(file) {
                 statusDelegate?.dfuStateDidChange(to: .completed)
@@ -68,9 +68,9 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
         } else {
             statusDelegate?.dfuStateDidChange(to: .aborted)
         }
-        
+
     }
-    
+
     /** Flashing process for USB Flashing
             1. Send "erase.act" to clean flash of Calliope
             2. Send "auto_rst.cfg" to enable auto restart after programming
@@ -86,7 +86,7 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
                 USBCalliope.calliopeLocation?.stopAccessingSecurityScopedResource()
             }
         }
-        
+
         let data = Data()
         let startInterfaceCommand = "start_if.act"
         let autoRestartConfigurationCommand = "auto_rst.cfg"
@@ -99,7 +99,7 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
         } catch {
             LogNotify.log("Error: \(error)")
         }
-        
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
             let accessResource = USBCalliope.calliopeLocation?.startAccessingSecurityScopedResource()
             defer {
@@ -113,7 +113,7 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
                 LogNotify.log("Error: \(error)")
             }
         }
-        
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 7) {
             let accessResource = USBCalliope.calliopeLocation?.startAccessingSecurityScopedResource()
             defer {
@@ -127,7 +127,7 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
                 LogNotify.log("Error: \(error)")
             }
         }
-        
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 9) {
             let accessResource = USBCalliope.calliopeLocation?.startAccessingSecurityScopedResource()
             defer {
@@ -142,7 +142,7 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
                 LogNotify.log("Error: \(error)")
             }
         }
-        
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
             completion()
         }
