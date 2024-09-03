@@ -1,5 +1,9 @@
 import Foundation
 
+enum NavigationTargetView {
+    case externalWebView, internalWebView
+}
+
 struct EditorDownload {
     let name: String
     let url: URL
@@ -12,11 +16,16 @@ protocol Editor {
     func download(_ request: URLRequest) -> EditorDownload?
     func isBackNavigation(_ request: URLRequest) -> Bool
     func allowNavigation(_ request: URLRequest) -> Bool
+    func getNavigationTargetViewForRequest(_ request: URLRequest) -> NavigationTargetView
 }
 
 extension Editor {
     func allowNavigation(_ request: URLRequest) -> Bool {
         return true
+    }
+    
+    func getNavigationTargetViewForRequest(_ request: URLRequest) -> NavigationTargetView {
+        return NavigationTargetView.externalWebView
     }
 }
 
@@ -78,7 +87,20 @@ final class RobertaEditor: Editor {
         let matches = s.matches(regex: "^data:text/xml")
         return matches.count == 0
     }
-
+    
+    func getNavigationTargetViewForRequest(_ request: URLRequest) -> NavigationTargetView {
+        guard let url = request.url, let robertaEditorUrlPrefix = UserDefaults.standard.string(forKey: SettingsKey.robertaEditorUrl.rawValue) else {
+            return NavigationTargetView.externalWebView
+        }
+        
+        if (url.absoluteString.hasPrefix(robertaEditorUrlPrefix)) {
+            return NavigationTargetView.internalWebView
+        }
+       
+        return NavigationTargetView.externalWebView
+    }
+    
+    
     func download(_ request: URLRequest) -> EditorDownload? {
         guard let url = request.url else { return nil }
         let s = url.absoluteString
