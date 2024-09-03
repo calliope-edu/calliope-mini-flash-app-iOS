@@ -4,22 +4,22 @@ import WebKit
 final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
 
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
-    
+
     let editor: Editor
 
     var webview: WKWebView! //webviews are buggy and cannot be placed via interface builder
     lazy var documentsPath: URL = { FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0] }()
     lazy var downloadsPath: URL = { FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask)[0] }()
-    
+
     init?(coder: NSCoder, editor: Editor) {
         self.editor = editor
         super.init(coder: coder)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -31,7 +31,7 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
             return
         }
         LogNotify.log("loading \(url)")
-        
+
         let controller = WKUserContentController()
         let configuration = WKWebViewConfiguration()
         configuration.userContentController = controller
@@ -39,18 +39,18 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
 
         webview = WKWebView(frame:self.view.bounds, configuration: configuration)
         webview.translatesAutoresizingMaskIntoConstraints = false
-        
+
         webview.navigationDelegate = self
         webview.uiDelegate = self
         webview.backgroundColor = Styles.colorWhite
-        
+
         self.view.insertSubview(webview, at: 0)
         let bounds: UILayoutGuide = self.view.safeAreaLayoutGuide
         webview.topAnchor.constraint(equalTo: bounds.topAnchor).isActive = true
         webview.bottomAnchor.constraint(equalTo: bounds.bottomAnchor).isActive = true
         webview.leftAnchor.constraint(equalTo: bounds.leftAnchor).isActive = true
         webview.rightAnchor.constraint(equalTo: bounds.rightAnchor).isActive = true
-        
+
         if traitCollection.userInterfaceIdiom == .pad {
             webview.customUserAgent = "Mozilla/5.0 (iPad; CPU OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.1 Mobile/15E148 Safari/604.1"
         }
@@ -59,25 +59,25 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
         self.webview?.load(URLRequest(url: url))
     }
 
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-		self.navigationController?.setNavigationBarHidden(false, animated: animated)
-	}
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
 
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         LogNotify.log("policy for action \(navigationAction.request.url?.absoluteString.truncate(length: 100) ?? "")")
         let request = navigationAction.request
+
         if let download = editor.download(request) {
             decisionHandler(.cancel)
             if (download.url.absoluteString.starts(with: "data:text/xml")) {
                 export(download: download)
-            }
-            else {
+            } else {
                 upload(result: download)
             }
         } else if editor.isBackNavigation(request) {
-			decisionHandler(.cancel)
-			self.navigationController?.popViewController(animated: true)
+            decisionHandler(.cancel)
+            self.navigationController?.popViewController(animated: true)
         } else if editor.allowNavigation(request) {
             decisionHandler(.allow)
         } else {
@@ -85,11 +85,14 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
         }
     }
 
+
     func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
-        if let url = navigationAction.request.url {
-            UIApplication.shared.open(url)
+        switch editor.getNavigationTargetViewForRequest(navigationAction.request) {
+        case .internalWebView:
+            return handleInternalWebView(navigationAction, webView)
+        case .externalWebView:
+            return handleExternalWebView(navigationAction)
         }
-        return nil
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation) {
@@ -163,11 +166,11 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
         present(alertController, animated: true, completion: nil)
     }
 
-	//MARK: uploading
+    //MARK: uploading
     var query = "document.querySelector('input#fileNameInput2').value"
     private func upload(result download: EditorDownload) {
         self.webview.evaluateJavaScript(query) { (result, error) in
-            let html = "\(result ?? "")"
+            let html = "\(result ?? "no-project-name")" // TODO: Dettermining name and default could be better
             LogNotify.log("html: \(html)")
             do {
                 guard let file = try HexFileManager.store(name: html, data: download.url.asData(), isHexFile: download.isHex) else {
@@ -181,7 +184,7 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
             }
         }
     }
-    
+
     private func saveFile(filename: String, data:Data, path:URL? = nil) -> (Bool, Error?) {
         let pathToUse = (path ?? downloadsPath)
         let fm = FileManager.default
@@ -191,7 +194,7 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
                     try fm.createDirectory(at: pathToUse, withIntermediateDirectories: true)
                 } catch {
                     // don't recurse into fallback mode
-                    if pathToUse != documentsPath {	
+                    if pathToUse != documentsPath {
                         return saveFile(filename: filename, data: data, path: documentsPath)
                     }
                 }
@@ -201,10 +204,10 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
             LogNotify.log("saveFile error: \(error.localizedDescription)")
             return (false, error)
         }
-        
+
         return (true, nil)
     }
-    
+
     private func export(download: EditorDownload) {
         do {
             let xml = try download.url.asData()
@@ -230,5 +233,23 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
             LogNotify.log(error.localizedDescription)
         }
     }
-}
 
+    // Web View Helper
+
+    fileprivate func handleInternalWebView(_ navigationAction: WKNavigationAction, _ webView: WKWebView) -> WKWebView? {
+        if let frame = navigationAction.targetFrame {
+            return nil
+        }
+        webView.load(navigationAction.request)
+        return nil
+    }
+
+
+    fileprivate func handleExternalWebView(_ navigationAction: WKNavigationAction) -> WKWebView? {
+        if let url = navigationAction.request.url {
+            UIApplication.shared.open(url)
+        }
+        return nil
+    }
+
+}
