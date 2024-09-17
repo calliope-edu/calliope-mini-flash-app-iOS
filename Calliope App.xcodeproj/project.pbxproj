@@ -135,6 +135,7 @@
 		60D02D852BFCA41400D3C34A /* ProjectCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D02D842BFCA41400D3C34A /* ProjectCollectionViewCell.swift */; };
 		60D672522B283D0F00AB974B /* QRCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D672512B283D0F00AB974B /* QRCodeViewController.swift */; };
 		60F1E8A62B1DEB5300CB3A07 /* OnboardingDetailWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F1E8A52B1DEB5300CB3A07 /* OnboardingDetailWebViewController.swift */; };
+		7E25C6C2B2AB859DB08F5D39 /* DfuInitPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E25C01AECE8AEAF8119F5C7 /* DfuInitPacket.swift */; };
 		B16DD0D6E28647BDAC9EA8CB /* Pods_Calliope_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B15F9E6DE42C49A76EC47B /* Pods_Calliope_App.framework */; };
 /* End PBXBuildFile section */
 
@@ -301,6 +302,7 @@
 		60F1E8A52B1DEB5300CB3A07 /* OnboardingDetailWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingDetailWebViewController.swift; sourceTree = "<group>"; };
 		60F889132B50225000B6C1F5 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
 		60FF510C2BB55324002B24A2 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = "Calliope App/PrivacyInfo.xcprivacy"; sourceTree = SOURCE_ROOT; };
+		7E25C01AECE8AEAF8119F5C7 /* DfuInitPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DfuInitPacket.swift; sourceTree = "<group>"; };
 		BD1AFC4008F992EADC1C557D /* Pods-Calliope App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.release.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -649,6 +651,7 @@
 				2F375ABA237F28BC004ED8D7 /* DefaultProgram.swift */,
 				2F61456522BF761F001C2734 /* HexParser.swift */,
 				2F61456422BF761F001C2734 /* Hex.swift */,
+				7E25C01AECE8AEAF8119F5C7 /* DfuInitPacket.swift */,
 			);
 			path = Hex;
 			sourceTree = "<group>";
@@ -1087,6 +1090,7 @@
 				2F61459122BF761F001C2734 /* FirmwareUpload.swift in Sources */,
 				2F61457922BF761F001C2734 /* Ext.swift in Sources */,
 				2F61457D22BF761F001C2734 /* LogNotify.swift in Sources */,
+				7E25C6C2B2AB859DB08F5D39 /* DfuInitPacket.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

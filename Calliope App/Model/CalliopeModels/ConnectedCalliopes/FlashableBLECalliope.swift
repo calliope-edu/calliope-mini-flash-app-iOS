@@ -463,9 +463,9 @@ class CalliopeV3: FlashableBLECalliope {
         }
 
         let (soft, app, boot) = (file as! HexFile).softDataBootloader
-        let initPacket = try HexFile.calliopeV3InitPacket(app)
+        let initPacket = DfuInitPacket(app, nil, nil).toData()
 //        let initPacketBoot = try HexFile.calliopeV3InitPacket(boot)
-//        let initPacketSoft = try HexFile.calliopeV3InitPacket(soft)
+        //        let initPacketSoft = try HexFile.calliopeV3InitPacket(soft)
 
         // let firmware = DFUFirmware(binFile: bin, datFile: dat, type: .application)
 
@@ -502,7 +502,7 @@ class CalliopeV3: FlashableBLECalliope {
 //            provider: { (position, size) -> Data in
 //                initPacketBoot.subdata(in: position..<position + size)
 //            })
-//
+
 //        try! archive.addEntry(
 //            with: "bootloader.bin",
 //            type: .file,
@@ -512,23 +512,23 @@ class CalliopeV3: FlashableBLECalliope {
 //                boot.subdata(in: position..<position + size)
 //            })
 
-//        try! archive.addEntry(
-//            with: "softdevice.dat",
-//            type: .file,
-//            uncompressedSize: UInt32(initPacketSoft.count),
-//            bufferSize: 1024,
-//            provider: { (position, size) -> Data in
-//                initPacketSoft.subdata(in: position..<position + size)
-//            })
-//
-//        try! archive.addEntry(
-//            with: "softdevice.bin",
-//            type: .file,
-//            uncompressedSize: UInt32(soft.count),
-//            bufferSize: 1024,
-//            provider: { (position, size) -> Data in
-//                soft.subdata(in: position..<position + size)
-//            })
+        //        try! archive.addEntry(
+        //            with: "softdevice.dat",
+        //            type: .file,
+        //            uncompressedSize: UInt32(initPacketSoft.count),
+        //            bufferSize: 1024,
+        //            provider: { (position, size) -> Data in
+        //                initPacketSoft.subdata(in: position..<position + size)
+        //            })
+        //
+        //        try! archive.addEntry(
+        //            with: "softdevice.bin",
+        //            type: .file,
+        //            uncompressedSize: UInt32(soft.count),
+        //            bufferSize: 1024,
+        //            provider: { (position, size) -> Data in
+        //                soft.subdata(in: position..<position + size)
+        //            })
 
         // Manifest
         let manifest = try JSONSerialization.data(withJSONObject: ["manifest": [
@@ -539,11 +539,11 @@ class CalliopeV3: FlashableBLECalliope {
 //            "bootloader": [
 //                "bin_file": "bootloader.bin",
 //                "dat_file": "bootloader.dat"
-//            ],
-//            "softdevice": [
-//                "bin_file": "softdevice.bin",
-//                "dat_file": "softdevice.dat"
-//            ]
+//        ],
+            //            "softdevice": [
+            //                "bin_file": "softdevice.bin",
+            //                "dat_file": "softdevice.dat"
+            //            ]
         ]], options: .prettyPrinted)
         print(manifest)
         try! archive.addEntry(
@@ -562,7 +562,6 @@ class CalliopeV3: FlashableBLECalliope {
         }
 
         let firmware = try! DFUFirmware(urlToZipFile: archiveURL, type: .softdeviceBootloaderApplication)
-
 
         initiator = SecureDFUServiceInitiator().with(firmware: firmware)
         initiator?.logger = logReceiver
