@@ -36,7 +36,7 @@ extension Hex {
 
     var dateString: String {
         get {
-            return HexFileManager.dateFormatter.string(from: date)
+            HexFileManager.dateFormatter.string(from: date)
         }
     }
 
@@ -111,12 +111,90 @@ struct HexFile: Hex, Equatable {
             let parser = HexParser(url: url)
             var bin = Data()
             parser.parse { address, data, dataType, isUniversal in
-                if address >= 0x1C000 && address < 0x77000 && (dataType == 2 || !isUniversal) {
+
+//                // Soft Device
+//                if address >= 0x01000 && address < 0x1c000 {
+//                    bin.append(data)
+//                }
+
+                // TODO(kotchose): change back to 0x73000
+                // App Data
+                if address >= 0x1c000 && address < 0x78000 {
                     bin.append(data)
                 }
+
+                //                // Bootloader
+                //                if address >= 0x78000 && address < 0x7e000 {
+                //                    bin.append(data)
+                //                }
+
             }
 
             return bin
+        }
+    }
+
+    var softDataBootloader: (Data, Data, Data) {
+        get {
+            let parser = HexParser(url: url)
+            var soft = Data()
+            var app = Data()
+            var boot = Data()
+
+            parser.parse { address, data, dataType, isUniversal in
+
+                // Soft Device
+                if address >= 0x01000 && address < 0x1c000 {
+                    soft.append(data)
+                }
+
+                // App Data
+                if address >= 0x1c000 && address < 0x78000 {
+                    app.append(data)
+                }
+
+                // Bootloader
+                if address >= 0x78000 && address < 0x7e000 {
+                    boot.append(data)
+                }
+
+            }
+
+            return (soft, app, boot)
+        }
+    }
+
+
+    var sizes: (UInt32, UInt32, UInt32) {
+        get {
+
+            var softDeviceSize: UInt32 = 0;
+            var applicationSize: UInt32 = 0;
+            var bootloaderSize: UInt32 = 0;
+
+            let parser = HexParser(url: url)
+            var bin = Data()
+            parser.parse { address, data, dataType, isUniversal in
+
+                if address >= 0x01000 && address < 0x1c000 {
+                    bin.append(data)
+                    softDeviceSize = UInt32(bin.count)
+                }
+
+                if address >= 0x1c000 && address < 0x78000 {
+                    bin.append(data)
+                    applicationSize = UInt32(bin.count) - softDeviceSize
+                }
+
+                if address >= 0x78000 && address < 0x7e000 {
+                    bin.append(data)
+                    bootloaderSize = UInt32(bin.count) - (softDeviceSize + applicationSize)
+                }
+
+
+            }
+
+            return (softDeviceSize, applicationSize, bootloaderSize)
         }
     }
 
@@ -142,6 +220,7 @@ struct HexFile: Hex, Equatable {
     func getHexTypes() -> Set<HexParser.HexVersion> {
         return HexParser(url: url).getHexVersion()
     }
+
 }
 
 extension HexFile: DiffAware {

@@ -8,6 +8,7 @@
 import UIKit
 import CoreBluetooth
 import NordicDFU
+import ZIPFoundation
 
 class FlashableBLECalliope: CalliopeAPI {
 
@@ -461,10 +462,107 @@ class CalliopeV3: FlashableBLECalliope {
             return
         }
 
-        let bin = file.calliopeV3Bin
-        let dat = try HexFile.calliopeV3InitPacket(bin)
+        let (soft, app, boot) = (file as! HexFile).softDataBootloader
+        let initPacket = try HexFile.calliopeV3InitPacket(app)
+//        let initPacketBoot = try HexFile.calliopeV3InitPacket(boot)
+//        let initPacketSoft = try HexFile.calliopeV3InitPacket(soft)
 
-        let firmware = DFUFirmware(binFile: bin, datFile: dat, type: .application)
+        // let firmware = DFUFirmware(binFile: bin, datFile: dat, type: .application)
+
+        // create zip
+        var archiveURL = URL(fileURLWithPath: NSTemporaryDirectory())
+        archiveURL.appendPathComponent(ProcessInfo.processInfo.globallyUniqueString)
+        archiveURL.appendPathExtension("zip")
+
+        let archive = try! Archive.init(url: archiveURL, accessMode: .create)
+
+        try! archive.addEntry(
+            with: "application.dat",
+            type: .file,
+            uncompressedSize: UInt32(initPacket.count),
+            bufferSize: 1024,
+            provider: { (position, size) -> Data in
+                initPacket.subdata(in: position..<position + size)
+            })
+
+        try! archive.addEntry(
+            with: "application.bin",
+            type: .file,
+            uncompressedSize: UInt32(app.count),
+            bufferSize: 1024,
+            provider: { (position, size) -> Data in
+                app.subdata(in: position..<position + size)
+            })
+
+//        try! archive.addEntry(
+//            with: "bootloader.dat",
+//            type: .file,
+//            uncompressedSize: UInt32(initPacketBoot.count),
+//            bufferSize: 1024,
+//            provider: { (position, size) -> Data in
+//                initPacketBoot.subdata(in: position..<position + size)
+//            })
+//
+//        try! archive.addEntry(
+//            with: "bootloader.bin",
+//            type: .file,
+//            uncompressedSize: UInt32(boot.count),
+//            bufferSize: 1024,
+//            provider: { (position, size) -> Data in
+//                boot.subdata(in: position..<position + size)
+//            })
+
+//        try! archive.addEntry(
+//            with: "softdevice.dat",
+//            type: .file,
+//            uncompressedSize: UInt32(initPacketSoft.count),
+//            bufferSize: 1024,
+//            provider: { (position, size) -> Data in
+//                initPacketSoft.subdata(in: position..<position + size)
+//            })
+//
+//        try! archive.addEntry(
+//            with: "softdevice.bin",
+//            type: .file,
+//            uncompressedSize: UInt32(soft.count),
+//            bufferSize: 1024,
+//            provider: { (position, size) -> Data in
+//                soft.subdata(in: position..<position + size)
+//            })
+
+        // Manifest
+        let manifest = try JSONSerialization.data(withJSONObject: ["manifest": [
+            "application": [
+                "bin_file": "application.bin",
+                "dat_file": "application.dat"
+            ],
+//            "bootloader": [
+//                "bin_file": "bootloader.bin",
+//                "dat_file": "bootloader.dat"
+//            ],
+//            "softdevice": [
+//                "bin_file": "softdevice.bin",
+//                "dat_file": "softdevice.dat"
+//            ]
+        ]], options: .prettyPrinted)
+        print(manifest)
+        try! archive.addEntry(
+            with: "manifest.json",
+            type: .file,
+            uncompressedSize: UInt32(manifest.count),
+            bufferSize: 1024,
+            provider: { (position, size) -> Data in
+                manifest.subdata(in: position..<position + size)
+            })
+
+        let archiveNew = try! Archive.init(url: archiveURL, accessMode: .read)
+        for entry in archiveNew {
+            let crc = try archiveNew.extract(entry, consumer: { (data) -> Void in () })
+            print("\(entry.path) ENTRY CRC \(entry.checksum) EXTRACTED CRC \(crc)")
+        }
+
+        let firmware = try! DFUFirmware(urlToZipFile: archiveURL, type: .softdeviceBootloaderApplication)
+
 
         initiator = SecureDFUServiceInitiator().with(firmware: firmware)
         initiator?.logger = logReceiver
