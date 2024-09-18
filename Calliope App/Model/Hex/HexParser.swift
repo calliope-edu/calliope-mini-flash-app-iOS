@@ -76,6 +76,7 @@ struct HexParser {
         var endIndex = 0
         // 0 = undefined, 1 = V1/2, 2 = V3
         var dataType = 0
+        var linenum = 0
 
         while let line = reader.nextLine() {
 
@@ -114,21 +115,56 @@ struct HexParser {
             let payload = line[beginIndex..<endIndex]
             beginIndex = endIndex
 
+            let address = addressHi + addressLo
+
+            if address < 0x01000 {
+                print("[HERE] HITTING MBR at \(linenum) at address \(String(format: "%02X", address)) with line \(line)")
+            }
+
+            if address >= 0x01000 && address < 0x1c000 {
+                print("[HERE] HITTING SOFTDEVICE at \(linenum) at address \(String(format: "%02X", address)) with line \(line)")
+            }
+
+            if address >= 0x1c000 && address < 0x6d000 {
+                print("[HERE] HITTING MICROPYTHON at \(linenum) at address \(String(format: "%02X", address)) with line \(line)")
+            }
+
+            if address >= 0x6d000 && address < 0x73000 {
+                print("[HERE] HITTING FILESYS at \(linenum) at address \(String(format: "%02X", address)) with line \(line)")
+            }
+
+            if address >= 0x73000 && address < 0x78000 {
+                print("[HERE] HITTING SCRATCH at \(linenum) at address \(String(format: "%02X", address)) with line \(line)")
+            }
+
+            if address >= 0x78000 && address < 0x7E000 {
+                print("[HERE] HITTING BOOTLOADER  at \(linenum) at address \(String(format: "%02X", address)) with line \(line)")
+            }
+
+            if address >= 0x7E000 {
+                print("[HERE] HITTING MBRSETTINGS at \(linenum) at address \(String(format: "%02X", address)) with line \(line)")
+            }
+
+
             switch (type) {
             case 0, 13: // Data
                 let position = addressHi + addressLo
                 guard let data = payload.toData(using: .hex) else {
+                    print("[HERE] Hit PAR into EXIT")
                     return
                 }
                 guard data.count == Int(length) else {
+                    print("[HERE] Hit LEN into EXIT")
                     return
                 }
                 handleDataEntry(position, data, dataType, isUniversal)
                 break
             case 1: // EOF
+                print("[HERE] Hit EOF into EXIT")
                 return
             case 2: // EXT SEGEMENT ADDRESS
                 guard let segment = UInt32(payload, radix: 16) else {
+                    print("[HERE] Hit EXT into EXIT")
                     return
                 }
                 addressHi = segment << 4
@@ -136,6 +172,7 @@ struct HexParser {
                 break
             case 4: // EXT LINEAR ADDRESS
                 guard let segment = UInt32(payload, radix: 16) else {
+                    print("[HERE] Hit EXT into EXIT")
                     return
                 }
                 addressHi = segment << 16
@@ -158,6 +195,8 @@ struct HexParser {
             default:
                 break
             }
+
+            linenum += 1
         }
     }
 

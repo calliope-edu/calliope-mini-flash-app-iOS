@@ -462,7 +462,8 @@ class CalliopeV3: FlashableBLECalliope {
             return
         }
 
-        let (soft, app, boot) = (file as! HexFile).softDataBootloader
+        let app = (file as! HexFile).paddedApplication
+//        print("Sizes: \((file as! HexFile).sizes)")
         let initPacket = DfuInitPacket(app, nil, nil).toData()
 //        let initPacketBoot = try HexFile.calliopeV3InitPacket(boot)
         //        let initPacketSoft = try HexFile.calliopeV3InitPacket(soft)
@@ -489,6 +490,7 @@ class CalliopeV3: FlashableBLECalliope {
             with: "application.bin",
             type: .file,
             uncompressedSize: UInt32(app.count),
+            compressionMethod: .deflate,
             bufferSize: 1024,
             provider: { (position, size) -> Data in
                 app.subdata(in: position..<position + size)
