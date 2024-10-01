@@ -16,7 +16,7 @@ protocol DownloadableHexFile: Hex, AnyObject {
 }
 
 extension DownloadableHexFile {
-    
+
     var date: Date {
         return downloadedHexFile?.date ?? Date()
     }
@@ -32,15 +32,15 @@ extension DownloadableHexFile {
     var calliopeV3Bin: Data {
         return downloadedHexFile?.calliopeV3Bin ?? loadExternalData()
     }
-    
+
     var calliopeUSBUrl: URL {
         return downloadedHexFile?.calliopeUSBUrl ?? URL(string: "/")!
     }
-    
+
     var partialFlashingInfo: (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? {
-        return downloadedHexFile?.partialFlashingInfo 
+        return downloadedHexFile?.partialFlashingInfo
     }
-    
+
     private func loadExternalData() -> Data {
         let url = URL(string: loadableProgramURL) ?? URL(string: "/")!
         let parser = HexParser(url:url)
@@ -52,7 +52,7 @@ extension DownloadableHexFile {
         }
         return bin
     }
-    
+
     public func load(completion: @escaping (Error?) -> ()) {
         let url = URL(string: loadableProgramURL)!
         let task = URLSession.shared.dataTask(with: url) {data, response, error in
@@ -79,7 +79,7 @@ extension DownloadableHexFile {
         }
         task.resume()
     }
-    
+
     /// use this initializer for downloadedHexFile to retrieve already-downloaded hex file
     public func storedHexFileInitializer() -> HexFile? {
         if let stored = (try? HexFileManager.stored())?.filter({ $0.name == loadableProgramName }),
@@ -89,7 +89,7 @@ extension DownloadableHexFile {
             return nil
         }
     }
-    
+
     func getHexTypes() -> Set<HexParser.HexVersion>{
         return HexParser(url: url).getHexVersion()
     }

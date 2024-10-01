@@ -109,17 +109,54 @@ struct HexFile: Hex, Equatable {
     var calliopeV3Bin: Data {
         get {
             let parser = HexParser(url: url)
-            var bin = Data()
+            var partitiones: [(UInt32, Data)] = [] // (Start, Data)
+            var lastAddress: UInt32 = 0
+
             parser.parse { address, data, dataType, isUniversal in
-                if address >= 0x1C000 && address < 0x77000 && (dataType == 2 || !isUniversal) {
-                    bin.append(data)
+
+                if address >= 0x1c000 && address < 0x73000 {
+
+                    if lastAddress > address || lastAddress + 16 < address { // JUMP
+                        partitiones.append((address, Data()))
+                    }
+
+                    if let lastElementIndex = partitiones.indices.last {
+                        partitiones[lastElementIndex].1.append(data)
+                        lastAddress = address
+                    }
+
                 }
             }
 
-            return bin
+            partitiones.sort { p1, p2 in
+                p1.0 < p2.0
+            }
+
+            for (address, data) in partitiones {
+                print("Partition Address at \(String(format: "%02X", address)) with size \(data.count) ends at \(String(format: "%02X", (address + (UInt32(data.count)))))")
+            }
+
+
+            var paddedApplication = Data()
+            for idx in 0..<(partitiones.count - 1) {
+                let current = partitiones[idx]
+                let next = partitiones[idx + 1]
+
+                // Append current Data
+                paddedApplication.append(current.1)
+
+                // Calculate number of padding
+                let paddingSize = (Int(next.0 - (current.0 + (UInt32(current.1.count)))))
+                let pad = Data([UInt8](repeating: 0xFF, count: paddingSize))
+                paddedApplication.append(pad)
+            }
+            paddedApplication.append(partitiones.last!.1)
+
+            print("Partitions")
+
+            return paddedApplication
         }
     }
-
     var calliopeUSBUrl: URL {
         get {
             return url
