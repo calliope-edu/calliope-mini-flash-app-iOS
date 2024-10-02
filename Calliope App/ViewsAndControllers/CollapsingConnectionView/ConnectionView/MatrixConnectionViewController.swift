@@ -146,10 +146,6 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
         usbSwitch.isOn = false
         usbSwitchSuperView.isHidden = false
         usbSwitch.addTarget(self, action: #selector(switchChanged), for: UIControl.Event.valueChanged)
-        if (!UIDevice.current.hasUSBC) {
-            usbSwitchSuperView.isHidden = true
-            usbSwitchHeightConstraint.constant = 0
-        }
         self.animate(expand: false, animate: false)
     }
 
