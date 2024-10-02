@@ -22,7 +22,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         case usbConnecting // connecting to a usb calliope
         case usbConnected // connected to a usb calliope
 	}
-    
+
     private static let usbCalliopeName = "USB_CALLIOPE"
 
 	var updateQueue = DispatchQueue.main
@@ -63,7 +63,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
                             self.updateQueue.async { self.errorBlock( NSLocalizedString("Connection to calliope timed out!", comment: "") ) }
                         }
                     }
-                } 
+                }
                 if connectingCalliope is DiscoveredUSBDevice {
                     LogNotify.log("Connect to USB Calliope")
                     let connectingUSBCalliope = connectingCalliope as! DiscoveredUSBDevice
@@ -74,9 +74,9 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
                     } catch {
                         LogNotify.log("Connecting to USB Calliope failed")
                     }
-                    
+
                 }
-				
+
 			}
 			redetermineState()
 		}
@@ -96,7 +96,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
             redetermineState()
 		}
 	}
-    
+
     private(set) var connectedUSBCalliope: DiscoveredUSBDevice? {
         didSet {
             oldValue?.hasDisconnected()
@@ -177,8 +177,8 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
             self.connectingCalliope = calliope
         }
 	}
-    
-    
+
+
     /// allows another CalliopeBLEDiscovery to use lastConnected variable to reconnect to the same calliope
     public func giveUpResponsibility() {
         self.updateBlock = {}
@@ -262,7 +262,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         self.connectedUSBCalliope = nil
 		self.connectedCalliope = nil
 	}
-    
+
     func initializeConnectionToUsbCalliope(view: UIViewController) {
         state = .usbConnecting
         let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.folder])
@@ -270,7 +270,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         documentPicker.allowsMultipleSelection = false
         view.present(documentPicker, animated: true, completion: nil)
     }
-    
+
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]){
         let url = urls.first
         let discoveredCalliope = DiscoveredUSBDevice(url: url!, name: CalliopeDiscovery.usbCalliopeName)
