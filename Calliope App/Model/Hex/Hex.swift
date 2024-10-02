@@ -132,11 +132,6 @@ struct HexFile: Hex, Equatable {
                 p1.0 < p2.0
             }
 
-            for (address, data) in partitiones {
-                print("Partition Address at \(String(format: "%02X", address)) with size \(data.count) ends at \(String(format: "%02X", (address + (UInt32(data.count)))))")
-            }
-
-
             var paddedApplication = Data()
             for idx in 0..<(partitiones.count - 1) {
                 let current = partitiones[idx]
@@ -151,8 +146,6 @@ struct HexFile: Hex, Equatable {
                 paddedApplication.append(pad)
             }
             paddedApplication.append(partitiones.last!.1)
-
-            print("Partitions")
 
             return paddedApplication
         }
