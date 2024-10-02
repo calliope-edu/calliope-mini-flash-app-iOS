@@ -27,10 +27,10 @@ extension UIDevice {
                    let groupRangeModelMinorVersion = Range(match.range(at: 3), in: self.model) {
                     let modelName = self.model[groupRangeModelName], modelMajorVersion = UInt8(self.model[groupRangeModelMajorVersion]) ?? 0, modelMinorVersion = UInt8(self.model[groupRangeModelMinorVersion]) ?? 0
 
-                    if modelName == "iPhone" && ((modelMajorVersion > 15) || (modelMajorVersion == 15 && modelMinorVersion >= 4)) {
+                    if modelName == "iPhone" && ((modelMajorVersion > 15) || (modelMajorVersion == 15 && modelMinorVersion > 3)) {
                         return true
                     }
-                    return modelName == "iPad" && ((8 <= modelMajorVersion && modelMajorVersion < 9) || modelMajorVersion >= 14)
+                    return modelName == "iPad" && (modelMajorVersion == 8 || modelMajorVersion >= 13)
 
                 }
             }
