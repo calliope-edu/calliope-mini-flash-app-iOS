@@ -268,8 +268,11 @@
 /* No comment provided by engineer. */
 "Übertragung läuft" = "Transmission running";
 
+/* (No Comment) */
+"Übertragung abgeschlossen" = "Transmission completed";
+
 /* No comment provided by engineer. */
-"Vor der nächsten Übertragung: \n 1. USB-Verbindung trennen \n 2. Batteriefach ausschalten" = "Before the next transfer: \n 1. Disconnect the USB connection \n 2. Switch off the battery compartment";
+"Vor der nächsten Verbindung muss die Verbindung wieder hergestellt werden und der Calliope mini ausgewählt werden." = "Before the next connection, the connection must be re-established and the Calliope mini selected.";
 
 /* No comment provided by engineer. */
 "https://calliope.cc/programmieren/mobil/ipad#sensordaten" = "https://calliope.cc/en/coding/mobile/ipad#sensordata";
