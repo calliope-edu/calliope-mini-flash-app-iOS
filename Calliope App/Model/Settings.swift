@@ -18,7 +18,6 @@ public enum SettingsKey: String, CaseIterable {
 
     case roberta = "robertaOnPreference"
     case robertaUrl = "robertaUrlPreference"
-    case robertaEditorUrl = "robertaEditorUrl"
 
     case playgrounds = "playgroundsOnPreference"
     case playgroundTemplateUrl = "playgroundTemplateUrlPreference"
@@ -42,9 +41,7 @@ public enum SettingsKey: String, CaseIterable {
 public struct Settings {
 
     static var defaultNewsUrl = NSLocalizedString("https://calliope.cc/forumassets/news.json", comment: "The url for the news json");
-//    static var defaultRobertaUrl = "https://lab.open-roberta.org?loadSystem=calliope2017"
-    static var defaultRobertaUrl = "http://app.calliope.cc/ios/openroberta/"
-    static var defaultRobertaEditorUrl = "https://lab.open-roberta.org"
+    static var defaultOpenRobertaUrl = "http://app.calliope.cc/ios/openroberta/"
 
     static var defaultMakecodeUrl = "https://makecode.calliope.cc"
     static var defaultProgramV3 = "https://calliope.cc/downloads/miniV3_start.hex"
@@ -78,9 +75,7 @@ public struct Settings {
         case .roberta:
             return defaultRobertaEnabled
         case .robertaUrl:
-            return defaultRobertaUrl
-        case .robertaEditorUrl:
-            return defaultRobertaEditorUrl
+            return defaultOpenRobertaUrl
 
         case .playgrounds:
             return defaultPlaygroundsEnabled
