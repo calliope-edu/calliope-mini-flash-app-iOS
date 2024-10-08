@@ -22,7 +22,6 @@
 		2F4B8D9F2598D7980026B480 /* HomeScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F4B8DA12598D7980026B480 /* HomeScreen.storyboard */; };
 		2F526C2426E00696004BA8FF /* HexFileStoreDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F526C2326E00696004BA8FF /* HexFileStoreDialog.swift */; };
 		2F526C2926E9688B004BA8FF /* CalliopeApp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F526C2B26E9688B004BA8FF /* CalliopeApp.storyboard */; };
-		2F526C3726E968A2004BA8FF /* Help.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F526C3926E968A2004BA8FF /* Help.storyboard */; };
 		2F526C3E26E9694D004BA8FF /* PlaygroundSnippets.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F526C4026E9694D004BA8FF /* PlaygroundSnippets.storyboard */; };
 		2F526C4526E9698B004BA8FF /* News.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F526C4726E9698B004BA8FF /* News.storyboard */; };
 		2F526C5D26E96FC7004BA8FF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2F526C5F26E96FC7004BA8FF /* Localizable.strings */; };
@@ -101,8 +100,6 @@
 		2F9E404A259DFB00002FFE0B /* PlaygroundSnippetTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9E4049259DFB00002FFE0B /* PlaygroundSnippetTableViewController.swift */; };
 		2FC2A12922C8FA6F00675C2F /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC2A12822C8FA6F00675C2F /* News.swift */; };
 		2FC2A12B22C962D100675C2F /* NewsDetailWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC2A12A22C962D100675C2F /* NewsDetailWebViewController.swift */; };
-		2FCB70E626C7FCA300DF79B7 /* HelpContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCB70E526C7FCA300DF79B7 /* HelpContentViewController.swift */; };
-		2FCB70E826C7FD5300DF79B7 /* HelpWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCB70E726C7FD5300DF79B7 /* HelpWebViewController.swift */; };
 		600E63262C2EBF810027AE61 /* CSVHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600E63252C2EBF810027AE61 /* CSVHandler.swift */; };
 		600E632C2C33D0750027AE61 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600E632B2C33D0750027AE61 /* ChartView.swift */; };
 		600E632E2C33D7BB0027AE61 /* DataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600E632D2C33D7BB0027AE61 /* DataParser.swift */; };
@@ -161,9 +158,6 @@
 		2F526C2A26E9688B004BA8FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/CalliopeApp.storyboard; sourceTree = "<group>"; };
 		2F526C2D26E96890004BA8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CalliopeApp.strings; sourceTree = "<group>"; };
 		2F526C2F26E96891004BA8FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/CalliopeApp.strings; sourceTree = "<group>"; };
-		2F526C3826E968A2004BA8FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Help.storyboard; sourceTree = "<group>"; };
-		2F526C3B26E968D2004BA8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Help.strings; sourceTree = "<group>"; };
-		2F526C3D26E96905004BA8FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Help.strings; sourceTree = "<group>"; };
 		2F526C3F26E9694D004BA8FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/PlaygroundSnippets.storyboard; sourceTree = "<group>"; };
 		2F526C4226E9694F004BA8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PlaygroundSnippets.strings; sourceTree = "<group>"; };
 		2F526C4426E9697D004BA8FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/PlaygroundSnippets.strings; sourceTree = "<group>"; };
@@ -253,8 +247,6 @@
 		2F9E4049259DFB00002FFE0B /* PlaygroundSnippetTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundSnippetTableViewController.swift; sourceTree = "<group>"; };
 		2FC2A12822C8FA6F00675C2F /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
 		2FC2A12A22C962D100675C2F /* NewsDetailWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDetailWebViewController.swift; sourceTree = "<group>"; };
-		2FCB70E526C7FCA300DF79B7 /* HelpContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpContentViewController.swift; sourceTree = "<group>"; };
-		2FCB70E726C7FD5300DF79B7 /* HelpWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpWebViewController.swift; sourceTree = "<group>"; };
 		36B15F9E6DE42C49A76EC47B /* Pods_Calliope_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Calliope_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3849EA7340C0FAB5DB1A4000 /* Pods-Calliope App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.debug.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.debug.xcconfig"; sourceTree = "<group>"; };
 		600E63252C2EBF810027AE61 /* CSVHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVHandler.swift; sourceTree = "<group>"; };
@@ -352,16 +344,6 @@
 			path = Playground;
 			sourceTree = "<group>";
 		};
-		2F4B8DA82598D8330026B480 /* Help */ = {
-			isa = PBXGroup;
-			children = (
-				2F526C3926E968A2004BA8FF /* Help.storyboard */,
-				2FCB70E526C7FCA300DF79B7 /* HelpContentViewController.swift */,
-				2FCB70E726C7FD5300DF79B7 /* HelpWebViewController.swift */,
-			);
-			path = Help;
-			sourceTree = "<group>";
-		};
 		2F61450322BF75DE001C2734 = {
 			isa = PBXGroup;
 			children = (
@@ -443,7 +425,6 @@
 				2F61455A22BF761F001C2734 /* MainContainerViewController.swift */,
 				2FAA2D0822DB3C2500BC1A5F /* Home */,
 				2FAA2D0922DB3C4D00BC1A5F /* EditorsAndPrograms */,
-				2F4B8DA82598D8330026B480 /* Help */,
 				60A40DED2BF782C80069A3B5 /* ProjectAndSensors */,
 				2F61455122BF761F001C2734 /* CollapsingConnectionView */,
 				2F1BD9982674D910006A47F2 /* Common */,
@@ -961,7 +942,6 @@
 				2F9B2A03233F0456009496DD /* Roboto-Italic.ttf in Resources */,
 				2F9B2A08233F0456009496DD /* Roboto-Black.ttf in Resources */,
 				2F9B2A1C233F045D009496DD /* RobotoMono-Bold.ttf in Resources */,
-				2F526C3726E968A2004BA8FF /* Help.storyboard in Resources */,
 				2F526C2926E9688B004BA8FF /* CalliopeApp.storyboard in Resources */,
 				2F6C1B87258FC7C600F4B5AC /* ConnectionView.storyboard in Resources */,
 			);
@@ -1018,7 +998,6 @@
 			files = (
 				2F61457B22BF761F001C2734 /* ValueLocalizer.swift in Sources */,
 				2FC2A12922C8FA6F00675C2F /* News.swift in Sources */,
-				2FCB70E826C7FD5300DF79B7 /* HelpWebViewController.swift in Sources */,
 				600E632E2C33D7BB0027AE61 /* DataParser.swift in Sources */,
 				60D02D832BFCA0C400D3C34A /* ProjectCollectionViewController.swift in Sources */,
 				60D672522B283D0F00AB974B /* QRCodeViewController.swift in Sources */,
@@ -1056,7 +1035,6 @@
 				60D02D852BFCA41400D3C34A /* ProjectCollectionViewCell.swift in Sources */,
 				2F6145A622C7D71B001C2734 /* Settings.swift in Sources */,
 				60D02D7E2BFC8FE400D3C34A /* DatabaseManager.swift in Sources */,
-				2FCB70E626C7FCA300DF79B7 /* HelpContentViewController.swift in Sources */,
 				2F61457022BF761F001C2734 /* Extension_CBUUID.swift in Sources */,
 				6094C3962C047549006F4CB4 /* ChartViewCell.swift in Sources */,
 				2F61457122BF761F001C2734 /* FlashableBLECalliope.swift in Sources */,
@@ -1141,16 +1119,6 @@
 				2F526C2F26E96891004BA8FF /* de */,
 			);
 			name = CalliopeApp.storyboard;
-			sourceTree = "<group>";
-		};
-		2F526C3926E968A2004BA8FF /* Help.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2F526C3826E968A2004BA8FF /* Base */,
-				2F526C3B26E968D2004BA8FF /* en */,
-				2F526C3D26E96905004BA8FF /* de */,
-			);
-			name = Help.storyboard;
 			sourceTree = "<group>";
 		};
 		2F526C4026E9694D004BA8FF /* PlaygroundSnippets.storyboard */ = {
