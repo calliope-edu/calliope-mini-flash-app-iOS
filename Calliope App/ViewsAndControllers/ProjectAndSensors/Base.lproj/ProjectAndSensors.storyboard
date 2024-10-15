@@ -475,7 +475,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" distribution="equalCentering" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="2QV-Sj-Ihc" userLabel="Selection">
                                                     <rect key="frame" x="10" y="20" width="964" height="50.5"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k32-SG-WvS" customClass="ContextMenuButton" customModule="Calliope_App" customModuleProvider="target">
+                                                        <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k32-SG-WvS">
                                                             <rect key="frame" x="0.0" y="0.0" width="85.5" height="50.5"/>
                                                             <menu key="menu" id="KD8-sU-2tT">
                                                                 <children>
@@ -488,7 +488,7 @@
                                                                 <color key="baseBackgroundColor" systemColor="systemTealColor"/>
                                                             </buttonConfiguration>
                                                         </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XBq-b6-ul5" customClass="ContextMenuButton" customModule="Calliope_App" customModuleProvider="target">
+                                                        <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XBq-b6-ul5">
                                                             <rect key="frame" x="465" y="0.0" width="51.5" height="50.5"/>
                                                             <menu key="menu" id="97l-HS-AiD">
                                                                 <children>
