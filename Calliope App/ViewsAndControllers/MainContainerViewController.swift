@@ -45,7 +45,6 @@ class MainContainerViewController: UITabBarController, UITabBarControllerDelegat
         DispatchQueue.main.async {
             let connectionVC = UIStoryboard(name: "ConnectionView", bundle: nil).instantiateInitialViewController() as! MatrixConnectionViewController
             connectionVC.view.translatesAutoresizingMaskIntoConstraints = false
-            self.addChild(connectionVC)
             window.addSubview(connectionVC.view)
 
             NSLayoutConstraint.activate([
