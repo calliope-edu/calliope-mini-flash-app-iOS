@@ -14,7 +14,7 @@ protocol ChartCellDelegate {
     func deleteChart(of cell: ChartViewCell, chart: Chart?)
 }
 
-class BaseChartViewCell: UICollectionViewCell, ChartViewDelegate {
+class BaseChartViewCell: UITableViewCell, ChartViewDelegate {
     
     var chart: Chart?
     var sensor: Sensor?

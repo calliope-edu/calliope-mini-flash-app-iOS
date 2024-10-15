@@ -12,7 +12,7 @@ import DGCharts
 import SwiftUI
 
 
-class ChartCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIDocumentPickerDelegate, ChartCellDelegate {
+class ChartCollectionViewController: UITableViewController, UIDocumentPickerDelegate, ChartCellDelegate {
 
     private lazy var charts: [Chart] = {
        return Chart.fetchChartsBy(projectsId: project?.id)
@@ -20,41 +20,39 @@ class ChartCollectionViewController: UICollectionViewController, UICollectionVie
 
 
     private let reuseIdentifierProgram = "sensorRecording"
-    
+
     var project: Project?
     var chartKvo: Any?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return charts.count
     }
 
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: UICollectionViewCell
-        cell = createChartCell(collectionView, indexPath)
-        return cell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return createChartCell(tableView, indexPath)
     }
-    
-    private func createChartCell(_ collectionView: UICollectionView, _ indexPath: IndexPath) -> UICollectionViewCell {
+
+    private func createChartCell(_ tableView: UITableView, _ indexPath: IndexPath) -> UITableViewCell {
         let cell: ChartViewCell
-        cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierProgram, for: indexPath) as! ChartViewCell
+        cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifierProgram, for: indexPath) as! ChartViewCell
         cell.chart = charts[indexPath.item]
         cell.setupChartView()
         cell.delegate = self
         return cell
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            return CGSize(width: collectionView.frame.width - 40, height: 400)
+        return CGSize(width: collectionView.frame.width - 20, height: 400)
     }
-    
+
     func deleteChart(of cell: ChartViewCell, chart: Chart?) {
         guard let chartId = chart?.id else {
             return
@@ -68,18 +66,18 @@ class ChartCollectionViewController: UICollectionViewController, UICollectionVie
         charts = Chart.fetchChartsBy(projectsId: project.id)
 
         // Remove chart from UI
-        guard let newIndexPath = collectionView.indexPath(for: cell) else {
+        guard let newIndexPath = tableView.indexPath(for: cell) else {
             return
         }
-        collectionView.deleteItems(at: [newIndexPath])
+        tableView.deleteRows(at: [newIndexPath], with: .fade)
     }
-    
+
     func addChart() {
         guard let chart = Chart.insertChart(sensorType: nil, projectsId: project!.id) else {
             return
         }
         let newIndexPath = IndexPath(item: charts.count, section: 0)
         charts.append(chart)
-        collectionView.insertItems(at: [newIndexPath])
+        tableView.insertRows(at: [newIndexPath], with: .fade)
     }
 }

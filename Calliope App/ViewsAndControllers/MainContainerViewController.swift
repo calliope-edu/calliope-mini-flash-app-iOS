@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class MainContainerViewController: UITabBarController, UITabBarControllerDelegate {
+class MainContainerViewController: UIViewController {
 
     @IBOutlet weak var matrixConnectionView: UIView!
 
@@ -22,11 +22,7 @@ class MainContainerViewController: UITabBarController, UITabBarControllerDelegat
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
-        DispatchQueue.main.async {
-            //called on the non-concurrent main queue so no further synchronization necessary
-            self.addConnectionViewController()
-        }
+        self.addConnectionViewController()
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -46,7 +42,7 @@ class MainContainerViewController: UITabBarController, UITabBarControllerDelegat
             let connectionVC = UIStoryboard(name: "ConnectionView", bundle: nil).instantiateInitialViewController() as! MatrixConnectionViewController
             connectionVC.view.translatesAutoresizingMaskIntoConstraints = false
             window.addSubview(connectionVC.view)
-
+            self.addChild(connectionVC)
             NSLayoutConstraint.activate([
                                             connectionVC.view.rightAnchor.constraint(equalTo: window.safeAreaLayoutGuide.rightAnchor, constant: -8.0),
                                             connectionVC.view.topAnchor.constraint(equalTo: window.safeAreaLayoutGuide.topAnchor, constant: 8.0),

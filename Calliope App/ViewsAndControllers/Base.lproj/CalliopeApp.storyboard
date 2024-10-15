@@ -1,16 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="m9X-fh-d5Q">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Txf-OB-dRE">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Main Container View Controller-->
+        <scene sceneID="E2A-tZ-3qe">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="Txf-OB-dRE" customClass="MainContainerViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lkq-O3-Fur">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jje-zF-maa">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <connections>
+                                    <segue destination="m9X-fh-d5Q" kind="embed" id="ieH-4m-oCZ"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="aGh-Zs-GIi"/>
+                        <constraints>
+                            <constraint firstItem="jje-zF-maa" firstAttribute="leading" secondItem="lkq-O3-Fur" secondAttribute="leading" id="VWk-ml-sbO"/>
+                            <constraint firstAttribute="trailing" secondItem="jje-zF-maa" secondAttribute="trailing" id="XMT-9O-kGB"/>
+                            <constraint firstAttribute="bottom" secondItem="jje-zF-maa" secondAttribute="bottom" id="g5W-7Y-QTt"/>
+                            <constraint firstItem="jje-zF-maa" firstAttribute="top" secondItem="lkq-O3-Fur" secondAttribute="top" id="ltW-Pi-0fI"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xrn-VZ-nLZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1564" y="81"/>
+        </scene>
+        <!--Tab Bar Controller-->
         <scene sceneID="Fcc-yf-iCm">
             <objects>
-                <tabBarController hidesBottomBarWhenPushed="YES" id="m9X-fh-d5Q" customClass="MainContainerViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController hidesBottomBarWhenPushed="YES" id="m9X-fh-d5Q" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Xub-TL-qh8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
