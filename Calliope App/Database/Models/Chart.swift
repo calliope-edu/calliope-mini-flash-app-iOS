@@ -10,24 +10,26 @@ import GRDB
 import DeepDiff
 
 struct Chart: Codable, FetchableRecord, PersistableRecord, DiffAware {
-    
+
     static let databaseTableName = "charts"
-    
+
     var id: Int64?
     var sensorType: CalliopeService?
     var projectsId: Int64?
 
     typealias DiffId = String
-    var diffId: DiffId { return "" }
-    
+    var diffId: DiffId {
+        return ""
+    }
+
     static func compareContent(_ a: Chart, _ b: Chart) -> Bool {
         a.sensorType == b.sensorType && a.id == b.id
     }
-    
+
     static func insertChart(sensorType: CalliopeService?, projectsId: Int64?) -> Chart? {
         var tmpChart: Chart? = nil
         do {
-            try DatabaseManager.shared.dbQueue?.write { db in
+            try DatabaseManager.shared.databaseQueue?.write { db in
                 let chart = Chart(sensorType: sensorType, projectsId: projectsId)
                 tmpChart = try chart.inserted(db)
                 tmpChart?.id = db.lastInsertedRowID
@@ -38,11 +40,11 @@ struct Chart: Codable, FetchableRecord, PersistableRecord, DiffAware {
         DatabaseManager.notifyChange()
         return tmpChart
     }
-    
+
     static func fetchChartsBy(projectsId: Int64?) -> [Chart] {
         var retrievedCharts: [Chart] = []
         do {
-            try DatabaseManager.shared.dbQueue?.read { db in
+            try DatabaseManager.shared.databaseQueue?.read { db in
                 retrievedCharts = try Chart.fetchAll(db)
                 retrievedCharts = retrievedCharts.filter({ chart in
                     return chart.projectsId == projectsId
@@ -54,10 +56,10 @@ struct Chart: Codable, FetchableRecord, PersistableRecord, DiffAware {
         }
         return retrievedCharts
     }
-    
+
     static func deleteChart(id: Int64?) {
         do {
-            try DatabaseManager.shared.dbQueue?.write { db in
+            try DatabaseManager.shared.databaseQueue?.write { db in
                 try Chart.deleteOne(db, key: id)
                 LogNotify.log("Deleted chart with id \(id ?? nil ?? 0)")
             }

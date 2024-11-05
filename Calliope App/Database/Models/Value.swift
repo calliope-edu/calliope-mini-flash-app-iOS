@@ -10,17 +10,17 @@ import Foundation
 import GRDB
 
 struct Value: Codable, FetchableRecord, PersistableRecord {
-    
+
     static let databaseTableName = "value"
-    
+
     var id: Int64?
     var value: String
     var time: Double
     var chartsId: Int64
-    
+
     static func insertValue(value: String, chartsId: Int64) {
         do {
-            try DatabaseManager.shared.dbQueue?.write { db in
+            try DatabaseManager.shared.databaseQueue?.write { db in
                 try Value(value: value, time: (Date().timeIntervalSinceReferenceDate * 100).rounded(toPlaces: 0), chartsId: chartsId).insert(db)
             }
         } catch {
@@ -28,11 +28,11 @@ struct Value: Codable, FetchableRecord, PersistableRecord {
         }
         DatabaseManager.notifyChange()
     }
-    
+
     static func fetchValuesBy(chartId: Int64?) -> [Value] {
         var retrievedValues: [Value] = []
         do {
-            try DatabaseManager.shared.dbQueue?.read { db in
+            try DatabaseManager.shared.databaseQueue?.read { db in
                 retrievedValues = try Value.fetchAll(db).filter({ value in
                     return value.chartsId == chartId
                 })
@@ -56,5 +56,5 @@ extension Value {
         }
         LogNotify.log("value table created")
     }
-    
+
 }
