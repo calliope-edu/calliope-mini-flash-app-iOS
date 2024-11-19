@@ -114,7 +114,7 @@ struct HexFile: Hex, Equatable {
 
             parser.parse { address, data, dataType, isUniversal in
 
-                if address >= 0x1c000 && address < 0x73000 {
+                if address >= 0x1c000 && address < 0x73000 && (dataType == 2 || !isUniversal){
 
                     if lastAddress > address || lastAddress + 16 < address { // JUMP
                         partitiones.append((address, Data()))
