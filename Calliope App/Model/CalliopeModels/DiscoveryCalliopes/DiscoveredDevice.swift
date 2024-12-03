@@ -10,27 +10,33 @@ import Foundation
 import CoreBluetooth
 
 class DiscoveredDevice: NSObject, CBPeripheralDelegate {
-    
+
     private let bluetoothQueue = DispatchQueue.global(qos: .userInitiated)
-    
+
     var updateQueue = DispatchQueue.main
-    var updateBlock: () -> () = {}
-    var errorBlock: (Error) -> () = { _ in }
-    
-    let name : String
-    
+    var updateBlock: () -> () = {
+    }
+    var errorBlock: (Error) -> () = { _ in
+    }
+
+    let name: String
+
     var usageReadyCalliope: Calliope?
-    
+
     var rebootingCalliope: Calliope? = nil
-    
+
     //discoverable Services of the BLE Devices
     static var discoverableServices: Set<CalliopeService> = [.secureDfuService, .dfuControlService, .partialFlashing, .accelerometer, .led, .temperature, .uart]
-    static var discoverableServicesUUIDs: Set<CBUUID> = Set(discoverableServices.map { $0.uuid })
-    
+    static var discoverableServicesUUIDs: Set<CBUUID> = Set(discoverableServices.map {
+        $0.uuid
+    })
+
     //discovered Services of the BLE Device
     final var discoveredServices: Set<CalliopeService> = []
-    lazy var discoveredServicesUUIDs: Set<CBUUID> = Set(discoveredServices.map { $0.uuid })
-    
+    lazy var discoveredServicesUUIDs: Set<CBUUID> = Set(discoveredServices.map {
+        $0.uuid
+    })
+
     enum CalliopeBLEDeviceState {
         case discovered //discovered and ready to connect, not connected yet
         case connected //connected, but services and characteristics have not (yet) been found
@@ -39,7 +45,7 @@ class DiscoveredDevice: NSObject, CBPeripheralDelegate {
         case wrongMode //required services and characteristics not available, put into right mode
     }
 
-    var state : CalliopeBLEDeviceState = .discovered {
+    var state: CalliopeBLEDeviceState = .discovered {
         didSet {
             LogNotify.log("calliope state: \(state)")
             handleStateUpdate(oldValue)
@@ -48,14 +54,16 @@ class DiscoveredDevice: NSObject, CBPeripheralDelegate {
             }
         }
     }
-    
+
     init(name: String) {
         self.name = name
         super.init()
     }
-    
+
     internal func handleStateUpdate(_ oldState: CalliopeBLEDeviceState) {
-        updateQueue.async { self.updateBlock() }
+        updateQueue.async {
+            self.updateBlock()
+        }
         if state == .discovered {
             discoveredServices = []
             if oldState == .usageReady {
@@ -70,7 +78,9 @@ class DiscoveredDevice: NSObject, CBPeripheralDelegate {
             self.bluetoothQueue.asyncAfter(deadline: DispatchTime.now() + BluetoothConstants.serviceDiscoveryTimeout) {
                 //has not discovered all services in time, probably stuck
                 if self.state == .evaluateMode {
-                    self.updateQueue.async { self.errorBlock(NSLocalizedString("Service discovery on calliope has timed out!", comment: "")) }
+                    self.updateQueue.async {
+                        self.errorBlock(NSLocalizedString("Service discovery on calliope has timed out!", comment: ""))
+                    }
                     self.state = .wrongMode
                 }
             }
@@ -79,7 +89,7 @@ class DiscoveredDevice: NSObject, CBPeripheralDelegate {
                                             object: self)
         }
     }
-    
+
     /// evaluate whether calliope is in correct mode
     public func evaluateMode() {
         if let usageReadyCalliope = usageReadyCalliope, usageReadyCalliope.rebootingIntoDFUMode {
@@ -94,13 +104,13 @@ class DiscoveredDevice: NSObject, CBPeripheralDelegate {
             state = .evaluateMode
         }
     }
-    
+
     public func hasConnected() {
         if state == .discovered {
             state = .connected
         }
     }
-    
+
     public func hasDisconnected() {
         if state != .discovered {
             state = .discovered
