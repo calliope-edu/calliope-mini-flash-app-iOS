@@ -8,8 +8,12 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
     let editor: Editor
 
     var webview: WKWebView! //webviews are buggy and cannot be placed via interface builder
-    lazy var documentsPath: URL = { FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0] }()
-    lazy var downloadsPath: URL = { FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask)[0] }()
+    lazy var documentsPath: URL = {
+        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    }()
+    lazy var downloadsPath: URL = {
+        FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask)[0]
+    }()
 
     init?(coder: NSCoder, editor: Editor) {
         self.editor = editor
@@ -37,7 +41,7 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
         configuration.userContentController = controller
         configuration.mediaTypesRequiringUserActionForPlayback = .video
 
-        webview = WKWebView(frame:self.view.bounds, configuration: configuration)
+        webview = WKWebView(frame: self.view.bounds, configuration: configuration)
         webview.translatesAutoresizingMaskIntoConstraints = false
 
         webview.navigationDelegate = self
@@ -168,6 +172,7 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
 
     //MARK: uploading
     var query = "document.querySelector('input#fileNameInput2').value"
+
     private func upload(result download: EditorDownload) {
         self.webview.evaluateJavaScript(query) { (result, error) in
             let html = "\(result ?? "no-project-name")" // TODO: Dettermining name and default could be better
@@ -185,7 +190,7 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
         }
     }
 
-    private func saveFile(filename: String, data:Data, path:URL? = nil) -> (Bool, Error?) {
+    private func saveFile(filename: String, data: Data, path: URL? = nil) -> (Bool, Error?) {
         let pathToUse = (path ?? downloadsPath)
         let fm = FileManager.default
         do {
@@ -217,12 +222,11 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
                                               message: NSLocalizedString("Program exported message", comment: "actual message in translation file"),
                                               preferredStyle: .alert)
 
-                alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .destructive) {_ in
+                alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .destructive) { _ in
                 })
 
                 self.present(alert, animated: true)
-            }
-            else {
+            } else {
                 throw error!
             }
             /*

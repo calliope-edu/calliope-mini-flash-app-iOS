@@ -232,7 +232,9 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
                || self.discoveredCalliopeWithCurrentMatrix == nil && self.connector.state == .discoveredAll {
             connector.startCalliopeDiscovery()
         } else if let calliope = self.discoveredCalliopeWithCurrentMatrix {
-            if calliope.state == .discovered {
+            if isInUsbMode && self.connector.state == .usbConnected && calliope.state == .usageReady {
+                return // fine for USB, as no reconnect after transfer like BLE
+            } else if calliope.state == .discovered {
                 calliope.updateBlock = updateDiscoveryState
                 calliope.errorBlock = error
                 LogNotify.log("Matrix view connecting to \(calliope)")

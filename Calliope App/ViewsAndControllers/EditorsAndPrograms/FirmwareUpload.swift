@@ -32,7 +32,7 @@ class FirmwareUpload {
                         alertDone.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default) { _ in
                             DispatchQueue.main.async {
                                 FirmwareUpload.uploadWithoutConfirmation(controller: controller, program: program) {
-                                        completion?(true)
+                                    completion?(true)
                                 }
                             }
                         })
@@ -57,7 +57,7 @@ class FirmwareUpload {
     }
 
     public static func showUploadUI(controller: UIViewController, program: Hex, name: String = NSLocalizedString("the program", comment: ""), completion: (() -> ())? = nil) {
-        let alert = UIAlertController(title: NSLocalizedString("Upload?", comment: ""), message: String(format:NSLocalizedString("Do you want to upload %@ to your Calliope mini?", comment: ""), name), preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("Upload?", comment: ""), message: String(format: NSLocalizedString("Do you want to upload %@ to your Calliope mini?", comment: ""), name), preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("Upload", comment: ""), style: .default) { _ in
             uploadWithoutConfirmation(controller: controller, program: program, completion: completion)
         })
@@ -76,11 +76,6 @@ class FirmwareUpload {
             do {
                 try uploader.upload(finishedCallback: {
                     controller.dismiss(animated: true, completion: nil)
-                    if tempCalliope is USBCalliope {
-                        let alert = UIAlertController(title: NSLocalizedString("Übertragung abgeschlossen", comment: ""), message: NSLocalizedString("Vor der nächsten Verbindung muss die Verbindung wieder hergestellt werden und der Calliope mini ausgewählt werden.", comment: ""), preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in })
-                        controller.present(alert, animated: true)
-                    }
                     completion?()
                 })
             } catch {
@@ -88,10 +83,10 @@ class FirmwareUpload {
                 UIApplication.shared.isIdleTimerDisabled = false
 
 
-
-                let alert = UIAlertController(title: NSLocalizedString("Upload failed", comment: ""), message: String(format:NSLocalizedString("The program does not seem to match the version of your Calliope mini. Please check the hardware selection in your editor again.", comment: "")), preferredStyle: .alert)
+                let alert = UIAlertController(title: NSLocalizedString("Upload failed", comment: ""), message: String(format: NSLocalizedString("The program does not seem to match the version of your Calliope mini. Please check the hardware selection in your editor again.", comment: "")), preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel) {
-                    _ in uploader.alertView.dismiss(animated: true)
+                    _ in
+                    uploader.alertView.dismiss(animated: true)
                 })
                 alert.addAction(UIAlertAction(title: NSLocalizedString("Further Information", comment: ""), style: .default) { _ in
                     if let url = URL(string: informationLink) {
@@ -113,18 +108,20 @@ class FirmwareUpload {
         self.controller = controller
     }
 
-	//keep last upload, so it cannot be de-inited prematurely
-	private static var uploadingInstance: FirmwareUpload? = nil {
-		didSet { _ = oldValue?.calliope?.cancelUpload() }
-	}
+    //keep last upload, so it cannot be de-inited prematurely
+    private static var uploadingInstance: FirmwareUpload? = nil {
+        didSet {
+            _ = oldValue?.calliope?.cancelUpload()
+        }
+    }
 
-	lazy var alertView: UIAlertController = {
-		guard let calliope = calliope else {
+    lazy var alertView: UIAlertController = {
+        guard let calliope = calliope else {
             let alertController = UIAlertController(title: NSLocalizedString("Cannot upload", comment: ""), message: NSLocalizedString("There is no connected calliope in DFU mode", comment: ""), preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: nil))
             MatrixConnectionViewController.instance.animateBounce()
-			return alertController
-		}
+            return alertController
+        }
 
         let uploadController = UIAlertController(title: NSLocalizedString("Übertragung läuft", comment: ""), message: "", preferredStyle: .alert)
 
@@ -144,10 +141,10 @@ class FirmwareUpload {
         uploadController.view.addSubview(progressView)
         uploadController.view.addSubview(logTextView)
         uploadController.view.addConstraints(
-            NSLayoutConstraint.constraints(withVisualFormat: "V:|-(80)-[progressView(120)]-(8)-[logTextView(logHeight)]-(50)-|", options: [], metrics: ["logHeight": logHeight], views: ["progressView" : progressView, "logTextView": logTextView]))
+            NSLayoutConstraint.constraints(withVisualFormat: "V:|-(80)-[progressView(120)]-(8)-[logTextView(logHeight)]-(50)-|", options: [], metrics: ["logHeight": logHeight], views: ["progressView": progressView, "logTextView": logTextView]))
         uploadController.view.addConstraints(
             NSLayoutConstraint.constraints(withVisualFormat: "H:|-(80@900)-[progressView(120)]-(80@900)-|",
-                                           options: [], metrics: nil, views: ["progressView" : progressView]))
+                                           options: [], metrics: nil, views: ["progressView": progressView]))
 
         uploadController.view.addConstraints(
             NSLayoutConstraint.constraints(withVisualFormat: "H:|-(8@900)-[logTextView(264)]-(8@900)-|",
@@ -155,24 +152,24 @@ class FirmwareUpload {
         )
 
         uploadController.addAction(cancelUploadAction)
-		return uploadController
-	}()
+        return uploadController
+    }()
 
-	private lazy var progressRing: UICircularProgressRing = {
-		let ring = UICircularProgressRing()
-		ring.minValue = 0
-		ring.maxValue = 100
-		ring.style = UICircularRingStyle.ontop
-		ring.outerRingColor = #colorLiteral(red: 0.976000011, green: 0.7760000229, blue: 0.1490000039, alpha: 1)
-		ring.innerRingColor = #colorLiteral(red: 0.2980000079, green: 0.851000011, blue: 0.3919999897, alpha: 1)
-		ring.shouldShowValueText = true
-		//ring.gradientOptions = UICircularRingGradientOptions(startPosition: .top, endPosition: .top, colors: [#colorLiteral(red: 0.2469999939, green: 0.7839999795, blue: 0.3880000114, alpha: 1), #colorLiteral(red: 0.2980000079, green: 0.851000011, blue: 0.3919999897, alpha: 1)], colorLocations: [0.0, 100.0])
-		ring.valueFormatter = UICircularProgressRingFormatter(valueIndicator: "%", rightToLeft: false, showFloatingPoint: false, decimalPlaces: 0)
-		return ring
-	}()
+    private lazy var progressRing: UICircularProgressRing = {
+        let ring = UICircularProgressRing()
+        ring.minValue = 0
+        ring.maxValue = 100
+        ring.style = UICircularRingStyle.ontop
+        ring.outerRingColor = #colorLiteral(red: 0.976000011, green: 0.7760000229, blue: 0.1490000039, alpha: 1)
+        ring.innerRingColor = #colorLiteral(red: 0.2980000079, green: 0.851000011, blue: 0.3919999897, alpha: 1)
+        ring.shouldShowValueText = true
+        //ring.gradientOptions = UICircularRingGradientOptions(startPosition: .top, endPosition: .top, colors: [#colorLiteral(red: 0.2469999939, green: 0.7839999795, blue: 0.3880000114, alpha: 1), #colorLiteral(red: 0.2980000079, green: 0.851000011, blue: 0.3919999897, alpha: 1)], colorLocations: [0.0, 100.0])
+        ring.valueFormatter = UICircularProgressRingFormatter(valueIndicator: "%", rightToLeft: false, showFloatingPoint: false, decimalPlaces: 0)
+        return ring
+    }()
 
     private lazy var cancelUploadAction: UIAlertAction = {
-        return UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .destructive) {  [weak self] _ in
+        return UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .destructive) { [weak self] _ in
             self?.finished()
         }
     }()
@@ -187,10 +184,12 @@ class FirmwareUpload {
         return textView
     }()
 
-	private var finished: () -> () = {}
-    private var failed: () -> () = {}
+    private var finished: () -> () = {
+    }
+    private var failed: () -> () = {
+    }
 
-	private var calliope = MatrixConnectionViewController.instance.usageReadyCalliope
+    private var calliope = MatrixConnectionViewController.instance.usageReadyCalliope
 
     func upload(finishedCallback: @escaping () -> ()) throws {
         // Validating for the correct Version of the Hex File
@@ -205,7 +204,7 @@ class FirmwareUpload {
 
         FirmwareUpload.uploadingInstance = self
 
-        let background_ident = UIApplication.shared.beginBackgroundTask(withName: "flashing", expirationHandler: {() -> Void in
+        let background_ident = UIApplication.shared.beginBackgroundTask(withName: "flashing", expirationHandler: { () -> Void in
             LogNotify.log("task expired?")
             // not exactly sure what belongs here...
         })
@@ -222,29 +221,23 @@ class FirmwareUpload {
             downloadCompletion()
             MatrixConnectionViewController.instance.enableDfuMode(mode: false)
         }
-		self.finished = {
-			downloadCompletion()
-			DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.0) {
-				finishedCallback()
-			}
+        self.finished = {
+            downloadCompletion()
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.0) {
+                finishedCallback()
+            }
             MatrixConnectionViewController.instance.enableDfuMode(mode: false)
-		}
+        }
 
-		do {
+        do {
             MatrixConnectionViewController.instance.enableDfuMode(mode: true)
             try calliope.upload(file: file, progressReceiver: self, statusDelegate: self, logReceiver: self)
-		}
-		catch {
-			DispatchQueue.main.async { [weak self] in
+        } catch {
+            DispatchQueue.main.async { [weak self] in
                 self?.showUploadError(error)
-			}
-		}
-        if calliope is USBCalliope {
-            MatrixConnectionViewController.instance.disconnectFromCalliope()
-            MatrixConnectionViewController.instance.usbSwitch.setOn(false, animated: true)
-            MatrixConnectionViewController.instance.switchChanged(usbSwitch: MatrixConnectionViewController.instance.usbSwitch)
+            }
         }
-	}
+    }
 
     func showUploadError(_ error: Error) {
         alertView.title = NSLocalizedString("Upload failed!", comment: "")
@@ -253,14 +246,14 @@ class FirmwareUpload {
         failed()
     }
 
-	deinit {
-		NSLog("FirmwareUpload deinited")
-	}
+    deinit {
+        NSLog("FirmwareUpload deinited")
+    }
 }
 
 extension FirmwareUpload: DFUProgressDelegate, DFUServiceDelegate, LoggerDelegate {
-	func dfuProgressDidChange(for part: Int, outOf totalParts: Int, to progress: Int, currentSpeedBytesPerSecond: Double, avgSpeedBytesPerSecond: Double) {
-		DispatchQueue.main.async { [weak self] in
+    func dfuProgressDidChange(for part: Int, outOf totalParts: Int, to progress: Int, currentSpeedBytesPerSecond: Double, avgSpeedBytesPerSecond: Double) {
+        DispatchQueue.main.async { [weak self] in
             guard let self = self else {
                 return
             }
@@ -273,8 +266,8 @@ extension FirmwareUpload: DFUProgressDelegate, DFUServiceDelegate, LoggerDelegat
                     failed()
                 }
             }
-		}
-	}
+        }
+    }
 
     func logWith(_ level: LogLevel, message: String) {
         LogNotify.log("DFU Message: \(message)")
