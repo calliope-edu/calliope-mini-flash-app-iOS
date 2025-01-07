@@ -62,7 +62,7 @@
 			<key>Key</key>
 			<string>robertaUrlPreference</string>
 			<key>DefaultValue</key>
-			<string>http://app.calliope.cc/ios/openroberta/</string>
+			<string>https://app.calliope.cc/ios/openroberta/</string>
 			<key>IsSecure</key>
 			<false/>
 			<key>KeyboardType</key>

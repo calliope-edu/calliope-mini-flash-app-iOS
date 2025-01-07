@@ -41,7 +41,7 @@ public enum SettingsKey: String, CaseIterable {
 public struct Settings {
 
     static var defaultNewsUrl = NSLocalizedString("https://calliope.cc/forumassets/news.json", comment: "The url for the news json");
-    static var defaultOpenRobertaUrl = "http://app.calliope.cc/ios/openroberta/"
+    static var defaultOpenRobertaUrl = "https://app.calliope.cc/ios/openroberta/"
 
     static var defaultMakecodeUrl = "https://makecode.calliope.cc"
     static var defaultProgramV3 = "https://calliope.cc/downloads/miniV3_start.hex"
