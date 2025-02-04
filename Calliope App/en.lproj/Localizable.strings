@@ -283,4 +283,5 @@
 /* (No Comment) */
 "Verbindung notwendig, um Daten anzeigen zu lassen." = "Connection required for data collection.";
 
-"View Datalogger" = "Datalogger Daten Anzeigen"
+/* (No Comment) */
+"Datalogger Daten Anzeigen" = "View Datalogger";

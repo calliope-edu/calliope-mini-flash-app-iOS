@@ -16,7 +16,7 @@ class ProjectCollectionViewController: UICollectionViewController, UIDocumentPic
     private let reuseIdentifierProgram = "uploadProjectCell"
 
     private lazy var projects: [Project] = { () -> [Project] in
-         return Project.fetchProjects()
+        return Project.fetchProjects()
     }()
 
     private var programSubscription: NSObjectProtocol!
@@ -29,9 +29,9 @@ class ProjectCollectionViewController: UICollectionViewController, UIDocumentPic
                 DispatchQueue.main.async {
                     self?.animateFileChange()
                 }
-        })
+            })
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         animateFileChange()
     }
@@ -51,7 +51,7 @@ class ProjectCollectionViewController: UICollectionViewController, UIDocumentPic
         cell = createProjectCell(collectionView, indexPath)
         return cell
     }
-    
+
     private func createProjectCell(_ collectionView: UICollectionView, _ indexPath: IndexPath) -> UICollectionViewCell {
         let cell: ProjectCollectionViewCell
         cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierProgram, for: indexPath) as! ProjectCollectionViewCell
@@ -59,7 +59,7 @@ class ProjectCollectionViewController: UICollectionViewController, UIDocumentPic
         cell.delegate = self
         return cell
     }
-    
+
     private func animateFileChange() {
         let oldItems = projects
         let newItems = Project.fetchProjects()
@@ -73,12 +73,12 @@ class ProjectCollectionViewController: UICollectionViewController, UIDocumentPic
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         return true
     }
-    
+
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedItem = projects[indexPath.row]
         self.parent?.performSegue(withIdentifier: "showNewlyCreatedProject", sender: selectedItem.id)
     }
-    
+
     func deleteProject(of cell: ProjectCollectionViewCell, project: Project) {
         guard let chartId = project.id else {
             return
@@ -96,7 +96,7 @@ class ProjectCollectionViewController: UICollectionViewController, UIDocumentPic
         }
         collectionView.deleteItems(at: [newIndexPath])
     }
-    
+
     deinit {
         NotificationCenter.default.removeObserver(programSubscription!)
     }

@@ -66,8 +66,8 @@ class BLECalliope: Calliope {
             return false
         }
 
-        LogNotify.log("found all of \(requiredServicesUUIDs.count) required services:\n\(requiredServices)")
-        LogNotify.log("found \(discoveredOptionalServices.count) of \(optionalServices.count) optional services")
+        LogNotify.log("Found all \(requiredServicesUUIDs.count) required services: \(requiredServices)")
+        LogNotify.log("Found \(discoveredOptionalServices.count) of \(optionalServices.count) optional Services: \(discoveredOptionalServices)")
 
         //Validate Characteristics, are characteristics discovered for all optional and required services
         for service in requiredServices {

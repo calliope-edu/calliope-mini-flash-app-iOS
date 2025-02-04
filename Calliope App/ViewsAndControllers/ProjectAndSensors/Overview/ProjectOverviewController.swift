@@ -16,10 +16,15 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
     @IBOutlet weak var addProjectButton: UIButton!
     @IBOutlet weak var projectContainerView: UIView?
 
+    @IBOutlet weak var dataloggerInformationButton: UIButton!
+
     @objc var projectCollectionViewController: ProjectCollectionViewController?
 
     var projectHeightConstraint: NSLayoutConstraint?
     var projectKvo: Any?
+
+    private var calliopeConnectedSubcription: NSObjectProtocol!
+    private var calliopeDisconnectedSubscription: NSObjectProtocol!
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
@@ -43,6 +48,8 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
         projectContainerView?.translatesAutoresizingMaskIntoConstraints = false
         projectHeightConstraint = projectContainerView?.heightAnchor.constraint(equalToConstant: 10)
         projectHeightConstraint?.isActive = true
+
+        addNotificationSubscriptions()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -55,6 +62,9 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
 
         MatrixConnectionViewController.instance?.connectionDescriptionText = NSLocalizedString("Calliope mini verbinden!", comment: "")
         MatrixConnectionViewController.instance?.calliopeClass = DiscoveredBLEDDevice.self
+
+        let connectedCalliope = MatrixConnectionViewController.instance.usageReadyCalliope as? CalliopeAPI
+        dataloggerInformationButton.isEnabled = ((connectedCalliope?.discoveredOptionalServices.contains(.microbitUtilityService)) != nil);
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -84,6 +94,7 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
             }
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+
         alertController.addAction(okAction)
         alertController.addAction(cancelAction)
         self.present(alertController, animated: true, completion: nil)
@@ -103,5 +114,30 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
         if let url = URL(string: NSLocalizedString("https://calliope.cc/programmieren/mobil/ipad#sensordaten", comment: "")) {
             UIApplication.shared.open(url)
         }
+    }
+
+    @IBAction func getDataloggerHtml() {
+        // TODO SKO
+        LogNotify.log("Yay!")
+    }
+
+    fileprivate func addNotificationSubscriptions() {
+        calliopeConnectedSubcription = NotificationCenter.default.addObserver(
+            forName: DiscoveredBLEDDevice.usageReadyNotificationName, object: nil, queue: nil,
+            using: { [weak self] (_) in
+                DispatchQueue.main.async {
+                    LogNotify.log("Received usage ready Notification")
+                    let connectedCalliope = MatrixConnectionViewController.instance.usageReadyCalliope as? CalliopeAPI
+                    self?.dataloggerInformationButton.isEnabled = ((connectedCalliope?.discoveredOptionalServices.contains(.microbitUtilityService)) != nil);
+                }
+            })
+
+        calliopeDisconnectedSubscription = NotificationCenter.default.addObserver(
+            forName: DiscoveredBLEDDevice.disconnectedNotificationName, object: nil, queue: nil,
+            using: { [weak self] (_) in
+                DispatchQueue.main.async {
+                    self?.dataloggerInformationButton.isEnabled = false
+                }
+            })
     }
 }

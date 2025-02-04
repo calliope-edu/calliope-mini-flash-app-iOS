@@ -136,6 +136,9 @@
                                                                         <buttonConfiguration key="configuration" style="filled" title="View Datalogger" titleAlignment="center">
                                                                             <color key="baseBackgroundColor" name="calliope-turqoise"/>
                                                                         </buttonConfiguration>
+                                                                        <connections>
+                                                                            <action selector="getDataloggerHtml" destination="nJx-VD-M8y" eventType="touchUpInside" id="B3n-T9-cKo"/>
+                                                                        </connections>
                                                                     </button>
                                                                 </subviews>
                                                                 <constraints>
@@ -245,6 +248,7 @@
                     <size key="freeformSize" width="699" height="1000"/>
                     <connections>
                         <outlet property="addProjectButton" destination="1Ta-ld-GFK" id="fCh-WR-gcx"/>
+                        <outlet property="dataloggerInformationButton" destination="kac-2O-C6o" id="VO0-R2-Zep"/>
                         <outlet property="projectContainerView" destination="vV5-4y-x1s" id="hiZ-aD-JWK"/>
                         <outlet property="stackView" destination="XPz-7S-14H" id="iK2-j9-mH4"/>
                         <segue destination="xWF-af-2iy" kind="show" identifier="showNewlyCreatedProject" destinationCreationSelector="segue:" id="iAp-cX-5QA"/>

@@ -11,16 +11,15 @@ import UIKit
 import DGCharts
 
 
-
 class ChartViewCell: BaseChartViewCell {
-    
+
     private var calliopeConnectedSubcription: NSObjectProtocol!
     private var calliopeDisconnectedSubscription: NSObjectProtocol!
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
+
     func setupChartView() {
         deleteButton.setTitle("", for: .normal)
         guard let chart = chart else {
@@ -31,14 +30,14 @@ class ChartViewCell: BaseChartViewCell {
         addNotificationSubscriptions()
         loadDatabaseDataIntoChart(chart)
         setupSensorMenu()
-        
+
         guard let _ = MatrixConnectionViewController.instance.usageReadyCalliope else {
             recordingButton.isEnabled = false
             sensorTypeButton.isEnabled = false
             return
         }
     }
-    
+
     fileprivate func addNotificationSubscriptions() {
         calliopeConnectedSubcription = NotificationCenter.default.addObserver(
             forName: DiscoveredBLEDDevice.usageReadyNotificationName, object: nil, queue: nil,
@@ -50,7 +49,7 @@ class ChartViewCell: BaseChartViewCell {
                     self?.setupSensorMenu()
                 }
             })
-        
+
         calliopeDisconnectedSubscription = NotificationCenter.default.addObserver(
             forName: DiscoveredBLEDDevice.disconnectedNotificationName, object: nil, queue: nil,
             using: { [weak self] (_) in
@@ -61,7 +60,7 @@ class ChartViewCell: BaseChartViewCell {
                 }
             })
     }
-    
+
     fileprivate func loadDatabaseDataIntoChart(_ chart: Chart) {
         LogNotify.log("Starting to load existing Data into Chart")
         let rawValues = Value.fetchValuesBy(chartId: chart.id)
@@ -74,7 +73,7 @@ class ChartViewCell: BaseChartViewCell {
                 getDataEntries(data: decodedValue, timestep: value.time, service: chart.sensorType ?? .empty)
             }
             addDataEntries(dataEntries: axisToData)
-            
+
             sensorTypeButton.isEnabled = false
             recordingButton.isEnabled = false
         } else {
@@ -82,7 +81,7 @@ class ChartViewCell: BaseChartViewCell {
             recordingButton.isEnabled = true
         }
     }
-    
+
     @IBAction func deleteChartView(_ sender: Any) {
         stopDataRecording()
         axisToData.removeAll()
@@ -90,7 +89,7 @@ class ChartViewCell: BaseChartViewCell {
         baseTime = nil
         delegate.deleteChart(of: self, chart: chart)
     }
-    
+
     func chartValueSelected(
         _ chartView: ChartViewBase,
         entry: ChartDataEntry,
@@ -107,14 +106,16 @@ class ChartViewCell: BaseChartViewCell {
 
 extension LineChartDataSet {
     func calculateAverageValue() -> Double {
-        let yValues = self.entries.map { $0.y }
+        let yValues = self.entries.map {
+            $0.y
+        }
         let sum = yValues.reduce(0, +)
         return sum / Double(yValues.count)
     }
 }
 
 extension Double {
-    func rounded(toPlaces places:Int) -> Double {
+    func rounded(toPlaces places: Int) -> Double {
         let divisor = pow(10.0, Double(places))
         return (self * divisor).rounded() / divisor
     }

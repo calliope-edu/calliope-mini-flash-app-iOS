@@ -15,17 +15,17 @@ protocol ChartCellDelegate {
 }
 
 class BaseChartViewCell: UITableViewCell, ChartViewDelegate {
-    
+
     var chart: Chart?
     var sensor: Sensor?
     var baseTime: Double?
     var isRecordingData: Bool = false
     var hasDefaultValues: Bool = false
     var selectedAxis: Int = -1
-    
+
     public var delegate: ChartCellDelegate!
     public var dataController: DataController
-    
+
     @IBOutlet weak var lineChartView: LineChartView!
     @IBOutlet weak var sensorTypeMenu: UIMenu!
     @IBOutlet weak var sensorTypeButton: ContextMenuButton!
@@ -37,19 +37,18 @@ class BaseChartViewCell: UITableViewCell, ChartViewDelegate {
     @IBOutlet weak var minValueLabel: UILabel!
     @IBOutlet weak var avgValueLabel: UILabel!
     @IBOutlet weak var currentValueLabel: UILabel!
-    
+
     let colors = [NSUIColor.calliopeGreen, NSUIColor.calliopePurple, NSUIColor.calliopeYellow, NSUIColor.calliopeRed, NSUIColor.calliopeGray]
-    
-    
-    
+
+
     var axisToDataSet: [String: LineChartDataSet] = [:]
     var axisToData: [String: [ChartDataEntry]] = [:]
-    
+
     required init?(coder: NSCoder) {
         dataController = DataController()
         super.init(coder: coder)
     }
-    
+
     @IBAction func startRecording(_ sender: Any) {
         if isRecordingData {
             stopDataRecording()
@@ -68,7 +67,7 @@ class BaseChartViewCell: UITableViewCell, ChartViewDelegate {
         }
         startDataRecording()
     }
-    
+
     func startDataRecording() {
         if hasDefaultValues {
             guard let dataSets = lineChartView.data?.dataSets else {
@@ -90,31 +89,33 @@ class BaseChartViewCell: UITableViewCell, ChartViewDelegate {
                 guard let chart = self.chart else {
                     fatalError()
                 }
-                self.getDataEntries(data: [value.0 : value.2], timestep: value.1, service: chart.sensorType ?? .empty)
-                self.addDataEntries(dataEntries:  self.axisToData)
+                self.getDataEntries(data: [value.0: value.2], timestep: value.1, service: chart.sensorType ?? .empty)
+                self.addDataEntries(dataEntries: self.axisToData)
             }
         }
         isRecordingData = true
     }
-    
+
     func stopDataRecording() {
         guard let chart = chart else {
             fatalError("chart has not been initialized before using the ChartViewCell")
         }
         dataController.sensorStopRecordingFor(chart: chart)
         isRecordingData = false
-        
+
         UIView.animate(withDuration: 0.5) {
             self.deleteButton.isEnabled = true
             self.recordingButton.isEnabled = false
             self.recordingButton.setImage(UIImage(systemName: "circle.fill"), for: .normal)
         }
     }
-    
-    func getDataEntries(data: [String : Double], timestep: Double, service: CalliopeService) {
+
+    func getDataEntries(data: [String: Double], timestep: Double, service: CalliopeService) {
         for key in data.keys {
-            if key == "" { break }
-            var dataSet : [ChartDataEntry] = axisToData[key] ?? []
+            if key == "" {
+                break
+            }
+            var dataSet: [ChartDataEntry] = axisToData[key] ?? []
             guard let datapoint = data[key], let baseTime = baseTime else {
                 return
             }
@@ -122,8 +123,8 @@ class BaseChartViewCell: UITableViewCell, ChartViewDelegate {
             axisToData[key] = dataSet
         }
     }
-    
-    func addDataEntries(dataEntries: [String : [ChartDataEntry]]) {
+
+    func addDataEntries(dataEntries: [String: [ChartDataEntry]]) {
         for key in dataEntries.keys {
             if axisToDataSet[key] == nil {
                 let newLineChartDataset = LineChartDataSet(label: key).layoutDataSet(color: colors[axisToDataSet.keys.count])
@@ -137,19 +138,19 @@ class BaseChartViewCell: UITableViewCell, ChartViewDelegate {
                 axisDataSet.addEntryOrdered(entry)
             }
         }
-        let lineChartDataSets : [LineChartDataSet] = Array(axisToDataSet.values)
+        let lineChartDataSets: [LineChartDataSet] = Array(axisToDataSet.values)
         lineChartView.data = LineChartData(dataSets: lineChartDataSets)
         if lineChartView.data!.count > 0 {
             lineChartView.setVisibleXRangeMaximum(3000)
-            lineChartView.moveViewToX(((lineChartView.data?.xMax ?? 1)  - 1))
+            lineChartView.moveViewToX(((lineChartView.data?.xMax ?? 1) - 1))
             updateDataLabels()
         }
         axisToData = [:]
     }
-    
+
     func setupSensorMenu() {
         LogNotify.log("Setting up Sensor Menu")
-        var sensors : [UIAction] = []
+        var sensors: [UIAction] = []
         for sensor in dataController.getAvailableSensors() {
             let isDefault = (sensor.calliopeService == chart?.sensorType)
             sensors.append(UIAction(title: sensor.name, state: isDefault ? .on : .off) { _ in
@@ -159,19 +160,22 @@ class BaseChartViewCell: UITableViewCell, ChartViewDelegate {
             })
         }
         self.sensor = SensorUtility.serviceSensorMap[chart?.sensorType ?? .accelerometer]
-        
+
         if sensors.isEmpty {
             sensorTypeButton.isEnabled = false
             if let count = lineChartView.data?.count, count > 1 {
-                sensors.append(UIAction(title: self.sensor!.name, state: .on) { _ in })
+                sensors.append(UIAction(title: self.sensor!.name, state: .on) { _ in
+                })
             } else {
-                sensors.append(UIAction(title: NSLocalizedString("No Sensor Available", comment: "")) { _ in })
+                sensors.append(UIAction(title: NSLocalizedString("No Sensor Available", comment: "")) { _ in
+                })
             }
         } else {
-            sensors.append(UIAction(title: NSLocalizedString("Select", comment: ""), state: .on) { _ in })
+            sensors.append(UIAction(title: NSLocalizedString("Select", comment: ""), state: .on) { _ in
+            })
         }
-        
-        var axisButtonChildren : [UIAction] = []
+
+        var axisButtonChildren: [UIAction] = []
         if axisToDataSet.keys.count > 1 {
             axisButtonChildren.append(UIAction(title: NSLocalizedString("All", comment: "")) { _ in
                 guard let dataSets = self.lineChartView.data?.dataSets else {
@@ -211,7 +215,7 @@ class BaseChartViewCell: UITableViewCell, ChartViewDelegate {
         sensorAxisButton.menu = UIMenu(title: NSLocalizedString("Axis", comment: ""), children: axisButtonChildren)
         sensorTypeButton.menu = UIMenu(title: NSLocalizedString("Sensors", comment: ""), children: sensors)
     }
-    
+
     private func resetLineChartView(sensor: Sensor) {
         self.sensor = sensor
         self.lineChartView.data?.clearValues()
@@ -223,7 +227,7 @@ class BaseChartViewCell: UITableViewCell, ChartViewDelegate {
         self.chart = Chart.insertChart(sensorType: sensor.calliopeService, projectsId: chart.projectsId)
         lineChartView.setupView(service: sensor.calliopeService)
     }
-    
+
     func updateDataLabels() {
         DispatchQueue.main.async {
             guard let lineChartData = self.lineChartView.data, let lineChartDataSets = lineChartData.dataSets as? [LineChartDataSet], let lineChartDataSet = lineChartDataSets.first else {

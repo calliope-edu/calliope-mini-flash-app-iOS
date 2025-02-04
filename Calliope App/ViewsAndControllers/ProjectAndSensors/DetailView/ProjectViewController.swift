@@ -79,7 +79,7 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
                         self?.addChartButton.isEnabled = true
                     }
                 }
-        })
+            })
 
         calliopeDisconnectedSubscription = NotificationCenter.default.addObserver(
             forName: DiscoveredBLEDDevice.disconnectedNotificationName, object: nil, queue: nil,
@@ -89,7 +89,7 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
                         self?.addChartButton.isEnabled = false
                     }
                 }
-        })
+            })
 
         guard let _ = MatrixConnectionViewController.instance.usageReadyCalliope else {
             self.addChartButton.isEnabled = false
@@ -147,13 +147,13 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
         settingsButton.showsMenuAsPrimaryAction = true
 
         settingsButton.menu = UIMenu(children: [
-            UIAction(title: NSLocalizedString("Delete", comment: ""), image: UIImage(systemName: "trash")) {(action: UIAction) in
+            UIAction(title: NSLocalizedString("Delete", comment: ""), image: UIImage(systemName: "trash")) { (action: UIAction) in
                 self.deleteProject()
             },
-            UIAction(title: NSLocalizedString("Export (CSV)", comment: ""), image: UIImage(systemName: "square.and.arrow.up")) {(action: UIAction) in
+            UIAction(title: NSLocalizedString("Export (CSV)", comment: ""), image: UIImage(systemName: "square.and.arrow.up")) { (action: UIAction) in
                 self.exportToCSVFile()
             },
-            UIAction(title: NSLocalizedString("Rename", comment: ""), image: UIImage(systemName: "pencil")) {(action: UIAction) in
+            UIAction(title: NSLocalizedString("Rename", comment: ""), image: UIImage(systemName: "pencil")) { (action: UIAction) in
                 self.renameProject()
             }
         ])
