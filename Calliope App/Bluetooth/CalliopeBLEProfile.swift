@@ -19,7 +19,7 @@ enum CalliopeService: String, CaseIterable, Codable {
     case secureDfuService = "FE59"
 
     case partialFlashing = "E97DD91D-251D-470A-A062-FA1922DFA9A8"
-   
+
     //MARK: master service
 
     case master = "CA11FF01-251D-470A-A062-FA1922DFA9A8"
@@ -83,6 +83,9 @@ enum CalliopeService: String, CaseIterable, Codable {
     /// This is an implementation of Nordic Semicondutor's UART/Serial Port Emulation over Bluetooth low energy.
     /// See https://developer.nordicsemi.com/nRF5_SDK/nRF51_SDK_v8.x.x/doc/8.0.0/s110/html/a00072.html for the original Nordic Semiconductor documentation by way of background.
     case uart = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E"
+
+    // MicroBit Utility Service for reading log data (e.g. MY_DATA.htm)
+    case microbitUtilityService = "E95D0001-251D-470A-A062-FA1922DFA9A8"
 
     case empty = "1111"
 }
@@ -237,6 +240,9 @@ enum CalliopeCharacteristic: String, CaseIterable {
     /// The maximum number of bytes which may be transmitted in one PDU is limited to the MTU minus three or 20 octets to be precise.
     case rxCharacteristic = "6E400003-B5A3-F393-E0A9-E50E24DCCA9E"
 
+    // Microbit Utility Characteristic to send request to and will provide the corresponding data
+    case microbitUtilityCharacterisitc = "E95D0002-251D-470A-A062-FA1922DFA9A8"
+
     var uuid: CBUUID {
         return rawValue.uuid
     }
@@ -277,6 +283,8 @@ extension CalliopeService {
             return 1 << 24
         case .temperature:
             return 1 << 5
+        case .microbitUtilityService:
+            return 1 << 25
         default:
             return 0
         }
@@ -315,6 +323,7 @@ struct CalliopeBLEProfile {
         .dfuControlService: [.dfuControl],
         .partialFlashing: [.partialFlashing],
         .secureDfuService: [.secureDfuCharacteristic],
+        .microbitUtilityService: [.microbitUtilityCharacterisitc]
     ]
 
     ///inverted map of characteristics and corresponding services (there are some ambiguities, which we ignore)
