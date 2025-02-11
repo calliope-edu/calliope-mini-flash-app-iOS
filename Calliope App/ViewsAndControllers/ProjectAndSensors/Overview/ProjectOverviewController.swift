@@ -26,6 +26,8 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
     private var calliopeConnectedSubcription: NSObjectProtocol!
     private var calliopeDisconnectedSubscription: NSObjectProtocol!
 
+    private var connectedCalliope: CalliopeAPI?
+
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: { (_) in
@@ -117,8 +119,11 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
     }
 
     @IBAction func getDataloggerHtml() {
-        // TODO SKO
-        LogNotify.log("Yay!")
+        guard let connectedCalliope = self.connectedCalliope else {
+            return
+        }
+
+        connectedCalliope.startJob(for: .LOG_HTML)
     }
 
     fileprivate func addNotificationSubscriptions() {
@@ -127,8 +132,8 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
             using: { [weak self] (_) in
                 DispatchQueue.main.async {
                     LogNotify.log("Received usage ready Notification")
-                    let connectedCalliope = MatrixConnectionViewController.instance.usageReadyCalliope as? CalliopeAPI
-                    self?.dataloggerInformationButton.isEnabled = ((connectedCalliope?.discoveredOptionalServices.contains(.microbitUtilityService)) != nil);
+                    self?.connectedCalliope = MatrixConnectionViewController.instance.usageReadyCalliope as? CalliopeAPI
+                    self?.dataloggerInformationButton.isEnabled = ((self?.connectedCalliope?.discoveredOptionalServices.contains(.microbitUtilityService)) != nil);
                 }
             })
 

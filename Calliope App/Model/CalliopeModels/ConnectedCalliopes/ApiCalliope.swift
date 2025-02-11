@@ -325,6 +325,87 @@ class CalliopeAPI: BLECalliope {
 	}
 
 
+	//MARK: MicroBit Utility Service Calls
+	// TODO SKO: Timeout jobs
+	// TODO SKO:
+
+	var currentJobs: [UtilityLogJob] = [];
+	var nextJobId: UInt8? {
+		get {
+			let allPossibleIDs: Set<UInt8> = Set(stride(from: 0x00, through: 0xF0, by: 0x10)) // Valid IDs
+			let existingIDs: Set<UInt8> = Set(currentJobs.map {
+				$0.id
+			})
+
+			let missingIDs = allPossibleIDs.subtracting(existingIDs).sorted()
+			return missingIDs.first
+		}
+	}
+
+	func startJob(for format: BLEDataTypes.UtilityRequest.Format) {
+		guard let nextJobId = nextJobId else {
+			LogNotify.log("No current free jobs")
+			return
+		}
+
+		var job: UtilityJobProtocol = switch format {
+		case .LOG_HTML_HEADER, .LOG_HTML, .LOG_CSV:
+			UtilityLogJob(id: nextJobId, format: format)
+		}
+
+		// setup
+		do {
+			try setNotify(characteristic: .microbitUtilityCharacterisitc, true)
+		} catch {
+			LogNotify.log("Unable to setup required state for datalogger HTML reading. Aborting.")
+			return
+		}
+
+		// initialize
+		try? job.start() { (data) in
+			try writeWithoutResponse(data, for: .microbitUtilityCharacterisitc)
+		}
+
+		if job.state != .Running {
+			LogNotify.log("Unable to start job. State \(job.state). Aborting")
+			try? setNotify(characteristic: .microbitUtilityCharacterisitc, false)
+			return
+		}
+
+		currentJobs.append(job as! UtilityLogJob)
+		LogNotify.log("Started Job \(job.id).")
+	}
+
+	private func handleNotification(_ data: Data) {
+		LogNotify.log("Received Data from Utility Service: \(data) with value (0x\(data.hexEncodedString()))")
+
+		guard data.first != nil else {
+			return
+		}
+
+		let id = data.first! & 0xF0
+		let job = currentJobs.first {
+			$0.id == id
+		}
+
+		guard let job = job else {
+			LogNotify.log("No job with id \(id) found.")
+			return
+		}
+
+
+		try? job.handle(response: data) { (data) in
+			try writeWithoutResponse(data, for: .microbitUtilityCharacterisitc)
+		}
+
+		LogNotify.log("Job \(job.id) in state \(job.state) after handling data")
+
+		if job.state == .Finished {
+			// inform app
+		}
+	}
+
+
 	//MARK: private api
 
 
@@ -431,6 +512,8 @@ class CalliopeAPI: BLECalliope {
 				return
 			}
 			uartValueNotification?(value)
+		case .microbitUtilityCharacterisitc:
+			handleNotification(value) // TODO SKO: Why are all other using other structure?
 		default:
 			return
 		}

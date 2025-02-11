@@ -10,17 +10,18 @@ import Foundation
 import CoreBluetooth
 
 class FlashableCalliopeFactory {
-    
+
     static let calliopeTypes = [CalliopeV3.self, CalliopeV1AndV2.self]
-    
+
     static func getFlashableCalliopeForBLEDevice(device: DiscoveredBLEDDevice) -> FlashableBLECalliope? {
-        let servicesChangedCallback = { [weak device] in 
+        let servicesChangedCallback = { [weak device] in
             device?.usageReadyCalliope = nil
             //device?.evaluateMode()
         }
         let calliope = calliopeTypes.compactMap { calliopeType in
             return calliopeType.init(peripheral: device.peripheral, name: device.name, discoveredServices: device.discoveredServices, discoveredCharacteristicUUIDsForServiceUUID: device.serviceToDiscoveredCharacteristicsMap, servicesChangedCallback: servicesChangedCallback)
-        }.first
+        }
+        .first
         return calliope
     }
 }

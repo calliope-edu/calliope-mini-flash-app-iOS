@@ -23,13 +23,13 @@ class NewsDetailWebViewController: UIViewController, WKNavigationDelegate, WKUID
         webView.uiDelegate = self
 
 		webView.load(URLRequest(url: url))
-        
+
         // add activity indicator
         activityIndicator = UIActivityIndicatorView()
         activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true
         activityIndicator.style = UIActivityIndicatorView.Style.medium
-        
+
         view.addSubview(activityIndicator)
         showActivityIndicator(show: true)
     }
@@ -49,7 +49,7 @@ class NewsDetailWebViewController: UIViewController, WKNavigationDelegate, WKUID
         }
         return nil
     }
-    
+
     func showActivityIndicator(show: Bool) {
         if show {
             activityIndicator.startAnimating()
@@ -57,7 +57,7 @@ class NewsDetailWebViewController: UIViewController, WKNavigationDelegate, WKUID
             activityIndicator.stopAnimating()
         }
     }
-    
+
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         showActivityIndicator(show: false)
     }

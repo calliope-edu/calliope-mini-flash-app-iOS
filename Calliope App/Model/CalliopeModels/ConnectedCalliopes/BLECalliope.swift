@@ -81,6 +81,7 @@ class BLECalliope: Calliope {
         return true
     }
 
+
     //MARK: reading and writing characteristics (asynchronously/ scheduled/ synchronously)
     //to sequentialize reads and writes
 
@@ -96,10 +97,10 @@ class BLECalliope: Calliope {
     var readValue: Data? = nil
 
     var setNotifyError: Error? = nil
-    var setNotifyingCharacteristic: CBCharacteristic? = nil
+    var notifyingCharacteristic: CBCharacteristic? = nil
 
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
-        if let writingCharac = writingCharacteristic, characteristic.uuid == writingCharac.uuid {
+        if let writingCharacteristic = writingCharacteristic, characteristic.uuid == writingCharacteristic.uuid {
             explicitWriteResponse(error)
             return
         } else {
@@ -139,7 +140,7 @@ class BLECalliope: Calliope {
     }
 
     func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
-        if let writingCharac = writingCharacteristic, characteristic.uuid == writingCharac.uuid {
+        if let writingCharacteristic = notifyingCharacteristic, characteristic.uuid == writingCharacteristic.uuid {
             explicitSetNotifyResponse(error)
             return
         } else {
@@ -168,7 +169,7 @@ class BLECalliope: Calliope {
     }
 
     private func explicitSetNotifyResponse(_ error: Error?) {
-        setNotifyingCharacteristic = nil
+        notifyingCharacteristic = nil
         //set potential error and move on
         setNotifyError = error
         if let error = error {
@@ -305,7 +306,7 @@ class BLECalliope: Calliope {
 
     func setNotify(characteristic: CBCharacteristic, _ activate: Bool) throws {
         return try applySemaphore(readWriteSem) {
-            setNotifyingCharacteristic = characteristic
+            notifyingCharacteristic = characteristic
 
             asyncAndWait(on: readWriteQueue) {
                 //read value and wait for delegate call (or error)
