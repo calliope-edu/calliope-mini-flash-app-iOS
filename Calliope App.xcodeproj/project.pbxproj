@@ -120,6 +120,7 @@
 		60B58BCE2C132ABA00050FE3 /* Chart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B58BCD2C132ABA00050FE3 /* Chart.swift */; };
 		60BBDB862B6B90C2003AD3CE /* DiscoveredDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BBDB852B6B90C2003AD3CE /* DiscoveredDevice.swift */; };
 		60BBDB882B6BA16F003AD3CE /* DiscoveredUSBDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BBDB872B6BA16F003AD3CE /* DiscoveredUSBDevice.swift */; };
+		60C345CD2D931CBF00430DA8 /* DataLoggerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C345CC2D931CBF00430DA8 /* DataLoggerViewController.swift */; };
 		60C915932B1F442F00E4039D /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C915922B1F442F00E4039D /* Network.swift */; };
 		60CF0EA92BFCBE1E00CB2A38 /* ProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CF0EA82BFCBE1E00CB2A38 /* ProjectViewController.swift */; };
 		60CF0EAD2BFCD25300CB2A38 /* Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CF0EAC2BFCD25300CB2A38 /* Value.swift */; };
@@ -281,7 +282,7 @@
 		60B58BCD2C132ABA00050FE3 /* Chart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chart.swift; sourceTree = "<group>"; };
 		60BBDB852B6B90C2003AD3CE /* DiscoveredDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredDevice.swift; sourceTree = "<group>"; };
 		60BBDB872B6BA16F003AD3CE /* DiscoveredUSBDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredUSBDevice.swift; sourceTree = "<group>"; };
-		60C345C82D93156800430DA8 /* DataLoggerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoggerViewController.swift; sourceTree = "<group>"; };
+		60C345CC2D931CBF00430DA8 /* DataLoggerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoggerViewController.swift; sourceTree = "<group>"; };
 		60C915922B1F442F00E4039D /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		60C915962B1F5F5300E4039D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Onboarding.strings; sourceTree = "<group>"; };
 		60C915982B1F61C200E4039D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Onboarding.strings; sourceTree = "<group>"; };
@@ -614,6 +615,7 @@
 		600E63282C328D700027AE61 /* Overview */ = {
 			isa = PBXGroup;
 			children = (
+				60C345CC2D931CBF00430DA8 /* DataLoggerViewController.swift */,
 				60D02D7A2BFC864900D3C34A /* ProjectOverviewController.swift */,
 				60D02D822BFCA0C400D3C34A /* ProjectCollectionViewController.swift */,
 				60D02D842BFCA41400D3C34A /* ProjectCollectionViewCell.swift */,
@@ -657,20 +659,11 @@
 		60A40DED2BF782C80069A3B5 /* ProjectAndSensors */ = {
 			isa = PBXGroup;
 			children = (
-				60C345C92D93156800430DA8 /* DataLoggerWebView */,
 				600E63342C342DC10027AE61 /* ProjectAndSensors.storyboard */,
 				600E63292C328DAE0027AE61 /* DetailView */,
 				600E63282C328D700027AE61 /* Overview */,
 			);
 			path = ProjectAndSensors;
-			sourceTree = "<group>";
-		};
-		60C345C92D93156800430DA8 /* DataLoggerWebView */ = {
-			isa = PBXGroup;
-			children = (
-				60C345C82D93156800430DA8 /* DataLoggerViewController.swift */,
-			);
-			path = DataLoggerWebView;
 			sourceTree = "<group>";
 		};
 		60CF0EAE2BFCD58E00CB2A38 /* LiveData */ = {
@@ -1088,6 +1081,7 @@
 				2F5E8F0426C9787400CE03CB /* PlaygroundStartViewController.swift in Sources */,
 				60CF0EB02BFCD59D00CB2A38 /* DataController.swift in Sources */,
 				60CF0EAD2BFCD25300CB2A38 /* Value.swift in Sources */,
+				60C345CD2D931CBF00430DA8 /* DataLoggerViewController.swift in Sources */,
 				2FC2A12B22C962D100675C2F /* NewsDetailWebViewController.swift in Sources */,
 				2F61459522BF761F001C2734 /* ProgramCollectionViewCell.swift in Sources */,
 				2F00EAB822DA195A000B5FDE /* HomeScreenViewController.swift in Sources */,
@@ -1379,7 +1373,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Calliope App/Calliope App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = GKA87N33H4;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "Calliope App/Info.plist";
@@ -1407,7 +1401,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Calliope App/Calliope App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = GKA87N33H4;
 				INFOPLIST_FILE = "Calliope App/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;

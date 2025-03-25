@@ -2,6 +2,15 @@
 //  DataLoggerViewController.swift
 //  Calliope App
 //
+//  Created by Calliope on 25.03.25.
+//  Copyright © 2025 calliope. All rights reserved.
+//
+
+
+//
+//  DataLoggerViewController.swift
+//  Calliope App
+//
 //  Created by Calliope on 11.03.25.
 //  Copyright © 2025 calliope. All rights reserved.
 //
