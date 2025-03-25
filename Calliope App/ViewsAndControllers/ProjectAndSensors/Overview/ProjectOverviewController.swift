@@ -70,7 +70,7 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
         MatrixConnectionViewController.instance?.connectionDescriptionText = NSLocalizedString("Calliope mini verbinden!", comment: "")
         MatrixConnectionViewController.instance?.calliopeClass = DiscoveredBLEDDevice.self
 
-        let connectedCalliope = MatrixConnectionViewController.instance.usageReadyCalliope as? CalliopeAPI
+        self.connectedCalliope = MatrixConnectionViewController.instance.usageReadyCalliope as? CalliopeAPI
         dataloggerInformationButton.isEnabled = connectedCalliope?.discoveredOptionalServices.contains(.microbitUtilityService) ?? false
     }
 
@@ -137,6 +137,7 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
 
     @IBAction func getDataloggerHtml() {
         guard let connectedCalliope = self.connectedCalliope else {
+            LogNotify.log("Datalogger Data button pressed, while no connected Calliope. This should not happen.")
             return
         }
 
