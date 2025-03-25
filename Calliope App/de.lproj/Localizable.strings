@@ -312,3 +312,13 @@ Weitere Infos unter „Hilfe”.";
 
 /* (No Comment) */
 "View Datalogger" = "Datalogger Daten Anzeigen";
+
+
+/* (No Comment) */
+"Datalogger Download Failed!" = "Datalogger Download fehlgeschlagen!";
+
+/* (No Comment) */
+"There was an issue downloading the datalogger data from your Calliope mini. Please ensure you are connected to the Calliope and try again." = "Es gab ein Problem beim Herunterladen der Datalogger-Daten von Ihrem Calliope mini. Bitte stellen Sie sicher, dass Sie mit dem Calliope verbunden sind, und versuchen Sie es erneut.";
+
+/* (No Comment) */
+"Transfering Datalogger Data" = "Übertragung der Datalogger-Daten";

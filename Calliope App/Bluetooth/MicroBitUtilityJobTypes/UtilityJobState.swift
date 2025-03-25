@@ -6,6 +6,7 @@ enum UtilityJobState {
         case Initial
         case Running
         case Finished
+        case Canceled
 
         // Error Cases
         case None

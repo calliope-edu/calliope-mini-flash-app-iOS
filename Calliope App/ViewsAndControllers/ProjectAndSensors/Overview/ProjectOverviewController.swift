@@ -6,6 +6,7 @@
 //  Copyright © 2024 calliope. All rights reserved.
 //
 
+import UICircularProgressRing
 import UIKit
 import CoreServices
 import SwiftUI
@@ -19,6 +20,8 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
     @IBOutlet weak var dataloggerInformationButton: UIButton!
 
     @objc var projectCollectionViewController: ProjectCollectionViewController?
+
+    @objc var dataLoggerViewController: DataLoggerViewController?
 
     var projectHeightConstraint: NSLayoutConstraint?
     var projectKvo: Any?
@@ -74,6 +77,18 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
         projectKvo = nil
     }
 
+    @IBSegueAction func initializeDataLoggerWebView(_ coder: NSCoder) -> DataLoggerViewController? {
+        LogNotify.log("Setting up DataLogger ViewController")
+        guard let result = self.connectedCalliope?.currentJob?.result else {
+            LogNotify.log("Missing Result Data, Aborting")
+            return nil
+        }
+
+        self.dataLoggerViewController = DataLoggerViewController(coder: coder)
+        self.dataLoggerViewController?.htmlData = result
+        return dataLoggerViewController
+    }
+
     @IBSegueAction func initializeProjects(_ coder: NSCoder) -> ProjectCollectionViewController? {
         LogNotify.log("setting project collection view controller")
         projectCollectionViewController = ProjectCollectionViewController(coder: coder)
@@ -123,7 +138,33 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
             return
         }
 
-        connectedCalliope.startJob(for: .LOG_HTML)
+        self.present(alertView, animated: true)
+        connectedCalliope.startUtilityJob(
+            for: .LOG_HTML,
+            onProgress: { [self] (a) in progressRing.startProgress(to: CGFloat(a), duration: 0.2) },
+            onCompletion: {
+                self.dismiss(animated: true)
+                self.performSegue(withIdentifier: "showDataLoggerHTML", sender: self)
+            },
+            onFailure: {
+                self.dismiss(animated: true)
+
+                let failureReason = connectedCalliope.currentJob?.jobState
+                if (failureReason == .Canceled) {
+                    return
+                }
+
+                let alert = UIAlertController(
+                    title: NSLocalizedString("Datalogger Download Failed!", comment: ""),
+                    message: String(format: NSLocalizedString("There was an issue downloading the datalogger data from your Calliope mini. Please ensure you are connected to the Calliope and try again.", comment: "")),
+                    preferredStyle: .alert
+                )
+                alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel) { _ in
+                    self.dismiss(animated: true)
+                })
+                self.present(alert, animated: true)
+            }
+        )
     }
 
     fileprivate func addNotificationSubscriptions() {
@@ -145,4 +186,63 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
                 }
             })
     }
+
+    // UI Components for displaying Datalogger Loading
+    private lazy var alertView: UIAlertController = {
+        let uploadController = UIAlertController(title: NSLocalizedString("Transfering Datalogger Data", comment: ""), message: "", preferredStyle: .alert)
+
+        let progressView: UIView
+        let logHeight = 0
+
+
+        progressView = progressRing
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+
+        uploadController.view.addSubview(progressView)
+        uploadController.view.addSubview(logTextView)
+        uploadController.view.addConstraints(
+            NSLayoutConstraint.constraints(withVisualFormat: "V:|-(80)-[progressView(120)]-(8)-[logTextView(logHeight)]-(50)-|", options: [], metrics: ["logHeight": logHeight], views: ["progressView": progressView, "logTextView": logTextView]))
+        uploadController.view.addConstraints(
+            NSLayoutConstraint.constraints(withVisualFormat: "H:|-(80@900)-[progressView(120)]-(80@900)-|",
+                                           options: [], metrics: nil, views: ["progressView": progressView]))
+
+        uploadController.view.addConstraints(
+            NSLayoutConstraint.constraints(withVisualFormat: "H:|-(8@900)-[logTextView(264)]-(8@900)-|",
+                                           options: [], metrics: nil, views: ["logTextView": logTextView])
+        )
+
+        uploadController.addAction(cancelUploadAction)
+        return uploadController
+    }()
+
+    private lazy var progressRing: UICircularProgressRing = {
+        let ring = UICircularProgressRing()
+        ring.minValue = 0
+        ring.maxValue = 100
+        ring.style = UICircularRingStyle.ontop
+        ring.outerRingColor = #colorLiteral(red: 0.976000011, green: 0.7760000229, blue: 0.1490000039, alpha: 1)
+        ring.innerRingColor = #colorLiteral(red: 0.2980000079, green: 0.851000011, blue: 0.3919999897, alpha: 1)
+        ring.shouldShowValueText = true
+        ring.valueFormatter = UICircularProgressRingFormatter(valueIndicator: "%", rightToLeft: false, showFloatingPoint: false, decimalPlaces: 0)
+        return ring
+    }()
+
+    private lazy var cancelUploadAction: UIAlertAction = {
+        UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .destructive) { [weak self] _ in
+            guard let connectedCalliope = self?.connectedCalliope else {
+                return
+            }
+            connectedCalliope.cancelUtilityJob()
+        }
+    }()
+
+    private lazy var logTextView: UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.backgroundColor = .clear
+        textView.isEditable = false
+        textView.isSelectable = true
+        textView.clipsToBounds = true
+        return textView
+    }()
 }

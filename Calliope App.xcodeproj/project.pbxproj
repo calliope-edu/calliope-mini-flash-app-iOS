@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -303,6 +303,10 @@
 		7E25CF0763552A9F4EBCE00E /* UtilityJobProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityJobProtocol.swift; sourceTree = "<group>"; };
 		BD1AFC4008F992EADC1C557D /* Pods-Calliope App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.release.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		600E609A2D80895500C34E6A /* DataLoggerWebView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = DataLoggerWebView; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		2F61450922BF75DE001C2734 /* Frameworks */ = {
@@ -656,6 +660,7 @@
 		60A40DED2BF782C80069A3B5 /* ProjectAndSensors */ = {
 			isa = PBXGroup;
 			children = (
+				600E609A2D80895500C34E6A /* DataLoggerWebView */,
 				600E63342C342DC10027AE61 /* ProjectAndSensors.storyboard */,
 				600E63292C328DAE0027AE61 /* DetailView */,
 				600E63282C328D700027AE61 /* Overview */,
@@ -767,6 +772,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				600E609A2D80895500C34E6A /* DataLoggerWebView */,
 			);
 			name = "Calliope App";
 			productName = "Calliope App";
@@ -1369,7 +1377,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Calliope App/Calliope App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = GKA87N33H4;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "Calliope App/Info.plist";
@@ -1397,7 +1405,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Calliope App/Calliope App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = GKA87N33H4;
 				INFOPLIST_FILE = "Calliope App/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;

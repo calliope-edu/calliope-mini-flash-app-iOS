@@ -135,7 +135,7 @@ class BLECalliope: Calliope {
             return
         }
 
-        handleValueUpdateInternal(calliopeCharacteristic, value)
+//        handleValueUpdateInternal(calliopeCharacteristic, value) ? Why ?
         handleValueUpdate(calliopeCharacteristic, value)
     }
 

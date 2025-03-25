@@ -46,53 +46,53 @@ extension UIColor {
 		return (coreImageColor.red, coreImageColor.green, coreImageColor.blue, coreImageColor.alpha)
 	}
 
-    
+
     /// Converts a hexadecimal color string (rgb or rgba) to a UIColor object
     ///
     /// - Parameter hex: a hexadecimal string of format "#<hexnumber>" where <hexnumber> must be a hexdadecimal number string with 6 (without alpha) or 8 letters.
 	public convenience init?(hex: String) {
         let r, g, b, a: CGFloat
-        
+
         guard hex.count == 7 || hex.count == 9, hex.hasPrefix("#") else { return nil }
-        
+
         let start = hex.index(hex.startIndex, offsetBy: 1)
         let hexColor = String(hex[start...])
-        
+
         let scanner = Scanner(string: hexColor)
         var hexNumber: UInt32 = 0
-        
+
         guard scanner.scanHexInt32(&hexNumber) else { return nil }
-        
+
         if (hexColor.count == 6) {
             hexNumber = hexNumber << 8
         }
-        
+
         r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
         g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
         b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
         a = hexColor.count == 8 ? CGFloat(hexNumber & 0x000000ff) / 255 : 1.0
-        
+
         self.init(red: r, green: g, blue: b, alpha: a)
-        
+
         return
     }
 
-    
+
     /// outputs a hexadecimal string with 6 letters or 8 if the color is not completely opaque, prefixed by #
 	var hex: String {
 		var r:CGFloat = 0
 		var g:CGFloat = 0
 		var b:CGFloat = 0
 		var a:CGFloat = 0
-		
+
         getRed(&r, green: &g, blue: &b, alpha: &a)
-		
+
         let rgb: UInt32 =
               ((UInt32) (r * 255) << 24)
             + ((UInt32) (g * 255) << 16)
             + ((UInt32) (b * 255) << 8)
             + ((UInt32) (a * 255) << 0)
-        
+
         if (a == 1) {
             return String(format: "#%06x", rgb >> 8)
         } else {

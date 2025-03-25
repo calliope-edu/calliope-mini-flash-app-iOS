@@ -326,94 +326,99 @@ class CalliopeAPI: BLECalliope {
 
 
 	//MARK: MicroBit Utility Service Calls
-	// TODO SKO: Timeout jobs
-	// TODO SKO:
-
-	var currentJobs: [UtilityLogJob] = [];
-	var nextJobId: UInt8? {
-		get {
-			let allPossibleIDs: Set<UInt8> = Set(stride(from: 0x00, through: 0xF0, by: 0x10)) // Valid IDs
-			let existingIDs: Set<UInt8> = Set(currentJobs.map {
-				$0.id
-			})
-
-			let missingIDs = allPossibleIDs.subtracting(existingIDs).sorted()
-			return missingIDs.first
-		}
+	// TODO SKO: cancel
+	var currentJob: UtilityJobProtocol?
+	private var uiViewControllerProgressCallback: (Int) -> () = { _ in
+	}
+	private var uiViewControllerCompletionCallback: () -> () = {
 	}
 
-	func startJob(for format: BLEDataTypes.UtilityRequest.Format) {
-		guard let nextJobId = nextJobId else {
-			LogNotify.log("No current free jobs")
+	private var uiViewControllerFailureCallback: () -> () = {
+	}
+
+	func startUtilityJob(for format: BLEDataTypes.UtilityRequest.Format, onProgress uiViewControllerProgressCallback: @escaping (Int) -> () = { _ in
+	}, onCompletion uiViewControllerCompletionCallback: @escaping () -> (), onFailure uiViewControllerFailureCallback: @escaping () -> ()) {
+		guard currentJob?.jobState != .Running else {
+			LogNotify.log("There is already a job running")
 			return
 		}
 
-		var job: UtilityJobProtocol = switch format {
-		case .LOG_HTML_HEADER, .LOG_HTML, .LOG_CSV:
-			UtilityLogJob(id: nextJobId, format: format)
-		}
-
-		// setup
+		let job: UtilityJobProtocol = initializeUtilityJob(for: format)
 		do {
 			try setNotify(characteristic: .microbitUtilityCharacterisitc, true)
 		} catch {
-			LogNotify.log("Unable to setup required state for datalogger HTML reading. Aborting.")
+			LogNotify.log("Unable to setup communication to Utility Service. Aborting.")
+			uiViewControllerFailureCallback()
 			return
 		}
 
 		// initialize
-		try? job.start() { (data) in
-			try writeWithoutResponse(data, for: .microbitUtilityCharacterisitc)
-		}
-
-		if job.state != .Running {
-			LogNotify.log("Unable to start job. State \(job.state). Aborting")
+		try? job.start()
+		if job.jobState != .Running {
+			LogNotify.log("Unable to start job. State \(job.jobState). Aborting")
 			try? setNotify(characteristic: .microbitUtilityCharacterisitc, false)
+			uiViewControllerFailureCallback()
 			return
 		}
 
-		currentJobs.append(job as! UtilityLogJob)
-		LogNotify.log("Started Job \(job.id).")
+		currentJob = job
+		self.uiViewControllerProgressCallback = uiViewControllerProgressCallback
+		self.uiViewControllerCompletionCallback = uiViewControllerCompletionCallback
+		self.uiViewControllerFailureCallback = uiViewControllerFailureCallback
+
+		LogNotify.log("Started new Utility Job.")
 	}
 
-	private func handleNotification(_ data: Data) {
-		LogNotify.log("Received Data from Utility Service: \(data) with value (0x\(data.hexEncodedString()))")
+	func cancelUtilityJob() {
+		guard let currentJob = currentJob else {
+			LogNotify.log("No job running")
+			return
+		}
+		currentJob.abort(due: .Canceled)
+	}
+
+	private func initializeUtilityJob(for format: BLEDataTypes.UtilityRequest.Format) -> UtilityJobProtocol {
+		switch format {
+		case .LOG_HTML_HEADER, .LOG_HTML, .LOG_CSV:
+			return UtilityLogJob(
+				id: 0x00,
+				format: format,
+				onRespond: { (data) in try self.writeWithoutResponse(data, for: .microbitUtilityCharacterisitc) },
+				onAbort: { [self] () in uiViewControllerFailureCallback() },
+				onFinish: { [self] () in uiViewControllerCompletionCallback() }
+			)
+		}
+	}
+
+	private func handleUtilityNotification(_ data: Data) {
+		guard let currentJob = currentJob else {
+			return
+		}
 
 		guard data.first != nil else {
 			return
 		}
 
-		let id = data.first! & 0xF0
-		let job = currentJobs.first {
-			$0.id == id
-		}
+		try? currentJob.handle(response: data)
+		LogNotify.log("Progress \(currentJob.progress)")
+		uiViewControllerProgressCallback(currentJob.progress)
 
-		guard let job = job else {
-			LogNotify.log("No job with id \(id) found.")
-			return
-		}
+		LogNotify.log("Current job with request id \(currentJob.id) in state \(currentJob.jobState) after handling data")
 
-
-		try? job.handle(response: data) { (data) in
-			try writeWithoutResponse(data, for: .microbitUtilityCharacterisitc)
-		}
-
-		LogNotify.log("Job \(job.id) in state \(job.state) after handling data")
-
-		if job.state == .Finished {
-			// inform app
+		if currentJob.jobState != .Running {
+			LogNotify.log("Current Job not running. State \(currentJob.jobState). Disabeling Notification Listener")
+			try? setNotify(characteristic: .microbitUtilityCharacterisitc, false)
 		}
 	}
 
 
-	//MARK: private api
+//MARK: private api
 
-
-	/// writes a typed input by encoding it to data and sending it to calliope
-	///
-	/// - Parameters:
-	///   - value: some value to be written
-	///   - characteristic: some characteristic to write to. Type of value needs to match type taken by characteristic
+/// writes a typed input by encoding it to data and sending it to calliope
+///
+/// - Parameters:
+///   - value: some value to be written
+///   - characteristic: some characteristic to write to. Type of value needs to match type taken by characteristic
 	private func write<T>(_ value: T, _ characteristic: CalliopeCharacteristic) {
 		LogNotify.log("attempt to write \(value) to \(characteristic)")
 		do {
@@ -428,10 +433,10 @@ class CalliopeAPI: BLECalliope {
 		}
 	}
 
-	/// reads a value from some calliope characteristic and adds type information to the parsed value
-	///
-	/// - Parameters:
-	///   - characteristic: some characteristic to read from. Required type needs to match value read by characteristic
+/// reads a value from some calliope characteristic and adds type information to the parsed value
+///
+/// - Parameters:
+///   - characteristic: some characteristic to read from. Required type needs to match value read by characteristic
 	private func read<T>(_ characteristic: CalliopeCharacteristic) -> T? {
 		guard let dataBytes = try? read(characteristic: characteristic) else {
 			LogNotify.log("read nothing from \(characteristic)")
@@ -513,11 +518,12 @@ class CalliopeAPI: BLECalliope {
 			}
 			uartValueNotification?(value)
 		case .microbitUtilityCharacterisitc:
-			handleNotification(value) // TODO SKO: Why are all other using other structure?
+			handleUtilityNotification(value)
 		default:
 			return
 		}
 	}
+
 }
 
 extension CalliopeCharacteristic {

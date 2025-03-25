@@ -2,14 +2,16 @@ import Foundation
 
 protocol UtilityJobProtocol {
     var id: UInt8 { get }
-    var state: UtilityJobState.External { get }
+    var jobState: UtilityJobState.External { get }
+    var progress: Int { get }
     var result: Data { get }
 
     var allowedFormats: Set<BLEDataTypes.UtilityRequest.Format> { get }
 
-    func start(respond: (Data) throws -> ()) throws
-    func handle(response data: Data, respond: (Data) throws -> ()) throws
+    func start() throws
+    func handle(response data: Data) throws
 
+    func abort(due reason: UtilityJobState.External)
 
 }
 

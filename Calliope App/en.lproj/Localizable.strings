@@ -285,3 +285,12 @@
 
 /* (No Comment) */
 "Datalogger Daten Anzeigen" = "View Datalogger";
+
+/* (No Comment) */
+"Datalogger Download fehlgeschlagen!" = "Datalogger Download Failed!";
+
+/* (No Comment) */
+"Es gab ein Problem beim Herunterladen der Datalogger-Daten von Ihrem Calliope mini. Bitte stellen Sie sicher, dass Sie mit dem Calliope verbunden sind, und versuchen Sie es erneut." = "There was an issue downloading the datalogger data from your Calliope mini. Please ensure you are connected to the Calliope and try again.";
+
+/* (No Comment) */
+"Übertragung der Datalogger-Daten" = "Transfering Datalogger Data";

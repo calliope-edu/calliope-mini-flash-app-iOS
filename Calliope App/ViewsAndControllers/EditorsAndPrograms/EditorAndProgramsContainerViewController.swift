@@ -109,12 +109,12 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
     }
 
     @IBAction func uploadDefaultV3Program(_ sender: Any) {
-        let program = DefaultProgram(programName: NSLocalizedString("Calliope mini V3", comment:""), url: UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV3Url.rawValue)!)
+        let program = DefaultProgram(programName: NSLocalizedString("Calliope mini V3", comment: ""), url: UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV3Url.rawValue)!)
         FirmwareUpload.showUIForDownloadableProgram(controller: self, program: program)
     }
 
     @IBAction func uploadDefaultV2And1Program(_sender: Any) {
-        let program = DefaultProgram(programName: NSLocalizedString("Calliope mini V1 + 2", comment:""), url: UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV1AndV2Url.rawValue)!)
+        let program = DefaultProgram(programName: NSLocalizedString("Calliope mini V1 + 2", comment: ""), url: UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV1AndV2Url.rawValue)!)
         FirmwareUpload.showUIForDownloadableProgram(controller: self, program: program)
     }
 
@@ -136,11 +136,11 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
     }
 
     func documentPicker(_ controller: UIDocumentPickerViewController,
-              didPickDocumentAt url: URL) {
+                        didPickDocumentAt url: URL) {
         if !(url.lastPathComponent.isEmpty) {
             // Dismiss this view
             dismiss(animated: true, completion: nil)
-            HexFileStoreDialog.showStoreHexUI(controller: self, hexFile: url, notSaved: {_ in })
+            HexFileStoreDialog.showStoreHexUI(controller: self, hexFile: url, notSaved: { _ in })
         }
     }
 }

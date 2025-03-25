@@ -11,10 +11,11 @@ import WebKit
 
 class NewsDetailWebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
 
-	@IBOutlet weak var webView: WKWebView!
+    @IBOutlet weak var webView: WKWebView!
     var activityIndicator: UIActivityIndicatorView!
 
-	public var url: URL!
+    public var url: URL!
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +23,7 @@ class NewsDetailWebViewController: UIViewController, WKNavigationDelegate, WKUID
         webView.navigationDelegate = self
         webView.uiDelegate = self
 
-		webView.load(URLRequest(url: url))
+        webView.load(URLRequest(url: url))
 
         // add activity indicator
         activityIndicator = UIActivityIndicatorView()
