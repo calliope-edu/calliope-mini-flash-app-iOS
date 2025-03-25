@@ -6,9 +6,9 @@
 //  Copyright © 2024 calliope. All rights reserved.
 //
 
+import DGCharts
 import Foundation
 import UIKit
-import DGCharts
 
 protocol ChartCellDelegate {
     func deleteChart(of cell: ChartViewCell, chart: Chart?)
@@ -106,7 +106,7 @@ class BaseChartViewCell: UITableViewCell, ChartViewDelegate {
         UIView.animate(withDuration: 0.5) {
             self.deleteButton.isEnabled = true
             self.recordingButton.isEnabled = false
-            self.recordingButton.setImage(UIImage(systemName: "circle.fill"), for: .normal)
+            self.recordingButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
         }
     }
 
@@ -153,64 +153,71 @@ class BaseChartViewCell: UITableViewCell, ChartViewDelegate {
         var sensors: [UIAction] = []
         for sensor in dataController.getAvailableSensors() {
             let isDefault = (sensor.calliopeService == chart?.sensorType)
-            sensors.append(UIAction(title: sensor.name, state: isDefault ? .on : .off) { _ in
-                DispatchQueue.main.async {
-                    self.resetLineChartView(sensor: sensor)
-                }
-            })
+            sensors.append(
+                UIAction(title: sensor.name, state: isDefault ? .on : .off) { _ in
+                    DispatchQueue.main.async {
+                        self.resetLineChartView(sensor: sensor)
+                    }
+                })
         }
         self.sensor = SensorUtility.serviceSensorMap[chart?.sensorType ?? .accelerometer]
 
         if sensors.isEmpty {
             sensorTypeButton.isEnabled = false
             if let count = lineChartView.data?.count, count > 1 {
-                sensors.append(UIAction(title: self.sensor!.name, state: .on) { _ in
-                })
+                sensors.append(
+                    UIAction(title: self.sensor!.name, state: .on) { _ in
+                    })
             } else {
-                sensors.append(UIAction(title: NSLocalizedString("No Sensor Available", comment: "")) { _ in
-                })
+                sensors.append(
+                    UIAction(title: NSLocalizedString("No Sensor Available", comment: "")) { _ in
+                    })
             }
         } else {
-            sensors.append(UIAction(title: NSLocalizedString("Select", comment: ""), state: .on) { _ in
-            })
+            sensors.append(
+                UIAction(title: NSLocalizedString("Select", comment: ""), state: .on) { _ in
+                })
         }
 
         var axisButtonChildren: [UIAction] = []
         if axisToDataSet.keys.count > 1 {
-            axisButtonChildren.append(UIAction(title: NSLocalizedString("All", comment: "")) { _ in
-                guard let dataSets = self.lineChartView.data?.dataSets else {
-                    return
-                }
-                for dataSet in dataSets {
-                    dataSet.visible = true
-                }
-                self.lineChartView.notifyDataSetChanged()
-                self.updateDataLabels()
-            })
+            axisButtonChildren.append(
+                UIAction(title: NSLocalizedString("All", comment: "")) { _ in
+                    guard let dataSets = self.lineChartView.data?.dataSets else {
+                        return
+                    }
+                    for dataSet in dataSets {
+                        dataSet.visible = true
+                    }
+                    self.lineChartView.notifyDataSetChanged()
+                    self.updateDataLabels()
+                })
         } else if axisToDataSet.keys.isEmpty {
-            axisButtonChildren.append(UIAction(title: "-") { _ in
-                guard let dataSets = self.lineChartView.data?.dataSets else {
-                    return
-                }
-                for dataSet in dataSets {
-                    dataSet.visible = true
-                }
-                self.lineChartView.notifyDataSetChanged()
-                self.updateDataLabels()
-                self.lineChartView.notifyDataSetChanged()
-            })
+            axisButtonChildren.append(
+                UIAction(title: "-") { _ in
+                    guard let dataSets = self.lineChartView.data?.dataSets else {
+                        return
+                    }
+                    for dataSet in dataSets {
+                        dataSet.visible = true
+                    }
+                    self.lineChartView.notifyDataSetChanged()
+                    self.updateDataLabels()
+                    self.lineChartView.notifyDataSetChanged()
+                })
         }
         for key in axisToDataSet.keys {
-            axisButtonChildren.append(UIAction(title: key) { _ in
-                guard let dataSets = self.lineChartView.data?.dataSets else {
-                    return
-                }
-                for dataSet in dataSets {
-                    dataSet.visible = false
-                }
-                self.lineChartView.lineData?.getLineChartDataSetForLabel(key)?.visible = true
-                self.lineChartView.notifyDataSetChanged()
-            })
+            axisButtonChildren.append(
+                UIAction(title: key) { _ in
+                    guard let dataSets = self.lineChartView.data?.dataSets else {
+                        return
+                    }
+                    for dataSet in dataSets {
+                        dataSet.visible = false
+                    }
+                    self.lineChartView.lineData?.getLineChartDataSetForLabel(key)?.visible = true
+                    self.lineChartView.notifyDataSetChanged()
+                })
         }
         sensorAxisButton.menu = UIMenu(title: NSLocalizedString("Axis", comment: ""), children: axisButtonChildren)
         sensorTypeButton.menu = UIMenu(title: NSLocalizedString("Sensors", comment: ""), children: sensors)

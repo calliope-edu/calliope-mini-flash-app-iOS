@@ -6,10 +6,9 @@
 //  Copyright © 2024 calliope. All rights reserved.
 //
 
+import DGCharts
 import Foundation
 import UIKit
-import DGCharts
-
 
 class ChartViewCell: BaseChartViewCell {
 
