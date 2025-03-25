@@ -5,8 +5,8 @@
 //  Created by Tassilo Karge on 14.12.18.
 //
 
-import UIKit
 import CoreBluetooth
+import UIKit
 
 class MatrixConnectionViewController: UIViewController, CollapsingViewControllerProtocol {
 
@@ -67,7 +67,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     }
 
     public var discoveredCalliopeWithCurrentMatrix: DiscoveredDevice? {
-        if (isInUsbMode) {
+        if isInUsbMode {
             return connector.discoveredCalliopes["USB_CALLIOPE"]
         } else {
             return connector.discoveredCalliopes[Matrix.matrix2friendly(matrixView.matrix) ?? ""]
@@ -75,7 +75,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     }
 
     public var usageReadyCalliope: Calliope? {
-        if (isInUsbMode) {
+        if isInUsbMode {
             return connector.connectedUSBCalliope?.usageReadyCalliope
         } else {
             return connector.connectedCalliope?.usageReadyCalliope
@@ -110,7 +110,8 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 
     private var connector: CalliopeDiscovery = CalliopeDiscovery({ peripheral, name in
         DiscoveredBLEDDevice(peripheral: peripheral, name: name)
-    }) {
+    })
+    {
         didSet {
             self.changedConnector(oldValue)
         }
@@ -160,9 +161,12 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
         viewToShow.alpha = 0.0
         viewToHide.alpha = 1.0
 
-        UIView.animate(withDuration: 0.1, animations: {
-            viewToHide.alpha = 0.0
-        }) { completed in
+        UIView.animate(
+            withDuration: 0.1,
+            animations: {
+                viewToHide.alpha = 0.0
+            }
+        ) { completed in
             UIView.animate(withDuration: 0.2) {
                 viewToHide.isHidden = true
                 viewToShow.isHidden = false
@@ -188,8 +192,9 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 
     func showFalseLocationAlert() {
         let alert = UIAlertController(title: NSLocalizedString("Falscher Speicherort", comment: ""), message: "Du hast keinen Calliope Ordner als Speicherort gewählt", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
-        })
+        alert.addAction(
+            UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
+            })
         self.present(alert, animated: true)
     }
 
@@ -229,11 +234,12 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 
     @IBAction func connect() {
         if self.connector.state == .initialized && !isInUsbMode
-               || self.discoveredCalliopeWithCurrentMatrix == nil && self.connector.state == .discoveredAll {
+            || self.discoveredCalliopeWithCurrentMatrix == nil && self.connector.state == .discoveredAll
+        {
             connector.startCalliopeDiscovery()
         } else if let calliope = self.discoveredCalliopeWithCurrentMatrix {
             if isInUsbMode && self.connector.state == .usbConnected && calliope.state == .usageReady {
-                return // fine for USB, as no reconnect after transfer like BLE
+                return  // fine for USB, as no reconnect after transfer like BLE
             } else if calliope.state == .discovered {
                 calliope.updateBlock = updateDiscoveryState
                 calliope.errorBlock = error
@@ -293,7 +299,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
             attemptReconnect = false
             reconnecting = false
             connectButton.connectionState = .connecting
-            self.collapseButton.connectionState = .connecting
+            self.collapseButton.connectionState = isInDfuMode ? .transmitting : .connecting
         case .connected:
             if let connectedCalliope = connector.connectedCalliope, discoveredCalliopeWithCurrentMatrix != connector.connectedCalliope {
                 //set matrix in case of auto-reconnect, where we do not have corresponding matrix yet
@@ -325,11 +331,6 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
 
     public func enableDfuMode(mode: Bool) {
         isInDfuMode = mode
-        if isInDfuMode {
-            UIView.animate(withDuration: 0.1, animations: {
-                MatrixConnectionViewController.instance.collapseButton.connectionState = .connected
-            })
-        }
     }
 
     private func evaluateCalliopeState(_ calliope: DiscoveredDevice) {
@@ -386,7 +387,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
         if (error as? CBError)?.errorCode == 14 {
             alertController = UIAlertController(title: NSLocalizedString("Remove paired device", comment: ""), message: NSLocalizedString("This Calliope can not be connected until you go to the bluetooth settings of your device and \"ignore\" it.", comment: ""), preferredStyle: .alert)
         } else if error.localizedDescription == NSLocalizedString("Connection to calliope timed out!", comment: "") {
-            alertController = nil //ignore error
+            alertController = nil  //ignore error
         } else {
             alertController = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Encountered an error discovering or connecting calliope:", comment: "") + "\n\(error.localizedDescription)", preferredStyle: .alert)
         }
