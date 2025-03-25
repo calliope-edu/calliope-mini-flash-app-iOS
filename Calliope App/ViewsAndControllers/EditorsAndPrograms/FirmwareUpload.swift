@@ -5,14 +5,14 @@
 //  Created by Tassilo Karge on 15.06.19.
 //
 
-import UIKit
-import UICircularProgressRing
 import NordicDFU
+import UICircularProgressRing
+import UIKit
 
 class FirmwareUpload {
 
-    public static func showUIForDownloadableProgram(controller: UIViewController, program: DownloadableHexFile, name: String = NSLocalizedString("the program", comment: ""), completion: ((_ success: Bool) -> ())? = nil) {
-        if (program.calliopeV1andV2Bin.count != 0) {
+    public static func showUIForDownloadableProgram(controller: UIViewController, program: DownloadableHexFile, name: String = NSLocalizedString("the program", comment: ""), completion: ((_ success: Bool) -> Void)? = nil) {
+        if program.calliopeV1andV2Bin.count != 0 {
             DispatchQueue.main.async {
                 FirmwareUpload.showUploadUI(controller: controller, program: program) {
                     completion?(true)
@@ -29,21 +29,23 @@ class FirmwareUpload {
 
                     if error == nil, program.calliopeV1andV2Bin.count != 0 {
                         let alertDone = UIAlertController(title: NSLocalizedString("Download finished", comment: ""), message: NSLocalizedString("The program is downloaded. Do you want to upload it now?", comment: ""), preferredStyle: .alert)
-                        alertDone.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default) { _ in
-                            DispatchQueue.main.async {
-                                FirmwareUpload.uploadWithoutConfirmation(controller: controller, program: program) {
-                                    completion?(true)
+                        alertDone.addAction(
+                            UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default) { _ in
+                                DispatchQueue.main.async {
+                                    FirmwareUpload.uploadWithoutConfirmation(controller: controller, program: program) {
+                                        completion?(true)
+                                    }
                                 }
-                            }
-                        })
+                            })
                         alertDone.addAction(UIAlertAction(title: NSLocalizedString("No", comment: ""), style: .cancel))
                         alert = alertDone
                     } else {
                         let reason = error?.localizedDescription ?? "The downloaded program is empty"
                         let alertError = UIAlertController(title: NSLocalizedString("Program download failed", comment: ""), message: String(format: NSLocalizedString("The program is not ready. The reason is:\n%@", comment: ""), reason), preferredStyle: .alert)
-                        alertError.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
-                            completion?(false)
-                        })
+                        alertError.addAction(
+                            UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
+                                completion?(false)
+                            })
                         alert = alertError
                     }
                     DispatchQueue.main.async {
@@ -56,17 +58,20 @@ class FirmwareUpload {
         }
     }
 
-    public static func showUploadUI(controller: UIViewController, program: Hex, name: String = NSLocalizedString("the program", comment: ""), completion: (() -> ())? = nil) {
+    public static func showUploadUI(controller: UIViewController, program: Hex, name: String = NSLocalizedString("the program", comment: ""), completion: (() -> Void)? = nil) {
         let alert = UIAlertController(title: NSLocalizedString("Upload?", comment: ""), message: String(format: NSLocalizedString("Do you want to upload %@ to your Calliope mini?", comment: ""), name), preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Upload", comment: ""), style: .default) { _ in
-            uploadWithoutConfirmation(controller: controller, program: program, completion: completion)
-        })
+        alert.addAction(
+            UIAlertAction(title: NSLocalizedString("Upload", comment: ""), style: .default) { _ in
+                uploadWithoutConfirmation(controller: controller, program: program, completion: completion)
+            })
         alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel))
         controller.present(alert, animated: true)
     }
 
-    public static func uploadWithoutConfirmation(controller: UIViewController, program: Hex,
-                                                 completion: (() -> ())? = nil) {
+    public static func uploadWithoutConfirmation(
+        controller: UIViewController, program: Hex,
+        completion: (() -> Void)? = nil
+    ) {
 
         let informationLink: String = "https://calliope.cc/programmieren/mobil/ipad#hardware"
 
@@ -84,16 +89,18 @@ class FirmwareUpload {
 
 
                 let alert = UIAlertController(title: NSLocalizedString("Upload failed", comment: ""), message: String(format: NSLocalizedString("The program does not seem to match the version of your Calliope mini. Please check the hardware selection in your editor again.", comment: "")), preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel) {
-                    _ in
-                    uploader.alertView.dismiss(animated: true)
-                })
-                alert.addAction(UIAlertAction(title: NSLocalizedString("Further Information", comment: ""), style: .default) { _ in
-                    if let url = URL(string: informationLink) {
-                        UIApplication.shared.open(url)
-                    }
-                    uploader.alertView.dismiss(animated: true)
-                })
+                alert.addAction(
+                    UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel) {
+                        _ in
+                        uploader.alertView.dismiss(animated: true)
+                    })
+                alert.addAction(
+                    UIAlertAction(title: NSLocalizedString("Further Information", comment: ""), style: .default) { _ in
+                        if let url = URL(string: informationLink) {
+                            UIApplication.shared.open(url)
+                        }
+                        uploader.alertView.dismiss(animated: true)
+                    })
                 uploader.alertView.present(alert, animated: true)
             }
 
@@ -143,12 +150,14 @@ class FirmwareUpload {
         uploadController.view.addConstraints(
             NSLayoutConstraint.constraints(withVisualFormat: "V:|-(80)-[progressView(120)]-(8)-[logTextView(logHeight)]-(50)-|", options: [], metrics: ["logHeight": logHeight], views: ["progressView": progressView, "logTextView": logTextView]))
         uploadController.view.addConstraints(
-            NSLayoutConstraint.constraints(withVisualFormat: "H:|-(80@900)-[progressView(120)]-(80@900)-|",
-                                           options: [], metrics: nil, views: ["progressView": progressView]))
+            NSLayoutConstraint.constraints(
+                withVisualFormat: "H:|-(80@900)-[progressView(120)]-(80@900)-|",
+                options: [], metrics: nil, views: ["progressView": progressView]))
 
         uploadController.view.addConstraints(
-            NSLayoutConstraint.constraints(withVisualFormat: "H:|-(8@900)-[logTextView(264)]-(8@900)-|",
-                                           options: [], metrics: nil, views: ["logTextView": logTextView])
+            NSLayoutConstraint.constraints(
+                withVisualFormat: "H:|-(8@900)-[logTextView(264)]-(8@900)-|",
+                options: [], metrics: nil, views: ["logTextView": logTextView])
         )
 
         uploadController.addAction(cancelUploadAction)
@@ -184,14 +193,14 @@ class FirmwareUpload {
         return textView
     }()
 
-    private var finished: () -> () = {
+    private var finished: () -> Void = {
     }
-    private var failed: () -> () = {
+    private var failed: () -> Void = {
     }
 
     private var calliope = MatrixConnectionViewController.instance.usageReadyCalliope
 
-    func upload(finishedCallback: @escaping () -> ()) throws {
+    func upload(finishedCallback: @escaping () -> Void) throws {
         // Validating for the correct Version of the Hex File
         let fileHexTypes = file.getHexTypes()
 
@@ -204,10 +213,12 @@ class FirmwareUpload {
 
         FirmwareUpload.uploadingInstance = self
 
-        let background_ident = UIApplication.shared.beginBackgroundTask(withName: "flashing", expirationHandler: { () -> Void in
-            LogNotify.log("task expired?")
-            // not exactly sure what belongs here...
-        })
+        let background_ident = UIApplication.shared.beginBackgroundTask(
+            withName: "flashing",
+            expirationHandler: { () -> Void in
+                LogNotify.log("task expired?")
+                // not exactly sure what belongs here...
+            })
 
         UIApplication.shared.isIdleTimerDisabled = true
 
