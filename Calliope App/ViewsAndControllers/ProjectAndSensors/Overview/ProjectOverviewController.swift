@@ -6,10 +6,10 @@
 //  Copyright © 2024 calliope. All rights reserved.
 //
 
-import UICircularProgressRing
-import UIKit
 import CoreServices
 import SwiftUI
+import UICircularProgressRing
+import UIKit
 
 class ProjectOverviewController: UIViewController, UINavigationControllerDelegate, UIDocumentPickerDelegate {
 
@@ -33,11 +33,13 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        coordinator.animate(alongsideTransition: { (_) in
-            self.configureLayout(size)
-        }, completion: { _ in
-            self.projectCollectionViewController?.collectionView.reloadData()
-        })
+        coordinator.animate(
+            alongsideTransition: { (_) in
+                self.configureLayout(size)
+            },
+            completion: { _ in
+                self.projectCollectionViewController?.collectionView.reloadData()
+            })
     }
 
     private func configureLayout(_ size: CGSize) {
@@ -69,7 +71,7 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
         MatrixConnectionViewController.instance?.calliopeClass = DiscoveredBLEDDevice.self
 
         let connectedCalliope = MatrixConnectionViewController.instance.usageReadyCalliope as? CalliopeAPI
-        dataloggerInformationButton.isEnabled = ((connectedCalliope?.discoveredOptionalServices.contains(.microbitUtilityService)) != nil);
+        dataloggerInformationButton.isEnabled = connectedCalliope?.discoveredOptionalServices.contains(.microbitUtilityService) ?? false
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -150,7 +152,7 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
                 self.dismiss(animated: true)
 
                 let failureReason = connectedCalliope.currentJob?.jobState
-                if (failureReason == .Canceled) {
+                if failureReason == .Canceled {
                     return
                 }
 
@@ -159,9 +161,10 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
                     message: String(format: NSLocalizedString("There was an issue downloading the datalogger data from your Calliope mini. Please ensure you are connected to the Calliope and try again.", comment: "")),
                     preferredStyle: .alert
                 )
-                alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel) { _ in
-                    self.dismiss(animated: true)
-                })
+                alert.addAction(
+                    UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel) { _ in
+                        self.dismiss(animated: true)
+                    })
                 self.present(alert, animated: true)
             }
         )
@@ -174,7 +177,7 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
                 DispatchQueue.main.async {
                     LogNotify.log("Received usage ready Notification")
                     self?.connectedCalliope = MatrixConnectionViewController.instance.usageReadyCalliope as? CalliopeAPI
-                    self?.dataloggerInformationButton.isEnabled = ((self?.connectedCalliope?.discoveredOptionalServices.contains(.microbitUtilityService)) != nil);
+                    self?.dataloggerInformationButton.isEnabled = self?.connectedCalliope?.discoveredOptionalServices.contains(.microbitUtilityService) ?? false
                 }
             })
 
@@ -203,12 +206,14 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
         uploadController.view.addConstraints(
             NSLayoutConstraint.constraints(withVisualFormat: "V:|-(80)-[progressView(120)]-(8)-[logTextView(logHeight)]-(50)-|", options: [], metrics: ["logHeight": logHeight], views: ["progressView": progressView, "logTextView": logTextView]))
         uploadController.view.addConstraints(
-            NSLayoutConstraint.constraints(withVisualFormat: "H:|-(80@900)-[progressView(120)]-(80@900)-|",
-                                           options: [], metrics: nil, views: ["progressView": progressView]))
+            NSLayoutConstraint.constraints(
+                withVisualFormat: "H:|-(80@900)-[progressView(120)]-(80@900)-|",
+                options: [], metrics: nil, views: ["progressView": progressView]))
 
         uploadController.view.addConstraints(
-            NSLayoutConstraint.constraints(withVisualFormat: "H:|-(8@900)-[logTextView(264)]-(8@900)-|",
-                                           options: [], metrics: nil, views: ["logTextView": logTextView])
+            NSLayoutConstraint.constraints(
+                withVisualFormat: "H:|-(8@900)-[logTextView(264)]-(8@900)-|",
+                options: [], metrics: nil, views: ["logTextView": logTextView])
         )
 
         uploadController.addAction(cancelUploadAction)
