@@ -2,9 +2,6 @@
 "App Version" = "App Version";
 
 /* (No Comment) */
-"Start Program" = "STARTPROGRAMM";
-
-/* (No Comment) */
 "Enabled" = "Aktiviert";
 
 /* (No Comment) */
@@ -20,18 +17,18 @@
 "Playgrounds" = "Calliope mini Swift Playground";
 
 /* (No Comment) */
-"Restore Last Matrix" = "Letztes ID-Muster laden";
-
-/* (No Comment) */
 "Reset Settings" = "Reset Einstellungen";
 
 /* (No Comment) */
 "Reset when app restarts" = "Reset beim Neustart der App";
 
 /* (No Comment) */
-"Roberta" = "Open Roberta Lab";
+"Restore Last Matrix" = "Letztes ID-Muster laden";
 
 /* (No Comment) */
+"Roberta" = "Open Roberta Lab";
+
+/* (No Comment)(No Comment) */
 "Start Program" = "Startprogramm";
 
 /* (No Comment) */
@@ -39,19 +36,4 @@
 
 /* (No Comment) */
 "URL" = "URL";
-
-/* (No Comment) */
-"All" = "Alle";
-
-/* (No Comment) */
-"Select" = "Auswählen";
-
-/* (No Comment) */
-"No Sensor Available" = "Kein Sensor verfügbar";
-
-/* (No Comment) */
-"Axis" = "Achsen";
-
-/* (No Comment) */
-"Sensors" = "Sensoren";
 

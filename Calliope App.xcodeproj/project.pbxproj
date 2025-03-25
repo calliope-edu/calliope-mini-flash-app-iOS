@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -281,6 +281,7 @@
 		60B58BCD2C132ABA00050FE3 /* Chart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chart.swift; sourceTree = "<group>"; };
 		60BBDB852B6B90C2003AD3CE /* DiscoveredDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredDevice.swift; sourceTree = "<group>"; };
 		60BBDB872B6BA16F003AD3CE /* DiscoveredUSBDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredUSBDevice.swift; sourceTree = "<group>"; };
+		60C345C82D93156800430DA8 /* DataLoggerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoggerViewController.swift; sourceTree = "<group>"; };
 		60C915922B1F442F00E4039D /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		60C915962B1F5F5300E4039D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Onboarding.strings; sourceTree = "<group>"; };
 		60C915982B1F61C200E4039D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Onboarding.strings; sourceTree = "<group>"; };
@@ -303,10 +304,6 @@
 		7E25CF0763552A9F4EBCE00E /* UtilityJobProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityJobProtocol.swift; sourceTree = "<group>"; };
 		BD1AFC4008F992EADC1C557D /* Pods-Calliope App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.release.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		600E609A2D80895500C34E6A /* DataLoggerWebView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = DataLoggerWebView; sourceTree = "<group>"; };
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		2F61450922BF75DE001C2734 /* Frameworks */ = {
@@ -660,12 +657,20 @@
 		60A40DED2BF782C80069A3B5 /* ProjectAndSensors */ = {
 			isa = PBXGroup;
 			children = (
-				600E609A2D80895500C34E6A /* DataLoggerWebView */,
+				60C345C92D93156800430DA8 /* DataLoggerWebView */,
 				600E63342C342DC10027AE61 /* ProjectAndSensors.storyboard */,
 				600E63292C328DAE0027AE61 /* DetailView */,
 				600E63282C328D700027AE61 /* Overview */,
 			);
 			path = ProjectAndSensors;
+			sourceTree = "<group>";
+		};
+		60C345C92D93156800430DA8 /* DataLoggerWebView */ = {
+			isa = PBXGroup;
+			children = (
+				60C345C82D93156800430DA8 /* DataLoggerViewController.swift */,
+			);
+			path = DataLoggerWebView;
 			sourceTree = "<group>";
 		};
 		60CF0EAE2BFCD58E00CB2A38 /* LiveData */ = {
@@ -772,9 +777,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				600E609A2D80895500C34E6A /* DataLoggerWebView */,
 			);
 			name = "Calliope App";
 			productName = "Calliope App";

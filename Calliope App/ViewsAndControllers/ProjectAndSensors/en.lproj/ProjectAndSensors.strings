@@ -116,4 +116,8 @@
 
 "Kjn-CJ-sdt.title" = "Sensordata";
 
-"kac-2O-C6o.title" = "View Datalogger";
+"80R-el-hVU.text" = "Data can be recorded on the Calliope mini 3. With the datalogger extension data can be saved in a table and also displayed as a graph.\n";
+
+"6lB-5y-zkN.text" = "1. This template can be used with the extension:\n";
+
+"M5s-gg-ZTZ.text" = "\n2. Create the program with the respective data and define the required columns and set the corresponding (sensor) data as values.\n\n3. Transfer the program to your Calliope mini. \n\n4. Open the data logger view.\n";

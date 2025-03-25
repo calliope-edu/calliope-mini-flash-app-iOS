@@ -2,10 +2,22 @@
 "1. Programm 5 starten\n2. Schütteln\n3. LED-Muster eingeben" = "1. A+B und 1 Sek Reset \n2. A+B gedrückt halten\n3. LED-Muster eingeben";
 
 /* No comment provided by engineer. */
+"Accelerometer" = "Beschleunigungsmesser";
+
+/* No comment provided by engineer. */
 "Activate Bluetooth!" = "Bitte Bluetooth aktivieren!";
 
 /* No comment provided by engineer. */
+"All" = "Alle";
+
+/* No comment provided by engineer. */
+"Axis" = "Achsen";
+
+/* No comment provided by engineer. */
 "Bluetooth" = "Bluetooth Swift Playground";
+
+/* No comment provided by engineer. */
+"Brightness" = "Helligkeit";
 
 /* No comment provided by engineer. */
 "Button A" = "Taste A";
@@ -26,6 +38,9 @@
 "Cannot upload" = "Übertragung nicht möglich";
 
 /* No comment provided by engineer. */
+"Change project name" = "Projectnamen ändern";
+
+/* No comment provided by engineer. */
 "Check your internet connection or the snippets url in settings.\n\nThe error description is:\n%@" = "Überprüfe deine Internetverbindung oder die Code-Schnipsel-Url in den Einstellungen.\n\nFehlermedlung:\n%@";
 
 /* No comment provided by engineer. */
@@ -44,13 +59,13 @@
 "Could not save file or download is not a proper hex file" = "Die Datei konnte nicht gesichert oder geladen werden";
 
 /* No comment provided by engineer. */
+"Datalogger Download Failed!" = "Datalogger Download fehlgeschlagen!";
+
+/* No comment provided by engineer. */
+"Datei geöffnet" = "Datei geöffnet";
+
+/* No comment provided by engineer. */
 "Delete" = "Löschen";
-
-/* No comment provided by engineer. */
-"Transfer" = "Übertragen";
-
-/* No comment provided by engineer. */
-"Open" = "Öffnen";
 
 /* No comment provided by engineer. */
 "Delete failed" = "Löschen fehlgeschlagen";
@@ -74,10 +89,13 @@
 "Download the Swift Playgrounds App" = "Lade die Swift Playgrounds App";
 
 /* No comment provided by engineer. */
-"Rename" = "Umbenennen";
+"Encountered an error discovering or connecting calliope:" = "Es ist ein Fehler beim Erkennen oder Verbinden aufgetreten:";
 
 /* No comment provided by engineer. */
-"Encountered an error discovering or connecting calliope:" = "Es ist ein Fehler beim Erkennen oder Verbinden aufgetreten:";
+"Enter an Projectname for the new Project" = "Projektnamen eingeben";
+
+/* No comment provided by engineer. */
+"Enter the new project name" = "Gebe den neuen Projektnamen ein";
 
 /* No comment provided by engineer. */
 "Error" = "Fehler";
@@ -93,6 +111,9 @@
 
 /* No comment provided by engineer. */
 "Flip through the programs by pressing the keys A or B" = "Gehe durch die Programme, indem du die Tasten A und B drückst";
+
+/* No comment provided by engineer. */
+"Further Information" = "Weitere Informationen";
 
 /* No comment provided by engineer. */
 "Greetings" = "Begrüßung";
@@ -125,7 +146,19 @@
 "https://calliope.cc/start/tipps" = "https://calliope.cc/start/tipps";
 
 /* No comment provided by engineer. */
+"Magnetometer" = "Magnetfeldsensor";
+
+/* No comment provided by engineer. */
+"Microphone" = "Mikrofon";
+
+/* No comment provided by engineer. */
+"Möchtest du die Datei sichern oder auf deinen Calliope mini übertragen?" = "Möchtest du die Datei sichern oder auf deinen Calliope mini übertragen?";
+
+/* No comment provided by engineer. */
 "Multiplication tables" = "1x1 Rechner";
+
+/* No comment provided by engineer. */
+"New project" = "Neues Projekt";
 
 /* No comment provided by engineer. */
 "No" = "Nein";
@@ -138,6 +171,9 @@
 
 /* No comment provided by engineer. */
 "No root view controller for presenting File Save UI found" = "Kein Root-View-Controller für die Darstellung der File Save UI gefunden";
+
+/* No comment provided by engineer. */
+"No Sensor Available" = "Kein Sensor verfügbar";
 
 /* No comment provided by engineer. */
 "Noise-o-meter" = "Lärm-o-meter";
@@ -163,14 +199,11 @@
 /* No comment provided by engineer. */
 "Program exported" = "Program exportiert";
 
-/* No comment provided by engineer. */
+/* actual message in translation file */
 "Program exported message" = "Das Program wurde im Calliope mini Ordner auf dem Gerät gespeichert.";
 
 /* No comment provided by engineer. */
-"Push the button and follow the instructions for connecting to your Calliope" = "Muster auf dem Calliope mini anzeigen: 
-V3: Reset Button 3-Mal drücken
-V2: A+B+Reset gedrückt halten, nach 1 Sekunde Reset loslassen.
-Weitere Infos unter „Hilfe”.";
+"Push the button and follow the instructions for connecting to your Calliope" = "Muster auf dem Calliope mini anzeigen: \nV3: Reset Button 3-Mal drücken\nV2: A+B+Reset gedrückt halten, nach 1 Sekunde Reset loslassen.\nWeitere Infos unter „Hilfe”.";
 
 /* No comment provided by engineer. */
 "Ready!" = "Fertig!";
@@ -179,7 +212,22 @@ Weitere Infos unter „Hilfe”.";
 "Remove paired device" = "Trennen";
 
 /* No comment provided by engineer. */
+"Rename" = "Umbenennen";
+
+/* No comment provided by engineer. */
+"Save and fast upload" = "Speichern und schnelles Übertragen";
+
+/* No comment provided by engineer. */
+"Save and thorough upload" = "Speichern und gründliches Übertragen";
+
+/* No comment provided by engineer. */
 "Save Program" = "Programm sichern";
+
+/* No comment provided by engineer. */
+"Select" = "Auswählen";
+
+/* No comment provided by engineer. */
+"Sensors" = "Sensoren";
 
 /* No comment provided by engineer. */
 "Service discovery on calliope has timed out!" = "Zeitüberschreitung";
@@ -191,16 +239,28 @@ Weitere Infos unter „Hilfe”.";
 "Share" = "Teilen";
 
 /* No comment provided by engineer. */
+"Sichern" = "Sichern";
+
+/* No comment provided by engineer. */
+"Speaker" = "Lautsprecher";
+
+/* No comment provided by engineer. */
 "Start Program" = "Startprogramm";
 
 /* No comment provided by engineer. */
 "Subscribe to the Calliope Playgrounds" = "Abonniere den Calliope mini Swift Playground";
 
 /* No comment provided by engineer. */
+"Temperature" = "Temperatur";
+
+/* No comment provided by engineer. */
 "The name %@ could not be given to %@. The name for a program must be unique and not empty." = "Der Name %@ konnte nicht an %@ vergeben werden. Der Name für ein Programm muss eindeutig sein und darf nicht leer sein.";
 
 /* No comment provided by engineer. */
 "the program" = "das Programm";
+
+/* No comment provided by engineer. */
+"The program does not seem to match the version of your Calliope mini. Please check the hardware selection in your editor again." = "Das Programm scheint nicht zu der Version des Calliope mini zu passen. Bitte überprüfe die Hardware Auswahl in deinem Editor nochmal.";
 
 /* No comment provided by engineer. */
 "The program is being downloaded. Please wait a little." = "Das Programm wird geladen. Einen Augenblick Geduld.";
@@ -215,10 +275,22 @@ Weitere Infos unter „Hilfe”.";
 "There is no connected calliope in DFU mode" = "Es konnte kein Calliope mini gefunden werden";
 
 /* No comment provided by engineer. */
+"There was an issue downloading the datalogger data from your Calliope mini. Please ensure you are connected to the Calliope and try again." = "Es gab ein Problem beim Herunterladen der Datalogger-Daten von Ihrem Calliope mini. Bitte stellen Sie sicher, dass Sie mit dem Calliope verbunden sind, und versuchen Sie es erneut.";
+
+/* No comment provided by engineer. */
 "This Calliope can not be connected until you go to the bluetooth settings of your device and \"ignore\" it." = "Dieser Calliope mini kann erst verbunden werden, wenn du in den Bluetooth-Einstellungen deines Geräts die Option \"ignorieren\" wählst.";
 
 /* No comment provided by engineer. */
+"Transfer" = "Übertragen";
+
+/* No comment provided by engineer. */
+"Transfering Datalogger Data" = "Übertragung der Datalogger-Daten";
+
+/* No comment provided by engineer. */
 "Upload" = "Übertragen";
+
+/* No comment provided by engineer. */
+"Upload failed" = "Übertragen fehlgeschlagen";
 
 /* No comment provided by engineer. */
 "Upload failed!" = "Übertragung fehlgeschlagen";
@@ -233,6 +305,9 @@ Weitere Infos unter „Hilfe”.";
 "Uploading" = "Übertragung läuft…";
 
 /* No comment provided by engineer. */
+"User defined (UART)" = "Benutzerdefiniert (UART)";
+
+/* No comment provided by engineer. */
 "Wait a little" = "Einen Moment bitte";
 
 /* No comment provided by engineer. */
@@ -241,84 +316,3 @@ Weitere Infos unter „Hilfe”.";
 /* No comment provided by engineer. */
 "You are connected to your Calliope, well done!" = "Yeah, du bist verbunden - super gemacht! Weiter geht's!";
 
-/* No comment provided by engineer. */
-"Save and fast upload" = "Speichern und schnelles Übertragen";
-
-/* No comment provided by engineer. */
-"Save and thorough upload" = "Speichern und gründliches Übertragen";
-
-/* No comment provided by engineer. */
-"Möchtest du die Datei sichern oder auf deinen Calliope mini übertragen?" = "Möchtest du die Datei sichern oder auf deinen Calliope mini übertragen?";
-
-/* No comment provided by engineer. */
-"Datei geöffnet" = "Datei geöffnet";
-
-/* No comment provided by engineer. */
-"Sichern" = "Sichern";
-
-/* No comment provided by engineer. */
-"The program does not seem to match the version of your Calliope mini. Please check the hardware selection in your editor again." = "Das Programm scheint nicht zu der Version des Calliope mini zu passen. Bitte überprüfe die Hardware Auswahl in deinem Editor nochmal.";
-
-/* No comment provided by engineer. */
-"Further Information" = "Weitere Informationen";
-
-/* No comment provided by engineer. */
-"Upload failed" = "Übertragen fehlgeschlagen";
-
-/* No comment provided by engineer. */
-"Wrong location selected" = "Falschen Speicherort ausgewählt";
-
-/* No comment provided by engineer. */
-"USB Location is not a USB Calliope folder" = "Speicherort ist kein USB Ordner des Calliope mini, bitte wähle den korrekten Ordner";
-
-"Enter an Projectname for the new Project" = "Projektnamen eingeben";
-
-"Change project name" = "Projectnamen ändern";
-
-"Enter the new project name" = "Gebe den neuen Projektnamen ein";
-
-"New project" = "Neues Projekt";
-
-"Microphone" = "Mikrofon";
-
-"Speaker" = "Lautsprecher";
-
-"Brightness" = "Helligkeit";
-
-"Temperature" = "Temperatur";
-
-"Accelerometer" = "Beschleunigungsmesser";
-
-"Magnetometer" = "Magnetfeldsensor";
-
-"User defined (UART)" = "Benutzerdefiniert (UART)";
-
-/* (No Comment) */
-"All" = "Alle";
-
-/* (No Comment) */
-"Select" = "Auswählen";
-
-/* (No Comment) */
-"No Sensor Available" = "Kein Sensor verfügbar";
-
-/* (No Comment) */
-"Axis" = "Achsen";
-
-/* (No Comment) */
-"Sensors" = "Sensoren";
-
-"Temperature" = "Temperatur";
-
-/* (No Comment) */
-"View Datalogger" = "Datalogger Daten Anzeigen";
-
-
-/* (No Comment) */
-"Datalogger Download Failed!" = "Datalogger Download fehlgeschlagen!";
-
-/* (No Comment) */
-"There was an issue downloading the datalogger data from your Calliope mini. Please ensure you are connected to the Calliope and try again." = "Es gab ein Problem beim Herunterladen der Datalogger-Daten von Ihrem Calliope mini. Bitte stellen Sie sicher, dass Sie mit dem Calliope verbunden sind, und versuchen Sie es erneut.";
-
-/* (No Comment) */
-"Transfering Datalogger Data" = "Übertragung der Datalogger-Daten";
