@@ -5,9 +5,9 @@
 //  Created by Tassilo Karge on 15.06.19.
 //
 
-import UIKit
 import CoreBluetooth
 import NordicDFU
+import UIKit
 
 class FlashableBLECalliope: CalliopeAPI {
 
@@ -37,8 +37,8 @@ class FlashableBLECalliope: CalliopeAPI {
     }
 
     public override func cancelUpload() -> Bool {
-        cancel = true //cancels partial flashing on next callback of calliope
-        let success = uploader?.abort() //cancels full flashing
+        cancel = true  //cancels partial flashing on next callback of calliope
+        let success = uploader?.abort()  //cancels full flashing
         if success ?? false {
             uploader = nil
         }
@@ -65,12 +65,12 @@ class FlashableBLECalliope: CalliopeAPI {
 
         //Partial flashing deactivated for now. Calliope mini disconnects from device with MakeCode Beta Hex File.
         LogNotify.log("Partial flashing service available: \(discoveredOptionalServices.contains(.partialFlashing))")
-        if discoveredOptionalServices.contains(.partialFlashing) {
-            startPartialFlashing()
-        } else {
-            shouldRebootOnDisconnect = false
-            try startFullFlashing()
-        }
+        //        if discoveredOptionalServices.contains(.partialFlashing) {
+        //            startPartialFlashing()
+        //        } else {
+        shouldRebootOnDisconnect = false
+        try startFullFlashing()
+        //        }
     }
 
     internal func startFullFlashing() throws {
@@ -100,6 +100,7 @@ class FlashableBLECalliope: CalliopeAPI {
             fatalError("firmware has disappeared somehow")
         }
 
+        LogNotify.log("Starting transfer with peripheral: \(peripheral)")
         uploader = initiator.start(target: peripheral)
     }
 
@@ -194,8 +195,8 @@ class FlashableBLECalliope: CalliopeAPI {
 
         updateCallback("start partial flashing")
         guard let file = file,
-              let partialFlashingInfo = file.partialFlashingInfo,
-              let partialFlashingCharacteristic = getCBCharacteristic(.partialFlashing)
+            let partialFlashingInfo = file.partialFlashingInfo,
+            let partialFlashingCharacteristic = getCBCharacteristic(.partialFlashing)
         else {
             LogNotify.log("partialFlashing not found")
             fallbackToFullFlash()
@@ -244,7 +245,7 @@ class FlashableBLECalliope: CalliopeAPI {
 
     func receivedStatus(_ needsRebootIntoBLEOnlyMode: Bool) {
         updateCallback("received mode of calliope, needs reboot: \(needsRebootIntoBLEOnlyMode)")
-        if (needsRebootIntoBLEOnlyMode) {
+        if needsRebootIntoBLEOnlyMode {
             shouldRebootOnDisconnect = true
             rebootingForPartialFlashing = true
             //calliope is in application state and needs to be rebooted
@@ -266,9 +267,9 @@ class FlashableBLECalliope: CalliopeAPI {
     private func receivedProgramHash() {
         updateCallback("received program hash \(hexProgramHash.hexEncodedString())")
         if currentProgramHash == hexProgramHash {
-            linesFlashed = partialFlashData?.lineCount ?? Int.max //set progress to 100%
+            linesFlashed = partialFlashData?.lineCount ?? Int.max  //set progress to 100%
             updateCallback("no changes to upload")
-            let _ = cancelUpload() //if cancel does not work, we cannot do anything about it here. Push reset button on Calliope should suffice
+            let _ = cancelUpload()  //if cancel does not work, we cannot do anything about it here. Push reset button on Calliope should suffice
             statusDelegate?.dfuStateDidChange(to: .completed)
         } else {
             updateCallback("partial flashing starts sending new program to calliope")
@@ -294,7 +295,7 @@ class FlashableBLECalliope: CalliopeAPI {
         self.partialFlashData = partialFlashData
         sendCurrentPackages()
         if currentDataToFlash.count < 4 {
-            endTransmission() //we did not have a full package to flash any more
+            endTransmission()  //we did not have a full package to flash any more
         }
         startPackageNumber = startPackageNumber.addingReportingOverflow(UInt8(currentDataToFlash.count)).partialValue
         linesFlashed += currentDataToFlash.count
@@ -470,6 +471,7 @@ class CalliopeV3: FlashableBLECalliope {
         initiator?.logger = logReceiver
         initiator?.delegate = self
         initiator?.progressDelegate = progressReceiver
+        initiator?.alternativeAdvertisingName = "DfuTarg"
 
         transferFirmware()
     }
@@ -487,24 +489,24 @@ class CalliopeV3: FlashableBLECalliope {
 
 
 //MARK: constants for partial flasing
-private extension UInt8 {
+extension UInt8 {
     //commands
-    static let REBOOT = UInt8(0xFF)
-    static let STATUS = UInt8(0xEE)
-    static let REGION = UInt8(0)
-    static let WRITE = UInt8(1)
-    static let TRANSMISSION_END = UInt8(2)
+    fileprivate static let REBOOT = UInt8(0xFF)
+    fileprivate static let STATUS = UInt8(0xEE)
+    fileprivate static let REGION = UInt8(0)
+    fileprivate static let WRITE = UInt8(1)
+    fileprivate static let TRANSMISSION_END = UInt8(2)
 
     //REGION parameters
-    static let EMBEDDED_REGION = UInt8(0)
-    static let DAL_REGION = UInt8(1)
-    static let PROGRAM_REGION = UInt8(2)
+    fileprivate static let EMBEDDED_REGION = UInt8(0)
+    fileprivate static let DAL_REGION = UInt8(1)
+    fileprivate static let PROGRAM_REGION = UInt8(2)
 
     //STATUS and REBOOT parameters
-    static let MODE_APPLICATION = UInt8(1)
-    static let MODE_BLE = UInt8(0)
+    fileprivate static let MODE_APPLICATION = UInt8(1)
+    fileprivate static let MODE_BLE = UInt8(0)
 
     //WRITE response values
-    static let WRITE_FAIL = UInt8(0xAA)
-    static let WRITE_SUCCESS = UInt8(0xFF)
+    fileprivate static let WRITE_FAIL = UInt8(0xAA)
+    fileprivate static let WRITE_SUCCESS = UInt8(0xFF)
 }

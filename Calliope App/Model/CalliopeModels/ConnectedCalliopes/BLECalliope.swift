@@ -6,9 +6,9 @@
 //  Copyright © 2023 calliope. All rights reserved.
 //
 
-import UIKit
-import NordicDFU
 import CoreBluetooth
+import NordicDFU
+import UIKit
 
 class BLECalliope: Calliope {
 
@@ -24,13 +24,15 @@ class BLECalliope: Calliope {
 
     final var discoveredOptionalServices: Set<CalliopeService> = []
 
-    lazy var requiredServicesUUIDs: Set<CBUUID> = Set(requiredServices.map {
-        $0.uuid
-    })
+    lazy var requiredServicesUUIDs: Set<CBUUID> = Set(
+        requiredServices.map {
+            $0.uuid
+        })
 
-    lazy var optionalServicesUUIDs: Set<CBUUID> = Set(optionalServices.map {
-        $0.uuid
-    })
+    lazy var optionalServicesUUIDs: Set<CBUUID> = Set(
+        optionalServices.map {
+            $0.uuid
+        })
 
     var updateQueue = DispatchQueue.main
 
@@ -57,9 +59,10 @@ class BLECalliope: Calliope {
     private func validateServicesAndCharacteristics(_ discoveredServices: Set<CalliopeService>, _ peripheral: CBPeripheral, _ discoveredCharacteristicUUIDsForServiceUUID: [CBUUID: Set<CBUUID>]) -> Bool {
         LogNotify.log("start validating optional and required services")
         //Validate Services, are required Services discovered
-        let requiredServicesUUIDs = Set(requiredServices.map {
-            return $0.uuid
-        })
+        let requiredServicesUUIDs = Set(
+            requiredServices.map {
+                return $0.uuid
+            })
         let discoveredOptionalServices = optionalServices.intersection(discoveredServices)
 
         guard requiredServices.isSubset(of: discoveredServices) else {
@@ -70,8 +73,9 @@ class BLECalliope: Calliope {
         LogNotify.log("Found \(discoveredOptionalServices.count) of \(optionalServices.count) optional Services: \(discoveredOptionalServices)")
 
         //Validate Characteristics, are characteristics discovered for all optional and required services
+        // Previous logic looked that the characteristics of the required service is found, which was a 1-1 relation. Now, it is 1-n where n has to be at least one of the characteristics
         for service in requiredServices {
-            guard let foundCharacteristics = discoveredCharacteristicUUIDsForServiceUUID[service.uuid], foundCharacteristics.isSuperset(of: CalliopeBLEProfile.serviceCharacteristicUUIDMap[service.uuid] ?? []) else {
+            guard let foundCharacteristics = discoveredCharacteristicUUIDsForServiceUUID[service.uuid], !foundCharacteristics.isEmpty, foundCharacteristics.isSubset(of: CalliopeBLEProfile.serviceCharacteristicUUIDMap[service.uuid] ?? []) else {
                 LogNotify.log("Some characteristics not found for service \(service.uuid)")
                 return false
             }
@@ -124,8 +128,7 @@ class BLECalliope: Calliope {
         }
 
         guard error == nil, let value = characteristic.value else {
-            LogNotify.log(readError?.localizedDescription ??
-                              "characteristic \(characteristic.uuid) does not have a value")
+            LogNotify.log(readError?.localizedDescription ?? "characteristic \(characteristic.uuid) does not have a value")
             return
         }
 
@@ -135,7 +138,7 @@ class BLECalliope: Calliope {
             return
         }
 
-//        handleValueUpdateInternal(calliopeCharacteristic, value) ? Why ?
+        //        handleValueUpdateInternal(calliopeCharacteristic, value) ? Why ?
         handleValueUpdate(calliopeCharacteristic, value)
     }
 
@@ -220,7 +223,7 @@ class BLECalliope: Calliope {
 
     private func checkWritePreconditions(for characteristic: CalliopeCharacteristic) throws -> CBCharacteristic {
         guard let serviceForCharacteristic = CalliopeBLEProfile.characteristicServiceMap[characteristic],
-              requiredServices.contains(serviceForCharacteristic) || discoveredOptionalServices.contains(serviceForCharacteristic)
+            requiredServices.contains(serviceForCharacteristic) || discoveredOptionalServices.contains(serviceForCharacteristic)
         else {
             throw "Not ready to write to characteristic \(characteristic)"
         }
@@ -272,7 +275,7 @@ class BLECalliope: Calliope {
 
             asyncAndWait(on: readWriteQueue) {
                 //read value and wait for delegate call (or error)
-                self.readWriteGroup = DispatchGroup();
+                self.readWriteGroup = DispatchGroup()
                 self.readWriteGroup!.enter()
                 self.peripheral.readValue(for: characteristic)
                 if self.readWriteGroup!.wait(timeout: DispatchTime.now() + BluetoothConstants.readTimeout) == .timedOut {
@@ -310,7 +313,7 @@ class BLECalliope: Calliope {
 
             asyncAndWait(on: readWriteQueue) {
                 //read value and wait for delegate call (or error)
-                self.readWriteGroup = DispatchGroup();
+                self.readWriteGroup = DispatchGroup()
                 self.readWriteGroup!.enter()
                 self.peripheral.setNotifyValue(activate, for: characteristic)
                 if self.readWriteGroup!.wait(timeout: DispatchTime.now() + BluetoothConstants.readTimeout) == .timedOut {

@@ -99,6 +99,9 @@ enum CalliopeCharacteristic: String, CaseIterable {
 
     case secureDfuCharacteristic = "8EC90004-F315-4F60-9FB8-838830DAEA50"
 
+    case secureDfuCharacteristicWithoutBond = "8ec90003-f315-4f60-9fb8-838830daea50"
+    case secureDfuCharacteristicDfuMode = "8ec90001-f315-4f60-9fb8-838830daea50"
+
     //MARK: partial flashing characteristics
 
     case partialFlashing = "E97D3B10-251D-470A-A062-FA1922DFA9A8"
@@ -322,8 +325,8 @@ struct CalliopeBLEProfile {
         .uart: [.uartCharacteristic, .rxCharacteristic],
         .dfuControlService: [.dfuControl],
         .partialFlashing: [.partialFlashing],
-        .secureDfuService: [.secureDfuCharacteristic],
-        .microbitUtilityService: [.microbitUtilityCharacterisitc]
+        .secureDfuService: [.secureDfuCharacteristic, .secureDfuCharacteristicWithoutBond, .secureDfuCharacteristicDfuMode],
+        .microbitUtilityService: [.microbitUtilityCharacterisitc],
     ]
 
     ///inverted map of characteristics and corresponding services (there are some ambiguities, which we ignore)
@@ -336,48 +339,54 @@ struct CalliopeBLEProfile {
         uniquingKeysWith: { (first, _) in first })
 
     ///Bluetooth profile with non-human-readable names (same as above, but all UUIDs)
-    static let serviceCharacteristicUUIDMap = Dictionary(uniqueKeysWithValues:
-                                                         serviceCharacteristicMap.map {
-                                                             ($0.uuid, $1.map {
-                                                                 $0.uuid
-                                                             })
-                                                         })
+    static let serviceCharacteristicUUIDMap = Dictionary(
+        uniqueKeysWithValues:
+            serviceCharacteristicMap.map {
+                (
+                    $0.uuid,
+                    $1.map {
+                        $0.uuid
+                    }
+                )
+            })
 
     ///To quickly access the service with the corresponding uuid
-    static let uuidServiceMap = Dictionary(uniqueKeysWithValues:
-                                           CalliopeService.allCases.map {
-                                               ($0.uuid, $0)
-                                           })
+    static let uuidServiceMap = Dictionary(
+        uniqueKeysWithValues:
+            CalliopeService.allCases.map {
+                ($0.uuid, $0)
+            })
 
     ///To quickly access the characteristic with the corresponding uuid
-    static let uuidCharacteristicMap = Dictionary(uniqueKeysWithValues:
-                                                  CalliopeCharacteristic.allCases.map {
-                                                      ($0.uuid, $0)
-                                                  })
+    static let uuidCharacteristicMap = Dictionary(
+        uniqueKeysWithValues:
+            CalliopeCharacteristic.allCases.map {
+                ($0.uuid, $0)
+            })
 }
 
 extension CalliopeService {
-    static func &(lhs: CalliopeService, rhs: CalliopeService) -> UInt32 {
+    static func & (lhs: CalliopeService, rhs: CalliopeService) -> UInt32 {
         return lhs & rhs.bitPattern
     }
 
-    static func &(lhs: UInt32, rhs: CalliopeService) -> UInt32 {
+    static func & (lhs: UInt32, rhs: CalliopeService) -> UInt32 {
         return lhs & rhs.bitPattern
     }
 
-    static func &(lhs: CalliopeService, rhs: UInt32) -> UInt32 {
+    static func & (lhs: CalliopeService, rhs: UInt32) -> UInt32 {
         return lhs.bitPattern & rhs
     }
 
-    static func |(lhs: CalliopeService, rhs: CalliopeService) -> UInt32 {
+    static func | (lhs: CalliopeService, rhs: CalliopeService) -> UInt32 {
         return lhs | rhs.bitPattern
     }
 
-    static func |(lhs: UInt32, rhs: CalliopeService) -> UInt32 {
+    static func | (lhs: UInt32, rhs: CalliopeService) -> UInt32 {
         return lhs | rhs.bitPattern
     }
 
-    static func |(lhs: CalliopeService, rhs: UInt32) -> UInt32 {
+    static func | (lhs: CalliopeService, rhs: UInt32) -> UInt32 {
         return lhs.bitPattern | rhs
     }
 }
