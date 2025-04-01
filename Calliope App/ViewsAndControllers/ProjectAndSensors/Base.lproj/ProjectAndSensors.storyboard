@@ -108,7 +108,7 @@
                                                                             <constraint firstAttribute="width" constant="200" id="V4O-aK-lLo"/>
                                                                         </constraints>
                                                                         <state key="normal" title="Button"/>
-                                                                        <buttonConfiguration key="configuration" style="filled" title="Calliope.cc">
+                                                                        <buttonConfiguration key="configuration" style="filled" title="calliope.cc">
                                                                             <color key="baseBackgroundColor" name="calliope-pink"/>
                                                                         </buttonConfiguration>
                                                                         <connections>
