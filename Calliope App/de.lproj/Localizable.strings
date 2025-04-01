@@ -316,3 +316,11 @@
 /* No comment provided by engineer. */
 "You are connected to your Calliope, well done!" = "Yeah, du bist verbunden - super gemacht! Weiter geht's!";
 
+/**/
+"Datalogger CSV successfully downloaded!" = "Datalogger CSV erfolgreich heruntergeladen!";
+
+"Failed to download Datalogger CSV!" = "Fehler beim Herunterladen der Datalogger CSV!";
+
+"You can find the CSV file containing your datalogger data, named MY_DATA.csv, in the Calliope directory on your device." = "Du findest die CSV-Datei mit den Datalogger-Daten im Calliope-Verzeichnis  auf deinem Gerät, unter den namen MY_DATA.csv";
+
+"The download of the CSV file containing your datalogger data was unsuccessful." = "Der Download der CSV-Datei mit deinen Datalogger-Daten war nicht erfolgreich.";

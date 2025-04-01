@@ -18,8 +18,13 @@
 import UIKit
 @preconcurrency import WebKit
 
-class DataLoggerViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHandler {
+class DataLoggerWebViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHandler {
 
+
+    private enum DataLoggerWebViewAction {
+        case downloadCSVSuccess
+        case downloadCSVFailed
+    }
 
     @IBOutlet var webview: WKWebView!
 
@@ -95,8 +100,38 @@ class DataLoggerViewController: UIViewController, WKNavigationDelegate, WKScript
         do {
             try csv.write(to: fileURL, atomically: true, encoding: String.Encoding.utf8)
             print("File saved to: \(fileURL.path)")
+            showAlert(for: .downloadCSVSuccess)
         } catch {
             print("Error saving file: \(error)")
+            showAlert(for: .downloadCSVFailed)
         }
+    }
+
+
+    private func showAlert(for useCase: DataLoggerWebViewAction) {
+        // title
+        let title =
+            switch useCase {
+            case .downloadCSVSuccess: NSLocalizedString("Datalogger CSV successfully downloaded!", comment: "")
+            case .downloadCSVFailed: NSLocalizedString("Failed to download Datalogger CSV!", comment: "")
+            }
+
+        let message =
+            switch useCase {
+            case .downloadCSVSuccess: NSLocalizedString("You can find the CSV file containing your datalogger data, named MY_DATA.csv, in the Calliope directory on your device.", comment: "")
+            case .downloadCSVFailed: NSLocalizedString("The download of the CSV file containing your datalogger data was unsuccessful.", comment: "")
+            }
+
+        let alert = UIAlertController(
+            title: title,
+            message: String(format: message),
+            preferredStyle: .alert
+        )
+        alert.addAction(
+            UIAlertAction(title: "OK", style: .cancel) { _ in
+                self.dismiss(animated: true)
+            }
+        )
+        self.present(alert, animated: true)
     }
 }

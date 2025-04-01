@@ -35,7 +35,7 @@
 "M5s-gg-ZTZ.text" = "\n2. Erstelle das Programm mit den jeweiligen Daten und definiere benötigte Spalten und setze entsprechende (Sensor-)Daten als Werte.\n\n3. Übertrage das Programm auf deinen Calliope mini.\n\n4. Öffne die Datenlogger Ansicht.\n";
 
 /* Class = "UILabel"; text = "1. Open MakeCode Editor\n                                                                    2. Add the Bluetooth extension to your project"; ObjectID = "N71-qD-IZn"; */
-"N71-qD-IZn.text" = "1. Starte MakeCode. \n2. Lade die Bluetooth-Erweiterung in dein Projekt.";
+"N71-qD-IZn.text" = "1. Starte MakeCode. \n2. Lade die Bluetooth-Erweiterung in dein Projekt oder starte das Template:";
 
 /* Class = "UIViewController"; title = "Sensordaten"; ObjectID = "nJx-VD-M8y"; */
 "nJx-VD-M8y.title" = "Sensoren und Projekte";

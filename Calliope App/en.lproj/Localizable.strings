@@ -294,3 +294,12 @@
 
 /* (No Comment) */
 "Übertragung der Datalogger-Daten" = "Transfering Datalogger Data";
+
+/**/
+"Datalogger CSV erfolgreich heruntergeladen!" = "Datalogger CSV successfully downloaded!";
+
+"Fehler beim Herunterladen der Datalogger CSV!" = "Failed to download Datalogger CSV!";
+
+"Du findest die CSV-Datei mit den Datalogger-Daten im Calliope-Verzeichnis  auf deinem Gerät, unter den namen MY_DATA.csv" = "You can find the CSV file containing your datalogger data, named MY_DATA.csv, in the Calliope directory on your device.";
+
+"Der Download der CSV-Datei mit deinen Datalogger-Daten war nicht erfolgreich." = "The download of the CSV file containing your datalogger data was unsuccessful.";

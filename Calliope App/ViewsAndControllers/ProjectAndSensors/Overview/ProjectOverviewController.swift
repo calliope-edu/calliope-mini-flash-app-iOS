@@ -17,11 +17,15 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
     @IBOutlet weak var addProjectButton: UIButton!
     @IBOutlet weak var projectContainerView: UIView?
 
-    @IBOutlet weak var dataloggerInformationButton: UIButton!
+    @IBOutlet weak var bluetoothSensorDataInformationButton: UIButton!
+
+    @IBOutlet weak var dataLoggerDataInformationButton: UIButton!
+
+    @IBOutlet weak var loadDataLoggerDataButton: UIButton!
 
     @objc var projectCollectionViewController: ProjectCollectionViewController?
 
-    @objc var dataLoggerViewController: DataLoggerViewController?
+    @objc var dataLoggerWebViewController: DataLoggerWebViewController?
 
     var projectHeightConstraint: NSLayoutConstraint?
     var projectKvo: Any?
@@ -71,7 +75,7 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
         MatrixConnectionViewController.instance?.calliopeClass = DiscoveredBLEDDevice.self
 
         self.connectedCalliope = MatrixConnectionViewController.instance.usageReadyCalliope as? CalliopeAPI
-        dataloggerInformationButton.isEnabled = connectedCalliope?.discoveredOptionalServices.contains(.microbitUtilityService) ?? false
+        loadDataLoggerDataButton.isEnabled = connectedCalliope?.discoveredOptionalServices.contains(.microbitUtilityService) ?? false
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -79,16 +83,17 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
         projectKvo = nil
     }
 
-    @IBSegueAction func initializeDataLoggerWebView(_ coder: NSCoder) -> DataLoggerViewController? {
+
+    @IBSegueAction func initializeDataLoggerWebView(_ coder: NSCoder) -> DataLoggerWebViewController? {
         LogNotify.log("Setting up DataLogger ViewController")
         guard let result = self.connectedCalliope?.currentJob?.result else {
             LogNotify.log("Missing Result Data, Aborting")
             return nil
         }
 
-        self.dataLoggerViewController = DataLoggerViewController(coder: coder)
-        self.dataLoggerViewController?.htmlData = result
-        return dataLoggerViewController
+        self.dataLoggerWebViewController = DataLoggerWebViewController(coder: coder)
+        self.dataLoggerWebViewController?.htmlData = result
+        return dataLoggerWebViewController
     }
 
     @IBSegueAction func initializeProjects(_ coder: NSCoder) -> ProjectCollectionViewController? {
@@ -96,6 +101,18 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
         projectCollectionViewController = ProjectCollectionViewController(coder: coder)
         self.reloadInputViews()
         return projectCollectionViewController
+    }
+
+    @IBAction func initializeBluetoothSensorInfoWebView() {
+        if let url = URL(string: NSLocalizedString("https://makecode.calliope.cc/_c72b1hgm2LWg", comment: "")) {
+            UIApplication.shared.open(url)
+        }
+    }
+
+    @IBAction func initializeDataLoggerInfoWebView() {
+        if let url = URL(string: NSLocalizedString("https://makecode.calliope.cc/_KYD3sacsPRD3", comment: "")) {
+            UIApplication.shared.open(url)
+        }
     }
 
     @IBAction func createNewProject(_ coder: NSCoder) {
@@ -178,7 +195,7 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
                 DispatchQueue.main.async {
                     LogNotify.log("Received usage ready Notification")
                     self?.connectedCalliope = MatrixConnectionViewController.instance.usageReadyCalliope as? CalliopeAPI
-                    self?.dataloggerInformationButton.isEnabled = self?.connectedCalliope?.discoveredOptionalServices.contains(.microbitUtilityService) ?? false
+                    self?.loadDataLoggerDataButton.isEnabled = self?.connectedCalliope?.discoveredOptionalServices.contains(.microbitUtilityService) ?? false
                 }
             })
 
@@ -186,7 +203,7 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
             forName: DiscoveredBLEDDevice.disconnectedNotificationName, object: nil, queue: nil,
             using: { [weak self] (_) in
                 DispatchQueue.main.async {
-                    self?.dataloggerInformationButton.isEnabled = false
+                    self?.loadDataLoggerDataButton.isEnabled = false
                 }
             })
     }

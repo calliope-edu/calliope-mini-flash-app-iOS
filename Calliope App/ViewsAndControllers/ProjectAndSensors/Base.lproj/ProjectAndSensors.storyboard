@@ -25,7 +25,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="699" height="1000"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RfU-ox-jjf" userLabel="Background View Bottomn Left">
-                                        <rect key="frame" x="11" y="635" width="328.5" height="752.5"/>
+                                        <rect key="frame" x="11" y="627.5" width="328.5" height="813.5"/>
                                         <color key="backgroundColor" name="calliope-lightgray"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -34,7 +34,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XBd-OB-Nlq" userLabel="Background View Top Left">
-                                        <rect key="frame" x="11" y="10" width="328.5" height="605"/>
+                                        <rect key="frame" x="11" y="10" width="328.5" height="597.5"/>
                                         <color key="backgroundColor" name="calliope-lightgray"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -52,13 +52,13 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="XPz-7S-14H">
-                                        <rect key="frame" x="31" y="30" width="637" height="1337.5"/>
+                                        <rect key="frame" x="31" y="30" width="637" height="1391"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="Xvk-5m-938">
-                                                <rect key="frame" x="0.0" y="0.0" width="288.5" height="1337.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="288.5" height="1391"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="VBO-5D-PIe">
-                                                        <rect key="frame" x="0.0" y="0.0" width="288.5" height="565"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="288.5" height="557.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Send sensor data directly from Calliope mini to the app" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ov1-de-29k">
                                                                 <rect key="frame" x="0.0" y="0.0" width="288.5" height="42.5"/>
@@ -74,14 +74,18 @@
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calliope_bluetooth_extension" translatesAutoresizingMaskIntoConstraints="NO" id="qWQ-jW-HwU">
-                                                                <rect key="frame" x="0.0" y="139" width="288.5" height="200"/>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cVa-L4-F9x">
+                                                                <rect key="frame" x="0.0" y="139" width="288.5" height="192.5"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="height" constant="200" id="Obk-mx-0zO"/>
+                                                                    <constraint firstAttribute="width" secondItem="cVa-L4-F9x" secondAttribute="height" multiplier="1.5:1" id="7Hi-pJ-3dM"/>
                                                                 </constraints>
-                                                            </imageView>
+                                                                <state key="normal" image="calliope_bluetooth_extension 1"/>
+                                                                <connections>
+                                                                    <action selector="initializeBluetoothSensorInfoWebView" destination="nJx-VD-M8y" eventType="touchUpInside" id="Fsd-St-JlR"/>
+                                                                </connections>
+                                                            </button>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OaB-k3-pOM">
-                                                                <rect key="frame" x="0.0" y="344" width="288.5" height="108.5"/>
+                                                                <rect key="frame" x="0.0" y="336.5" width="288.5" height="108.5"/>
                                                                 <string key="text">3. Select the desired services for your program to view or record.
                                                                     4. Start the program on your Calliope mini.</string>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
@@ -89,13 +93,13 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Detailed instructions can be found on the website:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cMt-qa-gH9">
-                                                                <rect key="frame" x="0.0" y="457.5" width="288.5" height="42.5"/>
+                                                                <rect key="frame" x="0.0" y="450" width="288.5" height="42.5"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="we8-oa-Shn">
-                                                                <rect key="frame" x="0.0" y="505" width="288.5" height="60"/>
+                                                                <rect key="frame" x="0.0" y="497.5" width="288.5" height="60"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j6E-jo-Y6K">
                                                                         <rect key="frame" x="44.5" y="0.0" width="200" height="60"/>
@@ -121,42 +125,46 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="V6B-Fg-aeb" userLabel="Datalogger Stack View">
-                                                        <rect key="frame" x="0.0" y="625" width="288.5" height="712.5"/>
+                                                        <rect key="frame" x="0.0" y="617.5" width="288.5" height="773.5"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="CkY-Zy-1Sh">
-                                                                <rect key="frame" x="0.0" y="0.0" width="288.5" height="647.5"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="288.5" height="708.5"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="80R-el-hVU">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="288.5" height="107"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="288.5" height="108.5"/>
                                                                         <string key="text">Data can be recorded on the Calliope mini 3. With the datalogger extension data can be saved in a table and also displayed as a graph.
-</string>
+                                                                        </string>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6lB-5y-zkN">
-                                                                        <rect key="frame" x="0.0" y="112" width="288.5" height="63"/>
+                                                                        <rect key="frame" x="0.0" y="113.5" width="288.5" height="64.5"/>
                                                                         <string key="text">1. This template can be used with the extension:
-</string>
+                                                                        </string>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calliope_bluetooth_extension" translatesAutoresizingMaskIntoConstraints="NO" id="H2L-VF-2r7">
-                                                                        <rect key="frame" x="0.0" y="180" width="288.5" height="200"/>
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C5B-tz-Y5P" userLabel="Data Logger Data Information Button">
+                                                                        <rect key="frame" x="0.0" y="183" width="288.5" height="192"/>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="height" constant="200" id="qlT-uT-Oq9"/>
+                                                                            <constraint firstAttribute="width" secondItem="C5B-tz-Y5P" secondAttribute="height" multiplier="1.5:1" id="1Fm-0a-ofu"/>
                                                                         </constraints>
-                                                                    </imageView>
+                                                                        <state key="normal" image="calliope_datalogger_extension"/>
+                                                                        <connections>
+                                                                            <action selector="initializeDataLoggerInfoWebView" destination="nJx-VD-M8y" eventType="touchUpInside" id="beY-zw-M2e"/>
+                                                                        </connections>
+                                                                    </button>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M5s-gg-ZTZ">
-                                                                        <rect key="frame" x="0.0" y="385" width="288.5" height="262.5"/>
+                                                                        <rect key="frame" x="0.0" y="380" width="288.5" height="328.5"/>
                                                                         <string key="text">
-2. Create the program with the respective data and define the required columns and set the corresponding (sensor) data as values.
+                                                                            2. Create the program with the respective data and define the required columns and set the corresponding (sensor) data as values.
 
-3. Transfer the program to your Calliope mini. 
+                                                                            3. Transfer the program to your Calliope mini. 
 
-4. Open the data logger view.
-</string>
+                                                                            4. Open the data logger view.
+                                                                        </string>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
@@ -164,7 +172,7 @@
                                                                 </subviews>
                                                             </stackView>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aeO-yK-dZb">
-                                                                <rect key="frame" x="0.0" y="652.5" width="288.5" height="60"/>
+                                                                <rect key="frame" x="0.0" y="713.5" width="288.5" height="60"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kac-2O-C6o">
                                                                         <rect key="frame" x="44.5" y="0.0" width="200" height="60"/>
@@ -288,7 +296,8 @@
                     <size key="freeformSize" width="699" height="1000"/>
                     <connections>
                         <outlet property="addProjectButton" destination="1Ta-ld-GFK" id="fCh-WR-gcx"/>
-                        <outlet property="dataloggerInformationButton" destination="kac-2O-C6o" id="VO0-R2-Zep"/>
+                        <outlet property="bluetoothSensorDataInformationButton" destination="cVa-L4-F9x" id="t8n-cX-5HD"/>
+                        <outlet property="loadDataLoggerDataButton" destination="kac-2O-C6o" id="P6k-3U-EKb"/>
                         <outlet property="projectContainerView" destination="vV5-4y-x1s" id="hiZ-aD-JWK"/>
                         <outlet property="stackView" destination="XPz-7S-14H" id="iK2-j9-mH4"/>
                         <segue destination="xWF-af-2iy" kind="show" identifier="showNewlyCreatedProject" destinationCreationSelector="segue:" id="iAp-cX-5QA"/>
@@ -760,10 +769,10 @@
             </objects>
             <point key="canvasLocation" x="2756" y="515"/>
         </scene>
-        <!--Data Logger View Controller-->
+        <!--Data Logger Web View Controller-->
         <scene sceneID="rNu-rB-anU">
             <objects>
-                <viewController id="eqp-p1-CyF" customClass="DataLoggerViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="eqp-p1-CyF" customClass="DataLoggerWebViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <wkWebView key="view" contentMode="scaleToFill" id="2IM-N6-PfH">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -785,7 +794,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="calliope_bluetooth_extension" width="486" height="357"/>
+        <image name="calliope_bluetooth_extension 1" width="486" height="307"/>
+        <image name="calliope_datalogger_extension" width="486" height="307"/>
         <image name="circle.fill" catalog="system" width="128" height="123"/>
         <image name="ellipsis.circle" catalog="system" width="128" height="123"/>
         <image name="gearshape.fill" catalog="system" width="128" height="123"/>
