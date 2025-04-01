@@ -5,8 +5,8 @@
 //  Created by Tassilo Karge on 08.12.18.
 //
 
-import UIKit
 import CoreBluetooth
+import UIKit
 
 class DiscoveredBLEDDevice: DiscoveredDevice {
 
@@ -50,16 +50,18 @@ class DiscoveredBLEDDevice: DiscoveredDevice {
         }
 
         let services = peripheral.services ?? []
-        let uuidSet = Set(services.map {
-            return $0.uuid
-        })
+        let uuidSet = Set(
+            services.map {
+                return $0.uuid
+            })
 
         LogNotify.log("Did discover services \(services)")
 
         let discoveredServiceUUIDs = uuidSet
-        discoveredServices = Set(discoveredServiceUUIDs.compactMap {
-            CalliopeBLEProfile.uuidServiceMap[$0]
-        })
+        discoveredServices = Set(
+            discoveredServiceUUIDs.compactMap {
+                CalliopeBLEProfile.uuidServiceMap[$0]
+            })
         services
             .forEach { service in
                 peripheral.discoverCharacteristics(
@@ -82,9 +84,10 @@ class DiscoveredBLEDDevice: DiscoveredDevice {
         }
 
         let characteristics = service.characteristics ?? []
-        let uuidSet = Set(characteristics.map {
-            return $0.uuid
-        })
+        let uuidSet = Set(
+            characteristics.map {
+                return $0.uuid
+            })
         serviceToDiscoveredCharacteristicsMap[service.uuid] = uuidSet
 
         LogNotify.log("Did discover characteristics \(uuidSet)")
@@ -92,7 +95,7 @@ class DiscoveredBLEDDevice: DiscoveredDevice {
         //Only continue once every discovered service has atleast been checked for characteristic
         servicesWithUndiscoveredCharacteristics.remove(service.uuid)
 
-        if (servicesWithUndiscoveredCharacteristics.isEmpty) {
+        if servicesWithUndiscoveredCharacteristics.isEmpty {
 
             LogNotify.log("Did discover characteristics for all discovered services")
 
@@ -158,4 +161,3 @@ extension DiscoveredBLEDDevice {
         return "name: \(String(describing: name)), state: \(state)"
     }
 }
-

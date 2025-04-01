@@ -6,9 +6,9 @@
 //  Copyright © 2019 calliope. All rights reserved.
 //
 
-import UIKit
 import CoreServices
 import SwiftUI
+import UIKit
 import UniformTypeIdentifiers
 
 class EditorAndProgramsContainerViewController: UIViewController, UINavigationControllerDelegate, UIDocumentPickerDelegate {
@@ -35,12 +35,14 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        coordinator.animate(alongsideTransition: { (_) in
-            self.configureLayout(size)
-        }, completion: { _ in
-            self.programsCollectionViewController?.collectionView.reloadData()
-            self.editorsCollectionViewController?.collectionView.reloadData()
-        })
+        coordinator.animate(
+            alongsideTransition: { (_) in
+                self.configureLayout(size)
+            },
+            completion: { _ in
+                self.programsCollectionViewController?.collectionView.reloadData()
+                self.editorsCollectionViewController?.collectionView.reloadData()
+            })
     }
 
     private func configureLayout(_ size: CGSize) {
@@ -135,8 +137,10 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
         return []
     }
 
-    func documentPicker(_ controller: UIDocumentPickerViewController,
-                        didPickDocumentAt url: URL) {
+    func documentPicker(
+        _ controller: UIDocumentPickerViewController,
+        didPickDocumentAt url: URL
+    ) {
         if !(url.lastPathComponent.isEmpty) {
             // Dismiss this view
             dismiss(animated: true, completion: nil)

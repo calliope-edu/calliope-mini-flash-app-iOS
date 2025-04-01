@@ -10,6 +10,7 @@ import CoreServices
 import SwiftUI
 import UICircularProgressRing
 import UIKit
+import UniformTypeIdentifiers
 
 class ProjectOverviewController: UIViewController, UINavigationControllerDelegate, UIDocumentPickerDelegate {
 
@@ -33,7 +34,10 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
     private var calliopeConnectedSubcription: NSObjectProtocol!
     private var calliopeDisconnectedSubscription: NSObjectProtocol!
 
-    private var connectedCalliope: CalliopeAPI?
+    private var connectedCalliope: Calliope?
+    private var isUsbMode: Bool = false
+    private var targetUrl: URL?
+
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
@@ -74,8 +78,9 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
         MatrixConnectionViewController.instance?.connectionDescriptionText = NSLocalizedString("Calliope mini verbinden!", comment: "")
         MatrixConnectionViewController.instance?.calliopeClass = DiscoveredBLEDDevice.self
 
-        self.connectedCalliope = MatrixConnectionViewController.instance.usageReadyCalliope as? CalliopeAPI
-        loadDataLoggerDataButton.isEnabled = connectedCalliope?.discoveredOptionalServices.contains(.microbitUtilityService) ?? false
+        self.connectedCalliope = MatrixConnectionViewController.instance.usageReadyCalliope
+        self.isUsbMode = MatrixConnectionViewController.instance.isInUsbMode
+        self.loadDataLoggerDataButton.isEnabled = (self.connectedCalliope as? CalliopeAPI)?.discoveredOptionalServices.contains(.microbitUtilityService) ?? false || self.isUsbMode
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -86,14 +91,20 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
 
     @IBSegueAction func initializeDataLoggerWebView(_ coder: NSCoder) -> DataLoggerWebViewController? {
         LogNotify.log("Setting up DataLogger ViewController")
-        guard let result = self.connectedCalliope?.currentJob?.result else {
-            LogNotify.log("Missing Result Data, Aborting")
-            return nil
+        self.dataLoggerWebViewController = DataLoggerWebViewController(coder: coder)
+
+        if !isUsbMode, let result = (connectedCalliope as? CalliopeAPI)?.currentJob?.result {
+            self.dataLoggerWebViewController?.htmlData = result
+            return dataLoggerWebViewController
         }
 
-        self.dataLoggerWebViewController = DataLoggerWebViewController(coder: coder)
-        self.dataLoggerWebViewController?.htmlData = result
-        return dataLoggerWebViewController
+        if isUsbMode, let url = targetUrl {
+            self.dataLoggerWebViewController?.htmlData = try! url.asData()
+            return dataLoggerWebViewController
+        }
+
+        LogNotify.log("No data")
+        return nil
     }
 
     @IBSegueAction func initializeProjects(_ coder: NSCoder) -> ProjectCollectionViewController? {
@@ -158,8 +169,42 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
             return
         }
 
+        if isUsbMode {
+            getDataLoggerHTMLFrom(usbCalliope: connectedCalliope)
+            return
+        }
+        getDataLoggerHTMLFrom(bleCalliope: connectedCalliope)
+
+    }
+
+    private func getDataLoggerHTMLFrom(usbCalliope calliope: Calliope) {
+        DispatchQueue.main.async {
+            let documentPickerController = UIDocumentPickerViewController(forOpeningContentTypes: [UTType(filenameExtension: "htm")!])
+            documentPickerController.delegate = self
+            self.present(documentPickerController, animated: true, completion: nil)
+        }
+    }
+
+
+    func documentPicker(
+        _ controller: UIDocumentPickerViewController,
+        didPickDocumentAt url: URL
+    ) {
+        if !(url.lastPathComponent.isEmpty) {
+            // Dismiss this view
+            dismiss(animated: true, completion: nil)
+            self.targetUrl = url
+            self.performSegue(withIdentifier: "showDataLoggerHTML", sender: self)
+        }
+    }
+
+    private func getDataLoggerHTMLFrom(bleCalliope calliope: Calliope) {
+        guard let calliope = (calliope as? CalliopeAPI) else {
+            return
+        }
+
         self.present(alertView, animated: true)
-        connectedCalliope.startUtilityJob(
+        calliope.startUtilityJob(
             for: .LOG_HTML,
             onProgress: { [self] (a) in progressRing.startProgress(to: CGFloat(a), duration: 0.2) },
             onCompletion: {
@@ -169,7 +214,7 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
             onFailure: {
                 self.dismiss(animated: true)
 
-                let failureReason = connectedCalliope.currentJob?.jobState
+                let failureReason = calliope.currentJob?.jobState
                 if failureReason == .Canceled {
                     return
                 }
@@ -194,8 +239,9 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
             using: { [weak self] (_) in
                 DispatchQueue.main.async {
                     LogNotify.log("Received usage ready Notification")
-                    self?.connectedCalliope = MatrixConnectionViewController.instance.usageReadyCalliope as? CalliopeAPI
-                    self?.loadDataLoggerDataButton.isEnabled = self?.connectedCalliope?.discoveredOptionalServices.contains(.microbitUtilityService) ?? false
+                    self?.connectedCalliope = MatrixConnectionViewController.instance.usageReadyCalliope
+                    self?.isUsbMode = MatrixConnectionViewController.instance.isInUsbMode
+                    self?.loadDataLoggerDataButton.isEnabled = (self?.connectedCalliope as? CalliopeAPI)?.discoveredOptionalServices.contains(.microbitUtilityService) ?? false || self?.isUsbMode ?? false
                 }
             })
 
@@ -203,6 +249,8 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
             forName: DiscoveredBLEDDevice.disconnectedNotificationName, object: nil, queue: nil,
             using: { [weak self] (_) in
                 DispatchQueue.main.async {
+                    self?.connectedCalliope = nil
+                    self?.isUsbMode = false
                     self?.loadDataLoggerDataButton.isEnabled = false
                 }
             })
@@ -252,7 +300,7 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
 
     private lazy var cancelUploadAction: UIAlertAction = {
         UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .destructive) { [weak self] _ in
-            guard let connectedCalliope = self?.connectedCalliope else {
+            guard let connectedCalliope = (self?.connectedCalliope as? CalliopeAPI) else {
                 return
             }
             connectedCalliope.cancelUtilityJob()
