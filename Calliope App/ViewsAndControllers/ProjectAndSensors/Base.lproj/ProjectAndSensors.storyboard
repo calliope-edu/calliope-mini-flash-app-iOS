@@ -728,7 +728,7 @@
                                                     <state key="normal" image="play.fill" catalog="system">
                                                         <color key="titleShadowColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
-                                                    <buttonConfiguration key="configuration" style="filled" image="circle.fill" catalog="system" cornerStyle="capsule">
+                                                    <buttonConfiguration key="configuration" style="filled" image="play.fill" catalog="system" cornerStyle="capsule">
                                                         <color key="baseForegroundColor" name="calliope-orange"/>
                                                         <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </buttonConfiguration>
@@ -818,7 +818,6 @@
     <resources>
         <image name="calliope_bluetooth_extension 1" width="486" height="307"/>
         <image name="calliope_datalogger_extension" width="486" height="307"/>
-        <image name="circle.fill" catalog="system" width="128" height="123"/>
         <image name="ellipsis.circle" catalog="system" width="128" height="123"/>
         <image name="gearshape.fill" catalog="system" width="128" height="123"/>
         <image name="menubar.rectangle" catalog="system" width="128" height="93"/>
