@@ -34,6 +34,7 @@ class FlashableBLECalliope: CalliopeAPI {
                 self.statusDelegate?.dfuError(.deviceDisconnected, didOccurWithMessage: "connection to calliope lost")
             }
         }
+        LogNotify.log("Nothing to do with this calliope")
     }
 
     public override func cancelUpload() -> Bool {

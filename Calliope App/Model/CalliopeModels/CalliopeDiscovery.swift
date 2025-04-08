@@ -151,8 +151,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
     }
 
     private var retryCount = 0
-    private var retrying = false
-
+    public var isInBackground = false
 
     init(_ calliopeBuilder: @escaping (_ peripheral: CBPeripheral, _ name: String) -> DiscoveredBLEDDevice) {
         self.calliopeBuilder = calliopeBuilder
@@ -234,25 +233,17 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
     }
 
     func retryCalliopeDiscovery(_ targetCalliope: DiscoveredDevice) {
-        if retrying || self.connectedCalliope != nil {
-            LogNotify.log("Stopping retrying due to: retrying - \(retrying) or connected - \(connectedCalliope != nil)")
+        if isInBackground || self.connectedCalliope != nil || self.retryCount >= BluetoothConstants.maxRetryCount {
+            LogNotify.log("Stopping retrying due to: isInBackground \(isInBackground) - retrycount (current: \(retryCount), max: \(BluetoothConstants.maxRetryCount)) - connected - \(connectedCalliope != nil)")
             retryCount = 0
             return
         }
 
-        if self.retryCount >= BluetoothConstants.maxRetryCount {
-            LogNotify.log("Stopping retrying to connect, as max (\(BluetoothConstants.maxRetryCount)) tries reached")
-            retryCount = 0
-            return
-        }
-
-        retrying = true
         self.retryCount += 1
         LogNotify.log("Trying reconnection \(retryCount)/\(BluetoothConstants.maxRetryCount)")
         self.connectToCalliope(targetCalliope)
 
         bluetoothQueue.asyncAfter(deadline: DispatchTime.now() + .seconds(BluetoothConstants.retryDelay)) {
-            self.retrying = false
             self.retryCalliopeDiscovery(targetCalliope)
         }
     }
@@ -354,7 +345,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
                 self.connectToCalliope(connectedCalliope)
             }
             return
-        } else if let connectedCalliope = connectedCalliope {
+        } else if let connectedCalliope = connectedCalliope, !isInBackground {
             self.connectedCalliope = nil
             connectingCalliope = nil
             lastConnected = nil

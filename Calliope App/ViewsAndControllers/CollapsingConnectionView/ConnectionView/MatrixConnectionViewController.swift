@@ -117,6 +117,16 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
         }
     }
 
+    public func moveToForeground() {
+        connector.isInBackground = false
+        connector.startCalliopeDiscovery()
+    }
+
+    public func moveToBackground() {
+        connector.isInBackground = true
+        connector.stopCalliopeDiscovery()
+    }
+
     private func changedConnector(_ oldValue: CalliopeDiscovery) {
         oldValue.giveUpResponsibility()
         connector.updateBlock = updateDiscoveryState
@@ -256,7 +266,6 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     }
 
     private func updateDiscoveryState() {
-
         switch self.connector.state {
         case .initialized:
             matrixView.isUserInteractionEnabled = true

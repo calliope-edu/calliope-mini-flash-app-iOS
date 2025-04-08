@@ -6,17 +6,17 @@
 //  Copyright © 2024 calliope. All rights reserved.
 //
 
-import Foundation
 import CoreBluetooth
+import Foundation
 
 class DiscoveredDevice: NSObject, CBPeripheralDelegate {
 
     private let bluetoothQueue = DispatchQueue.global(qos: .userInitiated)
 
     var updateQueue = DispatchQueue.main
-    var updateBlock: () -> () = {
+    var updateBlock: () -> Void = {
     }
-    var errorBlock: (Error) -> () = { _ in
+    var errorBlock: (Error) -> Void = { _ in
     }
 
     let name: String
@@ -27,22 +27,24 @@ class DiscoveredDevice: NSObject, CBPeripheralDelegate {
 
     //discoverable Services of the BLE Devices
     static var discoverableServices: Set<CalliopeService> = [.secureDfuService, .dfuControlService, .partialFlashing, .microbitUtilityService, .accelerometer, .led, .temperature, .uart]
-    static var discoverableServicesUUIDs: Set<CBUUID> = Set(discoverableServices.map {
-        $0.uuid
-    })
+    static var discoverableServicesUUIDs: Set<CBUUID> = Set(
+        discoverableServices.map {
+            $0.uuid
+        })
 
     //discovered Services of the BLE Device
     final var discoveredServices: Set<CalliopeService> = []
-    lazy var discoveredServicesUUIDs: Set<CBUUID> = Set(discoveredServices.map {
-        $0.uuid
-    })
+    lazy var discoveredServicesUUIDs: Set<CBUUID> = Set(
+        discoveredServices.map {
+            $0.uuid
+        })
 
     enum CalliopeBLEDeviceState {
-        case discovered //discovered and ready to connect, not connected yet
-        case connected //connected, but services and characteristics have not (yet) been found
-        case evaluateMode //connected, looking for services and characteristics
-        case usageReady //all required services and characteristics have been found, calliope ready to be programmed
-        case wrongMode //required services and characteristics not available, put into right mode
+        case discovered  //discovered and ready to connect, not connected yet
+        case connected  //connected, but services and characteristics have not (yet) been found
+        case evaluateMode  //connected, looking for services and characteristics
+        case usageReady  //all required services and characteristics have been found, calliope ready to be programmed
+        case wrongMode  //required services and characteristics not available, put into right mode
     }
 
     var state: CalliopeBLEDeviceState = .discovered {
@@ -85,8 +87,9 @@ class DiscoveredDevice: NSObject, CBPeripheralDelegate {
                 }
             }
         } else if state == .usageReady {
-            NotificationCenter.default.post(name: DiscoveredBLEDDevice.usageReadyNotificationName,
-                                            object: self)
+            NotificationCenter.default.post(
+                name: DiscoveredBLEDDevice.usageReadyNotificationName,
+                object: self)
         }
     }
 
