@@ -103,7 +103,7 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
         }
         self.addChartButton.isEnabled = true
     }
-
+    
     @IBSegueAction func initializeCharts(_ coder: NSCoder) -> ChartCollectionViewController? {
         chartCollectionViewController = ChartCollectionViewController(coder: coder)
         self.reloadInputViews()

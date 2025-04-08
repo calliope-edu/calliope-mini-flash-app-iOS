@@ -107,6 +107,12 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
         return nil
     }
 
+    @IBSegueAction func initializeEditorView(_ coder: NSCoder) -> EditorViewController? {
+        var editor = MakeCode()
+        editor.url = targetUrl
+        return EditorViewController(coder: coder, editor: editor)
+    }
+    
     @IBSegueAction func initializeProjects(_ coder: NSCoder) -> ProjectCollectionViewController? {
         LogNotify.log("setting project collection view controller")
         projectCollectionViewController = ProjectCollectionViewController(coder: coder)
@@ -115,15 +121,13 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
     }
 
     @IBAction func initializeBluetoothSensorInfoWebView() {
-        if let url = URL(string: NSLocalizedString("https://makecode.calliope.cc/_c72b1hgm2LWg", comment: "")) {
-            UIApplication.shared.open(url)
-        }
+        self.targetUrl = URL.init(string: "https://makecode.calliope.cc/#pub:_9fXFUpYu1c72")
+        self.performSegue(withIdentifier: "showEditor", sender: self)
     }
 
     @IBAction func initializeDataLoggerInfoWebView() {
-        if let url = URL(string: NSLocalizedString("https://makecode.calliope.cc/_KYD3sacsPRD3", comment: "")) {
-            UIApplication.shared.open(url)
-        }
+        self.targetUrl = URL.init(string: "https://makecode.calliope.cc/#pub:_C9T4rtEUoUfy")
+        self.performSegue(withIdentifier: "showEditor", sender: self)
     }
 
     @IBAction func createNewProject(_ coder: NSCoder) {

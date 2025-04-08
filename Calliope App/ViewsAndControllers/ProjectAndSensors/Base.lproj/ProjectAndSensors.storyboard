@@ -324,6 +324,7 @@
                         <outlet property="stackView" destination="XPz-7S-14H" id="iK2-j9-mH4"/>
                         <segue destination="xWF-af-2iy" kind="show" identifier="showNewlyCreatedProject" destinationCreationSelector="segue:" id="iAp-cX-5QA"/>
                         <segue destination="eqp-p1-CyF" kind="show" identifier="showDataLoggerHTML" destinationCreationSelector="initializeDataLoggerWebView:" id="hpb-CZ-FVD"/>
+                        <segue destination="ghf-jY-ggY" kind="show" identifier="showEditor" destinationCreationSelector="initializeEditorView:" id="ohT-63-Vbv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GtY-mM-QMm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -813,6 +814,38 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mEm-Ag-Jke" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2640" y="-180"/>
+        </scene>
+        <!--Editor-->
+        <scene sceneID="rlo-SA-83h">
+            <objects>
+                <viewController title="Editor" modalPresentationStyle="fullScreen" id="ghf-jY-ggY" customClass="EditorViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ka7-BE-y4t" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="lv9-ll-xf8">
+                                <rect key="frame" x="492" y="663" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="8Zc-4H-VUC"/>
+                                    <constraint firstAttribute="height" constant="40" id="LSq-gt-Jva"/>
+                                </constraints>
+                            </activityIndicatorView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="BaU-Ya-lws"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="lv9-ll-xf8" firstAttribute="centerY" secondItem="Ka7-BE-y4t" secondAttribute="centerY" id="4Vt-wQ-Q8e"/>
+                            <constraint firstItem="lv9-ll-xf8" firstAttribute="centerX" secondItem="Ka7-BE-y4t" secondAttribute="centerX" id="ONm-d0-2QR"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="D0d-6l-9Ju"/>
+                    <connections>
+                        <outlet property="loadingIndicator" destination="lv9-ll-xf8" id="gVG-aR-3kX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4vR-oi-1ZQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2640" y="-1044"/>
         </scene>
     </scenes>
     <resources>
