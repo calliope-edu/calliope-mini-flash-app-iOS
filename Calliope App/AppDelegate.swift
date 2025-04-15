@@ -75,4 +75,81 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         return false
     }
+
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        if let rootViewController = window?.rootViewController, let tabBarController = findTabBarController(from: rootViewController),
+            let targetViewController = setupTargetViewController(targetActivity: userActivity)
+        {
+            pushNewViewController(from: tabBarController, for: targetViewController)
+            return true
+        }
+
+        LogNotify.log("Either rootViewController, tabBarController or the targetViewController could not have been established")
+        return false
+    }
+
+
+    private func findTabBarController(from viewController: UIViewController) -> UITabBarController? {
+        if let tabBarController = viewController as? UITabBarController {
+            return tabBarController
+        }
+
+        if let navigationController = viewController as? UINavigationController {
+            for vc in navigationController.viewControllers {
+                if let tabBarController = findTabBarController(from: vc) {
+                    return tabBarController
+                }
+            }
+        }
+
+        for child in viewController.children {
+            if let tabBarController = findTabBarController(from: child) {
+                return tabBarController
+            }
+        }
+
+        LogNotify.log("Could not find tabBar. This should not happen.")
+        return nil
+    }
+
+    private func pushNewViewController(from tabBarController: UITabBarController, for targetViewController: UIViewController) {
+        guard let selectedNavController = tabBarController.selectedViewController as? UINavigationController else {
+            LogNotify.log("The selected view controller is not a UINavigationController.")
+            return
+        }
+
+        selectedNavController.pushViewController(targetViewController, animated: true)
+    }
+
+    private func setupTargetViewController(targetActivity userActivity: NSUserActivity) -> UIViewController? {
+        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb, let url = userActivity.webpageURL else {
+            LogNotify.log("Unable to setup target, as activity not supported")
+            return nil
+        }
+
+        // possibly extend this to some logic, if we going to be supporting more universallink targets
+        return setupMakeCodeEditorViewController(for: url)
+    }
+
+    private func setupMakeCodeEditorViewController(for url: URL) -> UIViewController? {
+        let storyboard = UIStoryboard(name: "EditorAndPrograms", bundle: Bundle.main)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "EditorViewControllerInEditorAndPrograms") as? EditorViewController
+
+        guard let viewController = viewController else {
+            LogNotify.log("Could not create new ViewController")
+            return nil
+        }
+
+        #if DEBUG
+        let originialUrl = url.absoluteString
+        let url = URL.init(string: "https://makecode.calliope.cc\(url.path)?\(url.query ?? "")#\(url.fragment ?? "")")
+        LogNotify.log("Redirected development domain (\(originialUrl)) to makecode (\(url?.absoluteString ?? "none?"))")
+        #endif
+
+        let editor = MakeCode()
+        editor.url = url
+        viewController.editor = editor
+
+        return viewController
+    }
 }

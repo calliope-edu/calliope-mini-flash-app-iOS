@@ -5,9 +5,9 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
 
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
 
-    let editor: Editor
+    var editor: Editor?
 
-    var webview: WKWebView! //webviews are buggy and cannot be placed via interface builder
+    var webview: WKWebView!  //webviews are buggy and cannot be placed via interface builder
     lazy var documentsPath: URL = {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
     }()
@@ -21,20 +21,20 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        //        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.title = editor.name
-        view.backgroundColor = Styles.colorWhite
-
-        guard let url = editor.url else {
-            LogNotify.log("URL is empty!)")
+        guard let editor = editor, let url = editor.url else {
+            LogNotify.log("No editor or empty URL -- bailing")
             return
         }
-        LogNotify.log("loading \(url)")
+
+        navigationItem.title = editor.name
+        view.backgroundColor = Styles.colorWhite
 
         let controller = WKUserContentController()
         let configuration = WKWebViewConfiguration()
@@ -69,12 +69,16 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
     }
 
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        guard let editor = editor else {
+            return
+        }
+
         LogNotify.log("policy for action \(navigationAction.request.url?.absoluteString.truncate(length: 100) ?? "")")
         let request = navigationAction.request
 
         if let download = editor.download(request) {
             decisionHandler(.cancel)
-            if (download.url.absoluteString.starts(with: "data:text/xml")) {
+            if download.url.absoluteString.starts(with: "data:text/xml") {
                 export(download: download)
             } else {
                 upload(result: download)
@@ -91,6 +95,10 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
 
 
     func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        guard let editor = editor else {
+            return nil
+        }
+
         switch editor.getNavigationTargetViewForRequest(navigationAction.request) {
         case .internalWebView:
             return handleInternalWebView(navigationAction, webView)
@@ -118,30 +126,43 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
     }
 
     //
-    func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo,
-                 completionHandler: @escaping () -> Void) {
+    func webView(
+        _ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo,
+        completionHandler: @escaping () -> Void
+    ) {
 
         let alertController = UIAlertController(title: nil, message: message, preferredStyle: .actionSheet)
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: { (action) in
-            completionHandler()
-        }))
+        alertController.addAction(
+            UIAlertAction(
+                title: NSLocalizedString("OK", comment: ""), style: .default,
+                handler: { (action) in
+                    completionHandler()
+                }))
 
         present(alertController, animated: true, completion: nil)
     }
 
 
-    func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo,
-                 completionHandler: @escaping (Bool) -> Void) {
+    func webView(
+        _ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo,
+        completionHandler: @escaping (Bool) -> Void
+    ) {
 
         let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
 
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: { (action) in
-            completionHandler(true)
-        }))
+        alertController.addAction(
+            UIAlertAction(
+                title: NSLocalizedString("OK", comment: ""), style: .default,
+                handler: { (action) in
+                    completionHandler(true)
+                }))
 
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .default, handler: { (action) in
-            completionHandler(false)
-        }))
+        alertController.addAction(
+            UIAlertAction(
+                title: NSLocalizedString("Cancel", comment: ""), style: .default,
+                handler: { (action) in
+                    completionHandler(false)
+                }))
 
         present(alertController, animated: true, completion: nil)
     }
@@ -155,17 +176,23 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
             textField.text = defaultText
         }
 
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: { (action) in
-            if let text = alertController.textFields?.first?.text {
-                completionHandler(text)
-            } else {
-                completionHandler(defaultText)
-            }
-        }))
+        alertController.addAction(
+            UIAlertAction(
+                title: NSLocalizedString("OK", comment: ""), style: .default,
+                handler: { (action) in
+                    if let text = alertController.textFields?.first?.text {
+                        completionHandler(text)
+                    } else {
+                        completionHandler(defaultText)
+                    }
+                }))
 
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .default, handler: { (action) in
-            completionHandler(nil)
-        }))
+        alertController.addAction(
+            UIAlertAction(
+                title: NSLocalizedString("Cancel", comment: ""), style: .default,
+                handler: { (action) in
+                    completionHandler(nil)
+                }))
 
         present(alertController, animated: true, completion: nil)
     }
@@ -175,7 +202,7 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
 
     private func upload(result download: EditorDownload) {
         self.webview.evaluateJavaScript(query) { (result, error) in
-            let html = "\(result ?? "no-project-name")" // TODO: Dettermining name and default could be better
+            let html = "\(result ?? "no-project-name")"  // TODO: Dettermining name and default could be better
             LogNotify.log("html: \(html)")
             do {
                 guard let file = try HexFileManager.store(name: html, data: download.url.asData(), isHexFile: download.isHex) else {
@@ -218,12 +245,14 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
             let xml = try download.url.asData()
             let (success, error) = saveFile(filename: "\(download.name).xml", data: xml)
             if success {
-                let alert = UIAlertController(title: NSLocalizedString("Program exported", comment: ""),
-                                              message: NSLocalizedString("Program exported message", comment: "actual message in translation file"),
-                                              preferredStyle: .alert)
+                let alert = UIAlertController(
+                    title: NSLocalizedString("Program exported", comment: ""),
+                    message: NSLocalizedString("Program exported message", comment: "actual message in translation file"),
+                    preferredStyle: .alert)
 
-                alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .destructive) { _ in
-                })
+                alert.addAction(
+                    UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .destructive) { _ in
+                    })
 
                 self.present(alert, animated: true)
             } else {
@@ -237,6 +266,9 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
             LogNotify.log(error.localizedDescription)
         }
     }
+
+    // handle
+
 
     // Web View Helper
 
