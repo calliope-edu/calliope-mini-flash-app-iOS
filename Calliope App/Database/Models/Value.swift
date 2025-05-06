@@ -6,6 +6,7 @@
 //  Copyright © 2024 calliope. All rights reserved.
 //
 
+import CoreLocation
 import Foundation
 import GRDB
 
@@ -16,12 +17,14 @@ struct Value: Codable, FetchableRecord, PersistableRecord {
     var id: Int64?
     var value: String
     var time: Double
+    var lat: Double?
+    var long: Double?
     var chartsId: Int64
 
-    static func insertValue(value: String, chartsId: Int64) {
+    static func insertValue(value: String, coordinates: CLLocationCoordinate2D?, chartsId: Int64) {
         do {
             try DatabaseManager.shared.databaseQueue?.write { db in
-                try Value(value: value, time: (Date().timeIntervalSinceReferenceDate * 100).rounded(toPlaces: 0), chartsId: chartsId).insert(db)
+                try Value(value: value, time: (Date().timeIntervalSinceReferenceDate * 100).rounded(toPlaces: 0), lat: coordinates?.latitude, long: coordinates?.longitude, chartsId: chartsId).insert(db)
             }
         } catch {
             LogNotify.log("Failed to insert value: \(error)")

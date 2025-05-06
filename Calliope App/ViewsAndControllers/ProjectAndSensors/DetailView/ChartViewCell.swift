@@ -9,6 +9,7 @@
 import DGCharts
 import Foundation
 import UIKit
+import CoreLocation
 
 class ChartViewCell: BaseChartViewCell {
 
@@ -70,8 +71,10 @@ class ChartViewCell: BaseChartViewCell {
             for value in rawValues {
                 let decodedValue = DataParser.decode(data: value.value, service: chart.sensorType ?? .empty)
                 getDataEntries(data: decodedValue, timestep: value.time, service: chart.sensorType ?? .empty)
+                handleLocationData(CLLocationCoordinate2D(latitude: value.lat, longitude: value.long), value.time)
             }
             addDataEntries(dataEntries: axisToData)
+            
 
             sensorTypeButton.isEnabled = false
             recordingButton.isEnabled = false

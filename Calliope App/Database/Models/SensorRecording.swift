@@ -17,7 +17,7 @@ struct SensorRecording: Codable, FetchableRecord, PersistableRecord {
     enum Columns: String, ColumnExpression {
         case id, projectId, sensorType, values
     }
-    
+
     static let databaseTableName = "sensorRecordings"
 }
 

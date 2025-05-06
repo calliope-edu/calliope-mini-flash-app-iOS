@@ -6,6 +6,7 @@
 //  Copyright © 2024 calliope. All rights reserved.
 //
 
+import CoreLocation
 import Foundation
 
 class DataController {
@@ -18,14 +19,17 @@ class DataController {
 
     var uartValue: [Any] = []
 
+    var getLastLocation: (() -> CLLocationCoordinate2D?)?
+
     init() {
         guard let connectedCalliope = MatrixConnectionViewController.instance.usageReadyCalliope else {
             return
         }
         self.apiCalliope = connectedCalliope as? CalliopeAPI
-        self.availableSensors = apiCalliope?.discoveredOptionalServices.compactMap { key in
-            return SensorUtility.serviceSensorMap[key]
-        } ?? []
+        self.availableSensors =
+            apiCalliope?.discoveredOptionalServices.compactMap { key in
+                return SensorUtility.serviceSensorMap[key]
+            } ?? []
     }
 
     func getAvailableSensors() -> [Sensor] {
@@ -35,7 +39,7 @@ class DataController {
         } ?? []
     }
 
-    func sensorStartRecordingFor(chart: Chart, response: @escaping ((String, Double, Double)) -> ()) {
+    func sensorStartRecordingFor(chart: Chart, response: @escaping ((String, Double, Double, CLLocationCoordinate2D?)) -> Void) {
         if DataController.activeServices.contains(chart.sensorType ?? .empty) {
             isRecording = false
             return
@@ -51,8 +55,9 @@ class DataController {
                 let newValue = self.fetchValue(service: chart.sensorType ?? .empty)
                 for (axis, time, value) in newValue {
                     let parsedValue = DataParser.encode(data: [axis: value], service: chart.sensorType ?? .empty)
-                    Value.insertValue(value: parsedValue, chartsId: chart.id!)
-                    response((axis, time, value))
+                    let coordinates = self.getLastLocation?()
+                    Value.insertValue(value: parsedValue, coordinates: coordinates, chartsId: chart.id!)
+                    response((axis, time, value, coordinates))
                 }
             }
             self.isRecording = true
@@ -78,14 +83,14 @@ class DataController {
                 return [
                     ("X", timestamp, Double(value.0)),
                     ("Y", timestamp, Double(value.1)),
-                    ("Z", timestamp, Double(value.2))
+                    ("Z", timestamp, Double(value.2)),
                 ]
             case .magnetometer:
                 let value = self.apiCalliope?.magnetometerValue ?? (0, 0, 0)
                 return [
                     ("X", timestamp, Double(value.0)),
                     ("Y", timestamp, Double(value.1)),
-                    ("Z", timestamp, Double(value.2))
+                    ("Z", timestamp, Double(value.2)),
                 ]
             case .temperature:
                 return [

@@ -6,15 +6,17 @@
 //  Copyright © 2024 calliope. All rights reserved.
 //
 
+import CoreLocation
 import DGCharts
 import Foundation
+import MapKit
 import UIKit
 
 protocol ChartCellDelegate {
     func deleteChart(of cell: ChartViewCell, chart: Chart?)
 }
 
-class BaseChartViewCell: UITableViewCell, ChartViewDelegate {
+class BaseChartViewCell: UITableViewCell, ChartViewDelegate, CLLocationManagerDelegate {
 
     var chart: Chart?
     var sensor: Sensor?
@@ -43,10 +45,18 @@ class BaseChartViewCell: UITableViewCell, ChartViewDelegate {
 
     var axisToDataSet: [String: LineChartDataSet] = [:]
     var axisToData: [String: [ChartDataEntry]] = [:]
+    var seenLocations: Set<CLLocationCoordinate2D> = Set()
+
+    @IBOutlet weak var mapview: MKMapView!
+
+    private var locationManager: CLLocationManager
 
     required init?(coder: NSCoder) {
         dataController = DataController()
+        locationManager = CLLocationManager()
+
         super.init(coder: coder)
+        self.setupLocationManager()
     }
 
     @IBAction func startRecording(_ sender: Any) {
@@ -84,15 +94,19 @@ class BaseChartViewCell: UITableViewCell, ChartViewDelegate {
         if baseTime == nil {
             baseTime = (Date().timeIntervalSinceReferenceDate * 100).rounded(toPlaces: 0)
         }
-        dataController.sensorStartRecordingFor(chart: chart) { value in
+        dataController.sensorStartRecordingFor(chart: chart) { (axis, time, value, coordinates) in
             if self.isRecordingData {
                 guard let chart = self.chart else {
                     fatalError()
                 }
-                self.getDataEntries(data: [value.0: value.2], timestep: value.1, service: chart.sensorType ?? .empty)
+                self.getDataEntries(data: [axis: value], timestep: time, service: chart.sensorType ?? .empty)
+                self.handleLocationData(coordinates, time)
                 self.addDataEntries(dataEntries: self.axisToData)
             }
         }
+
+        dataController.getLastLocation = getLastLocation
+        locationManager.startUpdatingLocation()
         isRecordingData = true
     }
 
@@ -102,12 +116,14 @@ class BaseChartViewCell: UITableViewCell, ChartViewDelegate {
         }
         dataController.sensorStopRecordingFor(chart: chart)
         isRecordingData = false
+        locationManager.stopUpdatingLocation()
 
         UIView.animate(withDuration: 0.5) {
             self.deleteButton.isEnabled = true
             self.recordingButton.isEnabled = false
             self.recordingButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
         }
+
     }
 
     func getDataEntries(data: [String: Double], timestep: Double, service: CalliopeService) {
@@ -253,5 +269,58 @@ class BaseChartViewCell: UITableViewCell, ChartViewDelegate {
             self.maxValueLabel.text = "\(lineChartData.yMax.rounded(toPlaces: 2))"
             self.minValueLabel.text = "\(lineChartData.yMin.rounded(toPlaces: 2))"
         }
+    }
+
+
+    // # MARK: LOCATION RELEVANT FUNCTIONS
+
+    private let COORDINATE_PRECISION = 4
+
+    func setupLocationManager() {
+        LogNotify.log("Init Location Updates; Auth status \(locationManager.authorizationStatus)")
+
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+
+        if locationManager.authorizationStatus != .authorizedWhenInUse {
+            LogNotify.log("Did not hold the ok to track my user. bummer :(") // TODO Handle this case
+            locationManager.requestWhenInUseAuthorization()
+            return
+        }
+
+        mapview.isHidden = true
+    }
+
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if locationManager.authorizationStatus == .authorizedWhenInUse {
+            mapview.isHidden = false
+            return
+        }
+        LogNotify.log("Did not receive the ok to track my user. bummer :(")
+    }
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        LogNotify.log("Got new Location Data - Location Manager holds Long: \(self.locationManager.location?.coordinate.longitude ?? 0.0) Lat: \(self.locationManager.location?.coordinate.latitude ?? 0.0)")
+    }
+
+    private func getLastLocation() -> CLLocationCoordinate2D? {
+        self.locationManager.location?.coordinate.rounded(toPlaces: COORDINATE_PRECISION) ?? nil
+    }
+
+    func handleLocationData(_ coordinates: CLLocationCoordinate2D?, _ time: Double) {
+        guard let coordinates = coordinates else {
+            return // no coordination data, possibly due to missing auth
+        }
+
+        if seenLocations.contains(coordinates) {
+            return // already seen location, dont add another marker
+        }
+
+        seenLocations.insert(coordinates)
+
+        let pin = MKPointAnnotation()
+        pin.title = Date(timeIntervalSinceReferenceDate: time / 100).getFormattedDate()
+        pin.coordinate = coordinates
+        mapview.addAnnotation(pin)
     }
 }
