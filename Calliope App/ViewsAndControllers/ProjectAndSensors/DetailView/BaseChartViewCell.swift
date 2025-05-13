@@ -16,7 +16,7 @@ protocol ChartCellDelegate {
     func deleteChart(of cell: ChartViewCell, chart: Chart?)
 }
 
-class BaseChartViewCell: UITableViewCell, ChartViewDelegate, CLLocationManagerDelegate {
+class BaseChartViewCell: UITableViewCell, ChartViewDelegate {
 
     var chart: Chart?
     var sensor: Sensor?
@@ -42,21 +42,16 @@ class BaseChartViewCell: UITableViewCell, ChartViewDelegate, CLLocationManagerDe
 
     let colors = [NSUIColor.calliopeGreen, NSUIColor.calliopePurple, NSUIColor.calliopeYellow, NSUIColor.calliopeRed, NSUIColor.calliopeGray]
 
-
     var axisToDataSet: [String: LineChartDataSet] = [:]
     var axisToData: [String: [ChartDataEntry]] = [:]
     var seenLocations: Set<CLLocationCoordinate2D> = Set()
 
     @IBOutlet weak var mapview: MKMapView!
 
-    private var locationManager: CLLocationManager
 
     required init?(coder: NSCoder) {
         dataController = DataController()
-        locationManager = CLLocationManager()
-
         super.init(coder: coder)
-        self.setupLocationManager()
     }
 
     @IBAction func startRecording(_ sender: Any) {
@@ -106,7 +101,6 @@ class BaseChartViewCell: UITableViewCell, ChartViewDelegate, CLLocationManagerDe
         }
 
         dataController.getLastLocation = getLastLocation
-        locationManager.startUpdatingLocation()
         isRecordingData = true
     }
 
@@ -116,7 +110,6 @@ class BaseChartViewCell: UITableViewCell, ChartViewDelegate, CLLocationManagerDe
         }
         dataController.sensorStopRecordingFor(chart: chart)
         isRecordingData = false
-        locationManager.stopUpdatingLocation()
 
         UIView.animate(withDuration: 0.5) {
             self.deleteButton.isEnabled = true
@@ -272,55 +265,55 @@ class BaseChartViewCell: UITableViewCell, ChartViewDelegate, CLLocationManagerDe
     }
 
 
-    // # MARK: LOCATION RELEVANT FUNCTIONS
-
-    private let COORDINATE_PRECISION = 4
-
-    func setupLocationManager() {
-        LogNotify.log("Init Location Updates; Auth status \(locationManager.authorizationStatus)")
-
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-
-        if locationManager.authorizationStatus != .authorizedWhenInUse {
-            LogNotify.log("Did not hold the ok to track my user. bummer :(") // TODO Handle this case
-            locationManager.requestWhenInUseAuthorization()
-            return
-        }
-
-        mapview.isHidden = true
-    }
-
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if locationManager.authorizationStatus == .authorizedWhenInUse {
-            mapview.isHidden = false
-            return
-        }
-        LogNotify.log("Did not receive the ok to track my user. bummer :(")
-    }
-
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        LogNotify.log("Got new Location Data - Location Manager holds Long: \(self.locationManager.location?.coordinate.longitude ?? 0.0) Lat: \(self.locationManager.location?.coordinate.latitude ?? 0.0)")
-    }
-
-    private func getLastLocation() -> CLLocationCoordinate2D? {
-        self.locationManager.location?.coordinate.rounded(toPlaces: COORDINATE_PRECISION) ?? nil
-    }
+    // # MARK: LOCATION/MAP RELEVANT FUNCTIONS
+    
+    var getLastLocation: (() -> CLLocationCoordinate2D?)?
 
     func handleLocationData(_ coordinates: CLLocationCoordinate2D?, _ time: Double) {
         guard let coordinates = coordinates else {
             return // no coordination data, possibly due to missing auth
         }
-
+        
         if seenLocations.contains(coordinates) {
             return // already seen location, dont add another marker
         }
-
+        
         seenLocations.insert(coordinates)
-
+        
+        
         let pin = MKPointAnnotation()
         pin.title = Date(timeIntervalSinceReferenceDate: time / 100).getFormattedDate()
         pin.coordinate = coordinates
         mapview.addAnnotation(pin)
+        followToLastLocation(coordinates)
+    }
+    
+    func followToLastLocation(_ coordinates: CLLocationCoordinate2D) {
+        self.mapview.setRegion(MKCoordinateRegion(center: coordinates, latitudinalMeters: CLLocationDistance(1), longitudinalMeters: CLLocationDistance(1)), animated: true)
+    }
+    
+    
+    // # MARK: CLEANUP
+    
+    func cleanup() {
+        sensor = nil
+        baseTime = nil
+        isRecordingData = false
+        hasDefaultValues = false
+        selectedAxis = -1
+
+        maxValueLabel.text = "-"
+        minValueLabel.text = "-"
+        avgValueLabel.text = "-"
+        currentValueLabel.text = "-"
+        
+        // chart
+        axisToDataSet.removeAll()
+        axisToData.removeAll()
+        baseTime = nil
+        
+        // location
+        seenLocations.removeAll()
+        mapview.removeAnnotations(mapview.annotations)
     }
 }

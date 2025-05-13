@@ -19,8 +19,8 @@ class ChartViewCell: BaseChartViewCell {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-
-    func setupChartView() {
+    
+    func setupCellView() {
         deleteButton.setTitle("", for: .normal)
         guard let chart = chart else {
             LogNotify.log("Setup of chart failed, no chart has been set")
@@ -75,7 +75,6 @@ class ChartViewCell: BaseChartViewCell {
             }
             addDataEntries(dataEntries: axisToData)
             
-
             sensorTypeButton.isEnabled = false
             recordingButton.isEnabled = false
         } else {
@@ -86,9 +85,6 @@ class ChartViewCell: BaseChartViewCell {
 
     @IBAction func deleteChartView(_ sender: Any) {
         stopDataRecording()
-        axisToData.removeAll()
-        axisToDataSet.removeAll()
-        baseTime = nil
         delegate.deleteChart(of: self, chart: chart)
     }
 
@@ -113,13 +109,6 @@ extension LineChartDataSet {
         }
         let sum = yValues.reduce(0, +)
         return sum / Double(yValues.count)
-    }
-}
-
-extension Double {
-    func rounded(toPlaces places: Int) -> Double {
-        let divisor = pow(10.0, Double(places))
-        return (self * divisor).rounded() / divisor
     }
 }
 
