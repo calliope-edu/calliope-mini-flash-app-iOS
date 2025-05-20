@@ -221,7 +221,11 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
                 state = .discoveryWaitingForBluetooth
             }
         } else if !centralManager.isScanning {
-            discoveredCalliopes = [:]
+            if MatrixConnectionViewController.instance.isInUsbMode, let discoveredCalliope = discoveredCalliopes[CalliopeDiscovery.usbCalliopeName] {
+                discoveredCalliopes = [ CalliopeDiscovery.usbCalliopeName : discoveredCalliope ]
+            } else {
+                discoveredCalliopes = [:]
+            }
             discoveredCalliopeUUIDNameMap = [:]
             centralManager.scanForPeripherals(withServices: nil, options: nil)
             //stop the search after some time. The user can invoke it again later.
