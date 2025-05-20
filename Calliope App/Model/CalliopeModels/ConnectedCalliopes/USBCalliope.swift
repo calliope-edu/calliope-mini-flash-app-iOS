@@ -18,6 +18,8 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
     override var compatibleHexTypes: Set<HexParser.HexVersion> {
         return [.universal, .v3, .v2]
     }
+    
+    var writeInProgress: Bool = false
 
     public init(calliopeLocation: URL) throws {
         super.init()
@@ -45,25 +47,26 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
     }
 
     func isConnected() -> Bool {
+        guard let calliopeLocation = USBCalliope.calliopeLocation else {
+            return false
+        }
+
         let accessResource = USBCalliope.calliopeLocation?.startAccessingSecurityScopedResource()
         defer {
             if accessResource ?? false {
                 USBCalliope.calliopeLocation?.stopAccessingSecurityScopedResource()
             }
         }
-
-        if (USBCalliope.calliopeLocation == nil) {
-            return false
-        } else {
-            return FileManager.default.isWritableFile(atPath: USBCalliope.calliopeLocation!.path)
-        }
+        return FileManager.default.isWritableFile(atPath: USBCalliope.calliopeLocation!.path)
     }
 
     override func upload(file: Hex, progressReceiver: DFUProgressDelegate? = nil, statusDelegate: DFUServiceDelegate? = nil, logReceiver: LoggerDelegate? = nil) throws {
         if isConnected() {
             progressReceiver?.dfuProgressDidChange(for: 50, outOf: 100, to: 51, currentSpeedBytesPerSecond: 0.0, avgSpeedBytesPerSecond: 0.0)
+            writeInProgress = true
             writeToCalliope(file) {
                 statusDelegate?.dfuStateDidChange(to: .completed)
+                self.writeInProgress = false
             }
         } else {
             statusDelegate?.dfuStateDidChange(to: .aborted)

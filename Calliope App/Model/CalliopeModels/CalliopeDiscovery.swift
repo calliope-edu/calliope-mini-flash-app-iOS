@@ -76,6 +76,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
                     do {
                         connectedUSBCalliope = connectingUSBCalliope
                         connectedUSBCalliope?.usageReadyCalliope = try USBCalliope(calliopeLocation: connectingUSBCalliope.url)
+                        dispatchUSBCalliopePolling()
                         LogNotify.log("Calliope Discovery State now: \(state)")
                     } catch {
                         LogNotify.log("Connecting to USB Calliope failed")
@@ -297,9 +298,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         if let connectedCalliope = self.connectedCalliope {
             self.centralManager.cancelPeripheralConnection(connectedCalliope.peripheral)
         }
-        //preemptively update connected calliope, in case delegate call does not happen
         if connectedUSBCalliope != nil {
-            connectedCalliope = nil
             discoveredCalliopes.removeValue(forKey: CalliopeDiscovery.usbCalliopeName)
         }
         self.connectedUSBCalliope = nil
@@ -391,6 +390,42 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
             state = .initialized
         @unknown default:
             break
+        }
+    }
+
+    // MARK: Delegate for keeping an eye on USB connection
+    
+    private let MAX_RETRIES = 2
+    private var currentRetries = 0
+
+    private func dispatchUSBCalliopePolling() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            guard let connectedUSBCalliope = self.connectedUSBCalliope, let usbCalliope = connectedUSBCalliope.usageReadyCalliope as? USBCalliope?, let usbCalliope = usbCalliope else {
+                return
+            }
+
+//            LogNotify.log("USB Calliope reachability state: (\(usbCalliope.isConnected()), \(usbCalliope.writeInProgress), \(self.isInBackground))")
+            if usbCalliope.isConnected() || usbCalliope.writeInProgress || self.isInBackground { // happy path
+                if self.currentRetries > 0 {
+                    LogNotify.log("USB Calliope reachable after \(self.currentRetries) retries")
+                    self.currentRetries = 0
+                }
+                self.dispatchUSBCalliopePolling()
+                return
+            }
+          
+            // calliope not reachable path
+            LogNotify.log("USB Calliope not reachable (\(usbCalliope.isConnected()), \(usbCalliope.writeInProgress), \(self.isInBackground)), \(self.currentRetries < self.MAX_RETRIES ? "retrying" : "disconnecting")")
+            if self.currentRetries < self.MAX_RETRIES { // retry path
+                self.currentRetries += 1
+                self.dispatchUSBCalliopePolling()
+                return
+            }
+            
+            // disconnect path
+            self.currentRetries = 0
+            self.disconnectFromCalliope()
+
         }
     }
 
