@@ -34,34 +34,20 @@ class CSVHandler {
         guard let project else {
             fatalError()
         }
-        var csvString = ""
-        
-        // Get the headers from the keys of the first dictionary
-        let headers = "timestep, value, axisName, sensor_type \n "
-        csvString += headers
-        
-        let data = fetchDataFor(project: project)
-        
-        // Add the rows
-        for row in data {
-            var rowString = "\(row.0), \(row.1), \(row.2), \(row.3)"
-            csvString += rowString + "\n"
+        var csvString = "timestep, value, axisName, sensor_type, latitude, longitude \n"
+        for row in fetchDataFor(project: project) {
+            csvString += "\(row.0), \(row.1), \(row.2), \(row.3), \(row.4.map { String($0) } ?? ""), \(row.5.map { String($0) } ?? "")\n"
         }
-        
         return csvString
     }
 
     
-    static func fetchDataFor(project: Int64) -> [(Double, Double, String, CalliopeService)]{
-        let charts = Chart.fetchChartsBy(projectsId: project)
-        var dataValues: [(Double, Double, String, CalliopeService)] = []
-        for chart in charts {
-            let values = Value.fetchValuesBy(chartId: chart.id)
-            for value in values {
-                let decodedValue = DataParser.decode(data: value.value, service: chart.sensorType ?? .empty)
-                for entry in decodedValue {
-                    var entry: (Double, Double, String, CalliopeService) = (value.time, entry.value, entry.key, chart.sensorType ?? .empty)
-                    dataValues.append(entry)
+    static func fetchDataFor(project: Int64) -> [(Double, Double, String, CalliopeService, Double?, Double?)]{
+        var dataValues: [(Double, Double, String, CalliopeService, Double?, Double?)] = []
+        for chart in Chart.fetchChartsBy(projectsId: project) {
+            for value in Value.fetchValuesBy(chartId: chart.id) {
+                for entry in DataParser.decode(data: value.value, service: chart.sensorType ?? .empty) {
+                    dataValues.append((value.time, entry.value, entry.key, chart.sensorType ?? .empty, value.lat, value.long))
                 }
             }
         }
