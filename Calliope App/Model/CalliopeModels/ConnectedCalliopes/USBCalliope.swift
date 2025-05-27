@@ -50,14 +50,8 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
         guard let calliopeLocation = USBCalliope.calliopeLocation else {
             return false
         }
-
-        let accessResource = USBCalliope.calliopeLocation?.startAccessingSecurityScopedResource()
-        defer {
-            if accessResource ?? false {
-                USBCalliope.calliopeLocation?.stopAccessingSecurityScopedResource()
-            }
-        }
-        return FileManager.default.isWritableFile(atPath: USBCalliope.calliopeLocation!.path)
+        
+        return (try? calliopeLocation.checkResourceIsReachable()) ?? false
     }
 
     override func upload(file: Hex, progressReceiver: DFUProgressDelegate? = nil, statusDelegate: DFUServiceDelegate? = nil, logReceiver: LoggerDelegate? = nil) throws {

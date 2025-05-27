@@ -395,27 +395,32 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
 
     // MARK: Delegate for keeping an eye on USB connection
     
-    private let MAX_RETRIES = 2
+    private let MAX_RETRIES = 3
+    private let POLLING_RATE_IN_SEC: Double = 0.5
+    private let DELAY: Double = 15
+    
+    private var backoff: Bool = false // e.g. current writes to calliope
     private var currentRetries = 0
 
-    private func dispatchUSBCalliopePolling() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+    private func dispatchUSBCalliopePolling(_ delay: Bool = false) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + POLLING_RATE_IN_SEC + (backoff ? DELAY : 0)) {
+            self.backoff = delay
             guard let connectedUSBCalliope = self.connectedUSBCalliope, let usbCalliope = connectedUSBCalliope.usageReadyCalliope as? USBCalliope?, let usbCalliope = usbCalliope else {
                 return
             }
 
-//            LogNotify.log("USB Calliope reachability state: (\(usbCalliope.isConnected()), \(usbCalliope.writeInProgress), \(self.isInBackground))")
+            LogNotify.log("USB Calliope reachability state: (\(usbCalliope.isConnected()), \(usbCalliope.writeInProgress), \(self.isInBackground), \(self.backoff))")
             if usbCalliope.isConnected() || usbCalliope.writeInProgress || self.isInBackground { // happy path
                 if self.currentRetries > 0 {
-                    LogNotify.log("USB Calliope reachable after \(self.currentRetries) retries")
+                    LogNotify.log("USB Calliope reachable after \(self.currentRetries) retries: (\(usbCalliope.isConnected()), \(usbCalliope.writeInProgress), \(self.isInBackground), \(self.backoff))")
                     self.currentRetries = 0
                 }
-                self.dispatchUSBCalliopePolling()
+                self.dispatchUSBCalliopePolling(usbCalliope.writeInProgress)
                 return
             }
           
             // calliope not reachable path
-            LogNotify.log("USB Calliope not reachable (\(usbCalliope.isConnected()), \(usbCalliope.writeInProgress), \(self.isInBackground)), \(self.currentRetries < self.MAX_RETRIES ? "retrying" : "disconnecting")")
+            LogNotify.log("USB Calliope not reachable (\(usbCalliope.isConnected()), \(usbCalliope.writeInProgress), \(self.isInBackground), \(self.backoff)), \(self.currentRetries < self.MAX_RETRIES ? "retrying" : "disconnecting")")
             if self.currentRetries < self.MAX_RETRIES { // retry path
                 self.currentRetries += 1
                 self.dispatchUSBCalliopePolling()
