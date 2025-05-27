@@ -409,7 +409,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
                 return
             }
 
-            LogNotify.log("USB Calliope reachability state: (\(usbCalliope.isConnected()), \(usbCalliope.writeInProgress), \(self.isInBackground), \(self.backoff))")
+//            LogNotify.log("USB Calliope reachability state: (\(usbCalliope.isConnected()), \(usbCalliope.writeInProgress), \(self.isInBackground), \(self.backoff))")
             if usbCalliope.isConnected() || usbCalliope.writeInProgress || self.isInBackground { // happy path
                 if self.currentRetries > 0 {
                     LogNotify.log("USB Calliope reachable after \(self.currentRetries) retries: (\(usbCalliope.isConnected()), \(usbCalliope.writeInProgress), \(self.isInBackground), \(self.backoff))")
