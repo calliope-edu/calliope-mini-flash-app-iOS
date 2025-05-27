@@ -316,13 +316,16 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         let url = urls.first
         let discoveredCalliope = DiscoveredUSBDevice(url: url!, name: CalliopeDiscovery.usbCalliopeName)
-        if discoveredCalliope == nil {
+        
+        guard let discoveredCalliope = discoveredCalliope else {
             MatrixConnectionViewController.instance.showFalseLocationAlert()
             state = .initialized
-        } else {
-            discoveredCalliope!.state = DiscoveredDevice.CalliopeBLEDeviceState.discovered
-            self.discoveredCalliopes.updateValue(discoveredCalliope!, forKey: CalliopeDiscovery.usbCalliopeName)
+            return
         }
+        
+        disconnectFromCalliope()
+        discoveredCalliope.state = DiscoveredDevice.CalliopeBLEDeviceState.discovered
+        self.discoveredCalliopes.updateValue(discoveredCalliope, forKey: CalliopeDiscovery.usbCalliopeName)
     }
 
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {

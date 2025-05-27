@@ -324,7 +324,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
         case .usbConnecting:
             connectButton.connectionState = .connecting
         case .usbConnected:
-            if let connectedCalliope = connector.connectedCalliope, discoveredCalliopeWithCurrentMatrix != connector.connectedCalliope {
+            if let connectedCalliope = connector.connectedUSBCalliope, discoveredCalliopeWithCurrentMatrix != connectedCalliope {
                 connectedCalliope.updateBlock = updateDiscoveryState
             }
             evaluateCalliopeState(discoveredCalliopeWithCurrentMatrix!)
@@ -349,7 +349,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
         if let usageReadyCalliope = calliope.usageReadyCalliope, usageReadyCalliope.rebootingIntoDFUMode, calliope.state == .discovered {
             self.collapseButton.connectionState = .connected
         } else if calliope.state == .wrongMode || calliope.state == .discovered {
-            self.collapseButton.connectionState = attemptReconnect || reconnecting ? .connecting : .disconnected
+            self.collapseButton.connectionState = (attemptReconnect || reconnecting) ? .disconnected : .connected
         } else if calliope.state == .usageReady {
             self.collapseButton.connectionState = .connected
             LogNotify.log("last pattern:\r\(matrixView.getMatrixString())")
