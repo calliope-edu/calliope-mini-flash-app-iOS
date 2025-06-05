@@ -17,6 +17,7 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
     private let reuseIdentifierOfflineEditor = "localEditorCell"
     private let reuseIdentifierPlayground = "playgroundCell"
     private let reuseIdentifierCalliopeBlocks = "calliopeBlocksCell"
+    private let reuseIdentifierMicroPython = "microPythonEditorCell"
 
     private lazy var activatedEditors: [SettingsKey] = {
         var keys: [SettingsKey] = []
@@ -35,6 +36,9 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
         }
         if settings.bool(forKey: SettingsKey.roberta.rawValue) {
             keys.append(.roberta)
+        }
+        if settings.bool(forKey: SettingsKey.microPython.rawValue) {
+            keys.append(.microPython)
         }
        
         return keys
@@ -75,6 +79,8 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
         switch editorKey {
         case .makeCode:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierMakeCode, for: indexPath) as! EditorCollectionViewCell
+        case .microPython:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierMicroPython, for: indexPath) as! EditorCollectionViewCell
         case .roberta:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierNepo, for: indexPath) as! EditorCollectionViewCell
         case .playgrounds:
@@ -137,5 +143,9 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
     @IBSegueAction
     func createNepoEditor(coder: NSCoder, sender: Any?) -> EditorViewController? {
         EditorViewController(coder: coder, editor: RobertaEditor())
+    }
+    
+    @IBSegueAction func createMicroPythonEditorWithCoder(_ coder: NSCoder, sender: Any?) -> EditorViewController? {
+        EditorViewController(coder: coder, editor: MicroPython())
     }
 }

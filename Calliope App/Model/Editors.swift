@@ -128,4 +128,29 @@ final class RobertaEditor: Editor {
     }
 }
 
+final class MicroPython: Editor {
+    public let name = "MicroPython"
+    public lazy var url: URL? = {
+        return URL(string: UserDefaults.standard.string(forKey: SettingsKey.microPythonUrl.rawValue)!)
+    }()
+   
 
+    
+    func download(_ request: URLRequest) -> EditorDownload? {
+        LogNotify.log("MicroPython uses different path and this should not have been called")
+        return nil
+    }
+    
+    func isBackNavigation(_ request: URLRequest) -> Bool {
+        guard let url = request.url, !isBlob(url) else {
+            return false
+        }
+        LogNotify.log("MicroPython -- Navigation Request: \(request)")
+        
+        return false
+    }
+    
+    private func isBlob(_ url: URL) -> Bool {
+        return url.absoluteString.matches(regex: "^blob:").count == 1
+    }
+}

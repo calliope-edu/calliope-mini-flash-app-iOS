@@ -1,7 +1,7 @@
 import UIKit
 import WebKit
 
-final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
+final class EditorViewController: UIViewController, WKNavigationDelegate, WKDownloadDelegate, WKUIDelegate {
 
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
 
@@ -74,9 +74,12 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
         }
 
         LogNotify.log("policy for action \(navigationAction.request.url?.absoluteString.truncate(length: 100) ?? "")")
+        
         let request = navigationAction.request
-
-        if let download = editor.download(request) {
+        
+        if navigationAction.shouldPerformDownload && editor is MicroPython {
+            decisionHandler(.download)
+        } else if let download = editor.download(request) {
             decisionHandler(.cancel)
             if download.url.absoluteString.starts(with: "data:text/xml") {
                 export(download: download)
@@ -267,13 +270,56 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKUIDe
         }
     }
 
-    // handle
-
-
+    // WKDownloadDelegate
+    var latestExpectedFile: URL?
+    func webView(_ webView: WKWebView, navigationAction: WKNavigationAction, didBecome download: WKDownload) {
+        download.delegate = self
+    }
+    
+    func download(_ download: WKDownload, decideDestinationUsing response: URLResponse, suggestedFilename: String, completionHandler: @escaping (URL?) -> Void) {
+        guard let _ = editor, editor is MicroPython else {
+            return
+        }
+        latestExpectedFile = prepareTemporaryStorage(for: suggestedFilename)
+        try? FileManager.default.removeItem(at: latestExpectedFile!)
+        completionHandler(latestExpectedFile)
+    }
+    
+    func downloadDidFinish(_ download: WKDownload) {
+        guard let _ = editor as? MicroPython, let url = latestExpectedFile else {
+            return
+        }
+        
+        LogNotify.log("Download finished -- transfering")
+        let file = HexFile(url: url, name: url.lastPathComponent, date: Date())
+        FirmwareUpload.uploadWithoutConfirmation(controller: self, program: file) {
+            MatrixConnectionViewController.instance.connect()
+            self.clearTemporaryStorage()
+        }
+    }
+    
+    public func download(_ download: WKDownload, didFailWithError error: Error, resumeData: Data?) {
+        LogNotify.log("Download failed: \(error)")
+        self.clearTemporaryStorage()
+    }
+    
+    private func prepareTemporaryStorage(for name: String) -> URL? {
+        return NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(name)
+    }
+    
+    private func clearTemporaryStorage() {
+        guard let latestExpectedFile = latestExpectedFile else {
+            return
+        }
+        
+        try? FileManager.default.removeItem(at: self.latestExpectedFile!)
+        self.latestExpectedFile = nil
+    }
+    
     // Web View Helper
 
     fileprivate func handleInternalWebView(_ navigationAction: WKNavigationAction, _ webView: WKWebView) -> WKWebView? {
-        if let frame = navigationAction.targetFrame {
+        guard navigationAction.targetFrame != nil else {
             return nil
         }
         webView.load(navigationAction.request)
