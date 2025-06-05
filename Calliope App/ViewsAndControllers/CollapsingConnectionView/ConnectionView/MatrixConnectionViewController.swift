@@ -349,7 +349,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
         if let usageReadyCalliope = calliope.usageReadyCalliope, usageReadyCalliope.rebootingIntoDFUMode, calliope.state == .discovered {
             self.collapseButton.connectionState = .connected
         } else if calliope.state == .wrongMode || calliope.state == .discovered {
-            self.collapseButton.connectionState = (attemptReconnect || reconnecting) ? .disconnected : .connected
+            self.collapseButton.connectionState = (attemptReconnect || reconnecting) ? .connected : .disconnected
         } else if calliope.state == .usageReady {
             self.collapseButton.connectionState = .connected
             LogNotify.log("last pattern:\r\(matrixView.getMatrixString())")
