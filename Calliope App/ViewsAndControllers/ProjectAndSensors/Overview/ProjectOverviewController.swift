@@ -108,7 +108,7 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
     }
 
     @IBSegueAction func initializeEditorView(_ coder: NSCoder) -> EditorViewController? {
-        var editor = MakeCode()
+        let editor = MakeCode()
         editor.url = targetUrl
         return EditorViewController(coder: coder, editor: editor)
     }
@@ -141,7 +141,7 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
             if let textField = alertController.textFields?.first, let name = textField.text {
                 let normalizedName = name.isEmpty ? "Calliope Project" : name
                 let project = Project.insertProject(name: normalizedName)
-                self.performSegue(withIdentifier: "showNewlyCreatedProject", sender: project?.id)
+                self.performSegue(withIdentifier: "showCreatedProject", sender: project?.id)
             }
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
@@ -157,8 +157,14 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
             guard let destinationVC = segue.destination as? ProjectViewController else {
                 return
             }
-            destinationVC.project = Project.fetchProject(id: sender as! Int)!
+            destinationVC.project = Project.fetchProject(id: sender as! Int64)!
         }
+    }
+    
+    
+    @IBSegueAction func showSwiftUIView(_ coder: NSCoder, sender: Any?) -> UIViewController? {
+        return UIHostingController(coder: coder, rootView: ProjectView(projectModelData: ProjectModelData(projectId: sender as! Int64)))
+
     }
 
     @IBAction func openLinkToCalliopeInformation() {

@@ -205,7 +205,7 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKDown
 
     private func upload(result download: EditorDownload) {
         self.webview.evaluateJavaScript(query) { (result, error) in
-            let html = "\(result ?? "no-project-name")"  // TODO: Dettermining name and default could be better
+            let html = "\(result ?? "no-project-name")"  // TODO: Determining name and default could be better
             LogNotify.log("html: \(html)")
             do {
                 guard let file = try HexFileManager.store(name: html, data: download.url.asData(), isHexFile: download.isHex) else {
@@ -261,10 +261,6 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKDown
             } else {
                 throw error!
             }
-            /*
-             let result = try String(contentsOf: filename)
-             LogNotify.log("xml: \(result.count) byte")
-             */
         } catch {
             LogNotify.log(error.localizedDescription)
         }
@@ -312,7 +308,7 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKDown
             return
         }
         
-        try? FileManager.default.removeItem(at: self.latestExpectedFile!)
+        try? FileManager.default.removeItem(at: latestExpectedFile)
         self.latestExpectedFile = nil
     }
     

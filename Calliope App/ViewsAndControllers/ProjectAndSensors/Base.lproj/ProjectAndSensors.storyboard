@@ -326,11 +326,12 @@
                         <segue destination="xWF-af-2iy" kind="show" identifier="showNewlyCreatedProject" destinationCreationSelector="segue:" id="iAp-cX-5QA"/>
                         <segue destination="eqp-p1-CyF" kind="show" identifier="showDataLoggerHTML" destinationCreationSelector="initializeDataLoggerWebView:" id="hpb-CZ-FVD"/>
                         <segue destination="ghf-jY-ggY" kind="show" identifier="showEditor" destinationCreationSelector="initializeEditorView:" id="ohT-63-Vbv"/>
+                        <segue destination="bUi-NY-XbW" kind="show" identifier="showCreatedProject" destinationCreationSelector="showSwiftUIView:sender:" id="cps-3F-SON"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GtY-mM-QMm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1089.55078125" y="422.9868228404099"/>
+            <point key="canvasLocation" x="1337" y="-41"/>
         </scene>
         <!--Project Collection View Controller-->
         <scene sceneID="xhp-1j-Ru9">
@@ -409,7 +410,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9lz-Ym-uSH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1990" y="-107"/>
+            <point key="canvasLocation" x="2181" y="555"/>
         </scene>
         <!--Project Overview-->
         <scene sceneID="R1K-Xb-HtQ">
@@ -548,7 +549,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UuD-ux-mgZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1828.7109374999998" y="579.79502196193266"/>
+            <point key="canvasLocation" x="1259" y="1082"/>
         </scene>
         <!--Sensordaten-->
         <scene sceneID="uHp-mq-DKm">
@@ -817,7 +818,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zVt-ab-yRe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2756" y="515"/>
+            <point key="canvasLocation" x="2078" y="1082"/>
         </scene>
         <!--Data Logger Web View Controller-->
         <scene sceneID="rNu-rB-anU">
@@ -840,7 +841,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mEm-Ag-Jke" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2640" y="-180"/>
+            <point key="canvasLocation" x="2169" y="-887"/>
         </scene>
         <!--Editor-->
         <scene sceneID="rlo-SA-83h">
@@ -872,7 +873,17 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4vR-oi-1ZQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2640" y="-1044"/>
+            <point key="canvasLocation" x="1259" y="-887"/>
+        </scene>
+        <!--Hosting Controller-->
+        <scene sceneID="bxQ-P4-c7a">
+            <objects>
+                <hostingController id="bUi-NY-XbW" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="FSF-x4-R6c"/>
+                </hostingController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eQA-1g-TPe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="547" y="1082"/>
         </scene>
     </scenes>
     <resources>

@@ -53,7 +53,7 @@ struct Project: Codable, FetchableRecord, PersistableRecord, DiffAware {
         return retrievedProjects
     }
 
-    static func fetchProject(id: Int) -> Project? {
+    static func fetchProject(id: Int64) -> Project? {
         var retrievedProjects: Project?
         do {
             try DatabaseManager.shared.databaseQueue?.read { db in

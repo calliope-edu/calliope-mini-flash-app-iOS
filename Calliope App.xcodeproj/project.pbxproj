@@ -112,6 +112,8 @@
 		60316BF82B01FEC300130C0D /* BLECalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60316BF72B01FEC300130C0D /* BLECalliope.swift */; };
 		60316BFA2B0210CC00130C0D /* CalliopeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60316BF92B0210CC00130C0D /* CalliopeFactory.swift */; };
 		604841D52B1F328A0037A825 /* OnboardingOfflineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604841D42B1F328A0037A825 /* OnboardingOfflineViewController.swift */; };
+		604938582E0549DE008BCE40 /* ProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604938572E0549DE008BCE40 /* ProjectView.swift */; };
+		6049387F2E13D071008BCE40 /* ProjectModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6049387E2E13D06C008BCE40 /* ProjectModelData.swift */; };
 		6055CDB62BBEE1E50007F6B0 /* CalliopeBlocksStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6055CDB52BBEE1E50007F6B0 /* CalliopeBlocksStartViewController.swift */; };
 		6094C3912C045FA9006F4CB4 /* ApiCalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6094C3902C045FA9006F4CB4 /* ApiCalliope.swift */; };
 		6094C3962C047549006F4CB4 /* ChartViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6094C3952C047549006F4CB4 /* ChartViewCell.swift */; };
@@ -270,6 +272,8 @@
 		60316BF72B01FEC300130C0D /* BLECalliope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLECalliope.swift; sourceTree = "<group>"; };
 		60316BF92B0210CC00130C0D /* CalliopeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeFactory.swift; sourceTree = "<group>"; };
 		604841D42B1F328A0037A825 /* OnboardingOfflineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingOfflineViewController.swift; sourceTree = "<group>"; };
+		604938572E0549DE008BCE40 /* ProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectView.swift; sourceTree = "<group>"; };
+		6049387E2E13D06C008BCE40 /* ProjectModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectModelData.swift; sourceTree = "<group>"; };
 		6055CDB52BBEE1E50007F6B0 /* CalliopeBlocksStartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeBlocksStartViewController.swift; sourceTree = "<group>"; };
 		60676F4D2C41328600014388 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ProjectAndSensors.strings; sourceTree = "<group>"; };
 		60676F4E2C41328D00014388 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ProjectAndSensors.strings; sourceTree = "<group>"; };
@@ -478,6 +482,7 @@
 		2F61456122BF761F001C2734 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				6049387D2E13CA5E008BCE40 /* DataloggedSensor */,
 				600E632A2C328EA50027AE61 /* Hex */,
 				60D1FD692B6BCF3D00BC6202 /* CalliopeModels */,
 				60CF0EAE2BFCD58E00CB2A38 /* LiveData */,
@@ -641,6 +646,7 @@
 				6094C39E2C04A869006F4CB4 /* ChartCollectionViewController.swift */,
 				600E632B2C33D0750027AE61 /* ChartView.swift */,
 				600E63312C3424580027AE61 /* BaseChartViewCell.swift */,
+				604938572E0549DE008BCE40 /* ProjectView.swift */,
 			);
 			path = DetailView;
 			sourceTree = "<group>";
@@ -655,6 +661,14 @@
 				2F61456422BF761F001C2734 /* Hex.swift */,
 			);
 			path = Hex;
+			sourceTree = "<group>";
+		};
+		6049387D2E13CA5E008BCE40 /* DataloggedSensor */ = {
+			isa = PBXGroup;
+			children = (
+				6049387E2E13D06C008BCE40 /* ProjectModelData.swift */,
+			);
+			path = DataloggedSensor;
 			sourceTree = "<group>";
 		};
 		6055CDB02BBED7D90007F6B0 /* CalliopeBlocks */ = {
@@ -1100,6 +1114,7 @@
 				2F61458922BF761F001C2734 /* CollapsingViewControllerProtocol.swift in Sources */,
 				2F2B809A25A0E01500A7CCF7 /* CodeSnippets.swift in Sources */,
 				60CF0EA92BFCBE1E00CB2A38 /* ProjectViewController.swift in Sources */,
+				6049387F2E13D071008BCE40 /* ProjectModelData.swift in Sources */,
 				2F61458A22BF761F001C2734 /* CollapseButtonProtocol.swift in Sources */,
 				609D9BD42B67A15500F2ECAE /* USBCalliope.swift in Sources */,
 				2F5E8F0426C9787400CE03CB /* PlaygroundStartViewController.swift in Sources */,
@@ -1128,6 +1143,7 @@
 				2F61458122BF761F001C2734 /* Binary.swift in Sources */,
 				609D9BD62B67AD2200F2ECAE /* Calliope.swift in Sources */,
 				2F61459122BF761F001C2734 /* FirmwareUpload.swift in Sources */,
+				604938582E0549DE008BCE40 /* ProjectView.swift in Sources */,
 				2F61457922BF761F001C2734 /* Ext.swift in Sources */,
 				2F61457D22BF761F001C2734 /* LogNotify.swift in Sources */,
 				7E25CB63E012B25A80606449 /* UIDevice+Extensions.swift in Sources */,
@@ -1403,7 +1419,7 @@
 				DEVELOPMENT_TEAM = GKA87N33H4;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "Calliope App/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1430,7 +1446,7 @@
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = GKA87N33H4;
 				INFOPLIST_FILE = "Calliope App/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

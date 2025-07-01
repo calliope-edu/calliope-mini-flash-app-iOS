@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import DGCharts
+import SwiftUI
 
 class ProjectViewController: UIViewController, ChartViewDelegate {
 
@@ -19,6 +20,7 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
     @IBOutlet weak var projectNameLabel: UILabel!
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var addChartButton: UIButton!
+    
 
     @objc var chartCollectionViewController: ChartCollectionViewController?
     var chartHeightConstraint: NSLayoutConstraint?
@@ -64,7 +66,7 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
 
         addChartButton.isEnabled = false
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         chartsKvo = nil
