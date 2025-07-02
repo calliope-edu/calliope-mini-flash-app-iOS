@@ -62,7 +62,7 @@ final class MakeCode: Editor {
     }()
 
     func download(_ request: URLRequest) -> EditorDownload? {
-        LogNotify.log("\(request)")
+//        LogNotify.log("\(request)")
         guard let s = request.url?.absoluteString, s.matches(regex: "^([^:]*://)?data:application/octet-streamng").count == 1, let url = URL(string: s) else {
             guard
                 let s = request.url?.absoluteString,
@@ -142,15 +142,36 @@ final class MicroPython: Editor {
     }
     
     func isBackNavigation(_ request: URLRequest) -> Bool {
-        guard let url = request.url, !isBlob(url) else {
-            return false
+        return false
+    }
+    
+}
+
+final class CampusEditor: Editor {
+    public let name = "Campus"
+    public lazy var url: URL? = {
+        return URL(string: UserDefaults.standard.string(forKey: SettingsKey.campusUrl.rawValue)!)
+    }()
+    
+    func download(_ request: URLRequest) -> EditorDownload? {
+        if let download = MakeCode().download(request) {
+            return download
         }
-        LogNotify.log("MicroPython -- Navigation Request: \(request)")
         
+        return nil
+    }
+    
+    func isBackNavigation(_ request: URLRequest) -> Bool {
         return false
     }
     
     private func isBlob(_ url: URL) -> Bool {
+        return url.absoluteString.matches(regex: "^blob:").count == 1
+    }
+}
+
+extension Editor {
+    public func isBlob(_ url: URL) -> Bool {
         return url.absoluteString.matches(regex: "^blob:").count == 1
     }
 }

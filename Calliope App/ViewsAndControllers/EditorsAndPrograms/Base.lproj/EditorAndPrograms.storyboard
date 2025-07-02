@@ -505,10 +505,10 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="nepoEditorCell" id="ucV-gN-En2" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="391.33333333333331" width="160" height="185.99999999999994"/>
+                                <rect key="frame" x="64.333333333333329" y="391.33333333333331" width="160" height="185.33333333333331"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bVT-UD-yV5">
-                                    <rect key="frame" x="0.0" y="0.0" width="160" height="185.99999999999994"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="160" height="185.33333333333331"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="editors_nepo" translatesAutoresizingMaskIntoConstraints="NO" id="1Ks-qN-EOY">
@@ -519,7 +519,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Open Roberta Lab" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pm2-Za-VcF">
-                                            <rect key="frame" x="0.0" y="165" width="160" height="21"/>
+                                            <rect key="frame" x="0.0" y="165" width="160" height="20.333333333333343"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -542,20 +542,20 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="playgroundCell" id="X1H-Rl-bCL" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="238.66666666666666" y="459.33333333333331" width="50" height="50"/>
+                                <rect key="frame" x="64.333333333333329" y="586.66666666666663" width="160" height="185.33333333333337"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="PXU-mA-kNy">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="160" height="185.33333333333337"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Playground" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NWk-nx-U7c">
-                                            <rect key="frame" x="0.0" y="50" width="50" height="0.0"/>
+                                            <rect key="frame" x="0.0" y="165" width="160" height="20.333333333333343"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="editors_swift" translatesAutoresizingMaskIntoConstraints="NO" id="qAp-AG-KqZ">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="45"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="qAp-AG-KqZ" secondAttribute="height" multiplier="1:1" priority="999" id="suM-0W-SJI"/>
                                                 <constraint firstAttribute="width" priority="999" constant="160" id="zNn-Fs-DNP"/>
@@ -582,7 +582,7 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="calliopeBlocksCell" id="Uov-es-KDS" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="587.33333333333337" width="160" height="160"/>
+                                <rect key="frame" x="0.0" y="782" width="160" height="160"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Nwx-rx-8wA">
                                     <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
@@ -626,6 +626,43 @@
                                     <outlet property="logo" destination="4Rc-L6-bEy" id="P7C-ol-gSr"/>
                                     <outlet property="name" destination="nWc-AL-4YR" id="Shy-eU-490"/>
                                     <segue destination="ZoJ-h7-jog" kind="show" id="QMm-vh-UzX"/>
+                                </connections>
+                            </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="campusEditorCell" id="gO2-tE-KHc" userLabel="campusEditorCell" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
+                                <rect key="frame" x="170" y="837" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="hPk-9I-qCC">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Campus" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rp9-Jl-mwf">
+                                            <rect key="frame" x="0.0" y="50" width="50" height="0.0"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="editors_makecode" translatesAutoresizingMaskIntoConstraints="NO" id="IzN-Fl-a4C">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="45"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" priority="999" constant="160" id="T4X-Li-pU4"/>
+                                                <constraint firstAttribute="width" secondItem="IzN-Fl-a4C" secondAttribute="height" multiplier="1:1" priority="999" id="XVu-aE-DLd"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Rp9-Jl-mwf" firstAttribute="leading" secondItem="hPk-9I-qCC" secondAttribute="leading" id="2UN-L4-Xx0"/>
+                                        <constraint firstItem="IzN-Fl-a4C" firstAttribute="top" secondItem="hPk-9I-qCC" secondAttribute="top" id="4CA-Ex-h5n"/>
+                                        <constraint firstAttribute="bottom" secondItem="Rp9-Jl-mwf" secondAttribute="bottom" id="IIL-Ky-PNI"/>
+                                        <constraint firstItem="Rp9-Jl-mwf" firstAttribute="top" secondItem="IzN-Fl-a4C" secondAttribute="bottom" constant="5" id="Qcw-dw-PwN"/>
+                                        <constraint firstItem="IzN-Fl-a4C" firstAttribute="leading" secondItem="hPk-9I-qCC" secondAttribute="leading" id="Wpl-XT-E6e"/>
+                                        <constraint firstAttribute="trailing" secondItem="IzN-Fl-a4C" secondAttribute="trailing" id="kOs-Sv-teV"/>
+                                        <constraint firstAttribute="trailing" secondItem="Rp9-Jl-mwf" secondAttribute="trailing" id="oSf-1B-NOK"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <connections>
+                                    <outlet property="logo" destination="IzN-Fl-a4C" id="aAe-HO-X42"/>
+                                    <outlet property="name" destination="Rp9-Jl-mwf" id="SUm-gJ-cvM"/>
+                                    <segue destination="eeY-2x-OZY" kind="show" identifier="openCampus" destinationCreationSelector="createCampusEditor:sender:" id="UIB-6u-Lgi"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -904,7 +941,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="eyZ-c1-qkE"/>
+        <segue reference="UIB-6u-Lgi"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="calliope-lilablau"/>
     <resources>

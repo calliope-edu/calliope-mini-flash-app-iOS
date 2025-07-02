@@ -77,7 +77,7 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKDown
         
         let request = navigationAction.request
         
-        if navigationAction.shouldPerformDownload && editor is MicroPython {
+        if navigationAction.shouldPerformDownload && (editor is MicroPython || editor is CampusEditor){
             decisionHandler(.download)
         } else if let download = editor.download(request) {
             decisionHandler(.cancel)
@@ -261,41 +261,41 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKDown
             } else {
                 throw error!
             }
-            /*
-             let result = try String(contentsOf: filename)
-             LogNotify.log("xml: \(result.count) byte")
-             */
         } catch {
             LogNotify.log(error.localizedDescription)
         }
     }
 
-    // WKDownloadDelegate
+    // MARK: Download Handler
     var latestExpectedFile: URL?
+    
     func webView(_ webView: WKWebView, navigationAction: WKNavigationAction, didBecome download: WKDownload) {
         download.delegate = self
     }
     
     func download(_ download: WKDownload, decideDestinationUsing response: URLResponse, suggestedFilename: String, completionHandler: @escaping (URL?) -> Void) {
-        guard let _ = editor, editor is MicroPython else {
+        guard let editor = editor, editor is MicroPython || editor is CampusEditor else {
             return
         }
+        
+        
         latestExpectedFile = prepareTemporaryStorage(for: suggestedFilename)
         try? FileManager.default.removeItem(at: latestExpectedFile!)
         completionHandler(latestExpectedFile)
     }
     
     func downloadDidFinish(_ download: WKDownload) {
-        guard let _ = editor as? MicroPython, let url = latestExpectedFile else {
+        guard let url = latestExpectedFile, let fileextension = FileExtension(rawValue: url.pathExtension.lowercased()) else {
             return
         }
         
-        LogNotify.log("Download finished -- transfering")
-        let file = HexFile(url: url, name: url.lastPathComponent, date: Date())
-        FirmwareUpload.uploadWithoutConfirmation(controller: self, program: file) {
-            MatrixConnectionViewController.instance.connect()
-            self.clearTemporaryStorage()
+        switch fileextension {
+        case .hex:
+            uploadHex(from: url)
+        case .html, .json:
+            storeSessionData(for: url)
         }
+        
     }
     
     public func download(_ download: WKDownload, didFailWithError error: Error, resumeData: Data?) {
@@ -312,8 +312,38 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKDown
             return
         }
         
-        try? FileManager.default.removeItem(at: self.latestExpectedFile!)
+        try? FileManager.default.removeItem(at: latestExpectedFile)
         self.latestExpectedFile = nil
+    }
+    
+    private func uploadHex(from location: URL) {
+        LogNotify.log("Downloaded hex data: \(location.absoluteString)")
+        guard location.isFileURL, FileExtension(rawValue: location.pathExtension.lowercased()) == .hex else {
+            LogNotify.log("Location of hex file was not provided or is not a hex file.")
+            return
+        }
+        
+        let file = HexFile(url: location, name: location.lastPathComponent, date: Date())
+        FirmwareUpload.uploadWithoutConfirmation(controller: self, program: file) {
+            MatrixConnectionViewController.instance.connect()
+            self.clearTemporaryStorage()
+        }
+    }
+    
+    private func storeSessionData(for location: URL) {
+        LogNotify.log("Downloaded session relevant data: \(location.absoluteString)")
+        guard location.isFileURL, [FileExtension.html, FileExtension.json].contains(FileExtension(rawValue: location.pathExtension.lowercased())) else {
+            LogNotify.log("Location of session data file was not provided, or is neither in json or html format")
+            return
+        }
+        
+        let destination = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(location.lastPathComponent)
+        do {
+            try FileManager.default.moveItem(at: location, to: destination)
+            showAlertSessionDataDownload(for: .success)
+        } catch {
+            showAlertSessionDataDownload(for: .failure)
+        }
     }
     
     // Web View Helper
@@ -332,6 +362,35 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKDown
             UIApplication.shared.open(url)
         }
         return nil
+    }
+    
+    
+    // helper
+    
+    private func showAlertSessionDataDownload(for status: OperationStatus) {
+        let title =
+            switch status {
+            case .success: NSLocalizedString("Session data successfully downloaded!", comment: "")
+            default: NSLocalizedString("Failed to download session data!", comment: "")
+            }
+
+        let message =
+            switch status {
+            case .success: NSLocalizedString("You can find the session data, in the Calliope directory on your device.", comment: "")
+            default: NSLocalizedString("The download of the session data was unsuccessful.", comment: "")
+            }
+
+        let alert = UIAlertController(
+            title: title,
+            message: String(format: message),
+            preferredStyle: .alert
+        )
+        alert.addAction(
+            UIAlertAction(title: "OK", style: .cancel) { _ in
+                self.dismiss(animated: true)
+            }
+        )
+        self.present(alert, animated: true)
     }
 
 }

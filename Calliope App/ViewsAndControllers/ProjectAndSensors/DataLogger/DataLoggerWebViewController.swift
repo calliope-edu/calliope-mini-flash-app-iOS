@@ -20,12 +20,6 @@ import UIKit
 
 class DataLoggerWebViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHandler {
 
-
-    private enum DataLoggerWebViewAction {
-        case downloadCSVSuccess
-        case downloadCSVFailed
-    }
-
     @IBOutlet var webview: WKWebView!
 
     private var html: String?
@@ -100,26 +94,25 @@ class DataLoggerWebViewController: UIViewController, WKNavigationDelegate, WKScr
         do {
             try csv.write(to: fileURL, atomically: true, encoding: String.Encoding.utf8)
             print("File saved to: \(fileURL.path)")
-            showAlert(for: .downloadCSVSuccess)
+            showAlert(for: .success)
         } catch {
             print("Error saving file: \(error)")
-            showAlert(for: .downloadCSVFailed)
+            showAlert(for: .failure)
         }
     }
 
 
-    private func showAlert(for useCase: DataLoggerWebViewAction) {
-        // title
+    private func showAlert(for status: OperationStatus) {
         let title =
-            switch useCase {
-            case .downloadCSVSuccess: NSLocalizedString("Datalogger CSV successfully downloaded!", comment: "")
-            case .downloadCSVFailed: NSLocalizedString("Failed to download Datalogger CSV!", comment: "")
+            switch status {
+            case .success: NSLocalizedString("Datalogger CSV successfully downloaded!", comment: "")
+            default: NSLocalizedString("Failed to download Datalogger CSV!", comment: "")
             }
 
         let message =
-            switch useCase {
-            case .downloadCSVSuccess: NSLocalizedString("You can find the CSV file containing your datalogger data, named MY_DATA.csv, in the Calliope directory on your device.", comment: "")
-            case .downloadCSVFailed: NSLocalizedString("The download of the CSV file containing your datalogger data was unsuccessful.", comment: "")
+            switch status {
+            case .success: NSLocalizedString("You can find the CSV file containing your datalogger data, named MY_DATA.csv, in the Calliope directory on your device.", comment: "")
+            default: NSLocalizedString("The download of the CSV file containing your datalogger data was unsuccessful.", comment: "")
             }
 
         let alert = UIAlertController(

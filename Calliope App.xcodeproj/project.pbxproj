@@ -112,6 +112,8 @@
 		60316BF82B01FEC300130C0D /* BLECalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60316BF72B01FEC300130C0D /* BLECalliope.swift */; };
 		60316BFA2B0210CC00130C0D /* CalliopeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60316BF92B0210CC00130C0D /* CalliopeFactory.swift */; };
 		604841D52B1F328A0037A825 /* OnboardingOfflineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604841D42B1F328A0037A825 /* OnboardingOfflineViewController.swift */; };
+		604938832E151282008BCE40 /* FileExtensionsEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604938822E15127E008BCE40 /* FileExtensionsEnum.swift */; };
+		604938852E151BB1008BCE40 /* OperationStatusEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604938842E151BA7008BCE40 /* OperationStatusEnum.swift */; };
 		6055CDB62BBEE1E50007F6B0 /* CalliopeBlocksStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6055CDB52BBEE1E50007F6B0 /* CalliopeBlocksStartViewController.swift */; };
 		6094C3912C045FA9006F4CB4 /* ApiCalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6094C3902C045FA9006F4CB4 /* ApiCalliope.swift */; };
 		6094C3962C047549006F4CB4 /* ChartViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6094C3952C047549006F4CB4 /* ChartViewCell.swift */; };
@@ -270,6 +272,8 @@
 		60316BF72B01FEC300130C0D /* BLECalliope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLECalliope.swift; sourceTree = "<group>"; };
 		60316BF92B0210CC00130C0D /* CalliopeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeFactory.swift; sourceTree = "<group>"; };
 		604841D42B1F328A0037A825 /* OnboardingOfflineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingOfflineViewController.swift; sourceTree = "<group>"; };
+		604938822E15127E008BCE40 /* FileExtensionsEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileExtensionsEnum.swift; sourceTree = "<group>"; };
+		604938842E151BA7008BCE40 /* OperationStatusEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationStatusEnum.swift; sourceTree = "<group>"; };
 		6055CDB52BBEE1E50007F6B0 /* CalliopeBlocksStartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeBlocksStartViewController.swift; sourceTree = "<group>"; };
 		60676F4D2C41328600014388 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ProjectAndSensors.strings; sourceTree = "<group>"; };
 		60676F4E2C41328D00014388 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ProjectAndSensors.strings; sourceTree = "<group>"; };
@@ -396,7 +400,6 @@
 				2F61459B22BF9D26001C2734 /* Settings.bundle */,
 				2F526C5F26E96FC7004BA8FF /* Localizable.strings */,
 				2F684E3226E977FC008A39CD /* InfoPlist.strings */,
-				7E25CFB9A12F85C56D3256F9 /* Utilities */,
 			);
 			path = "Calliope App";
 			sourceTree = "<group>";
@@ -416,6 +419,9 @@
 		2F61453722BF761F001C2734 /* GeneralUtilities */ = {
 			isa = PBXGroup;
 			children = (
+				604938842E151BA7008BCE40 /* OperationStatusEnum.swift */,
+				604938822E15127E008BCE40 /* FileExtensionsEnum.swift */,
+				7E25C5F2B4FF55234B28A749 /* UIDevice+Extensions.swift */,
 				60030B9F2DC9E77600397E69 /* Coordinates+Extension.swift */,
 				60030B9D2DC9E6C600397E69 /* Double+Extension.swift */,
 				60030B9B2DC8B2DE00397E69 /* Date.swift */,
@@ -747,14 +753,6 @@
 			path = ConnectedCalliopes;
 			sourceTree = "<group>";
 		};
-		7E25C1EADACCA54603D35055 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				7E25C5F2B4FF55234B28A749 /* UIDevice+Extensions.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
 		7E25C2CC08B6BEB8F94AAE88 /* MicroBitUtilityJobTypes */ = {
 			isa = PBXGroup;
 			children = (
@@ -763,14 +761,6 @@
 				7E25C8370320F1AE86E741A5 /* UtilityLogJob.swift */,
 			);
 			path = MicroBitUtilityJobTypes;
-			sourceTree = "<group>";
-		};
-		7E25CFB9A12F85C56D3256F9 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				7E25C1EADACCA54603D35055 /* Extensions */,
-			);
-			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1073,6 +1063,7 @@
 				2F08A0E1234AC7400088A8D6 /* EditorAndProgramsContainerViewController.swift in Sources */,
 				60C915932B1F442F00E4039D /* Network.swift in Sources */,
 				600E63322C3424580027AE61 /* BaseChartViewCell.swift in Sources */,
+				604938832E151282008BCE40 /* FileExtensionsEnum.swift in Sources */,
 				6094C3912C045FA9006F4CB4 /* ApiCalliope.swift in Sources */,
 				2F2B809D25A0F25700A7CCF7 /* PlaygroundSnippetTableViewCell.swift in Sources */,
 				2F91665B235405AA0065AD81 /* EditorCollectionViewCell.swift in Sources */,
@@ -1132,6 +1123,7 @@
 				2F61457D22BF761F001C2734 /* LogNotify.swift in Sources */,
 				7E25CB63E012B25A80606449 /* UIDevice+Extensions.swift in Sources */,
 				7E25C2F16E2316D7C6EF236F /* UtilityJobProtocol.swift in Sources */,
+				604938852E151BB1008BCE40 /* OperationStatusEnum.swift in Sources */,
 				7E25C1EF8B03BE2835268F12 /* UtilityJobState.swift in Sources */,
 				7E25CE114DDEDC718EAB742D /* UtilityLogJob.swift in Sources */,
 				7E25C52A365F804B8AF1752B /* DataLoggerWebViewController.swift in Sources */,

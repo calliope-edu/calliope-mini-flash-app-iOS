@@ -56,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
 
-        if url.isFileURL && url.pathExtension.lowercased() == "hex" {
+        if url.isFileURL && FileExtension(rawValue: url.pathExtension.lowercased()) == .hex {
             LogNotify.log("received \(url.lastPathComponent)")
             guard let viewController = UIApplication.shared.keyWindow?.rootViewController else {
                 fatalError(NSLocalizedString("No root view controller for presenting File Save UI found", comment: ""))

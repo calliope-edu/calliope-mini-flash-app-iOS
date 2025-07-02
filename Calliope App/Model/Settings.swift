@@ -40,6 +40,8 @@ public enum SettingsKey: String, CaseIterable {
     case microPython = "microPythonOnPreference"
     case microPythonUrl = "microPythonUrlPreference"
 
+    case campus = "campusOnPreference"
+    case campusUrl = "campusOnUrlPreference"
 }
 
 public struct Settings {
@@ -52,13 +54,15 @@ public struct Settings {
     static var defaultProgramV2andV1 = "https://calliope.cc/downloads/calliope-demo.hex"
     static var defaultPlaygroundTemplateUrl = NSLocalizedString("https://calliope.cc/forumassets/snippets.json", comment: "The url for the snippets json")
     static var defaultCalliopeBlocksUrl = "https://calliope.cc/downloads/blocks.hex"
-    static var defaultMicroPythonUrl = "https://python.calliope.cc"
+    static var defaultMicroPythonUrl = "https://python.calliope.cc?mobile=true"
+    static var defaultCampusUrl = "https://campus.calliope.cc"
 
     static var defaultLocalEditorEnabled = false
     static var defaultMakeCodeEnabled = true
     static var defaultRobertaEnabled = true
     static var defaultPlaygroundsEnabled = UIDevice.current.userInterfaceIdiom != .phone
     static var defaultMicroPythonEnabled = true
+    static var defaultCampusEnabled = true
 
     static var defaultRestoreLastMatrixEnabled = true
 
@@ -92,6 +96,12 @@ public struct Settings {
         case .microPythonUrl:
             return defaultMicroPythonUrl
 
+        case .campus:
+            return defaultCampusEnabled
+        case .campusUrl:
+            return defaultCampusUrl
+            
+            
         case .appVersion:
             return defaultAppVersion
 

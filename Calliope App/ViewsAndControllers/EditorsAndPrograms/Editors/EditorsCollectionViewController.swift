@@ -18,6 +18,7 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
     private let reuseIdentifierPlayground = "playgroundCell"
     private let reuseIdentifierCalliopeBlocks = "calliopeBlocksCell"
     private let reuseIdentifierMicroPython = "microPythonEditorCell"
+    private let reuseIdentifierCampus = "campusEditorCell"
 
     private lazy var activatedEditors: [SettingsKey] = {
         var keys: [SettingsKey] = []
@@ -39,6 +40,9 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
         }
         if settings.bool(forKey: SettingsKey.microPython.rawValue) {
             keys.append(.microPython)
+        }
+        if settings.bool(forKey: SettingsKey.campus.rawValue) {
+            keys.append(.campus)
         }
        
         return keys
@@ -89,6 +93,8 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierOfflineEditor, for: indexPath) as! EditorCollectionViewCell
         case .calliopeBlocks:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierCalliopeBlocks, for: indexPath) as! EditorCollectionViewCell
+        case .campus:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierCampus, for: indexPath) as! EditorCollectionViewCell
         default:
             fatalError("invalid key found in active editors array")
         }
@@ -147,5 +153,9 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
     
     @IBSegueAction func createMicroPythonEditorWithCoder(_ coder: NSCoder, sender: Any?) -> EditorViewController? {
         EditorViewController(coder: coder, editor: MicroPython())
+    }
+    
+    @IBSegueAction func createCampusEditor(_ coder: NSCoder, sender: Any?) -> EditorViewController? {
+        return EditorViewController(coder: coder, editor: CampusEditor())
     }
 }
