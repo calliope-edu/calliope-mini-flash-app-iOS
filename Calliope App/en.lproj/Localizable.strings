@@ -303,3 +303,16 @@
 "Du findest die CSV-Datei mit den Datalogger-Daten im Calliope-Verzeichnis  auf deinem Gerät, unter den namen MY_DATA.csv" = "You can find the CSV file containing your datalogger data, named MY_DATA.csv, in the Calliope directory on your device.";
 
 "Der Download der CSV-Datei mit deinen Datalogger-Daten war nicht erfolgreich." = "The download of the CSV file containing your datalogger data was unsuccessful.";
+
+
+/* (No Comment) */
+
+/* Campus Editor */
+"Download erfolgreich!" = "Session data successfully downloaded!";
+
+"Download fehlgeschlagen!" = "Failed to download session data!";
+
+"Sie können die Sitzungsdaten im Calliope-Verzeichnis auf Ihrem Gerät finden." = "You can find the session data, in the Calliope directory on your device.";
+
+"Das Herunterladen der Sitzungsdaten ist fehlgeschlagen." = "The download of the session data was unsuccessful.";
+
