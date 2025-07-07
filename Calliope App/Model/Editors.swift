@@ -148,7 +148,7 @@ final class MicroPython: Editor {
 }
 
 final class CampusEditor: Editor {
-    public let name = "Campus"
+    public let name = "Calliope Campus"
     public lazy var url: URL? = {
         return URL(string: UserDefaults.standard.string(forKey: SettingsKey.campusUrl.rawValue)!)
     }()
