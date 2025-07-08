@@ -29,29 +29,18 @@ extension Editor {
     }
 }
 
-// https://miniedit.calliope.cc/86184610-93de-11e7-a0b1-cd0ef2962ca5
-final class MiniEditor: Editor {
-    public let name = "Calliope mini Editor"
-    public let url = URL(string: "/")
-
-    init() {
-        fatalError("MiniEditor not implemented currently")
-    }
-
+final class BlocksMiniEditor: Editor {
+    public let name = "Calliope mini Blocks Editor"
+    public lazy var url: URL? = {
+        return URL(string: UserDefaults.standard.string(forKey: SettingsKey.blocksMiniEditorUrl.rawValue)!)
+    }()
     func download(_ request: URLRequest) -> EditorDownload? {
-        guard let url = request.url else {
-            return nil
-        }
-        let s = url.absoluteString
-        let matches = s.matches(regex: "https://[^/]+/(\\w+-\\w+-\\w+-\\w+-\\w+)")
-        guard matches.count == 2 else {
-            return nil
-        }
-        return EditorDownload(name: "mini-" + matches[1], url: url, isHex: true)
+        LogNotify.log("Blocks Editor does not download a file, but communicates directly with the mini")
+        return nil
     }
-
+    
     func isBackNavigation(_ request: URLRequest) -> Bool {
-        fatalError("MiniEditor not implemented currently")
+        return false
     }
 }
 

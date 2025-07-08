@@ -21,6 +21,9 @@ public enum SettingsKey: String, CaseIterable {
 
     case playgrounds = "playgroundsOnPreference"
     case playgroundTemplateUrl = "playgroundTemplateUrlPreference"
+    
+    case blocksMiniEditor = "blocksMiniOnPreferences"
+    case blocksMiniEditorUrl = "blocksMiniUrlPreference"
 
     case appVersion = "appVersionInformationPreference"
 
@@ -54,16 +57,19 @@ public struct Settings {
     static var defaultProgramV2andV1 = "https://calliope.cc/downloads/calliope-demo.hex"
     static var defaultPlaygroundTemplateUrl = NSLocalizedString("https://calliope.cc/forumassets/snippets.json", comment: "The url for the snippets json")
     static var defaultCalliopeBlocksUrl = "https://calliope.cc/downloads/blocks.hex"
+    static var defaultBlocksMiniEditorUrl = "https://blocks.calliope.cc"
     static var defaultMicroPythonUrl = "https://python.calliope.cc?mobile=true"
     static var defaultCampusUrl = "https://campus.calliope.cc"
 
     static var defaultLocalEditorEnabled = false
     static var defaultMakeCodeEnabled = true
+    static var defaultBlocksMiniEditorEnabled = true
     static var defaultRobertaEnabled = true
     static var defaultPlaygroundsEnabled = UIDevice.current.userInterfaceIdiom != .phone
     static var defaultMicroPythonEnabled = true
     static var defaultCampusEnabled = true
-
+    
+    
     static var defaultRestoreLastMatrixEnabled = true
 
     static var defaultAppVersion = "1.0"
@@ -81,6 +87,11 @@ public struct Settings {
         case .makecodeUrl:
             return defaultMakecodeUrl
 
+        case .blocksMiniEditor:
+            return defaultBlocksMiniEditorEnabled
+        case .blocksMiniEditorUrl:
+            return defaultBlocksMiniEditorUrl
+            
         case .roberta:
             return defaultRobertaEnabled
         case .robertaUrl:

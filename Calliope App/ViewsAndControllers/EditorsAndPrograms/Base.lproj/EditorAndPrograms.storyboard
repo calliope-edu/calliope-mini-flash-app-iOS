@@ -505,7 +505,7 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="nepoEditorCell" id="ucV-gN-En2" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="391.33333333333331" width="160" height="185.33333333333331"/>
+                                <rect key="frame" x="64.333333333333329" y="391.33333333333331" width="160" height="185.33333333333331"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bVT-UD-yV5">
                                     <rect key="frame" x="0.0" y="0.0" width="160" height="185.33333333333331"/>
@@ -542,20 +542,20 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="playgroundCell" id="X1H-Rl-bCL" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="238.66666666666666" y="459" width="50" height="50"/>
+                                <rect key="frame" x="64.333333333333329" y="586.66666666666663" width="160" height="185.33333333333337"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="PXU-mA-kNy">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="160" height="185.33333333333337"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Playground" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NWk-nx-U7c">
-                                            <rect key="frame" x="0.0" y="50" width="50" height="0.0"/>
+                                            <rect key="frame" x="0.0" y="165" width="160" height="20.333333333333343"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="editors_swift" translatesAutoresizingMaskIntoConstraints="NO" id="qAp-AG-KqZ">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="45"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="qAp-AG-KqZ" secondAttribute="height" multiplier="1:1" priority="999" id="suM-0W-SJI"/>
                                                 <constraint firstAttribute="width" priority="999" constant="160" id="zNn-Fs-DNP"/>
@@ -582,7 +582,7 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="calliopeBlocksCell" id="Uov-es-KDS" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="586.66666666666663" width="160" height="160"/>
+                                <rect key="frame" x="64.333333333333329" y="782" width="160" height="160"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Nwx-rx-8wA">
                                     <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
@@ -628,8 +628,55 @@
                                     <segue destination="ZoJ-h7-jog" kind="show" id="QMm-vh-UzX"/>
                                 </connections>
                             </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="calliopeBlocksEditorCell" id="B39-nd-MiD" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="952" width="160" height="160"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="MRt-a5-on6">
+                                    <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calliope mini Blocks Editor" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WpF-ql-A9P">
+                                            <rect key="frame" x="0.0" y="160" width="160" height="0.0"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="editors_blocks_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="Hv5-aD-NWE">
+                                            <rect key="frame" x="0.0" y="-12" width="160" height="160"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" priority="999" constant="160" id="2N8-fT-I6q"/>
+                                                <constraint firstAttribute="width" secondItem="Hv5-aD-NWE" secondAttribute="height" multiplier="1:1" priority="999" id="IZx-C2-C69"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="15"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Hv5-aD-NWE" firstAttribute="top" secondItem="MRt-a5-on6" secondAttribute="top" id="4YS-0b-cGz"/>
+                                        <constraint firstAttribute="trailing" secondItem="Hv5-aD-NWE" secondAttribute="trailing" id="IPz-9u-tcM"/>
+                                        <constraint firstItem="Hv5-aD-NWE" firstAttribute="leading" secondItem="MRt-a5-on6" secondAttribute="leading" id="IRT-ps-hkc"/>
+                                        <constraint firstItem="Hv5-aD-NWE" firstAttribute="leading" secondItem="MRt-a5-on6" secondAttribute="leading" id="KvO-3z-GZY"/>
+                                        <constraint firstItem="WpF-ql-A9P" firstAttribute="top" secondItem="Hv5-aD-NWE" secondAttribute="bottom" constant="5" id="X6S-2j-R61"/>
+                                        <constraint firstItem="WpF-ql-A9P" firstAttribute="leading" secondItem="MRt-a5-on6" secondAttribute="leading" id="ffs-Yl-qMn"/>
+                                        <constraint firstAttribute="bottom" secondItem="WpF-ql-A9P" secondAttribute="bottom" id="iKN-vZ-48A"/>
+                                        <constraint firstAttribute="trailing" secondItem="WpF-ql-A9P" secondAttribute="trailing" id="n39-pB-fJw"/>
+                                        <constraint firstItem="Hv5-aD-NWE" firstAttribute="top" secondItem="MRt-a5-on6" secondAttribute="top" id="ugH-Zo-k90"/>
+                                        <constraint firstAttribute="trailing" secondItem="Hv5-aD-NWE" secondAttribute="trailing" id="xYx-Rn-7iu"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <size key="customSize" width="160" height="160"/>
+                                <connections>
+                                    <outlet property="logo" destination="Hv5-aD-NWE" id="oCq-pj-HR5"/>
+                                    <outlet property="name" destination="WpF-ql-A9P" id="eAr-mX-hrp"/>
+                                    <segue destination="eeY-2x-OZY" kind="show" identifier="openBlocksEditor" destinationCreationSelector="createBlocksEditor:sender:" id="3vj-03-YP1"/>
+                                </connections>
+                            </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="campusEditorCell" id="gO2-tE-KHc" userLabel="campusEditorCell" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="238.66666666666666" y="641.66666666666663" width="50" height="50"/>
+                                <rect key="frame" x="170" y="1007" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="hPk-9I-qCC">
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -941,7 +988,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="UIB-6u-Lgi"/>
+        <segue reference="3vj-03-YP1"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="calliope-lilablau"/>
     <resources>

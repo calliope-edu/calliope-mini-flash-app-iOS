@@ -126,6 +126,27 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
         connector.isInBackground = true
         connector.stopCalliopeDiscovery()
     }
+    
+    public func dropBLEConnection() {
+        connector.updateBlock = {
+        }
+        connector.isInBackground = true
+        connector.stopCalliopeDiscovery()
+        connector.disconnectFromCalliope()
+        
+    }
+    
+    public func restartFromBLEConnectionDrop() {
+        connector.updateBlock = updateDiscoveryState
+        matrixView.updateBlock = {
+            //matrix has been changed manually, this always triggers a disconnect
+            self.connector.disconnectFromCalliope()
+            self.connector.startCalliopeDiscovery()
+            self.updateDiscoveryState()
+        }
+        connector.isInBackground = false
+        connect()
+    }
 
     private func changedConnector(_ oldValue: CalliopeDiscovery) {
         oldValue.giveUpResponsibility()

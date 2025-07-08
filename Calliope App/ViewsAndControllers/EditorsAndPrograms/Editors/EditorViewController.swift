@@ -1,7 +1,9 @@
 import UIKit
 import WebKit
 
-final class EditorViewController: UIViewController, WKNavigationDelegate, WKDownloadDelegate, WKUIDelegate {
+import ScratchLinkKit
+
+final class EditorViewController: UIViewController, WKNavigationDelegate, WKDownloadDelegate, WKUIDelegate, ScratchLinkDelegate {
 
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
 
@@ -14,6 +16,8 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKDown
     lazy var downloadsPath: URL = {
         FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask)[0]
     }()
+    
+    private let scratchLink = ScratchLink()
 
     init?(coder: NSCoder, editor: Editor) {
         self.editor = editor
@@ -40,7 +44,7 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKDown
         let configuration = WKWebViewConfiguration()
         configuration.userContentController = controller
         configuration.mediaTypesRequiringUserActionForPlayback = .video
-
+        
         webview = WKWebView(frame: self.view.bounds, configuration: configuration)
         webview.translatesAutoresizingMaskIntoConstraints = false
 
@@ -55,9 +59,12 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKDown
         webview.leftAnchor.constraint(equalTo: bounds.leftAnchor).isActive = true
         webview.rightAnchor.constraint(equalTo: bounds.rightAnchor).isActive = true
 
-        if traitCollection.userInterfaceIdiom == .pad {
-            webview.customUserAgent = "Mozilla/5.0 (iPad; CPU OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.1 Mobile/15E148 Safari/604.1"
-        }
+        webview.configuration.applicationNameForUserAgent = "Scrub"
+        webview.customUserAgent = nil
+
+        scratchLink.setup(webView: self.webview)
+        scratchLink.delegate = self
+        
 
         loadingIndicator.startAnimating()
         self.webview?.load(URLRequest(url: url))
@@ -66,6 +73,10 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKDown
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        MatrixConnectionViewController.instance.restartFromBLEConnectionDrop()
     }
 
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -109,12 +120,12 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKDown
             return handleExternalWebView(navigationAction)
         }
     }
-
+    
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation) {
         loadingIndicator.stopAnimating()
-        // LOG("finish")
+        handlePossibleEditorChanges()
     }
-
+    
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         loadingIndicator.stopAnimating()
         LogNotify.log("\(error)")
@@ -124,11 +135,6 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKDown
         LogNotify.log("\(error)")
     }
 
-    func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
-        // LOG("terminate")
-    }
-
-    //
     func webView(
         _ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo,
         completionHandler: @escaping () -> Void
@@ -393,4 +399,51 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKDown
         self.present(alert, animated: true)
     }
 
+    
+    // MARK: ScratchLinkDelegate
+    
+    func canStartSession(type: ScratchLinkKit.SessionType) -> Bool {
+        LogNotify.log("Call to 'canStartSession'")
+        return true
+    }
+    
+    func didStartSession(type: ScratchLinkKit.SessionType) {
+        LogNotify.log("Call to 'didStartSession'")
+    }
+    
+    func didFailStartingSession(type: ScratchLinkKit.SessionType, error: ScratchLinkKit.SessionError) {
+        LogNotify.log("Call to 'didFailStartingSession'")
+    }
+   
+    // MARK: Handle possible editor change (i.e. Scratch Based with own BLE connection)
+    
+    private func handlePossibleEditorChanges() {
+        determineIfScratchBasedEditor() { self.switchEditorImperatives($0)}
+    }
+    
+    
+    private func determineIfScratchBasedEditor(completion: @escaping (Bool) -> Void) {
+        let condition = "document.getElementById('scratch-link-extension-script') != null"
+        
+        webview.evaluateJavaScript(condition) { (result, error) in
+            let isScratchEditor = result as? Bool ?? false
+            completion(isScratchEditor)
+        }
+    }
+    
+    private func switchEditorImperatives(_ isScratchEditor: Bool) {
+        if (isScratchEditor) {
+            LogNotify.log("Switching editor imperatives to handle scratch based editor")
+            MatrixConnectionViewController.instance.dropBLEConnection()
+            self.webview.configuration.applicationNameForUserAgent = "Scrub"
+            self.webview.customUserAgent = nil
+            return
+        }
+        
+        LogNotify.log("Switching editor imperatives to handle non-scratch based editor")
+        self.webview.configuration.applicationNameForUserAgent = nil
+        webview.customUserAgent = traitCollection.userInterfaceIdiom == .pad ? "Mozilla/5.0 (iPad; CPU OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.1 Mobile/15E148 Safari/604.1" : nil
+        MatrixConnectionViewController.instance.restartFromBLEConnectionDrop()
+    }
 }
+

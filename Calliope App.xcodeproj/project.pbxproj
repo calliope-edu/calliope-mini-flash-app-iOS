@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -114,6 +114,8 @@
 		604841D52B1F328A0037A825 /* OnboardingOfflineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604841D42B1F328A0037A825 /* OnboardingOfflineViewController.swift */; };
 		604938832E151282008BCE40 /* FileExtensionsEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604938822E15127E008BCE40 /* FileExtensionsEnum.swift */; };
 		604938852E151BB1008BCE40 /* OperationStatusEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604938842E151BA7008BCE40 /* OperationStatusEnum.swift */; };
+		604938BE2E1BAF6C008BCE40 /* DummyModules in Frameworks */ = {isa = PBXBuildFile; productRef = 604938BD2E1BAF6C008BCE40 /* DummyModules */; };
+		604938C02E1BAF6C008BCE40 /* ScratchLinkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 604938BF2E1BAF6C008BCE40 /* ScratchLinkKit */; };
 		6055CDB62BBEE1E50007F6B0 /* CalliopeBlocksStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6055CDB52BBEE1E50007F6B0 /* CalliopeBlocksStartViewController.swift */; };
 		6094C3912C045FA9006F4CB4 /* ApiCalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6094C3902C045FA9006F4CB4 /* ApiCalliope.swift */; };
 		6094C3962C047549006F4CB4 /* ChartViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6094C3952C047549006F4CB4 /* ChartViewCell.swift */; };
@@ -274,6 +276,7 @@
 		604841D42B1F328A0037A825 /* OnboardingOfflineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingOfflineViewController.swift; sourceTree = "<group>"; };
 		604938822E15127E008BCE40 /* FileExtensionsEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileExtensionsEnum.swift; sourceTree = "<group>"; };
 		604938842E151BA7008BCE40 /* OperationStatusEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationStatusEnum.swift; sourceTree = "<group>"; };
+		604938B42E1BAF1D008BCE40 /* ScratchLinkKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ScratchLinkKit; sourceTree = "<group>"; };
 		6055CDB52BBEE1E50007F6B0 /* CalliopeBlocksStartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeBlocksStartViewController.swift; sourceTree = "<group>"; };
 		60676F4D2C41328600014388 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ProjectAndSensors.strings; sourceTree = "<group>"; };
 		60676F4E2C41328D00014388 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ProjectAndSensors.strings; sourceTree = "<group>"; };
@@ -324,6 +327,8 @@
 			files = (
 				6094C3992C048201006F4CB4 /* DGCharts.framework in Frameworks */,
 				B16DD0D6E28647BDAC9EA8CB /* Pods_Calliope_App.framework in Frameworks */,
+				604938C02E1BAF6C008BCE40 /* ScratchLinkKit in Frameworks */,
+				604938BE2E1BAF6C008BCE40 /* DummyModules in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,6 +371,7 @@
 		2F61450322BF75DE001C2734 = {
 			isa = PBXGroup;
 			children = (
+				604938B32E1BAF16008BCE40 /* Packages */,
 				2F61450E22BF75DE001C2734 /* Calliope App */,
 				2F61450D22BF75DE001C2734 /* Products */,
 				5764819361F6510AB656C448 /* Pods */,
@@ -663,6 +669,14 @@
 			path = Hex;
 			sourceTree = "<group>";
 		};
+		604938B32E1BAF16008BCE40 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				604938B42E1BAF1D008BCE40 /* ScratchLinkKit */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
 		6055CDB02BBED7D90007F6B0 /* CalliopeBlocks */ = {
 			isa = PBXGroup;
 			children = (
@@ -923,6 +937,11 @@
 				es_AR,
 			);
 			mainGroup = 2F61450322BF75DE001C2734;
+			packageReferences = (
+				604938BC2E1BAF6C008BCE40 /* XCLocalSwiftPackageReference "Packages/ScratchLinkKit" */,
+				604938C12E1BAF7F008BCE40 /* XCLocalSwiftPackageReference "Packages/ScratchWebKit" */,
+				604938C52E1BB513008BCE40 /* XCLocalSwiftPackageReference "Packages/WebMIDIKit" */,
+			);
 			productRefGroup = 2F61450D22BF75DE001C2734 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1460,6 +1479,32 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		604938BC2E1BAF6C008BCE40 /* XCLocalSwiftPackageReference "Packages/ScratchLinkKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/ScratchLinkKit;
+		};
+		604938C12E1BAF7F008BCE40 /* XCLocalSwiftPackageReference "Packages/ScratchWebKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/ScratchWebKit;
+		};
+		604938C52E1BB513008BCE40 /* XCLocalSwiftPackageReference "Packages/WebMIDIKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/WebMIDIKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		604938BD2E1BAF6C008BCE40 /* DummyModules */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DummyModules;
+		};
+		604938BF2E1BAF6C008BCE40 /* ScratchLinkKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ScratchLinkKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2F61450422BF75DE001C2734 /* Project object */;
 }

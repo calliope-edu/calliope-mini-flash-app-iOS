@@ -19,6 +19,7 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
     private let reuseIdentifierCalliopeBlocks = "calliopeBlocksCell"
     private let reuseIdentifierMicroPython = "microPythonEditorCell"
     private let reuseIdentifierCampus = "campusEditorCell"
+    private let reuseIdentifierBlocksEditor = "calliopeBlocksEditorCell"
 
     private lazy var activatedEditors: [SettingsKey] = {
         var keys: [SettingsKey] = []
@@ -29,20 +30,23 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
         if settings.bool(forKey: SettingsKey.makeCode.rawValue) {
             keys.append(.makeCode)
         }
+        if settings.bool(forKey: SettingsKey.roberta.rawValue) {
+            keys.append(.roberta)
+        }
         if settings.bool(forKey: SettingsKey.calliopeBlocks.rawValue) {
             keys.append(.calliopeBlocks)
         }
-        if settings.bool(forKey: SettingsKey.playgrounds.rawValue) {
-            keys.append(.playgrounds)
-        }
-        if settings.bool(forKey: SettingsKey.roberta.rawValue) {
-            keys.append(.roberta)
+        if settings.bool(forKey: SettingsKey.blocksMiniEditor.rawValue) {
+            keys.append(.blocksMiniEditor)
         }
         if settings.bool(forKey: SettingsKey.microPython.rawValue) {
             keys.append(.microPython)
         }
         if settings.bool(forKey: SettingsKey.campus.rawValue) {
             keys.append(.campus)
+        }
+        if settings.bool(forKey: SettingsKey.playgrounds.rawValue) {
+            keys.append(.playgrounds)
         }
        
         return keys
@@ -95,6 +99,9 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierCalliopeBlocks, for: indexPath) as! EditorCollectionViewCell
         case .campus:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierCampus, for: indexPath) as! EditorCollectionViewCell
+        case .blocksMiniEditor:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierBlocksEditor, for: indexPath) as! EditorCollectionViewCell
+
         default:
             fatalError("invalid key found in active editors array")
         }
@@ -156,6 +163,10 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
     }
     
     @IBSegueAction func createCampusEditor(_ coder: NSCoder, sender: Any?) -> EditorViewController? {
-        return EditorViewController(coder: coder, editor: CampusEditor())
+        EditorViewController(coder: coder, editor: CampusEditor())
+    }
+    
+    @IBSegueAction func createBlocksEditor(_ coder: NSCoder, sender: Any?) -> EditorViewController? {
+        EditorViewController(coder: coder, editor: BlocksMiniEditor())
     }
 }
