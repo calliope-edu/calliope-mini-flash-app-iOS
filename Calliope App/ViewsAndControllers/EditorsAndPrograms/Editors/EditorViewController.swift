@@ -3,32 +3,35 @@ import WebKit
 
 import ScratchLinkKit
 
-final class EditorViewController: UIViewController, WKNavigationDelegate, WKDownloadDelegate, WKUIDelegate, ScratchLinkDelegate {
-
-    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
-
-    var editor: Editor?
+final class EditorViewController: UIViewController {
 
     var webview: WKWebView!  //webviews are buggy and cannot be placed via interface builder
-    lazy var documentsPath: URL = {
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    
+    var editor: Editor?
+    private var latestDownloadedTargetFile: URL?
+    var documentsPath: URL {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-    }()
-    lazy var downloadsPath: URL = {
+    }
+    var downloadsPath: URL {
         FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask)[0]
-    }()
+    }
     
     private let scratchLink = ScratchLink()
-
+    
+    let filenameQuery = "document.querySelector('input#fileNameInput2').value"
+    
     init?(coder: NSCoder, editor: Editor) {
         self.editor = editor
         super.init(coder: coder)
     }
 
     required init?(coder: NSCoder) {
-        //        fatalError("init(coder:) has not been implemented")
         super.init(coder: coder)
     }
 
+    // MARK: UIViewController
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -59,13 +62,9 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKDown
         webview.leftAnchor.constraint(equalTo: bounds.leftAnchor).isActive = true
         webview.rightAnchor.constraint(equalTo: bounds.rightAnchor).isActive = true
 
-        webview.configuration.applicationNameForUserAgent = "Scrub"
-        webview.customUserAgent = nil
-
         scratchLink.setup(webView: self.webview)
         scratchLink.delegate = self
         
-
         loadingIndicator.startAnimating()
         self.webview?.load(URLRequest(url: url))
     }
@@ -76,9 +75,16 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKDown
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+//        Task { // this will hang, as the mutex is never released -> semaphore_wait_trap
+//            scratchLink.closeAllSessions()
+//        }
         MatrixConnectionViewController.instance.restartFromBLEConnectionDrop()
     }
+    
+}
 
+extension EditorViewController: WKNavigationDelegate {
+    
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         guard let editor = editor else {
             return
@@ -134,8 +140,29 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKDown
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         LogNotify.log("\(error)")
     }
+    
+    // helper
+    
+    fileprivate func handleInternalWebView(_ navigationAction: WKNavigationAction, _ webView: WKWebView) -> WKWebView? {
+        guard navigationAction.targetFrame != nil else {
+            return nil
+        }
+        webView.load(navigationAction.request)
+        return nil
+    }
 
-    func webView(
+
+    fileprivate func handleExternalWebView(_ navigationAction: WKNavigationAction) -> WKWebView? {
+        if let url = navigationAction.request.url {
+            UIApplication.shared.open(url)
+        }
+        return nil
+    }
+ 
+}
+
+extension EditorViewController: WKUIDelegate {
+     func webView(
         _ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo,
         completionHandler: @escaping () -> Void
     ) {
@@ -204,17 +231,180 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKDown
                 }))
 
         present(alertController, animated: true, completion: nil)
+    }   
+}
+
+extension EditorViewController: WKDownloadDelegate {
+    
+    func webView(_ webView: WKWebView, navigationAction: WKNavigationAction, didBecome download: WKDownload) {
+        download.delegate = self
+    }
+    
+    func download(_ download: WKDownload, decideDestinationUsing response: URLResponse, suggestedFilename: String, completionHandler: @escaping (URL?) -> Void) {
+        guard let editor = editor, editor is MicroPython || editor is CampusEditor else {
+            return
+        }
+        
+        latestDownloadedTargetFile = prepareTemporaryStorage(for: suggestedFilename)
+        try? FileManager.default.removeItem(at: latestDownloadedTargetFile!)
+        completionHandler(latestDownloadedTargetFile)
+    }
+    
+    func downloadDidFinish(_ download: WKDownload) {
+        guard let url = latestDownloadedTargetFile, let fileextension = FileExtension(rawValue: url.pathExtension.lowercased()) else {
+            return
+        }
+        
+        switch fileextension {
+        case .hex:
+            uploadHex(from: url)
+        case .html, .json:
+            storeSessionData(for: url)
+        }
+        
+    }
+    
+    public func download(_ download: WKDownload, didFailWithError error: Error, resumeData: Data?) {
+        LogNotify.log("Download failed: \(error)")
+        self.clearTemporaryStorage()
+    }
+   
+    // MARK: Helper
+    
+    private func prepareTemporaryStorage(for name: String) -> URL? {
+        return NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(name)
+    }
+    
+    private func clearTemporaryStorage() {
+        guard let latestDownloadedTargetFile = latestDownloadedTargetFile else {
+            return
+        }
+        
+        try? FileManager.default.removeItem(at: latestDownloadedTargetFile)
+        self.latestDownloadedTargetFile = nil
+    }
+    
+    private func uploadHex(from location: URL) {
+        LogNotify.log("Treating downloaded file as a Hex-File for the mini: \(location.absoluteString)")
+        guard location.isFileURL, FileExtension(rawValue: location.pathExtension.lowercased()) == .hex else {
+            LogNotify.log("Location of hex file was not provided or target at locationis not a hex file.")
+            return
+        }
+        
+        let file = HexFile(url: location, name: location.lastPathComponent, date: Date())
+        FirmwareUpload.uploadWithoutConfirmation(controller: self, program: file) {
+            MatrixConnectionViewController.instance.connect()
+            self.clearTemporaryStorage()
+        }
+    }
+    
+    private func storeSessionData(for location: URL) {
+        LogNotify.log("Treating downloaded file as session relevant data: \(location.absoluteString)")
+        guard location.isFileURL, [FileExtension.html, FileExtension.json].contains(FileExtension(rawValue: location.pathExtension.lowercased())) else {
+            LogNotify.log("Location of session data file was not provided, or is neither in json or html format")
+            return
+        }
+        
+        let destination = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(location.lastPathComponent)
+        do {
+            try FileManager.default.moveItem(at: location, to: destination)
+            showAlertSessionDataDownload(for: .success)
+        } catch {
+            showAlertSessionDataDownload(for: .failure)
+        }
+    }
+    
+     
+    private func showAlertSessionDataDownload(for status: OperationStatus) {
+        let title =
+            switch status {
+            case .success: NSLocalizedString("Session data successfully downloaded!", comment: "")
+            default: NSLocalizedString("Failed to download session data!", comment: "")
+            }
+
+        let message =
+            switch status {
+            case .success: NSLocalizedString("You can find the session data, in the Calliope directory on your device.", comment: "")
+            default: NSLocalizedString("The download of the session data was unsuccessful.", comment: "")
+            }
+
+        let alert = UIAlertController(
+            title: title,
+            message: String(format: message),
+            preferredStyle: .alert
+        )
+        alert.addAction(
+            UIAlertAction(title: "OK", style: .cancel) { _ in
+                self.dismiss(animated: true)
+            }
+        )
+        self.present(alert, animated: true)
     }
 
-    //MARK: uploading
-    var query = "document.querySelector('input#fileNameInput2').value"
 
+}
+
+extension EditorViewController: ScratchLinkDelegate {
+    
+    func canStartSession(type: ScratchLinkKit.SessionType) -> Bool {
+        LogNotify.log("Call to 'canStartSession'")
+        return true
+    }
+    
+    func didStartSession(type: ScratchLinkKit.SessionType) {
+        LogNotify.log("Call to 'didStartSession'")
+    }
+    
+    func didFailStartingSession(type: ScratchLinkKit.SessionType, error: ScratchLinkKit.SessionError) {
+        LogNotify.log("Call to 'didFailStartingSession'")
+    }
+     
+}
+
+extension EditorViewController {
+    // MARK: Handle possible editor change (i.e. Scratch Based with own BLE connection)
+    
+    private func handlePossibleEditorChanges() {
+        determineIfScratchBasedEditor() { self.switchEditorImperatives($0)}
+    }
+    
+    
+    private func determineIfScratchBasedEditor(completion: @escaping (Bool) -> Void) {
+        let condition = "document.getElementById('scratch-link-extension-script') != null"
+        
+        webview.evaluateJavaScript(condition) { (result, error) in
+            let isScratchEditor = result as? Bool ?? false
+            completion(isScratchEditor)
+        }
+    }
+    
+    private func switchEditorImperatives(_ isScratchEditor: Bool) {
+        if (isScratchEditor) {
+            LogNotify.log("Switching editor imperatives to handle scratch based editor")
+            MatrixConnectionViewController.instance.dropBLEConnection()
+            self.webview.configuration.applicationNameForUserAgent = "Scrub"
+            self.webview.customUserAgent = nil
+            return
+        }
+        
+        LogNotify.log("Switching editor imperatives to handle non-scratch based editor")
+        self.webview.configuration.applicationNameForUserAgent = nil
+        self.webview.configuration.applicationNameForUserAgent = nil
+        webview.customUserAgent = traitCollection.userInterfaceIdiom == .pad ? "Mozilla/5.0 (iPad; CPU OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.1 Mobile/15E148 Safari/604.1" : nil
+        MatrixConnectionViewController.instance.restartFromBLEConnectionDrop()
+    }
+}
+
+
+extension EditorViewController {
+    
+    //MARK: uploading
+    
     private func upload(result download: EditorDownload) {
-        self.webview.evaluateJavaScript(query) { (result, error) in
-            let html = "\(result ?? "no-project-name")"  // TODO: Dettermining name and default could be better
-            LogNotify.log("html: \(html)")
+        self.webview.evaluateJavaScript(filenameQuery) { (result, error) in
+            let filename = "\(result ?? "no-project-name")"
             do {
-                guard let file = try HexFileManager.store(name: html, data: download.url.asData(), isHexFile: download.isHex) else {
+                guard let file = try HexFileManager.store(name: filename, data: download.url.asData(), isHexFile: download.isHex) else {
                     return
                 }
                 FirmwareUpload.uploadWithoutConfirmation(controller: self, program: file) {
@@ -272,178 +462,4 @@ final class EditorViewController: UIViewController, WKNavigationDelegate, WKDown
         }
     }
 
-    // MARK: Download Handler
-    var latestExpectedFile: URL?
-    
-    func webView(_ webView: WKWebView, navigationAction: WKNavigationAction, didBecome download: WKDownload) {
-        download.delegate = self
-    }
-    
-    func download(_ download: WKDownload, decideDestinationUsing response: URLResponse, suggestedFilename: String, completionHandler: @escaping (URL?) -> Void) {
-        guard let editor = editor, editor is MicroPython || editor is CampusEditor else {
-            return
-        }
-        
-        
-        latestExpectedFile = prepareTemporaryStorage(for: suggestedFilename)
-        try? FileManager.default.removeItem(at: latestExpectedFile!)
-        completionHandler(latestExpectedFile)
-    }
-    
-    func downloadDidFinish(_ download: WKDownload) {
-        guard let url = latestExpectedFile, let fileextension = FileExtension(rawValue: url.pathExtension.lowercased()) else {
-            return
-        }
-        
-        switch fileextension {
-        case .hex:
-            uploadHex(from: url)
-        case .html, .json:
-            storeSessionData(for: url)
-        }
-        
-    }
-    
-    public func download(_ download: WKDownload, didFailWithError error: Error, resumeData: Data?) {
-        LogNotify.log("Download failed: \(error)")
-        self.clearTemporaryStorage()
-    }
-    
-    private func prepareTemporaryStorage(for name: String) -> URL? {
-        return NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(name)
-    }
-    
-    private func clearTemporaryStorage() {
-        guard let latestExpectedFile = latestExpectedFile else {
-            return
-        }
-        
-        try? FileManager.default.removeItem(at: latestExpectedFile)
-        self.latestExpectedFile = nil
-    }
-    
-    private func uploadHex(from location: URL) {
-        LogNotify.log("Downloaded hex data: \(location.absoluteString)")
-        guard location.isFileURL, FileExtension(rawValue: location.pathExtension.lowercased()) == .hex else {
-            LogNotify.log("Location of hex file was not provided or is not a hex file.")
-            return
-        }
-        
-        let file = HexFile(url: location, name: location.lastPathComponent, date: Date())
-        FirmwareUpload.uploadWithoutConfirmation(controller: self, program: file) {
-            MatrixConnectionViewController.instance.connect()
-            self.clearTemporaryStorage()
-        }
-    }
-    
-    private func storeSessionData(for location: URL) {
-        LogNotify.log("Downloaded session relevant data: \(location.absoluteString)")
-        guard location.isFileURL, [FileExtension.html, FileExtension.json].contains(FileExtension(rawValue: location.pathExtension.lowercased())) else {
-            LogNotify.log("Location of session data file was not provided, or is neither in json or html format")
-            return
-        }
-        
-        let destination = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(location.lastPathComponent)
-        do {
-            try FileManager.default.moveItem(at: location, to: destination)
-            showAlertSessionDataDownload(for: .success)
-        } catch {
-            showAlertSessionDataDownload(for: .failure)
-        }
-    }
-    
-    // Web View Helper
-
-    fileprivate func handleInternalWebView(_ navigationAction: WKNavigationAction, _ webView: WKWebView) -> WKWebView? {
-        guard navigationAction.targetFrame != nil else {
-            return nil
-        }
-        webView.load(navigationAction.request)
-        return nil
-    }
-
-
-    fileprivate func handleExternalWebView(_ navigationAction: WKNavigationAction) -> WKWebView? {
-        if let url = navigationAction.request.url {
-            UIApplication.shared.open(url)
-        }
-        return nil
-    }
-    
-    
-    // helper
-    
-    private func showAlertSessionDataDownload(for status: OperationStatus) {
-        let title =
-            switch status {
-            case .success: NSLocalizedString("Session data successfully downloaded!", comment: "")
-            default: NSLocalizedString("Failed to download session data!", comment: "")
-            }
-
-        let message =
-            switch status {
-            case .success: NSLocalizedString("You can find the session data, in the Calliope directory on your device.", comment: "")
-            default: NSLocalizedString("The download of the session data was unsuccessful.", comment: "")
-            }
-
-        let alert = UIAlertController(
-            title: title,
-            message: String(format: message),
-            preferredStyle: .alert
-        )
-        alert.addAction(
-            UIAlertAction(title: "OK", style: .cancel) { _ in
-                self.dismiss(animated: true)
-            }
-        )
-        self.present(alert, animated: true)
-    }
-
-    
-    // MARK: ScratchLinkDelegate
-    
-    func canStartSession(type: ScratchLinkKit.SessionType) -> Bool {
-        LogNotify.log("Call to 'canStartSession'")
-        return true
-    }
-    
-    func didStartSession(type: ScratchLinkKit.SessionType) {
-        LogNotify.log("Call to 'didStartSession'")
-    }
-    
-    func didFailStartingSession(type: ScratchLinkKit.SessionType, error: ScratchLinkKit.SessionError) {
-        LogNotify.log("Call to 'didFailStartingSession'")
-    }
-   
-    // MARK: Handle possible editor change (i.e. Scratch Based with own BLE connection)
-    
-    private func handlePossibleEditorChanges() {
-        determineIfScratchBasedEditor() { self.switchEditorImperatives($0)}
-    }
-    
-    
-    private func determineIfScratchBasedEditor(completion: @escaping (Bool) -> Void) {
-        let condition = "document.getElementById('scratch-link-extension-script') != null"
-        
-        webview.evaluateJavaScript(condition) { (result, error) in
-            let isScratchEditor = result as? Bool ?? false
-            completion(isScratchEditor)
-        }
-    }
-    
-    private func switchEditorImperatives(_ isScratchEditor: Bool) {
-        if (isScratchEditor) {
-            LogNotify.log("Switching editor imperatives to handle scratch based editor")
-            MatrixConnectionViewController.instance.dropBLEConnection()
-            self.webview.configuration.applicationNameForUserAgent = "Scrub"
-            self.webview.customUserAgent = nil
-            return
-        }
-        
-        LogNotify.log("Switching editor imperatives to handle non-scratch based editor")
-        self.webview.configuration.applicationNameForUserAgent = nil
-        webview.customUserAgent = traitCollection.userInterfaceIdiom == .pad ? "Mozilla/5.0 (iPad; CPU OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.1 Mobile/15E148 Safari/604.1" : nil
-        MatrixConnectionViewController.instance.restartFromBLEConnectionDrop()
-    }
 }
-
