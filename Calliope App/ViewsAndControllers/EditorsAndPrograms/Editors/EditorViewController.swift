@@ -44,9 +44,15 @@ final class EditorViewController: UIViewController {
         view.backgroundColor = Styles.colorWhite
 
         let controller = WKUserContentController()
+        
+        #if DEBUG
+        WebLogHandler().register(with: controller, WebLogHandler.ALL_LEVELS)
+        #endif
+        
         let configuration = WKWebViewConfiguration()
         configuration.userContentController = controller
         configuration.mediaTypesRequiringUserActionForPlayback = .video
+        
         
         webview = WKWebView(frame: self.view.bounds, configuration: configuration)
         webview.translatesAutoresizingMaskIntoConstraints = false
@@ -382,13 +388,12 @@ extension EditorViewController {
         if (isScratchEditor) {
             LogNotify.log("Switching editor imperatives to handle scratch based editor")
             MatrixConnectionViewController.instance.dropBLEConnection()
-            self.webview.configuration.applicationNameForUserAgent = "Scrub"
             self.webview.customUserAgent = nil
+            self.webview.configuration.applicationNameForUserAgent = "Scrub"
             return
         }
         
         LogNotify.log("Switching editor imperatives to handle non-scratch based editor")
-        self.webview.configuration.applicationNameForUserAgent = nil
         self.webview.configuration.applicationNameForUserAgent = nil
         webview.customUserAgent = traitCollection.userInterfaceIdiom == .pad ? "Mozilla/5.0 (iPad; CPU OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.1 Mobile/15E148 Safari/604.1" : nil
         MatrixConnectionViewController.instance.restartFromBLEConnectionDrop()
