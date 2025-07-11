@@ -36,9 +36,10 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
         if settings.bool(forKey: SettingsKey.calliopeBlocks.rawValue) {
             keys.append(.calliopeBlocks)
         }
-        if settings.bool(forKey: SettingsKey.blocksMiniEditor.rawValue) {
-            keys.append(.blocksMiniEditor)
-        }
+//        TODO: Next release, we will include the Blocks Editor, but for now we disable this
+//        if settings.bool(forKey: SettingsKey.blocksMiniEditor.rawValue) {
+//            keys.append(.blocksMiniEditor)
+//        }
         if settings.bool(forKey: SettingsKey.microPython.rawValue) {
             keys.append(.microPython)
         }

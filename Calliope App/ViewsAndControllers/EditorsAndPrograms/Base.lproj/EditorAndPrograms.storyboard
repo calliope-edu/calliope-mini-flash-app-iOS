@@ -628,7 +628,7 @@
                                     <segue destination="ZoJ-h7-jog" kind="show" id="QMm-vh-UzX"/>
                                 </connections>
                             </collectionViewCell>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="calliopeBlocksEditorCell" id="B39-nd-MiD" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
+                            <collectionViewCell hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" reuseIdentifier="calliopeBlocksEditorCell" id="B39-nd-MiD" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="952" width="160" height="160"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="MRt-a5-on6">

@@ -28,7 +28,6 @@ class ChartCollectionViewController: UITableViewController, UIDocumentPickerDele
     required init?(coder: NSCoder) {
         locationManager = CLLocationManager()
         super.init(coder: coder)
-        
         self.setupLocationManager()
     }
 
@@ -115,7 +114,7 @@ class ChartCollectionViewController: UITableViewController, UIDocumentPickerDele
     }
 
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        LogNotify.log("Maps will be \(self.isAuthorizedForLocation() ? "hidden" : "shown"), as Auth Status \(locationManager.authorizationStatus)")
+        LogNotify.log("Maps will be \(self.isAuthorizedForLocation() ? "shown" : "hidden"), as Auth Status \(locationManager.authorizationStatus)")
         self.tableView.reloadData()
     }
     
@@ -128,6 +127,7 @@ class ChartCollectionViewController: UITableViewController, UIDocumentPickerDele
     }
     
     private func isAuthorizedForLocation() -> Bool {
-        [CLAuthorizationStatus.authorizedAlways, CLAuthorizationStatus.authorizedWhenInUse].contains(self.locationManager.authorizationStatus)
+//        [CLAuthorizationStatus.authorizedAlways, CLAuthorizationStatus.authorizedWhenInUse].contains(self.locationManager.authorizationStatus)
+        false
     }
 }
