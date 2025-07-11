@@ -72,6 +72,8 @@ final class EditorViewController: UIViewController {
         scratchLink.delegate = self
         
         loadingIndicator.startAnimating()
+        webview.configuration.applicationNameForUserAgent = editor is BlocksMiniEditor ? "Scrub" : nil
+        webview.customUserAgent = traitCollection.userInterfaceIdiom == .pad && !(editor is BlocksMiniEditor) ? "Mozilla/5.0 (iPad; CPU OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.1 Mobile/15E148 Safari/604.1" : nil
         self.webview?.load(URLRequest(url: url))
     }
 
@@ -395,7 +397,7 @@ extension EditorViewController {
         
         LogNotify.log("Switching editor imperatives to handle non-scratch based editor")
         self.webview.configuration.applicationNameForUserAgent = nil
-        webview.customUserAgent = traitCollection.userInterfaceIdiom == .pad ? "Mozilla/5.0 (iPad; CPU OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.1 Mobile/15E148 Safari/604.1" : nil
+        self.webview.customUserAgent = traitCollection.userInterfaceIdiom == .pad ? "Mozilla/5.0 (iPad; CPU OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.1 Mobile/15E148 Safari/604.1" : nil
         MatrixConnectionViewController.instance.restartFromBLEConnectionDrop()
     }
 }
