@@ -28,13 +28,13 @@ class FlashableBLECalliope: CalliopeAPI {
                 self.startPartialFlashing()
             }
         } else if newState == .discovered && isPartiallyFlashing {
-            LogNotify.log("Lost connection to calliope during flashing process")
+            LogNotify.log("Lost connection to Calliope mini during flashing process")
             // Abort if in discovered state but not in DfuProcess, however if is partial flashing
             DispatchQueue.main.async {
                 self.statusDelegate?.dfuError(.deviceDisconnected, didOccurWithMessage: "connection to calliope lost")
             }
         }
-        LogNotify.log("Nothing to do with this calliope")
+        LogNotify.log("Nothing to do with this Calliope mini")
     }
 
     public override func cancelUpload() -> Bool {
@@ -98,7 +98,7 @@ class FlashableBLECalliope: CalliopeAPI {
     internal func transferFirmware() {
 
         guard let initiator = initiator else {
-            fatalError("firmware has disappeared somehow")
+            fatalError("Firmware has disappeared somehow")
         }
 
         LogNotify.log("Starting transfer with peripheral: \(peripheral)")
@@ -141,11 +141,11 @@ class FlashableBLECalliope: CalliopeAPI {
 
         if cancel {
             endTransmission()
-            updateCallback("received cancel call")
+            updateCallback("Received cancel call")
             return
         }
 
-        updateCallback("received notification from partial flashing service: \(value.hexEncodedString())")
+        updateCallback("Received notification from partial flashing service: \(value.hexEncodedString())")
 
         if value[0] == .STATUS {
             //requested the mode of the calliope
@@ -194,12 +194,12 @@ class FlashableBLECalliope: CalliopeAPI {
     func startPartialFlashing() {
         rebootingForPartialFlashing = false
 
-        updateCallback("start partial flashing")
+        updateCallback("Start partial flashing")
         guard let file = file,
             let partialFlashingInfo = file.partialFlashingInfo,
             let partialFlashingCharacteristic = getCBCharacteristic(.partialFlashing)
         else {
-            LogNotify.log("partialFlashing not found")
+            LogNotify.log("Partial flashing not found")
             fallbackToFullFlash()
             return
         }
@@ -234,7 +234,7 @@ class FlashableBLECalliope: CalliopeAPI {
     }
 
     private func receivedDalHash() {
-        updateCallback("received dal hash \(dalHash.hexEncodedString()), hash in hex file is \(hexFileHash.hexEncodedString())")
+        updateCallback("Received dal hash \(dalHash.hexEncodedString()), hash in hex file is \(hexFileHash.hexEncodedString())")
         guard dalHash == hexFileHash else {
             fallbackToFullFlash()
             return
@@ -245,7 +245,7 @@ class FlashableBLECalliope: CalliopeAPI {
     }
 
     func receivedStatus(_ needsRebootIntoBLEOnlyMode: Bool) {
-        updateCallback("received mode of calliope, needs reboot: \(needsRebootIntoBLEOnlyMode)")
+        updateCallback("Received mode of Calliope mini, needs reboot: \(needsRebootIntoBLEOnlyMode)")
         if needsRebootIntoBLEOnlyMode {
             shouldRebootOnDisconnect = true
             rebootingForPartialFlashing = true
@@ -260,20 +260,20 @@ class FlashableBLECalliope: CalliopeAPI {
     }
 
     private func receivedEmbedHash() {
-        updateCallback("received embed hash")
+        updateCallback("Received embed hash")
         // request program hash
         send(command: .REGION, value: Data([.PROGRAM_REGION]))
     }
 
     private func receivedProgramHash() {
-        updateCallback("received program hash \(hexProgramHash.hexEncodedString())")
+        updateCallback("Received program hash \(hexProgramHash.hexEncodedString())")
         if currentProgramHash == hexProgramHash {
             linesFlashed = partialFlashData?.lineCount ?? Int.max  //set progress to 100%
-            updateCallback("no changes to upload")
+            updateCallback("No changes to upload")
             let _ = cancelUpload()  //if cancel does not work, we cannot do anything about it here. Push reset button on Calliope should suffice
             statusDelegate?.dfuStateDidChange(to: .completed)
         } else {
-            updateCallback("partial flashing starts sending new program to calliope")
+            updateCallback("Partial flashing starts sending new program to Calliope mini")
             //start sending program part packages to calliope
             startPackageNumber = 0
             sendNextPackages()
@@ -311,7 +311,7 @@ class FlashableBLECalliope: CalliopeAPI {
     }
 
     private func sendCurrentPackages() {
-        updateCallback("sending \(currentDataToFlash.count) packages, beginning at \(startPackageNumber)")
+        updateCallback("Sending \(currentDataToFlash.count) packages, beginning at \(startPackageNumber)")
         for (index, package) in currentDataToFlash.enumerated() {
             let packageAddress = index == 1 ? currentSegmentAddress.bigEndianData : package.address.bigEndianData
             let packageNumber = Data([startPackageNumber + UInt8(index)])
@@ -323,7 +323,7 @@ class FlashableBLECalliope: CalliopeAPI {
     private func endTransmission() {
         isPartiallyFlashing = false
         shouldRebootOnDisconnect = false
-        updateCallback("partial flashing done!")
+        updateCallback("Partial flashing done!")
         send(command: .TRANSMISSION_END)
     }
 
@@ -341,11 +341,11 @@ class FlashableBLECalliope: CalliopeAPI {
 
     private func fallbackToFullFlash() {
         isPartiallyFlashing = false
-        updateCallback("partial flash failed, resort to full flashing")
+        updateCallback("Partial flash failed, resort to full flashing")
         do {
             try startFullFlashing()
         } catch {
-            LogNotify.log("full flashing failed, cancel upload")
+            LogNotify.log("Full flashing failed, cancel upload")
             _ = cancelUpload()
         }
     }
@@ -355,7 +355,7 @@ class FlashableBLECalliope: CalliopeAPI {
     private func updateCallback(_ logMessage: String) {
         logReceiver?.logWith(.info, message: logMessage)
         let progressPerCent = Int(floor(Double(linesFlashed * 100) / Double(partialFlashData?.lineCount ?? Int.max)))
-        LogNotify.log("partial flashing progress: \(progressPerCent)%")
+        LogNotify.log("Partial flashing progress: \(progressPerCent)%")
         progressReceiver?.dfuProgressDidChange(for: 1, outOf: 1, to: progressPerCent, currentSpeedBytesPerSecond: 0, avgSpeedBytesPerSecond: 0)
     }
 

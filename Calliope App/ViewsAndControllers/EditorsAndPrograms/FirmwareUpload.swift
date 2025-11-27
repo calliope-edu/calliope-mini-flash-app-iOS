@@ -124,7 +124,7 @@ class FirmwareUpload {
 
     lazy var alertView: UIAlertController = {
         guard let calliope = calliope else {
-            let alertController = UIAlertController(title: NSLocalizedString("Cannot upload", comment: ""), message: NSLocalizedString("There is no connected calliope in DFU mode", comment: ""), preferredStyle: .alert)
+            let alertController = UIAlertController(title: NSLocalizedString("Cannot upload", comment: ""), message: NSLocalizedString("There is no connected Calliope mini in DFU mode", comment: ""), preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: nil))
             MatrixConnectionViewController.instance.animateBounce()
             return alertController
@@ -291,7 +291,7 @@ extension FirmwareUpload: DFUProgressDelegate, DFUServiceDelegate, LoggerDelegat
             self.finished()
         }
         if [DFUState.aborted].contains(state) {
-            self.dfuError(.deviceDisconnected, didOccurWithMessage: "dfu process aborted")
+            self.dfuError(.deviceDisconnected, didOccurWithMessage: "DFU process aborted")
         }
     }
 

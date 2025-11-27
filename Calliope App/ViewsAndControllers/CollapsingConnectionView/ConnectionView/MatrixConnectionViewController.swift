@@ -412,8 +412,16 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
         }
     }
 
+    private var isShowingErrorAlert = false
+
     private func error(_ error: Error) {
+        // Prüfe, ob bereits ein Fehler-Alert angezeigt wird
+        if isShowingErrorAlert {
+            return
+        }
+
         let alertController: UIAlertController?
+
         if (error as? CBError)?.errorCode == 14 {
             alertController = UIAlertController(title: NSLocalizedString("Remove paired device", comment: ""), message: NSLocalizedString("This Calliope can not be connected until you go to the bluetooth settings of your device and \"ignore\" it.", comment: ""), preferredStyle: .alert)
         } else if error.localizedDescription == NSLocalizedString("Connection to calliope timed out!", comment: "") {
@@ -426,7 +434,17 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
             return
         }
 
-        alertController.addAction(UIAlertAction(title: "OK", style: .default))
+        // Falls es sich um die Standard-Fehlermeldung handelt, die nur einmal gezeigt werden soll,
+        // die Variable setzen
+        if alertController.title == NSLocalizedString("Error", comment: "") {
+            isShowingErrorAlert = true
+            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+                self.isShowingErrorAlert = false
+            }))
+        } else {
+            alertController.addAction(UIAlertAction(title: "OK", style: .default))
+        }
+
         self.show(alertController, sender: nil)
     }
-}
+    }
