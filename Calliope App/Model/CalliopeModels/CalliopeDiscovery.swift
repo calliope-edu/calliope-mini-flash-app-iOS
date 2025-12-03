@@ -35,7 +35,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
 
     private(set) var state: CalliopeDiscoveryState = .initialized {
         didSet {
-            LogNotify.log("calliope discovery state: \(state)")
+            LogNotify.log("Calliope mini discovery state: \(state)")
             updateQueue.async {
                 self.updateBlock()
             }
@@ -55,7 +55,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         didSet {
             if let connectingCalliope = self.connectingCalliope {
                 if connectingCalliope is DiscoveredBLEDDevice {
-                    LogNotify.log("Connect to Bluetooth Calliope")
+                    LogNotify.log("Connect to Bluetooth Calliope mini")
                     let connectingBLECalliope = connectingCalliope as! DiscoveredBLEDDevice
                     connectedCalliope = nil
                     self.centralManager.connect(connectingBLECalliope.peripheral, options: nil)
@@ -65,21 +65,21 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
                             LogNotify.log("disabling auto connect for \(connectingCalliope)")
                             self.centralManager.cancelPeripheralConnection(connectingBLECalliope.peripheral)
                             self.updateQueue.async {
-                                self.errorBlock(NSLocalizedString("Connection to calliope timed out!", comment: ""))
+                                self.errorBlock(NSLocalizedString("Connection to Calliope mini timed out!", comment: ""))
                             }
                         }
                     }
                 }
                 if connectingCalliope is DiscoveredUSBDevice {
-                    LogNotify.log("Connect to USB Calliope")
+                    LogNotify.log("Connect to USB Calliope mini")
                     let connectingUSBCalliope = connectingCalliope as! DiscoveredUSBDevice
                     do {
                         connectedUSBCalliope = connectingUSBCalliope
                         connectedUSBCalliope?.usageReadyCalliope = try USBCalliope(calliopeLocation: connectingUSBCalliope.url)
                         dispatchUSBCalliopePolling()
-                        LogNotify.log("Calliope Discovery State now: \(state)")
+                        LogNotify.log("Calliope mini Discovery State now: \(state)")
                     } catch {
-                        LogNotify.log("Connecting to USB Calliope failed")
+                        LogNotify.log("Connecting to USB Calliope mini failed")
                     }
 
                 }
@@ -333,7 +333,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
             let calliope = discoveredCalliopes[name]
         else {
             updateQueue.async {
-                self.errorBlock(NSLocalizedString("Could not find connected calliope in discovered calliopes", comment: ""))
+                self.errorBlock(NSLocalizedString("Could not find connected Calliope mini in discovered Calliope minis", comment: ""))
             }
             return
         }
@@ -415,7 +415,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
 //            LogNotify.log("USB Calliope reachability state: (\(usbCalliope.isConnected()), \(usbCalliope.writeInProgress), \(self.isInBackground), \(self.backoff))")
             if usbCalliope.isConnected() || usbCalliope.writeInProgress || self.isInBackground { // happy path
                 if self.currentRetries > 0 {
-                    LogNotify.log("USB Calliope reachable after \(self.currentRetries) retries: (\(usbCalliope.isConnected()), \(usbCalliope.writeInProgress), \(self.isInBackground), \(self.backoff))")
+                    LogNotify.log("USB Calliope mini reachable after \(self.currentRetries) retries: (\(usbCalliope.isConnected()), \(usbCalliope.writeInProgress), \(self.isInBackground), \(self.backoff))")
                     self.currentRetries = 0
                 }
                 self.dispatchUSBCalliopePolling(usbCalliope.writeInProgress)
@@ -423,7 +423,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
             }
           
             // calliope not reachable path
-            LogNotify.log("USB Calliope not reachable (\(usbCalliope.isConnected()), \(usbCalliope.writeInProgress), \(self.isInBackground), \(self.backoff)), \(self.currentRetries < self.MAX_RETRIES ? "retrying" : "disconnecting")")
+            LogNotify.log("USB Calliope mini not reachable (\(usbCalliope.isConnected()), \(usbCalliope.writeInProgress), \(self.isInBackground), \(self.backoff)), \(self.currentRetries < self.MAX_RETRIES ? "retrying" : "disconnecting")")
             if self.currentRetries < self.MAX_RETRIES { // retry path
                 self.currentRetries += 1
                 self.dispatchUSBCalliopePolling()

@@ -40,9 +40,9 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
         }
 
         if fileManager.fileExists(atPath: filePath) {
-            LogNotify.log("Validated Calliope folder")
+            LogNotify.log("Validated Calliope mini folder")
         } else {
-            LogNotify.log("Failed to Validate calliope")
+            LogNotify.log("Failed to validate Calliope mini")
         }
     }
 
@@ -55,8 +55,8 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
     }
 
     override func upload(file: Hex, progressReceiver: DFUProgressDelegate? = nil, statusDelegate: DFUServiceDelegate? = nil, logReceiver: LoggerDelegate? = nil) throws {
-        if isConnected() {
-            progressReceiver?.dfuProgressDidChange(for: 50, outOf: 100, to: 51, currentSpeedBytesPerSecond: 0.0, avgSpeedBytesPerSecond: 0.0)
+        if isConnected() || writeInProgress {
+            if !writeInProgress { progressReceiver?.dfuProgressDidChange(for: 50, outOf: 100, to: 51, currentSpeedBytesPerSecond: 0.0, avgSpeedBytesPerSecond: 0.0) }
             writeInProgress = true
             writeToCalliope(file) {
                 statusDelegate?.dfuStateDidChange(to: .completed)

@@ -38,7 +38,7 @@
 "Connect to enable uploading programs" = "Connect to Calliope mini to enable uploading programs";
 
 /* No comment provided by engineer. */
-"Connection to calliope timed out!" = "Connection to Calliope mini timed out!";
+"Connection to Calliope mini timed out!" = "Connection to Calliope mini timed out!";
 
 /* No comment provided by engineer. */
 "Could not find connected calliope in discovered calliopes" = "Could not find connected Calliope mini";

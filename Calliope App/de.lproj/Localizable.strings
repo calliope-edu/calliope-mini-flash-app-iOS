@@ -316,6 +316,30 @@
 /* No comment provided by engineer. */
 "You are connected to your Calliope, well done!" = "Yeah, du bist verbunden - super gemacht! Weiter geht's!";
 
+/* No comment provided by engineer. */
+"Calliope mini discovery state: \(state)" = "Calliope mini Bluetooth Status: \(state)";
+
+/* No comment provided by engineer. */
+"Connect to Bluetooth Calliope mini" = "Verbunden mit dem Calliope mini per Bluetooth";
+
+/* No comment provided by engineer. */
+"Connection to Calliope mini timed out!" = "Zeitüberschreitung bei der Verbindung mit dem Calliope mini!";
+
+/* No comment provided by engineer. */
+"Connect to USB Calliope mini" = "Verbunden mit dem Calliope mini per USB!";
+
+/* No comment provided by engineer. */
+"Calliope mini Discovery State now: \(state)" = "Der Verbindungsstatus zum Calliope mini ist \(state)";
+
+/* No comment provided by engineer. */
+"Connecting to USB Calliope mini failed" = "Verbindung zum Calliope mini per USB ist fehlgeschlagen!";
+
+/* No comment provided by engineer. */
+"Could not find connected Calliope mini in discovered Calliope minis" = "Verbundener Calliope mini konnte nicht gefunden werden!";
+
+/* No comment provided by engineer. */
+"DFU process aborted" = "DFU-Prozess abgebrochen!";
+
 /**/
 "Datalogger CSV successfully downloaded!" = "Datalogger CSV erfolgreich heruntergeladen!";
 
