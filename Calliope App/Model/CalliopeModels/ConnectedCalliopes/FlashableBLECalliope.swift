@@ -52,6 +52,12 @@ class FlashableBLECalliope: CalliopeAPI {
     internal var uploader: DFUServiceController? = nil
 
     override public func upload(file: Hex, progressReceiver: DFUProgressDelegate? = nil, statusDelegate: DFUServiceDelegate? = nil, logReceiver: LoggerDelegate? = nil) throws {
+        let hexTypes = file.getHexTypes()
+           if hexTypes.contains(.arcade) {
+               LogNotify.log("Arcade files cannot be uploaded via Bluetooth")
+               statusDelegate?.dfuError(.unsupportedResponse, didOccurWithMessage: NSLocalizedString("Arcade-Dateien können nur per USB übertragen werden.", comment: ""))
+               return
+           }
 
         self.file = file
 
