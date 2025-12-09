@@ -145,6 +145,7 @@
 		7E25C52A365F804B8AF1752B /* DataLoggerWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E25C0A505857D5F2CC1019C /* DataLoggerWebViewController.swift */; };
 		7E25CB63E012B25A80606449 /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E25C5F2B4FF55234B28A749 /* UIDevice+Extensions.swift */; };
 		7E25CE114DDEDC718EAB742D /* UtilityLogJob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E25C8370320F1AE86E741A5 /* UtilityLogJob.swift */; };
+		802A2C672ED9FE7C00B49002 /* PartialFlashingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802A2C662ED9FE7C00B49002 /* PartialFlashingManager.swift */; };
 		B16DD0D6E28647BDAC9EA8CB /* Pods_Calliope_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B15F9E6DE42C49A76EC47B /* Pods_Calliope_App.framework */; };
 /* End PBXBuildFile section */
 
@@ -319,6 +320,7 @@
 		7E25C80C2A4E87716138A0E0 /* UtilityJobState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityJobState.swift; sourceTree = "<group>"; };
 		7E25C8370320F1AE86E741A5 /* UtilityLogJob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityLogJob.swift; sourceTree = "<group>"; };
 		7E25CF0763552A9F4EBCE00E /* UtilityJobProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityJobProtocol.swift; sourceTree = "<group>"; };
+		802A2C662ED9FE7C00B49002 /* PartialFlashingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartialFlashingManager.swift; sourceTree = "<group>"; };
 		BD1AFC4008F992EADC1C557D /* Pods-Calliope App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.release.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -744,6 +746,7 @@
 				60D1FD6A2B6BCF8700BC6202 /* DiscoveryCalliopes */,
 				60316BF92B0210CC00130C0D /* CalliopeFactory.swift */,
 				2F61452F22BF761F001C2734 /* CalliopeDiscovery.swift */,
+				802A2C662ED9FE7C00B49002 /* PartialFlashingManager.swift */,
 			);
 			path = CalliopeModels;
 			sourceTree = "<group>";
@@ -1076,6 +1079,7 @@
 				604841D52B1F328A0037A825 /* OnboardingOfflineViewController.swift in Sources */,
 				60030BA02DC9E77C00397E69 /* Coordinates+Extension.swift in Sources */,
 				6094C39F2C04A869006F4CB4 /* ChartCollectionViewController.swift in Sources */,
+				802A2C672ED9FE7C00B49002 /* PartialFlashingManager.swift in Sources */,
 				2F61459422BF761F001C2734 /* EditorViewController.swift in Sources */,
 				2F61458B22BF761F001C2734 /* MatrixView.swift in Sources */,
 				2F2B80A025A1100800A7CCF7 /* PlaygroundCodeSnippetViewController.swift in Sources */,

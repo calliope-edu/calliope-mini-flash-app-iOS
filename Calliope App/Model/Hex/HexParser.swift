@@ -175,9 +175,41 @@ struct HexParser {
         }
         reader.rewind()
 
-        let (line, currentSegmentAddress) = forwardToMagicNumber(reader)
-        guard let magicLine = line else {
+        let (magicLine, currentSegmentAddress) = forwardToMagicNumber(reader)
+        guard let magicLineUnwrapped = magicLine else {
             return nil
+        }
+
+        // Determine endMarkerAddress from the checksum block (the line before magicLine)
+        // The checksum block is assumed to be the line before magicLine in stream order,
+        // so rewind to start and find the checksum block line by iterating until magicLine.
+        var endMarkerAddressValue: UInt16? = nil
+
+        reader.rewind()
+        var prevLine: String? = nil
+        while let line = reader.nextLine() {
+            if line == magicLineUnwrapped {
+                break
+            }
+            prevLine = line
+        }
+        if let checksumBlockLine = prevLine {
+            // Parse the checksum block line:
+            // It should be a record of type 0, with data length >= 8 bytes (to read offset 4..7)
+            if HexReader.type(of: checksumBlockLine) == 0,
+               let length = HexReader.length(of: checksumBlockLine),
+               length >= 8,
+               let data = HexReader.data(of: checksumBlockLine, length) {
+                // The offset 4 (zero-based) means bytes 4..7 (4 bytes, little-endian)
+                if data.count >= 8 {
+                    let endMarkerData = data.subdata(in: 4..<8)
+                    // convert 4-byte little endian data to UInt32, then downcast to UInt16 (low 16 bits)
+                    let endMarkerUInt32 = endMarkerData.withUnsafeBytes { ptr -> UInt32 in
+                        ptr.load(as: UInt32.self)
+                    }
+                    endMarkerAddressValue = UInt16(truncatingIfNeeded: endMarkerUInt32)
+                }
+            }
         }
 
         if let hashesLine = reader.nextLine(),
@@ -187,10 +219,11 @@ struct HexParser {
             return (templateHash,
                 programHash,
                 PartialFlashData(
-                    nextLines: [hashesLine, magicLine],
+                    nextLines: [hashesLine, magicLineUnwrapped],
                     currentSegmentAddress: currentSegmentAddress,
                     reader: reader,
-                    lineCount: numLinesToFlash))
+                    lineCount: numLinesToFlash,
+                    endMarkerAddress: endMarkerAddressValue))
         }
         return nil
     }
@@ -220,11 +253,15 @@ struct PartialFlashData: Sequence, IteratorProtocol {
     private var nextData: [(address: UInt16, data: Data)] = []
     private var reader: StreamReader?
 
-    init(nextLines: [String], currentSegmentAddress: UInt16, reader: StreamReader, lineCount: Int) {
+    private var endMarkerChunk: (address: UInt16, data: Data)?
+    private let endMarkerAddress: UInt16?
+
+    init(nextLines: [String], currentSegmentAddress: UInt16, reader: StreamReader, lineCount: Int, endMarkerAddress: UInt16? = nil) {
         self.reader = reader
         self.nextData = []
         self.currentSegmentAddress = currentSegmentAddress
         self.lineCount = lineCount
+        self.endMarkerAddress = endMarkerAddress
         //extract data from nextLines
         nextLines.forEach {
             read($0)
@@ -232,12 +269,19 @@ struct PartialFlashData: Sequence, IteratorProtocol {
     }
 
     mutating func next() -> (address: UInt16, data: Data)? {
+        // First try to return from nextData
         let line = nextData.popLast()
+        // If none and still have reader, read more lines
         while let reader = reader, nextData.count == 0 {
             guard let record = reader.nextLine() else {
                 break
             }
             read(record)
+        }
+        // If line is nil and endMarkerChunk exists, return it now
+        if line == nil, let endChunk = endMarkerChunk {
+            endMarkerChunk = nil
+            return endChunk
         }
         return line
     }
@@ -253,7 +297,12 @@ struct PartialFlashData: Sequence, IteratorProtocol {
             if record.contains("00000001FF") {
                 break
             } else if let data = HexReader.readData(record) {
-                nextData.append(data)
+                if let endAddr = endMarkerAddress, data.address == endAddr {
+                    // Store end marker chunk separately
+                    endMarkerChunk = data
+                } else {
+                    nextData.append(data)
+                }
             }
         case 2: // extended segment adress
             if let segmentAddress = HexReader.readSegmentAddress(record) {

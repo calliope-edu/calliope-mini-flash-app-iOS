@@ -11,6 +11,10 @@ import UniformTypeIdentifiers
 
 class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDelegate {
 
+    // UUIDs used to identify Calliope mini v3 / micro:bit v2 devices (partial flashing capable)
+    private static let partialFlashingServiceUUID = CBUUID(string: "e97dd91d-251d-470a-a062-fa1922dfa9a8")
+    private static let secureDFUServiceUUID = CBUUID(string: "0000fe59-0000-1000-8000-00805f9b34fb")
+
     enum CalliopeDiscoveryState {
         case initialized  //no discovered calliopes, doing nothing
         case discoveryWaitingForBluetooth  //invoked discovery but waiting for the system bluetooth (might be off)
@@ -50,6 +54,8 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
     }
 
     private var discoveredCalliopeUUIDNameMap: [UUID: String] = [:]
+
+    private var partialFlashingManager: PartialFlashingManager?
 
     private(set) var connectingCalliope: DiscoveredDevice? {
         didSet {
@@ -212,6 +218,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
     // MARK: discovery
 
     func startCalliopeDiscovery() {
+        LogNotify.log("startCalliopeDiscovery() called")
         //start scan only if central manger already connected to bluetooth system service (=poweredOn)
         //alternatively, this is invoked after the state of the central mananger changed to poweredOn.
         if centralManager.state != .poweredOn {
@@ -272,6 +279,14 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
             //let friendlyName = Optional("gepeg") {
             //never create a calliope twice, since this would clear its state
             if discoveredCalliopes[friendlyName] == nil {
+                // Filter: only accept devices that expose PF (v3) related services (micro:bit v2 / Calliope mini v3)
+                let advertisedServices = advertisementData[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID] ?? []
+                let hasPFService = advertisedServices.contains(CalliopeDiscovery.partialFlashingServiceUUID)
+                let hasSecureDFU = advertisedServices.contains(CalliopeDiscovery.secureDFUServiceUUID)
+                guard hasPFService || hasSecureDFU else {
+                    // Ignore non-v3 devices (e.g., older Calliope variants without PF capability)
+                    return
+                }
                 //we found a calliope device (or one that pretends to be a calliope at least)
                 let calliope = calliopeBuilder(peripheral, friendlyName)
                 discoveredCalliopes.updateValue(calliope, forKey: friendlyName)
@@ -338,6 +353,27 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
             return
         }
         connectedCalliope = calliope as? DiscoveredBLEDDevice
+
+        // Initialize Partial Flashing for v3-capable devices
+        if let advertised = (central.retrievePeripherals(withIdentifiers: [peripheral.identifier]).first)?.identifier, true {
+            // We already filtered at discovery time by advertised services; proceed to set up PF manager
+            let manager = PartialFlashingManager(peripheral: peripheral)
+            self.partialFlashingManager = manager
+            manager.onReadyForPartialFlash = { [weak self] in
+                LogNotify.log("PF: Ready for partial flashing (notifications enabled)")
+                // You can trigger startPartialFlash(hexFileURL:) from your UI when appropriate
+            }
+            manager.onProgress = { progress in
+                LogNotify.log("PF progress: \(progress)%")
+            }
+            manager.onCompleted = { [weak self] in
+                LogNotify.log("PF completed")
+            }
+            manager.onError = { error in
+                LogNotify.log("PF error: \(error.localizedDescription)")
+            }
+            manager.beginServiceDiscovery()
+        }
     }
 
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
