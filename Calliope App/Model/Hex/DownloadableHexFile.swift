@@ -32,11 +32,23 @@ extension DownloadableHexFile {
     var calliopeV3Bin: Data {
         return downloadedHexFile?.calliopeV3Bin ?? loadExternalData()
     }
-
+    
     var calliopeUSBUrl: URL {
         return downloadedHexFile?.calliopeUSBUrl ?? URL(string: "/")!
     }
+    var calliopeArcadeBin: Data {
+        return downloadedHexFile?.calliopeArcadeBin ?? loadArcadeData()
+    }
 
+    private func loadArcadeData() -> Data {
+        guard let url = URL(string: loadableProgramURL) else { return Data() }
+        do {
+            return try Data(contentsOf: url)
+        } catch {
+            return Data()
+        }
+    }
+    
     var partialFlashingInfo: (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? {
         return downloadedHexFile?.partialFlashingInfo
     }
@@ -55,30 +67,49 @@ extension DownloadableHexFile {
 
     public func load(completion: @escaping (Error?) -> ()) {
         let url = URL(string: loadableProgramURL)!
-        let task = URLSession.shared.dataTask(with: url) {data, response, error in
-            if (self.downloadFile) {
-                guard error == nil, let data = data, data.count > 0, let hexFile = try? HexFileManager.store(name: self.loadableProgramName, data: data), hexFile.calliopeV1andV2Bin.count > 0 || hexFile.calliopeV3Bin.count > 0 else {
-                    //file saving or parsing issue!
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            if self.downloadFile {
+                guard
+                    error == nil,
+                    let data = data,
+                    data.count > 0,
+                    let hexFile = try? HexFileManager.store(name: self.loadableProgramName, data: data)
+                else {
                     completion(error ?? NSLocalizedString("Could not save file or download is not a proper hex file", comment: ""))
                     return
                 }
-                //everything went smooth
+
+                let types = hexFile.getHexTypes()        // nutzt HexParser.getHexVersion()[file:3][file:2]
+                let isValid =
+                    types.contains(.v2) ||
+                    types.contains(.v3) ||
+                    types.contains(.universal) ||
+                    types.contains(.arcade)
+
+                guard isValid else {
+                    completion(NSLocalizedString("Download is not a proper hex file", comment: ""))
+                    return
+                }
+
                 self.downloadedHexFile = hexFile
                 completion(nil)
             } else {
                 guard error == nil, let data = data, data.count > 0 else {
-                    //file saving or parsing issue!
                     completion(error ?? NSLocalizedString("Could not save file or download is not a proper hex file", comment: ""))
                     return
                 }
                 let hexFile = HexFile(url: url, name: self.name, date: Date())
-                //everything went smooth
                 self.downloadedHexFile = hexFile
                 completion(nil)
             }
         }
         task.resume()
     }
+
+
+
+    
+
 
     /// use this initializer for downloadedHexFile to retrieve already-downloaded hex file
     public func storedHexFileInitializer() -> HexFile? {

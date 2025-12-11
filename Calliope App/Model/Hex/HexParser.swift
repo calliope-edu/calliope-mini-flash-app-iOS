@@ -19,41 +19,52 @@ struct HexParser {
     }
 
     enum HexVersion: String, CaseIterable {
-
-        case v3 = ":1000000000040020810A000015070000610A0000BA"
-        case v2 = ":020000040000FA"
+        case v3      = ":1000000000040020810A000015070000610A0000BA"
+        case v2      = ":020000040000FA"
         case universal = ":0400000A9900C0DEBB"
+        case arcade  = ":10000000000002202D5A0100555A0100575A0100E4"  // ← EXAKT so!
         case invalid = ""
     }
 
+
     func getHexVersion() -> Set<HexVersion> {
+        print("🔍 getHexVersion() für: \(url.path)") // ← NEU!
+        
         let urlAccess = url.startAccessingSecurityScopedResource()
         guard let reader = StreamReader(path: url.path) else {
+            print("❌ StreamReader failed") // ← NEU!
             var enumSet: Set<HexVersion> = Set.init()
             enumSet.insert(.invalid)
             return enumSet
         }
-
+        
         defer {
             reader.close()
             if urlAccess {
                 url.stopAccessingSecurityScopedResource()
             }
         }
-
+        
         var relevantLines: Set<String> = Set.init()
         relevantLines.insert(reader.nextLine()?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "")
         relevantLines.insert(reader.nextLine()?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "")
-
+        
+        print("📄 Erste Zeilen: \(relevantLines)") // ← NEU!
+        
         var enumSet: Set<HexVersion> = Set.init()
         for version in HexVersion.allCases {
             if relevantLines.contains(version.rawValue) {
+                print("✅ Match: \(version)") // ← NEU!
                 enumSet.insert(version)
             }
         }
+        
         if enumSet.isEmpty {
+            print("❌ Kein Match → .invalid") // ← NEU!
             enumSet.insert(.invalid)
         }
+        
+        print("🔍 Rückgabe: \(enumSet)") // ← NEU!
         return enumSet
     }
 

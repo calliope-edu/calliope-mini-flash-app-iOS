@@ -1,382 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="93j-LA-Q6m">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="93j-LA-Q6m">
     <device id="ipad11_0rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Playground Code Snippet View Controller-->
-        <scene sceneID="SOb-Zl-ut2">
-            <objects>
-                <viewController storyboardIdentifier="playgroundCodeSnippetViewController" id="b79-Bp-axf" customClass="PlaygroundCodeSnippetViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="enb-Bu-AEQ">
-                        <rect key="frame" x="0.0" y="0.0" width="513.5" height="1194"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L1q-WM-W3L">
-                                <rect key="frame" x="0.0" y="50" width="513.5" height="1104"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <attributedString key="attributedText">
-                                    <fragment>
-                                        <string key="content">func chooseASnippet() { 	let snippet = 
-		leftColumn.selectedSnippet
-	this.display(snippet)
-}</string>
-                                        <attributes>
-                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <font key="NSFont" metaFont="system" size="16"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gTk-sL-RBi">
-                                <rect key="frame" x="0.0" y="1154" width="513.5" height="40"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copied snippet!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7rw-qs-gzO">
-                                        <rect key="frame" x="0.0" y="0.0" width="513.5" height="40"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="fG2-9N-LB3"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" name="calliope-orange"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="7rw-qs-gzO" secondAttribute="trailing" id="3u7-hG-qTe"/>
-                                    <constraint firstItem="7rw-qs-gzO" firstAttribute="top" secondItem="gTk-sL-RBi" secondAttribute="top" id="iD4-IE-lnD"/>
-                                    <constraint firstItem="7rw-qs-gzO" firstAttribute="leading" secondItem="gTk-sL-RBi" secondAttribute="leading" id="sdo-rC-1P0"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="gSF-XG-CiI"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="gSF-XG-CiI" firstAttribute="trailing" secondItem="gTk-sL-RBi" secondAttribute="trailing" id="3Xi-qu-RgN"/>
-                            <constraint firstItem="gSF-XG-CiI" firstAttribute="trailing" secondItem="L1q-WM-W3L" secondAttribute="trailing" id="5cy-gr-Li8"/>
-                            <constraint firstItem="L1q-WM-W3L" firstAttribute="leading" secondItem="gSF-XG-CiI" secondAttribute="leading" id="Njt-YP-DH1"/>
-                            <constraint firstItem="L1q-WM-W3L" firstAttribute="top" secondItem="gSF-XG-CiI" secondAttribute="top" id="VqF-LL-ghL"/>
-                            <constraint firstItem="gTk-sL-RBi" firstAttribute="leading" secondItem="gSF-XG-CiI" secondAttribute="leading" id="Xzu-jj-PEv"/>
-                            <constraint firstAttribute="bottom" secondItem="gTk-sL-RBi" secondAttribute="bottom" id="egS-uP-jC2"/>
-                            <constraint firstItem="gTk-sL-RBi" firstAttribute="top" secondItem="L1q-WM-W3L" secondAttribute="bottom" id="xxg-1L-Cdg"/>
-                            <constraint firstItem="gSF-XG-CiI" firstAttribute="bottom" secondItem="7rw-qs-gzO" secondAttribute="bottom" id="yNd-RG-mST"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="codeView" destination="L1q-WM-W3L" id="O8c-Lr-mcL"/>
-                        <outlet property="copySuccessView" destination="gTk-sL-RBi" id="n3e-1z-Oeu"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jpb-JW-eDl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1491" y="1358"/>
-        </scene>
-        <!--Playground Snippets-->
-        <scene sceneID="MZm-0p-TvX">
-            <objects>
-                <tableViewController title="Playground Snippets" clearsSelectionOnViewWillAppear="NO" id="IAA-SO-Qac" customClass="PlaygroundSnippetTableViewController" customModule="Calliope_App" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="wIN-P2-k8d">
-                        <rect key="frame" x="0.0" y="0.0" width="420" height="1194"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="snippetOverviewCell" id="HYI-qk-Ict" customClass="PlaygroundSnippetTableViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="50" width="420" height="66.5"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HYI-qk-Ict" id="GnZ-Nf-zya">
-                                    <rect key="frame" x="100" y="0.0" width="320" height="66.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jZR-Hi-92E">
-                                            <rect key="frame" x="16" y="11" width="388" height="20.5"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oCk-WD-9Kc">
-                                            <rect key="frame" x="16" y="34.5" width="388" height="21"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="oCk-WD-9Kc" firstAttribute="leading" secondItem="GnZ-Nf-zya" secondAttribute="leadingMargin" id="QRV-Xq-AS2"/>
-                                        <constraint firstItem="oCk-WD-9Kc" firstAttribute="top" secondItem="jZR-Hi-92E" secondAttribute="bottom" constant="3" id="YeG-dr-CDe"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="jZR-Hi-92E" secondAttribute="trailing" id="Z7z-AD-OAJ"/>
-                                        <constraint firstItem="jZR-Hi-92E" firstAttribute="leading" secondItem="GnZ-Nf-zya" secondAttribute="leadingMargin" id="ZsU-gS-6Ht"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="oCk-WD-9Kc" secondAttribute="bottom" id="ccH-IZ-NwE"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="oCk-WD-9Kc" secondAttribute="trailing" id="emO-rd-Ocd"/>
-                                        <constraint firstItem="jZR-Hi-92E" firstAttribute="top" secondItem="GnZ-Nf-zya" secondAttribute="topMargin" id="qCD-xA-qrd"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="snippetTitle" destination="jZR-Hi-92E" id="EIE-p4-7rf"/>
-                                    <outlet property="summary" destination="oCk-WD-9Kc" id="heX-Pc-1GL"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="IAA-SO-Qac" id="Cho-fI-O9Y"/>
-                            <outlet property="delegate" destination="IAA-SO-Qac" id="Ue9-ef-5K3"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Playground Snippets" id="ke0-Pl-3Bl">
-                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="o8B-0D-61P">
-                            <connections>
-                                <action selector="done:" destination="IAA-SO-Qac" id="Odh-bt-C6f"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Lq5-Fv-dHM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2381" y="752"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="1bh-4g-ypm">
-            <objects>
-                <navigationController id="Dz8-u8-rBh" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KuC-Ra-QYj">
-                        <rect key="frame" x="0.0" y="0.0" width="420" height="50"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="IAA-SO-Qac" kind="relationship" relationship="rootViewController" id="fWH-4M-5hK"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="YFV-qP-zy1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1491" y="753"/>
-        </scene>
-        <!--Split View Controller-->
-        <scene sceneID="7bm-KH-mbe">
-            <objects>
-                <splitViewController allowDoubleColumnStyle="YES" preferredDisplayMode="beside" behavior="tile" id="Yvi-oC-R1z" sceneMemberID="viewController">
-                    <connections>
-                        <segue destination="Dz8-u8-rBh" kind="relationship" relationship="masterViewController" id="BgP-Ul-FUa"/>
-                        <segue destination="b79-Bp-axf" kind="relationship" relationship="detailViewController" id="uhG-Vr-NCf"/>
-                        <segue destination="Hcj-lk-ieU" kind="relationship" relationship="compactViewController" id="p9e-io-AEj"/>
-                    </connections>
-                </splitViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="WIA-KS-F2S" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="602" y="1056"/>
-        </scene>
-        <!--Playground Snippets-->
-        <scene sceneID="Uel-M3-IjX">
-            <objects>
-                <tableViewController title="Playground Snippets" clearsSelectionOnViewWillAppear="NO" id="SgB-Yb-sTD" customClass="PlaygroundSnippetTableViewController" customModule="Calliope_App" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="kpV-wI-X37">
-                        <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="snippetOverviewCell" id="fAq-65-61O" customClass="PlaygroundSnippetTableViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="50" width="834" height="106"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fAq-65-61O" id="zPA-ln-gsu">
-                                    <rect key="frame" x="0.0" y="0.0" width="834" height="106"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mVL-Pc-a55">
-                                            <rect key="frame" x="20" y="11" width="794" height="20.5"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Al-Qu-EWO">
-                                            <rect key="frame" x="20" y="34.5" width="794" height="21"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <view contentMode="scaleToFill" verticalHuggingPriority="252" verticalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="CQE-r4-aTu">
-                                            <rect key="frame" x="20" y="58.5" width="794" height="36.5"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" verticalCompressionResistancePriority="752" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YGA-Ni-z9x">
-                                                    <rect key="frame" x="8" y="8" width="778" height="20.5"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                            <constraints>
-                                                <constraint firstItem="YGA-Ni-z9x" firstAttribute="leading" secondItem="CQE-r4-aTu" secondAttribute="leading" constant="8" id="MsD-2p-4F7"/>
-                                                <constraint firstAttribute="trailing" secondItem="YGA-Ni-z9x" secondAttribute="trailing" constant="8" id="bAe-ye-que"/>
-                                                <constraint firstAttribute="bottom" secondItem="YGA-Ni-z9x" secondAttribute="bottom" constant="8" id="gGO-P0-Z11"/>
-                                                <constraint firstItem="YGA-Ni-z9x" firstAttribute="top" secondItem="CQE-r4-aTu" secondAttribute="top" constant="8" id="svp-Sw-xKZ"/>
-                                            </constraints>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                    <integer key="value" value="8"/>
-                                                </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
-                                                    <integer key="value" value="2"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
-                                        </view>
-                                        <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AP8-Ad-iON">
-                                            <rect key="frame" x="0.0" y="0.0" width="834" height="106"/>
-                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bQW-1C-7xd">
-                                                <rect key="frame" x="0.0" y="0.0" width="834" height="106"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                <subviews>
-                                                    <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="heg-XS-XiE">
-                                                        <rect key="frame" x="0.0" y="0.0" width="834" height="106"/>
-                                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Trp-Mt-Jap">
-                                                            <rect key="frame" x="0.0" y="0.0" width="834" height="106"/>
-                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                            <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copied snippet!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cIf-ra-SUA">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="834" height="106"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                            </subviews>
-                                                            <constraints>
-                                                                <constraint firstItem="cIf-ra-SUA" firstAttribute="top" secondItem="Trp-Mt-Jap" secondAttribute="top" id="1AT-kd-GCO"/>
-                                                                <constraint firstAttribute="bottom" secondItem="cIf-ra-SUA" secondAttribute="bottom" id="1SN-5c-NcN"/>
-                                                                <constraint firstItem="cIf-ra-SUA" firstAttribute="leading" secondItem="Trp-Mt-Jap" secondAttribute="leading" id="EYM-yH-R3p"/>
-                                                                <constraint firstAttribute="trailing" secondItem="cIf-ra-SUA" secondAttribute="trailing" id="nI6-1H-Dgl"/>
-                                                            </constraints>
-                                                        </view>
-                                                        <vibrancyEffect>
-                                                            <blurEffect style="prominent"/>
-                                                        </vibrancyEffect>
-                                                    </visualEffectView>
-                                                </subviews>
-                                                <constraints>
-                                                    <constraint firstItem="heg-XS-XiE" firstAttribute="top" secondItem="bQW-1C-7xd" secondAttribute="top" id="6ji-fu-HKO"/>
-                                                    <constraint firstAttribute="bottom" secondItem="heg-XS-XiE" secondAttribute="bottom" id="ZwR-EG-Q5b"/>
-                                                    <constraint firstItem="heg-XS-XiE" firstAttribute="leading" secondItem="bQW-1C-7xd" secondAttribute="leading" id="fG3-1s-FQn"/>
-                                                    <constraint firstAttribute="trailing" secondItem="heg-XS-XiE" secondAttribute="trailing" id="wr4-42-Lh2"/>
-                                                </constraints>
-                                            </view>
-                                            <blurEffect style="prominent"/>
-                                        </visualEffectView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="AP8-Ad-iON" firstAttribute="leading" secondItem="zPA-ln-gsu" secondAttribute="leading" id="0Uk-xy-efD"/>
-                                        <constraint firstAttribute="bottom" secondItem="AP8-Ad-iON" secondAttribute="bottom" id="5qj-8A-RAq"/>
-                                        <constraint firstItem="AP8-Ad-iON" firstAttribute="top" secondItem="zPA-ln-gsu" secondAttribute="top" id="671-tx-bV5"/>
-                                        <constraint firstAttribute="trailing" secondItem="AP8-Ad-iON" secondAttribute="trailing" id="FCm-QA-vxs"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="8Al-Qu-EWO" secondAttribute="trailing" id="KWf-cM-okY"/>
-                                        <constraint firstItem="CQE-r4-aTu" firstAttribute="top" secondItem="8Al-Qu-EWO" secondAttribute="bottom" constant="3" id="Ksc-4r-Pey"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="mVL-Pc-a55" secondAttribute="trailing" id="Q5X-c6-alk"/>
-                                        <constraint firstItem="mVL-Pc-a55" firstAttribute="top" secondItem="zPA-ln-gsu" secondAttribute="topMargin" id="Uf7-7p-Qqg"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="CQE-r4-aTu" secondAttribute="bottom" id="UmK-CF-6rI"/>
-                                        <constraint firstItem="CQE-r4-aTu" firstAttribute="leading" secondItem="zPA-ln-gsu" secondAttribute="leadingMargin" id="fhM-pA-WdU"/>
-                                        <constraint firstItem="8Al-Qu-EWO" firstAttribute="top" secondItem="mVL-Pc-a55" secondAttribute="bottom" constant="3" id="iZh-gd-hI9"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="CQE-r4-aTu" secondAttribute="trailing" id="tfP-vR-luY"/>
-                                        <constraint firstItem="mVL-Pc-a55" firstAttribute="leading" secondItem="zPA-ln-gsu" secondAttribute="leadingMargin" id="vSP-9x-Pbh"/>
-                                        <constraint firstItem="8Al-Qu-EWO" firstAttribute="leading" secondItem="zPA-ln-gsu" secondAttribute="leadingMargin" id="vb3-7l-p0l"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="code" destination="YGA-Ni-z9x" id="Thl-Yb-RdP"/>
-                                    <outlet property="copySuccessOverlay" destination="AP8-Ad-iON" id="mAP-Yl-cH9"/>
-                                    <outlet property="snippetTitle" destination="mVL-Pc-a55" id="Lij-ef-Cf9"/>
-                                    <outlet property="summary" destination="8Al-Qu-EWO" id="b8s-TN-2lK"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="SgB-Yb-sTD" id="SE8-qR-Azy"/>
-                            <outlet property="delegate" destination="SgB-Yb-sTD" id="O1j-DQ-HO7"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Playground Snippets" id="yeh-9e-tUu">
-                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="srX-YA-5cN">
-                            <connections>
-                                <action selector="done:" destination="SgB-Yb-sTD" id="h9o-6h-cZh"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zL5-aL-b5W" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2401" y="81"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="aee-P2-Jm3">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Hcj-lk-ieU" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="DH6-cM-5Qv">
-                        <rect key="frame" x="0.0" y="0.0" width="834" height="50"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="SgB-Yb-sTD" kind="relationship" relationship="rootViewController" id="ION-Kv-Rt0"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qWc-Zu-LB6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1491" y="81"/>
-        </scene>
         <!--Home-->
         <scene sceneID="9CR-zM-dgV">
             <objects>
-                <viewController title="Home" id="93j-LA-Q6m" customClass="PlaygroundStartViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wYO-wv-LFs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController storyboardIdentifier="ArcadeStartViewController" title="Home" id="93j-LA-Q6m" customClass="ArcadeStartViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0x9-uc-3Lc">
-                        <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1210"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="roW-FT-wft">
-                                <rect key="frame" x="0.0" y="34" width="834" height="1130"/>
+                                <rect key="frame" x="0.0" y="42" width="834" height="1113"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cCG-ae-1G1">
-                                        <rect key="frame" x="0.0" y="0.0" width="834" height="560"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="834" height="551.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bKp-jF-jIw">
-                                                <rect key="frame" x="10" y="0.0" width="814" height="560"/>
+                                                <rect key="frame" x="10" y="0.0" width="814" height="551.5"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iNU-gK-Q8E">
-                                                        <rect key="frame" x="0.0" y="0.0" width="824" height="182.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="824" height="0.0"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sDg-74-hMi">
-                                                                <rect key="frame" x="20" y="16" width="784" height="86.5"/>
-                                                                <string key="text">Verwende die Snippet Library mit dem Swift Playground. Wenn du in dem Swift Playground "Calliope Mini - Vorlage" arbeitest, kannst du die Snippets Library neben der Playgrounds App öffnen und die Codesnippets ganz bequem von der App in den Playground kopieren.</string>
+                                                                <rect key="frame" x="20" y="16" width="784" height="42.5"/>
+                                                                <string key="text">Mit MakeCode Arcade kannst du Spiele für deinen Calliope mini erstellen und diese auf einem Display oder sogar einer Spielekonsole spielen. Die Übertragung funktioniert nur per USB-Kabel.</string>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="zqc-Md-ScS">
-                                                                <rect key="frame" x="302" y="122.5" width="220" height="50"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="width" constant="220" id="IyM-Qo-az1"/>
-                                                                    <constraint firstAttribute="height" constant="50" id="ryi-j8-JWU"/>
-                                                                </constraints>
-                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                                <state key="normal" title="Snippets Library" image="playground_startscreen/code_library_snippets" backgroundImage="playground_startscreen/mini_button_grey"/>
-                                                                <connections>
-                                                                    <segue destination="Yvi-oC-R1z" kind="presentation" modalPresentationStyle="fullScreen" id="X9R-mB-qq0"/>
-                                                                </connections>
-                                                            </button>
                                                         </subviews>
                                                         <constraints>
                                                             <constraint firstItem="sDg-74-hMi" firstAttribute="leading" secondItem="iNU-gK-Q8E" secondAttribute="leading" constant="20" id="INL-ej-BVr"/>
-                                                            <constraint firstItem="zqc-Md-ScS" firstAttribute="centerX" secondItem="sDg-74-hMi" secondAttribute="centerX" id="ald-8k-azs"/>
                                                             <constraint firstItem="sDg-74-hMi" firstAttribute="top" secondItem="iNU-gK-Q8E" secondAttribute="top" constant="16" id="eNz-fa-Qd3"/>
-                                                            <constraint firstAttribute="bottom" secondItem="zqc-Md-ScS" secondAttribute="bottom" constant="10" id="ezc-ti-0cm"/>
                                                             <constraint firstAttribute="trailing" secondItem="sDg-74-hMi" secondAttribute="trailing" constant="20" id="gCA-IM-Joh"/>
-                                                            <constraint firstItem="zqc-Md-ScS" firstAttribute="top" secondItem="sDg-74-hMi" secondAttribute="bottom" constant="20" id="mLb-NI-hjV"/>
                                                         </constraints>
                                                     </view>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="playground_startscreen/calliope_multitasking" translatesAutoresizingMaskIntoConstraints="NO" id="qal-QC-PEH">
-                                                        <rect key="frame" x="159.5" y="182.5" width="505" height="363.5"/>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="playground_startscreen/calliope_multitasking" translatesAutoresizingMaskIntoConstraints="NO" id="qal-QC-PEH">
+                                                        <rect key="frame" x="61" y="65" width="693" height="499"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="qal-QC-PEH" secondAttribute="height" multiplier="490:353" id="t1u-5G-8cZ"/>
                                                         </constraints>
@@ -408,12 +78,11 @@
                                             <constraint firstAttribute="trailing" secondItem="iNU-gK-Q8E" secondAttribute="trailing" id="o0P-64-zMy"/>
                                         </constraints>
                                     </view>
-                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sH8-TE-zVt">
-                                        <rect key="frame" x="0.0" y="570" width="834" height="560"/>
-                                        <connections>
-                                            <segue destination="5BP-cm-jHp" kind="embed" id="39p-cH-dIJ"/>
-                                        </connections>
-                                    </containerView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dfI-Hn-17L">
+                                        <rect key="frame" x="0.0" y="561.5" width="834" height="551.5"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="MakeCode Arcade öffnen"/>
+                                    </button>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -429,110 +98,21 @@
                     <navigationItem key="navigationItem" title="Home" id="wz7-bF-qTT"/>
                     <connections>
                         <outlet property="mainStackView" destination="roW-FT-wft" id="Ib7-C0-zLl"/>
-                        <outlet property="snippetLibraryButton" destination="zqc-Md-ScS" id="1ly-yw-GAM"/>
+                        <outlet property="openArcadeButton" destination="dfI-Hn-17L" id="1QL-aN-9Be"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wYO-wv-LFs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-338.12949640287775" y="1058.2914572864322"/>
-        </scene>
-        <!--Playground Instructions Collection Collection View Controller-->
-        <scene sceneID="aY7-HF-UnF">
-            <objects>
-                <collectionViewController id="5BP-cm-jHp" customClass="PlaygroundInstructionsCollectionCollectionViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" id="HnM-vf-kZG">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Leo-51-h4F">
-                            <size key="itemSize" width="290" height="260"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="newsCell" id="vxg-fL-XHc" customClass="NewsCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="70" width="290" height="260"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                    <rect key="frame" x="0.0" y="0.0" width="290" height="260"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="R3q-Jj-1DB">
-                                            <rect key="frame" x="0.0" y="0.0" width="290" height="193.5"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" secondItem="R3q-Jj-1DB" secondAttribute="height" multiplier="3:2" priority="998" id="Wc0-c1-2pq"/>
-                                            </constraints>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There is veeery long text which could end up in two lines" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="AKN-ba-DUa">
-                                            <rect key="frame" x="16" y="198.5" width="258" height="53.5"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
-                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OTq-HU-8Ga">
-                                            <rect key="frame" x="16" y="193.5" width="258" height="2"/>
-                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="2" id="pyd-K9-TGe"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                </view>
-                                <color key="backgroundColor" name="calliope-turqoise"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="AKN-ba-DUa" secondAttribute="bottom" priority="999" constant="8" id="2r7-3U-BwV"/>
-                                    <constraint firstItem="AKN-ba-DUa" firstAttribute="top" secondItem="R3q-Jj-1DB" secondAttribute="bottom" constant="5" id="3S3-Sr-tvY"/>
-                                    <constraint firstAttribute="trailing" secondItem="OTq-HU-8Ga" secondAttribute="trailing" constant="16" id="DVE-t8-bUY"/>
-                                    <constraint firstAttribute="trailing" secondItem="AKN-ba-DUa" secondAttribute="trailing" priority="999" constant="16" id="GXp-GZ-cbJ"/>
-                                    <constraint firstItem="R3q-Jj-1DB" firstAttribute="top" secondItem="vxg-fL-XHc" secondAttribute="top" id="Jow-p9-wx8"/>
-                                    <constraint firstItem="R3q-Jj-1DB" firstAttribute="leading" secondItem="vxg-fL-XHc" secondAttribute="leading" id="MGz-zq-tcp"/>
-                                    <constraint firstItem="OTq-HU-8Ga" firstAttribute="leading" secondItem="vxg-fL-XHc" secondAttribute="leading" constant="16" id="aSR-7E-ZqW"/>
-                                    <constraint firstItem="OTq-HU-8Ga" firstAttribute="top" secondItem="R3q-Jj-1DB" secondAttribute="bottom" id="g6j-Lj-SWB"/>
-                                    <constraint firstAttribute="trailing" secondItem="R3q-Jj-1DB" secondAttribute="trailing" priority="999" constant="8" id="hey-Wk-wDG"/>
-                                    <constraint firstItem="AKN-ba-DUa" firstAttribute="leading" secondItem="vxg-fL-XHc" secondAttribute="leading" constant="16" id="n6M-VM-kpC"/>
-                                    <constraint firstItem="R3q-Jj-1DB" firstAttribute="width" secondItem="vxg-fL-XHc" secondAttribute="width" id="yUD-b3-eiT"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="7"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <outlet property="newsImageView" destination="R3q-Jj-1DB" id="zPu-iG-W59"/>
-                                    <outlet property="newsTitle" destination="AKN-ba-DUa" id="alb-gT-hWD"/>
-                                </connections>
-                            </collectionViewCell>
-                        </cells>
-                        <connections>
-                            <outlet property="dataSource" destination="5BP-cm-jHp" id="4zj-ol-hPE"/>
-                            <outlet property="delegate" destination="5BP-cm-jHp" id="sQ2-6d-347"/>
-                        </connections>
-                    </collectionView>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="600" height="400"/>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Mja-60-lit" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-338" y="1688"/>
+            <point key="canvasLocation" x="-358" y="1066"/>
         </scene>
     </scenes>
     <color key="tintColor" name="calliope-lilablau"/>
     <resources>
         <image name="playground_startscreen/calliope_multitasking" width="1200" height="800"/>
-        <image name="playground_startscreen/code_library_snippets" width="82" height="82"/>
-        <image name="playground_startscreen/mini_button_grey" width="19" height="180"/>
         <namedColor name="calliope-lightgray">
             <color red="0.92900002002716064" green="0.93300002813339233" blue="0.93699997663497925" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="calliope-lilablau">
             <color red="0.3919999897480011" green="0.46200001239776611" blue="0.99199998378753662" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="calliope-orange">
-            <color red="1" green="0.3059999942779541" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="calliope-turqoise">
-            <color red="0.25900000333786011" green="0.78799998760223389" blue="0.78799998760223389" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

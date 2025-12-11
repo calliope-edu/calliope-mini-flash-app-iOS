@@ -16,7 +16,7 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
     static var calliopeLocation: URL?
 
     override var compatibleHexTypes: Set<HexParser.HexVersion> {
-        return [.universal, .v3, .v2]
+        return [.universal, .v3, .v2, .arcade]
     }
     
     var writeInProgress: Bool = false
@@ -77,13 +77,40 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
         For further information on the different commands, visit: https://github.com/ARMmbed/DAPLink/blob/main/docs/MSD_COMMANDS.md
      */
     fileprivate func writeToCalliope(_ file: Hex?, _ completion: @escaping () -> Void) {
+        guard let file = file else {
+            completion()
+            return
+        }
+        
         let accessResource = USBCalliope.calliopeLocation?.startAccessingSecurityScopedResource()
         defer {
             if accessResource ?? false {
                 USBCalliope.calliopeLocation?.stopAccessingSecurityScopedResource()
             }
         }
-
+        
+        // Prüfen ob es eine Arcade-Datei ist
+        let hexTypes = file.getHexTypes()
+        let isArcadeFile = hexTypes.contains(.arcade)
+        
+        if isArcadeFile {
+            // Arcade: Direkt die komplette Datei kopieren ohne vorherige Befehle
+            LogNotify.log("Arcade file detected - copying complete file")
+            do {
+                let data = try Data(contentsOf: file.calliopeUSBUrl)
+                try data.write(to: USBCalliope.calliopeLocation!.appendingPathComponent(file.calliopeUSBUrl.lastPathComponent))
+                LogNotify.log("Arcade file copied successfully")
+            } catch {
+                LogNotify.log("Error copying Arcade file: \(error)")
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                completion()
+            }
+            return
+        }
+        
+        // Bestehender Code für normale MakeCode-Dateien
         let data = Data()
         let startInterfaceCommand = "start_if.act"
         let autoRestartConfigurationCommand = "auto_rst.cfg"
@@ -133,8 +160,8 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
                 }
             }
             do {
-                let data = try Data(contentsOf: file!.calliopeUSBUrl)
-                try data.write(to: USBCalliope.calliopeLocation!.appendingPathComponent(file!.calliopeUSBUrl.lastPathComponent))
+                let data = try Data(contentsOf: file.calliopeUSBUrl)
+                try data.write(to: USBCalliope.calliopeLocation!.appendingPathComponent(file.calliopeUSBUrl.lastPathComponent))
             } catch {
                 LogNotify.log("Error: \(error)")
             }

@@ -23,8 +23,8 @@
 /* Class = "UIButton"; normalTitle = "Scan QR code"; ObjectID = "49i-Ve-lcm"; */
 "49i-Ve-lcm.normalTitle" = "Scan";
 
-/* Class = "UILabel"; text = "Playground"; ObjectID = "NWk-nx-U7c"; */
-"NWk-nx-U7c.text" = "Playground";
+/* Class = "UILabel"; text = "Arcade (USB only)"; ObjectID = "NWk-nx-U7c"; */
+"NWk-nx-U7c.text" = "Arcade (USB only)";
 
 /* Class = "UIViewController"; title = "Editor"; ObjectID = "eeY-2x-OZY"; */
 "eeY-2x-OZY.title" = "Editor";

@@ -34,8 +34,8 @@
 /* Class = "UILabel"; text = "Calliope mini 3: Download the original program of the Calliope mini 3. \nConnect and transfer the program!"; ObjectID = "nWb-Ra-8Xg"; */
 "nWb-Ra-8Xg.text" = "Calliope mini 3: Lade hier das Startprogramm für den Calliope mini 3.\nEinfach verbinden und Programm übertragen!\n";
 
-/* Class = "UILabel"; text = "Playground"; ObjectID = "NWk-nx-U7c"; */
-"NWk-nx-U7c.text" = "Playground";
+/* Class = "UILabel"; text = "Arcade (nur über USB)"; ObjectID = "NWk-nx-U7c"; */
+"NWk-nx-U7c.text" = "Arcade (nur über USB)";
 
 /* Class = "UILabel"; text = "Open Roberta Lab"; ObjectID = "pm2-Za-VcF"; */
 "pm2-Za-VcF.text" = "Open Roberta Lab";

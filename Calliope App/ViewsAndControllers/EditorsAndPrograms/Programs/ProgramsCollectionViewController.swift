@@ -64,7 +64,7 @@ class ProgramsCollectionViewController: UICollectionViewController, ProgramCellD
     private func animateFileChange() {
         let oldItems = hexFiles
         let newItems = (try? HexFileManager.stored()) ?? []
-        let changes = diff(old: oldItems, new: newItems)
+        let changes = diff(old: oldItems as [HexFile], new: newItems as [HexFile])
         collectionView.reload(changes: changes, section: 0, updateData: {
             self.hexFiles = newItems
         })
@@ -192,3 +192,4 @@ class ProgramsCollectionViewController: UICollectionViewController, ProgramCellD
 
 
 }
+

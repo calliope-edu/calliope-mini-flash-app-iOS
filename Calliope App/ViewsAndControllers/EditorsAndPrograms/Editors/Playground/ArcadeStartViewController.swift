@@ -1,5 +1,5 @@
 //
-//  PlaygroundStartViewController.swift
+//  ArcadeStartViewController.swift
 //  Calliope App
 //
 //  Created by Tassilo Karge on 15.08.21.
@@ -8,20 +8,20 @@
 
 import UIKit
 
-class PlaygroundStartViewController: UIViewController {
+class ArcadeStartViewController: UIViewController {
 
     @IBOutlet weak var mainStackView: UIStackView!
-    @IBOutlet weak var snippetLibraryButton: UIButton!
+    @IBOutlet weak var openArcadeButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        snippetLibraryButton.imageView?.contentMode = .scaleAspectFit
+        openArcadeButton.addTarget(self, action: #selector(openArcadeButtonTapped(_:)), for: .touchUpInside)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.rearrangeStackview(view.bounds.size)
-        MatrixConnectionViewController.instance?.calliopeClass = DiscoveredBLEDDevice.self
+        // MatrixConnectionViewController.instance?.calliopeClass = DiscoveredBLEDDevice.self
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -46,5 +46,12 @@ class PlaygroundStartViewController: UIViewController {
         let landscape: Bool = parentSize.width > parentSize.height
         return CGSize(width: landscape ? parentSize.width / 2.0 : parentSize.width, height: landscape ? parentSize.height : parentSize.height / 2.0)
     }
-
+    
+    @objc @IBAction func openArcadeButtonTapped(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "EditorAndPrograms", bundle: nil)
+        if let editorVC = storyboard.instantiateViewController(withIdentifier: "EditorViewController") as? EditorViewController {
+            editorVC.editor = ArcadeEditor()
+            navigationController?.pushViewController(editorVC, animated: true)
+        }
+    }
 }

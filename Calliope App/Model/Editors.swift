@@ -159,6 +159,64 @@ final class CampusEditor: Editor {
     }
 }
 
+final class ArcadeEditor: Editor {
+    public let name = "MakeCode Arcade"
+    public lazy var url: URL? = {
+        return URL(string: "https://arcade.makecode.com")
+    }()
+    
+    func download(_ request: URLRequest) -> EditorDownload? {
+        guard let s = request.url?.absoluteString else {
+            return nil
+        }
+        
+        // Arcade Base64 Format (data:undefined;base64,...)
+        if s.matches(regex: "^([^:]*://)?data:undefined;base64,").count == 1,
+           let url = URL(string: s) {
+            LogNotify.log("ArcadeEditor: Matched undefined;base64 format!")
+            return EditorDownload(name: "arcade-" + UUID().uuidString, url: url, isHex: true)
+        }
+        
+        // Standard Hex-Format (wie bei normalem MakeCode)
+        if s.matches(regex: "^([^:]*://)?data:application/x-calliope-hex").count == 1 ||
+           s.matches(regex: "^([^:]*://)?data:application/x-microbit-hex").count == 1,
+           let url = URL(string: s) {
+            return EditorDownload(name: "arcade-" + UUID().uuidString, url: url, isHex: true)
+        }
+        
+        // Octet-Stream Format
+        if s.matches(regex: "^([^:]*://)?data:application/octet-stream").count == 1,
+           let url = URL(string: s) {
+            return EditorDownload(name: "arcade-" + UUID().uuidString, url: url, isHex: true)
+        }
+        
+        return nil
+    }
+    
+    func isBackNavigation(_ request: URLRequest) -> Bool {
+        // Keine automatische Zurück-Navigation
+        return false
+    }
+    
+    func allowNavigation(_ request: URLRequest) -> Bool {
+        return true
+    }
+    
+    func getNavigationTargetViewForRequest(_ request: URLRequest) -> NavigationTargetView {
+        guard let url = request.url else {
+            return NavigationTargetView.externalWebView
+        }
+        
+        // Interne Navigation für Arcade und MakeCode Seiten
+        if url.host?.contains("arcade.makecode.com") == true ||
+           url.host?.contains("makecode.com") == true {
+            return NavigationTargetView.internalWebView
+        }
+        
+        return NavigationTargetView.externalWebView
+    }
+}
+
 extension Editor {
     public func isBlob(_ url: URL) -> Bool {
         return url.absoluteString.matches(regex: "^blob:").count == 1

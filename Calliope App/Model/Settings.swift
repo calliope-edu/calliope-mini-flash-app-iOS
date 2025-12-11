@@ -19,8 +19,8 @@ public enum SettingsKey: String, CaseIterable {
     case roberta = "robertaOnPreference"
     case robertaUrl = "robertaUrlPreference"
 
-    case playgrounds = "playgroundsOnPreference"
-    case playgroundTemplateUrl = "playgroundTemplateUrlPreference"
+    case arcade = "arcadeOnPreference"
+    case arcadeUrl = "arcadeUrlPreference"
     
     case blocksMiniEditor = "blocksMiniOnPreferences"
     case blocksMiniEditorUrl = "blocksMiniUrlPreference"
@@ -55,7 +55,7 @@ public struct Settings {
     static var defaultMakecodeUrl = "https://makecode.calliope.cc/beta"
     static var defaultProgramV3 = "https://calliope.cc/downloads/miniV3_start.hex"
     static var defaultProgramV2andV1 = "https://calliope.cc/downloads/calliope-demo.hex"
-    static var defaultPlaygroundTemplateUrl = NSLocalizedString("https://calliope.cc/forumassets/snippets.json", comment: "The url for the snippets json")
+    static var defaultArcadeUrl = "https://arcade.makecode.com"
     static var defaultCalliopeBlocksUrl = "https://calliope.cc/downloads/blocks.hex"
     static var defaultBlocksMiniEditorUrl = "https://blocks.calliope.cc"
     static var defaultMicroPythonUrl = "https://python.calliope.cc?mobile=true"
@@ -65,9 +65,10 @@ public struct Settings {
     static var defaultMakeCodeEnabled = true
     static var defaultBlocksMiniEditorEnabled = true
     static var defaultRobertaEnabled = true
+    static var defaultArcadeEnabled = true
     static var defaultPlaygroundsEnabled = UIDevice.current.userInterfaceIdiom != .phone
-    static var defaultMicroPythonEnabled = true
-    static var defaultCampusEnabled = true
+    static var defaultMicroPythonEnabled = UIDevice.current.userInterfaceIdiom != .phone
+    static var defaultCampusEnabled = UIDevice.current.userInterfaceIdiom != .phone
     
     
     static var defaultRestoreLastMatrixEnabled = true
@@ -97,10 +98,10 @@ public struct Settings {
         case .robertaUrl:
             return defaultOpenRobertaUrl
 
-        case .playgrounds:
-            return defaultPlaygroundsEnabled
-        case .playgroundTemplateUrl:
-            return defaultPlaygroundTemplateUrl
+        case .arcade:
+            return defaultArcadeEnabled
+        case .arcadeUrl:
+            return defaultArcadeUrl
             
         case .microPython:
             return defaultMicroPythonEnabled

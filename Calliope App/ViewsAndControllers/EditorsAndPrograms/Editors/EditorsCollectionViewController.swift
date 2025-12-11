@@ -15,7 +15,7 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
     private let reuseIdentifierMakeCode = "makecodeEditorCell"
     private let reuseIdentifierNepo = "nepoEditorCell"
     private let reuseIdentifierOfflineEditor = "localEditorCell"
-    private let reuseIdentifierPlayground = "playgroundCell"
+    private let reuseIdentifierArcade = "arcadeCell"
     private let reuseIdentifierCalliopeBlocks = "calliopeBlocksCell"
     private let reuseIdentifierMicroPython = "microPythonEditorCell"
     private let reuseIdentifierCampus = "campusEditorCell"
@@ -46,8 +46,8 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
         if settings.bool(forKey: SettingsKey.campus.rawValue) {
             keys.append(.campus)
         }
-        if settings.bool(forKey: SettingsKey.playgrounds.rawValue) {
-            keys.append(.playgrounds)
+        if settings.bool(forKey: SettingsKey.arcade.rawValue) {
+            keys.append(.arcade)
         }
        
         return keys
@@ -92,8 +92,8 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierMicroPython, for: indexPath) as! EditorCollectionViewCell
         case .roberta:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierNepo, for: indexPath) as! EditorCollectionViewCell
-        case .playgrounds:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierPlayground, for: indexPath) as! EditorCollectionViewCell
+        case .arcade:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierArcade, for: indexPath) as! EditorCollectionViewCell
         case .localEditor:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierOfflineEditor, for: indexPath) as! EditorCollectionViewCell
         case .calliopeBlocks:
@@ -169,5 +169,12 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
     
     @IBSegueAction func createBlocksEditor(_ coder: NSCoder, sender: Any?) -> EditorViewController? {
         EditorViewController(coder: coder, editor: BlocksMiniEditor())
+    }
+    
+    @IBSegueAction func createArcadeStartView(_ coder: NSCoder, sender: Any?) -> ArcadeStartViewController? {
+        let storyboard = UIStoryboard(name: "PlaygroundSnippets", bundle: nil)
+        return storyboard.instantiateViewController(identifier: "ArcadeStartViewController") { coder in
+            ArcadeStartViewController(coder: coder)
+        }
     }
 }
