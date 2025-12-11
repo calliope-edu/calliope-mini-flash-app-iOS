@@ -5,7 +5,7 @@
 .xcuserdata
 
 # Xcode & Swift
-
+.DS_Store
 ## User settings
 xcuserdata/
 
