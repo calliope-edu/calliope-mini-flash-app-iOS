@@ -89,7 +89,7 @@
 "Finished" = "Done";
 
 /* No comment provided by engineer. */
-"Flip through the programs by pressing the keys A or B" = "Gehe durch die Programme, indem du die Tasten A und B drückst";
+"Flip through the programs by pressing the keys A or B" = "Flip through the programs by pressing the keys A or B";
 
 /* No comment provided by engineer. */
 "Greetings" = "Welcome";
@@ -290,7 +290,7 @@
 "Datalogger Download fehlgeschlagen!" = "Datalogger Download Failed!";
 
 /* (No Comment) */
-"Es gab ein Problem beim Herunterladen der Datalogger-Daten von Ihrem Calliope mini. Bitte stellen Sie sicher, dass Sie mit dem Calliope verbunden sind, und versuchen Sie es erneut." = "There was an issue downloading the datalogger data from your Calliope mini. Please ensure you are connected to the Calliope and try again.";
+"Es gab ein Problem beim Herunterladen der Datalogger-Daten von Ihrem Calliope mini. Bitte stellen Sie sicher, dass Sie mit dem Calliope verbunden sind, und versuchen Sie es erneut." = "There was an issue downloading the datalogger data from your Calliope mini. Please ensure you are connected to the Calliope mini and try again.";
 
 /* (No Comment) */
 "Übertragung der Datalogger-Daten" = "Transfering Datalogger Data";

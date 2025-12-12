@@ -80,13 +80,30 @@ final class EditorViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        
+        // Alle Navigation Gestures deaktivieren
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        navigationController?.navigationBar.isUserInteractionEnabled = true
+        
+        // Für iPadOS 26+ - versuche alle Gesture Recognizers zu deaktivieren
+        if let gestures = navigationController?.view.gestureRecognizers {
+            for gesture in gestures {
+                gesture.isEnabled = false
+            }
+        }
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
-//        Task { // this will hang, as the mutex is never released -> semaphore_wait_trap
-//            scratchLink.closeAllSessions()
-//        }
+        super.viewWillDisappear(animated)
         MatrixConnectionViewController.instance.restartFromBLEConnectionDrop()
+        
+        // Gestures wieder aktivieren
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        if let gestures = navigationController?.view.gestureRecognizers {
+            for gesture in gestures {
+                gesture.isEnabled = true
+            }
+        }
     }
     
 }

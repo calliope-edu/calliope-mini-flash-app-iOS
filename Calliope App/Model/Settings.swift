@@ -63,7 +63,7 @@ public struct Settings {
 
     static var defaultLocalEditorEnabled = false
     static var defaultMakeCodeEnabled = true
-    static var defaultBlocksMiniEditorEnabled = true
+    static var defaultBlocksMiniEditorEnabled = UIDevice.current.userInterfaceIdiom != .phone
     static var defaultRobertaEnabled = true
     static var defaultArcadeEnabled = true
     static var defaultPlaygroundsEnabled = UIDevice.current.userInterfaceIdiom != .phone

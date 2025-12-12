@@ -123,7 +123,7 @@ struct HexFile: Hex, Equatable, DiffAware {
             // ARCADE FIX: Dummy-Daten für Validierung
             let types = getHexTypes()
             if types.contains(.arcade) {
-                print("✅ Arcade → Dummy V3 Bin (1 byte)")
+                print("Arcade → Dummy V3 Bin (1 byte)")
                 return Data([0x01])  // count > 0! → Prüfung besteht
             }
             

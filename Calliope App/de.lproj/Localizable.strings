@@ -275,7 +275,7 @@
 "There is no connected calliope in DFU mode" = "Es konnte kein Calliope mini gefunden werden";
 
 /* No comment provided by engineer. */
-"There was an issue downloading the datalogger data from your Calliope mini. Please ensure you are connected to the Calliope and try again." = "Es gab ein Problem beim Herunterladen der Datalogger-Daten von Ihrem Calliope mini. Bitte stellen Sie sicher, dass Sie mit dem Calliope verbunden sind, und versuchen Sie es erneut.";
+"There was an issue downloading the datalogger data from your Calliope mini. Please ensure you are connected to the Calliope and try again." = "Es gab ein Problem beim Herunterladen der Datalogger-Daten von Ihrem Calliope mini. Bitte stelle sicher, dass du mit dem Calliope mini verbunden bist, und versuche es erneut.";
 
 /* No comment provided by engineer. */
 "This Calliope can not be connected until you go to the bluetooth settings of your device and \"ignore\" it." = "Dieser Calliope mini kann erst verbunden werden, wenn du in den Bluetooth-Einstellungen deines Geräts die Option \"ignorieren\" wählst.";
@@ -345,7 +345,7 @@
 
 "Failed to download Datalogger CSV!" = "Fehler beim Herunterladen der Datalogger CSV!";
 
-"You can find the CSV file containing your datalogger data, named MY_DATA.csv, in the Calliope directory on your device." = "Du findest die CSV-Datei mit den Datalogger-Daten im Calliope-Verzeichnis  auf deinem Gerät, unter den namen MY_DATA.csv";
+"You can find the CSV file containing your datalogger data, named MY_DATA.csv, in the Calliope directory on your device." = "Du findest die CSV-Datei mit den Datalogger-Daten im Calliope-Verzeichnis auf deinem Gerät, unter den namen MY_DATA.csv";
 
 "The download of the CSV file containing your datalogger data was unsuccessful." = "Der Download der CSV-Datei mit deinen Datalogger-Daten war nicht erfolgreich.";
 
@@ -354,6 +354,6 @@
 
 "Failed to download session data!" = "Download fehlgeschlagen!";
 
-"You can find the session data, in the Calliope directory on your device." = "Sie können die Sitzungsdaten im Calliope-Verzeichnis auf Ihrem Gerät finden.";
+"You can find the session data, in the Calliope directory on your device." = "Du kannst die Sitzungsdaten im Calliope-Verzeichnis auf deinem Gerät finden.";
 
 "The download of the session data was unsuccessful." = "Das Herunterladen der Sitzungsdaten ist fehlgeschlagen.";

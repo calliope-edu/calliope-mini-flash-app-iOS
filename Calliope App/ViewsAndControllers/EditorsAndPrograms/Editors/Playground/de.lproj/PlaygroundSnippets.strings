@@ -28,8 +28,9 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "oCk-WD-9Kc"; */
 "oCk-WD-9Kc.text" = "Label";
 
-/* Class = "UILabel"; text = "Verwende die Snippet Library mit dem Swift Playground. Wenn du in dem Swift Playground \"Calliope Mini - Vorlage\" arbeitest, kannst du die Snippets Library neben der Playgrounds App öffnen und die Codesnippets ganz bequem von der App in den Playground kopieren."; ObjectID = "sDg-74-hMi"; */
-"sDg-74-hMi.text" = "Verwende die Programm-Schnipsel Bibliothek mit dem Swift Playground Wenn du in dem Swift Playground \"Calliope Mini - Vorlage\" arbeitest, kannst du die Programm-Schnipsel Bibliothek neben der Playgrounds App öffnen und die Programm-Schnipsel ganz bequem von der App in den Playground kopieren.";
+/* Class = "UILabel"; text = "Mit MakeCode Arcade kannst du Spiele für deinen Calliope mini erstellen und diese auf einem Display anzeigen lassen oder sogar einer Spielekonsole spielen. Die Übertragung der Datei funktioniert nur per USB-Kabel."; ObjectID = "sDg-74-hMi"; */
+"sDg-74-hMi.text" = "Mit MakeCode Arcade kannst du Spiele für deinen Calliope mini erstellen und diese auf einem Display anzeigen lassen oder sogar einer Spielekonsole spielen.
+Die Übertragung der Datei funktioniert nur per USB-Kabel.";
 
 /* Class = "UITableViewController"; title = "Playground Snippets"; ObjectID = "SgB-Yb-sTD"; */
 "SgB-Yb-sTD.title" = "Swift Playground Programm-Schnipsel";
