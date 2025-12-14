@@ -78,7 +78,42 @@ class ProgramsCollectionViewController: UICollectionViewController, ProgramCellD
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        return
+        guard let cell = collectionView.cellForItem(at: indexPath) as? ProgramCollectionViewCell else {
+            return
+        }
+        
+        let alert = UIAlertController(title: cell.program.name, message: nil, preferredStyle: .actionSheet)
+        
+        let transferAction = UIAlertAction(title: NSLocalizedString("Transfer", comment: ""), style: .default) { _ in
+            self.uploadProgram(of: cell)
+        }
+        transferAction.setValue(UIImage(systemName: "arrow.left.arrow.right"), forKey: "image")
+        alert.addAction(transferAction)
+        
+        let shareAction = UIAlertAction(title: NSLocalizedString("Share", comment: ""), style: .default) { _ in
+            cell.share()
+        }
+        shareAction.setValue(UIImage(systemName: "square.and.arrow.up"), forKey: "image")
+        alert.addAction(shareAction)
+        
+        let renameAction = UIAlertAction(title: NSLocalizedString("Rename", comment: ""), style: .default) { _ in
+            cell.edit()
+        }
+        renameAction.setValue(UIImage(systemName: "rectangle.and.pencil.and.ellipsis"), forKey: "image")
+        alert.addAction(renameAction)
+        
+        let deleteAction = UIAlertAction(title: NSLocalizedString("Delete", comment: ""), style: .destructive) { _ in
+            cell.delete()
+        }
+        deleteAction.setValue(UIImage(systemName: "trash"), forKey: "image")
+        alert.addAction(deleteAction)
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel))
+        
+        alert.popoverPresentationController?.sourceView = cell
+        alert.popoverPresentationController?.sourceRect = cell.bounds
+        
+        present(alert, animated: true)
     }
 
     // menu

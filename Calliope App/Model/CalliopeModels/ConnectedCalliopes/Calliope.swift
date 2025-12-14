@@ -12,6 +12,18 @@ import CoreBluetooth
 
 class Calliope: NSObject, DFUServiceDelegate, CBPeripheralDelegate {
 
+    // Flag um Fehlermeldungen bei Verbindungswechsel zu unterdrücken
+    static var isConnectionSwitching = false
+    
+    /// Aufrufen wenn Verbindung gewechselt wird (BLE -> USB oder USB -> BLE)
+    static func startConnectionSwitch() {
+        isConnectionSwitching = true
+        // Nach 5 Sekunden wieder deaktivieren
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            isConnectionSwitching = false
+        }
+    }
+
     public var compatibleHexTypes: Set<HexParser.HexVersion> {
         []
     }

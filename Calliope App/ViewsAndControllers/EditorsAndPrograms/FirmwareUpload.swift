@@ -291,12 +291,24 @@ extension FirmwareUpload: DFUProgressDelegate, DFUServiceDelegate, LoggerDelegat
             self.finished()
         }
         if [DFUState.aborted].contains(state) {
+            // Bei Verbindungswechsel keine Fehlermeldung anzeigen
+            if Calliope.isConnectionSwitching {
+                LogNotify.log("Connection switching - suppressing abort message")
+                return
+            }
             self.dfuError(.deviceDisconnected, didOccurWithMessage: "DFU process aborted")
         }
     }
-
+    
     func dfuError(_ error: DFUError, didOccurWithMessage message: String) {
         LogNotify.log("DFU Error \(error) while uploading: \(message)")
+        
+        // Bei Verbindungswechsel keine Fehlermeldung anzeigen
+        if Calliope.isConnectionSwitching {
+            LogNotify.log("Connection switching - suppressing error message")
+            return
+        }
+        
         showUploadError(message)
     }
 }
