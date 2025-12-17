@@ -137,9 +137,31 @@ class FirmwareUpload {
 
         if calliope is USBCalliope {
             uploadController.message = NSLocalizedString("Der Calliope mini startet das Programm, sobald die Übertragung beendet ist.", comment: "")
+            
+            // Container für Spinner + Timer
+            let containerView = UIView()
+            containerView.translatesAutoresizingMaskIntoConstraints = false
+            
             let activityIndicator = UIActivityIndicatorView(style: .large)
+            activityIndicator.translatesAutoresizingMaskIntoConstraints = false
             activityIndicator.startAnimating()
-            progressView = activityIndicator
+            
+            containerView.addSubview(activityIndicator)
+            containerView.addSubview(usbTimerLabel)
+            
+            NSLayoutConstraint.activate([
+                activityIndicator.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+                activityIndicator.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 30),
+                
+                usbTimerLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+                usbTimerLabel.topAnchor.constraint(equalTo: activityIndicator.bottomAnchor, constant: 30),
+                usbTimerLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -10)
+            ])
+            
+            // Timer starten
+            startUSBTimer()
+            
+            progressView = containerView
         } else {
             progressView = progressRing
         }
@@ -182,7 +204,17 @@ class FirmwareUpload {
             self?.finished()
         }
     }()
+    private var usbTimer: Timer?
+    private var usbStartTime: Date?
 
+    private lazy var usbTimerLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .medium)
+        label.textColor = .gray
+        return label
+    }()
     private lazy var logTextView: UITextView = {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
@@ -230,10 +262,12 @@ class FirmwareUpload {
 
         self.failed = {
             downloadCompletion()
+            self.stopUSBTimer()
             MatrixConnectionViewController.instance.enableDfuMode(mode: false)
         }
         self.finished = {
             downloadCompletion()
+            self.stopUSBTimer()
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.0) {
                 finishedCallback()
             }
@@ -256,7 +290,34 @@ class FirmwareUpload {
         progressRing.outerRingColor = #colorLiteral(red: 0.99, green: 0.29, blue: 0.15, alpha: 1)
         failed()
     }
+    private func startUSBTimer() {
+        usbStartTime = Date()
+        usbTimerLabel.text = "00:00 / 15 " + NSLocalizedString("Sekunden", comment: "seconds")
+        
+        usbTimer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { [weak self] _ in
+            self?.updateUSBTimerLabel()
+        }
+    }
 
+    private func updateUSBTimerLabel() {
+        guard let startTime = usbStartTime else { return }
+        
+        let elapsed = Date().timeIntervalSince(startTime)
+        let seconds = Int(elapsed)
+        let hundredths = Int((elapsed - Double(seconds)) * 100)
+        
+        let timeString = String(format: "%02d:%02d / 15 %@", seconds, hundredths, NSLocalizedString("Sekunden", comment: "seconds"))
+        
+        DispatchQueue.main.async {
+            self.usbTimerLabel.text = timeString
+        }
+    }
+
+    private func stopUSBTimer() {
+        usbTimer?.invalidate()
+        usbTimer = nil
+        usbStartTime = nil
+    }
     deinit {
         NSLog("FirmwareUpload deinited")
     }

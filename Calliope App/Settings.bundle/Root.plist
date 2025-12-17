@@ -20,17 +20,17 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
-			<string>Playgrounds</string>
+			<string>Arcade</string>
 		</dict>
 		<dict>
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
 			<key>Title</key>
-			<string>Template URL</string>
+			<string>Arcade</string>
 			<key>Key</key>
-			<string>playgroundTemplateUrlPreference</string>
+			<string>arcadeUrlPreference</string>
 			<key>DefaultValue</key>
-			<string>https://calliope.cc/forumassets/snippets.json</string>
+			<string>https://arcade.makecode.com</string>
 			<key>KeyboardType</key>
 			<string>URL</string>
 			<key>AutocapitalizationType</key>
@@ -44,7 +44,7 @@
 			<key>Title</key>
 			<string>Enabled</string>
 			<key>Key</key>
-			<string>playgroundsOnPreference</string>
+			<string>arcadeOnPreference</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
@@ -113,6 +113,38 @@
 			<string>Enabled</string>
 			<key>Key</key>
 			<string>makecodeOnPreference</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Calliope Campus</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Calliope Campus</string>
+			<key>Key</key>
+			<string>campusOnUrlPreference</string>
+			<key>DefaultValue</key>
+			<string>https://campus.calliope.cc</string>
+			<key>KeyboardType</key>
+			<string>URL</string>
+			<key>AutocapitalizationType</key>
+			<string>None</string>
+			<key>AutocorrectionType</key>
+			<string>No</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Enabled</string>
+			<key>Key</key>
+			<string>campusOnPreference</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>

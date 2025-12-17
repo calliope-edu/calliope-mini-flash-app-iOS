@@ -79,6 +79,10 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
      Between the different stages, Timeouts to allow for completion of processing
      For further information on the different commands, visit: https://github.com/ARMmbed/DAPLink/blob/main/docs/MSD_COMMANDS.md
      */
+    /** Flashing process for USB Flashing
+        Simplified: Direct file copy without DAPLink commands
+        For further information on the different commands, visit: https://github.com/ARMmbed/DAPLink/blob/main/docs/MSD_COMMANDS.md
+     */
     fileprivate func writeToCalliope(_ file: Hex?, _ completion: @escaping () -> Void) {
         guard let file = file else {
             completion()
@@ -92,85 +96,17 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
             }
         }
         
-        // Prüfen ob es eine Arcade-Datei ist
-        let hexTypes = file.getHexTypes()
-        let isArcadeFile = hexTypes.contains(.arcade)
-        
-        if isArcadeFile {
-            // Arcade: Direkt die komplette Datei kopieren ohne vorherige Befehle
-            LogNotify.log("Arcade file detected - copying complete file")
-            do {
-                let data = try Data(contentsOf: file.calliopeUSBUrl)
-                try data.write(to: USBCalliope.calliopeLocation!.appendingPathComponent(file.calliopeUSBUrl.lastPathComponent))
-                LogNotify.log("Arcade file copied successfully")
-            } catch {
-                LogNotify.log("Error copying Arcade file: \(error)")
-            }
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                completion()
-            }
-            return
-        }
-        
-        // Bestehender Code für normale MakeCode-Dateien
-        let data = Data()
-        let startInterfaceCommand = "start_if.act"
-        let autoRestartConfigurationCommand = "auto_rst.cfg"
-        let eraseCommand = "erase.act"
-        let startInterfaceCommandFile = USBCalliope.calliopeLocation!.appendingPathComponent(startInterfaceCommand)
-        let autoRestartConfigurationCommandFile = USBCalliope.calliopeLocation!.appendingPathComponent(autoRestartConfigurationCommand)
-        let eraseCommandFile = USBCalliope.calliopeLocation!.appendingPathComponent(eraseCommand)
+        // Direkt die komplette Datei kopieren
+        LogNotify.log("USB Transfer - copying complete file")
         do {
-            try data.write(to: eraseCommandFile)
+            let data = try Data(contentsOf: file.calliopeUSBUrl)
+            try data.write(to: USBCalliope.calliopeLocation!.appendingPathComponent(file.calliopeUSBUrl.lastPathComponent))
+            LogNotify.log("File copied successfully")
         } catch {
-            LogNotify.log("Error: \(error)")
+            LogNotify.log("Error copying file: \(error)")
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-            let accessResource = USBCalliope.calliopeLocation?.startAccessingSecurityScopedResource()
-            defer {
-                if accessResource ?? false {
-                    USBCalliope.calliopeLocation?.stopAccessingSecurityScopedResource()
-                }
-            }
-            do {
-                try data.write(to: autoRestartConfigurationCommandFile)
-            } catch {
-                LogNotify.log("Error: \(error)")
-            }
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 7) {
-            let accessResource = USBCalliope.calliopeLocation?.startAccessingSecurityScopedResource()
-            defer {
-                if accessResource ?? false {
-                    USBCalliope.calliopeLocation?.stopAccessingSecurityScopedResource()
-                }
-            }
-            do {
-                try data.write(to: startInterfaceCommandFile)
-            } catch {
-                LogNotify.log("Error: \(error)")
-            }
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 9) {
-            let accessResource = USBCalliope.calliopeLocation?.startAccessingSecurityScopedResource()
-            defer {
-                if accessResource ?? false {
-                    USBCalliope.calliopeLocation?.stopAccessingSecurityScopedResource()
-                }
-            }
-            do {
-                let data = try Data(contentsOf: file.calliopeUSBUrl)
-                try data.write(to: USBCalliope.calliopeLocation!.appendingPathComponent(file.calliopeUSBUrl.lastPathComponent))
-            } catch {
-                LogNotify.log("Error: \(error)")
-            }
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             completion()
         }
     }
