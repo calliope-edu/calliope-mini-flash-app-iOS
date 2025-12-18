@@ -103,14 +103,14 @@ struct HexFile: Hex, Equatable, DiffAware {
         let types = getHexTypes()
         if types.contains(.arcade) {
             print("✅ Arcade → Dummy V1/V2 (1 byte)")
-            return Data([0x01])  // count > 0!
+            return Data([0x01])
         }
         
-        // REST DES BESTEHENDEN CODES UNVERÄNDERT
         let parser = HexParser(url: url)
         var bin = Data()
         parser.parse { address, data, dataType, isUniversal in
-            if address >= 0x18000 && address < 0x3C000 && dataType == 1 && !isUniversal {
+            // dataType == 1 ist V1/V2, oder !isUniversal für normale Hex Dateien
+            if address >= 0x18000 && address < 0x3C000 && (dataType == 1 || !isUniversal) {
                 bin.append(data)
             }
         }

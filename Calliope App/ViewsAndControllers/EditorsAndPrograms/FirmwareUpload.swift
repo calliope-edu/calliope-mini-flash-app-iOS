@@ -25,30 +25,29 @@ class FirmwareUpload {
 
             controller.present(alertStart, animated: true) {
                 program.load { error in
-                    let alert: UIAlertController
+                    DispatchQueue.main.async {
+                        let alert: UIAlertController
 
-                    if error == nil, program.calliopeV1andV2Bin.count != 0 {
-                        let alertDone = UIAlertController(title: NSLocalizedString("Download finished", comment: ""), message: NSLocalizedString("The program is downloaded. Do you want to upload it now?", comment: ""), preferredStyle: .alert)
-                        alertDone.addAction(
-                            UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default) { _ in
-                                DispatchQueue.main.async {
+                        if error == nil, program.calliopeV1andV2Bin.count != 0 {
+                            let alertDone = UIAlertController(title: NSLocalizedString("Download finished", comment: ""), message: NSLocalizedString("The program is downloaded. Do you want to upload it now?", comment: ""), preferredStyle: .alert)
+                            alertDone.addAction(
+                                UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default) { _ in
                                     FirmwareUpload.uploadWithoutConfirmation(controller: controller, program: program) {
                                         completion?(true)
                                     }
-                                }
-                            })
-                        alertDone.addAction(UIAlertAction(title: NSLocalizedString("No", comment: ""), style: .cancel))
-                        alert = alertDone
-                    } else {
-                        let reason = error?.localizedDescription ?? "The downloaded program is empty"
-                        let alertError = UIAlertController(title: NSLocalizedString("Program download failed", comment: ""), message: String(format: NSLocalizedString("The program is not ready. The reason is:\n%@", comment: ""), reason), preferredStyle: .alert)
-                        alertError.addAction(
-                            UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
-                                completion?(false)
-                            })
-                        alert = alertError
-                    }
-                    DispatchQueue.main.async {
+                                })
+                            alertDone.addAction(UIAlertAction(title: NSLocalizedString("No", comment: ""), style: .cancel))
+                            alert = alertDone
+                        } else {
+                            let reason = error?.localizedDescription ?? "The downloaded program is empty"
+                            let alertError = UIAlertController(title: NSLocalizedString("Program download failed", comment: ""), message: String(format: NSLocalizedString("The program is not ready. The reason is:\n%@", comment: ""), reason), preferredStyle: .alert)
+                            alertError.addAction(
+                                UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
+                                    completion?(false)
+                                })
+                            alert = alertError
+                        }
+                        
                         alertStart.dismiss(animated: true) {
                             controller.present(alert, animated: true)
                         }

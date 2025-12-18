@@ -67,8 +67,14 @@ extension DownloadableHexFile {
 
     public func load(completion: @escaping (Error?) -> ()) {
         let url = URL(string: loadableProgramURL)!
+        print("🔽 DownloadableHexFile.load() starting for URL: \(url)")
+        print("🔽 downloadFile flag: \(self.downloadFile)")
+        
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            print("🔽 Download completed, data size: \(data?.count ?? 0), error: \(String(describing: error))")
+            
             if self.downloadFile {
+                print("🔽 Taking downloadFile=true path")
                 guard
                     error == nil,
                     let data = data,
@@ -79,12 +85,14 @@ extension DownloadableHexFile {
                     return
                 }
 
-                let types = hexFile.getHexTypes()        // nutzt HexParser.getHexVersion()[file:3][file:2]
+                let types = hexFile.getHexTypes()
                 let isValid =
                     types.contains(.v2) ||
                     types.contains(.v3) ||
                     types.contains(.universal) ||
                     types.contains(.arcade)
+                
+                print("🔽 HexFile types: \(types), isValid: \(isValid)")
 
                 guard isValid else {
                     completion(NSLocalizedString("Download is not a proper hex file", comment: ""))
@@ -92,6 +100,11 @@ extension DownloadableHexFile {
                 }
 
                 self.downloadedHexFile = hexFile
+                print("🔽 downloadedHexFile set, checking bin sizes:")
+                print("🔽 calliopeV1andV2Bin.count: \(self.calliopeV1andV2Bin.count)")
+                print("🔽 calliopeV3Bin.count: \(self.calliopeV3Bin.count)")
+                print("🔽 downloadedHexFile?.calliopeV1andV2Bin.count: \(self.downloadedHexFile?.calliopeV1andV2Bin.count ?? -1)")
+                
                 completion(nil)
             } else {
                 guard error == nil, let data = data, data.count > 0 else {
