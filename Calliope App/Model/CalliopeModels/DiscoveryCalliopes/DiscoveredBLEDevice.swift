@@ -77,7 +77,6 @@ class DiscoveredBLEDDevice: DiscoveredDevice {
 
         guard error == nil else {
             LogNotify.log("Error discovering characteristics \(error!)")
-
             LogNotify.log(error!.localizedDescription)
             state = .wrongMode
             return
@@ -92,33 +91,101 @@ class DiscoveredBLEDDevice: DiscoveredDevice {
 
         LogNotify.log("Did discover characteristics \(uuidSet)")
 
-        //Only continue once every discovered service has atleast been checked for characteristic
+        // Only continue once every discovered service has at least been checked for characteristics
         servicesWithUndiscoveredCharacteristics.remove(service.uuid)
 
         if servicesWithUndiscoveredCharacteristics.isEmpty {
 
             LogNotify.log("Did discover characteristics for all discovered services")
 
-            guard let validBLECalliope = FlashableCalliopeFactory.getFlashableCalliopeForBLEDevice(device: self) else {
-                state = .wrongMode
+            // 1. Versuche zuerst einen flashbaren Calliope zu finden (V1/V2 oder V3 im DFU Mode)
+            if let validBLECalliope = FlashableCalliopeFactory.getFlashableCalliopeForBLEDevice(device: self) {
+                
+                if let rebootingCalliope = rebootingCalliope, type(of: rebootingCalliope) === type(of: validBLECalliope) {
+                    LogNotify.log("Choose rebooting calliope for use")
+                    usageReadyCalliope = rebootingCalliope
+                } else {
+                    usageReadyCalliope = validBLECalliope
+                }
+
+                self.peripheral.delegate = usageReadyCalliope
+                rebootingCalliope = nil
+                state = .usageReady
                 return
             }
-
-            if let rebootingCalliope = rebootingCalliope, type(of: rebootingCalliope) === type(of: validBLECalliope) {
-                LogNotify.log("Choose rebooting calliope for use")
-                // We saved a calliope in a reboot process, use that one
-                usageReadyCalliope = rebootingCalliope
-            } else {
-                //new calliope found, delegate was set in initialization process
-                usageReadyCalliope = validBLECalliope
+            
+            // 2. NEU: Fallback für Calliope V3 im Application Mode
+            //    Prüfe ob dies ein V3 sein könnte (hat Partial Flashing Service aber kein DFU)
+            if let connectedV3 = createConnectedCalliopeV3() {
+                LogNotify.log("Created ConnectedCalliopeV3 - Calliope V3 is in Application Mode")
+                
+                // Wenn wir von einem DFU kommen, übernehme den alten Calliope-Zustand
+                if let rebootingCalliope = rebootingCalliope as? ConnectedCalliopeV3 {
+                    LogNotify.log("Preserving state from rebooting ConnectedCalliopeV3")
+                    usageReadyCalliope = rebootingCalliope
+                    self.peripheral.delegate = rebootingCalliope
+                } else if let rebootingCalliope = rebootingCalliope as? CalliopeV3 {
+                    // Wir hatten einen CalliopeV3 (DFU Mode) und sind jetzt im Application Mode
+                    LogNotify.log("Transitioned from CalliopeV3 (DFU) to ConnectedCalliopeV3 (Application)")
+                    usageReadyCalliope = connectedV3
+                    self.peripheral.delegate = connectedV3
+                } else {
+                    // Frische Verbindung zu einem V3 im Application Mode
+                    usageReadyCalliope = connectedV3
+                    self.peripheral.delegate = connectedV3
+                }
+                
+                rebootingCalliope = nil
+                state = .usageReady
+                return
             }
-
-            self.peripheral.delegate = usageReadyCalliope
-
-            rebootingCalliope = nil
-
-            state = .usageReady
+            
+            // 3. Weder DFU-fähig noch V3 Application Mode - falscher Modus
+            LogNotify.log("Could not create any Calliope type - wrong mode")
+            state = .wrongMode
         }
+    }
+    
+    // Versucht einen ConnectedCalliopeV3 zu erstellen (für V3 im Application Mode)
+    // - Returns: ConnectedCalliopeV3 wenn die Bedingungen erfüllt sind, sonst nil
+    private func createConnectedCalliopeV3() -> ConnectedCalliopeV3? {
+        // Ein V3 im Application Mode hat typischerweise:
+        // - Partial Flashing Service (zum Wechseln in DFU Mode)
+        // - KEINEN Secure DFU Service (der ist nur im DFU Mode verfügbar)
+        
+        // Prüfe ob Partial Flashing verfügbar ist
+        let hasPartialFlashing = discoveredServices.contains(.partialFlashing)
+        
+        // Prüfe ob KEIN DFU Service vorhanden ist (sonst wären wir im DFU Mode)
+        let hasSecureDFU = discoveredServices.contains(.secureDfuService)
+        let hasLegacyDFU = discoveredServices.contains(.dfuControlService)
+        
+        // V3 Application Mode: Hat Partial Flashing, aber kein DFU
+        // ODER: Hat gar keine DFU Services (könnte auch V3 sein)
+        if hasPartialFlashing && !hasSecureDFU && !hasLegacyDFU {
+            LogNotify.log("Detected Calliope V3 in Application Mode (has Partial Flashing, no DFU)")
+            return ConnectedCalliopeV3(
+                peripheral: peripheral,
+                name: name,
+                discoveredServices: discoveredServices,
+                discoveredCharacteristicUUIDsForServiceUUID: serviceToDiscoveredCharacteristicsMap,
+                servicesChangedCallback: { [weak self] in self?.evaluateMode() }
+            )
+        }
+        
+        // Wenn wir von einem Reboot kommen (rebootingCalliope existiert) und es war ein V3
+        if rebootingCalliope is CalliopeV3 || rebootingCalliope is ConnectedCalliopeV3 {
+            LogNotify.log("Creating ConnectedCalliopeV3 as continuation of previous V3 session")
+            return ConnectedCalliopeV3(
+                peripheral: peripheral,
+                name: name,
+                discoveredServices: discoveredServices,
+                discoveredCharacteristicUUIDsForServiceUUID: serviceToDiscoveredCharacteristicsMap,
+                servicesChangedCallback: { [weak self] in self?.evaluateMode() }
+            )
+        }
+        
+        return nil
     }
 
     internal override func handleStateUpdate(_ oldState: DiscoveredDevice.CalliopeBLEDeviceState) {

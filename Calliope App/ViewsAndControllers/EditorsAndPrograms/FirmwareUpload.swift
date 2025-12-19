@@ -71,7 +71,14 @@ class FirmwareUpload {
         controller: UIViewController, program: Hex,
         completion: (() -> Void)? = nil
     ) {
-
+        // NEU: Prüfe ob es eine Arcade-Datei ist
+        let hexTypes = program.getHexTypes()
+        if hexTypes.contains(.arcade) {
+            // Arcade-Dateien können nur per USB übertragen werden
+            showArcadeUSBAlert(controller: controller, completion: completion)
+            return
+        }
+        
         let informationLink: String = "https://calliope.cc/programmieren/mobil/ipad#hardware"
 
         let uploader = FirmwareUpload(file: program, controller: controller)
@@ -86,11 +93,13 @@ class FirmwareUpload {
                 FirmwareUpload.uploadingInstance = nil
                 UIApplication.shared.isIdleTimerDisabled = false
 
-
-                let alert = UIAlertController(title: NSLocalizedString("Upload failed", comment: "Laden fehlgeschlagen"), message: String(format: NSLocalizedString("The program does not seem to match the version of your Calliope mini. Please check the hardware selection in your editor again.", comment: "Das Programm scheint nicht mit der Version deines Calliope mini übereinzustimmen. Bitte überprüfe die Hardwareauswahl in deinem Editor.")), preferredStyle: .alert)
+                let alert = UIAlertController(
+                    title: NSLocalizedString("Upload failed", comment: ""),
+                    message: String(format: NSLocalizedString("The program does not seem to match the version of your Calliope mini. Please check the hardware selection in your editor again.", comment: "")),
+                    preferredStyle: .alert
+                )
                 alert.addAction(
-                    UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel) {
-                        _ in
+                    UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel) { _ in
                         uploader.alertView.dismiss(animated: true)
                     })
                 alert.addAction(
@@ -102,8 +111,38 @@ class FirmwareUpload {
                     })
                 uploader.alertView.present(alert, animated: true)
             }
-
         }
+    }
+
+    // NEU: Hilfsmethode für Arcade USB Alert
+    private static func showArcadeUSBAlert(controller: UIViewController, completion: (() -> Void)?) {
+        let alert = UIAlertController(
+            title: NSLocalizedString("USB-Verbindung erforderlich", comment: "USB connection required"),
+            message: NSLocalizedString("Arcade-Programme können nur per USB auf den Calliope mini übertragen werden.\n\nBitte verbinde den Calliope mini per USB-Kabel und wähle den MINI-Ordner aus.", comment: "Arcade programs can only be transferred via USB"),
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(
+            title: NSLocalizedString("USB-Modus öffnen", comment: "Open USB mode"),
+            style: .default
+        ) { _ in
+            // Wechsle in USB-Modus
+            if let matrixVC = MatrixConnectionViewController.instance {
+                matrixVC.isInUsbMode = true
+                // Falls es einen USB-Switch gibt, aktiviere ihn
+                // matrixVC.usbSwitch.isOn = true
+            }
+            completion?()
+        })
+        
+        alert.addAction(UIAlertAction(
+            title: NSLocalizedString("Abbrechen", comment: "Cancel"),
+            style: .cancel
+        ) { _ in
+            completion?()
+        })
+        
+        controller.present(alert, animated: true)
     }
 
     private var file: Hex
