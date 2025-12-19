@@ -61,11 +61,16 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
                     self.centralManager.connect(connectingBLECalliope.peripheral, options: nil)
                     //manual timeout (system timeout is too long)
                     bluetoothQueue.asyncAfter(deadline: DispatchTime.now() + .seconds(BluetoothConstants.connectTimeout)) {
-                        if self.connectedCalliope == nil {
-                            LogNotify.log("disabling auto connect for \(connectingCalliope)")
+                        if self.connectedCalliope == nil && self.connectingCalliope === connectingCalliope {
+                            LogNotify.log("Connection attempt timed out for \(connectingCalliope)")
                             self.centralManager.cancelPeripheralConnection(connectingBLECalliope.peripheral)
-                            self.updateQueue.async {
-                                self.errorBlock(NSLocalizedString("Connection to Calliope mini timed out!", comment: ""))
+                            // NEU: Bei Timeout während Reconnect nach DFU, erneut versuchen
+                            if self.isWaitingForDFUReconnect {
+                                self.handleDFUReconnectTimeout(connectingBLECalliope)
+                            } else {
+                                self.updateQueue.async {
+                                    self.errorBlock(NSLocalizedString("Connection to Calliope mini timed out!", comment: ""))
+                                }
                             }
                         }
                     }
@@ -100,6 +105,12 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
             connectedCalliope?.hasConnected()
             if connectedCalliope != nil {
                 connectingCalliope = nil
+                // NEU: Reconnect nach DFU war erfolgreich
+                if isWaitingForDFUReconnect {
+                    LogNotify.log("DFU reconnect successful!")
+                    isWaitingForDFUReconnect = false
+                    dfuReconnectAttempts = 0
+                }
             }
             redetermineState()
         }
@@ -153,6 +164,12 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
 
     private var retryCount = 0
     public var isInBackground = false
+    
+    // NEU: DFU Reconnect Tracking
+    private var isWaitingForDFUReconnect = false
+    private var dfuReconnectAttempts = 0
+    private let maxDFUReconnectAttempts = 5
+    private var lastDFUDisconnectedCalliope: DiscoveredBLEDDevice?
 
     init(_ calliopeBuilder: @escaping (_ peripheral: CBPeripheral, _ name: String) -> DiscoveredBLEDDevice) {
         self.calliopeBuilder = calliopeBuilder
@@ -231,7 +248,10 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
             centralManager.scanForPeripherals(withServices: nil, options: nil)
             //stop the search after some time. The user can invoke it again later.
             bluetoothQueue.asyncAfter(deadline: DispatchTime.now() + BluetoothConstants.discoveryTimeout) {
-                self.stopCalliopeDiscovery()
+                // NEU: Nicht stoppen wenn wir auf DFU Reconnect warten
+                if !self.isWaitingForDFUReconnect {
+                    self.stopCalliopeDiscovery()
+                }
             }
             redetermineState()
         }
@@ -268,14 +288,21 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
             BluetoothConstants.deviceNames.map({ lowerName.contains($0) }).contains(true),
             let friendlyName = Matrix.full2Friendly(fullName: lowerName)
         {
-            //FIXME: hard-coded name for testing
-            //let friendlyName = Optional("gepeg") {
             //never create a calliope twice, since this would clear its state
             if discoveredCalliopes[friendlyName] == nil {
                 //we found a calliope device (or one that pretends to be a calliope at least)
                 let calliope = calliopeBuilder(peripheral, friendlyName)
                 discoveredCalliopes.updateValue(calliope, forKey: friendlyName)
                 discoveredCalliopeUUIDNameMap.updateValue(friendlyName, forKey: peripheral.identifier)
+                
+                // NEU: Wenn wir auf DFU Reconnect warten und den Calliope wiederfinden
+                if isWaitingForDFUReconnect, let lastDFU = lastDFUDisconnectedCalliope {
+                    // Prüfe ob es derselbe Calliope ist (gleicher Name)
+                    if friendlyName == lastDFU.name {
+                        LogNotify.log("Found Calliope after DFU, attempting reconnect: \(friendlyName)")
+                        connectToCalliope(calliope)
+                    }
+                }
             }
         }
     }
@@ -284,13 +311,19 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
 
     func connectToCalliope(_ calliope: DiscoveredDevice) {
         //when we first connect, we stop searching further
-        stopCalliopeDiscovery()
+        // NEU: Nicht stoppen wenn wir auf DFU Reconnect warten - wir brauchen Scanning
+        if !isWaitingForDFUReconnect {
+            stopCalliopeDiscovery()
+        }
         //do not connect twice
         guard calliope != connectedCalliope else {
             return
         }
         //reset last connected, we attempt to connect to a new callipoe now
-        lastConnected = nil
+        // NEU: Nicht resetten bei DFU Reconnect
+        if !isWaitingForDFUReconnect {
+            lastConnected = nil
+        }
         connectingCalliope = calliope
     }
 
@@ -342,28 +375,167 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
 
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         LogNotify.log("disconnected from \(peripheral.name ?? "unknown device"), with error: \(error?.localizedDescription ?? "none")")
-        // If Usage Ready Calliope is rebooting, automatically reconnect to the calliope
-        if let connectedCalliope = connectedCalliope, connectedCalliope.shouldReconnectAfterReboot() {
-            connectedCalliope.rebootingCalliope = connectedCalliope.usageReadyCalliope
-            self.connectedCalliope = nil
-            // Reconnect to Calliope after waiting for it having rebooted
-            bluetoothQueue.asyncAfter(deadline: DispatchTime.now() + BluetoothConstants.restartDuration) {
-                self.connectToCalliope(connectedCalliope)
-            }
-            return
-        } else if let connectedCalliope = connectedCalliope, !isInBackground {
-            self.connectedCalliope = nil
+        
+        guard let disconnectedCalliope = connectedCalliope else {
+            // Kein connectedCalliope - nichts zu tun
+            connectedCalliope = nil
             connectingCalliope = nil
-            lastConnected = nil
-            self.retryCalliopeDiscovery(connectedCalliope)
             return
         }
+        
+        // NEU: Prüfe ob DFU gerade läuft oder abgeschlossen wurde
+        let isDFURelatedDisconnect = disconnectedCalliope.usageReadyCalliope?.rebootingIntoDFUMode ?? false
+        let shouldReconnect = disconnectedCalliope.shouldReconnectAfterReboot()
+        
+        LogNotify.log("Disconnect analysis: isDFURelated=\(isDFURelatedDisconnect), shouldReconnect=\(shouldReconnect), isInBackground=\(isInBackground)")
+        
+        // Fall 1: Calliope soll nach Reboot reconnecten (z.B. nach Partial Flashing Reboot)
+        if shouldReconnect {
+            LogNotify.log("Calliope requested reconnect after reboot")
+            disconnectedCalliope.rebootingCalliope = disconnectedCalliope.usageReadyCalliope
+            self.connectedCalliope = nil
+            // Warte auf Neustart und verbinde erneut
+            bluetoothQueue.asyncAfter(deadline: DispatchTime.now() + BluetoothConstants.restartDuration) {
+                self.connectToCalliope(disconnectedCalliope)
+            }
+            return
+        }
+        
+        // Fall 2: DFU-bezogene Trennung - starte Reconnect-Prozess
+        // Dies passiert wenn die Nordic DFU Library die Verbindung trennt
+        if isDFURelatedDisconnect || self.isExpectedDFUDisconnect(error) {
+            LogNotify.log("DFU-related disconnect detected, starting reconnect process")
+            self.startDFUReconnect(disconnectedCalliope)
+            return
+        }
+        
+        // Fall 3: Unerwartete Trennung - versuche Retry
+        if !isInBackground {
+            self.connectedCalliope = nil
+            connectingCalliope = nil
+            // NEU: lastConnected NICHT löschen bei unerwarteter Trennung
+            // So kann der Nutzer manuell reconnecten
+            self.retryCalliopeDiscovery(disconnectedCalliope)
+            return
+        }
+        
+        // Fall 4: App im Hintergrund - einfach aufräumen
         connectedCalliope = nil
         connectingCalliope = nil
         lastConnected = nil
     }
+    
+    // NEU: Prüfe ob der Fehler ein erwarteter DFU-Disconnect ist
+    private func isExpectedDFUDisconnect(_ error: Error?) -> Bool {
+        // Nordic DFU trennt die Verbindung nach erfolgreichem Flash
+        // Dies kann verschiedene Fehlercodes haben oder keinen Fehler
+        guard let error = error as NSError? else {
+            // Kein Fehler kann auch DFU-bedingt sein
+            return false
+        }
+        
+        // CBError Codes die bei DFU auftreten können:
+        // - connectionTimeout (6)
+        // - peripheralDisconnected (7)
+        let dfuRelatedCodes = [6, 7]
+        return dfuRelatedCodes.contains(error.code)
+    }
+    
+    // NEU: Starte den DFU Reconnect Prozess
+    private func startDFUReconnect(_ calliope: DiscoveredBLEDDevice) {
+        LogNotify.log("Starting DFU reconnect process for \(calliope.name)")
+        
+        isWaitingForDFUReconnect = true
+        dfuReconnectAttempts = 0
+        lastDFUDisconnectedCalliope = calliope
+        
+        // Speichere den Calliope für späteren Reconnect
+        calliope.rebootingCalliope = calliope.usageReadyCalliope
+        self.connectedCalliope = nil
+        
+        // Warte länger auf den Neustart nach DFU (Calliope V3 braucht mehr Zeit)
+        let dfuRestartDuration = 4.0  // Länger als normaler restartDuration
+        
+        bluetoothQueue.asyncAfter(deadline: DispatchTime.now() + dfuRestartDuration) {
+            self.attemptDFUReconnect(calliope)
+        }
+    }
+    
+    // NEU: Versuche Reconnect nach DFU
+    private func attemptDFUReconnect(_ calliope: DiscoveredBLEDDevice) {
+        guard isWaitingForDFUReconnect else {
+            LogNotify.log("DFU reconnect cancelled")
+            return
+        }
+        
+        dfuReconnectAttempts += 1
+        LogNotify.log("DFU reconnect attempt \(dfuReconnectAttempts)/\(maxDFUReconnectAttempts)")
+        
+        if dfuReconnectAttempts > maxDFUReconnectAttempts {
+            LogNotify.log("DFU reconnect failed after \(maxDFUReconnectAttempts) attempts")
+            isWaitingForDFUReconnect = false
+            lastDFUDisconnectedCalliope = nil
+            updateQueue.async {
+                self.errorBlock(NSLocalizedString("Could not reconnect to Calliope mini after flashing. Please reconnect manually.", comment: ""))
+            }
+            return
+        }
+        
+        // Starte Discovery falls nicht aktiv
+        if !centralManager.isScanning {
+            startCalliopeDiscovery()
+        }
+        
+        // Versuche direkt zu verbinden (falls Peripheral noch bekannt)
+        if let peripheral = centralManager.retrievePeripherals(withIdentifiers: [calliope.peripheral.identifier]).first {
+            LogNotify.log("Found peripheral in cache, attempting direct connect")
+            // Erstelle neuen DiscoveredBLEDDevice mit dem gecachten Peripheral
+            let reconnectCalliope = calliopeBuilder(peripheral, calliope.name)
+            reconnectCalliope.rebootingCalliope = calliope.rebootingCalliope
+            
+            discoveredCalliopes.updateValue(reconnectCalliope, forKey: calliope.name)
+            discoveredCalliopeUUIDNameMap.updateValue(calliope.name, forKey: peripheral.identifier)
+            
+            connectToCalliope(reconnectCalliope)
+        }
+        
+        // Plane nächsten Versuch
+        bluetoothQueue.asyncAfter(deadline: DispatchTime.now() + 3.0) {
+            if self.isWaitingForDFUReconnect && self.connectedCalliope == nil {
+                self.attemptDFUReconnect(calliope)
+            }
+        }
+    }
+    
+    // NEU: Handle Timeout während DFU Reconnect
+    private func handleDFUReconnectTimeout(_ calliope: DiscoveredBLEDDevice) {
+        LogNotify.log("DFU reconnect connection attempt timed out")
+        connectingCalliope = nil
+        
+        // Versuche erneut
+        if dfuReconnectAttempts < maxDFUReconnectAttempts {
+            bluetoothQueue.asyncAfter(deadline: DispatchTime.now() + 2.0) {
+                if let lastDFU = self.lastDFUDisconnectedCalliope {
+                    self.attemptDFUReconnect(lastDFU)
+                }
+            }
+        } else {
+            isWaitingForDFUReconnect = false
+            lastDFUDisconnectedCalliope = nil
+        }
+    }
 
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
+        LogNotify.log("Failed to connect to \(peripheral.name ?? "unknown"): \(error?.localizedDescription ?? "unknown error")")
+        
+        // NEU: Bei DFU Reconnect nicht sofort aufgeben
+        if isWaitingForDFUReconnect {
+            if let lastDFU = lastDFUDisconnectedCalliope {
+                handleDFUReconnectTimeout(lastDFU)
+            }
+            return
+        }
+        
         if let error = error {
             updateQueue.async {
                 self.errorBlock(error)
@@ -390,6 +562,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
             connectedCalliope = nil
             discoveredCalliopes = [:]
             discoveredCalliopeUUIDNameMap = [:]
+            isWaitingForDFUReconnect = false  // NEU: Reset DFU state
             state = .initialized
         @unknown default:
             break
@@ -412,8 +585,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
                 return
             }
 
-//            LogNotify.log("USB Calliope reachability state: (\(usbCalliope.isConnected()), \(usbCalliope.writeInProgress), \(self.isInBackground), \(self.backoff))")
-            if usbCalliope.isConnected() || usbCalliope.writeInProgress || self.isInBackground { // happy path
+            if usbCalliope.isConnected() || usbCalliope.writeInProgress || self.isInBackground {
                 if self.currentRetries > 0 {
                     LogNotify.log("USB Calliope mini reachable after \(self.currentRetries) retries: (\(usbCalliope.isConnected()), \(usbCalliope.writeInProgress), \(self.isInBackground), \(self.backoff))")
                     self.currentRetries = 0
@@ -422,15 +594,13 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
                 return
             }
           
-            // calliope not reachable path
             LogNotify.log("USB Calliope mini not reachable (\(usbCalliope.isConnected()), \(usbCalliope.writeInProgress), \(self.isInBackground), \(self.backoff)), \(self.currentRetries < self.MAX_RETRIES ? "retrying" : "disconnecting")")
-            if self.currentRetries < self.MAX_RETRIES { // retry path
+            if self.currentRetries < self.MAX_RETRIES {
                 self.currentRetries += 1
                 self.dispatchUSBCalliopePolling()
                 return
             }
             
-            // disconnect path
             self.currentRetries = 0
             self.disconnectFromCalliope()
 

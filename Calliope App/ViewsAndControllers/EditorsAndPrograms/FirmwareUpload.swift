@@ -87,7 +87,7 @@ class FirmwareUpload {
                 UIApplication.shared.isIdleTimerDisabled = false
 
 
-                let alert = UIAlertController(title: NSLocalizedString("Upload failed", comment: ""), message: String(format: NSLocalizedString("The program does not seem to match the version of your Calliope mini. Please check the hardware selection in your editor again.", comment: "")), preferredStyle: .alert)
+                let alert = UIAlertController(title: NSLocalizedString("Upload failed", comment: "Laden fehlgeschlagen"), message: String(format: NSLocalizedString("The program does not seem to match the version of your Calliope mini. Please check the hardware selection in your editor again.", comment: "Das Programm scheint nicht mit der Version deines Calliope mini übereinzustimmen. Bitte überprüfe die Hardwareauswahl in deinem Editor.")), preferredStyle: .alert)
                 alert.addAction(
                     UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel) {
                         _ in
@@ -123,7 +123,7 @@ class FirmwareUpload {
 
     lazy var alertView: UIAlertController = {
         guard let calliope = calliope else {
-            let alertController = UIAlertController(title: NSLocalizedString("Cannot upload", comment: ""), message: NSLocalizedString("There is no connected Calliope mini in DFU mode", comment: ""), preferredStyle: .alert)
+            let alertController = UIAlertController(title: NSLocalizedString("Cannot upload", comment: "Übertragung nicht möglich"), message: NSLocalizedString("There is no connected Calliope mini in DFU mode", comment: "Es konnte kein Calliope mini gefunden werden"), preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: nil))
             MatrixConnectionViewController.instance.animateBounce()
             return alertController

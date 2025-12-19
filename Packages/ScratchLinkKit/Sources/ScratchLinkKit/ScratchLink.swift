@@ -9,6 +9,7 @@ import Foundation
 import WebKit
 import CoreBluetooth
 import Combine
+import os.log
 
 typealias uint8 = UInt8
 typealias uint16 = UInt16
@@ -31,13 +32,13 @@ extension SessionError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .unavailable:
-            return NSLocalizedString("This session is unavailable", bundle: Bundle.module, comment: "This session is unavailable")
+            return NSLocalizedString("This session is unavailable", bundle: Bundle.module, comment: "Diese Sitzung ist nicht verfügbar.")
         case .bluetoothIsPoweredOff:
-            return NSLocalizedString("Bluetooth is powered off", bundle: Bundle.module, comment: "Bluetooth is powered off")
+            return NSLocalizedString("Bluetooth is powered off", bundle: Bundle.module, comment: "Bluetooth ist ausgeschaltet.")
         case .bluetoothIsUnauthorized:
-            return NSLocalizedString("Bluetooth is unauthorized", bundle: Bundle.module, comment: "Bluetooth is unauthorized")
+            return NSLocalizedString("Bluetooth is unauthorized", bundle: Bundle.module, comment: "Bluetooth ist nicht autorisiert.")
         case .bluetoothIsUnsupported:
-            return NSLocalizedString("Bluetooth is unsupported", bundle: Bundle.module, comment: "Bluetooth is unsupported")
+            return NSLocalizedString("Bluetooth is unsupported", bundle: Bundle.module, comment: "Bluetooth wird nicht unterstützt.")
         case .other(error: let error):
             return error.localizedDescription
         }
@@ -50,6 +51,8 @@ public enum SessionType: String, Codable {
 }
 
 public class ScratchLink: NSObject {
+    
+    private static let logger = Logger(subsystem: "cc.calliope.mini.scratchlink", category: "ScratchLink")
     
     private struct Message: Codable {
         let method: Method
@@ -77,9 +80,19 @@ public class ScratchLink: NSObject {
     
     public func setup(webView: WKWebView) {
         let js = JavaScriptLoader.load(filename: "inject")
-        let script = WKUserScript(source: js, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
-        webView.configuration.userContentController.addUserScript(script)
+        
+        // Inject into ALL frames (main frame and iframes) at both injection times
+        // This ensures the script is available for the parent frame bridge
+        let scriptAtDocumentStart = WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: false)
+        let scriptAtDocumentEnd = WKUserScript(source: js, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
+        
+        webView.configuration.userContentController.addUserScript(scriptAtDocumentStart)
+        webView.configuration.userContentController.addUserScript(scriptAtDocumentEnd)
         webView.configuration.userContentController.add(self, name: "scratchLink")
+        
+        // Enable JavaScript features needed for cross-frame communication
+        webView.configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
+        
         self.webView = webView
     }
     
@@ -94,6 +107,8 @@ public class ScratchLink: NSObject {
 extension ScratchLink: WKScriptMessageHandler {
     
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        Self.logger.debug("📨 Received message from WebView, isMainFrame: \(message.frameInfo.isMainFrame)")
+        
         guard let jsonString = message.body as? String else { return }
         guard let jsonData = jsonString.data(using: .utf8) else { return }
         
@@ -148,8 +163,44 @@ extension ScratchLink: WKScriptMessageHandler {
     private func open(socketId: Int, type: SessionType) throws {
         let webSocket = WebSocket() { [weak self] (message) in
             DispatchQueue.main.async {
-                let js = "ScratchLinkKit.coordinator.handleMessage(\(socketId), '\(message)')"
-                self?.webView?.evaluateJavaScript(js)
+                // Escape the message for JavaScript string
+                let escapedMessage = message
+                    .replacingOccurrences(of: "\\", with: "\\\\")
+                    .replacingOccurrences(of: "'", with: "\\'")
+                    .replacingOccurrences(of: "\n", with: "\\n")
+                    .replacingOccurrences(of: "\r", with: "\\r")
+                
+                // First try direct call (works if socket is in main frame)
+                let js = "if (typeof ScratchLinkKit !== 'undefined' && ScratchLinkKit.coordinator) { ScratchLinkKit.coordinator.handleMessage(\(socketId), '\(escapedMessage)'); }"
+                self?.webView?.evaluateJavaScript(js) { result, error in
+                    if let error = error {
+                        Self.logger.debug("Direct JS call note: \(error.localizedDescription)")
+                    }
+                }
+                
+                // Always broadcast to iframes via postMessage
+                // This is needed when blocks.calliope.cc runs inside campus.calliope.cc iframe
+                let broadcastJs = """
+                    (function() {
+                        var iframes = document.querySelectorAll('iframe');
+                        for (var i = 0; i < iframes.length; i++) {
+                            try {
+                                iframes[i].contentWindow.postMessage({
+                                    type: 'scratchLinkResponse',
+                                    socketId: \(socketId),
+                                    message: '\(escapedMessage)'
+                                }, '*');
+                            } catch(e) {
+                                console.error('[ScratchLink] Could not post to iframe:', e);
+                            }
+                        }
+                    })();
+                    """
+                self?.webView?.evaluateJavaScript(broadcastJs) { result, error in
+                    if let error = error {
+                        Self.logger.error("Error broadcasting to iframes: \(error.localizedDescription)")
+                    }
+                }
             }
         }
         

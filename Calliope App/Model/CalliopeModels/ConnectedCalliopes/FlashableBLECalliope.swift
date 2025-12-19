@@ -14,7 +14,10 @@ class FlashableBLECalliope: CalliopeAPI {
     // MARK: common
     private var rebootingForPartialFlashing = false
     private var isPartiallyFlashing = false
-
+    
+    // Tracks whether DFU has completed successfully and we're waiting for reconnect
+    private var dfuCompletedAwaitingReconnect = false
+    
     internal private(set) var file: Hex?
 
     weak internal private(set) var progressReceiver: DFUProgressDelegate?
@@ -23,18 +26,39 @@ class FlashableBLECalliope: CalliopeAPI {
 
     override func notify(aboutState newState: DiscoveredDevice.CalliopeBLEDeviceState) {
         LogNotify.log("Received notification about state change to \(newState)")
-        if newState == .usageReady && rebootingForPartialFlashing {
-            updateQueue.async {
-                self.startPartialFlashing()
+        
+        switch newState {
+        case .usageReady:
+            if rebootingForPartialFlashing {
+                updateQueue.async {
+                    self.startPartialFlashing()
+                }
+            } else if dfuCompletedAwaitingReconnect {
+                // Nach DFU wieder verbunden - Reset der Flags
+                LogNotify.log("Reconnected after DFU completion!")
+                dfuCompletedAwaitingReconnect = false
+                shouldRebootOnDisconnect = false
             }
-        } else if newState == .discovered && isPartiallyFlashing {
-            LogNotify.log("Lost connection to Calliope mini during flashing process")
-            // Abort if in discovered state but not in DfuProcess, however if is partial flashing
-            DispatchQueue.main.async {
-                self.statusDelegate?.dfuError(.deviceDisconnected, didOccurWithMessage: "connection to calliope lost")
+            
+        case .discovered:
+            if isPartiallyFlashing {
+                LogNotify.log("Lost connection to Calliope mini during partial flashing")
+                DispatchQueue.main.async {
+                    self.statusDelegate?.dfuError(.deviceDisconnected, didOccurWithMessage: "connection to calliope lost")
+                }
             }
+            // Bei DFU completion ist discovered normal - wir warten auf reconnect
+            
+        case .wrongMode:
+            // Reset flags bei falschem Modus
+            if !rebootingIntoDFUMode {
+                shouldRebootOnDisconnect = false
+                dfuCompletedAwaitingReconnect = false
+            }
+            
+        default:
+            break
         }
-        LogNotify.log("Nothing to do with this Calliope mini")
     }
 
     public override func cancelUpload() -> Bool {
@@ -53,31 +77,29 @@ class FlashableBLECalliope: CalliopeAPI {
 
     override public func upload(file: Hex, progressReceiver: DFUProgressDelegate? = nil, statusDelegate: DFUServiceDelegate? = nil, logReceiver: LoggerDelegate? = nil) throws {
         let hexTypes = file.getHexTypes()
-           if hexTypes.contains(.arcade) {
-               LogNotify.log("Arcade files cannot be uploaded via Bluetooth")
-               statusDelegate?.dfuError(.unsupportedResponse, didOccurWithMessage: NSLocalizedString("Arcade-Dateien können nur per USB übertragen werden.", comment: ""))
-               return
-           }
+        if hexTypes.contains(.arcade) {
+            LogNotify.log("Arcade files cannot be uploaded via Bluetooth")
+            statusDelegate?.dfuError(.unsupportedResponse, didOccurWithMessage: NSLocalizedString("Arcade-Dateien können nur per USB übertragen werden.", comment: ""))
+            return
+        }
 
         self.file = file
-
         self.progressReceiver = progressReceiver
         self.statusDelegate = statusDelegate
         self.logReceiver = logReceiver
+        
+        // Reset flags
+        dfuCompletedAwaitingReconnect = false
 
-        //Attempt partial flashing first
-        // Android implementation: https://github.com/microbit-sam/microbit-android/blob/partial-flash/app/src/main/java/com/samsung/microbit/service/PartialFlashService.java
-        // Explanation: https://lancaster-university.github.io/microbit-docs/ble/partial-flashing-service/
-        // the explanation is outdated though.
-
-        //Partial flashing deactivated for now. Calliope mini disconnects from device with MakeCode Beta Hex File.
+        // Attempt partial flashing first if available
         LogNotify.log("Partial flashing service available: \(discoveredOptionalServices.contains(.partialFlashing))")
-        //        if discoveredOptionalServices.contains(.partialFlashing) {
-        //            startPartialFlashing()
-        //        } else {
-        shouldRebootOnDisconnect = false
-        try startFullFlashing()
-        //        }
+        if discoveredOptionalServices.contains(.partialFlashing) && file.partialFlashingInfo != nil {
+            startPartialFlashing()
+        } else {
+            // NEU: shouldRebootOnDisconnect HIER auf true setzen für Reconnect nach DFU
+            shouldRebootOnDisconnect = true
+            try startFullFlashing()
+        }
     }
 
     internal func startFullFlashing() throws {
@@ -368,15 +390,46 @@ class FlashableBLECalliope: CalliopeAPI {
     //MARK: dfu delegate
 
     override func dfuStateDidChange(to state: DFUState) {
-        if state == .starting {
+        LogNotify.log("DFU State changed to: \(state)")
+        
+        switch state {
+        case .starting:
             rebootingIntoDFUMode = false
+            
+        case .completed:
+            // DFU erfolgreich abgeschlossen
+            LogNotify.log("DFU completed successfully!")
+            rebootingIntoDFUMode = false
+            dfuCompletedAwaitingReconnect = true
+            // WICHTIG: shouldRebootOnDisconnect auf true setzen damit Reconnect funktioniert
+            shouldRebootOnDisconnect = true
+            
+        case .aborted:
+            LogNotify.log("DFU was aborted")
+            rebootingIntoDFUMode = false
+            shouldRebootOnDisconnect = false
+            dfuCompletedAwaitingReconnect = false
+            
+        case .disconnecting:
+            // Der Calliope trennt sich nach DFU
+            if dfuCompletedAwaitingReconnect {
+                LogNotify.log("DFU disconnecting after successful flash - reconnect expected")
+                // shouldRebootOnDisconnect bleibt true für Reconnect
+            }
+            
+        default:
+            break
         }
+        
         statusDelegate?.dfuStateDidChange(to: state)
     }
 
 
     override func dfuError(_ error: NordicDFU.DFUError, didOccurWithMessage message: String) {
+        LogNotify.log("DFU Error: \(error) - \(message)")
         rebootingIntoDFUMode = false
+        shouldRebootOnDisconnect = false
+        dfuCompletedAwaitingReconnect = false
         statusDelegate?.dfuError(error, didOccurWithMessage: message)
     }
 
@@ -395,9 +448,9 @@ class CalliopeV1AndV2: FlashableBLECalliope {
         [.dfuControlService]
     }
 
-    override var optionalServices: Set<CalliopeService> {
-        [.partialFlashing]
-    }
+   // override var optionalServices: Set<CalliopeService> {
+   //     [.partialFlashing]
+   // }
 
     override func notify(aboutState newState: DiscoveredDevice.CalliopeBLEDeviceState) {
         super.notify(aboutState: newState)
@@ -438,6 +491,8 @@ class CalliopeV1AndV2: FlashableBLECalliope {
 
 //MARK: Calliope V3
 
+//MARK: Calliope V3
+
 class CalliopeV3: FlashableBLECalliope {
 
     override func notify(aboutState newState: DiscoveredDevice.CalliopeBLEDeviceState) {
@@ -447,6 +502,11 @@ class CalliopeV3: FlashableBLECalliope {
             shouldRebootOnDisconnect = true
             if let cbCharacteristic = getCBCharacteristic(.secureDfuCharacteristic) {
                 peripheral.setNotifyValue(true, for: cbCharacteristic)
+            }
+            // Enable partial flashing notifications if available
+            if discoveredOptionalServices.contains(.partialFlashing),
+               let pfCharacteristic = getCBCharacteristic(.partialFlashing) {
+                peripheral.setNotifyValue(true, for: pfCharacteristic)
             }
             shouldRebootOnDisconnect = false
         }
@@ -459,6 +519,11 @@ class CalliopeV3: FlashableBLECalliope {
     override var requiredServices: Set<CalliopeService> {
         [.secureDfuService]
     }
+    
+    // NEU: Partial Flashing als optionaler Service
+   // override var optionalServices: Set<CalliopeService> {
+   //     [.partialFlashing]
+   // }
 
     // TODO: v3 defaults to full flash
     //  - dat [makecode: 56 bytes, open-roberta: 56 bytes]
@@ -483,14 +548,34 @@ class CalliopeV3: FlashableBLECalliope {
         transferFirmware()
     }
 
+    // NEU: Partial Flashing für V3 aktivieren
+   // internal override func startPartialFlashing() {
+     //   LogNotify.log("Attempting partial flashing for Calliope V3")
+        
+        // Prüfen ob Partial Flashing verfügbar ist
+       // if discoveredOptionalServices.contains(.partialFlashing),
+       //    let _ = file?.partialFlashingInfo {
+            // Nutze die geerbte Partial Flashing Logik
+       //     super.startPartialFlashing()
+       // } else {
+            // Fallback zu Full Flashing
+       //     LogNotify.log("Partial flashing not available, using full flashing")
+       //     do {
+       //         try startFullFlashing()
+        //    } catch {
+         //       LogNotify.log("Full Flashing failed: \(error)")
+        //    }
+       // }
+   // }
     internal override func startPartialFlashing() {
-        // Disable Full Flashing for v3 for now
+        // Partial Flashing für V3 deaktiviert - nutze Full Flashing
+        // TODO: Später mit optimierter Streaming-Implementierung aktivieren
+        LogNotify.log("Partial flashing disabled for V3, using full flashing")
         do {
             try startFullFlashing()
         } catch {
-            LogNotify.log("Full Flashing failed")
+            LogNotify.log("Full Flashing failed: \(error)")
         }
-
     }
 }
 
