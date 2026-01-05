@@ -400,6 +400,8 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
             matrixView.isUserInteractionEnabled = false
             connectButton.connectionState = .testingMode
         case .usageReady:
+            // Verbindung erfolgreich - merken für Fehlerbehandlung
+            hasEverConnected = true
             matrixView.isUserInteractionEnabled = true
             connectButton.connectionState = .readyToPlay
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
@@ -413,6 +415,10 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     }
 
     private var isShowingErrorAlert = false
+    
+    /// Speichert ob jemals eine erfolgreiche Verbindung hergestellt wurde
+    /// Fehler werden nur angezeigt wenn dies true ist
+    private var hasEverConnected = false
 
     private func error(_ error: Error) {
         // Prüfe, ob bereits ein Fehler-Alert angezeigt wird
@@ -423,9 +429,44 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
         let alertController: UIAlertController?
 
         if (error as? CBError)?.errorCode == 14 {
-            alertController = UIAlertController(title: NSLocalizedString("Remove paired device", comment: ""), message: NSLocalizedString("This Calliope can not be connected until you go to the bluetooth settings of your device and \"ignore\" it.", comment: ""), preferredStyle: .alert)
+            // CBError 14 = Peer removed pairing information
+            // Das passiert nach Verwendung einer anderen App (z.B. Blocks mit UART)
+            alertController = UIAlertController(
+                title: NSLocalizedString("Bluetooth-Verbindung zurücksetzen", comment: "Reset Bluetooth connection"),
+                message: NSLocalizedString("Der Calliope mini wurde zuvor mit Blocks verbunden. Um ihn wieder hier zu verbinden:\n\n1. Gehe zu Einstellungen → Bluetooth\n2. Tippe auf das (i) neben dem Calliope mini\n3. Wähle \"Dieses Gerät ignorieren\"\n4. Kehre zur Calliope mini App zurück und verbinde erneut", comment: "Instructions to reset Bluetooth pairing"),
+                preferredStyle: .alert
+            )
+            
+            // Button der zu den Einstellungen führt
+            alertController?.addAction(UIAlertAction(
+                title: NSLocalizedString("Einstellungen", comment: "ettings"),
+                style: .default,
+                handler: { _ in
+                    // Öffnet die Einstellungen-App, Benutzer navigiert dann zu Bluetooth
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(url)
+                    }
+                }
+            ))
+            
+            // Abbrechen-Button zum Schließen
+            alertController?.addAction(UIAlertAction(
+                title: NSLocalizedString("Abbrechen", comment: "Cancel"),
+                style: .cancel,
+                handler: nil
+            ))
         } else if error.localizedDescription == NSLocalizedString("Connection to calliope timed out!", comment: "") {
-            alertController = nil  //ignore error
+            // Timeout ignorieren wenn noch nie verbunden war
+            if !hasEverConnected {
+                LogNotify.log("Ignoring connection timeout - never connected before")
+                alertController = nil
+            } else {
+                alertController = nil  // Auch bei vorheriger Verbindung ignorieren (wie bisher)
+            }
+        } else if error.localizedDescription.contains("Calliope mini") && !hasEverConnected {
+            // Andere Calliope-bezogene Fehler nur anzeigen wenn schon mal verbunden war
+            LogNotify.log("Ignoring error - never connected before: \(error.localizedDescription)")
+            alertController = nil
         } else {
             alertController = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Encountered an error discovering or connecting calliope:", comment: "") + "\n\(error.localizedDescription)", preferredStyle: .alert)
         }

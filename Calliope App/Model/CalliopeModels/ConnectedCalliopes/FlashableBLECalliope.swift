@@ -13,8 +13,11 @@ class FlashableBLECalliope: CalliopeAPI {
 
     // MARK: common
     private var rebootingForPartialFlashing = false
-    private var isPartiallyFlashing = false
+    internal var isPartiallyFlashing = false
     
+    // Optimiertes Partial Flashing für V3 ist deaktiviert
+    // TODO: Bei erneutem Versuch hier den Manager wieder aktivieren
+
     // Tracks whether DFU has completed successfully and we're waiting for reconnect
     private var dfuCompletedAwaitingReconnect = false
     
@@ -120,11 +123,9 @@ class FlashableBLECalliope: CalliopeAPI {
             dfuError(.failedToConnect, didOccurWithMessage: "Could not start DFU mode")
             throw error
         }
-
     }
 
     internal func transferFirmware() {
-
         guard let initiator = initiator else {
             fatalError("Firmware has disappeared somehow")
         }
@@ -218,7 +219,6 @@ class FlashableBLECalliope: CalliopeAPI {
         }
     }
 
-
     func startPartialFlashing() {
         rebootingForPartialFlashing = false
 
@@ -298,11 +298,10 @@ class FlashableBLECalliope: CalliopeAPI {
         if currentProgramHash == hexProgramHash {
             linesFlashed = partialFlashData?.lineCount ?? Int.max  //set progress to 100%
             updateCallback("No changes to upload")
-            let _ = cancelUpload()  //if cancel does not work, we cannot do anything about it here. Push reset button on Calliope should suffice
+            let _ = cancelUpload()
             statusDelegate?.dfuStateDidChange(to: .completed)
         } else {
             updateCallback("Partial flashing starts sending new program to Calliope mini")
-            //start sending program part packages to calliope
             startPackageNumber = 0
             sendNextPackages()
         }
@@ -366,7 +365,6 @@ class FlashableBLECalliope: CalliopeAPI {
         }
     }
 
-
     private func fallbackToFullFlash() {
         isPartiallyFlashing = false
         updateCallback("Partial flash failed, resort to full flashing")
@@ -424,7 +422,6 @@ class FlashableBLECalliope: CalliopeAPI {
         statusDelegate?.dfuStateDidChange(to: state)
     }
 
-
     override func dfuError(_ error: NordicDFU.DFUError, didOccurWithMessage message: String) {
         LogNotify.log("DFU Error: \(error) - \(message)")
         rebootingIntoDFUMode = false
@@ -432,8 +429,6 @@ class FlashableBLECalliope: CalliopeAPI {
         dfuCompletedAwaitingReconnect = false
         statusDelegate?.dfuError(error, didOccurWithMessage: message)
     }
-
-
 }
 
 //MARK: Calliope V1 and V2
@@ -448,9 +443,9 @@ class CalliopeV1AndV2: FlashableBLECalliope {
         [.dfuControlService]
     }
 
-   // override var optionalServices: Set<CalliopeService> {
-   //     [.partialFlashing]
-   // }
+    override var optionalServices: Set<CalliopeService> {
+        [.partialFlashing]
+    }
 
     override func notify(aboutState newState: DiscoveredDevice.CalliopeBLEDeviceState) {
         super.notify(aboutState: newState)
@@ -491,8 +486,6 @@ class CalliopeV1AndV2: FlashableBLECalliope {
 
 //MARK: Calliope V3
 
-//MARK: Calliope V3
-
 class CalliopeV3: FlashableBLECalliope {
 
     override func notify(aboutState newState: DiscoveredDevice.CalliopeBLEDeviceState) {
@@ -503,11 +496,7 @@ class CalliopeV3: FlashableBLECalliope {
             if let cbCharacteristic = getCBCharacteristic(.secureDfuCharacteristic) {
                 peripheral.setNotifyValue(true, for: cbCharacteristic)
             }
-            // Enable partial flashing notifications if available
-            if discoveredOptionalServices.contains(.partialFlashing),
-               let pfCharacteristic = getCBCharacteristic(.partialFlashing) {
-                peripheral.setNotifyValue(true, for: pfCharacteristic)
-            }
+            // Partial Flashing für V3 deaktiviert - verursacht Probleme
             shouldRebootOnDisconnect = false
         }
     }
@@ -520,14 +509,11 @@ class CalliopeV3: FlashableBLECalliope {
         [.secureDfuService]
     }
     
-    // NEU: Partial Flashing als optionaler Service
-   // override var optionalServices: Set<CalliopeService> {
-   //     [.partialFlashing]
-   // }
+    // Partial Flashing für V3 deaktiviert - keine optionalen Services
+    override var optionalServices: Set<CalliopeService> {
+        []
+    }
 
-    // TODO: v3 defaults to full flash
-    //  - dat [makecode: 56 bytes, open-roberta: 56 bytes]
-    //  - bin [makecode: 183152 bytes], [open-roberta: 314117 bytes]
     internal override func startFullFlashing() throws {
 
         guard let file = self.file else {
@@ -548,29 +534,9 @@ class CalliopeV3: FlashableBLECalliope {
         transferFirmware()
     }
 
-    // NEU: Partial Flashing für V3 aktivieren
-   // internal override func startPartialFlashing() {
-     //   LogNotify.log("Attempting partial flashing for Calliope V3")
-        
-        // Prüfen ob Partial Flashing verfügbar ist
-       // if discoveredOptionalServices.contains(.partialFlashing),
-       //    let _ = file?.partialFlashingInfo {
-            // Nutze die geerbte Partial Flashing Logik
-       //     super.startPartialFlashing()
-       // } else {
-            // Fallback zu Full Flashing
-       //     LogNotify.log("Partial flashing not available, using full flashing")
-       //     do {
-       //         try startFullFlashing()
-        //    } catch {
-         //       LogNotify.log("Full Flashing failed: \(error)")
-        //    }
-       // }
-   // }
+    // Partial Flashing für V3 deaktiviert - immer Full Flashing verwenden
     internal override func startPartialFlashing() {
-        // Partial Flashing für V3 deaktiviert - nutze Full Flashing
-        // TODO: Später mit optimierter Streaming-Implementierung aktivieren
-        LogNotify.log("Partial flashing disabled for V3, using full flashing")
+        LogNotify.log("Partial flashing disabled for V3 - using full flashing")
         do {
             try startFullFlashing()
         } catch {
@@ -579,8 +545,7 @@ class CalliopeV3: FlashableBLECalliope {
     }
 }
 
-
-//MARK: constants for partial flasing
+//MARK: constants for partial flashing
 extension UInt8 {
     //commands
     fileprivate static let REBOOT = UInt8(0xFF)
