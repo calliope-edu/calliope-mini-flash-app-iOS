@@ -464,8 +464,24 @@ class FlashableBLECalliope: CalliopeAPI {
     
     private func sendNextPacketInBlock() {
         guard currentBlockSendIndex < packetsToSend.count else {
-            // All packets in block sent, now wait for device notification
-            debugLog("All \(packetsToSend.count) packets sent, waiting for device ACK")
+            // All packets in block sent
+            if packetsToSend.count < 4 {
+                // Incomplete block - device won't send ACK, finish immediately
+                debugLog("Last incomplete block (\(packetsToSend.count) packets) sent, ending transmission")
+                
+                // Update counters for the last block
+                startPackageNumber = startPackageNumber.addingReportingOverflow(UInt8(packetsToSend.count)).partialValue
+                linesFlashed += packetsToSend.count
+                
+                // Cancel timer and end successfully
+                blockTransmissionTimer?.invalidate()
+                blockTransmissionTimer = nil
+                
+                endTransmission()
+            } else {
+                // Full block - wait for device ACK
+                debugLog("All 4 packets sent, waiting for device ACK")
+            }
             return
         }
         
