@@ -451,6 +451,29 @@ class FlashableBLECalliope: CalliopeAPI {
     }
 
     private func sendCurrentPackagesWithFlowControl() {
+        // Check buffer before starting new block (iOS 11+)
+        if #available(iOS 11.0, *) {
+            if !peripheral.canSendWriteWithoutResponse {
+                // Buffer full, retry in 10ms
+                flowControlRetryCount += 1
+                
+                if flowControlRetryCount >= maxFlowControlRetries {
+                    LogNotify.log("Flow control timeout - buffer stayed full for 1 second before block start")
+                    fallbackToFullFlash()
+                    return
+                }
+                
+                if flowControlRetryCount % 10 == 0 {
+                    debugLog("Buffer full before block start, waiting... (retry \(flowControlRetryCount)/\(maxFlowControlRetries))")
+                }
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) { [weak self] in
+                    self?.sendCurrentPackagesWithFlowControl()
+                }
+                return
+            }
+        }
+        
         updateCallback("Sending \(currentDataToFlash.count) packages, beginning at \(startPackageNumber)")
         
         // Prepare packets to send
@@ -458,7 +481,7 @@ class FlashableBLECalliope: CalliopeAPI {
         currentBlockSendIndex = 0
         flowControlRetryCount = 0
         
-        // Start sending
+        // Start sending (all 4 packets immediately)
         sendNextPacketInBlock()
     }
     
@@ -487,29 +510,6 @@ class FlashableBLECalliope: CalliopeAPI {
         
         let (index, package) = packetsToSend[currentBlockSendIndex]
         
-        // Check buffer availability (iOS 11+)
-        if #available(iOS 11.0, *) {
-            if index > 0 && !peripheral.canSendWriteWithoutResponse {
-                // Buffer full, retry in 10ms
-                flowControlRetryCount += 1
-                
-                if flowControlRetryCount >= maxFlowControlRetries {
-                    LogNotify.log("Flow control timeout - buffer stayed full for 1 second")
-                    fallbackToFullFlash()
-                    return
-                }
-                
-                if flowControlRetryCount % 10 == 0 {
-                    debugLog("Buffer full, waiting... (retry \(flowControlRetryCount)/\(maxFlowControlRetries))")
-                }
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) { [weak self] in
-                    self?.sendNextPacketInBlock()
-                }
-                return
-            }
-        }
-        
         // Send packet
         let packageAddress = currentBlockSendIndex == 1 ? currentSegmentAddress.bigEndianData : package.address.bigEndianData
         let currentPacketNumber = startPackageNumber.addingReportingOverflow(UInt8(currentBlockSendIndex)).partialValue
@@ -522,9 +522,8 @@ class FlashableBLECalliope: CalliopeAPI {
         
         // Move to next packet
         currentBlockSendIndex += 1
-        flowControlRetryCount = 0  // Reset on successful send
         
-        // Continue sending immediately (flow control will throttle if needed)
+        // Send all packets immediately without delay (like Android app)
         sendNextPacketInBlock()
     }
 
