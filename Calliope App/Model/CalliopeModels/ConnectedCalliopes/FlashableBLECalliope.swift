@@ -14,9 +14,9 @@ class FlashableBLECalliope: CalliopeAPI {
     // MARK: common
     private var rebootingForPartialFlashing = false
     internal var isPartiallyFlashing = false
-    
-    // Optimiertes Partial Flashing für V3 ist deaktiviert
-    // TODO: Bei erneutem Versuch hier den Manager wieder aktivieren
+
+    // Optimized partial flashing manager with pipelining
+    private var optimizedFlashingManager: OptimizedPartialFlashingManager?
 
     // Tracks whether DFU has completed successfully and we're waiting for reconnect
     private var dfuCompletedAwaitingReconnect = false
@@ -66,6 +66,8 @@ class FlashableBLECalliope: CalliopeAPI {
 
     public override func cancelUpload() -> Bool {
         cancel = true  //cancels partial flashing on next callback of calliope
+        optimizedFlashingManager?.cancel()
+        optimizedFlashingManager = nil
         let success = uploader?.abort()  //cancels full flashing
         if success ?? false {
             uploader = nil
@@ -162,7 +164,12 @@ class FlashableBLECalliope: CalliopeAPI {
         }
         //dispatch from ble queue to update queue to avoid deadlock
         updateQueue.async {
-            self.handlePartialValueNotification(value)
+            // Route to optimized manager if active, otherwise use legacy path
+            if let manager = self.optimizedFlashingManager, manager.isActive {
+                manager.handleNotification(value)
+            } else {
+                self.handlePartialValueNotification(value)
+            }
         }
     }
 
@@ -223,6 +230,8 @@ class FlashableBLECalliope: CalliopeAPI {
         rebootingForPartialFlashing = false
 
         updateCallback("Start partial flashing")
+        LogNotify.log("⏱️ Partial flashing started at \(Date())")
+
         guard let file = file,
             let partialFlashingInfo = file.partialFlashingInfo,
             let partialFlashingCharacteristic = getCBCharacteristic(.partialFlashing)
@@ -297,14 +306,65 @@ class FlashableBLECalliope: CalliopeAPI {
         updateCallback("Received program hash \(hexProgramHash.hexEncodedString())")
         if currentProgramHash == hexProgramHash {
             linesFlashed = partialFlashData?.lineCount ?? Int.max  //set progress to 100%
-            updateCallback("No changes to upload")
-            let _ = cancelUpload()
+            updateCallback("No changes to upload - program hash matches")
+            LogNotify.log("Hash matches - no changes needed, sending TRANSMISSION_END")
+            // Must send TRANSMISSION_END to tell device we're done
+            endTransmission()
             statusDelegate?.dfuStateDidChange(to: .completed)
         } else {
             updateCallback("Partial flashing starts sending new program to Calliope mini")
-            startPackageNumber = 0
-            sendNextPackages()
+            LogNotify.log("Hash mismatch - starting partial flash")
+
+            // Use optimized pipelining if enabled
+            if PartialFlashingConfig.enabled {
+                startOptimizedPartialFlashing()
+            } else {
+                // Fall back to legacy sequential approach
+                startPackageNumber = 0
+                sendNextPackages()
+            }
         }
+    }
+
+    private func startOptimizedPartialFlashing() {
+        guard let partialFlashData = partialFlashData else {
+            fallbackToFullFlash()
+            return
+        }
+
+        LogNotify.log("Using optimized partial flashing with pipelining (maxBlocksInFlight=\(PartialFlashingConfig.maxBlocksInFlight))")
+
+        let manager = OptimizedPartialFlashingManager(calliope: self)
+        self.optimizedFlashingManager = manager
+
+        manager.progressCallback = { [weak self] current, total in
+            guard let self = self else { return }
+            self.linesFlashed = current
+            let percent = total > 0 ? Int((Double(current) / Double(total)) * 100) : 0
+            self.progressReceiver?.dfuProgressDidChange(
+                for: 1, outOf: 1, to: percent,
+                currentSpeedBytesPerSecond: 0, avgSpeedBytesPerSecond: 0
+            )
+        }
+
+        manager.completionCallback = { [weak self] success, message in
+            guard let self = self else { return }
+            LogNotify.log("Optimized partial flashing completed: success=\(success), message=\(message)")
+            if success {
+                self.isPartiallyFlashing = false
+                self.endTransmission()
+                self.statusDelegate?.dfuStateDidChange(to: .completed)
+            } else {
+                LogNotify.log("Optimized partial flashing failed, falling back to full flash")
+                self.fallbackToFullFlash()
+            }
+        }
+
+        manager.logCallback = { [weak self] message in
+            self?.logReceiver?.logWith(.info, message: message)
+        }
+
+        manager.start(with: partialFlashData)
     }
 
     private func sendNextPackages() {
@@ -321,6 +381,12 @@ class FlashableBLECalliope: CalliopeAPI {
             currentDataToFlash.append(nextPackage)
         }
         self.partialFlashData = partialFlashData
+
+        // Log every 50th package to track progress
+        if linesFlashed % 50 == 0 || linesFlashed == 0 {
+            LogNotify.log("Partial flashing: Sent \(linesFlashed)/\(partialFlashData.lineCount) packages (\(Int((Double(linesFlashed) / Double(partialFlashData.lineCount)) * 100))%)")
+        }
+
         sendCurrentPackages()
         if currentDataToFlash.count < 4 {
             endTransmission()  //we did not have a full package to flash any more
@@ -339,6 +405,14 @@ class FlashableBLECalliope: CalliopeAPI {
 
     private func sendCurrentPackages() {
         updateCallback("Sending \(currentDataToFlash.count) packages, beginning at \(startPackageNumber)")
+
+        // Log first package details for debugging
+        if linesFlashed == 0 && currentDataToFlash.count > 0 {
+            let firstPkg = currentDataToFlash[0]
+            let dataPreview = firstPkg.data.prefix(8).map { String(format: "%02X", $0) }.joined(separator: " ")
+            LogNotify.log("First package: addr=0x\(String(format: "%04X", firstPkg.address)), data=[\(dataPreview)...]")
+        }
+
         for (index, package) in currentDataToFlash.enumerated() {
             let packageAddress = index == 1 ? currentSegmentAddress.bigEndianData : package.address.bigEndianData
             let packageNumber = Data([startPackageNumber + UInt8(index)])
@@ -349,9 +423,18 @@ class FlashableBLECalliope: CalliopeAPI {
 
     private func endTransmission() {
         isPartiallyFlashing = false
-        shouldRebootOnDisconnect = false
         updateCallback("Partial flashing done!")
+        LogNotify.log("⏱️ Partial flashing completed at \(Date())")
         send(command: .TRANSMISSION_END)
+
+        // Give device time to process TRANSMISSION_END before rebooting
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+            guard let self = self else { return }
+            // Reboot device into application mode after transmission ends
+            LogNotify.log("Sending REBOOT command to restart Calliope")
+            self.send(command: .REBOOT, value: Data([.MODE_APPLICATION]))
+            self.shouldRebootOnDisconnect = false
+        }
     }
 
 
@@ -496,7 +579,10 @@ class CalliopeV3: FlashableBLECalliope {
             if let cbCharacteristic = getCBCharacteristic(.secureDfuCharacteristic) {
                 peripheral.setNotifyValue(true, for: cbCharacteristic)
             }
-            // Partial Flashing für V3 deaktiviert - verursacht Probleme
+            // Enable partial flashing notification for V3
+            if discoveredOptionalServices.contains(.partialFlashing), let cbCharacteristic = getCBCharacteristic(.partialFlashing) {
+                peripheral.setNotifyValue(true, for: cbCharacteristic)
+            }
             shouldRebootOnDisconnect = false
         }
     }
@@ -508,10 +594,10 @@ class CalliopeV3: FlashableBLECalliope {
     override var requiredServices: Set<CalliopeService> {
         [.secureDfuService]
     }
-    
-    // Partial Flashing für V3 deaktiviert - keine optionalen Services
+
+    // Enable partial flashing service for V3
     override var optionalServices: Set<CalliopeService> {
-        []
+        [.partialFlashing]
     }
 
     internal override func startFullFlashing() throws {
@@ -534,14 +620,10 @@ class CalliopeV3: FlashableBLECalliope {
         transferFirmware()
     }
 
-    // Partial Flashing für V3 deaktiviert - immer Full Flashing verwenden
+    // Partial Flashing enabled for V3 with empty block filtering
     internal override func startPartialFlashing() {
-        LogNotify.log("Partial flashing disabled for V3 - using full flashing")
-        do {
-            try startFullFlashing()
-        } catch {
-            LogNotify.log("Full Flashing failed: \(error)")
-        }
+        LogNotify.log("Starting partial flashing for V3")
+        super.startPartialFlashing()
     }
 }
 

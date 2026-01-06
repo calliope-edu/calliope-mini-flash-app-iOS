@@ -179,11 +179,23 @@ struct HexParser {
 
         _ = forwardToMagicNumber(reader)
         var numLinesToFlash = 0
+        var numEmptyLinesSkipped = 0
         while let line = reader.nextLine(), !HexReader.isEndOfFileOrMagicEnd(line) {
             if line.starts(with: ":") && HexReader.type(of: line) == 0 {
+                // Count all data lines
                 numLinesToFlash += 1
+
+                // Count how many are empty/padding (for logging)
+                if let data = HexReader.readData(line), HexReader.isEmptyOrPaddingBlock(data.data) {
+                    numEmptyLinesSkipped += 1
+                }
             }
         }
+
+        // Calculate actual lines to flash (excluding empty blocks)
+        let actualLinesToFlash = numLinesToFlash - numEmptyLinesSkipped
+        LogNotify.log("Partial flashing: Total lines=\(numLinesToFlash), Empty/padding=\(numEmptyLinesSkipped), Will transfer=\(actualLinesToFlash)")
+
         reader.rewind()
 
         let (line, currentSegmentAddress) = forwardToMagicNumber(reader)
@@ -201,7 +213,7 @@ struct HexParser {
                     nextLines: [hashesLine, magicLine],
                     currentSegmentAddress: currentSegmentAddress,
                     reader: reader,
-                    lineCount: numLinesToFlash))
+                    lineCount: actualLinesToFlash))
         }
         return nil
     }
@@ -230,12 +242,14 @@ struct PartialFlashData: Sequence, IteratorProtocol {
     public private(set) var currentSegmentAddress: UInt16
     private var nextData: [(address: UInt16, data: Data)] = []
     private var reader: StreamReader?
+    private var skippedBlockCount: Int = 0  // Track skipped blocks for logging
 
     init(nextLines: [String], currentSegmentAddress: UInt16, reader: StreamReader, lineCount: Int) {
         self.reader = reader
         self.nextData = []
         self.currentSegmentAddress = currentSegmentAddress
         self.lineCount = lineCount
+        self.skippedBlockCount = 0
         //extract data from nextLines
         nextLines.forEach {
             read($0)
@@ -264,7 +278,16 @@ struct PartialFlashData: Sequence, IteratorProtocol {
             if record.contains("00000001FF") {
                 break
             } else if let data = HexReader.readData(record) {
-                nextData.append(data)
+                // Skip empty/padding blocks (all 0xFF or all 0x00)
+                if !HexReader.isEmptyOrPaddingBlock(data.data) {
+                    nextData.append(data)
+                } else {
+                    // Log first few skipped blocks to verify filtering is working
+                    skippedBlockCount += 1
+                    if skippedBlockCount <= 5 {
+                        LogNotify.log("Skipping empty/padding block at address \(String(format: "0x%04X", data.address)): \(data.data.prefix(4).map { String(format: "%02X", $0) }.joined())")
+                    }
+                }
             }
         case 2: // extended segment adress
             if let segmentAddress = HexReader.readSegmentAddress(record) {
@@ -346,5 +369,21 @@ struct HexReader {
     static func isEndOfFileOrMagicEnd(_ record: String) -> Bool {
         //magic end of program data (start of embedded source)
         return record.count >= 24 && record[9..<24] == MAGIC_END_NUMBER || record.contains("00000001FF")
+    }
+
+    /// Checks if a data block is empty (all 0x00) or padding (all 0xFF)
+    /// These blocks don't need to be transferred during partial flashing
+    static func isEmptyOrPaddingBlock(_ data: Data) -> Bool {
+        guard !data.isEmpty else { return true }
+
+        // Check if all bytes are 0xFF (padding/uninitialized flash)
+        let isAllFF = data.allSatisfy { $0 == 0xFF }
+        if isAllFF { return true }
+
+        // Check if all bytes are 0x00 (zero-initialized/empty)
+        let isAllZero = data.allSatisfy { $0 == 0x00 }
+        if isAllZero { return true }
+
+        return false
     }
 }

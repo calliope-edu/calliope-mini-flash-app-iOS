@@ -23,14 +23,15 @@ import CoreBluetooth
 struct PartialFlashingConfig {
     /// Maximale Anzahl von 4er-Blöcken die gleichzeitig "in flight" sein dürfen
     /// Höherer Wert = schneller, aber mehr Risiko bei Packet Loss
-    /// REDUZIERT auf 2 für bessere Stabilität
-    static let maxBlocksInFlight = 2  // 8 Pakete gleichzeitig
-    
+    /// REDUZIERT auf 1 - V3 firmware can't handle pipelining
+    static let maxBlocksInFlight = 1  // No pipelining - sequential only
+
     /// Timeout für Gesamtübertragung (in Sekunden)
     static let timeout: TimeInterval = 120.0  // 2 Minuten
-    
+
     /// Aktiviert optimiertes Partial Flashing (für einfaches An/Aus)
-    static let enabled = true
+    /// DISABLED - V3 disconnects with pipelining
+    static let enabled = false
 }
 
 // MARK: - Optimized Partial Flashing Manager
