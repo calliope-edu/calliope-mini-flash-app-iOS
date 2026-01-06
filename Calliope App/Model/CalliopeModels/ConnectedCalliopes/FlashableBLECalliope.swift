@@ -425,24 +425,10 @@ class FlashableBLECalliope: CalliopeAPI {
         }
 
         for (index, package) in currentDataToFlash.enumerated() {
-            // Protocol: Packet 0 = lower 16 bits, Packet 1 = upper 16 bits of 32-bit address
-            // Construct full 32-bit address: (segment << 16) | address
-            let full32BitAddress = (UInt32(currentSegmentAddress) << 16) | UInt32(package.address)
-
-            let addressToSend: UInt16
-            if index == 0 {
-                // Packet 0: Lower 16 bits of 32-bit address
-                addressToSend = UInt16(full32BitAddress & 0xFFFF)
-            } else if index == 1 {
-                // Packet 1: Upper 16 bits of 32-bit address
-                addressToSend = UInt16((full32BitAddress >> 16) & 0xFFFF)
-            } else {
-                // Packets 2-3: Use their own addresses as lower 16 bits
-                let addr32 = (UInt32(currentSegmentAddress) << 16) | UInt32(package.address)
-                addressToSend = UInt16(addr32 & 0xFFFF)
-            }
-
-            let packageAddress = addressToSend.bigEndianData
+            // WICHTIG: Das Original-Protokoll ist einfacher als gedacht:
+            // - Paket 1 (index == 1): Verwende currentSegmentAddress (obere 16 Bit)
+            // - Alle anderen Pakete (0, 2, 3): Verwende package.address (untere 16 Bit)
+            let packageAddress = index == 1 ? currentSegmentAddress.bigEndianData : package.address.bigEndianData
             let packageNumber = Data([startPackageNumber + UInt8(index)])
             let writeData = packageAddress + packageNumber + package.data
 
@@ -450,7 +436,8 @@ class FlashableBLECalliope: CalliopeAPI {
                 let addrHex = packageAddress.map { String(format: "%02X", $0) }.joined()
                 let numHex = String(format: "%02X", packageNumber[0])
                 let dataHex = package.data.prefix(4).map { String(format: "%02X", $0) }.joined(separator: " ")
-                LogNotify.log("  → WRITE[\(index)] addr=[\(addrHex)] num=[\(numHex)] data=[\(dataHex)...] (full32=0x\(String(format: "%08X", full32BitAddress)))")
+                let addrValue = index == 1 ? currentSegmentAddress : package.address
+                LogNotify.log("  → WRITE[\(index)] addr=[\(addrHex)] (0x\(String(format: "%04X", addrValue))) num=[\(numHex)] data=[\(dataHex)...]")
             }
 
             send(command: .WRITE, value: writeData)
