@@ -283,14 +283,19 @@ class FirmwareUpload {
 
         FirmwareUpload.uploadingInstance = self
 
+        // WICHTIG: Idle Timer SOFORT deaktivieren, damit der Bildschirm an bleibt
+        // Muss VOR beginBackgroundTask() passieren
+        UIApplication.shared.isIdleTimerDisabled = true
+        LogNotify.log("🔋 Idle timer disabled - screen will stay on during flashing")
+
         let background_ident = UIApplication.shared.beginBackgroundTask(
             withName: "flashing",
-            expirationHandler: { () -> Void in
-                LogNotify.log("task expired?")
-                // not exactly sure what belongs here...
+            expirationHandler: { [weak self] () -> Void in
+                LogNotify.log("⚠️ Background task expiring - this should not happen during active flashing!")
+                LogNotify.log("App should remain in foreground during flashing to prevent iOS from terminating the task")
+                // Warnung: Wenn dieser Handler aufgerufen wird, sind nur noch wenige Sekunden Zeit
+                // Die App MUSS im Foreground bleiben während des Flashings
             })
-
-        UIApplication.shared.isIdleTimerDisabled = true
 
         let downloadCompletion = {
             FirmwareUpload.uploadingInstance = nil
