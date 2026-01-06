@@ -459,9 +459,6 @@ class FlashableBLECalliope: CalliopeAPI {
             // Send TRANSMISSION_END - device will reboot automatically
             self.send(command: .TRANSMISSION_END)
             LogNotify.log("TRANSMISSION_END sent - device should reboot automatically")
-
-            // WICHTIG: .completed erst NACH dem Senden von TRANSMISSION_END
-            self.statusDelegate?.dfuStateDidChange(to: .completed)
         }
     }
 
