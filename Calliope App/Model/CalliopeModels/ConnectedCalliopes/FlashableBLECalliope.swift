@@ -486,45 +486,42 @@ class FlashableBLECalliope: CalliopeAPI {
     }
     
     private func sendNextPacketInBlock() {
-        guard currentBlockSendIndex < packetsToSend.count else {
-            // All packets in block sent
-            if packetsToSend.count < 4 {
-                // Incomplete block - device won't send ACK, finish immediately
-                debugLog("Last incomplete block (\(packetsToSend.count) packets) sent, ending transmission")
-                
-                // Update counters for the last block
-                startPackageNumber = startPackageNumber.addingReportingOverflow(UInt8(packetsToSend.count)).partialValue
-                linesFlashed += packetsToSend.count
-                
-                // Cancel timer and end successfully
-                blockTransmissionTimer?.invalidate()
-                blockTransmissionTimer = nil
-                
-                endTransmission()
-            } else {
-                // Full block - wait for device ACK
-                debugLog("All 4 packets sent, waiting for device ACK")
-            }
-            return
+        // Send all packets in tight loop for maximum speed
+        while currentBlockSendIndex < packetsToSend.count {
+            let (index, package) = packetsToSend[currentBlockSendIndex]
+            
+            // Send packet
+            let packageAddress = currentBlockSendIndex == 1 ? currentSegmentAddress.bigEndianData : package.address.bigEndianData
+            let currentPacketNumber = startPackageNumber.addingReportingOverflow(UInt8(currentBlockSendIndex)).partialValue
+            let packageNumber = Data([currentPacketNumber])
+            let writeData = packageAddress + packageNumber + package.data
+            
+            debugLog("Sending packet #\(currentPacketNumber): addr=\(String(format: "0x%04X", package.address)), data=\(package.data.prefix(4).map { String(format: "%02X", $0) }.joined())...")
+            
+            send(command: .WRITE, value: writeData)
+            
+            // Move to next packet
+            currentBlockSendIndex += 1
         }
         
-        let (index, package) = packetsToSend[currentBlockSendIndex]
-        
-        // Send packet
-        let packageAddress = currentBlockSendIndex == 1 ? currentSegmentAddress.bigEndianData : package.address.bigEndianData
-        let currentPacketNumber = startPackageNumber.addingReportingOverflow(UInt8(currentBlockSendIndex)).partialValue
-        let packageNumber = Data([currentPacketNumber])
-        let writeData = packageAddress + packageNumber + package.data
-        
-        debugLog("Sending packet #\(currentPacketNumber): addr=\(String(format: "0x%04X", package.address)), data=\(package.data.prefix(4).map { String(format: "%02X", $0) }.joined())...")
-        
-        send(command: .WRITE, value: writeData)
-        
-        // Move to next packet
-        currentBlockSendIndex += 1
-        
-        // Send all packets immediately without delay (like Android app)
-        sendNextPacketInBlock()
+        // All packets in block sent
+        if packetsToSend.count < 4 {
+            // Incomplete block - device won't send ACK, finish immediately
+            debugLog("Last incomplete block (\(packetsToSend.count) packets) sent, ending transmission")
+            
+            // Update counters for the last block
+            startPackageNumber = startPackageNumber.addingReportingOverflow(UInt8(packetsToSend.count)).partialValue
+            linesFlashed += packetsToSend.count
+            
+            // Cancel timer and end successfully
+            blockTransmissionTimer?.invalidate()
+            blockTransmissionTimer = nil
+            
+            endTransmission()
+        } else {
+            // Full block - wait for device ACK
+            debugLog("All 4 packets sent, waiting for device ACK")
+        }
     }
 
     private func endTransmission() {
