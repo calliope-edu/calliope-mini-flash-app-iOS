@@ -209,8 +209,10 @@ struct HexParser {
 
         let (line, currentSegmentAddress) = forwardToMagicNumber(reader)
         guard let magicLine = line else {
+            print("[PartialFlash] ERROR: Magic start not found after rewind!")
             return nil
         }
+        print("[PartialFlash] After rewind: found magic start again, segment address: \(String(format: "0x%04X", currentSegmentAddress))")
 
         if let hashesLine = reader.nextLine(),
            hashesLine.count >= 41,
@@ -259,10 +261,12 @@ struct PartialFlashData: Sequence, IteratorProtocol {
         self.nextData = []
         self.currentSegmentAddress = currentSegmentAddress
         self.lineCount = lineCount
+        print("[PartialFlash] PartialFlashData init: segment address=\(String(format: "0x%04X", currentSegmentAddress)), lineCount=\(lineCount)")
         //extract data from nextLines
         nextLines.forEach {
             read($0)
         }
+        print("[PartialFlash] After processing nextLines, have \(nextData.count) packets in buffer")
     }
 
     mutating func next() -> (address: UInt16, data: Data)? {
@@ -278,9 +282,6 @@ struct PartialFlashData: Sequence, IteratorProtocol {
             
             // Check if we got a line
             guard let result = line else {
-                if iterationCount > 0 && (iterationCount % 100 == 0 || skippedCount > 0) {
-                    print("[PartialFlash] Iteration complete: \(iterationCount) packets sent, \(skippedCount) skipped")
-                }
                 return nil
             }
             
@@ -291,10 +292,6 @@ struct PartialFlashData: Sequence, IteratorProtocol {
             }
             
             iterationCount += 1
-            if iterationCount == 1 || iterationCount % 500 == 0 {
-                print("[PartialFlash] Sent \(iterationCount) packets (\(skippedCount) skipped)")
-            }
-            
             return result
         }
     }
@@ -318,9 +315,7 @@ struct PartialFlashData: Sequence, IteratorProtocol {
             } else if let data = HexReader.readData(record) {
                 // Don't filter here - we'll filter in next() to keep lineCount accurate
                 nextData.append(data)
-                if nextData.count == 1 || nextData.count % 500 == 0 {
-                    print("[PartialFlash] Read \(nextData.count) packets so far, address: \(String(format: "0x%04X", data.address))")
-                }
+
             }
         case 2: // extended segment adress
             if let segmentAddress = HexReader.readSegmentAddress(record) {
