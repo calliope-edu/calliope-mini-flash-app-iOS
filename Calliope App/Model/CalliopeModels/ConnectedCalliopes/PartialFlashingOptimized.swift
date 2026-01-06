@@ -28,8 +28,8 @@ struct PartialFlashingConfig {
 
     /// Verzögerung zwischen Paketen INNERHALB eines 4er-Blocks (in Sekunden)
     /// Android: 3-15ms zwischen Paketen (Thread.sleep(3), max 5 Iterationen)
-    /// iOS: Nutzen wir writeWithoutResponse für maximale Geschwindigkeit (keine Verzögerung nötig)
-    static let intraBlockPacketDelay: TimeInterval = 0.0  // No delay - let BLE stack handle it
+    /// iOS: Verwenden 5ms Verzögerung für BLE Flow Control
+    static let intraBlockPacketDelay: TimeInterval = 0.005  // 5ms - matches Android's approach
 
     /// Timeout für Gesamtübertragung (in Sekunden)
     static let timeout: TimeInterval = 120.0  // 2 Minuten
@@ -233,9 +233,17 @@ class OptimizedPartialFlashingManager {
             // In allen anderen Paketen wird die normale Adresse verwendet
             let addr: UInt16 = (i == 1) ? blockSegmentAddress : pkg.address
             let packetNum = startPacketNum &+ UInt8(i)
-            
+
             let writeData = addr.bigEndianData + Data([packetNum]) + pkg.data
-            
+
+            // WICHTIG: BLE Flow Control wie in Android
+            // Android wartet 3-15ms zwischen Paketen (waitForOnWriteCharacteristic)
+            // iOS: Warten bis BLE Stack bereit ist für nächstes Paket
+            if i > 0 {
+                // Kurze Verzögerung zwischen Paketen (simuliert Android's Thread.sleep(3))
+                Thread.sleep(forTimeInterval: PartialFlashingConfig.intraBlockPacketDelay)
+            }
+
             do {
                 try calliope.writeWithoutResponse(Data([Command.WRITE]) + writeData, for: .partialFlashing)
             } catch {
