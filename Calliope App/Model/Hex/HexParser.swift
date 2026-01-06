@@ -179,14 +179,20 @@ struct HexParser {
 
         _ = forwardToMagicNumber(reader)
         var numLinesToFlash = 0
+        var totalLines = 0
         // Count only non-empty blocks (like Android does implicitly)
         while let line = reader.nextLine(), !HexReader.isEndOfFileOrMagicEnd(line) {
             if line.starts(with: ":") && HexReader.type(of: line) == 0 {
+                totalLines += 1
                 // Check if this line contains actual data (not all 0xFF)
                 if let data = HexReader.readData(line), !data.data.allSatisfy({ $0 == 0xFF }) {
                     numLinesToFlash += 1
                 }
             }
+        }
+        let skipped = totalLines - numLinesToFlash
+        if skipped > 0 {
+            print("[PartialFlash] Filtered \(skipped) empty blocks (\(numLinesToFlash) packets to send)")
         }
         reader.rewind()
 
