@@ -213,13 +213,15 @@ class FlashableBLECalliope: CalliopeAPI {
         if value[0] == .WRITE {
             updateCallback("write status: \(Data([value[1]]).hexEncodedString())")
             if value[1] == .WRITE_FAIL {
-                LogNotify.log("Received error message, stopping transmission")
+                LogNotify.log("⚠️ WRITE_FAIL (0xAA) received! Out-of-order packet detected at line \(linesFlashed)")
+                LogNotify.log("Last block sent: startPkg=\(startPackageNumber - UInt8(currentDataToFlash.count)), count=\(currentDataToFlash.count)")
+                LogNotify.log("Segment addr was: 0x\(String(format: "%04X", currentSegmentAddress))")
                 _ = cancelUpload()
                 resendPackages()
             } else if value[1] == .WRITE_SUCCESS {
                 sendNextPackages()
             } else {
-                //we do not understand the response
+                LogNotify.log("⚠️ Unknown write status: 0x\(String(format: "%02X", value[1]))")
                 fallbackToFullFlash()
             }
             return
@@ -406,35 +408,60 @@ class FlashableBLECalliope: CalliopeAPI {
     private func sendCurrentPackages() {
         updateCallback("Sending \(currentDataToFlash.count) packages, beginning at \(startPackageNumber)")
 
-        // Log first package details for debugging
-        if linesFlashed == 0 && currentDataToFlash.count > 0 {
-            let firstPkg = currentDataToFlash[0]
-            let dataPreview = firstPkg.data.prefix(8).map { String(format: "%02X", $0) }.joined(separator: " ")
-            LogNotify.log("First package: addr=0x\(String(format: "%04X", firstPkg.address)), data=[\(dataPreview)...]")
+        // Log detailed packet info for first block and every 50th block
+        let shouldLogDetailed = (linesFlashed == 0 || linesFlashed % 50 == 0)
+
+        if shouldLogDetailed {
+            LogNotify.log("=== Block \(linesFlashed/4) Details ===")
+            LogNotify.log("Segment Address: 0x\(String(format: "%04X", currentSegmentAddress))")
+            for (idx, pkg) in currentDataToFlash.enumerated() {
+                let dataPreview = pkg.data.prefix(4).map { String(format: "%02X", $0) }.joined(separator: " ")
+                LogNotify.log("  Pkg[\(idx)] addr=0x\(String(format: "%04X", pkg.address)) data=[\(dataPreview)...]")
+            }
         }
 
         for (index, package) in currentDataToFlash.enumerated() {
-            let packageAddress = index == 1 ? currentSegmentAddress.bigEndianData : package.address.bigEndianData
+            // Protocol: Packet 0 = lower 16 bits, Packet 1 = upper 16 bits of 32-bit address
+            // Construct full 32-bit address: (segment << 16) | address
+            let full32BitAddress = (UInt32(currentSegmentAddress) << 16) | UInt32(package.address)
+
+            let addressToSend: UInt16
+            if index == 0 {
+                // Packet 0: Lower 16 bits of 32-bit address
+                addressToSend = UInt16(full32BitAddress & 0xFFFF)
+            } else if index == 1 {
+                // Packet 1: Upper 16 bits of 32-bit address
+                addressToSend = UInt16((full32BitAddress >> 16) & 0xFFFF)
+            } else {
+                // Packets 2-3: Use their own addresses as lower 16 bits
+                let addr32 = (UInt32(currentSegmentAddress) << 16) | UInt32(package.address)
+                addressToSend = UInt16(addr32 & 0xFFFF)
+            }
+
+            let packageAddress = addressToSend.bigEndianData
             let packageNumber = Data([startPackageNumber + UInt8(index)])
             let writeData = packageAddress + packageNumber + package.data
+
+            if shouldLogDetailed {
+                let addrHex = packageAddress.map { String(format: "%02X", $0) }.joined()
+                let numHex = String(format: "%02X", packageNumber[0])
+                let dataHex = package.data.prefix(4).map { String(format: "%02X", $0) }.joined(separator: " ")
+                LogNotify.log("  → WRITE[\(index)] addr=[\(addrHex)] num=[\(numHex)] data=[\(dataHex)...] (full32=0x\(String(format: "%08X", full32BitAddress)))")
+            }
+
             send(command: .WRITE, value: writeData)
         }
     }
 
     private func endTransmission() {
         isPartiallyFlashing = false
+        shouldRebootOnDisconnect = false
         updateCallback("Partial flashing done!")
         LogNotify.log("⏱️ Partial flashing completed at \(Date())")
-        send(command: .TRANSMISSION_END)
 
-        // Give device time to process TRANSMISSION_END before rebooting
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
-            guard let self = self else { return }
-            // Reboot device into application mode after transmission ends
-            LogNotify.log("Sending REBOOT command to restart Calliope")
-            self.send(command: .REBOOT, value: Data([.MODE_APPLICATION]))
-            self.shouldRebootOnDisconnect = false
-        }
+        // Send TRANSMISSION_END - device will reboot automatically
+        send(command: .TRANSMISSION_END)
+        LogNotify.log("TRANSMISSION_END sent - device should reboot automatically")
     }
 
 

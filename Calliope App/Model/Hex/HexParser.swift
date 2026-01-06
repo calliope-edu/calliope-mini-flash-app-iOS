@@ -207,6 +207,8 @@ struct HexParser {
            hashesLine.count >= 41,
            let templateHash = hashesLine[9..<25].toData(using: .hex),
            let programHash = (hashesLine[25..<41]).toData(using: .hex) {
+            // Pass magic and hash lines to PartialFlashData
+            // The read() function will now filter them out
             return (templateHash,
                 programHash,
                 PartialFlashData(
@@ -273,11 +275,27 @@ struct PartialFlashData: Sequence, IteratorProtocol {
             reader = nil
             return
         }
+
+        // Skip magic start line (contains metadata, not program data)
+        if HexReader.isMagicStart(record) {
+            LogNotify.log("Skipping magic start line (metadata)")
+            return
+        }
+
         switch HexReader.type(of: record) {
         case 0: //record type 0 means data for program
             if record.contains("00000001FF") {
                 break
             } else if let data = HexReader.readData(record) {
+                // Skip magic number data blocks (they contain the hash/magic metadata)
+                if data.data.count >= 16 {
+                    let dataHex = data.data.prefix(16).map { String(format: "%02X", $0) }.joined()
+                    if dataHex.hasPrefix("708E3B92C615A841") { // First 8 bytes of magic
+                        LogNotify.log("Skipping magic data block at address 0x\(String(format: "%04X", data.address))")
+                        return
+                    }
+                }
+
                 // Skip empty/padding blocks (all 0xFF or all 0x00)
                 if !HexReader.isEmptyOrPaddingBlock(data.data) {
                     nextData.append(data)
