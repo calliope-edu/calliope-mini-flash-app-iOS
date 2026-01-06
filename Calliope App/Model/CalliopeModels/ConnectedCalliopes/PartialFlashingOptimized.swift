@@ -258,26 +258,32 @@ class OptimizedPartialFlashingManager {
     private func sendEndTransmission() {
         guard isActive else { return }
         isActive = false
-        
+
         let duration = startTime.map { Date().timeIntervalSince($0) } ?? 0
         log("Sending TRANSMISSION_END after \(String(format: "%.2f", duration))s")
-        
-        // WICHTIG: Setze isPartiallyFlashing SOFORT auf false,
+
+        // WICHTIG: Setze isPartiallyFlashing SOFORT auf false VOR dem Senden von TRANSMISSION_END,
         // damit ein nachfolgender Disconnect nicht als Fehler gewertet wird
+        // Der Calliope könnte sich sofort nach Empfang von TRANSMISSION_END trennen!
         calliope?.isPartiallyFlashing = false
         calliope?.shouldRebootOnDisconnect = false
-        
-        // Sende END Kommando
-        if let calliope = calliope {
+
+        // Kleine Verzögerung um sicherzustellen, dass die Flags gesetzt sind
+        // bevor der Calliope sich trennt
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self] in
+            guard let self = self, let calliope = self.calliope else { return }
+
+            // Sende END Kommando
             do {
                 try calliope.writeWithoutResponse(Data([Command.TRANSMISSION_END]), for: .partialFlashing)
-                log("TRANSMISSION_END sent successfully")
+                self.log("TRANSMISSION_END sent successfully")
             } catch {
-                log("Failed to send TRANSMISSION_END: \(error)")
+                self.log("Failed to send TRANSMISSION_END: \(error)")
             }
+
+            // Completion callback NACH dem Senden
+            self.completionCallback?(true, "Completed in \(String(format: "%.2f", duration))s")
         }
-        
-        completionCallback?(true, "Completed in \(String(format: "%.2f", duration))s")
     }
     
     private func handleWriteSuccess() {

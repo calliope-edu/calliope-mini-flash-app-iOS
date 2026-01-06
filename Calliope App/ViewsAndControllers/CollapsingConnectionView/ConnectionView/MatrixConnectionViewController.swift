@@ -436,24 +436,20 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
                 message: NSLocalizedString("Der Calliope mini wurde zuvor mit Blocks verbunden. Um ihn wieder hier zu verbinden:\n\n1. Gehe zu Einstellungen → Bluetooth\n2. Tippe auf das (i) neben dem Calliope mini\n3. Wähle \"Dieses Gerät ignorieren\"\n4. Kehre zur Calliope mini App zurück und verbinde erneut", comment: "Instructions to reset Bluetooth pairing"),
                 preferredStyle: .alert
             )
-            
-            // Button der zu den Einstellungen führt
+
+            // Button der zu den System-Einstellungen führt (öffnet generelle iOS Einstellungen)
+            // WICHTIG: iOS erlaubt nur das Öffnen der allgemeinen Einstellungen,
+            // nicht direkt der Bluetooth-Einstellungen
             alertController?.addAction(UIAlertAction(
-                title: NSLocalizedString("Einstellungen", comment: "ettings"),
+                title: NSLocalizedString("Einstellungen öffnen", comment: "Open Settings"),
                 style: .default,
                 handler: { _ in
-                    // Öffnet die Einstellungen-App, Benutzer navigiert dann zu Bluetooth
-                    if let url = URL(string: UIApplication.openSettingsURLString) {
-                        UIApplication.shared.open(url)
+                    // Öffnet die iOS Einstellungen (nicht App-Einstellungen!)
+                    // Der Benutzer kann dann manuell zu Bluetooth navigieren
+                    if let url = URL(string: "App-prefs:root=Bluetooth") {
+                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
                     }
                 }
-            ))
-            
-            // Abbrechen-Button zum Schließen
-            alertController?.addAction(UIAlertAction(
-                title: NSLocalizedString("Abbrechen", comment: "Cancel"),
-                style: .cancel,
-                handler: nil
             ))
         } else if error.localizedDescription == NSLocalizedString("Connection to calliope timed out!", comment: "") {
             // Timeout ignorieren wenn noch nie verbunden war

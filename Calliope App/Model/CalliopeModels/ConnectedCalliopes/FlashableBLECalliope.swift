@@ -46,6 +46,8 @@ class FlashableBLECalliope: CalliopeAPI {
         case .discovered:
             if isPartiallyFlashing {
                 LogNotify.log("Lost connection to Calliope mini during partial flashing")
+                // Setze Flag auf false um weitere Fehler zu vermeiden
+                isPartiallyFlashing = false
                 DispatchQueue.main.async {
                     self.statusDelegate?.dfuError(.deviceDisconnected, didOccurWithMessage: "connection to calliope lost")
                 }
@@ -454,14 +456,20 @@ class FlashableBLECalliope: CalliopeAPI {
     }
 
     private func endTransmission() {
+        // WICHTIG: Flags SOFORT setzen, bevor TRANSMISSION_END gesendet wird
+        // Der Calliope könnte sich direkt nach Empfang von TRANSMISSION_END trennen
         isPartiallyFlashing = false
         shouldRebootOnDisconnect = false
         updateCallback("Partial flashing done!")
         LogNotify.log("⏱️ Partial flashing completed at \(Date())")
 
-        // Send TRANSMISSION_END - device will reboot automatically
-        send(command: .TRANSMISSION_END)
-        LogNotify.log("TRANSMISSION_END sent - device should reboot automatically")
+        // Kleine Verzögerung um Race Condition zu vermeiden
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self] in
+            guard let self = self else { return }
+            // Send TRANSMISSION_END - device will reboot automatically
+            self.send(command: .TRANSMISSION_END)
+            LogNotify.log("TRANSMISSION_END sent - device should reboot automatically")
+        }
     }
 
 
