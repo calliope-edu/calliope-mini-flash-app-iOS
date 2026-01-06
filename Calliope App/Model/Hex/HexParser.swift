@@ -177,26 +177,34 @@ struct HexParser {
             return nil
         }
 
-        let (magicLine, _) = forwardToMagicNumber(reader)
+        let (magicLine, currentSegmentAddress) = forwardToMagicNumber(reader)
         if magicLine == nil {
             print("[PartialFlash] ERROR: Magic start marker not found!")
             return nil
         }
         
+        // Read hashes line immediately (it's right after magic)
+        guard let hashesLine = reader.nextLine(),
+              hashesLine.count >= 41,
+              let templateHash = hashesLine[9..<25].toData(using: .hex),
+              let programHash = (hashesLine[25..<41]).toData(using: .hex) else {
+            print("[PartialFlash] ERROR: Could not read hash line after magic marker")
+            return nil
+        }
+        
+        // Count remaining lines from current position to magic end
         var numLinesToFlash = 0
         var totalLines = 0
         var emptyLines = 0
         var lineNumber = 0
-        // Count only non-empty blocks (like Android does implicitly)
         while let line = reader.nextLine() {
             lineNumber += 1
             if HexReader.isEndOfFileOrMagicEnd(line) {
-                print("[PartialFlash] Stopped at magic end/EOF after reading \(lineNumber) lines from magic start")
+                print("[PartialFlash] Stopped at magic end/EOF after reading \(lineNumber) lines from hashes")
                 break
             }
             if line.starts(with: ":") && HexReader.type(of: line) == 0 {
                 totalLines += 1
-                // Check if this line contains actual data (not all 0xFF)
                 if let data = HexReader.readData(line), !data.data.allSatisfy({ $0 == 0xFF }) {
                     numLinesToFlash += 1
                 } else {
@@ -205,28 +213,30 @@ struct HexParser {
             }
         }
         print("[PartialFlash] Found \(totalLines) type-0 lines (\(emptyLines) empty, \(numLinesToFlash) with data)")
-        reader.rewind()
-
-        let (line, currentSegmentAddress) = forwardToMagicNumber(reader)
-        guard let magicLine = line else {
-            print("[PartialFlash] ERROR: Magic start not found after rewind!")
+        
+        // Don't rewind - open a fresh reader positioned at magic marker
+        guard let freshReader = StreamReader(path: url.path) else {
             return nil
         }
-        print("[PartialFlash] After rewind: found magic start again, segment address: \(String(format: "0x%04X", currentSegmentAddress))")
-
-        if let hashesLine = reader.nextLine(),
-           hashesLine.count >= 41,
-           let templateHash = hashesLine[9..<25].toData(using: .hex),
-           let programHash = (hashesLine[25..<41]).toData(using: .hex) {
-            return (templateHash,
-                programHash,
-                PartialFlashData(
-                    nextLines: [hashesLine, magicLine],
-                    currentSegmentAddress: currentSegmentAddress,
-                    reader: reader,
-                    lineCount: numLinesToFlash))
+        
+        let (freshMagicLine, freshSegmentAddress) = forwardToMagicNumber(freshReader)
+        guard let magicLineForData = freshMagicLine else {
+            return nil
         }
-        return nil
+        print("[PartialFlash] Fresh reader: segment address: \(String(format: "0x%04X", freshSegmentAddress))")
+        
+        // Read hashes line again for the fresh reader
+        guard let hashesLineForData = freshReader.nextLine() else {
+            return nil
+        }
+
+        return (templateHash,
+            programHash,
+            PartialFlashData(
+                nextLines: [hashesLineForData, magicLineForData],
+                currentSegmentAddress: freshSegmentAddress,
+                reader: freshReader,
+                lineCount: numLinesToFlash))
     }
 
     private func forwardToMagicNumber(_ reader: StreamReader) -> (String?, UInt16) {
