@@ -177,12 +177,23 @@ struct HexParser {
             return nil
         }
 
-        _ = forwardToMagicNumber(reader)
+        let (magicLine, _) = forwardToMagicNumber(reader)
+        if magicLine == nil {
+            print("[PartialFlash] ERROR: Magic start marker not found!")
+            return nil
+        }
+        
         var numLinesToFlash = 0
         var totalLines = 0
         var emptyLines = 0
+        var lineNumber = 0
         // Count only non-empty blocks (like Android does implicitly)
-        while let line = reader.nextLine(), !HexReader.isEndOfFileOrMagicEnd(line) {
+        while let line = reader.nextLine() {
+            lineNumber += 1
+            if HexReader.isEndOfFileOrMagicEnd(line) {
+                print("[PartialFlash] Stopped at magic end/EOF after reading \(lineNumber) lines from magic start")
+                break
+            }
             if line.starts(with: ":") && HexReader.type(of: line) == 0 {
                 totalLines += 1
                 // Check if this line contains actual data (not all 0xFF)
@@ -295,6 +306,7 @@ struct PartialFlashData: Sequence, IteratorProtocol {
 
     mutating private func read(_ record: String) {
         if HexReader.isEndOfFileOrMagicEnd(record) {
+            print("[PartialFlash] Hit magic end during iteration - closing reader")
             reader?.close()
             reader = nil
             return
@@ -306,6 +318,9 @@ struct PartialFlashData: Sequence, IteratorProtocol {
             } else if let data = HexReader.readData(record) {
                 // Don't filter here - we'll filter in next() to keep lineCount accurate
                 nextData.append(data)
+                if nextData.count == 1 || nextData.count % 500 == 0 {
+                    print("[PartialFlash] Read \(nextData.count) packets so far, address: \(String(format: "0x%04X", data.address))")
+                }
             }
         case 2: // extended segment adress
             if let segmentAddress = HexReader.readSegmentAddress(record) {
