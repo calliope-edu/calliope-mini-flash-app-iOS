@@ -395,8 +395,6 @@ class FlashableBLECalliope: CalliopeAPI {
             self?.handleBlockTimeout()
         }
         
-        debugLog("Sending block: \(currentDataToFlash.count) packets, starting at #\(startPackageNumber)")
-        
         if currentDataToFlash.count < 4 {
             debugLog("Last block (\(currentDataToFlash.count) packets), sending END after transmission")
             // Note: endTransmission will be called after we get WRITE_SUCCESS for last block
@@ -463,10 +461,6 @@ class FlashableBLECalliope: CalliopeAPI {
                     return
                 }
                 
-                if flowControlRetryCount % 10 == 0 {
-                    debugLog("Buffer full before block start, waiting... (retry \(flowControlRetryCount)/\(maxFlowControlRetries))")
-                }
-                
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) { [weak self] in
                     self?.sendCurrentPackagesWithFlowControl()
                 }
@@ -496,8 +490,6 @@ class FlashableBLECalliope: CalliopeAPI {
             let packageNumber = Data([currentPacketNumber])
             let writeData = packageAddress + packageNumber + package.data
             
-            debugLog("Sending packet #\(currentPacketNumber): addr=\(String(format: "0x%04X", package.address)), data=\(package.data.prefix(4).map { String(format: "%02X", $0) }.joined())...")
-            
             send(command: .WRITE, value: writeData)
             
             // Move to next packet
@@ -520,7 +512,6 @@ class FlashableBLECalliope: CalliopeAPI {
             endTransmission()
         } else {
             // Full block - wait for device ACK
-            debugLog("All 4 packets sent, waiting for device ACK")
         }
     }
 
