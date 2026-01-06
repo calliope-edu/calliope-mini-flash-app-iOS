@@ -243,14 +243,33 @@ struct PartialFlashData: Sequence, IteratorProtocol {
     }
 
     mutating func next() -> (address: UInt16, data: Data)? {
-        let line = nextData.popLast()
-        while let reader = reader, nextData.count == 0 {
-            guard let record = reader.nextLine() else {
-                break
+        // Skip empty blocks (only 0xFF) like Android does
+        while true {
+            let line = nextData.popLast()
+            while let reader = reader, nextData.count == 0 {
+                guard let record = reader.nextLine() else {
+                    break
+                }
+                read(record)
             }
-            read(record)
+            
+            // Check if we got a line
+            guard let result = line else {
+                return nil
+            }
+            
+            // Check if block is empty (all 0xFF) - skip these
+            if isEmptyBlock(result.data) {
+                continue  // Skip this block and get next one
+            }
+            
+            return result
         }
-        return line
+    }
+    
+    private func isEmptyBlock(_ data: Data) -> Bool {
+        // A block is empty if all bytes are 0xFF (erased flash)
+        return data.allSatisfy { $0 == 0xFF }
     }
 
     mutating private func read(_ record: String) {
@@ -264,6 +283,7 @@ struct PartialFlashData: Sequence, IteratorProtocol {
             if record.contains("00000001FF") {
                 break
             } else if let data = HexReader.readData(record) {
+                // Don't filter here - we'll filter in next() to keep lineCount accurate
                 nextData.append(data)
             }
         case 2: // extended segment adress
