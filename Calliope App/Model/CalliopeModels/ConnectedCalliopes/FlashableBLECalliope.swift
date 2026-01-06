@@ -245,6 +245,11 @@ class FlashableBLECalliope: CalliopeAPI {
                 resendPackages()
             } else if value[1] == .WRITE_SUCCESS {
                 debugLog("Received WRITE_SUCCESS (0xFF), proceeding to next block")
+                
+                // Update counters after successful transmission
+                startPackageNumber = startPackageNumber.addingReportingOverflow(UInt8(currentDataToFlash.count)).partialValue
+                linesFlashed += currentDataToFlash.count
+                
                 // Reset retry counter on success
                 currentBlockRetryCount = 0
                 flowControlRetryCount = 0
@@ -392,24 +397,23 @@ class FlashableBLECalliope: CalliopeAPI {
         
         debugLog("Sending block: \(currentDataToFlash.count) packets, starting at #\(startPackageNumber)")
         
-        sendCurrentPackagesWithFlowControl()
-        
         if currentDataToFlash.count < 4 {
             debugLog("Last block (\(currentDataToFlash.count) packets), sending END after transmission")
             // Note: endTransmission will be called after we get WRITE_SUCCESS for last block
-            // But we set a flag to know this is the last block
         }
         
-        startPackageNumber = startPackageNumber.addingReportingOverflow(UInt8(currentDataToFlash.count)).partialValue
-        linesFlashed += currentDataToFlash.count
-
-        if linesFlashed + 4 > partialFlashData.lineCount {
-            // Don't call dfuStateDidChange here - wait until TRANSMISSION_END is sent
-            debugLog("Approaching end of transmission: \(linesFlashed) / \(totalPacketsToSend)")
-        }
+        sendCurrentPackagesWithFlowControl()
     }
 
     private func resendPackages() {
+        // Prevent duplicate retry triggers
+        partialFlashingStateLock.lock()
+        guard isPartialFlashingActive else {
+            partialFlashingStateLock.unlock()
+            return
+        }
+        partialFlashingStateLock.unlock()
+        
         currentBlockRetryCount += 1
         
         if currentBlockRetryCount > maxBlockRetries {
@@ -491,11 +495,12 @@ class FlashableBLECalliope: CalliopeAPI {
         }
         
         // Send packet
-        let packageAddress = index == 1 ? currentSegmentAddress.bigEndianData : package.address.bigEndianData
-        let packageNumber = Data([startPackageNumber + UInt8(index)])
+        let packageAddress = currentBlockSendIndex == 1 ? currentSegmentAddress.bigEndianData : package.address.bigEndianData
+        let currentPacketNumber = startPackageNumber.addingReportingOverflow(UInt8(currentBlockSendIndex)).partialValue
+        let packageNumber = Data([currentPacketNumber])
         let writeData = packageAddress + packageNumber + package.data
         
-        debugLog("Sending packet #\(startPackageNumber + UInt8(index)): addr=\(String(format: "0x%04X", package.address)), data=\(package.data.prefix(4).map { String(format: "%02X", $0) }.joined())...")
+        debugLog("Sending packet #\(currentPacketNumber): addr=\(String(format: "0x%04X", package.address)), data=\(package.data.prefix(4).map { String(format: "%02X", $0) }.joined())...")
         
         send(command: .WRITE, value: writeData)
         
