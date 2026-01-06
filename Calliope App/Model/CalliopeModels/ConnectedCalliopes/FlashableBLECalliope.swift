@@ -413,7 +413,8 @@ class FlashableBLECalliope: CalliopeAPI {
         updateCallback("Sending \(currentDataToFlash.count) packages, beginning at \(startPackageNumber)")
 
         // Log detailed packet info for first block and every 50th block
-        let shouldLogDetailed = (linesFlashed == 0 || linesFlashed % 50 == 0)
+        // TEMPORÄR: Aktiviere detailliertes Logging für alle Blöcke ab Block 35 für Debugging
+        let shouldLogDetailed = (linesFlashed == 0 || linesFlashed % 50 == 0 || linesFlashed >= 140)
 
         if shouldLogDetailed {
             LogNotify.log("=== Block \(linesFlashed/4) Details ===")
