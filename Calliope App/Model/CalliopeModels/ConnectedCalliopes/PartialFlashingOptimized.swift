@@ -22,15 +22,20 @@ import CoreBluetooth
 
 struct PartialFlashingConfig {
     /// Maximale Anzahl von 4er-Blöcken die gleichzeitig "in flight" sein dürfen
-    /// Höherer Wert = schneller, aber mehr Risiko bei Packet Loss
-    /// Konservativ starten mit 3 Blöcken für bessere Performance
-    static let maxBlocksInFlight = 3  // Conservative pipelining for speed
+    /// Basierend auf Android-Analyse: Start mit 1 Block, da Android auch nach jedem Block wartet
+    /// Der Geschwindigkeitsgewinn kommt von schneller Paket-Übertragung INNERHALB des Blocks
+    static let maxBlocksInFlight = 1  // Match Android: sequential blocks
+
+    /// Verzögerung zwischen Paketen INNERHALB eines 4er-Blocks (in Sekunden)
+    /// Android: 3-15ms zwischen Paketen (Thread.sleep(3), max 5 Iterationen)
+    /// iOS: Nutzen wir writeWithoutResponse für maximale Geschwindigkeit (keine Verzögerung nötig)
+    static let intraBlockPacketDelay: TimeInterval = 0.0  // No delay - let BLE stack handle it
 
     /// Timeout für Gesamtübertragung (in Sekunden)
     static let timeout: TimeInterval = 120.0  // 2 Minuten
 
     /// Aktiviert optimiertes Partial Flashing (für einfaches An/Aus)
-    /// ENABLED - Testing with conservative pipelining
+    /// ENABLED - Testing Android-style rapid packet transmission
     static let enabled = true
 }
 

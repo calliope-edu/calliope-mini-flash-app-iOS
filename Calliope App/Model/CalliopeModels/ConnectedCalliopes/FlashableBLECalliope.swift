@@ -355,8 +355,11 @@ class FlashableBLECalliope: CalliopeAPI {
             guard let self = self else { return }
             LogNotify.log("Optimized partial flashing completed: success=\(success), message=\(message)")
             if success {
-                self.isPartiallyFlashing = false
-                self.endTransmission()
+                // WICHTIG: Der OptimizedPartialFlashingManager hat bereits:
+                // - isPartiallyFlashing auf false gesetzt
+                // - shouldRebootOnDisconnect auf false gesetzt
+                // - TRANSMISSION_END gesendet
+                // Wir müssen nur noch .completed Signal geben
                 self.statusDelegate?.dfuStateDidChange(to: .completed)
             } else {
                 LogNotify.log("Optimized partial flashing failed, falling back to full flash")
@@ -429,6 +432,7 @@ class FlashableBLECalliope: CalliopeAPI {
             // WICHTIG: Das Original-Protokoll ist einfacher als gedacht:
             // - Paket 1 (index == 1): Verwende currentSegmentAddress (obere 16 Bit)
             // - Alle anderen Pakete (0, 2, 3): Verwende package.address (untere 16 Bit)
+            // Dies ist das ORIGINAL-PROTOKOLL das funktioniert!
             let packageAddress = index == 1 ? currentSegmentAddress.bigEndianData : package.address.bigEndianData
             let packageNumber = Data([startPackageNumber + UInt8(index)])
             let writeData = packageAddress + packageNumber + package.data
@@ -437,8 +441,7 @@ class FlashableBLECalliope: CalliopeAPI {
                 let addrHex = packageAddress.map { String(format: "%02X", $0) }.joined()
                 let numHex = String(format: "%02X", packageNumber[0])
                 let dataHex = package.data.prefix(4).map { String(format: "%02X", $0) }.joined(separator: " ")
-                let addrValue = index == 1 ? currentSegmentAddress : package.address
-                LogNotify.log("  → WRITE[\(index)] addr=[\(addrHex)] (0x\(String(format: "%04X", addrValue))) num=[\(numHex)] data=[\(dataHex)...]")
+                LogNotify.log("  → WRITE[\(index)] addr=[\(addrHex)] num=[\(numHex)] data=[\(dataHex)...]")
             }
 
             send(command: .WRITE, value: writeData)
