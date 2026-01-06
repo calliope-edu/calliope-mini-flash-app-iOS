@@ -154,6 +154,23 @@ class FlashableBLECalliope: CalliopeAPI {
     //for GUI interaction
     var cancel: Bool = false
     var linesFlashed = 0
+    
+    // MARK: Enhanced partial flashing state (flow control, timeout, retry)
+    private let partialFlashingStateLock = NSLock()
+    private var isPartialFlashingActive = false
+    private var currentBlockRetryCount = 0
+    private let maxBlockRetries = 3
+    private var blockTransmissionTimer: Timer?
+    private let blockTimeout: TimeInterval = 5.0
+    private var partialFlashStartTime: Date?
+    private var totalPacketsToSend: Int = 0
+    private var currentBlockStartTime: Date?
+    
+    // Flow control for iOS 11+
+    private var packetsToSend: [(index: Int, package: (address: UInt16, data: Data))] = []
+    private var currentBlockSendIndex = 0
+    private var flowControlRetryCount = 0
+    private let maxFlowControlRetries = 100  // Max 1 second total wait (10ms * 100)
 
     override func handleValueUpdate(_ characteristic: CalliopeCharacteristic, _ value: Data) {
         guard characteristic == .partialFlashing else {
@@ -161,7 +178,19 @@ class FlashableBLECalliope: CalliopeAPI {
             return
         }
         //dispatch from ble queue to update queue to avoid deadlock
-        updateQueue.async {
+        updateQueue.async { [weak self] in
+            guard let self = self else { return }
+            
+            // Thread safety: only process notifications when actively flashing
+            self.partialFlashingStateLock.lock()
+            let isActive = self.isPartialFlashingActive
+            self.partialFlashingStateLock.unlock()
+            
+            guard isActive else {
+                self.debugLog("Ignoring notification - not actively flashing")
+                return
+            }
+            
             self.handlePartialValueNotification(value)
         }
     }
@@ -204,15 +233,32 @@ class FlashableBLECalliope: CalliopeAPI {
         }
 
         if value[0] == .WRITE {
-            updateCallback("write status: \(Data([value[1]]).hexEncodedString())")
+            // Cancel timeout timer on any response
+            blockTransmissionTimer?.invalidate()
+            blockTransmissionTimer = nil
+            
+            let blockDuration = currentBlockStartTime.map { Date().timeIntervalSince($0) } ?? 0
+            updateCallback("write status: \(Data([value[1]]).hexEncodedString()) (block took \(String(format: "%.3f", blockDuration))s)")
+            
             if value[1] == .WRITE_FAIL {
-                LogNotify.log("Received error message, stopping transmission")
-                _ = cancelUpload()
+                LogNotify.log("Received WRITE_FAIL (0xAA), attempting retry")
                 resendPackages()
             } else if value[1] == .WRITE_SUCCESS {
-                sendNextPackages()
+                debugLog("Received WRITE_SUCCESS (0xFF), proceeding to next block")
+                // Reset retry counter on success
+                currentBlockRetryCount = 0
+                flowControlRetryCount = 0
+                
+                // Check if this was the last block (had fewer than 4 packets)
+                if currentDataToFlash.count < 4 {
+                    debugLog("Last block completed successfully, ending transmission")
+                    endTransmission()
+                } else {
+                    sendNextPackages()
+                }
             } else {
                 //we do not understand the response
+                LogNotify.log("Unknown write response: \(value[1]), falling back to full flash")
                 fallbackToFullFlash()
             }
             return
@@ -252,6 +298,20 @@ class FlashableBLECalliope: CalliopeAPI {
         //for GUI interaction
         cancel = false
         linesFlashed = 0
+        
+        // Initialize enhanced partial flashing state
+        partialFlashingStateLock.lock()
+        isPartialFlashingActive = true
+        partialFlashingStateLock.unlock()
+        
+        currentBlockRetryCount = 0
+        flowControlRetryCount = 0
+        partialFlashStartTime = Date()
+        totalPacketsToSend = partialFlashingInfo.partialFlashData.lineCount
+        blockTransmissionTimer?.invalidate()
+        blockTransmissionTimer = nil
+        
+        debugLog("Starting partial flashing: \(totalPacketsToSend) packets to send")
 
         hexFileHash = partialFlashingInfo.fileHash
         hexProgramHash = partialFlashingInfo.programHash
@@ -312,6 +372,7 @@ class FlashableBLECalliope: CalliopeAPI {
             fallbackToFullFlash()
             return
         }
+        
         currentSegmentAddress = partialFlashData.currentSegmentAddress
         currentDataToFlash = []
         for _ in 0..<4 {
@@ -321,37 +382,152 @@ class FlashableBLECalliope: CalliopeAPI {
             currentDataToFlash.append(nextPackage)
         }
         self.partialFlashData = partialFlashData
-        sendCurrentPackages()
-        if currentDataToFlash.count < 4 {
-            endTransmission()  //we did not have a full package to flash any more
+        
+        // Start timeout timer for this block
+        currentBlockStartTime = Date()
+        blockTransmissionTimer?.invalidate()
+        blockTransmissionTimer = Timer.scheduledTimer(withTimeInterval: blockTimeout, repeats: false) { [weak self] _ in
+            self?.handleBlockTimeout()
         }
+        
+        debugLog("Sending block: \(currentDataToFlash.count) packets, starting at #\(startPackageNumber)")
+        
+        sendCurrentPackagesWithFlowControl()
+        
+        if currentDataToFlash.count < 4 {
+            debugLog("Last block (\(currentDataToFlash.count) packets), sending END after transmission")
+            // Note: endTransmission will be called after we get WRITE_SUCCESS for last block
+            // But we set a flag to know this is the last block
+        }
+        
         startPackageNumber = startPackageNumber.addingReportingOverflow(UInt8(currentDataToFlash.count)).partialValue
         linesFlashed += currentDataToFlash.count
 
         if linesFlashed + 4 > partialFlashData.lineCount {
-            statusDelegate?.dfuStateDidChange(to: .completed)
+            // Don't call dfuStateDidChange here - wait until TRANSMISSION_END is sent
+            debugLog("Approaching end of transmission: \(linesFlashed) / \(totalPacketsToSend)")
         }
     }
 
     private func resendPackages() {
-        fallbackToFullFlash()
+        currentBlockRetryCount += 1
+        
+        if currentBlockRetryCount > maxBlockRetries {
+            LogNotify.log("Max retries (\(maxBlockRetries)) exceeded for block, falling back to full flash")
+            fallbackToFullFlash()
+            return
+        }
+        
+        LogNotify.log("Retrying block transmission (attempt \(currentBlockRetryCount)/\(maxBlockRetries))")
+        updateCallback("Retry #\(currentBlockRetryCount): Resending \(currentDataToFlash.count) packets")
+        
+        // Reset packet send index and retry same block
+        currentBlockSendIndex = 0
+        flowControlRetryCount = 0
+        
+        // Restart timeout timer
+        currentBlockStartTime = Date()
+        blockTransmissionTimer?.invalidate()
+        blockTransmissionTimer = Timer.scheduledTimer(withTimeInterval: blockTimeout, repeats: false) { [weak self] _ in
+            self?.handleBlockTimeout()
+        }
+        
+        // Add small delay before retry (100ms) to let device recover
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+            self?.sendCurrentPackagesWithFlowControl()
+        }
+    }
+    
+    private func handleBlockTimeout() {
+        LogNotify.log("Block transmission timeout (\(blockTimeout)s) - no response from device")
+        updateCallback("Timeout waiting for device response")
+        
+        // Treat timeout as failure and retry
+        resendPackages()
     }
 
-    private func sendCurrentPackages() {
+    private func sendCurrentPackagesWithFlowControl() {
         updateCallback("Sending \(currentDataToFlash.count) packages, beginning at \(startPackageNumber)")
-        for (index, package) in currentDataToFlash.enumerated() {
-            let packageAddress = index == 1 ? currentSegmentAddress.bigEndianData : package.address.bigEndianData
-            let packageNumber = Data([startPackageNumber + UInt8(index)])
-            let writeData = packageAddress + packageNumber + package.data
-            send(command: .WRITE, value: writeData)
+        
+        // Prepare packets to send
+        packetsToSend = currentDataToFlash.enumerated().map { ($0.offset, $0.element) }
+        currentBlockSendIndex = 0
+        flowControlRetryCount = 0
+        
+        // Start sending
+        sendNextPacketInBlock()
+    }
+    
+    private func sendNextPacketInBlock() {
+        guard currentBlockSendIndex < packetsToSend.count else {
+            // All packets in block sent, now wait for device notification
+            debugLog("All \(packetsToSend.count) packets sent, waiting for device ACK")
+            return
         }
+        
+        let (index, package) = packetsToSend[currentBlockSendIndex]
+        
+        // Check buffer availability (iOS 11+)
+        if #available(iOS 11.0, *) {
+            if index > 0 && !peripheral.canSendWriteWithoutResponse {
+                // Buffer full, retry in 10ms
+                flowControlRetryCount += 1
+                
+                if flowControlRetryCount >= maxFlowControlRetries {
+                    LogNotify.log("Flow control timeout - buffer stayed full for 1 second")
+                    fallbackToFullFlash()
+                    return
+                }
+                
+                if flowControlRetryCount % 10 == 0 {
+                    debugLog("Buffer full, waiting... (retry \(flowControlRetryCount)/\(maxFlowControlRetries))")
+                }
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) { [weak self] in
+                    self?.sendNextPacketInBlock()
+                }
+                return
+            }
+        }
+        
+        // Send packet
+        let packageAddress = index == 1 ? currentSegmentAddress.bigEndianData : package.address.bigEndianData
+        let packageNumber = Data([startPackageNumber + UInt8(index)])
+        let writeData = packageAddress + packageNumber + package.data
+        
+        debugLog("Sending packet #\(startPackageNumber + UInt8(index)): addr=\(String(format: "0x%04X", package.address)), data=\(package.data.prefix(4).map { String(format: "%02X", $0) }.joined())...")
+        
+        send(command: .WRITE, value: writeData)
+        
+        // Move to next packet
+        currentBlockSendIndex += 1
+        flowControlRetryCount = 0  // Reset on successful send
+        
+        // Continue sending immediately (flow control will throttle if needed)
+        sendNextPacketInBlock()
     }
 
     private func endTransmission() {
+        // Clean up state
+        partialFlashingStateLock.lock()
+        isPartialFlashingActive = false
         isPartiallyFlashing = false
+        partialFlashingStateLock.unlock()
+        
         shouldRebootOnDisconnect = false
-        updateCallback("Partial flashing done!")
+        blockTransmissionTimer?.invalidate()
+        blockTransmissionTimer = nil
+        
+        let duration = partialFlashStartTime.map { Date().timeIntervalSince($0) } ?? 0
+        let avgSpeed = duration > 0 ? Double(linesFlashed * 16) / duration : 0
+        
+        updateCallback("Partial flashing done in \(String(format: "%.2f", duration))s (\(Int(avgSpeed)) bytes/s)")
+        debugLog("Transmission complete: \(linesFlashed) packets in \(String(format: "%.2f", duration))s")
+        
         send(command: .TRANSMISSION_END)
+        
+        // Signal completion to delegate
+        statusDelegate?.dfuStateDidChange(to: .completed)
     }
 
 
@@ -361,12 +537,21 @@ class FlashableBLECalliope: CalliopeAPI {
         do {
             try writeWithoutResponse(Data([command]) + value, for: .partialFlashing)
         } catch {
+            LogNotify.log("Write failed: \(error.localizedDescription)")
             fallbackToFullFlash()
         }
     }
 
     private func fallbackToFullFlash() {
+        // Clean up partial flashing state
+        partialFlashingStateLock.lock()
+        isPartialFlashingActive = false
         isPartiallyFlashing = false
+        partialFlashingStateLock.unlock()
+        
+        blockTransmissionTimer?.invalidate()
+        blockTransmissionTimer = nil
+        
         updateCallback("Partial flash failed, resort to full flashing")
         do {
             try startFullFlashing()
@@ -380,9 +565,39 @@ class FlashableBLECalliope: CalliopeAPI {
 
     private func updateCallback(_ logMessage: String) {
         logReceiver?.logWith(.info, message: logMessage)
-        let progressPerCent = Int(floor(Double(linesFlashed * 100) / Double(partialFlashData?.lineCount ?? Int.max)))
-        LogNotify.log("Partial flashing progress: \(progressPerCent)%")
-        progressReceiver?.dfuProgressDidChange(for: 1, outOf: 1, to: progressPerCent, currentSpeedBytesPerSecond: 0, avgSpeedBytesPerSecond: 0)
+        
+        let total = max(partialFlashData?.lineCount ?? 1, 1)  // Avoid division by zero
+        let progressPercent = Int(floor(Double(linesFlashed * 100) / Double(total)))
+        
+        // Calculate speed if we have timing data
+        var avgSpeed: Double = 0
+        var currentSpeed: Double = 0
+        
+        if let startTime = partialFlashStartTime {
+            let elapsed = Date().timeIntervalSince(startTime)
+            if elapsed > 0 {
+                avgSpeed = Double(linesFlashed * 16) / elapsed  // bytes per second
+                currentSpeed = avgSpeed  // For now, use same value
+            }
+        }
+        
+        LogNotify.log("Partial flashing: \(progressPercent)% (\(linesFlashed)/\(total) packets, \(Int(avgSpeed)) bytes/s)")
+        
+        progressReceiver?.dfuProgressDidChange(
+            for: 1,
+            outOf: 1,
+            to: progressPercent,
+            currentSpeedBytesPerSecond: currentSpeed,
+            avgSpeedBytesPerSecond: avgSpeed
+        )
+    }
+    
+    // MARK: Debug logging
+    private func debugLog(_ message: String) {
+        #if DEBUG
+        let timestamp = Date().timeIntervalSince1970
+        LogNotify.log("[PF-\(String(format: "%.3f", timestamp))] \(message)")
+        #endif
     }
 
     //MARK: dfu delegate
@@ -496,7 +711,11 @@ class CalliopeV3: FlashableBLECalliope {
             if let cbCharacteristic = getCBCharacteristic(.secureDfuCharacteristic) {
                 peripheral.setNotifyValue(true, for: cbCharacteristic)
             }
-            // Partial Flashing für V3 deaktiviert - verursacht Probleme
+            // Enable partial flashing notifications for V3
+            if discoveredOptionalServices.contains(.partialFlashing),
+               let pfCharacteristic = getCBCharacteristic(.partialFlashing) {
+                peripheral.setNotifyValue(true, for: pfCharacteristic)
+            }
             shouldRebootOnDisconnect = false
         }
     }
@@ -509,9 +728,9 @@ class CalliopeV3: FlashableBLECalliope {
         [.secureDfuService]
     }
     
-    // Partial Flashing für V3 deaktiviert - keine optionalen Services
+    // Partial Flashing für V3 aktiviert
     override var optionalServices: Set<CalliopeService> {
-        []
+        [.partialFlashing]
     }
 
     internal override func startFullFlashing() throws {
@@ -533,17 +752,22 @@ class CalliopeV3: FlashableBLECalliope {
 
         transferFirmware()
     }
-
-    // Partial Flashing für V3 deaktiviert - immer Full Flashing verwenden
-    internal override func startPartialFlashing() {
-        LogNotify.log("Partial flashing disabled for V3 - using full flashing")
-        do {
-            try startFullFlashing()
-        } catch {
-            LogNotify.log("Full Flashing failed: \(error)")
-        }
-    }
 }
+
+// MARK: - Partial Flashing V3 Implementation Notes
+//
+// CalliopeV3 now uses the standard partial flashing implementation from FlashableBLECalliope.
+// Key requirements:
+// 1. Must use 4-packet blocks with device acknowledgment (WRITE_SUCCESS) between blocks
+// 2. Must respect iOS CoreBluetooth flow control (canSendWriteWithoutResponse on iOS 11+)
+// 3. Device firmware protocol:
+//    - Send: WRITE command + 4 packets (address + packet# + 16 bytes data)
+//    - Wait: Device notification with WRITE_SUCCESS (0xFF) or WRITE_FAIL (0xAA)
+//    - Retry: On WRITE_FAIL, resend same 4 packets
+//    - End: Send TRANSMISSION_END (0x02) after last packet
+//
+// See micro:bit Android implementation for reference:
+// https://github.com/microbit-foundation/microbit-android
 
 //MARK: constants for partial flashing
 extension UInt8 {
