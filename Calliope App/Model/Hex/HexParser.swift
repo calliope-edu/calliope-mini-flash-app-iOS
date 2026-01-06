@@ -180,6 +180,7 @@ struct HexParser {
         _ = forwardToMagicNumber(reader)
         var numLinesToFlash = 0
         var totalLines = 0
+        var emptyLines = 0
         // Count only non-empty blocks (like Android does implicitly)
         while let line = reader.nextLine(), !HexReader.isEndOfFileOrMagicEnd(line) {
             if line.starts(with: ":") && HexReader.type(of: line) == 0 {
@@ -187,13 +188,12 @@ struct HexParser {
                 // Check if this line contains actual data (not all 0xFF)
                 if let data = HexReader.readData(line), !data.data.allSatisfy({ $0 == 0xFF }) {
                     numLinesToFlash += 1
+                } else {
+                    emptyLines += 1
                 }
             }
         }
-        let skipped = totalLines - numLinesToFlash
-        if skipped > 0 {
-            print("[PartialFlash] Filtered \(skipped) empty blocks (\(numLinesToFlash) packets to send)")
-        }
+        print("[PartialFlash] Found \(totalLines) type-0 lines (\(emptyLines) empty, \(numLinesToFlash) with data)")
         reader.rewind()
 
         let (line, currentSegmentAddress) = forwardToMagicNumber(reader)
@@ -240,6 +240,8 @@ struct PartialFlashData: Sequence, IteratorProtocol {
     public private(set) var currentSegmentAddress: UInt16
     private var nextData: [(address: UInt16, data: Data)] = []
     private var reader: StreamReader?
+    private var iterationCount: Int = 0
+    private var skippedCount: Int = 0
 
     init(nextLines: [String], currentSegmentAddress: UInt16, reader: StreamReader, lineCount: Int) {
         self.reader = reader
@@ -265,12 +267,21 @@ struct PartialFlashData: Sequence, IteratorProtocol {
             
             // Check if we got a line
             guard let result = line else {
+                if iterationCount > 0 && (iterationCount % 100 == 0 || skippedCount > 0) {
+                    print("[PartialFlash] Iteration complete: \(iterationCount) packets sent, \(skippedCount) skipped")
+                }
                 return nil
             }
             
             // Check if block is empty (all 0xFF) - skip these
             if isEmptyBlock(result.data) {
+                skippedCount += 1
                 continue  // Skip this block and get next one
+            }
+            
+            iterationCount += 1
+            if iterationCount == 1 || iterationCount % 500 == 0 {
+                print("[PartialFlash] Sent \(iterationCount) packets (\(skippedCount) skipped)")
             }
             
             return result
