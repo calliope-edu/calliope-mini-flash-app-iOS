@@ -394,13 +394,15 @@ class FlashableBLECalliope: CalliopeAPI {
         sendCurrentPackages()
         if currentDataToFlash.count < 4 {
             endTransmission()  //we did not have a full package to flash any more
+            // WICHTIG: .completed wird erst in endTransmission() gerufen, nicht hier!
         }
         startPackageNumber = startPackageNumber.addingReportingOverflow(UInt8(currentDataToFlash.count)).partialValue
         linesFlashed += currentDataToFlash.count
 
-        if linesFlashed + 4 > partialFlashData.lineCount {
-            statusDelegate?.dfuStateDidChange(to: .completed)
-        }
+        // ENTFERNT: Vorzeitige .completed Meldung führt zu Abbruch
+        // if linesFlashed + 4 > partialFlashData.lineCount {
+        //     statusDelegate?.dfuStateDidChange(to: .completed)
+        // }
     }
 
     private func resendPackages() {
@@ -469,6 +471,9 @@ class FlashableBLECalliope: CalliopeAPI {
             // Send TRANSMISSION_END - device will reboot automatically
             self.send(command: .TRANSMISSION_END)
             LogNotify.log("TRANSMISSION_END sent - device should reboot automatically")
+
+            // WICHTIG: .completed erst NACH dem Senden von TRANSMISSION_END
+            self.statusDelegate?.dfuStateDidChange(to: .completed)
         }
     }
 
