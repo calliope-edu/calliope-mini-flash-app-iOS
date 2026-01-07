@@ -44,8 +44,8 @@ struct PartialFlashingConfig {
     static let maxRetries = 3
 
     /// Aktiviert optimiertes Partial Flashing (für einfaches An/Aus)
-    /// ENABLED - Testing Android-style rapid packet transmission
-    static let enabled = true
+    /// DISABLED - Partial flashing deactivated, using full flash for all devices
+    static let enabled = false
 }
 
 // MARK: - Optimized Partial Flashing Manager

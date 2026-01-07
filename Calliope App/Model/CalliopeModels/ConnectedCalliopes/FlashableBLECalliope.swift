@@ -98,15 +98,11 @@ class FlashableBLECalliope: CalliopeAPI {
         // Reset flags
         dfuCompletedAwaitingReconnect = false
 
-        // Attempt partial flashing first if available
-        LogNotify.log("Partial flashing service available: \(discoveredOptionalServices.contains(.partialFlashing))")
-        if discoveredOptionalServices.contains(.partialFlashing) && file.partialFlashingInfo != nil {
-            startPartialFlashing()
-        } else {
-            // NEU: shouldRebootOnDisconnect HIER auf true setzen für Reconnect nach DFU
-            shouldRebootOnDisconnect = true
-            try startFullFlashing()
-        }
+        // Partial flashing DISABLED - always use full flash
+        LogNotify.log("Partial flashing is disabled - using full flash for all devices")
+        // NEU: shouldRebootOnDisconnect HIER auf true setzen für Reconnect nach DFU
+        shouldRebootOnDisconnect = true
+        try startFullFlashing()
     }
 
     internal func startFullFlashing() throws {
