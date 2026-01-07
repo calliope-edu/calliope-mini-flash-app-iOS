@@ -168,13 +168,13 @@ class FirmwareUpload {
             return alertController
         }
 
-        let uploadController = UIAlertController(title: NSLocalizedString("Übertragung läuft", comment: ""), message: "", preferredStyle: .alert)
+        let uploadController = UIAlertController(title: NSLocalizedString("Transmission running", comment: ""), message: "", preferredStyle: .alert)
 
         let progressView: UIView
         let logHeight = 0
 
         if calliope is USBCalliope {
-            uploadController.message = NSLocalizedString("Der Calliope mini startet das Programm, sobald die Übertragung beendet ist.", comment: "")
+            uploadController.message = NSLocalizedString("Calliope mini will start the program as soon as the transmission is complete.", comment: "")
             
             // Container für Spinner + Timer
             let containerView = UIView()
@@ -335,7 +335,7 @@ class FirmwareUpload {
     }
     private func startUSBTimer() {
         usbStartTime = Date()
-        usbTimerLabel.text = "00:00 / 15 " + NSLocalizedString("Sekunden", comment: "seconds")
+        usbTimerLabel.text = "00:00 / 15 " + NSLocalizedString("seconds", comment: "")
         
         usbTimer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { [weak self] _ in
             self?.updateUSBTimerLabel()
@@ -349,7 +349,7 @@ class FirmwareUpload {
         let seconds = Int(elapsed)
         let hundredths = Int((elapsed - Double(seconds)) * 100)
         
-        let timeString = String(format: "%02d:%02d / 15 %@", seconds, hundredths, NSLocalizedString("Sekunden", comment: "seconds"))
+        let timeString = String(format: "%02d:%02d / 15 %@", seconds, hundredths, NSLocalizedString("seconds", comment: ""))
         
         DispatchQueue.main.async {
             self.usbTimerLabel.text = timeString

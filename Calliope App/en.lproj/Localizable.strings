@@ -335,3 +335,12 @@
 "Enter the CSV file name" = "Enter the CSV file name";
 
 "Cancel" = "Cancel";
+
+/* DFU/Upload alerts */
+"There is no connected Calliope mini in DFU mode" = "There is no connected Calliope mini in DFU mode";
+
+"Transmission running" = "Transmission running";
+
+"Calliope mini will start the program as soon as the transmission is complete." = "Calliope mini will start the program as soon as the transmission is complete.";
+
+"seconds" = "seconds";
