@@ -319,6 +319,13 @@ struct PartialFlashData: Sequence, IteratorProtocol {
             break
         }
     }
+
+    /// Explicitly closes the StreamReader to prevent file access errors
+    /// Safe to call multiple times - will only close if reader exists
+    mutating func closeReader() {
+        reader?.close()
+        reader = nil
+    }
 }
 
 struct HexReader {

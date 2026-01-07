@@ -31,8 +31,17 @@ struct PartialFlashingConfig {
     /// iOS: Verwenden 5ms Verzögerung für BLE Flow Control
     static let intraBlockPacketDelay: TimeInterval = 0.005  // 5ms - matches Android's approach
 
+    /// Timeout für Block-Notification (in Sekunden)
+    /// Android: 5 seconds per block notification wait
+    static let blockNotificationTimeout: TimeInterval = 5.0  // 5 seconds per block
+
     /// Timeout für Gesamtübertragung (in Sekunden)
-    static let timeout: TimeInterval = 120.0  // 2 Minuten
+    /// Android: 60 seconds overall timeout
+    static let overallTimeout: TimeInterval = 60.0  // 60 seconds - matches Android
+
+    /// Maximale Anzahl von Retry-Versuchen pro Block
+    /// Android retries blocks when PACKET_STATE_RETRANSMIT (0xAA) received
+    static let maxRetries = 3
 
     /// Aktiviert optimiertes Partial Flashing (für einfaches An/Aus)
     /// ENABLED - Testing Android-style rapid packet transmission
@@ -46,7 +55,7 @@ struct PartialFlashingConfig {
 class OptimizedPartialFlashingManager {
     
     // MARK: - State
-    
+
     private weak var calliope: FlashableBLECalliope?
     private var allPackages: [(segmentAddress: UInt16, address: UInt16, data: Data)] = []
     private var nextPackageIndex: Int = 0
@@ -54,7 +63,15 @@ class OptimizedPartialFlashingManager {
     private var blocksInFlight: Int = 0
     private var startTime: Date?
     private(set) var isActive: Bool = false  // Von außen lesbar für Notification-Routing
-    
+
+    // Block notification waiting (Android-style lock.wait())
+    private var waitingForNotification = false
+    private var notificationReceived = false
+    private let notificationCondition = NSCondition()  // Use NSCondition instead of NSLock for wait/signal
+    private var lastNotificationTime: Date?
+    private var currentBlockRetryCount: Int = 0
+    private var currentBlockStartIndex: Int = 0
+
     // Callbacks
     var progressCallback: ((Int, Int) -> Void)?  // (current, total)
     var completionCallback: ((Bool, String) -> Void)?  // (success, message)
@@ -110,48 +127,60 @@ class OptimizedPartialFlashingManager {
             }
             
             self.log("Prepared \(self.allPackages.count) packages for transmission")
-            
-            // Starte Pipeline auf Main Thread (BLE writes müssen dort passieren)
-            DispatchQueue.main.async {
-                // WICHTIG: isActive erst HIER setzen, damit Notifications erst ab jetzt geroutet werden
-                self.isActive = true
-                self.fillPipeline()
-            }
+
+            // WICHTIG: isActive erst HIER setzen, damit Notifications erst ab jetzt geroutet werden
+            self.isActive = true
+
+            // CRITICAL: Run send loop on background thread to allow blocking waits
+            // BLE notifications will come in on their own thread and update notificationReceived flag
+            self.fillPipeline()
         }
     }
     
     /// Verarbeitet eingehende Notification
     func handleNotification(_ value: Data) {
         guard isActive else { return }
-        
-        // Check Timeout
-        if let start = startTime, Date().timeIntervalSince(start) > PartialFlashingConfig.timeout {
-            log("Timeout after \(PartialFlashingConfig.timeout)s")
-            fail(reason: "Timeout")
+
+        // Check Overall Timeout (Android: 60 seconds)
+        if let start = startTime, Date().timeIntervalSince(start) > PartialFlashingConfig.overallTimeout {
+            log("Overall timeout after \(PartialFlashingConfig.overallTimeout)s")
+            fail(reason: "Overall timeout")
             return
         }
-        
+
         guard value.count >= 2 else {
             log("Invalid notification: too short")
             return
         }
-        
+
         // Nur WRITE Responses verarbeiten
         guard value[0] == Command.WRITE else {
             log("Ignoring non-WRITE notification: \(value.hexEncodedString())")
             return
         }
-        
+
+        // Record notification time
+        lastNotificationTime = Date()
+
+        // Signal notification received (Android-style lock.notifyAll())
+        notificationCondition.lock()
+        notificationReceived = true
+        notificationCondition.signal()  // Wake up waiting thread
+        notificationCondition.unlock()
+
         switch value[1] {
         case WriteStatus.SUCCESS:
+            // Reset retry count on success
+            currentBlockRetryCount = 0
             handleWriteSuccess()
-            
+
         case WriteStatus.FAIL:
-            log("Received WRITE_FAIL")
-            fail(reason: "Device reported write failure")
-            
+            // Android retransmits the last 4-packet block
+            log("Received WRITE_FAIL (0xAA) - retry \(currentBlockRetryCount + 1)/\(PartialFlashingConfig.maxRetries)")
+            handleWriteRetransmit()
+
         default:
-            log("Unknown write status: \(value[1])")
+            log("Unknown write status: 0x\(String(format: "%02X", value[1]))")
             fail(reason: "Unknown write status")
         }
     }
@@ -169,23 +198,31 @@ class OptimizedPartialFlashingManager {
         nextPackageIndex = 0
         acknowledgedBlockCount = 0
         blocksInFlight = 0
-        
+
         var mutableData = data
-        
+
         // Wichtig: Die Segment-Adresse muss VOR dem next() Aufruf gelesen werden,
         // genau wie in der Original-Implementierung
         while true {
             // Lese aktuelle Segment-Adresse BEVOR next() aufgerufen wird
             let currentSegment = mutableData.currentSegmentAddress
-            
+
             guard let package = mutableData.next() else { break }
-            
+
             allPackages.append((
                 segmentAddress: currentSegment,
                 address: package.address,
                 data: package.data
             ))
         }
+
+        // CRITICAL: Close the StreamReader to prevent "Attempt to read from closed file" error
+        // The mutableData copy will go out of scope when this function returns, which would
+        // deallocate the StreamReader if it's the last reference, triggering deinit->close()
+        // By explicitly closing it here after we've read all data, we avoid race conditions
+        // where the reader might be accessed after being closed
+        // Note: The close() operation is safe to call multiple times (it sets fileHandle to nil)
+        mutableData.closeReader()
     }
     
     private func fillPipeline() {
@@ -208,41 +245,41 @@ class OptimizedPartialFlashingManager {
             fail(reason: "Calliope connection lost")
             return
         }
-        
+
+        // Save block start for potential retry (Android: line0 = lineCount)
+        currentBlockStartIndex = nextPackageIndex
+
         let blockStart = nextPackageIndex
         var packagesInBlock: [(segmentAddress: UInt16, address: UInt16, data: Data)] = []
-        
+
         // Sammle bis zu 4 Pakete
         for i in 0..<4 {
             let idx = blockStart + i
             guard idx < allPackages.count else { break }
             packagesInBlock.append(allPackages[idx])
         }
-        
+
         guard !packagesInBlock.isEmpty else { return }
-        
+
         // Die Segment-Adresse für diesen Block ist die des ERSTEN Pakets im Block
-        // (so wie in der Original-Implementierung)
         let blockSegmentAddress = packagesInBlock[0].segmentAddress
-        
+
         // Sende Pakete
         let startPacketNum = UInt8(truncatingIfNeeded: blockStart)
-        
+
+        // Reset notification flag before sending (Android: packetState = PACKET_STATE_WAITING)
+        notificationCondition.lock()
+        notificationReceived = false
+        waitingForNotification = true
+        notificationCondition.unlock()
+
+        // Send all 4 packets rapidly with delays between them
         for (i, pkg) in packagesInBlock.enumerated() {
             // Segment-Adresse NUR im zweiten Paket des Blocks (index == 1)
-            // In allen anderen Paketen wird die normale Adresse verwendet
             let addr: UInt16 = (i == 1) ? blockSegmentAddress : pkg.address
             let packetNum = startPacketNum &+ UInt8(i)
 
             let writeData = addr.bigEndianData + Data([packetNum]) + pkg.data
-
-            // WICHTIG: BLE Flow Control wie in Android
-            // Android wartet 3-15ms zwischen Paketen (waitForOnWriteCharacteristic)
-            // iOS: Warten bis BLE Stack bereit ist für nächstes Paket
-            if i > 0 {
-                // Kurze Verzögerung zwischen Paketen (simuliert Android's Thread.sleep(3))
-                Thread.sleep(forTimeInterval: PartialFlashingConfig.intraBlockPacketDelay)
-            }
 
             do {
                 try calliope.writeWithoutResponse(Data([Command.WRITE]) + writeData, for: .partialFlashing)
@@ -251,21 +288,66 @@ class OptimizedPartialFlashingManager {
                 fail(reason: "BLE write failed")
                 return
             }
+
+            // Android: Wait between packets AFTER write (waitForOnWriteCharacteristic)
+            // BUT NOT after the 4th packet - we wait for notification instead
+            if i < 3 {
+                Thread.sleep(forTimeInterval: PartialFlashingConfig.intraBlockPacketDelay)
+            }
         }
-        
+
         // Update State
         nextPackageIndex += packagesInBlock.count
         blocksInFlight += 1
-        
+
         // Progress Update
         reportProgress()
-        
+
         // WICHTIG: Wenn der letzte Block weniger als 4 Pakete hat,
         // sende END sofort (wie in der Original-Implementierung)
         if packagesInBlock.count < 4 {
             log("Last block had \(packagesInBlock.count) packages - sending END")
+            notificationCondition.lock()
+            waitingForNotification = false
+            notificationCondition.unlock()
             sendEndTransmission()
+            return
         }
+
+        // CRITICAL: Android waits SYNCHRONOUSLY here (while loop with lock.wait)
+        // We must do the same - wait for notification before returning from sendNextBlock
+        // This prevents fillPipeline from being called again prematurely
+        waitForBlockNotificationSynchronously()
+    }
+
+    /// Waits for device notification after sending 4-packet block (Android-style)
+    /// IMPORTANT: This is called synchronously, matching Android's behavior
+    private func waitForBlockNotificationSynchronously() {
+        log("Waiting for block notification...")
+
+        // Use NSCondition.wait with timeout (Android: lock.wait(5000))
+        // This properly blocks until signaled or timeout
+        notificationCondition.lock()
+
+        // Wait until notificationReceived becomes true or timeout
+        let timeoutDate = Date(timeIntervalSinceNow: PartialFlashingConfig.blockNotificationTimeout)
+
+        while !notificationReceived {
+            if !notificationCondition.wait(until: timeoutDate) {
+                // Timeout occurred
+                log("Block notification timeout after \(PartialFlashingConfig.blockNotificationTimeout)s")
+                waitingForNotification = false
+                notificationCondition.unlock()
+                fail(reason: "Block notification timeout")
+                return
+            }
+        }
+
+        // Notification received!
+        log("Block notification received - continuing")
+        waitingForNotification = false
+        notificationReceived = false  // Reset for next block
+        notificationCondition.unlock()
     }
     
     private func sendEndTransmission() {
@@ -281,9 +363,9 @@ class OptimizedPartialFlashingManager {
         calliope?.isPartiallyFlashing = false
         calliope?.shouldRebootOnDisconnect = false
 
-        // Kleine Verzögerung um sicherzustellen, dass die Flags gesetzt sind
-        // bevor der Calliope sich trennt
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self] in
+        // Android: Thread.sleep(100) - allow time for last write to complete
+        // Dann nochmal 50ms um sicherzustellen dass die Flags gesetzt sind
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
             guard let self = self, let calliope = self.calliope else { return }
 
             // Sende END Kommando
@@ -294,26 +376,50 @@ class OptimizedPartialFlashingManager {
                 self.log("Failed to send TRANSMISSION_END: \(error)")
             }
 
-            // Completion callback NACH dem Senden
-            self.completionCallback?(true, "Completed in \(String(format: "%.2f", duration))s")
+            // Android: Thread.sleep(100) after END command
+            // IMPORTANT: Completion callback already on main thread, no need to dispatch again
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+                guard let self = self else { return }
+                // Completion callback NACH dem Senden (already on main thread)
+                self.completionCallback?(true, "Completed in \(String(format: "%.2f", duration))s")
+            }
         }
     }
     
     private func handleWriteSuccess() {
         blocksInFlight = max(0, blocksInFlight - 1)
         acknowledgedBlockCount += 1
-        
+
         // Nur alle 50 Blöcke loggen um System nicht zu überlasten
         if acknowledgedBlockCount % 50 == 0 {
             log("Block \(acknowledgedBlockCount) acknowledged, \(blocksInFlight) in flight, \(allPackages.count - nextPackageIndex) remaining")
         }
-        
+
         // Fülle Pipeline nach
         if hasMorePackages() {
             fillPipeline()
         }
-        
+
         checkCompletion()
+    }
+
+    private func handleWriteRetransmit() {
+        currentBlockRetryCount += 1
+
+        if currentBlockRetryCount > PartialFlashingConfig.maxRetries {
+            log("Max retries (\(PartialFlashingConfig.maxRetries)) exceeded for block")
+            fail(reason: "Max retries exceeded")
+            return
+        }
+
+        // Rewind to start of current block (Android: lineCount = line0, part = part0)
+        nextPackageIndex = currentBlockStartIndex
+        blocksInFlight = 0
+
+        log("Retransmitting block starting at package \(currentBlockStartIndex)")
+
+        // Resend the block
+        fillPipeline()
     }
     
     private func checkCompletion() {
@@ -336,20 +442,29 @@ class OptimizedPartialFlashingManager {
     private func fail(reason: String) {
         guard isActive else { return }
         isActive = false
-        
+
         log("Failed: \(reason)")
-        completionCallback?(false, reason)
+        // IMPORTANT: Callbacks might trigger UI updates, so dispatch to main thread
+        DispatchQueue.main.async { [weak self] in
+            self?.completionCallback?(false, reason)
+        }
     }
     
     private func reportProgress() {
         let total = allPackages.count
         let done = nextPackageIndex
-        progressCallback?(done, total)
+        // IMPORTANT: Callbacks might trigger UI updates, so dispatch to main thread
+        DispatchQueue.main.async { [weak self] in
+            self?.progressCallback?(done, total)
+        }
     }
     
     private func log(_ message: String) {
         LogNotify.log("[OptimizedPF] \(message)")
-        logCallback?(message)
+        // IMPORTANT: Log callbacks might update UI, dispatch to main thread
+        DispatchQueue.main.async { [weak self] in
+            self?.logCallback?(message)
+        }
     }
 }
 
