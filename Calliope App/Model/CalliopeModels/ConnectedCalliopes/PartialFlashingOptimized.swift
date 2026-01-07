@@ -66,11 +66,11 @@ class OptimizedPartialFlashingManager {
 
     // Block notification waiting (Android-style lock.wait())
     private var waitingForNotification = false
-    private var notificationReceived = false
-    private let notificationCondition = NSCondition()  // Use NSCondition instead of NSLock for wait/signal
+    private let notificationSemaphore = DispatchSemaphore(value: 0)  // Use semaphore for cross-thread signaling
     private var lastNotificationTime: Date?
     private var currentBlockRetryCount: Int = 0
     private var currentBlockStartIndex: Int = 0
+    private var lastNotificationStatus: UInt8 = 0  // Store the actual notification value
 
     // Callbacks
     var progressCallback: ((Int, Int) -> Void)?  // (current, total)
@@ -162,27 +162,13 @@ class OptimizedPartialFlashingManager {
         // Record notification time
         lastNotificationTime = Date()
 
+        // Store notification status (Android: packetState = notificationValue[1])
+        lastNotificationStatus = value[1]
+
         // Signal notification received (Android-style lock.notifyAll())
-        notificationCondition.lock()
-        notificationReceived = true
-        notificationCondition.signal()  // Wake up waiting thread
-        notificationCondition.unlock()
-
-        switch value[1] {
-        case WriteStatus.SUCCESS:
-            // Reset retry count on success
-            currentBlockRetryCount = 0
-            handleWriteSuccess()
-
-        case WriteStatus.FAIL:
-            // Android retransmits the last 4-packet block
-            log("Received WRITE_FAIL (0xAA) - retry \(currentBlockRetryCount + 1)/\(PartialFlashingConfig.maxRetries)")
-            handleWriteRetransmit()
-
-        default:
-            log("Unknown write status: 0x\(String(format: "%02X", value[1]))")
-            fail(reason: "Unknown write status")
-        }
+        // Use semaphore signal to wake up waiting thread
+        // This works reliably across different threads/queues
+        notificationSemaphore.signal()
     }
     
     /// Bricht die Übertragung ab
@@ -267,11 +253,9 @@ class OptimizedPartialFlashingManager {
         // Sende Pakete
         let startPacketNum = UInt8(truncatingIfNeeded: blockStart)
 
-        // Reset notification flag before sending (Android: packetState = PACKET_STATE_WAITING)
-        notificationCondition.lock()
-        notificationReceived = false
+        // Reset notification status before sending (Android: packetState = PACKET_STATE_WAITING)
+        lastNotificationStatus = 0  // Reset to waiting state
         waitingForNotification = true
-        notificationCondition.unlock()
 
         // Send all 4 packets rapidly with delays between them
         for (i, pkg) in packagesInBlock.enumerated() {
@@ -307,9 +291,7 @@ class OptimizedPartialFlashingManager {
         // sende END sofort (wie in der Original-Implementierung)
         if packagesInBlock.count < 4 {
             log("Last block had \(packagesInBlock.count) packages - sending END")
-            notificationCondition.lock()
             waitingForNotification = false
-            notificationCondition.unlock()
             sendEndTransmission()
             return
         }
@@ -325,29 +307,38 @@ class OptimizedPartialFlashingManager {
     private func waitForBlockNotificationSynchronously() {
         log("Waiting for block notification...")
 
-        // Use NSCondition.wait with timeout (Android: lock.wait(5000))
-        // This properly blocks until signaled or timeout
-        notificationCondition.lock()
+        // Use DispatchSemaphore.wait with timeout (Android: lock.wait(5000))
+        // Semaphores work reliably across different threads/queues
+        let result = notificationSemaphore.wait(timeout: .now() + PartialFlashingConfig.blockNotificationTimeout)
 
-        // Wait until notificationReceived becomes true or timeout
-        let timeoutDate = Date(timeIntervalSinceNow: PartialFlashingConfig.blockNotificationTimeout)
+        waitingForNotification = false
 
-        while !notificationReceived {
-            if !notificationCondition.wait(until: timeoutDate) {
-                // Timeout occurred
-                log("Block notification timeout after \(PartialFlashingConfig.blockNotificationTimeout)s")
-                waitingForNotification = false
-                notificationCondition.unlock()
-                fail(reason: "Block notification timeout")
-                return
-            }
+        if result == .timedOut {
+            // Timeout occurred
+            log("Block notification timeout after \(PartialFlashingConfig.blockNotificationTimeout)s")
+            fail(reason: "Block notification timeout")
+            return
         }
 
-        // Notification received!
-        log("Block notification received - continuing")
-        waitingForNotification = false
-        notificationReceived = false  // Reset for next block
-        notificationCondition.unlock()
+        // Notification received! Check the status
+        log("Block notification received - status: 0x\(String(format: "%02X", lastNotificationStatus))")
+
+        // Handle the notification based on status (Android pattern)
+        switch lastNotificationStatus {
+        case WriteStatus.SUCCESS:
+            // Reset retry count on success
+            currentBlockRetryCount = 0
+            handleWriteSuccess()
+
+        case WriteStatus.FAIL:
+            // Android retransmits the last 4-packet block
+            log("Received WRITE_FAIL (0xAA) - retry \(currentBlockRetryCount + 1)/\(PartialFlashingConfig.maxRetries)")
+            handleWriteRetransmit()
+
+        default:
+            log("Unknown write status: 0x\(String(format: "%02X", lastNotificationStatus))")
+            fail(reason: "Unknown write status")
+        }
     }
     
     private func sendEndTransmission() {
