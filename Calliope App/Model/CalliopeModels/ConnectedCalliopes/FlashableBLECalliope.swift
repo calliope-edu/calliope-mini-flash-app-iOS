@@ -334,10 +334,12 @@ class FlashableBLECalliope: CalliopeAPI {
         }
 
         // request status
+        LogNotify.log("[PartialFlash] Requesting device status...")
         send(command: .STATUS)
     }
 
     func receivedStatus(_ needsRebootIntoBLEOnlyMode: Bool) {
+        LogNotify.log("[PartialFlash] Received status: needsReboot=\(needsRebootIntoBLEOnlyMode)")
         updateCallback("Received mode of Calliope mini, needs reboot: \(needsRebootIntoBLEOnlyMode)")
         if needsRebootIntoBLEOnlyMode {
             shouldRebootOnDisconnect = true
