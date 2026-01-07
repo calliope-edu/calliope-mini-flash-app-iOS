@@ -316,3 +316,10 @@
 
 "Das Herunterladen der Sitzungsdaten ist fehlgeschlagen." = "The download of the session data was unsuccessful.";
 
+
+/* Bluetooth Alert */
+"Bluetooth deactivated" = "Bluetooth deactivated";
+
+"Bluetooth must be activated to send data to Calliope mini!" = "Bluetooth must be activated to send data to Calliope mini!";
+
+"Open Settings" = "Open Settings";

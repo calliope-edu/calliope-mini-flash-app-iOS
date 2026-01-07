@@ -30,6 +30,8 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
     }
     var errorBlock: (Error) -> Void = { _ in
     }
+    var bluetoothStateChangedBlock: (CBManagerState) -> Void = { _ in
+    }
 
     var calliopeBuilder: (_ peripheral: CBPeripheral, _ name: String) -> DiscoveredBLEDDevice
 
@@ -389,6 +391,11 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
     // MARK: state of the bluetooth manager
 
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        // Notify about Bluetooth state change
+        updateQueue.async {
+            self.bluetoothStateChangedBlock(central.state)
+        }
+
         switch central.state {
         case .poweredOn:
             startCalliopeDiscovery()

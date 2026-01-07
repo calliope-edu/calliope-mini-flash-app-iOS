@@ -152,6 +152,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
         oldValue.giveUpResponsibility()
         connector.updateBlock = updateDiscoveryState
         connector.errorBlock = error
+        connector.bluetoothStateChangedBlock = handleBluetoothStateChange
         matrixView.updateBlock = {
             //matrix has been changed manually, this always triggers a disconnect
             self.connector.disconnectFromCalliope()
@@ -419,6 +420,49 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     /// Speichert ob jemals eine erfolgreiche Verbindung hergestellt wurde
     /// Fehler werden nur angezeigt wenn dies true ist
     private var hasEverConnected = false
+
+    /// Speichert ob bereits ein Bluetooth-Alert angezeigt wird
+    private var isShowingBluetoothAlert = false
+
+    private func handleBluetoothStateChange(_ state: CBManagerState) {
+        // Show alert only when Bluetooth is powered off
+        if state == .poweredOff && !isShowingBluetoothAlert {
+            isShowingBluetoothAlert = true
+
+            let alertController = UIAlertController(
+                title: NSLocalizedString("Bluetooth deactivated", comment: "Bluetooth is turned off"),
+                message: NSLocalizedString("Bluetooth must be activated to send data to Calliope mini!", comment: "Bluetooth required message"),
+                preferredStyle: .alert
+            )
+
+            // Button to open Bluetooth settings
+            alertController.addAction(UIAlertAction(
+                title: NSLocalizedString("Open Settings", comment: "Open Settings button"),
+                style: .default,
+                handler: { [weak self] _ in
+                    self?.isShowingBluetoothAlert = false
+                    // Open iOS Settings app - Bluetooth section
+                    if let url = URL(string: "App-prefs:root=Bluetooth") {
+                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                    }
+                }
+            ))
+
+            // OK button to dismiss
+            alertController.addAction(UIAlertAction(
+                title: "OK",
+                style: .cancel,
+                handler: { [weak self] _ in
+                    self?.isShowingBluetoothAlert = false
+                }
+            ))
+
+            self.show(alertController, sender: nil)
+        } else if state == .poweredOn {
+            // Reset flag when Bluetooth is turned back on
+            isShowingBluetoothAlert = false
+        }
+    }
 
     private func error(_ error: Error) {
         // Prüfe, ob bereits ein Fehler-Alert angezeigt wird

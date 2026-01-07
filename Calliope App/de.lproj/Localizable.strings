@@ -357,3 +357,10 @@
 "You can find the session data, in the Calliope directory on your device." = "Du kannst die Sitzungsdaten im Calliope-Verzeichnis auf deinem Gerät finden.";
 
 "The download of the session data was unsuccessful." = "Das Herunterladen der Sitzungsdaten ist fehlgeschlagen.";
+
+/* Bluetooth Alert */
+"Bluetooth deactivated" = "Bluetooth deaktiviert";
+
+"Bluetooth must be activated to send data to Calliope mini!" = "Bluetooth muss aktiviert sein, damit Daten an den Calliope mini gesendet werden können!";
+
+"Open Settings" = "Einstellungen öffnen";
