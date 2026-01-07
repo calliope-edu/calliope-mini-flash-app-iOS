@@ -3,6 +3,10 @@ import Foundation
 struct HexParser {
 
     private var url: URL
+    
+    // Cache filtered hex to avoid re-filtering on every call
+    private static var filteredHexCache: [URL: URL] = [:]
+    private static let cacheLock = NSLock()
 
     init(url: URL) {
         self.url = url
@@ -24,6 +28,14 @@ struct HexParser {
         case universal = ":0400000A9900C0DEBB"
         case arcade  = ":10000000000002202D5A0100555A0100575A0100E4"  // ← EXAKT so!
         case invalid = ""
+    }
+    
+    // Clear cached filtered hex files
+    static func clearCache() {
+        cacheLock.lock()
+        filteredHexCache.removeAll()
+        cacheLock.unlock()
+        LogNotify.log("[PartialFlash] Cleared filtered hex cache")
     }
 
 
@@ -173,11 +185,27 @@ struct HexParser {
     }
 
     func retrievePartialFlashingInfo() -> (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? {
+        // Check cache first
+        HexParser.cacheLock.lock()
+        let cachedFilteredURL = HexParser.filteredHexCache[url]
+        HexParser.cacheLock.unlock()
+        
+        if let cachedURL = cachedFilteredURL {
+            LogNotify.log("[PartialFlash] Using cached filtered hex")
+            return retrievePartialFlashingInfoFromFile(url: cachedURL)
+        }
+        
         // Filter universal hex to application region (preserves magic markers)
         LogNotify.log("[PartialFlash] Filtering universal hex to application region...")
         if let filteredLines = UniversalHexFilter.filterUniversalHex(sourceURL: url, hexBlock: .v2),
            let filteredURL = UniversalHexFilter.writeFilteredHex(filteredLines) {
             LogNotify.log("[PartialFlash] Using filtered hex with \(filteredLines.count) lines")
+            
+            // Cache the filtered result
+            HexParser.cacheLock.lock()
+            HexParser.filteredHexCache[url] = filteredURL
+            HexParser.cacheLock.unlock()
+            
             return retrievePartialFlashingInfoFromFile(url: filteredURL)
         }
         
