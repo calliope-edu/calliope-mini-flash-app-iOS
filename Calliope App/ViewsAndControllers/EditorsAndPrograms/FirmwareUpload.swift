@@ -128,9 +128,19 @@ class FirmwareUpload {
         ) { _ in
             // Wechsle in USB-Modus
             if let matrixVC = MatrixConnectionViewController.instance {
-                matrixVC.isInUsbMode = true
-                // Falls es einen USB-Switch gibt, aktiviere ihn
-                // matrixVC.usbSwitch.isOn = true
+                // Expand the matrix connection view if it's collapsed
+                if matrixVC.collapseButton.expansionState != .open {
+                    matrixVC.animate(expand: true)
+                }
+
+                // Switch to USB mode (this triggers switchChanged which updates the UI)
+                matrixVC.usbSwitch.isOn = true
+                matrixVC.switchChanged(usbSwitch: matrixVC.usbSwitch)
+
+                // Open the file picker after a short delay to allow the UI to update
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    matrixVC.startUSBconnect(matrixVC.connectButton as Any)
+                }
             }
             completion?()
         })

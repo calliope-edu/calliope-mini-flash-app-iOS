@@ -147,6 +147,7 @@
 		7E25CE114DDEDC718EAB742D /* UtilityLogJob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E25C8370320F1AE86E741A5 /* UtilityLogJob.swift */; };
 		806801512EF5A2D00010448D /* ConnectedCalliopeV3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806801502EF5A2D00010448D /* ConnectedCalliopeV3.swift */; };
 		806801532EF700920010448D /* PartialFlashingOptimized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806801522EF7008B0010448D /* PartialFlashingOptimized.swift */; };
+		80EB0D422F0ECA3C000C3269 /* UniversalHexFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB0D412F0ECA3A000C3269 /* UniversalHexFilter.swift */; };
 		B16DD0D6E28647BDAC9EA8CB /* Pods_Calliope_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B15F9E6DE42C49A76EC47B /* Pods_Calliope_App.framework */; };
 /* End PBXBuildFile section */
 
@@ -323,6 +324,7 @@
 		7E25CF0763552A9F4EBCE00E /* UtilityJobProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityJobProtocol.swift; sourceTree = "<group>"; };
 		806801502EF5A2D00010448D /* ConnectedCalliopeV3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedCalliopeV3.swift; sourceTree = "<group>"; };
 		806801522EF7008B0010448D /* PartialFlashingOptimized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartialFlashingOptimized.swift; sourceTree = "<group>"; };
+		80EB0D412F0ECA3A000C3269 /* UniversalHexFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalHexFilter.swift; sourceTree = "<group>"; };
 		BD1AFC4008F992EADC1C557D /* Pods-Calliope App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.release.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -667,6 +669,7 @@
 		600E632A2C328EA50027AE61 /* Hex */ = {
 			isa = PBXGroup;
 			children = (
+				80EB0D412F0ECA3A000C3269 /* UniversalHexFilter.swift */,
 				601040AB2B592B7300526735 /* HexFileManager.swift */,
 				2F57C3B32394F78B008B0D69 /* DownloadableHexFile.swift */,
 				2F375ABA237F28BC004ED8D7 /* DefaultProgram.swift */,
@@ -1151,6 +1154,7 @@
 				2F61457922BF761F001C2734 /* Ext.swift in Sources */,
 				2F61457D22BF761F001C2734 /* LogNotify.swift in Sources */,
 				7E25CB63E012B25A80606449 /* UIDevice+Extensions.swift in Sources */,
+				80EB0D422F0ECA3C000C3269 /* UniversalHexFilter.swift in Sources */,
 				7E25C2F16E2316D7C6EF236F /* UtilityJobProtocol.swift in Sources */,
 				604938852E151BB1008BCE40 /* OperationStatusEnum.swift in Sources */,
 				7E25C1EF8B03BE2835268F12 /* UtilityJobState.swift in Sources */,
