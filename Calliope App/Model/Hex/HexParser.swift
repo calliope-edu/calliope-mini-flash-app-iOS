@@ -1,53 +1,48 @@
 import Foundation
 
 struct HexParser {
-
+    
+    // MARK: - Properties
+    
     private var url: URL
     
-    // Cache filtered hex to avoid re-filtering on every call
+    // MARK: - Cache Management
+    
+    /// Cache filtered hex to avoid re-filtering on every call
     private static var filteredHexCache: [URL: URL] = [:]
     private static let cacheLock = NSLock()
-
-    init(url: URL) {
-        self.url = url
-    }
-
-    private func calcChecksum(_ address: UInt16, _ type: UInt8, _ data: Data) -> UInt8 {
-        var crc: UInt8 = UInt8(data.count)
-            + UInt8(address >> 8)
-            + UInt8(address + UInt16(type))
-        for b in data {
-            crc = crc + b
-        }
-        return UInt8((0x100 - UInt16(crc)))
-    }
-
-    enum HexVersion: String, CaseIterable {
-        case v3      = ":1000000000040020810A000015070000610A0000BA"
-        case v2      = ":020000040000FA"
-        case universal = ":0400000A9900C0DEBB"
-        case arcade  = ":10000000000002202D5A0100555A0100575A0100E4"  // ← EXAKT so!
-        case invalid = ""
-    }
     
-    // Clear cached filtered hex files
+    /// Clears all cached filtered hex files
     static func clearCache() {
         cacheLock.lock()
+        defer { cacheLock.unlock() }
         filteredHexCache.removeAll()
-        cacheLock.unlock()
         LogNotify.log("[PartialFlash] Cleared filtered hex cache")
     }
 
+    // MARK: - Initialization
+    
+    init(url: URL) {
+        self.url = url
+    }
+    
+    // MARK: - Hex Version Detection
+    
+    enum HexVersion: String, CaseIterable {
+        case v3        = ":1000000000040020810A000015070000610A0000BA"
+        case v2        = ":020000040000FA"
+        case universal = ":0400000A9900C0DEBB"
+        case arcade    = ":10000000000002202D5A0100555A0100575A0100E4"
+        case invalid   = ""
+    }
 
+
+    /// Detects hex file version by examining the first two lines
+    /// - Returns: Set of detected hex versions (v3, v2, universal, arcade, or invalid)
     func getHexVersion() -> Set<HexVersion> {
-        print("🔍 getHexVersion() für: \(url.path)") // ← NEU!
-        
         let urlAccess = url.startAccessingSecurityScopedResource()
         guard let reader = StreamReader(path: url.path) else {
-            print("❌ StreamReader failed") // ← NEU!
-            var enumSet: Set<HexVersion> = Set.init()
-            enumSet.insert(.invalid)
-            return enumSet
+            return [.invalid]
         }
         
         defer {
@@ -57,29 +52,26 @@ struct HexParser {
             }
         }
         
-        var relevantLines: Set<String> = Set.init()
-        relevantLines.insert(reader.nextLine()?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "")
-        relevantLines.insert(reader.nextLine()?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "")
+        // Read first two lines to determine version
+        let firstLine = reader.nextLine()?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let secondLine = reader.nextLine()?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let relevantLines: Set<String> = [firstLine, secondLine]
         
-        print("📄 Erste Zeilen: \(relevantLines)") // ← NEU!
-        
-        var enumSet: Set<HexVersion> = Set.init()
+        // Check which versions match
+        var detectedVersions = Set<HexVersion>()
         for version in HexVersion.allCases {
             if relevantLines.contains(version.rawValue) {
-                print("✅ Match: \(version)") // ← NEU!
-                enumSet.insert(version)
+                detectedVersions.insert(version)
             }
         }
         
-        if enumSet.isEmpty {
-            print("❌ Kein Match → .invalid") // ← NEU!
-            enumSet.insert(.invalid)
-        }
-        
-        print("🔍 Rückgabe: \(enumSet)") // ← NEU!
-        return enumSet
+        return detectedVersions.isEmpty ? [.invalid] : detectedVersions
     }
+    
+    // MARK: - Hex Parsing
 
+    /// Parses hex file and calls handler for each data entry
+    /// - Parameter handleDataEntry: Closure called for each data record with (address, data, dataType, isUniversal)
     func parse(handleDataEntry: (UInt32, Data, Int, Bool) -> ()) {
         let urlAccess = url.startAccessingSecurityScopedResource()
         guard let reader = StreamReader(path: url.path) else {
@@ -184,13 +176,12 @@ struct HexParser {
         }
     }
 
+    /// Retrieves partial flashing information from hex file
+    /// Uses cached filtered hex if available, otherwise filters and caches
+    /// - Returns: Tuple of (fileHash, programHash, partialFlashData) or nil on error
     func retrievePartialFlashingInfo() -> (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? {
         // Check cache first
-        HexParser.cacheLock.lock()
-        let cachedFilteredURL = HexParser.filteredHexCache[url]
-        HexParser.cacheLock.unlock()
-        
-        if let cachedURL = cachedFilteredURL {
+        if let cachedURL = getCachedFilteredURL() {
             LogNotify.log("[PartialFlash] Using cached filtered hex")
             return retrievePartialFlashingInfoFromFile(url: cachedURL)
         }
@@ -202,9 +193,7 @@ struct HexParser {
             LogNotify.log("[PartialFlash] Using filtered hex with \(filteredLines.count) lines")
             
             // Cache the filtered result
-            HexParser.cacheLock.lock()
-            HexParser.filteredHexCache[url] = filteredURL
-            HexParser.cacheLock.unlock()
+            setCachedFilteredURL(filteredURL)
             
             return retrievePartialFlashingInfoFromFile(url: filteredURL)
         }
@@ -212,6 +201,22 @@ struct HexParser {
         // Fallback to original universal hex if filtering fails
         LogNotify.log("[PartialFlash] Filtering failed, using original hex")
         return retrievePartialFlashingInfoFromFile(url: url)
+    }
+    
+    // MARK: - Cache Management
+    
+    /// Get cached filtered URL for current hex file
+    private func getCachedFilteredURL() -> URL? {
+        HexParser.cacheLock.lock()
+        defer { HexParser.cacheLock.unlock() }
+        return HexParser.filteredHexCache[url]
+    }
+    
+    /// Cache filtered URL for current hex file
+    private func setCachedFilteredURL(_ filteredURL: URL) {
+        HexParser.cacheLock.lock()
+        defer { HexParser.cacheLock.unlock() }
+        HexParser.filteredHexCache[url] = filteredURL
     }
     
     private func retrievePartialFlashingInfoFromFile(url: URL) -> (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? {

@@ -5,6 +5,13 @@ import Foundation
 /// Based on micro:bit Android implementation (irmHexUtils.java)
 struct UniversalHexFilter {
     
+    // Intel HEX record types
+    private enum RecordType: UInt8 {
+        case data = 0x00                    // Data record
+        case endOfFile = 0x01               // End of file
+        case extendedLinearAddress = 0x04   // Extended linear address (upper 16 bits)
+    }
+    
     // Application memory regions for different micro:bit versions
     enum HexBlock {
         case v1  // micro:bit V1
@@ -51,7 +58,7 @@ struct UniversalHexFilter {
             }
             
             // Update segment address for type 04 (Extended Linear Address)
-            if record.type == 0x04 {
+            if record.type == RecordType.extendedLinearAddress.rawValue {
                 currentSegmentAddress = UInt32(record.data[0]) << 24 | UInt32(record.data[1]) << 16
                 // Always include segment address records for proper hex format
                 filteredLines.append(trimmed)
@@ -59,7 +66,7 @@ struct UniversalHexFilter {
             }
             
             // Handle data records (type 00) - filter by address range
-            if record.type == 0x00 {
+            if record.type == RecordType.data.rawValue {
                 let fullAddress = currentSegmentAddress + UInt32(record.address)
                 
                 // Check if this record overlaps with application region
@@ -71,7 +78,7 @@ struct UniversalHexFilter {
             }
             
             // Include EOF record (type 01)
-            if record.type == 0x01 {
+            if record.type == RecordType.endOfFile.rawValue {
                 filteredLines.append(trimmed)
                 break
             }
@@ -88,8 +95,8 @@ struct UniversalHexFilter {
     /// - Parameter lines: Array of hex record strings
     /// - Returns: URL to the temporary file, or nil on error
     static func writeFilteredHex(_ lines: [String]) -> URL? {
-        let tempDir = FileManager.default.temporaryDirectory
-        let tempFile = tempDir.appendingPathComponent("application_filtered.hex")
+        let tempFile = FileManager.default.temporaryDirectory
+            .appendingPathComponent("application_filtered.hex")
         
         let content = lines.joined(separator: "\n")
         
@@ -145,30 +152,4 @@ struct UniversalHexFilter {
         return HexRecord(address: address, type: type, data: data)
     }
     
-    /// Construct an Intel HEX record line from components
-    private static func constructHexRecord(address: UInt16, type: UInt8, data: Data) -> String? {
-        let byteCount = UInt8(data.count)
-        
-        // Calculate checksum
-        var checksum: UInt16 = UInt16(byteCount)
-        checksum += UInt16(address >> 8)
-        checksum += UInt16(address & 0xFF)
-        checksum += UInt16(type)
-        for byte in data {
-            checksum += UInt16(byte)
-        }
-        checksum = (0x100 - (checksum & 0xFF)) & 0xFF
-        
-        // Build hex string
-        var hexString = ":"
-        hexString += String(format: "%02X", byteCount)
-        hexString += String(format: "%04X", address)
-        hexString += String(format: "%02X", type)
-        for byte in data {
-            hexString += String(format: "%02X", byte)
-        }
-        hexString += String(format: "%02X", checksum)
-        
-        return hexString
-    }
 }
