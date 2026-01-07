@@ -66,11 +66,11 @@ class OptimizedPartialFlashingManager {
 
     // Block notification waiting (Android-style lock.wait())
     private var waitingForNotification = false
-    private let notificationSemaphore = DispatchSemaphore(value: 0)  // Use semaphore for cross-thread signaling
+    private let notificationSemaphore = DispatchSemaphore(value: 0)
     private var lastNotificationTime: Date?
     private var currentBlockRetryCount: Int = 0
     private var currentBlockStartIndex: Int = 0
-    private var lastNotificationStatus: UInt8 = 0  // Store the actual notification value
+    private var lastNotificationStatus: UInt8 = 0  // Store notification status for processing
 
     // Callbacks
     var progressCallback: ((Int, Int) -> Void)?  // (current, total)
@@ -131,13 +131,14 @@ class OptimizedPartialFlashingManager {
             // WICHTIG: isActive erst HIER setzen, damit Notifications erst ab jetzt geroutet werden
             self.isActive = true
 
-            // CRITICAL: Run send loop on background thread to allow blocking waits
-            // BLE notifications will come in on their own thread and update notificationReceived flag
+            // Start sending on background thread (so we can block on semaphore)
+            // BLE writes will be dispatched to main thread from within sendNextBlock
             self.fillPipeline()
         }
     }
     
     /// Verarbeitet eingehende Notification
+    /// IMPORTANT: This runs on main thread (BLE notification callback thread)
     func handleNotification(_ value: Data) {
         guard isActive else { return }
 
@@ -159,15 +160,14 @@ class OptimizedPartialFlashingManager {
             return
         }
 
-        // Record notification time
+        // Record notification time and status
         lastNotificationTime = Date()
-
-        // Store notification status (Android: packetState = notificationValue[1])
         lastNotificationStatus = value[1]
 
+        log("Block notification received - status: 0x\(String(format: "%02X", value[1]))")
+
         // Signal notification received (Android-style lock.notifyAll())
-        // Use semaphore signal to wake up waiting thread
-        // This works reliably across different threads/queues
+        // This wakes up the background thread waiting in waitForBlockNotificationSynchronously()
         notificationSemaphore.signal()
     }
     
@@ -207,7 +207,6 @@ class OptimizedPartialFlashingManager {
         // deallocate the StreamReader if it's the last reference, triggering deinit->close()
         // By explicitly closing it here after we've read all data, we avoid race conditions
         // where the reader might be accessed after being closed
-        // Note: The close() operation is safe to call multiple times (it sets fileHandle to nil)
         mutableData.closeReader()
     }
     
@@ -253,31 +252,56 @@ class OptimizedPartialFlashingManager {
         // Sende Pakete
         let startPacketNum = UInt8(truncatingIfNeeded: blockStart)
 
-        // Reset notification status before sending (Android: packetState = PACKET_STATE_WAITING)
-        lastNotificationStatus = 0  // Reset to waiting state
+        // Reset notification flag before sending (Android: packetState = PACKET_STATE_WAITING)
         waitingForNotification = true
 
         // Send all 4 packets rapidly with delays between them
-        for (i, pkg) in packagesInBlock.enumerated() {
-            // Segment-Adresse NUR im zweiten Paket des Blocks (index == 1)
-            let addr: UInt16 = (i == 1) ? blockSegmentAddress : pkg.address
-            let packetNum = startPacketNum &+ UInt8(i)
+        // CRITICAL: BLE writes MUST happen on main thread
+        let writeSemaphore = DispatchSemaphore(value: 0)
+        var writeError: Error?
 
-            let writeData = addr.bigEndianData + Data([packetNum]) + pkg.data
-
-            do {
-                try calliope.writeWithoutResponse(Data([Command.WRITE]) + writeData, for: .partialFlashing)
-            } catch {
-                log("Write failed: \(error)")
-                fail(reason: "BLE write failed")
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self, let calliope = self.calliope else {
+                writeError = NSError(domain: "PartialFlashing", code: -1, userInfo: [NSLocalizedDescriptionKey: "Calliope lost"])
+                writeSemaphore.signal()
                 return
             }
 
-            // Android: Wait between packets AFTER write (waitForOnWriteCharacteristic)
-            // BUT NOT after the 4th packet - we wait for notification instead
-            if i < 3 {
-                Thread.sleep(forTimeInterval: PartialFlashingConfig.intraBlockPacketDelay)
+            for (i, pkg) in packagesInBlock.enumerated() {
+                // Segment-Adresse NUR im zweiten Paket des Blocks (index == 1)
+                let addr: UInt16 = (i == 1) ? blockSegmentAddress : pkg.address
+                let packetNum = startPacketNum &+ UInt8(i)
+
+                let writeData = addr.bigEndianData + Data([packetNum]) + pkg.data
+
+                do {
+                    try calliope.writeWithoutResponse(Data([Command.WRITE]) + writeData, for: .partialFlashing)
+                } catch {
+                    self.log("Write failed: \(error)")
+                    writeError = error
+                    writeSemaphore.signal()
+                    return
+                }
+
+                // Android: Wait between packets AFTER write (waitForOnWriteCharacteristic)
+                // BUT NOT after the 4th packet - we wait for notification instead
+                if i < 3 {
+                    Thread.sleep(forTimeInterval: PartialFlashingConfig.intraBlockPacketDelay)
+                }
             }
+
+            // All writes completed successfully
+            writeSemaphore.signal()
+        }
+
+        // Wait for writes to complete on main thread
+        writeSemaphore.wait()
+
+        // Check for write errors
+        if let error = writeError {
+            log("Write failed: \(error)")
+            fail(reason: "BLE write failed")
+            return
         }
 
         // Update State
@@ -303,27 +327,26 @@ class OptimizedPartialFlashingManager {
     }
 
     /// Waits for device notification after sending 4-packet block (Android-style)
-    /// IMPORTANT: This is called synchronously, matching Android's behavior
+    /// IMPORTANT: This is called synchronously on background thread, matching Android's behavior
+    /// Notifications arrive on main thread and signal the semaphore
     private func waitForBlockNotificationSynchronously() {
         log("Waiting for block notification...")
 
         // Use DispatchSemaphore.wait with timeout (Android: lock.wait(5000))
-        // Semaphores work reliably across different threads/queues
+        // Semaphore is signaled by handleNotification() on main thread
         let result = notificationSemaphore.wait(timeout: .now() + PartialFlashingConfig.blockNotificationTimeout)
 
-        waitingForNotification = false
-
         if result == .timedOut {
-            // Timeout occurred
             log("Block notification timeout after \(PartialFlashingConfig.blockNotificationTimeout)s")
+            waitingForNotification = false
             fail(reason: "Block notification timeout")
             return
         }
 
-        // Notification received! Check the status
-        log("Block notification received - status: 0x\(String(format: "%02X", lastNotificationStatus))")
+        // Notification received! Process the status
+        waitingForNotification = false
 
-        // Handle the notification based on status (Android pattern)
+        // Process notification status (matching Android's pattern)
         switch lastNotificationStatus {
         case WriteStatus.SUCCESS:
             // Reset retry count on success
@@ -368,10 +391,9 @@ class OptimizedPartialFlashingManager {
             }
 
             // Android: Thread.sleep(100) after END command
-            // IMPORTANT: Completion callback already on main thread, no need to dispatch again
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
                 guard let self = self else { return }
-                // Completion callback NACH dem Senden (already on main thread)
+                // Completion callback NACH dem Senden
                 self.completionCallback?(true, "Completed in \(String(format: "%.2f", duration))s")
             }
         }
