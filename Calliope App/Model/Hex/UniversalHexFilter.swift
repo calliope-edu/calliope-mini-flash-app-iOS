@@ -35,39 +35,15 @@ struct UniversalHexFilter {
         let range = hexBlock.addressRange
         var filteredLines: [String] = []
         var currentSegmentAddress: UInt32 = 0
-        var inMagicRegion = false
-        var foundMagicStart = false
         
         // Track the actual data range we're extracting
         var resultAddrMin: UInt32 = UInt32.max
         var resultAddrMax: UInt32 = 0
         
-        // Magic markers for micro:bit partial flashing
-        let magicStart = "708E3B92C615A841C49866C975EE5197"
-        let magicEnd = "41140E2FB82FA2B"
+        LogNotify.log("UniversalHexFilter: Filtering address range 0x\(String(range.min, radix: 16)) - 0x\(String(range.max, radix: 16))")
         
         while let line = reader.nextLine() {
             let trimmed = line.trimmingCharacters(in: .whitespacesAndNewlines)
-            
-            // Check for magic markers
-            if trimmed.contains(magicStart) {
-                inMagicRegion = true
-                foundMagicStart = true
-                filteredLines.append(trimmed)
-                LogNotify.log("UniversalHexFilter: Found magic START marker")
-                continue
-            }
-            
-            if trimmed.contains(magicEnd) {
-                filteredLines.append(trimmed)
-                LogNotify.log("UniversalHexFilter: Found magic END marker")
-                break
-            }
-            
-            // If we haven't found magic start yet, skip everything
-            if !foundMagicStart {
-                continue
-            }
             
             // Parse hex record
             guard let record = parseHexRecord(trimmed) else {
@@ -77,40 +53,32 @@ struct UniversalHexFilter {
             // Update segment address for type 04 (Extended Linear Address)
             if record.type == 0x04 {
                 currentSegmentAddress = UInt32(record.data[0]) << 24 | UInt32(record.data[1]) << 16
-                // Always include segment address records when in magic region
-                if inMagicRegion {
-                    filteredLines.append(trimmed)
-                }
+                // Always include segment address records for proper hex format
+                filteredLines.append(trimmed)
                 continue
             }
             
-            // Handle data records (type 00) - only filter if in magic region
-            if record.type == 0x00 && inMagicRegion {
+            // Handle data records (type 00) - filter by address range
+            if record.type == 0x00 {
                 let fullAddress = currentSegmentAddress + UInt32(record.address)
                 
-                // Check if this record falls within application region
-                if fullAddress + UInt32(record.data.count) > range.min && fullAddress < range.max {
+                // Check if this record overlaps with application region
+                if fullAddress < range.max && fullAddress + UInt32(record.data.count) > range.min {
                     filteredLines.append(trimmed)
                     resultAddrMin = min(resultAddrMin, fullAddress)
                     resultAddrMax = max(resultAddrMax, fullAddress + UInt32(record.data.count))
-                } else {
-                    LogNotify.log("UniversalHexFilter: Skipping record outside range: 0x\(String(fullAddress, radix: 16))")
                 }
             }
             
-            // Include other record types when in magic region (type 05, etc.)
-            if record.type != 0x00 && record.type != 0x04 && inMagicRegion {
+            // Include EOF record (type 01)
+            if record.type == 0x01 {
                 filteredLines.append(trimmed)
+                break
             }
         }
         
-        // Add EOF record if not already present
-        if let lastLine = filteredLines.last, !lastLine.hasPrefix(":00000001") {
-            filteredLines.append(":00000001FF")
-        }
-        
         LogNotify.log("UniversalHexFilter: Filtered from universal hex")
-        LogNotify.log("  Address range: 0x\(String(resultAddrMin, radix: 16)) - 0x\(String(resultAddrMax, radix: 16))")
+        LogNotify.log("  Data range: 0x\(String(resultAddrMin, radix: 16)) - 0x\(String(resultAddrMax, radix: 16))")
         LogNotify.log("  Output lines: \(filteredLines.count)")
         
         return filteredLines.isEmpty ? nil : filteredLines
