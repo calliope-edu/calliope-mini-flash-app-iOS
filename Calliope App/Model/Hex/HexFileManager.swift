@@ -74,6 +74,10 @@ final class HexFileManager {
         }
         do {
             try data.write(to: file)
+            // Clear filtered hex cache when new hex file is written
+            if isHexFile {
+                HexParser.clearCache()
+            }
         } catch {
             LogNotify.log("\(error)")
         }
