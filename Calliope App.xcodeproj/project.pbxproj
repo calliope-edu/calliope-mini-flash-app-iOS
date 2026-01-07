@@ -65,6 +65,7 @@
 		2F61459822BF761F001C2734 /* StreamReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61456322BF761F001C2734 /* StreamReader.swift */; };
 		2F61459922BF761F001C2734 /* Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61456422BF761F001C2734 /* Hex.swift */; };
 		2F61459A22BF761F001C2734 /* HexParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61456522BF761F001C2734 /* HexParser.swift */; };
+		A1B2C3D52E2F3A4500ABCDEF /* UniversalHexFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D42E2F3A4500ABCDEF /* UniversalHexFilter.swift */; };
 		2F61459C22BF9D26001C2734 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2F61459B22BF9D26001C2734 /* Settings.bundle */; };
 		2F61459E22BFE607001C2734 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F61459D22BFE607001C2734 /* Assets.xcassets */; };
 		2F6145A222C7B3C2001C2734 /* NewsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6145A122C7B3C2001C2734 /* NewsCollectionViewController.swift */; };
@@ -223,6 +224,7 @@
 		2F61456322BF761F001C2734 /* StreamReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamReader.swift; sourceTree = "<group>"; };
 		2F61456422BF761F001C2734 /* Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hex.swift; sourceTree = "<group>"; };
 		2F61456522BF761F001C2734 /* HexParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexParser.swift; sourceTree = "<group>"; };
+		A1B2C3D42E2F3A4500ABCDEF /* UniversalHexFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversalHexFilter.swift; sourceTree = "<group>"; };
 		2F61459B22BF9D26001C2734 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		2F61459D22BFE607001C2734 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2F6145A122C7B3C2001C2734 /* NewsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewController.swift; sourceTree = "<group>"; };
@@ -672,6 +674,7 @@
 				2F375ABA237F28BC004ED8D7 /* DefaultProgram.swift */,
 				2F61456522BF761F001C2734 /* HexParser.swift */,
 				2F61456422BF761F001C2734 /* Hex.swift */,
+				A1B2C3D42E2F3A4500ABCDEF /* UniversalHexFilter.swift */,
 			);
 			path = Hex;
 			sourceTree = "<group>";
@@ -1077,6 +1080,7 @@
 				60BBDB882B6BA16F003AD3CE /* DiscoveredUSBDevice.swift in Sources */,
 				2F61458222BF761F001C2734 /* Checksum.swift in Sources */,
 				2F61459A22BF761F001C2734 /* HexParser.swift in Sources */,
+				A1B2C3D52E2F3A4500ABCDEF /* UniversalHexFilter.swift in Sources */,
 				2F61456F22BF761F001C2734 /* CalliopeDiscovery.swift in Sources */,
 				2F61457822BF761F001C2734 /* ExtString.swift in Sources */,
 				604841D52B1F328A0037A825 /* OnboardingOfflineViewController.swift in Sources */,

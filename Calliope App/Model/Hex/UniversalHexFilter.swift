@@ -35,13 +35,39 @@ struct UniversalHexFilter {
         let range = hexBlock.addressRange
         var filteredLines: [String] = []
         var currentSegmentAddress: UInt32 = 0
+        var inMagicRegion = false
+        var foundMagicStart = false
         
         // Track the actual data range we're extracting
         var resultAddrMin: UInt32 = UInt32.max
         var resultAddrMax: UInt32 = 0
         
+        // Magic markers for micro:bit partial flashing
+        let magicStart = "708E3B92C615A841C49866C975EE5197"
+        let magicEnd = "41140E2FB82FA2B"
+        
         while let line = reader.nextLine() {
             let trimmed = line.trimmingCharacters(in: .whitespacesAndNewlines)
+            
+            // Check for magic markers
+            if trimmed.contains(magicStart) {
+                inMagicRegion = true
+                foundMagicStart = true
+                filteredLines.append(trimmed)
+                LogNotify.log("UniversalHexFilter: Found magic START marker")
+                continue
+            }
+            
+            if trimmed.contains(magicEnd) {
+                filteredLines.append(trimmed)
+                LogNotify.log("UniversalHexFilter: Found magic END marker")
+                break
+            }
+            
+            // If we haven't found magic start yet, skip everything
+            if !foundMagicStart {
+                continue
+            }
             
             // Parse hex record
             guard let record = parseHexRecord(trimmed) else {
@@ -51,49 +77,36 @@ struct UniversalHexFilter {
             // Update segment address for type 04 (Extended Linear Address)
             if record.type == 0x04 {
                 currentSegmentAddress = UInt32(record.data[0]) << 24 | UInt32(record.data[1]) << 16
-                // Include segment address record in output
-                filteredLines.append(trimmed)
+                // Always include segment address records when in magic region
+                if inMagicRegion {
+                    filteredLines.append(trimmed)
+                }
                 continue
             }
             
-            // Handle data records (type 00)
-            if record.type == 0x00 {
+            // Handle data records (type 00) - only filter if in magic region
+            if record.type == 0x00 && inMagicRegion {
                 let fullAddress = currentSegmentAddress + UInt32(record.address)
                 
                 // Check if this record falls within application region
                 if fullAddress + UInt32(record.data.count) > range.min && fullAddress < range.max {
-                    // Calculate which bytes to include
-                    let first = fullAddress < range.min ? range.min - fullAddress : 0
-                    let next = fullAddress + UInt32(record.data.count) > range.max ? range.max - fullAddress : UInt32(record.data.count)
-                    
-                    if next > first {
-                        // This record (or part of it) is in range
-                        if first == 0 && next == UInt32(record.data.count) {
-                            // Entire record is in range - include as-is
-                            filteredLines.append(trimmed)
-                        } else {
-                            // Partial record - need to reconstruct
-                            let newAddress = UInt16(record.address) + UInt16(first)
-                            let newData = record.data[Int(first)..<Int(next)]
-                            if let newLine = constructHexRecord(address: newAddress, type: 0x00, data: Data(newData)) {
-                                filteredLines.append(newLine)
-                            }
-                        }
-                        
-                        // Track range
-                        let dataStart = fullAddress + first
-                        let dataEnd = fullAddress + next
-                        resultAddrMin = min(resultAddrMin, dataStart)
-                        resultAddrMax = max(resultAddrMax, dataEnd)
-                    }
+                    filteredLines.append(trimmed)
+                    resultAddrMin = min(resultAddrMin, fullAddress)
+                    resultAddrMax = max(resultAddrMax, fullAddress + UInt32(record.data.count))
+                } else {
+                    LogNotify.log("UniversalHexFilter: Skipping record outside range: 0x\(String(fullAddress, radix: 16))")
                 }
             }
             
-            // Include EOF record (type 01)
-            if record.type == 0x01 {
+            // Include other record types when in magic region (type 05, etc.)
+            if record.type != 0x00 && record.type != 0x04 && inMagicRegion {
                 filteredLines.append(trimmed)
-                break
             }
+        }
+        
+        // Add EOF record if not already present
+        if let lastLine = filteredLines.last, !lastLine.hasPrefix(":00000001") {
+            filteredLines.append(":00000001FF")
         }
         
         LogNotify.log("UniversalHexFilter: Filtered from universal hex")

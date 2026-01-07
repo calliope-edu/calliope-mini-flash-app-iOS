@@ -173,24 +173,24 @@ struct HexParser {
     }
 
     func retrievePartialFlashingInfo() -> (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? {
-        // First, filter the universal hex to extract only application region
-        // This reduces packets from ~2,300 to ~160, speeding up flash from 55s to 3-5s
+        // Filter universal hex to application region (preserves magic markers)
         LogNotify.log("[PartialFlash] Filtering universal hex to application region...")
-        guard let filteredLines = UniversalHexFilter.filterUniversalHex(sourceURL: url, hexBlock: .v2),
-              let filteredURL = UniversalHexFilter.writeFilteredHex(filteredLines) else {
-            LogNotify.log("[PartialFlash] ERROR: Failed to filter universal hex, falling back to original")
-            // Fall back to original file if filtering fails
-            return retrievePartialFlashingInfoFromFile(url: url)
+        if let filteredLines = UniversalHexFilter.filterUniversalHex(sourceURL: url, hexBlock: .v2),
+           let filteredURL = UniversalHexFilter.writeFilteredHex(filteredLines) {
+            LogNotify.log("[PartialFlash] Using filtered hex with \(filteredLines.count) lines")
+            return retrievePartialFlashingInfoFromFile(url: filteredURL)
         }
         
-        LogNotify.log("[PartialFlash] Successfully filtered hex, using application-only hex")
-        return retrievePartialFlashingInfoFromFile(url: filteredURL)
+        // Fallback to original universal hex if filtering fails
+        LogNotify.log("[PartialFlash] Filtering failed, using original hex")
+        return retrievePartialFlashingInfoFromFile(url: url)
     }
     
     private func retrievePartialFlashingInfoFromFile(url: URL) -> (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? {
         guard let reader = StreamReader(path: url.path) else {
             return nil
         }
+        defer { reader.close() }
 
         let (magicLine, currentSegmentAddress) = forwardToMagicNumber(reader)
         if magicLine == nil {
