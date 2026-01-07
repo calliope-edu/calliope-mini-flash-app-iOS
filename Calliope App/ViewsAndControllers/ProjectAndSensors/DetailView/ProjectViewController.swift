@@ -160,12 +160,12 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
     }
 
     func exportToCSVFile() {
-        let alertController = UIAlertController(title: "Export Data", message: "Enter the CSV File name", preferredStyle: .alert)
+        let alertController = UIAlertController(title: NSLocalizedString("Export Data", comment: ""), message: NSLocalizedString("Enter the CSV file name", comment: ""), preferredStyle: .alert)
         alertController.addTextField { textField in
             textField.placeholder = "CSV_Export"
         }
 
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil)
         let okAction = UIAlertAction(title: "OK", style: .default) { _ in
             if let textField = alertController.textFields?.first, let inputText = textField.text {
                 let string = CSVHandler.convertToCSVString(project: self.project?.id ?? nil)

@@ -323,3 +323,15 @@
 "Bluetooth must be activated to send data to Calliope mini!" = "Bluetooth must be activated to send data to Calliope mini!";
 
 "Open Settings" = "Open Settings";
+
+/* Storage location alert */
+"Wrong storage location" = "Wrong storage location";
+
+"You have not selected a Calliope folder as storage location" = "You have not selected a Calliope folder as storage location";
+
+/* Export Data alert */
+"Export Data" = "Export Data";
+
+"Enter the CSV file name" = "Enter the CSV file name";
+
+"Cancel" = "Cancel";

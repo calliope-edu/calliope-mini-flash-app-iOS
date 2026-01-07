@@ -223,7 +223,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     }
 
     func showFalseLocationAlert() {
-        let alert = UIAlertController(title: NSLocalizedString("Falscher Speicherort", comment: ""), message: "Du hast keinen Calliope Ordner als Speicherort gewählt", preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("Wrong storage location", comment: ""), message: NSLocalizedString("You have not selected a Calliope folder as storage location", comment: ""), preferredStyle: .alert)
         alert.addAction(
             UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
             })
