@@ -397,16 +397,30 @@ class FlashableBLECalliope: CalliopeAPI {
         }
         self.partialFlashData = partialFlashData
         
+        // Check if we're done - no more data to send
+        if currentDataToFlash.count == 0 {
+            debugLog("No more data to send, ending transmission")
+            endTransmission()
+            return
+        }
+        
+        // Pad incomplete blocks with 0xFF (like Android does)
+        // Device firmware expects blocks of 4 packets
+        if currentDataToFlash.count < 4 {
+            let paddingCount = 4 - currentDataToFlash.count
+            debugLog("Padding last block with \(paddingCount) packets of 0xFF")
+            let paddingData = Data(repeating: 0xFF, count: 16)
+            for _ in 0..<paddingCount {
+                // Use address 0x0000 for padding packets (they'll be ignored by device)
+                currentDataToFlash.append((address: 0x0000, data: paddingData))
+            }
+        }
+        
         // Start timeout timer for this block
         currentBlockStartTime = Date()
         blockTransmissionTimer?.invalidate()
         blockTransmissionTimer = Timer.scheduledTimer(withTimeInterval: blockTimeout, repeats: false) { [weak self] _ in
             self?.handleBlockTimeout()
-        }
-        
-        if currentDataToFlash.count < 4 {
-            debugLog("Last block (\(currentDataToFlash.count) packets), sending END after transmission")
-            // Note: endTransmission will be called after we get WRITE_SUCCESS for last block
         }
         
         sendCurrentPackagesWithFlowControl()
@@ -491,26 +505,8 @@ class FlashableBLECalliope: CalliopeAPI {
     private func sendNextPacketInBlock() {
         // Check if we've sent all packets in this block
         guard currentBlockSendIndex < packetsToSend.count else {
-            // All packets sent
-            if packetsToSend.count < 4 {
-                // Incomplete block (1-3 packets) - device won't send ACK, finish immediately
-                debugLog("Last incomplete block (\(packetsToSend.count) packets) sent, ending transmission without waiting for ACK")
-                
-                // Update counters for the incomplete block
-                startPackageNumber = startPackageNumber.addingReportingOverflow(UInt8(packetsToSend.count)).partialValue
-                linesFlashed += packetsToSend.count
-                debugLog("Transmitted \(linesFlashed) lines")
-                
-                // Cancel timeout timer since we're ending immediately
-                blockTransmissionTimer?.invalidate()
-                blockTransmissionTimer = nil
-                
-                // End transmission
-                endTransmission()
-            } else {
-                // Full block (4 packets) - wait for device ACK
-                debugLog("All \(packetsToSend.count) packets sent, waiting for device response")
-            }
+            // All 4 packets sent (including padding if needed) - wait for device ACK
+            debugLog("All \(packetsToSend.count) packets sent, waiting for device response")
             return
         }
         
@@ -553,12 +549,6 @@ class FlashableBLECalliope: CalliopeAPI {
     }
 
     private func endTransmission() {
-        // Clean up state
-        partialFlashingStateLock.lock()
-        isPartialFlashingActive = false
-        isPartiallyFlashing = false
-        partialFlashingStateLock.unlock()
-        
         shouldRebootOnDisconnect = false
         blockTransmissionTimer?.invalidate()
         blockTransmissionTimer = nil
@@ -569,20 +559,40 @@ class FlashableBLECalliope: CalliopeAPI {
         updateCallback("Partial flashing done in \(String(format: "%.2f", duration))s (\(Int(avgSpeed)) bytes/s)")
         debugLog("Transmission complete: \(linesFlashed) packets in \(String(format: "%.2f", duration))s")
         
+        // Send TRANSMISSION_END before cleaning up state
+        debugLog("Sending TRANSMISSION_END (0x02) command")
+        updateCallback("Sending end of transmission command...")
         send(command: .TRANSMISSION_END)
         
-        // Signal completion to delegate
-        statusDelegate?.dfuStateDidChange(to: .completed)
+        // Now clean up state AFTER sending the command
+        partialFlashingStateLock.lock()
+        isPartialFlashingActive = false
+        isPartiallyFlashing = false
+        partialFlashingStateLock.unlock()
+        
+        // Per BLE partial flash protocol, device firmware should:
+        // 1. Process TRANSMISSION_END command
+        // 2. Remove embedded source magic
+        // 3. Automatically disconnect and reboot into application mode
+        // Give device time to process and initiate reboot before signaling completion.
+        // Android implementation waits 100ms then explicitly disconnects.
+        updateCallback("Waiting for device to reboot into application mode...")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.statusDelegate?.dfuStateDidChange(to: .completed)
+        }
     }
 
 
     //MARK: partial flashing utility functions
 
     private func send(command: UInt8, value: Data = Data()) {
+        let commandData = Data([command]) + value
+        debugLog("Sending command: 0x\(String(format: "%02X", command)) with \(value.count) bytes of data")
         do {
-            try writeWithoutResponse(Data([command]) + value, for: .partialFlashing)
+            try writeWithoutResponse(commandData, for: .partialFlashing)
+            debugLog("Command 0x\(String(format: "%02X", command)) sent successfully")
         } catch {
-            LogNotify.log("Write failed: \(error.localizedDescription)")
+            LogNotify.log("Write failed for command 0x\(String(format: "%02X", command)): \(error.localizedDescription)")
             fallbackToFullFlash()
         }
     }

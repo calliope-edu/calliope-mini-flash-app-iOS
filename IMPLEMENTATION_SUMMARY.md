@@ -1,5 +1,27 @@
 # Partial Flashing Implementation - Changes Summary
 
+## Latest Update: January 12, 2026
+
+### 🔧 CRITICAL FIX: Device Reboot After Partial Flash
+
+**Problem:** After completing partial flash transfer, the device remained stuck in BLE pairing mode (showing the pairing pattern) and did not start the transferred program.
+
+**Root Cause:** The device is rebooted into BLE pairing mode at the start of partial flashing to prevent interference with the running application. However, after the transfer completed, the device was never explicitly told to reboot back into application mode.
+
+**Solution:** Added explicit `REBOOT` command with `MODE_APPLICATION` (0x01) parameter after `TRANSMISSION_END` (0x02) in the `endTransmission()` method.
+
+**Code Change in `FlashableBLECalliope.swift`:**
+```swift
+send(command: .TRANSMISSION_END)
+
+// CRITICAL: Reboot device into application mode to start the transferred program
+send(command: .REBOOT, value: Data([.MODE_APPLICATION]))
+```
+
+**Reference:** While the micro:bit documentation suggests the device should auto-reboot after `TRANSMISSION_END`, the actual firmware behavior requires an explicit reboot command. This was confirmed by comparing with the Android implementation flow and device behavior.
+
+---
+
 ## Date: January 6, 2026
 
 ## Overview
