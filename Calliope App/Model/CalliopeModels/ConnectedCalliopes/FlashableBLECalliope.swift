@@ -21,6 +21,9 @@ class FlashableBLECalliope: CalliopeAPI {
     // Callback to request disconnect from CalliopeDiscovery
     var requestDisconnectCallback: (() -> Void)?
     
+    // Cache parsed flash info to avoid re-parsing after reboot
+    private var cachedFlashInfo: (fileURL: URL, fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)?
+    
     internal private(set) var file: Hex?
 
     weak internal private(set) var progressReceiver: DFUProgressDelegate?
@@ -69,6 +72,7 @@ class FlashableBLECalliope: CalliopeAPI {
 
     public override func cancelUpload() -> Bool {
         cancel = true  //cancels partial flashing on next callback of calliope
+        cachedFlashInfo = nil  // Clear cache
         let success = uploader?.abort()  //cancels full flashing
         if success ?? false {
             uploader = nil
@@ -93,6 +97,9 @@ class FlashableBLECalliope: CalliopeAPI {
         self.progressReceiver = progressReceiver
         self.statusDelegate = statusDelegate
         self.logReceiver = logReceiver
+        
+        // Clear cached flash info for fresh upload
+        cachedFlashInfo = nil
         
         // Reset flags
         dfuCompletedAwaitingReconnect = false
@@ -287,11 +294,52 @@ class FlashableBLECalliope: CalliopeAPI {
         rebootingForPartialFlashing = false
 
         updateCallback("Start partial flashing")
-        guard let file = file,
-            let partialFlashingInfo = file.partialFlashingInfo,
-            let partialFlashingCharacteristic = getCBCharacteristic(.partialFlashing)
+        
+        // Use cached flash info if available (resuming after reboot with same hex file)
+        let partialFlashingInfo: (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)
+        if let cached = cachedFlashInfo, 
+           let hexFile = file as? HexFile,
+           cached.fileURL == hexFile.url,
+           let file = file,
+           let currentInfo = file.partialFlashingInfo,
+           cached.programHash == currentInfo.programHash {
+            LogNotify.log("[PartialFlash] Using cached flash info (skipping 2s re-parse)")
+            partialFlashingInfo = (fileHash: cached.fileHash, programHash: cached.programHash, partialFlashData: cached.partialFlashData)
+        } else {
+            // Clear cache if hex file changed or contents changed
+            if cachedFlashInfo != nil {
+                if let hexFile = file as? HexFile,
+                   let file = file,
+                   let currentInfo = file.partialFlashingInfo,
+                   let cached = cachedFlashInfo,
+                   cached.fileURL == hexFile.url {
+                    let cachedHash = cached.programHash.map { String(format: "%02x", $0) }.joined()
+                    let currentHash = currentInfo.programHash.map { String(format: "%02x", $0) }.joined()
+                    LogNotify.log("[PartialFlash] Clearing cache - file contents changed (cached programHash: \(cachedHash), current: \(currentHash))")
+                } else {
+                    LogNotify.log("[PartialFlash] Clearing cache - hex file changed")
+                }
+                cachedFlashInfo = nil
+            }
+            
+            guard let file = file,
+                let info = file.partialFlashingInfo
+            else {
+                LogNotify.log("Partial flashing not found")
+                fallbackToFullFlash()
+                return
+            }
+            partialFlashingInfo = info
+            
+            // Cache for potential resume after reboot
+            if let hexFile = file as? HexFile {
+                cachedFlashInfo = (fileURL: hexFile.url, fileHash: info.fileHash, programHash: info.programHash, partialFlashData: info.partialFlashData)
+            }
+        }
+        
+        guard let partialFlashingCharacteristic = getCBCharacteristic(.partialFlashing)
         else {
-            LogNotify.log("Partial flashing not found")
+            LogNotify.log("Partial flashing characteristic not found")
             fallbackToFullFlash()
             return
         }

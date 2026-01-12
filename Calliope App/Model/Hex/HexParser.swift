@@ -9,7 +9,8 @@ struct HexParser {
     // MARK: - Cache Management
     
     /// Cache filtered hex to avoid re-filtering on every call
-    private static var filteredHexCache: [URL: URL] = [:]
+    /// Key: source URL, Value: (filtered URL, source file modification date)
+    private static var filteredHexCache: [URL: (filteredURL: URL, sourceModificationDate: Date)] = [:]
     private static let cacheLock = NSLock()
     
     /// Clears all cached filtered hex files
@@ -209,14 +210,46 @@ struct HexParser {
     private func getCachedFilteredURL() -> URL? {
         HexParser.cacheLock.lock()
         defer { HexParser.cacheLock.unlock() }
-        return HexParser.filteredHexCache[url]
+        
+        guard let cached = HexParser.filteredHexCache[url] else {
+            return nil
+        }
+        
+        // Check if source file has been modified since cached
+        do {
+            let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
+            if let currentModDate = attributes[.modificationDate] as? Date {
+                // If modification date changed, invalidate cache
+                if currentModDate != cached.sourceModificationDate {
+                    LogNotify.log("[PartialFlash] Cache invalid - source file modified (cached: \(cached.sourceModificationDate), current: \(currentModDate))")
+                    HexParser.filteredHexCache.removeValue(forKey: url)
+                    return nil
+                }
+            }
+        } catch {
+            // If we can't check modification date, invalidate cache to be safe
+            LogNotify.log("[PartialFlash] Cache invalid - could not read file attributes")
+            HexParser.filteredHexCache.removeValue(forKey: url)
+            return nil
+        }
+        
+        return cached.filteredURL
     }
     
     /// Cache filtered URL for current hex file
     private func setCachedFilteredURL(_ filteredURL: URL) {
         HexParser.cacheLock.lock()
         defer { HexParser.cacheLock.unlock() }
-        HexParser.filteredHexCache[url] = filteredURL
+        
+        // Store modification date to detect file changes
+        do {
+            let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
+            if let modDate = attributes[.modificationDate] as? Date {
+                HexParser.filteredHexCache[url] = (filteredURL: filteredURL, sourceModificationDate: modDate)
+            }
+        } catch {
+            LogNotify.log("[PartialFlash] Warning: Could not read file modification date for caching")
+        }
     }
     
     private func retrievePartialFlashingInfoFromFile(url: URL) -> (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? {
