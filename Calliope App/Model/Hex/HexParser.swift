@@ -230,15 +230,51 @@ struct HexParser {
             print("[PartialFlash] ERROR: Magic start marker not found!")
             return nil
         }
-        
-        // Read hashes line immediately (it's right after magic)
-        guard let hashesLine = reader.nextLine(),
-              hashesLine.count >= 41,
-              let templateHash = hashesLine[9..<25].toData(using: .hex),
-              let programHash = (hashesLine[25..<41]).toData(using: .hex) else {
-            print("[PartialFlash] ERROR: Could not read hash line after magic marker")
+        let magicRecordType = HexReader.type(of: magicLine!)
+        let magicRecordLength = HexReader.length(of: magicLine!)
+        let magicRecordAddress = HexReader.address(of: magicLine!)
+        print("[PartialFlash] Found magic line (type=\(magicRecordType ?? -1), len=\(magicRecordLength ?? -1), addr=\(String(format: "0x%04X", magicRecordAddress ?? 0))): \(magicLine!.prefix(60))...")
+
+        // Validate magic record: must be type 0 (data) with exactly 16 bytes
+        guard magicRecordType == 0, magicRecordLength == 16 else {
+            print("[PartialFlash] ERROR: Magic record has wrong format (expected type=0, len=16)")
             return nil
         }
+
+        // Read hashes line immediately (it's right after magic)
+        guard let hashesLine = reader.nextLine() else {
+            print("[PartialFlash] ERROR: Could not read line after magic marker")
+            return nil
+        }
+
+        // Validate hash line format: must be a 16-byte data record (type 0) at sequential address
+        let hashRecordType = HexReader.type(of: hashesLine)
+        let hashRecordLength = HexReader.length(of: hashesLine)
+        let hashRecordAddress = HexReader.address(of: hashesLine)
+
+        print("[PartialFlash] Hash line (type=\(hashRecordType ?? -1), len=\(hashRecordLength ?? -1), addr=\(String(format: "0x%04X", hashRecordAddress ?? 0))): \(hashesLine.prefix(50))...")
+
+        // Strict validation: hash record must be type 0 (data) with 16 bytes
+        // and address must be sequential (magic address + 16)
+        guard hashRecordType == 0,
+              hashRecordLength == 16,
+              let magicAddr = magicRecordAddress,
+              let hashAddr = hashRecordAddress,
+              hashAddr == magicAddr + 16 else {
+            print("[PartialFlash] ERROR: Invalid hash record format - not a valid MakeCode partial flashing marker")
+            print("[PartialFlash] Expected: type=0, len=16, addr=\(String(format: "0x%04X", (magicRecordAddress ?? 0) + 16))")
+            print("[PartialFlash] Got: type=\(hashRecordType ?? -1), len=\(hashRecordLength ?? -1), addr=\(String(format: "0x%04X", hashRecordAddress ?? 0))")
+            return nil
+        }
+
+        guard hashesLine.count >= 41,
+              let templateHash = hashesLine[9..<25].toData(using: .hex),
+              let programHash = (hashesLine[25..<41]).toData(using: .hex) else {
+            print("[PartialFlash] ERROR: Could not extract hashes from hash line")
+            return nil
+        }
+        print("[PartialFlash] Extracted DAL hash (templateHash): \(templateHash.hexEncodedString())")
+        print("[PartialFlash] Extracted program hash: \(programHash.hexEncodedString())")
         
         // Count remaining lines from current position to magic end
         var numLinesToFlash = 0

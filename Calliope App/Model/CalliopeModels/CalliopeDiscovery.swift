@@ -318,16 +318,19 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         let url = urls.first
         let discoveredCalliope = DiscoveredUSBDevice(url: url!, name: CalliopeDiscovery.usbCalliopeName)
-        
+
         guard let discoveredCalliope = discoveredCalliope else {
             MatrixConnectionViewController.instance.showFalseLocationAlert()
             state = .initialized
             return
         }
-        
+
         disconnectFromCalliope()
         discoveredCalliope.state = DiscoveredDevice.CalliopeBLEDeviceState.discovered
         self.discoveredCalliopes.updateValue(discoveredCalliope, forKey: CalliopeDiscovery.usbCalliopeName)
+
+        // Verbinde automatisch mit dem ausgewählten USB-Gerät
+        connectToCalliope(discoveredCalliope)
     }
 
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {

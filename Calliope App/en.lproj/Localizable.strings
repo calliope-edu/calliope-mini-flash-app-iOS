@@ -344,3 +344,6 @@
 "Calliope mini will start the program as soon as the transmission is complete." = "Calliope mini will start the program as soon as the transmission is complete.";
 
 "seconds" = "seconds";
+
+/* USB transfer duration message */
+"Duration: about 10 seconds" = "Takes  about 10 seconds";

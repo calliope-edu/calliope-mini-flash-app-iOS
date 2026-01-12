@@ -94,15 +94,36 @@ class FlashableBLECalliope: CalliopeAPI {
         // Reset flags
         dfuCompletedAwaitingReconnect = false
 
+        // Partial flashing disabled for now - always use full flashing
+        // To re-enable partial flashing later, uncomment the block below
+        /*
         // Attempt partial flashing first if available
         LogNotify.log("Partial flashing service available: \(discoveredOptionalServices.contains(.partialFlashing))")
-        if discoveredOptionalServices.contains(.partialFlashing) && file.partialFlashingInfo != nil {
-            startPartialFlashing()
+
+        // Prüfe ob Partial Flashing verfügbar ist und sinnvoll (< 700 Zeilen zu ändern)
+        if discoveredOptionalServices.contains(.partialFlashing),
+           let partialInfo = file.partialFlashingInfo {
+            let lineCount = partialInfo.partialFlashData.lineCount
+            LogNotify.log("Partial flashing: \(lineCount) lines to change")
+
+            if lineCount < 700 {
+                LogNotify.log("Using partial flashing (< 700 lines)")
+                startPartialFlashing()
+            } else {
+                LogNotify.log("Skipping partial flashing (>= 700 lines), using full flash instead")
+                shouldRebootOnDisconnect = true
+                try startFullFlashing()
+            }
         } else {
-            // NEU: shouldRebootOnDisconnect HIER auf true setzen für Reconnect nach DFU
             shouldRebootOnDisconnect = true
             try startFullFlashing()
         }
+        */
+
+        // Always use full flashing
+        LogNotify.log("Using full flashing (partial flashing disabled)")
+        shouldRebootOnDisconnect = true
+        try startFullFlashing()
     }
 
     internal func startFullFlashing() throws {
@@ -668,18 +689,20 @@ class CalliopeV1AndV2: FlashableBLECalliope {
         [.dfuControlService]
     }
 
-    override var optionalServices: Set<CalliopeService> {
-        [.partialFlashing]
-    }
+    // Partial flashing disabled for now - to be revisited later
+    // override var optionalServices: Set<CalliopeService> {
+    //     [.partialFlashing]
+    // }
 
     override func notify(aboutState newState: DiscoveredDevice.CalliopeBLEDeviceState) {
         super.notify(aboutState: newState)
         if newState == .usageReady {
             //read to trigger pairing if necessary
             shouldRebootOnDisconnect = true
-            if discoveredOptionalServices.contains(.partialFlashing), let cbCharacteristic = getCBCharacteristic(.partialFlashing) {
-                peripheral.setNotifyValue(true, for: cbCharacteristic)
-            }
+            // Partial flashing disabled for now
+            // if discoveredOptionalServices.contains(.partialFlashing), let cbCharacteristic = getCBCharacteristic(.partialFlashing) {
+            //     peripheral.setNotifyValue(true, for: cbCharacteristic)
+            // }
             shouldRebootOnDisconnect = false
         }
     }
@@ -721,11 +744,11 @@ class CalliopeV3: FlashableBLECalliope {
             if let cbCharacteristic = getCBCharacteristic(.secureDfuCharacteristic) {
                 peripheral.setNotifyValue(true, for: cbCharacteristic)
             }
-            // Enable partial flashing notifications for V3
-            if discoveredOptionalServices.contains(.partialFlashing),
-               let pfCharacteristic = getCBCharacteristic(.partialFlashing) {
-                peripheral.setNotifyValue(true, for: pfCharacteristic)
-            }
+            // Partial flashing disabled for now
+            // if discoveredOptionalServices.contains(.partialFlashing),
+            //    let pfCharacteristic = getCBCharacteristic(.partialFlashing) {
+            //     peripheral.setNotifyValue(true, for: pfCharacteristic)
+            // }
             shouldRebootOnDisconnect = false
         }
     }
@@ -737,11 +760,11 @@ class CalliopeV3: FlashableBLECalliope {
     override var requiredServices: Set<CalliopeService> {
         [.secureDfuService]
     }
-    
-    // Partial Flashing für V3 aktiviert
-    override var optionalServices: Set<CalliopeService> {
-        [.partialFlashing]
-    }
+
+    // Partial flashing disabled for now - to be revisited later
+    // override var optionalServices: Set<CalliopeService> {
+    //     [.partialFlashing]
+    // }
 
     internal override func startFullFlashing() throws {
 

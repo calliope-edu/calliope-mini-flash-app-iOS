@@ -385,3 +385,6 @@
 "Calliope mini will start the program as soon as the transmission is complete." = "Der Calliope mini startet das Programm, sobald die Übertragung beendet ist.";
 
 "seconds" = "Sekunden";
+
+/* USB transfer duration message */
+"Duration: about 10 seconds" = "Dauer 10 Sek.";

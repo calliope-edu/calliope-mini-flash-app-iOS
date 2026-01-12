@@ -222,6 +222,11 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
         self.connector.initializeConnectionToUsbCalliope(view: self)
     }
 
+    /// Prüft ob eine USB-Verbindung zum Calliope besteht
+    public func isUSBConnected() -> Bool {
+        return isInUsbMode && connector.discoveredCalliopes["USB_CALLIOPE"] != nil
+    }
+
     func showFalseLocationAlert() {
         let alert = UIAlertController(title: NSLocalizedString("Wrong storage location", comment: ""), message: NSLocalizedString("You have not selected a Calliope folder as storage location", comment: ""), preferredStyle: .alert)
         alert.addAction(
@@ -508,7 +513,10 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
             LogNotify.log("Ignoring error - never connected before: \(error.localizedDescription)")
             alertController = nil
         } else {
-            alertController = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Encountered an error discovering or connecting calliope:", comment: "") + "\n\(error.localizedDescription)", preferredStyle: .alert)
+            // TEMP: Alert deaktiviert - kann später wieder aktiviert werden
+            // alertController = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Encountered an error discovering or connecting calliope:", comment: "") + "\n\(error.localizedDescription)", preferredStyle: .alert)
+            LogNotify.log("Error suppressed (alert commented out): \(error.localizedDescription)")
+            alertController = nil
         }
 
         guard let alertController = alertController else {

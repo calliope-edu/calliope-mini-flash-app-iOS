@@ -61,6 +61,11 @@ final class EditorViewController: UIViewController {
         webview.uiDelegate = self
         webview.backgroundColor = Styles.colorWhite
 
+        // Configure scroll view to better handle touches in web content
+        // This helps with selecting items in MakeCode project lists
+        webview.scrollView.delaysContentTouches = false
+        webview.scrollView.canCancelContentTouches = true
+
         self.view.insertSubview(webview, at: 0)
         let bounds: UILayoutGuide = self.view.safeAreaLayoutGuide
         webview.topAnchor.constraint(equalTo: bounds.topAnchor).isActive = true
@@ -80,28 +85,60 @@ final class EditorViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
-        
-        // Alle Navigation Gestures deaktivieren
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-        navigationController?.navigationBar.isUserInteractionEnabled = true
-        
-        // Für iPadOS 26+ - versuche alle Gesture Recognizers zu deaktivieren
-        if let gestures = navigationController?.view.gestureRecognizers {
-            for gesture in gestures {
-                gesture.isEnabled = false
-            }
-        }
+
+        // Disable all navigation gestures to prevent interference with web view content
+        disableNavigationGestures()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         MatrixConnectionViewController.instance.restartFromBLEConnectionDrop()
-        
-        // Gestures wieder aktivieren
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+
+        // Re-enable navigation gestures
+        enableNavigationGestures()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // Ensure gestures remain disabled after view fully appears
+        // This catches any gestures that might be re-added during transitions
+        disableNavigationGestures()
+    }
+
+    // MARK: - Gesture Management
+
+    private func disableNavigationGestures() {
+        // Disable the standard interactive pop gesture
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        navigationController?.navigationBar.isUserInteractionEnabled = true
+
+        // Disable edge pan gestures and any pan gestures on the navigation controller's view
+        // This prevents fluid navigation from interfering with web view content
         if let gestures = navigationController?.view.gestureRecognizers {
             for gesture in gestures {
-                gesture.isEnabled = true
+                if gesture is UIScreenEdgePanGestureRecognizer || gesture is UIPanGestureRecognizer {
+                    gesture.isEnabled = false
+                }
+            }
+        }
+
+        // Also configure the webview's scroll view pan gesture to not delay touches
+        if let panGesture = webview?.scrollView.panGestureRecognizer {
+            panGesture.delaysTouchesBegan = false
+            panGesture.delaysTouchesEnded = false
+        }
+    }
+
+    private func enableNavigationGestures() {
+        // Re-enable the standard interactive pop gesture
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+
+        // Re-enable gestures on the navigation controller's view
+        if let gestures = navigationController?.view.gestureRecognizers {
+            for gesture in gestures {
+                if gesture is UIScreenEdgePanGestureRecognizer || gesture is UIPanGestureRecognizer {
+                    gesture.isEnabled = true
+                }
             }
         }
     }

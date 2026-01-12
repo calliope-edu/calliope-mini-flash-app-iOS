@@ -76,13 +76,12 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zk1-RV-1GC">
-                                                                <rect key="frame" x="0.0" y="139" width="288.5" height="200"/>
+                                                                <rect key="frame" x="0.0" y="139" width="288.5" height="192.5"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cVa-L4-F9x">
-                                                                        <rect key="frame" x="-5.5" y="0.0" width="300" height="200"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="288.5" height="192.5"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" secondItem="cVa-L4-F9x" secondAttribute="height" multiplier="1.5:1" id="kxg-EM-GpL"/>
-                                                                            <constraint firstAttribute="height" constant="200" id="wxw-6x-NBe"/>
                                                                         </constraints>
                                                                         <state key="normal" image="calliope_bluetooth_extension 1"/>
                                                                         <connections>
@@ -93,7 +92,8 @@
                                                                 <constraints>
                                                                     <constraint firstItem="cVa-L4-F9x" firstAttribute="top" secondItem="zk1-RV-1GC" secondAttribute="top" id="9U4-Dj-ut0"/>
                                                                     <constraint firstAttribute="bottom" secondItem="cVa-L4-F9x" secondAttribute="bottom" id="CPl-IG-5sX"/>
-                                                                    <constraint firstItem="cVa-L4-F9x" firstAttribute="centerX" secondItem="zk1-RV-1GC" secondAttribute="centerX" id="pb9-On-whw"/>
+                                                                    <constraint firstItem="cVa-L4-F9x" firstAttribute="leading" secondItem="zk1-RV-1GC" secondAttribute="leading" id="pb9-On-lft"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="cVa-L4-F9x" secondAttribute="trailing" id="pb9-On-rgt"/>
                                                                 </constraints>
                                                             </view>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OaB-k3-pOM">
@@ -111,13 +111,12 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="we8-oa-Shn">
-                                                                <rect key="frame" x="0.0" y="505" width="288.5" height="60"/>
+                                                                <rect key="frame" x="0.0" y="505" width="288.5" height="50"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j6E-jo-Y6K">
-                                                                        <rect key="frame" x="44.5" y="0.0" width="200" height="60"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="288.5" height="50"/>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="height" constant="60" id="LDy-xm-xdj"/>
-                                                                            <constraint firstAttribute="width" constant="200" id="V4O-aK-lLo"/>
+                                                                            <constraint firstAttribute="height" constant="50" id="LDy-xm-xdj"/>
                                                                         </constraints>
                                                                         <state key="normal" title="Button"/>
                                                                         <buttonConfiguration key="configuration" style="filled" title="calliope.cc">
@@ -130,7 +129,8 @@
                                                                 </subviews>
                                                                 <constraints>
                                                                     <constraint firstItem="j6E-jo-Y6K" firstAttribute="top" secondItem="we8-oa-Shn" secondAttribute="top" id="xiz-WH-xRZ"/>
-                                                                    <constraint firstItem="j6E-jo-Y6K" firstAttribute="centerX" secondItem="we8-oa-Shn" secondAttribute="centerX" id="ySL-zY-6rW"/>
+                                                                    <constraint firstItem="j6E-jo-Y6K" firstAttribute="leading" secondItem="we8-oa-Shn" secondAttribute="leading" id="ySL-zY-lft"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="j6E-jo-Y6K" secondAttribute="trailing" id="ySL-zY-rgt"/>
                                                                     <constraint firstAttribute="bottom" secondItem="j6E-jo-Y6K" secondAttribute="bottom" id="zaL-WW-owf"/>
                                                                 </constraints>
                                                             </view>
@@ -159,12 +159,11 @@
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K4D-AD-fyT">
-                                                                        <rect key="frame" x="0.0" y="183" width="288.5" height="200"/>
+                                                                        <rect key="frame" x="0.0" y="183" width="288.5" height="192.5"/>
                                                                         <subviews>
                                                                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C5B-tz-Y5P" userLabel="Data Logger Data Information Button">
-                                                                                <rect key="frame" x="-5.5" y="0.0" width="300" height="200"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="288.5" height="192.5"/>
                                                                                 <constraints>
-                                                                                    <constraint firstAttribute="height" constant="200" id="HJg-hR-9Ab"/>
                                                                                     <constraint firstAttribute="width" secondItem="C5B-tz-Y5P" secondAttribute="height" multiplier="1.5:1" id="pNL-ZF-lf5"/>
                                                                                 </constraints>
                                                                                 <state key="normal" image="calliope_datalogger_extension"/>
@@ -175,7 +174,8 @@
                                                                         </subviews>
                                                                         <constraints>
                                                                             <constraint firstAttribute="bottom" secondItem="C5B-tz-Y5P" secondAttribute="bottom" id="Nq8-fX-0DF"/>
-                                                                            <constraint firstItem="C5B-tz-Y5P" firstAttribute="centerX" secondItem="K4D-AD-fyT" secondAttribute="centerX" id="TYi-Gc-3zt"/>
+                                                                            <constraint firstItem="C5B-tz-Y5P" firstAttribute="leading" secondItem="K4D-AD-fyT" secondAttribute="leading" id="TYi-Gc-lft"/>
+                                                                            <constraint firstAttribute="trailing" secondItem="C5B-tz-Y5P" secondAttribute="trailing" id="TYi-Gc-rgt"/>
                                                                             <constraint firstItem="C5B-tz-Y5P" firstAttribute="top" secondItem="K4D-AD-fyT" secondAttribute="top" id="suI-cG-Thi"/>
                                                                         </constraints>
                                                                     </view>
@@ -195,13 +195,12 @@
                                                                 </subviews>
                                                             </stackView>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aeO-yK-dZb">
-                                                                <rect key="frame" x="0.0" y="721.5" width="288.5" height="60"/>
+                                                                <rect key="frame" x="0.0" y="721.5" width="288.5" height="50"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kac-2O-C6o">
-                                                                        <rect key="frame" x="44.5" y="0.0" width="200" height="60"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="288.5" height="50"/>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="width" constant="200" id="1kK-03-dMs"/>
-                                                                            <constraint firstAttribute="height" constant="60" id="fay-wr-loN"/>
+                                                                            <constraint firstAttribute="height" constant="50" id="fay-wr-loN"/>
                                                                         </constraints>
                                                                         <state key="normal" title="Button"/>
                                                                         <buttonConfiguration key="configuration" style="filled" title="Datalogger View" titleAlignment="center">
@@ -214,7 +213,8 @@
                                                                 </subviews>
                                                                 <constraints>
                                                                     <constraint firstItem="kac-2O-C6o" firstAttribute="top" secondItem="aeO-yK-dZb" secondAttribute="top" id="b5r-bC-Wyp"/>
-                                                                    <constraint firstItem="kac-2O-C6o" firstAttribute="centerX" secondItem="aeO-yK-dZb" secondAttribute="centerX" id="dCT-5J-s8R"/>
+                                                                    <constraint firstItem="kac-2O-C6o" firstAttribute="leading" secondItem="aeO-yK-dZb" secondAttribute="leading" id="dCT-5J-lft"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="kac-2O-C6o" secondAttribute="trailing" id="dCT-5J-rgt"/>
                                                                     <constraint firstAttribute="bottom" secondItem="kac-2O-C6o" secondAttribute="bottom" id="meO-hd-kse"/>
                                                                 </constraints>
                                                             </view>

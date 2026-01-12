@@ -75,14 +75,23 @@ class FirmwareUpload {
         let hexTypes = program.getHexTypes()
         if hexTypes.contains(.arcade) {
             // Arcade-Dateien können nur per USB übertragen werden
-            showArcadeUSBAlert(controller: controller, completion: completion)
-            return
+            // Prüfe zuerst ob bereits eine USB-Verbindung besteht
+            if let matrixVC = MatrixConnectionViewController.instance,
+               matrixVC.isUSBConnected() {
+                // USB ist bereits verbunden, fahre mit Upload fort
+                // (Der Code fällt durch zu uploadAlert unten)
+            } else {
+                // Keine USB-Verbindung, zeige Alert
+                showArcadeUSBAlert(controller: controller, completion: completion)
+                return
+            }
         }
         
         let informationLink: String = "https://calliope.cc/programmieren/mobil/ipad#hardware"
 
         let uploader = FirmwareUpload(file: program, controller: controller)
         let tempCalliope = MatrixConnectionViewController.instance.usageReadyCalliope
+
         controller.present(uploader.alertView, animated: true) {
             do {
                 try uploader.upload(finishedCallback: {
@@ -200,15 +209,15 @@ class FirmwareUpload {
             NSLayoutConstraint.activate([
                 activityIndicator.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
                 activityIndicator.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 30),
-                
+
                 usbTimerLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
                 usbTimerLabel.topAnchor.constraint(equalTo: activityIndicator.bottomAnchor, constant: 30),
                 usbTimerLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -10)
             ])
-            
-            // Timer starten
-            startUSBTimer()
-            
+
+            // Statische Nachricht anzeigen (kein Timer wegen Blocking-Operationen)
+            usbTimerLabel.text = NSLocalizedString("Duration: about 10 seconds", comment: "USB transfer duration message")
+
             progressView = containerView
         } else {
             progressView = progressRing
@@ -217,18 +226,22 @@ class FirmwareUpload {
 
         uploadController.view.addSubview(progressView)
         uploadController.view.addSubview(logTextView)
+
+        // Vertical constraints for progressView and logTextView
         uploadController.view.addConstraints(
             NSLayoutConstraint.constraints(withVisualFormat: "V:|-(80)-[progressView(120)]-(8)-[logTextView(logHeight)]-(50)-|", options: [], metrics: ["logHeight": logHeight], views: ["progressView": progressView, "logTextView": logTextView]))
-        uploadController.view.addConstraints(
-            NSLayoutConstraint.constraints(
-                withVisualFormat: "H:|-(80@900)-[progressView(120)]-(80@900)-|",
-                options: [], metrics: nil, views: ["progressView": progressView]))
 
-        uploadController.view.addConstraints(
-            NSLayoutConstraint.constraints(
-                withVisualFormat: "H:|-(8@900)-[logTextView(264)]-(8@900)-|",
-                options: [], metrics: nil, views: ["logTextView": logTextView])
-        )
+        // Center progressView horizontally with fixed width
+        NSLayoutConstraint.activate([
+            progressView.centerXAnchor.constraint(equalTo: uploadController.view.centerXAnchor),
+            progressView.widthAnchor.constraint(equalToConstant: 120)
+        ])
+
+        // Center logTextView horizontally with fixed width
+        NSLayoutConstraint.activate([
+            logTextView.centerXAnchor.constraint(equalTo: uploadController.view.centerXAnchor),
+            logTextView.widthAnchor.constraint(equalToConstant: 264)
+        ])
 
         uploadController.addAction(cancelUploadAction)
         return uploadController
@@ -281,6 +294,11 @@ class FirmwareUpload {
     private var calliope = MatrixConnectionViewController.instance.usageReadyCalliope
 
     func upload(finishedCallback: @escaping () -> Void) throws {
+        // Timer deaktiviert - USB-Kopieren blockiert Main-Thread, daher zeigen wir statisch "~15 Sekunden"
+        // if MatrixConnectionViewController.instance.usageReadyCalliope is USBCalliope {
+        //     startUSBTimer()
+        // }
+
         // Validating for the correct Version of the Hex File
         let fileHexTypes = file.getHexTypes()
 
@@ -315,12 +333,12 @@ class FirmwareUpload {
 
         self.failed = {
             downloadCompletion()
-            self.stopUSBTimer()
+            // self.stopUSBTimer() // Timer deaktiviert
             MatrixConnectionViewController.instance.enableDfuMode(mode: false)
         }
         self.finished = {
             downloadCompletion()
-            self.stopUSBTimer()
+            // self.stopUSBTimer() // Timer deaktiviert
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.0) {
                 finishedCallback()
             }
@@ -343,27 +361,42 @@ class FirmwareUpload {
         progressRing.outerRingColor = #colorLiteral(red: 0.99, green: 0.29, blue: 0.15, alpha: 1)
         failed()
     }
-    private func startUSBTimer() {
+    func startUSBTimer() {
+        LogNotify.log("⏱️ USB Timer starting now")
         usbStartTime = Date()
         usbTimerLabel.text = "00:00 / 15 " + NSLocalizedString("seconds", comment: "")
-        
+
         usbTimer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { [weak self] _ in
             self?.updateUSBTimerLabel()
         }
+        LogNotify.log("⏱️ USB Timer scheduled")
     }
 
     private func updateUSBTimerLabel() {
         guard let startTime = usbStartTime else { return }
-        
+
         let elapsed = Date().timeIntervalSince(startTime)
+
+        // Log first update
+        if elapsed < 0.1 {
+            LogNotify.log("⏱️ USB Timer first update: \(elapsed)s")
+        }
+
+        // Timer bei 15 Sekunden stoppen
+        if elapsed >= 15.0 {
+            let timeString = String(format: "15:00 / 15 %@", NSLocalizedString("seconds", comment: ""))
+            self.usbTimerLabel.text = timeString
+            stopUSBTimer()
+            return
+        }
+
         let seconds = Int(elapsed)
         let hundredths = Int((elapsed - Double(seconds)) * 100)
-        
+
         let timeString = String(format: "%02d:%02d / 15 %@", seconds, hundredths, NSLocalizedString("seconds", comment: ""))
-        
-        DispatchQueue.main.async {
-            self.usbTimerLabel.text = timeString
-        }
+
+        // Update label directly (we're already on main thread since timer is on main runloop)
+        self.usbTimerLabel.text = timeString
     }
 
     private func stopUSBTimer() {
@@ -372,6 +405,7 @@ class FirmwareUpload {
         usbStartTime = nil
     }
     deinit {
+        // stopUSBTimer() // Timer deaktiviert
         NSLog("FirmwareUpload deinited")
     }
 }
