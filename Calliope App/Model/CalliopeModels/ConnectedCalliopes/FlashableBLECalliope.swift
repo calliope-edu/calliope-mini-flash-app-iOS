@@ -18,6 +18,9 @@ class FlashableBLECalliope: CalliopeAPI {
     // Tracks whether DFU has completed successfully and we're waiting for reconnect
     private var dfuCompletedAwaitingReconnect = false
     
+    // Callback to request disconnect from CalliopeDiscovery
+    var requestDisconnectCallback: (() -> Void)?
+    
     internal private(set) var file: Hex?
 
     weak internal private(set) var progressReceiver: DFUProgressDelegate?
@@ -30,6 +33,7 @@ class FlashableBLECalliope: CalliopeAPI {
         switch newState {
         case .usageReady:
             if rebootingForPartialFlashing {
+                LogNotify.log("[PartialFlash] Device reconnected after reboot, resuming partial flashing...")
                 updateQueue.async {
                     self.startPartialFlashing()
                 }
@@ -46,6 +50,8 @@ class FlashableBLECalliope: CalliopeAPI {
                 DispatchQueue.main.async {
                     self.statusDelegate?.dfuError(.deviceDisconnected, didOccurWithMessage: "connection to calliope lost")
                 }
+            } else if rebootingForPartialFlashing {
+                LogNotify.log("[PartialFlash] Device disconnected after reboot command, waiting for reconnection...")
             }
             // Bei DFU completion ist discovered normal - wir warten auf reconnect
             
@@ -329,20 +335,23 @@ class FlashableBLECalliope: CalliopeAPI {
         hexProgramHash = partialFlashingInfo.programHash
         partialFlashData = partialFlashingInfo.partialFlashData
 
-        // request dal hash
-        send(command: .REGION, value: Data([.DAL_REGION]))
+        // Skip DAL hash check before reboot - we'll verify it after device is in BLE mode
+        // This saves ~160ms per flash operation
+        LogNotify.log("[PartialFlash] Skipping initial DAL verification, requesting device status...")
+        send(command: .STATUS)
     }
 
     private func receivedDalHash() {
         updateCallback("Received dal hash \(dalHash.hexEncodedString()), hash in hex file is \(hexFileHash.hexEncodedString())")
+        LogNotify.log("[PartialFlash] DAL hash verified: \(dalHash == hexFileHash ? "✓ match" : "✗ mismatch")")
         guard dalHash == hexFileHash else {
+            LogNotify.log("[PartialFlash] DAL hash mismatch - falling back to full flash")
             fallbackToFullFlash()
             return
         }
 
-        // request status
-        LogNotify.log("[PartialFlash] Requesting device status...")
-        send(command: .STATUS)
+        // Device is in BLE mode and DAL verified, continue with embedded region
+        send(command: .REGION, value: Data([.EMBEDDED_REGION]))
     }
 
     func receivedStatus(_ needsRebootIntoBLEOnlyMode: Bool) {
@@ -352,29 +361,54 @@ class FlashableBLECalliope: CalliopeAPI {
             shouldRebootOnDisconnect = true
             rebootingForPartialFlashing = true
             //calliope is in application state and needs to be rebooted
+            LogNotify.log("[PartialFlash] Sending reboot command to enter BLE mode...")
             send(command: .REBOOT, value: Data([.MODE_BLE]))
+            
+            // Immediately disconnect to avoid waiting for iOS to detect timeout (saves ~4s)
+            LogNotify.log("[PartialFlash] Triggering disconnect to speed up reconnection...")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+                self?.requestDisconnectCallback?()
+            }
         } else {
             //calliope is already in bluetooth state
-            // request embedded hash
+            LogNotify.log("[PartialFlash] Device already in BLE mode, verifying DAL hash...")
             isPartiallyFlashing = true
-            send(command: .REGION, value: Data([.EMBEDDED_REGION]))
+            // Now request DAL hash to verify firmware compatibility
+            send(command: .REGION, value: Data([.DAL_REGION]))
         }
     }
 
     private func receivedEmbedHash() {
+        LogNotify.log("[PartialFlash] Received embedded region hash")
         updateCallback("Received embed hash")
         // request program hash
         send(command: .REGION, value: Data([.PROGRAM_REGION]))
     }
 
     private func receivedProgramHash() {
+        LogNotify.log("[PartialFlash] Received program hash - current: \(currentProgramHash.hexEncodedString()), target: \(hexProgramHash.hexEncodedString())")
         updateCallback("Received program hash \(hexProgramHash.hexEncodedString())")
         if currentProgramHash == hexProgramHash {
+            LogNotify.log("[PartialFlash] Program unchanged - rebooting to application mode")
             linesFlashed = partialFlashData?.lineCount ?? Int.max  //set progress to 100%
             updateCallback("No changes to upload")
-            let _ = cancelUpload()
-            statusDelegate?.dfuStateDidChange(to: .completed)
+            
+            // Clear flashing flag BEFORE reboot to prevent disconnect error
+            partialFlashingStateLock.lock()
+            isPartialFlashingActive = false
+            isPartiallyFlashing = false
+            partialFlashingStateLock.unlock()
+            
+            // Reboot device back to application mode since we're done
+            send(command: .REBOOT, value: Data([.MODE_APPLICATION]))
+            
+            // Wait briefly for reboot command, then complete
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                let _ = self?.cancelUpload()
+                self?.statusDelegate?.dfuStateDidChange(to: .completed)
+            }
         } else {
+            LogNotify.log("[PartialFlash] ⚡ Starting data transmission now (setup complete)")
             updateCallback("Partial flashing starts sending new program to Calliope mini")
             startPackageNumber = 0
             sendNextPackages()

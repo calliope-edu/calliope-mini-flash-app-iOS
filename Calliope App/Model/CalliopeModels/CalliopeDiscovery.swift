@@ -306,6 +306,15 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         self.connectedUSBCalliope = nil
         self.connectedCalliope = nil
     }
+    
+    // Disconnect for reboot - keeps connectedCalliope reference for automatic reconnection
+    func disconnectForReboot() {
+        if let connectedCalliope = self.connectedCalliope {
+            LogNotify.log("[PartialFlash] Disconnecting for reboot - will auto-reconnect")
+            self.centralManager.cancelPeripheralConnection(connectedCalliope.peripheral)
+            // Don't clear connectedCalliope - let didDisconnectPeripheral handle reconnection
+        }
+    }
 
     func initializeConnectionToUsbCalliope(view: UIViewController) {
         state = .usbConnecting

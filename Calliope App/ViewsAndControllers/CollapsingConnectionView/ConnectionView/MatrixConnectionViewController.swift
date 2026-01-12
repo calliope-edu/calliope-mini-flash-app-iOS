@@ -108,7 +108,8 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
         }
     }
 
-    private var connector: CalliopeDiscovery = CalliopeDiscovery({ peripheral, name in
+    // Made internal for partial flashing disconnect optimization
+    internal var connector: CalliopeDiscovery = CalliopeDiscovery({ peripheral, name in
         DiscoveredBLEDDevice(peripheral: peripheral, name: name)
     })
     {
