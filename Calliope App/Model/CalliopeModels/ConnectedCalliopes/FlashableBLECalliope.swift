@@ -82,6 +82,9 @@ class FlashableBLECalliope: CalliopeAPI {
     internal var uploader: DFUServiceController? = nil
 
     override public func upload(file: Hex, progressReceiver: DFUProgressDelegate? = nil, statusDelegate: DFUServiceDelegate? = nil, logReceiver: LoggerDelegate? = nil) throws {
+        // Clear filtered hex cache to ensure fresh partial flashing info for each upload
+        HexParser.clearCache()
+        
         let hexTypes = file.getHexTypes()
         if hexTypes.contains(.arcade) {
             LogNotify.log("Arcade files cannot be uploaded via Bluetooth")
