@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,12 +12,12 @@
         <!--Console View Controller-->
         <scene sceneID="S1F-zD-DvF">
             <objects>
-                <viewController id="YCd-xn-2IL" customClass="ConsoleViewController" customModule="WebBLE" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ConsoleViewController" id="YCd-xn-2IL" customClass="ConsoleViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wN2-tf-SQg"/>
                         <viewControllerLayoutGuide type="bottom" id="Tyh-wb-er1"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="tKx-oA-BIE" customClass="ConsoleView" customModule="WebBLE" customModuleProvider="target">
+                    <view key="view" contentMode="scaleToFill" id="tKx-oA-BIE" customClass="ConsoleView" customModule="Calliope_App" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="800"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         <viewLayoutGuide key="safeArea" id="mRf-MW-WWW"/>
@@ -39,7 +39,7 @@
         <!--Console View Container Controller-->
         <scene sceneID="jjL-Tk-tTc">
             <objects>
-                <viewController storyboardIdentifier="ConsoleViewContainer" id="gfn-yI-dsN" customClass="ConsoleViewContainerController" customModule="WebBLE" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ConsoleViewContainerController" id="gfn-yI-dsN" customClass="ConsoleViewContainerController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="yIi-7U-JZx"/>
                         <viewControllerLayoutGuide type="bottom" id="ehj-ex-qU1"/>
@@ -48,7 +48,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="128"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView verifyAmbiguity="off" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" delaysContentTouches="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rnO-dD-ogt" customClass="ConsoleScrollView" customModule="WebBLE" customModuleProvider="target">
+                            <scrollView verifyAmbiguity="off" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" delaysContentTouches="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rnO-dD-ogt" customClass="ConsoleScrollView" customModule="Calliope_App" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="8" width="375" height="120"/>
                                 <subviews>
                                     <containerView autoresizesSubviews="NO" verifyAmbiguity="ignoreSizes" opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OQr-CY-eZU">
@@ -69,7 +69,7 @@
                                     <constraint firstItem="OQr-CY-eZU" firstAttribute="top" secondItem="rnO-dD-ogt" secondAttribute="top" id="veR-BR-lKr"/>
                                 </constraints>
                             </scrollView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5bj-QH-Q4o" customClass="DividerView" customModule="WebBLE" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5bj-QH-Q4o" customClass="DividerView" customModule="Calliope_App" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="8"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o5q-9o-Nj5">
@@ -178,7 +178,7 @@
                                 </connections>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ca8-g2-bii" userLabel="Extra Buttons View">
-                                <rect key="frame" x="295" y="84" width="80" height="44"/>
+                                <rect key="frame" x="295" y="50" width="80" height="44"/>
                                 <subviews>
                                     <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pLC-Oz-vnL">
                                         <rect key="frame" x="0.0" y="0.0" width="80" height="44"/>
@@ -266,7 +266,7 @@
                         <outlet property="consoleScrollViewHeightConstraint" destination="Or9-LE-zQX" id="AwS-4K-sGp"/>
                         <outlet property="copySuccessIndication" destination="DSl-4f-yGT" id="NAk-vM-s5x"/>
                         <outlet property="scrollView" destination="rnO-dD-ogt" id="dzY-PN-p0U"/>
-                        <segue destination="LJz-yU-32Y" kind="unwind" identifier="HideConsoleSegueID" customClass="HideConsoleSegue" customModule="WebBLE" customModuleProvider="target" unwindAction="unwindToWBControllerWithSender:" id="dXz-eK-6b7"/>
+                        <segue destination="LJz-yU-32Y" kind="unwind" identifier="HideConsoleSegueID" customClass="HideConsoleSegue" customModule="Calliope_App" customModuleProvider="target" unwindAction="unwindToWBControllerWithSender:" id="dXz-eK-6b7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Fn-69-caL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -303,10 +303,10 @@
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="opaqueSeparatorColor">
-            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="separatorColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

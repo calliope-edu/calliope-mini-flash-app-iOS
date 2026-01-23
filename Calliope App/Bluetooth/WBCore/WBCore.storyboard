@@ -178,6 +178,7 @@
                         <outlet property="loadingProgressView" destination="XxI-Sv-pHo" id="YJj-Dq-EvG"/>
                         <segue destination="KTy-YM-LKE" kind="showDetail" identifier="ShowDevicePicker" customClass="WBShowPickerSegue" customModule="Calliope_App" customModuleProvider="target" id="dOv-qy-DBm"/>
                         <segue destination="GEZ-JB-y3I" kind="presentation" identifier="nav-error-segue" id="GoK-zO-nz2"/>
+                        <segue destination="1pf-XP-Wsg" kind="custom" identifier="ShowConsoleSegue" customClass="ShowConsoleSegue" customModule="Calliope_App" customModuleProvider="target" id="yQC-n6-iar"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oir-tl-BMD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -187,7 +188,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-1611" y="1051"/>
+            <point key="canvasLocation" x="-1632" y="1042"/>
         </scene>
         <!--Error View Controller-->
         <scene sceneID="B5t-zb-uOo">
@@ -294,6 +295,14 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-693" y="1189"/>
+        </scene>
+        <!--ConsoleViewContainerController-->
+        <scene sceneID="lsa-bU-HGN">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Console" referencedIdentifier="ConsoleViewContainerController" id="1pf-XP-Wsg" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QRt-zq-LSx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2122" y="1302"/>
         </scene>
     </scenes>
     <resources>

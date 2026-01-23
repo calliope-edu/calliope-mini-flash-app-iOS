@@ -20,6 +20,7 @@ class WBWebViewContainerController: UIViewController, WKNavigationDelegate, WKUI
     
     @IBOutlet var loadingProgressContainer: UIView!
     @IBOutlet var loadingProgressView: UIView!
+    var consoleOpen: Bool = false;
     
     // At some point it might be nice to try and handle back and
     // forward in the browser better, i.e. by managing multiple managers
@@ -44,12 +45,23 @@ class WBWebViewContainerController: UIViewController, WKNavigationDelegate, WKUI
     @objc var pickerIsShowing = false
     var popUpPickerController: WBPopUpPickerController!
     var popUpPickerBottomConstraint: NSLayoutConstraint!
+    
+    var consoleViewBottomConstraint: NSLayoutConstraint!
+    var consoleViewContainerController: ConsoleViewContainerController?
 
     // MARK: - IBActions
     @IBAction public func toggleConsole() {
-        if let consoleToggler = self.parent as? ConsoleToggler {
-            print("Trying to toggle console ...")
-            consoleToggler.toggleConsole()
+        print("Trying to toggle console ...")
+        if(consoleOpen) {
+            consoleOpen = false;
+            if(consoleViewContainerController != nil) {
+                consoleViewContainerController!.performSegue(withIdentifier: "HideConsoleSegueID", sender: consoleViewContainerController);
+                consoleViewContainerController = nil;
+            }
+        }
+        else {
+            consoleOpen = true;
+            self.performSegue(withIdentifier: "ShowConsoleSegue", sender: self);
         }
     }
     
@@ -122,6 +134,8 @@ class WBWebViewContainerController: UIViewController, WKNavigationDelegate, WKUI
         case let obj as ErrorViewController:
             let error = sender as! Error
             obj.errorMessage = error.localizedDescription
+        case let obj as ConsoleViewContainerController:
+            self.consoleViewContainerController = obj;
         default:
             break
         }

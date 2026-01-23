@@ -55,11 +55,106 @@ class WBHidePickerSegue: UIStoryboardSegue {
 class ShowConsoleSegue: UIStoryboardSegue {
     override func perform() {
         print("Trying to open console ...")
+        
+        let vc = self.source as! WBWebViewContainerController
+        let vcv = vc.view!
+        let cc = self.destination as! ConsoleViewContainerController
+        let ccv = cc.view!
+
+        vc.addChild(cc)
+        vcv.addSubview(ccv)
+
+        cc.wbLogManager = vc.webViewController.logManager
+
+        // Configure the height
+        let prevHeight = CGFloat(UserDefaults.standard.float(forKey: "lastConsoleHeight"))
+        print(prevHeight)
+        let heightConstraint =
+            cc.consoleScrollViewHeightConstraint!
+        heightConstraint.constant = (
+            prevHeight > 0.0
+            ? prevHeight
+            : 500.0
+        )
+
+        // Configure the intial constraints
+        let topConstraint = ccv.topAnchor.constraint(
+            equalTo: vcv.bottomAnchor
+        )
+        /*vc.consoleViewBottomConstraint = ccv.topAnchor.constraint(
+            equalTo: vcv.safeAreaLayoutGuide.bottomAnchor
+        )*/
+        NSLayoutConstraint.activate([
+            // Horizontal
+            ccv.leadingAnchor.constraint(
+                equalTo: vcv.safeAreaLayoutGuide.leadingAnchor
+            ),
+            ccv.trailingAnchor.constraint(
+                equalTo: vcv.safeAreaLayoutGuide.trailingAnchor
+            ),
+            // Vertical
+            //
+            // Start by pinning the console at the bottom of the screen,
+            // then move it into place with an animation
+            // ensure we do not enlarge the console above the url bar,
+            // this is something of a hack
+            topConstraint,
+            ccv.topAnchor.constraint(
+                greaterThanOrEqualTo: vcv.safeAreaLayoutGuide.topAnchor,
+                constant: 300.0
+            ),
+
+            // this constraint will override the existing constraint pinning the bottom of the web view's container to the bottom of the safe area
+            ccv.bottomAnchor.constraint(
+                equalTo: vc.view.subviews.first!.bottomAnchor
+            ),
+        ])
+        vcv.layoutIfNeeded()
+
+        UIView.animate(
+            withDuration: 0.2,
+            animations: {
+                NSLayoutConstraint.deactivate([topConstraint])
+                /*NSLayoutConstraint.activate([
+                    vc.consoleViewBottomConstraint!
+                ])*/
+                vcv.layoutIfNeeded()
+            }
+        )
     }
 }
 
 class HideConsoleSegue: UIStoryboardSegue {
     override func perform() {
         print("Trying to close console ...")
+        
+        let cc = self.source as! ConsoleViewContainerController
+        let ccv = cc.view!
+        let vc = self.destination as! WBWebViewContainerController
+        let vcv = vc.view!
+        
+        print("Closing ...")
+
+        /*let topConstraint = ccv.topAnchor.constraint(
+            equalTo: vcv.bottomAnchor
+        )
+
+        UIView.animate(
+            withDuration: 0.2,
+            animations: {
+                /*NSLayoutConstraint.deactivate([
+                    vc.consoleViewBottomConstraint!
+                ])*/
+                NSLayoutConstraint.activate([topConstraint])
+                vcv.layoutIfNeeded()
+            },
+            completion: {
+                _ in
+                cc.removeFromParent()
+                ccv.removeFromSuperview()
+                vc.consoleViewBottomConstraint = nil
+                vcv.layoutIfNeeded()
+            }
+        )*/
     }
 }
