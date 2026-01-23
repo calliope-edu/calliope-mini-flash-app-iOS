@@ -31,5 +31,11 @@ class LofiAppViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
         super.viewDidLoad()
         MatrixConnectionViewController.instance?.calliopeClass = nil;
         self.webView.load(URLRequest(url: url))
+        #if DEBUG
+        if #available(iOS 16.4, *) {
+            webView.isInspectable = true
+            print("Inspection enabled")
+        }
+        #endif
     }
 }
