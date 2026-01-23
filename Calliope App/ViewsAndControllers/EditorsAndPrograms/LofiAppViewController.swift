@@ -13,6 +13,8 @@ import UIKit
 @preconcurrency import WebKit
 
 class LofiAppViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
+    
+    public var url: URL!
 
     var WBWebViewContainerController: WBWebViewContainerController {
         get {
@@ -27,8 +29,6 @@ class LofiAppViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.webView.load(URLRequest(url: URL(
-            string: "https://cardboard.lofirobot.com/control-calliope/"
-        )!))
+        self.webView.load(URLRequest(url: url))
     }
 }
