@@ -372,40 +372,40 @@
                                                                     <constraint firstAttribute="height" constant="10" id="off-Aq-adT"/>
                                                                 </constraints>
                                                             </view>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DQn-cj-kRH">
+                                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lUf-NQ-ywj">
                                                                 <rect key="frame" x="0.0" y="30.333333333333371" width="320" height="100"/>
                                                                 <subviews>
-                                                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BYz-L8-Eos">
+                                                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0GT-5I-Tjq">
                                                                         <rect key="frame" x="0.0" y="0.0" width="150" height="100"/>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="height" constant="100" id="DDd-Oz-nZe"/>
-                                                                            <constraint firstAttribute="width" secondItem="BYz-L8-Eos" secondAttribute="height" multiplier="1.5:1" id="fhl-Ve-c9Y"/>
+                                                                            <constraint firstAttribute="height" constant="100" id="2Oh-hZ-SkQ"/>
+                                                                            <constraint firstAttribute="width" secondItem="0GT-5I-Tjq" secondAttribute="height" multiplier="1.5:1" id="Ynq-pJ-VhX"/>
                                                                         </constraints>
                                                                         <state key="normal" image="calliope_bluetooth_extension 1"/>
                                                                         <connections>
-                                                                            <action selector="openLofiApp1:" destination="rb5-ni-SG8" eventType="touchUpInside" id="QRj-EE-vgK"/>
+                                                                            <action selector="openLofiApp1:" destination="rb5-ni-SG8" eventType="touchUpInside" id="jDW-tJ-SUf"/>
                                                                         </connections>
                                                                     </button>
-                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cin-Ah-ub5">
+                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kAV-s1-qGt">
                                                                         <rect key="frame" x="150" y="0.0" width="20" height="100"/>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="width" constant="20" id="yI7-p0-UXM"/>
+                                                                            <constraint firstAttribute="width" constant="20" id="xAT-As-xk6"/>
                                                                         </constraints>
                                                                     </view>
-                                                                    <button opaque="NO" tag="1" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wMe-j2-8T3">
+                                                                    <button opaque="NO" tag="1" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O1X-Uc-F6Q">
                                                                         <rect key="frame" x="170" y="0.0" width="150" height="100"/>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="width" secondItem="wMe-j2-8T3" secondAttribute="height" multiplier="1.5:1" id="HtH-9i-trP"/>
-                                                                            <constraint firstAttribute="height" constant="100" id="i3I-8p-P8K"/>
+                                                                            <constraint firstAttribute="width" secondItem="O1X-Uc-F6Q" secondAttribute="height" multiplier="1.5:1" id="JTM-XX-A1O"/>
+                                                                            <constraint firstAttribute="height" constant="100" id="eju-wn-q96"/>
                                                                         </constraints>
                                                                         <state key="normal" image="calliope_bluetooth_extension 1"/>
                                                                         <connections>
-                                                                            <action selector="openLofiApp1:" destination="rb5-ni-SG8" eventType="touchUpInside" id="EDG-IT-Boo"/>
+                                                                            <action selector="openLofiApp1:" destination="rb5-ni-SG8" eventType="touchUpInside" id="wom-GQ-YNE"/>
                                                                         </connections>
                                                                     </button>
                                                                 </subviews>
                                                                 <constraints>
-                                                                    <constraint firstItem="wMe-j2-8T3" firstAttribute="width" secondItem="wMe-j2-8T3" secondAttribute="height" multiplier="1.5:1" id="m74-ie-7E6"/>
+                                                                    <constraint firstItem="O1X-Uc-F6Q" firstAttribute="width" secondItem="O1X-Uc-F6Q" secondAttribute="height" multiplier="1.5:1" id="MdQ-p0-zOi"/>
                                                                 </constraints>
                                                             </stackView>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wJy-aC-I1z">

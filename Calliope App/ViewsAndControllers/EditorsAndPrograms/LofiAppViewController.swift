@@ -24,6 +24,12 @@ class LofiAppViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
         print("View loaded")
         webView.navigationDelegate = self
         webView.uiDelegate = self
+        if #available(iOS 16.4, *) {
+            webView.isInspectable = true
+            print("Inspection enabled")
+        } else {
+            // Fallback on earlier versions
+        }
 
         webView.load(URLRequest(url: url))
     }
