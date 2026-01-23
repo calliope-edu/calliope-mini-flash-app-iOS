@@ -10,19 +10,22 @@ import UIKit
 let DURATION = 0.3
 
 class WBShowPickerSegue: UIStoryboardSegue {
+    
+    
+    
     override func perform() {
         let wvcc = self.source as! WBWebViewContainerController
         let puvc = self.destination as! WBPopUpPickerController
         wvcc.addChild(self.destination)
         wvcc.view.addSubview(self.destination.view)
-        let topBotConstraint = wvcc.view.topAnchor.constraint(equalTo: puvc.view.topAnchor)
+        let topBotConstraint = wvcc.view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: puvc.view.topAnchor)
         NSLayoutConstraint.activate([
             wvcc.view.leftAnchor.constraint(equalTo: puvc.view.leftAnchor),
             wvcc.view.rightAnchor.constraint(equalTo: puvc.view.rightAnchor),
             topBotConstraint
             ])
         // inactive initially... activated in the animation block
-        wvcc.popUpPickerBottomConstraint = self.source.view.topAnchor.constraint(equalTo: self.destination.view.topAnchor)
+        wvcc.popUpPickerBottomConstraint = self.source.view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: self.destination.view.bottomAnchor)
         wvcc.view.layoutIfNeeded()
         UIView.animate(withDuration: DURATION, animations: {
             wvcc.view.removeConstraint(topBotConstraint)
@@ -39,7 +42,7 @@ class WBHidePickerSegue: UIStoryboardSegue {
         wvcc.view.removeConstraint(wvcc.popUpPickerBottomConstraint!)
         wvcc.popUpPickerBottomConstraint = nil
         UIView.animate(withDuration: DURATION, animations: {
-            wvcc.view.bottomAnchor.constraint(equalTo: puvc.view.topAnchor).isActive = true
+            wvcc.view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: puvc.view.topAnchor).isActive = true
             wvcc.view.layoutIfNeeded()
         }, completion: {
             _ in
