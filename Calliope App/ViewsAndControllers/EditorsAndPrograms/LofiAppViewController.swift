@@ -29,6 +29,7 @@ class LofiAppViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        MatrixConnectionViewController.instance?.calliopeClass = nil;
         self.webView.load(URLRequest(url: url))
     }
 }
