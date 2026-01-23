@@ -14,23 +14,21 @@ import UIKit
 
 class LofiAppViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
 
-    @IBOutlet var webView: WKWebView!
-    
-    public var url: URL!
-    
+    var WBWebViewContainerController: WBWebViewContainerController {
+        get {
+            return self.children.first(where: {$0 as? WBWebViewContainerController != nil}) as! WBWebViewContainerController
+        }
+    }
+    var webView: WBWebView {
+        get {
+            return self.WBWebViewContainerController.webView
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        print("View loaded")
-        webView.navigationDelegate = self
-        webView.uiDelegate = self
-        if #available(iOS 16.4, *) {
-            webView.isInspectable = true
-            print("Inspection enabled")
-        } else {
-            // Fallback on earlier versions
-        }
-
-        webView.load(URLRequest(url: url))
+        self.webView.load(URLRequest(url: URL(
+            string: "https://cardboard.lofirobot.com/control-calliope/"
+        )!))
     }
 }

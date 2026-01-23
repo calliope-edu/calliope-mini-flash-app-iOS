@@ -19,8 +19,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="643" height="1000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" contentInsetAdjustmentBehavior="always" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="g5r-Xk-lED" customClass="TPKeyboardAvoidingScrollView">
-                                <rect key="frame" x="0.0" y="0.0" width="643" height="1000"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentInsetAdjustmentBehavior="always" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="g5r-Xk-lED" customClass="TPKeyboardAvoidingScrollView">
+                                <rect key="frame" x="0.0" y="0.0" width="642" height="1000"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZAw-Ve-3Pb">
                                         <rect key="frame" x="11" y="10" width="240" height="524.33333333333337"/>
@@ -396,6 +396,7 @@
                                                                         <rect key="frame" x="170" y="0.0" width="150" height="100"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" secondItem="O1X-Uc-F6Q" secondAttribute="height" multiplier="1.5:1" id="JTM-XX-A1O"/>
+                                                                            <constraint firstAttribute="width" secondItem="O1X-Uc-F6Q" secondAttribute="height" multiplier="1.5:1" id="MdQ-p0-zOi"/>
                                                                             <constraint firstAttribute="height" constant="100" id="eju-wn-q96"/>
                                                                         </constraints>
                                                                         <state key="normal" image="calliope_bluetooth_extension 1"/>
@@ -404,9 +405,6 @@
                                                                         </connections>
                                                                     </button>
                                                                 </subviews>
-                                                                <constraints>
-                                                                    <constraint firstItem="O1X-Uc-F6Q" firstAttribute="width" secondItem="O1X-Uc-F6Q" secondAttribute="height" multiplier="1.5:1" id="MdQ-p0-zOi"/>
-                                                                </constraints>
                                                             </stackView>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wJy-aC-I1z">
                                                                 <rect key="frame" x="0.0" y="130.33333333333337" width="320" height="10"/>
@@ -1097,23 +1095,28 @@
         <scene sceneID="Urx-FH-Zy6">
             <objects>
                 <viewController id="p62-6L-UHs" customClass="LofiAppViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <wkWebView key="view" contentMode="scaleToFill" id="VQO-wi-YO7">
+                    <containerView key="view" opaque="NO" contentMode="scaleToFill" id="tWW-go-SRJ">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <wkWebViewConfiguration key="configuration">
-                            <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
-                            <wkPreferences key="preferences"/>
-                        </wkWebViewConfiguration>
-                    </wkWebView>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <connections>
+                            <segue destination="l6t-Dq-qHJ" kind="embed" id="tNe-4F-6ez"/>
+                        </connections>
+                    </containerView>
                     <navigationItem key="navigationItem" id="7oi-2B-oCX"/>
-                    <connections>
-                        <outlet property="webView" destination="VQO-wi-YO7" id="crC-Bd-mfx"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dmn-pr-He1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1856" y="-401"/>
+        </scene>
+        <!--WebViewContainerController-->
+        <scene sceneID="2be-n6-rbO">
+            <objects>
+                <viewControllerPlaceholder storyboardName="WBCore" referencedIdentifier="WebViewContainerController" id="l6t-Dq-qHJ" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="3Jw-IT-3Ix"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6q4-TO-Bff" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2911" y="-570"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

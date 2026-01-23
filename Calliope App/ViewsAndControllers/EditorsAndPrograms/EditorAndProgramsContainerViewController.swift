@@ -161,10 +161,10 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
         self.performSegue(withIdentifier: "showLofiAppView", sender: self)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    /*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showLofiAppView" {
             let lofiAppViewController = segue.destination as! LofiAppViewController
             lofiAppViewController.url = lofiAppURLs[selectedLofiApp]
         }
-    }
+    }*/
 }
