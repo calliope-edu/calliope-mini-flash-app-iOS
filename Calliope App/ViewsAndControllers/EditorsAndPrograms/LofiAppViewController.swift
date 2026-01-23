@@ -30,6 +30,7 @@ class LofiAppViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         MatrixConnectionViewController.instance?.calliopeClass = nil;
+        MatrixConnectionViewController.instance.moveToBackground();
         self.webView.load(URLRequest(url: url))
         #if DEBUG
         if #available(iOS 16.4, *) {

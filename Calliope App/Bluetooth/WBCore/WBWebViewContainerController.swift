@@ -48,6 +48,7 @@ class WBWebViewContainerController: UIViewController, WKNavigationDelegate, WKUI
     // MARK: - IBActions
     @IBAction public func toggleConsole() {
         if let consoleToggler = self.parent as? ConsoleToggler {
+            print("Trying to toggle console ...")
             consoleToggler.toggleConsole()
         }
     }
