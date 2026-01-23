@@ -154,10 +154,9 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
         }
     }
     
-    @IBAction func openLofiApp1(_ sender: Any) {
-        let button = sender as! UIButton
-        selectedLofiApp = button.tag;
-        print("Selected app " + String(selectedLofiApp))
+    @IBAction func openLofiApp(_ sender: Any) {
+        let senderView = (sender as! UITapGestureRecognizer).view as! UIStackView;
+        selectedLofiApp = senderView.tag;
         self.performSegue(withIdentifier: "showLofiAppView", sender: self)
     }
     
