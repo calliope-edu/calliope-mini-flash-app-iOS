@@ -223,14 +223,12 @@ struct HexParser {
         defer { reader.close() }
         
         let (magicLine, _) = forwardToMagicNumber(reader)
-        guard let magicLine = magicLine else {
-            print("[PartialFlash] ERROR: Magic start marker not found!")
+        guard magicLine != nil else {
             return nil
         }
         
         // Read hash line immediately after magic
         guard let hashesLine = reader.nextLine() else {
-            print("[PartialFlash] ERROR: Could not read line after magic marker")
             return nil
         }
         
@@ -239,19 +237,14 @@ struct HexParser {
         let hashRecordLength = HexReader.length(of: hashesLine)
         
         guard hashRecordType == 0, hashRecordLength == 16 else {
-            print("[PartialFlash] ERROR: Invalid hash record format")
             return nil
         }
         
         guard hashesLine.count >= 41,
               let templateHash = hashesLine[9..<25].toData(using: .hex),
               let programHash = (hashesLine[25..<41]).toData(using: .hex) else {
-            print("[PartialFlash] ERROR: Could not extract hashes from hash line")
             return nil
         }
-        
-        print("[PartialFlash] Extracted DAL hash (templateHash): \(templateHash.hexEncodedString())")
-        print("[PartialFlash] Extracted program hash: \(programHash.hexEncodedString())")
         
         return (templateHash, programHash)
     }
@@ -366,12 +359,10 @@ struct PartialFlashData: Sequence, IteratorProtocol {
         self.nextData = []
         self.currentSegmentAddress = currentSegmentAddress
         self.lineCount = lineCount
-        print("[PartialFlash] PartialFlashData init: segment address=\(String(format: "0x%04X", currentSegmentAddress)), lineCount=\(lineCount)")
         //extract data from nextLines
         nextLines.forEach {
             read($0)
         }
-        print("[PartialFlash] After processing nextLines, have \(nextData.count) packets in buffer")
     }
 
     mutating func next() -> (address: UInt16, data: Data)? {
@@ -408,7 +399,6 @@ struct PartialFlashData: Sequence, IteratorProtocol {
 
     mutating private func read(_ record: String) {
         if HexReader.isEndOfFileOrMagicEnd(record) {
-            print("[PartialFlash] Hit magic end during iteration - closing reader")
             reader?.close()
             reader = nil
             return
