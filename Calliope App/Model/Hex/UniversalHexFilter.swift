@@ -43,25 +43,11 @@ struct UniversalHexFilter {
         let range = hexBlock.addressRange
         var filteredLines: [String] = []
         var currentSegmentAddress: UInt32 = 0
-        var lastEmittedSegment: UInt32? = nil  // Track which segment was last emitted
-        
-        // Track the actual data range we're extracting
-        var resultAddrMin: UInt32 = UInt32.max
-        var resultAddrMax: UInt32 = 0
-        
-        // Statistics for debugging
-        var totalDataRecords = 0
-        var includedDataRecords = 0
-        var excludedDataRecords = 0
-        var segmentChanges = 0
-        var elaRecordsEmitted = 0
-        
-        LogNotify.log("UniversalHexFilter: Filtering address range 0x\(String(range.min, radix: 16)) - 0x\(String(range.max, radix: 16))")
+        var lastEmittedSegment: UInt32? = nil
         
         while let line = reader.nextLine() {
             let trimmed = line.trimmingCharacters(in: .whitespacesAndNewlines)
             
-            // Parse hex record
             guard let record = parseHexRecord(trimmed) else {
                 continue
             }
@@ -69,50 +55,28 @@ struct UniversalHexFilter {
             // Update segment address for type 04 (Extended Linear Address)
             if record.type == RecordType.extendedLinearAddress.rawValue {
                 currentSegmentAddress = UInt32(record.data[0]) << 24 | UInt32(record.data[1]) << 16
-                segmentChanges += 1
-                LogNotify.log("UniversalHexFilter: [ELA Type 04] Set segment to 0x\(String(currentSegmentAddress, radix: 16))")
                 continue
             }
             
-            // Handle type 02 (Extended Segment Address) - calculate address but filter by range
+            // Handle type 02 (Extended Segment Address)
             if record.type == RecordType.extendedSegmentAddress.rawValue {
-                let segmentAddress = (UInt32(record.data[0]) << 8 | UInt32(record.data[1])) << 4
-                currentSegmentAddress = segmentAddress
-                segmentChanges += 1
-                LogNotify.log("UniversalHexFilter: [ESA Type 02] Set segment to 0x\(String(currentSegmentAddress, radix: 16))")
+                currentSegmentAddress = (UInt32(record.data[0]) << 8 | UInt32(record.data[1])) << 4
                 continue
             }
             
             // Handle data records (type 00) - filter by address range
             if record.type == RecordType.data.rawValue {
-                totalDataRecords += 1
                 let fullAddress = currentSegmentAddress + UInt32(record.address)
-                
-                // Log data at interesting offsets
-                if record.address == 0x7000 || record.address == 0x7010 {
-                    LogNotify.log("UniversalHexFilter: [Data at 0x\(String(record.address, radix: 16))] Segment=0x\(String(currentSegmentAddress, radix: 16)), Absolute=0x\(String(fullAddress, radix: 16)), InRange=\(fullAddress >= range.min && fullAddress < range.max)")
-                }
                 
                 // Check if this record overlaps with application region
                 if fullAddress < range.max && fullAddress + UInt32(record.data.count) > range.min {
-                    includedDataRecords += 1
-                    
-                    // Emit segment record if needed (different from last emitted)
+                    // Emit segment record if needed
                     if lastEmittedSegment != currentSegmentAddress {
-                        // Create ELA type 04 record for current segment
                         let segmentHigh16 = (currentSegmentAddress >> 16) & 0xFFFF
-                        let elaLine = createExtendedLinearAddressRecord(segment: segmentHigh16)
-                        filteredLines.append(elaLine)
-                        elaRecordsEmitted += 1
+                        filteredLines.append(createExtendedLinearAddressRecord(segment: segmentHigh16))
                         lastEmittedSegment = currentSegmentAddress
-                        LogNotify.log("UniversalHexFilter: [Emit ELA] Created type 04 record for segment 0x\(String(currentSegmentAddress, radix: 16))")
                     }
-                    
                     filteredLines.append(trimmed)
-                    resultAddrMin = min(resultAddrMin, fullAddress)
-                    resultAddrMax = max(resultAddrMax, fullAddress + UInt32(record.data.count))
-                } else {
-                    excludedDataRecords += 1
                 }
             }
             
@@ -123,41 +87,18 @@ struct UniversalHexFilter {
             }
         }
         
-        LogNotify.log("UniversalHexFilter: Statistics:")
-        LogNotify.log("  - Segment changes: \(segmentChanges)")
-        LogNotify.log("  - ELA records emitted: \(elaRecordsEmitted)")
-        LogNotify.log("  - Data records: \(totalDataRecords) total, \(includedDataRecords) included, \(excludedDataRecords) excluded")
-        
-        LogNotify.log("UniversalHexFilter: Filtered from universal hex")
-        LogNotify.log("  Data range: 0x\(String(resultAddrMin, radix: 16)) - 0x\(String(resultAddrMax, radix: 16))")
-        LogNotify.log("  Output lines: \(filteredLines.count)")
-        
-        // Log first few lines for debugging
-        if filteredLines.count > 0 {
-            LogNotify.log("UniversalHexFilter: First 5 filtered lines:")
-            for i in 0..<min(5, filteredLines.count) {
-                LogNotify.log("  [\(i)]: \(filteredLines[i])")
-            }
-        }
-        
         return filteredLines.isEmpty ? nil : filteredLines
     }
     
     /// Writes filtered hex lines to a temporary file
-    /// - Parameter lines: Array of hex record strings
-    /// - Returns: URL to the temporary file, or nil on error
     static func writeFilteredHex(_ lines: [String]) -> URL? {
         let tempFile = FileManager.default.temporaryDirectory
             .appendingPathComponent("application_filtered.hex")
         
-        let content = lines.joined(separator: "\n")
-        
         do {
-            try content.write(to: tempFile, atomically: true, encoding: .utf8)
-            LogNotify.log("UniversalHexFilter: Wrote filtered hex to \(tempFile.path)")
+            try lines.joined(separator: "\n").write(to: tempFile, atomically: true, encoding: .utf8)
             return tempFile
         } catch {
-            LogNotify.log("UniversalHexFilter: Failed to write file: \(error)")
             return nil
         }
     }
