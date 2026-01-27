@@ -103,20 +103,14 @@ class FlashableBLECalliope: CalliopeAPI {
         // Attempt partial flashing first if available
         LogNotify.log("Partial flashing service available: \(discoveredOptionalServices.contains(.partialFlashing))")
 
-        // Prüfe ob Partial Flashing verfügbar ist und sinnvoll (< 700 Zeilen zu ändern)
+        // Check if partial flashing is available and hex has magic markers
+        // The actual decision (partial vs full) is made after connecting and comparing DAL hashes
         if discoveredOptionalServices.contains(.partialFlashing),
            let partialInfo = file.partialFlashingInfo {
             let lineCount = partialInfo.partialFlashData.lineCount
-            LogNotify.log("Partial flashing: \(lineCount) lines to change")
-
-            if lineCount < 700 {
-                LogNotify.log("Using partial flashing (< 700 lines)")
-                startPartialFlashing()
-            } else {
-                LogNotify.log("Skipping partial flashing (>= 700 lines), using full flash instead")
-                shouldRebootOnDisconnect = true
-                try startFullFlashing()
-            }
+            LogNotify.log("Partial flashing: hex has \(lineCount) lines after magic marker")
+            LogNotify.log("Starting partial flash process (will verify DAL hash with device)")
+            startPartialFlashing()
         } else {
             shouldRebootOnDisconnect = true
             try startFullFlashing()
@@ -158,6 +152,12 @@ class FlashableBLECalliope: CalliopeAPI {
     //current calliope state
     var dalHash = Data()
     var currentProgramHash = Data()
+    
+    // Memory regions reported by device
+    var deviceDalRegionStart: UInt32 = 0
+    var deviceDalRegionEnd: UInt32 = 0
+    var deviceProgramRegionStart: UInt32 = 0
+    var deviceProgramRegionEnd: UInt32 = 0
 
     //data file and its properties
     var hexFileHash = Data()
@@ -232,14 +232,25 @@ class FlashableBLECalliope: CalliopeAPI {
         if value[0] == .REGION && value[1] == .DAL_REGION {
             //requested dal hash and position
             dalHash = value[10..<18]
+            
+            // Extract memory region boundaries (big-endian 32-bit values)
+            deviceDalRegionStart = UInt32(bigEndianData: value[2..<6])
+            deviceDalRegionEnd = UInt32(bigEndianData: value[6..<10])
+            
             updateCallback("Dal region from \(value[2..<6].hexEncodedString()) to \(value[6..<10].hexEncodedString())")
+            LogNotify.log("[PartialFlash] DAL region: 0x\(String(deviceDalRegionStart, radix: 16)) - 0x\(String(deviceDalRegionEnd, radix: 16))")
             receivedDalHash()
             return
         }
 
         if value[0] == .REGION && value[1] == .PROGRAM_REGION {
             currentProgramHash = value[10..<18]
-            LogNotify.log("Program region: \(value[2..<6].hexEncodedString()) to \(value[6..<10].hexEncodedString()) - hash: \(currentProgramHash.hexEncodedString()) - new hash: \(hexProgramHash.hexEncodedString())")
+            
+            // Extract memory region boundaries (big-endian 32-bit values)
+            deviceProgramRegionStart = UInt32(bigEndianData: value[2..<6])
+            deviceProgramRegionEnd = UInt32(bigEndianData: value[6..<10])
+            
+            LogNotify.log("[PartialFlash] Program region: 0x\(String(deviceProgramRegionStart, radix: 16)) - 0x\(String(deviceProgramRegionEnd, radix: 16)) - hash: \(currentProgramHash.hexEncodedString()) - new hash: \(hexProgramHash.hexEncodedString())")
             receivedProgramHash()
             return
         }
@@ -347,8 +358,27 @@ class FlashableBLECalliope: CalliopeAPI {
     private func receivedDalHash() {
         updateCallback("Received dal hash \(dalHash.hexEncodedString()), hash in hex file is \(hexFileHash.hexEncodedString())")
         LogNotify.log("[PartialFlash] DAL hash verified: \(dalHash == hexFileHash ? "✓ match" : "✗ mismatch")")
+        LogNotify.log("[PartialFlash] Device memory layout - DAL: 0x\(String(deviceDalRegionStart, radix: 16))-0x\(String(deviceDalRegionEnd, radix: 16)), Program: 0x\(String(deviceProgramRegionStart, radix: 16))-0x\(String(deviceProgramRegionEnd, radix: 16))")
+        
+        // Check 1: DAL hash must match between device and hex file
         guard dalHash == hexFileHash else {
             LogNotify.log("[PartialFlash] DAL hash mismatch - falling back to full flash")
+            fallbackToFullFlash()
+            return
+        }
+        
+        // Check 2: Verify last successful flash was also a partial flash with this DAL
+        // This prevents incorrect partial flash after flashing samples (which doesn't erase the partial flash region)
+        if let lastDalHash = HexParser.lastPartialFlashDalHash {
+            if lastDalHash == hexFileHash {
+                LogNotify.log("[PartialFlash] Last flash was partial flash with same DAL - safe to proceed")
+            } else {
+                LogNotify.log("[PartialFlash] Last partial flash had different DAL (\(lastDalHash.hexEncodedString()) vs \(hexFileHash.hexEncodedString())) - falling back to full flash for safety")
+                fallbackToFullFlash()
+                return
+            }
+        } else {
+            LogNotify.log("[PartialFlash] No previous partial flash recorded - falling back to full flash for safety")
             fallbackToFullFlash()
             return
         }
@@ -390,7 +420,17 @@ class FlashableBLECalliope: CalliopeAPI {
 
     private func receivedProgramHash() {
         LogNotify.log("[PartialFlash] Received program hash - current: \(currentProgramHash.hexEncodedString()), target: \(hexProgramHash.hexEncodedString())")
+        LogNotify.log("[PartialFlash] Program region: 0x\(String(deviceProgramRegionStart, radix: 16))-0x\(String(deviceProgramRegionEnd, radix: 16))")
         updateCallback("Received program hash \(hexProgramHash.hexEncodedString())")
+        
+        // Validate program region - if invalid, device doesn't have valid MakeCode firmware
+        // This can happen when samples were flashed (stale DAL hash in flash memory)
+        if deviceProgramRegionStart == 0 || deviceProgramRegionEnd <= deviceProgramRegionStart {
+            LogNotify.log("[PartialFlash] Invalid program region (start=0x\(String(deviceProgramRegionStart, radix: 16)), end=0x\(String(deviceProgramRegionEnd, radix: 16))) - device may have stale flash data, falling back to full DFU")
+            fallbackToFullFlash()
+            return
+        }
+        
         if currentProgramHash == hexProgramHash {
             LogNotify.log("[PartialFlash] Program unchanged - rebooting to application mode")
             linesFlashed = partialFlashData?.lineCount ?? Int.max  //set progress to 100%
@@ -596,6 +636,11 @@ class FlashableBLECalliope: CalliopeAPI {
         updateCallback("Partial flashing done in \(String(format: "%.2f", duration))s (\(Int(avgSpeed)) bytes/s)")
         debugLog("Transmission complete: \(linesFlashed) packets in \(String(format: "%.2f", duration))s")
         
+        // Store the DAL hash for this successful partial flash
+        // This allows future partial flashes with the same DAL to proceed
+        HexParser.lastPartialFlashDalHash = hexFileHash
+        LogNotify.log("[PartialFlash] Stored successful partial flash DAL hash: \(hexFileHash.hexEncodedString())")
+        
         // Send TRANSMISSION_END before cleaning up state
         debugLog("Sending TRANSMISSION_END (0x02) command")
         updateCallback("Sending end of transmission command...")
@@ -708,6 +753,17 @@ class FlashableBLECalliope: CalliopeAPI {
             dfuCompletedAwaitingReconnect = true
             // WICHTIG: shouldRebootOnDisconnect auf true setzen damit Reconnect funktioniert
             shouldRebootOnDisconnect = true
+            
+            // Update last partial flash DAL hash based on what was flashed
+            if let file = file, let partialInfo = file.partialFlashingInfo {
+                // MakeCode file (has magic markers) - store DAL hash for future partial flash
+                HexParser.lastPartialFlashDalHash = partialInfo.fileHash
+                LogNotify.log("[PartialFlash] Stored DAL hash after full DFU of MakeCode file: \(partialInfo.fileHash.hexEncodedString())")
+            } else {
+                // Non-MakeCode file (no magic markers) - clear DAL hash
+                HexParser.clearLastPartialFlashDalHash()
+                LogNotify.log("[PartialFlash] Cleared last partial flash DAL hash after full DFU of non-MakeCode file")
+            }
             
         case .aborted:
             LogNotify.log("DFU was aborted")
@@ -880,4 +936,14 @@ extension UInt8 {
     //WRITE response values
     fileprivate static let WRITE_FAIL = UInt8(0xAA)
     fileprivate static let WRITE_SUCCESS = UInt8(0xFF)
+}
+
+// MARK: - Data Extensions for Memory Region Parsing
+extension UInt32 {
+    /// Initialize from big-endian Data (4 bytes) - device sends addresses in big-endian format
+    init(bigEndianData data: Data) {
+        var value: UInt32 = 0
+        _ = withUnsafeMutableBytes(of: &value) { data.copyBytes(to: $0) }
+        self = UInt32(bigEndian: value)
+    }
 }

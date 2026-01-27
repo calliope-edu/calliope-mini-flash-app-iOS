@@ -6,6 +6,31 @@ struct HexParser {
     
     private var url: URL
     
+    // MARK: - Last Partial Flash Tracking
+    
+    /// Key for storing the DAL hash of the last successful partial flash
+    private static let lastPartialFlashDalHashKey = "lastPartialFlashDalHash"
+    
+    /// Get the DAL hash from the last successful partial flash
+    static var lastPartialFlashDalHash: Data? {
+        get {
+            UserDefaults.standard.data(forKey: lastPartialFlashDalHashKey)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: lastPartialFlashDalHashKey)
+            if let hash = newValue {
+                LogNotify.log("[PartialFlash] Stored last partial flash DAL hash: \(hash.hexEncodedString())")
+            } else {
+                LogNotify.log("[PartialFlash] Cleared last partial flash DAL hash")
+            }
+        }
+    }
+    
+    /// Clear the last partial flash DAL hash (call after full DFU)
+    static func clearLastPartialFlashDalHash() {
+        lastPartialFlashDalHash = nil
+    }
+    
     // MARK: - Cache Management
     
     /// Cache filtered hex to avoid re-filtering on every call
@@ -177,30 +202,136 @@ struct HexParser {
     }
 
     /// Retrieves partial flashing information from hex file
-    /// Uses cached filtered hex if available, otherwise filters and caches
+    /// Uses original hex to find magic markers and extract hashes, then uses filtered hex for data
     /// - Returns: Tuple of (fileHash, programHash, partialFlashData) or nil on error
     func retrievePartialFlashingInfo() -> (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? {
-        // Check cache first
-        if let cachedURL = getCachedFilteredURL() {
-            LogNotify.log("[PartialFlash] Using cached filtered hex")
-            return retrievePartialFlashingInfoFromFile(url: cachedURL)
+        // Step 1: Extract hashes from original hex
+        guard let hashInfo = extractHashes(from: url) else {
+            return nil
         }
         
-        // Filter universal hex to application region (preserves magic markers)
-        LogNotify.log("[PartialFlash] Filtering universal hex to application region...")
-        if let filteredLines = UniversalHexFilter.filterUniversalHex(sourceURL: url, hexBlock: .v2),
-           let filteredURL = UniversalHexFilter.writeFilteredHex(filteredLines) {
-            LogNotify.log("[PartialFlash] Using filtered hex with \(filteredLines.count) lines")
-            
-            // Cache the filtered result
-            setCachedFilteredURL(filteredURL)
-            
-            return retrievePartialFlashingInfoFromFile(url: filteredURL)
+        // Step 2: Get or create filtered hex for data transmission (for speed)
+        let filteredURL: URL
+        if let cached = getCachedFilteredURL() {
+            LogNotify.log("[PartialFlash] Using cached filtered hex: \(cached.lastPathComponent)")
+            filteredURL = cached
+        } else if let lines = UniversalHexFilter.filterUniversalHex(sourceURL: url, hexBlock: .v2),
+                  let newURL = UniversalHexFilter.writeFilteredHex(lines) {
+            LogNotify.log("[PartialFlash] Created filtered hex with \(lines.count) lines")
+            setCachedFilteredURL(newURL)
+            filteredURL = newURL
+        } else {
+            // Fallback to original hex if filtering fails
+            LogNotify.log("[PartialFlash] Filtering failed, using original hex (slower)")
+            filteredURL = url
         }
         
-        // Fallback to original universal hex if filtering fails
-        LogNotify.log("[PartialFlash] Filtering failed, using original hex")
-        return retrievePartialFlashingInfoFromFile(url: url)
+        // Step 3: Create PartialFlashData from filtered hex
+        guard let partialData = createPartialFlashData(from: filteredURL) else {
+            // Fallback to original hex if filtered hex doesn't work
+            LogNotify.log("[PartialFlash] Filtered hex failed, trying original hex")
+            guard let originalData = createPartialFlashData(from: url) else {
+                return nil
+            }
+            return (hashInfo.fileHash, hashInfo.programHash, originalData)
+        }
+        
+        return (hashInfo.fileHash, hashInfo.programHash, partialData)
+    }
+    
+    /// Extract hashes from hex file without creating PartialFlashData
+    private func extractHashes(from url: URL) -> (fileHash: Data, programHash: Data)? {
+        guard let reader = StreamReader(path: url.path) else {
+            return nil
+        }
+        defer { reader.close() }
+        
+        let (magicLine, _) = forwardToMagicNumber(reader)
+        guard let magicLine = magicLine else {
+            print("[PartialFlash] ERROR: Magic start marker not found!")
+            return nil
+        }
+        
+        // Read hash line immediately after magic
+        guard let hashesLine = reader.nextLine() else {
+            print("[PartialFlash] ERROR: Could not read line after magic marker")
+            return nil
+        }
+        
+        // Validate hash line format
+        let hashRecordType = HexReader.type(of: hashesLine)
+        let hashRecordLength = HexReader.length(of: hashesLine)
+        
+        guard hashRecordType == 0, hashRecordLength == 16 else {
+            print("[PartialFlash] ERROR: Invalid hash record format")
+            return nil
+        }
+        
+        guard hashesLine.count >= 41,
+              let templateHash = hashesLine[9..<25].toData(using: .hex),
+              let programHash = (hashesLine[25..<41]).toData(using: .hex) else {
+            print("[PartialFlash] ERROR: Could not extract hashes from hash line")
+            return nil
+        }
+        
+        print("[PartialFlash] Extracted DAL hash (templateHash): \(templateHash.hexEncodedString())")
+        print("[PartialFlash] Extracted program hash: \(programHash.hexEncodedString())")
+        
+        return (templateHash, programHash)
+    }
+    
+    /// Create PartialFlashData from a hex file URL
+    private func createPartialFlashData(from url: URL) -> PartialFlashData? {
+        guard let reader = StreamReader(path: url.path) else {
+            return nil
+        }
+        
+        let (magicLine, segmentAddress) = forwardToMagicNumber(reader)
+        guard let magicLine = magicLine else {
+            return nil
+        }
+        
+        // Read hash line
+        guard let hashesLine = reader.nextLine() else {
+            return nil
+        }
+        
+        // Count lines from current position to magic end
+        var numLinesToFlash = 0
+        while let line = reader.nextLine() {
+            if HexReader.isEndOfFileOrMagicEnd(line) {
+                break
+            }
+            if line.starts(with: ":") && HexReader.type(of: line) == 0 {
+                if let data = HexReader.readData(line), !data.data.allSatisfy({ $0 == 0xFF }) {
+                    numLinesToFlash += 1
+                }
+            }
+        }
+        
+        LogNotify.log("[PartialFlash] Filtered hex will send \(numLinesToFlash) data packets")
+        
+        // Open fresh reader for data transmission
+        guard let freshReader = StreamReader(path: url.path) else {
+            return nil
+        }
+        
+        let (freshMagicLine, freshSegmentAddress) = forwardToMagicNumber(freshReader)
+        guard let freshMagicLine = freshMagicLine else {
+            return nil
+        }
+        
+        guard let hashesLineForData = freshReader.nextLine() else {
+            return nil
+        }
+        
+        print("[PartialFlash] Fresh reader: segment address: 0x\(String(format: "%04X", freshSegmentAddress))")
+        
+        return PartialFlashData(
+            nextLines: [hashesLineForData, freshMagicLine],
+            currentSegmentAddress: freshSegmentAddress,
+            reader: freshReader,
+            lineCount: numLinesToFlash)
     }
     
     // MARK: - Cache Management
@@ -218,123 +349,70 @@ struct HexParser {
         defer { HexParser.cacheLock.unlock() }
         HexParser.filteredHexCache[url] = filteredURL
     }
-    
-    private func retrievePartialFlashingInfoFromFile(url: URL) -> (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? {
-        guard let reader = StreamReader(path: url.path) else {
-            return nil
-        }
-        defer { reader.close() }
-
-        let (magicLine, currentSegmentAddress) = forwardToMagicNumber(reader)
-        if magicLine == nil {
-            print("[PartialFlash] ERROR: Magic start marker not found!")
-            return nil
-        }
-        let magicRecordType = HexReader.type(of: magicLine!)
-        let magicRecordLength = HexReader.length(of: magicLine!)
-        let magicRecordAddress = HexReader.address(of: magicLine!)
-        print("[PartialFlash] Found magic line (type=\(magicRecordType ?? -1), len=\(magicRecordLength ?? -1), addr=\(String(format: "0x%04X", magicRecordAddress ?? 0))): \(magicLine!.prefix(60))...")
-
-        // Validate magic record: must be type 0 (data) with exactly 16 bytes
-        guard magicRecordType == 0, magicRecordLength == 16 else {
-            print("[PartialFlash] ERROR: Magic record has wrong format (expected type=0, len=16)")
-            return nil
-        }
-
-        // Read hashes line immediately (it's right after magic)
-        guard let hashesLine = reader.nextLine() else {
-            print("[PartialFlash] ERROR: Could not read line after magic marker")
-            return nil
-        }
-
-        // Validate hash line format: must be a 16-byte data record (type 0) at sequential address
-        let hashRecordType = HexReader.type(of: hashesLine)
-        let hashRecordLength = HexReader.length(of: hashesLine)
-        let hashRecordAddress = HexReader.address(of: hashesLine)
-
-        print("[PartialFlash] Hash line (type=\(hashRecordType ?? -1), len=\(hashRecordLength ?? -1), addr=\(String(format: "0x%04X", hashRecordAddress ?? 0))): \(hashesLine.prefix(50))...")
-
-        // Strict validation: hash record must be type 0 (data) with 16 bytes
-        // and address must be sequential (magic address + 16)
-        guard hashRecordType == 0,
-              hashRecordLength == 16,
-              let magicAddr = magicRecordAddress,
-              let hashAddr = hashRecordAddress,
-              hashAddr == magicAddr + 16 else {
-            print("[PartialFlash] ERROR: Invalid hash record format - not a valid MakeCode partial flashing marker")
-            print("[PartialFlash] Expected: type=0, len=16, addr=\(String(format: "0x%04X", (magicRecordAddress ?? 0) + 16))")
-            print("[PartialFlash] Got: type=\(hashRecordType ?? -1), len=\(hashRecordLength ?? -1), addr=\(String(format: "0x%04X", hashRecordAddress ?? 0))")
-            return nil
-        }
-
-        guard hashesLine.count >= 41,
-              let templateHash = hashesLine[9..<25].toData(using: .hex),
-              let programHash = (hashesLine[25..<41]).toData(using: .hex) else {
-            print("[PartialFlash] ERROR: Could not extract hashes from hash line")
-            return nil
-        }
-        print("[PartialFlash] Extracted DAL hash (templateHash): \(templateHash.hexEncodedString())")
-        print("[PartialFlash] Extracted program hash: \(programHash.hexEncodedString())")
-        
-        // Count remaining lines from current position to magic end
-        var numLinesToFlash = 0
-        var totalLines = 0
-        var emptyLines = 0
-        var lineNumber = 0
-        while let line = reader.nextLine() {
-            lineNumber += 1
-            if HexReader.isEndOfFileOrMagicEnd(line) {
-                print("[PartialFlash] Stopped at magic end/EOF after reading \(lineNumber) lines from hashes")
-                break
-            }
-            if line.starts(with: ":") && HexReader.type(of: line) == 0 {
-                totalLines += 1
-                if let data = HexReader.readData(line), !data.data.allSatisfy({ $0 == 0xFF }) {
-                    numLinesToFlash += 1
-                } else {
-                    emptyLines += 1
-                }
-            }
-        }
-        print("[PartialFlash] Found \(totalLines) type-0 lines (\(emptyLines) empty, \(numLinesToFlash) with data)")
-        
-        // Don't rewind - open a fresh reader positioned at magic marker
-        guard let freshReader = StreamReader(path: url.path) else {
-            return nil
-        }
-        
-        let (freshMagicLine, freshSegmentAddress) = forwardToMagicNumber(freshReader)
-        guard let magicLineForData = freshMagicLine else {
-            return nil
-        }
-        print("[PartialFlash] Fresh reader: segment address: \(String(format: "0x%04X", freshSegmentAddress))")
-        
-        // Read hashes line again for the fresh reader
-        guard let hashesLineForData = freshReader.nextLine() else {
-            return nil
-        }
-
-        return (templateHash,
-            programHash,
-            PartialFlashData(
-                nextLines: [hashesLineForData, magicLineForData],
-                currentSegmentAddress: freshSegmentAddress,
-                reader: freshReader,
-                lineCount: numLinesToFlash))
-    }
 
     private func forwardToMagicNumber(_ reader: StreamReader) -> (String?, UInt16) {
         var magicLine: String?
 
         var currentSegmentAddress: UInt16 = 0
+        var lineCount = 0
+        var foundSegment7 = false
         while let record = reader.nextLine() {
-            if HexReader.isMagicStart(record) {
-                magicLine = record
-                break
-            } else if HexReader.type(of: record) == 4,
-                      let segmentAddress = HexReader.readSegmentAddress(record) {
-                currentSegmentAddress = segmentAddress
+            lineCount += 1
+            
+            // Track ELA (type 04) segment changes BEFORE checking for magic
+            if HexReader.type(of: record) == 4,
+               let length = HexReader.length(of: record), length == 2,
+               let data = HexReader.data(of: record, length) {
+                // ELA: segment = (upper 16 bits from data)
+                let high = UInt16(data[0])
+                let low = UInt16(data[1])
+                currentSegmentAddress = (high << 8) | low
+                print("[PartialFlash] ELA record at line \(lineCount): segment changed to 0x\(String(format: "%04X", currentSegmentAddress))")
+                if currentSegmentAddress == 0x0007 {
+                    foundSegment7 = true
+                    print("[PartialFlash] ⚠️ Entered segment 0x0007 - looking for data at offset 0x7000...")
+                }
+                continue
             }
+            
+            // Debug: Log data records in segment 0x0007
+            if foundSegment7 && currentSegmentAddress == 0x0007 && HexReader.type(of: record) == 0 {
+                if let recordAddress = HexReader.address(of: record) {
+                    if recordAddress >= 0x7000 && recordAddress <= 0x7010 {
+                        let absoluteAddress = UInt32(currentSegmentAddress) << 16 | UInt32(recordAddress)
+                        let dataPreview = record.count >= 41 ? String(record[9..<41]) : "???"
+                        print("[PartialFlash] Data record in segment 0x0007 at line \(lineCount): offset=0x\(String(format: "%04X", recordAddress)), absolute=0x\(String(format: "%05X", absoluteAddress)), data=\(dataPreview)")
+                        if recordAddress == 0x7000 {
+                            print("[PartialFlash] Expected magic: 708E3B92C615A841C49866C975EE5197")
+                            print("[PartialFlash] isMagicStart check: \(HexReader.isMagicStart(record))")
+                        }
+                    }
+                }
+            }
+            
+            // Check for magic marker with address validation
+            if HexReader.isMagicStart(record) {
+                let recordAddress = HexReader.address(of: record) ?? 0
+                let absoluteAddress = UInt32(currentSegmentAddress) << 16 | UInt32(recordAddress)
+                
+                // Magic markers can be at different addresses depending on device/firmware:
+                // - 0x47000: MakeCode V3 (some versions)
+                // - 0x77000: MakeCode V3 (other versions)  
+                // - 0x1F000: V1/V2
+                // Reject markers at other addresses (e.g., application data matching pattern)
+                let validAddresses: [UInt32] = [0x47000, 0x77000, 0x1F000]
+                
+                if validAddresses.contains(absoluteAddress) {
+                    magicLine = record
+                    print("[PartialFlash] Found VALID magic marker at line \(lineCount), absolute address: 0x\(String(format: "%05X", absoluteAddress)), segment: 0x\(String(format: "%04X", currentSegmentAddress))")
+                    break
+                } else {
+                    print("[PartialFlash] Found magic pattern at line \(lineCount) but WRONG address: 0x\(String(format: "%05X", absoluteAddress)) (expected 0x47000, 0x77000 or 0x1F000), ignoring...")
+                }
+            }
+        }
+        if magicLine == nil {
+            print("[PartialFlash] Scanned \(lineCount) lines, no valid magic marker found at expected address, final segment: 0x\(String(format: "%04X", currentSegmentAddress))")
         }
         return (magicLine, currentSegmentAddress)
     }
