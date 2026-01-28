@@ -6,18 +6,6 @@ struct HexParser {
     
     private var url: URL
     
-    // MARK: - Deprecated - Use PartialFlashManager instead
-    
-    /// Deprecated: Use PartialFlashManager.lastDalHash instead
-    static var lastPartialFlashDalHash: Data? {
-        get { PartialFlashManager.lastDalHash }
-        set { PartialFlashManager.lastDalHash = newValue }
-    }
-    
-    /// Deprecated: Use PartialFlashManager.clearCache() instead
-    static func clearCache() {
-        PartialFlashManager.clearCache()
-    }
 
     // MARK: - Initialization
     

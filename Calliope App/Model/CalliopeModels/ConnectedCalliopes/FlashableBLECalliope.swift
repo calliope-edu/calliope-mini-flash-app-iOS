@@ -83,7 +83,7 @@ class FlashableBLECalliope: CalliopeAPI {
 
     override public func upload(file: Hex, progressReceiver: DFUProgressDelegate? = nil, statusDelegate: DFUServiceDelegate? = nil, logReceiver: LoggerDelegate? = nil) throws {
         // Clear filtered hex cache to ensure fresh partial flashing info for each upload
-        HexParser.clearCache()
+        PartialFlashManager.clearCache()
         
         let hexTypes = file.getHexTypes()
         if hexTypes.contains(.arcade) {
@@ -344,13 +344,6 @@ class FlashableBLECalliope: CalliopeAPI {
             return
         }
         
-        // Check 2: Verify last successful flash was also a partial flash with this DAL
-        // This prevents incorrect partial flash after flashing samples (which doesn't erase the partial flash region)
-        guard let lastDalHash = HexParser.lastPartialFlashDalHash, lastDalHash == hexFileHash else {
-            LogNotify.log("[PartialFlash] No matching previous partial flash - falling back to full flash")
-            fallbackToFullFlash()
-            return
-        }
 
         // Device is in BLE mode and DAL verified, continue with embedded region
         send(command: .REGION, value: Data([.EMBEDDED_REGION]))
@@ -592,8 +585,6 @@ class FlashableBLECalliope: CalliopeAPI {
         updateCallback("Partial flashing done in \(String(format: "%.2f", duration))s (\(Int(avgSpeed)) bytes/s)")
         debugLog("Transmission complete: \(linesFlashed) packets in \(String(format: "%.2f", duration))s")
         
-        // Store the DAL hash for this successful partial flash
-        HexParser.lastPartialFlashDalHash = hexFileHash
         
         // Send TRANSMISSION_END before cleaning up state
         debugLog("Sending TRANSMISSION_END (0x02) command")
@@ -708,14 +699,6 @@ class FlashableBLECalliope: CalliopeAPI {
             // WICHTIG: shouldRebootOnDisconnect auf true setzen damit Reconnect funktioniert
             shouldRebootOnDisconnect = true
             
-            // Update last partial flash DAL hash based on what was flashed
-            if let file = file, let partialInfo = file.partialFlashingInfo {
-                // MakeCode file - store DAL hash for future partial flash
-                HexParser.lastPartialFlashDalHash = partialInfo.fileHash
-            } else {
-                // Non-MakeCode file - clear DAL hash
-                HexParser.lastPartialFlashDalHash = nil
-            }
             
         case .aborted:
             LogNotify.log("DFU was aborted")

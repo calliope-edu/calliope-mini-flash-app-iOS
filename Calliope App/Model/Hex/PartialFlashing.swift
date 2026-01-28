@@ -5,17 +5,6 @@ import Foundation
 /// Manages partial flashing functionality including hash tracking, hex filtering, and data iteration
 struct PartialFlashManager {
     
-    // MARK: - DAL Hash Tracking
-    
-    /// Key for storing the DAL hash of the last successful partial flash
-    private static let lastPartialFlashDalHashKey = "lastPartialFlashDalHash"
-    
-    /// Get/set the DAL hash from the last successful partial flash
-    /// Used to prevent incorrect partial flash after samples (which leave stale markers)
-    static var lastDalHash: Data? {
-        get { UserDefaults.standard.data(forKey: lastPartialFlashDalHashKey) }
-        set { UserDefaults.standard.set(newValue, forKey: lastPartialFlashDalHashKey) }
-    }
     
     // MARK: - Cache Management
     
