@@ -61,7 +61,10 @@ struct PartialFlashManager {
         guard let partialData = createPartialFlashData(from: filteredURL) ?? createPartialFlashData(from: url) else {
             return nil
         }
-        
+        // If too many packets, fall back to full DFU
+        if partialData.lineCount > 700 {
+            return nil
+        }
         return (hashInfo.fileHash, hashInfo.programHash, partialData)
     }
     
