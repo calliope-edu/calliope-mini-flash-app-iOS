@@ -46,7 +46,7 @@ func asyncAndWait<T>(on queue: DispatchQueue, after deadline: DispatchTime? = ni
 @discardableResult
 func delay(queue: DispatchQueue = DispatchQueue.main, time: Double, _ block: @escaping (() -> Void)) -> DispatchWorkItem {
 	let dwi = DispatchWorkItem(block: block)
-    let when = DispatchTime.now() + time
+	let when = DispatchTime.now() + time
 	queue.asyncAfter(deadline: when, execute: dwi)
 	return dwi
 }

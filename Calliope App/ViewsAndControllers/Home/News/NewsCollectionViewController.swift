@@ -41,7 +41,6 @@ class NewsCollectionViewController: UICollectionViewController, UICollectionView
             case .failure(_):
                 self?.news = NewsManager.getDefaultNews()
                 self?.loadedOnlineContent = false
-                //TODO: show offline status or restart news discovery
                 break
             }
         }

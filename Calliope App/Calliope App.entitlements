@@ -4,6 +4,12 @@
 <dict>
 	<key>aps-environment</key>
 	<string>development</string>
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:makecode.calliope.cc</string>
+		<string>applinks:5c05-46-114-170-228.ngrok-free.app?mode=developer</string>
+		<string>applinks:makecode.calliope.cc?mode=developer</string>
+	</array>
 	<key>com.apple.security.application-groups</key>
 	<array>
 		<string>group.flashapps.calliope.cc</string>

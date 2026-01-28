@@ -41,7 +41,6 @@ class NewsCollectionViewCell: UICollectionViewCell {
                     }
                 }
             case .failure(_):
-                //TODO: handle error
                 break
             }
         })

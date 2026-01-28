@@ -5,8 +5,8 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "DpH-x4-88I"; */
 "DpH-x4-88I.text" = "Label";
 
-/* Class = "UILabel"; text = "You can program your Calliope mini with the help of the editors.\nMakeCode works with Calliope mini 3 and all previous Calliope mini versions. \nOpen Roberta Lab works with Calliope mini 1 and 2."; ObjectID = "Hqp-zE-kfc"; */
-"Hqp-zE-kfc.text" = "You can program your Calliope mini with the help of the editors.\nMakeCode works with Calliope mini 3 and all previous Calliope mini versions. \nOpen Roberta Lab works with Calliope mini 1 and 2.";
+/* Class = "UILabel"; text = "You can program your Calliope mini with the help of the editors."; ObjectID = "Hqp-zE-kfc"; */
+"Hqp-zE-kfc.text" = "You can program your Calliope mini with the help of the editors.";
 
 /* Class = "UIButton"; normalTitle = "Startprogramm"; ObjectID = "HyP-3y-Mpt"; */
 "HyP-3y-Mpt.normalTitle" = "Start program";
@@ -23,8 +23,8 @@
 /* Class = "UIButton"; normalTitle = "Scan QR code"; ObjectID = "49i-Ve-lcm"; */
 "49i-Ve-lcm.normalTitle" = "Scan";
 
-/* Class = "UILabel"; text = "Playground"; ObjectID = "NWk-nx-U7c"; */
-"NWk-nx-U7c.text" = "Playground";
+/* Class = "UILabel"; text = "Arcade (USB only)"; ObjectID = "NWk-nx-U7c"; */
+"NWk-nx-U7c.text" = "Arcade (USB only)";
 
 /* Class = "UIViewController"; title = "Editor"; ObjectID = "eeY-2x-OZY"; */
 "eeY-2x-OZY.title" = "Editor";

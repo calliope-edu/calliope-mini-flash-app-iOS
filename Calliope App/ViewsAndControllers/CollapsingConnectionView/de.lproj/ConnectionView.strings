@@ -1,15 +1,9 @@
+/* Class = "UILabel"; text = "USB verwenden"; ObjectID = "NJ1-SW-3EC"; */
+"NJ1-SW-3EC.text" = "USB Verbindung";
 
-/* Class = "UILabel"; text = "USB verwenden"; ObjectID = "65U-Jg-l1c"; */
-"NJ1-SW-3EC.text" = "USB-C verwenden";
-
-/* Class = "UISwitch"; title = "USB"; ObjectID = "WY5-hC-Tgz"; */
-"WY5-hC-Tgz.title" = "USB";
-
-/* Class = "UIButton"; configuration.title = "Calliope mini auswählen"; ObjectID = "Xhu-PJ-3s9"; */
+/* Class = "UIButton"; configuration.title = "Calliope mini auswählen"; ObjectID = "Uly-Zt-Dwr"; */
 "Uly-Zt-Dwr.configuration.title" = "Calliope mini auswählen";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Xhu-PJ-3s9"; */
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Uly-Zt-Dwr"; */
 "Uly-Zt-Dwr.normalTitle" = "Calliope mini auswählen";
 
-/* Class = "UILabel"; text = "1. Programm 5 starten\n2. Schütteln\n3. LED-Muster eingeben"; ObjectID = "lTg-DP-YaK"; */
-"lTg-DP-YaK.text" = "1. Programm 5 starten\n2. Schütteln\n3. LED-Muster eingeben";

@@ -8,19 +8,13 @@
 
 import UIKit
 import MobileCoreServices
+import UniformTypeIdentifiers
 
 class PlaygroundSnippetTableViewController: UITableViewController, UITableViewDragDelegate {
 
     var secondary: CodeSnippetController? {
 
-        if #available(iOS 14.0, *) {
-            let secondary = splitViewController?.viewController(for: .secondary) as? CodeSnippetController
-            if secondary != nil {
-                return secondary
-            }
-        }
-
-        let secondary = (splitViewController?.viewControllers.last as? UINavigationController)?.viewControllers.first as? CodeSnippetController
+        let secondary = splitViewController?.viewController(for: .secondary) as? CodeSnippetController
         if secondary != nil {
             return secondary
         }
@@ -109,7 +103,7 @@ class PlaygroundSnippetTableViewController: UITableViewController, UITableViewDr
         guard let codeSnippet = (tableView.cellForRow(at: indexPath) as? PlaygroundSnippetTableViewCell)?.snippet, let data = codeSnippet.content.data(using: .utf8) else {
             return []
         }
-        let itemProvider = NSItemProvider(item: data as NSData, typeIdentifier: kUTTypeUTF8PlainText as String)
+        let itemProvider = NSItemProvider(item: data as NSData, typeIdentifier: UTType.utf8PlainText.identifier as String)
         let dragItem = UIDragItem(itemProvider: itemProvider)
         return [dragItem]
     }

@@ -1,8 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "programms_EN_gross.png",
       "idiom" : "universal",
+      "filename" : "programms_EN_gross.png",
       "scale" : "1x"
     },
     {
@@ -14,9 +14,9 @@
       "scale" : "3x"
     },
     {
-      "filename" : "programms_DE_gross.png",
-      "idiom" : "universal",
       "locale" : "de",
+      "idiom" : "universal",
+      "filename" : "programms_DE_gross.png",
       "scale" : "1x"
     },
     {
@@ -31,8 +31,8 @@
     }
   ],
   "info" : {
-    "author" : "xcode",
-    "version" : 1
+    "version" : 1,
+    "author" : "xcode"
   },
   "properties" : {
     "localizable" : true

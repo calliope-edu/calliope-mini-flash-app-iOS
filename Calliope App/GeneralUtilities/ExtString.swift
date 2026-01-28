@@ -5,8 +5,6 @@ extension String: LocalizedError {
 }
 
 extension String {
-	//TODO: subscript has been deprecated for a good reason, maybe replace
-
 	subscript (i: Int) -> Character {
 
 		// wraps out of bounds indices

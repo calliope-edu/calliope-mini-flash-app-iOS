@@ -15,26 +15,39 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
     private let reuseIdentifierMakeCode = "makecodeEditorCell"
     private let reuseIdentifierNepo = "nepoEditorCell"
     private let reuseIdentifierOfflineEditor = "localEditorCell"
-    private let reuseIdentifierPlayground = "playgroundCell"
+    private let reuseIdentifierArcade = "arcadeCell"
     private let reuseIdentifierCalliopeBlocks = "calliopeBlocksCell"
+    private let reuseIdentifierMicroPython = "microPythonEditorCell"
+    private let reuseIdentifierCampus = "campusEditorCell"
+    private let reuseIdentifierBlocksEditor = "calliopeBlocksEditorCell"
 
     private lazy var activatedEditors: [SettingsKey] = {
         var keys: [SettingsKey] = []
         let settings = UserDefaults.standard
+        let isPhone = UIDevice.current.userInterfaceIdiom == .phone
         if settings.bool(forKey: SettingsKey.localEditor.rawValue) {
             keys.append(.localEditor)
         }
         if settings.bool(forKey: SettingsKey.makeCode.rawValue) {
             keys.append(.makeCode)
         }
-        if settings.bool(forKey: SettingsKey.calliopeBlocks.rawValue) {
-            keys.append(.calliopeBlocks)
-        }
-        if settings.bool(forKey: SettingsKey.playgrounds.rawValue) {
-            keys.append(.playgrounds)
-        }
         if settings.bool(forKey: SettingsKey.roberta.rawValue) {
             keys.append(.roberta)
+        }
+        if settings.bool(forKey: SettingsKey.calliopeBlocks.rawValue)  && !isPhone { keys.append(.calliopeBlocks)
+        }
+//        TODO: Next release, we will include the Blocks Editor, but for now we disable this
+//        if settings.bool(forKey: SettingsKey.blocksMiniEditor.rawValue) {
+//            keys.append(.blocksMiniEditor)
+//        }
+        if settings.bool(forKey: SettingsKey.microPython.rawValue) {
+            keys.append(.microPython)
+        }
+        if settings.bool(forKey: SettingsKey.campus.rawValue) {
+            keys.append(.campus)
+        }
+        if settings.bool(forKey: SettingsKey.arcade.rawValue) {
+            keys.append(.arcade)
         }
        
         return keys
@@ -75,14 +88,21 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
         switch editorKey {
         case .makeCode:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierMakeCode, for: indexPath) as! EditorCollectionViewCell
+        case .microPython:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierMicroPython, for: indexPath) as! EditorCollectionViewCell
         case .roberta:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierNepo, for: indexPath) as! EditorCollectionViewCell
-        case .playgrounds:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierPlayground, for: indexPath) as! EditorCollectionViewCell
+        case .arcade:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierArcade, for: indexPath) as! EditorCollectionViewCell
         case .localEditor:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierOfflineEditor, for: indexPath) as! EditorCollectionViewCell
         case .calliopeBlocks:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierCalliopeBlocks, for: indexPath) as! EditorCollectionViewCell
+        case .campus:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierCampus, for: indexPath) as! EditorCollectionViewCell
+        case .blocksMiniEditor:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierBlocksEditor, for: indexPath) as! EditorCollectionViewCell
+
         default:
             fatalError("invalid key found in active editors array")
         }
@@ -139,16 +159,22 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
         EditorViewController(coder: coder, editor: RobertaEditor())
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        //we use segue initialization for ios13.
-        // When ios11 compatibility is dropped, this method can be deleted.
-        if #available(iOS 13.0, *) { return }
-        
-        if segue.identifier == "openMakecode" {
-            (segue.destination as! EditorViewController).editor = MakeCode()
-        } else if segue.identifier == "openNepo" {
-            (segue.destination as! EditorViewController).editor = RobertaEditor()
+    @IBSegueAction func createMicroPythonEditorWithCoder(_ coder: NSCoder, sender: Any?) -> EditorViewController? {
+        EditorViewController(coder: coder, editor: MicroPython())
+    }
+    
+    @IBSegueAction func createCampusEditor(_ coder: NSCoder, sender: Any?) -> EditorViewController? {
+        EditorViewController(coder: coder, editor: CampusEditor())
+    }
+    
+    @IBSegueAction func createBlocksEditor(_ coder: NSCoder, sender: Any?) -> EditorViewController? {
+        EditorViewController(coder: coder, editor: BlocksMiniEditor())
+    }
+    
+    @IBSegueAction func createArcadeStartView(_ coder: NSCoder, sender: Any?) -> ArcadeStartViewController? {
+        let storyboard = UIStoryboard(name: "PlaygroundSnippets", bundle: nil)
+        return storyboard.instantiateViewController(identifier: "ArcadeStartViewController") { coder in
+            ArcadeStartViewController(coder: coder)
         }
-        
     }
 }

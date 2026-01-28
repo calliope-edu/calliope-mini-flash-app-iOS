@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="JSJ-uf-MRY">
+    <device id="ipad11_0rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Help-->
+        <scene sceneID="ghl-IB-trR">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="JSJ-uf-MRY" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Help" image="IconHelp" id="xOk-Ya-FCk"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="6IO-Lz-xI9">
+                        <rect key="frame" x="0.0" y="24" width="834" height="50"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="heD-1d-5dc" kind="relationship" relationship="rootViewController" id="aOI-wN-Pea"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QNs-cz-Thf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="175" y="5"/>
+        </scene>
+        <!--Help Web View Controller-->
+        <scene sceneID="upg-BM-eCN">
+            <objects>
+                <viewController id="heD-1d-5dc" customClass="HelpWebViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <wkWebView key="view" contentMode="scaleToFill" id="icn-Vs-jLD">
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <wkWebViewConfiguration key="configuration">
+                            <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                            <wkPreferences key="preferences"/>
+                        </wkWebViewConfiguration>
+                    </wkWebView>
+                    <navigationItem key="navigationItem" id="NWH-mp-5K3"/>
+                    <connections>
+                        <outlet property="webView" destination="icn-Vs-jLD" id="3dh-1a-A1T"/>
+                        <segue destination="FYs-vd-jgb" kind="show" identifier="showOfflineFallback" id="bBN-OF-nQF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aKq-UK-ePP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="671" y="687"/>
+        </scene>
+        <!--onboardingOffline-->
+        <scene sceneID="QMM-4s-PCv">
+            <objects>
+                <viewController restorationIdentifier="onboardingOffline" storyboardIdentifier="onboardingOffline" title="onboardingOffline" id="FYs-vd-jgb" customClass="OnboardingOfflineViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gal-2M-bAx">
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QNd-9I-4aS">
+                                <rect key="frame" x="0.0" y="74" width="834" height="1100"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="bel-hd-wTh">
+                                        <rect key="frame" x="30" y="0.0" width="714" height="125.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Du bist leider offline. Dennoch haben wir ein paar Informationen für dich!" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KhZ-kE-mKD">
+                                                <rect key="frame" x="0.0" y="0.0" width="714" height="82"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Diese Seite ist zurzeit noch in Arbeit." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pyJ-dY-Vya">
+                                                <rect key="frame" x="0.0" y="92" width="714" height="33.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="bel-hd-wTh" firstAttribute="leading" secondItem="ObE-Fj-sWU" secondAttribute="leading" id="4Hh-SI-0ZV"/>
+                                    <constraint firstItem="bel-hd-wTh" firstAttribute="top" secondItem="ObE-Fj-sWU" secondAttribute="top" id="Ir9-hF-tYe"/>
+                                    <constraint firstItem="bel-hd-wTh" firstAttribute="trailing" secondItem="ObE-Fj-sWU" secondAttribute="trailing" id="MNu-En-f87"/>
+                                    <constraint firstItem="bel-hd-wTh" firstAttribute="bottom" secondItem="ObE-Fj-sWU" secondAttribute="bottom" id="fQb-XS-BRe"/>
+                                    <constraint firstItem="bel-hd-wTh" firstAttribute="trailing" secondItem="ObE-Fj-sWU" secondAttribute="trailing" id="oTN-da-IT5"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="ObE-Fj-sWU"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="sMY-2V-w2e"/>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6uy-id-jAB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="6uy-id-jAB" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bel-hd-wTh" secondAttribute="trailing" constant="30" id="24I-P1-OEx"/>
+                            <constraint firstItem="QNd-9I-4aS" firstAttribute="trailing" secondItem="6uy-id-jAB" secondAttribute="trailing" id="AwR-PI-qAG"/>
+                            <constraint firstItem="QNd-9I-4aS" firstAttribute="top" secondItem="6uy-id-jAB" secondAttribute="top" id="O7T-EV-Fhc"/>
+                            <constraint firstItem="QNd-9I-4aS" firstAttribute="leading" secondItem="6uy-id-jAB" secondAttribute="leading" id="S1r-ad-uDn"/>
+                            <constraint firstItem="bel-hd-wTh" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6uy-id-jAB" secondAttribute="leading" constant="30" id="VQM-H9-5fm"/>
+                            <constraint firstAttribute="trailing" secondItem="QNd-9I-4aS" secondAttribute="trailing" id="c2Y-dX-nRv"/>
+                            <constraint firstItem="QNd-9I-4aS" firstAttribute="centerY" secondItem="6uy-id-jAB" secondAttribute="centerY" id="cFu-zC-rpL"/>
+                            <constraint firstItem="6uy-id-jAB" firstAttribute="bottom" secondItem="QNd-9I-4aS" secondAttribute="bottom" id="zTH-qa-97u"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="zej-DQ-1pF"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UDV-TU-cRR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1356" y="-6"/>
+        </scene>
+    </scenes>
+    <color key="tintColor" name="calliope-lilablau"/>
+    <resources>
+        <image name="IconHelp" width="30" height="33"/>
+        <namedColor name="calliope-lilablau">
+            <color red="0.3919999897480011" green="0.46200001239776611" blue="0.99199998378753662" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -38,7 +38,7 @@
 "Connect to enable uploading programs" = "Connect to Calliope mini to enable uploading programs";
 
 /* No comment provided by engineer. */
-"Connection to calliope timed out!" = "Connection to Calliope mini timed out!";
+"Connection to Calliope mini timed out!" = "Connection to Calliope mini timed out!";
 
 /* No comment provided by engineer. */
 "Could not find connected calliope in discovered calliopes" = "Could not find connected Calliope mini";
@@ -89,7 +89,7 @@
 "Finished" = "Done";
 
 /* No comment provided by engineer. */
-"Flip through the programs by pressing the keys A or B" = "Gehe durch die Programme, indem du die Tasten A und B drückst";
+"Flip through the programs by pressing the keys A or B" = "Flip through the programs by pressing the keys A or B";
 
 /* No comment provided by engineer. */
 "Greetings" = "Welcome";
@@ -263,14 +263,87 @@
 "Sichern" = "Save";
 
 /* No comment provided by engineer. */
-"Der Calliope mini startet das Programm, sobald die Übertragung beendet ist." = "The Calliope mini starts the programme as soon as the transmission is finished.";
+"Der Calliope mini startet das Programm, sobald die Übertragung beendet ist." = "The Calliope mini starts the program as soon as the transmission is finished.";
 
 /* No comment provided by engineer. */
 "Übertragung läuft" = "Transmission running";
 
+/* (No Comment) */
+"Übertragung abgeschlossen" = "Transmission completed";
+
 /* No comment provided by engineer. */
-"Vor der nächsten Übertragung: \n 1. USB-Verbindung trennen \n 2. Batteriefach ausschalten" = "Before the next transfer: \n 1. Disconnect the USB connection \n 2. Switch off the battery compartment";
+"Vor der nächsten Verbindung muss die Verbindung wieder hergestellt werden und der Calliope mini ausgewählt werden." = "Before the next connection, the connection must be re-established and the Calliope mini selected.";
 
-"Übertragung abgeschlossen" = "Transfer completed";
+/* No comment provided by engineer. */
+"https://calliope.cc/programmieren/mobil/ipad#sensordaten" = "https://calliope.cc/en/coding/mobile/ipad#sensordata";
 
-"Calliope mini verbinden" = "Connect a Calliope mini";
+/* (No Comment) */
+"Calliope mini verbinden!" = "Connect a Calliope mini!";
+
+/* (No Comment) */
+"Verbindung notwendig, um Daten anzeigen zu lassen." = "Connection required for data collection.";
+
+/* (No Comment) */
+"Datalogger Daten Anzeigen" = "View Datalogger";
+
+/* (No Comment) */
+"Datalogger Download fehlgeschlagen!" = "Datalogger Download Failed!";
+
+/* (No Comment) */
+"Es gab ein Problem beim Herunterladen der Datalogger-Daten von Ihrem Calliope mini. Bitte stellen Sie sicher, dass Sie mit dem Calliope verbunden sind, und versuchen Sie es erneut." = "There was an issue downloading the datalogger data from your Calliope mini. Please ensure you are connected to the Calliope mini and try again.";
+
+/* (No Comment) */
+"Übertragung der Datalogger-Daten" = "Transfering Datalogger Data";
+
+/**/
+"Datalogger CSV erfolgreich heruntergeladen!" = "Datalogger CSV successfully downloaded!";
+
+"Fehler beim Herunterladen der Datalogger CSV!" = "Failed to download Datalogger CSV!";
+
+"Du findest die CSV-Datei mit den Datalogger-Daten im Calliope-Verzeichnis  auf deinem Gerät, unter den namen MY_DATA.csv" = "You can find the CSV file containing your datalogger data, named MY_DATA.csv, in the Calliope directory on your device.";
+
+"Der Download der CSV-Datei mit deinen Datalogger-Daten war nicht erfolgreich." = "The download of the CSV file containing your datalogger data was unsuccessful.";
+
+
+/* (No Comment) */
+
+/* Campus Editor */
+"Download erfolgreich!" = "Session data successfully downloaded!";
+
+"Download fehlgeschlagen!" = "Failed to download session data!";
+
+"Sie können die Sitzungsdaten im Calliope-Verzeichnis auf Ihrem Gerät finden." = "You can find the session data, in the Calliope directory on your device.";
+
+"Das Herunterladen der Sitzungsdaten ist fehlgeschlagen." = "The download of the session data was unsuccessful.";
+
+
+/* Bluetooth Alert */
+"Bluetooth deactivated" = "Bluetooth deactivated";
+
+"Bluetooth must be activated to send data to Calliope mini!" = "Bluetooth must be activated to send data to Calliope mini!";
+
+"Open Settings" = "Open Settings";
+
+/* Storage location alert */
+"Wrong storage location" = "Wrong storage location";
+
+"You have not selected a Calliope folder as storage location" = "You have not selected a Calliope folder as storage location";
+
+/* Export Data alert */
+"Export Data" = "Export Data";
+
+"Enter the CSV file name" = "Enter the CSV file name";
+
+"Cancel" = "Cancel";
+
+/* DFU/Upload alerts */
+"There is no connected Calliope mini in DFU mode" = "There is no connected Calliope mini in DFU mode";
+
+"Transmission running" = "Transmission running";
+
+"Calliope mini will start the program as soon as the transmission is complete." = "Calliope mini will start the program as soon as the transmission is complete.";
+
+"seconds" = "seconds";
+
+/* USB transfer duration message */
+"Duration: about 10 seconds" = "Takes  about 10 seconds";

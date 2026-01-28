@@ -47,10 +47,8 @@ class ProgramCollectionViewCell: AutoHeightCollectionViewCell {
 		didSet {
 			//changed from editing to not editing
 			if oldValue && !editing {
-				let newDescription = (descriptionText?.text != nil && descriptionText?.text != "") ? descriptionText!.text! : program.dateString
 				let newName = nameEditField.text ?? ""
 				setProgramName(newName)
-				setProgramDescription(newDescription)
 			}
 
             if !editing {
@@ -88,10 +86,6 @@ class ProgramCollectionViewCell: AutoHeightCollectionViewCell {
 			//rename was not successful
 			delegate.renameFailed(self, to: newName)
 		}
-	}
-
-	private func setProgramDescription(_ newDescription: String) {
-		//TODO: there is no description saved in a hex file yet
 	}
 
 	func changeTextExclusion() {

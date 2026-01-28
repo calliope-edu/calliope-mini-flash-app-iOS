@@ -10,37 +10,37 @@ import UIKit
 import WebKit
 
 class OnboardingDetailWebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
-    
+
     @IBOutlet weak var webView: WKWebView!
     var activityIndicator: UIActivityIndicatorView!
-    
-    
+
+
     private var url: URL = URL(string: "https://calliope.cc/programmieren/mobil/ipad")!
     private var initialLoadPerformed: Bool = false
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         webView.navigationDelegate = self
         webView.uiDelegate = self
         initialLoadPerformed = false
-        
+
         // add activity indicator
         activityIndicator = UIActivityIndicatorView()
         activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true
         activityIndicator.style = UIActivityIndicatorView.Style.medium
-        
+
         view.addSubview(activityIndicator)
         showActivityIndicator(show: true)
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         showActivityIndicator(show: true)
         webView.load(URLRequest(url: url))
     }
 
-    
+
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url {
             UIApplication.shared.open(url)
@@ -49,14 +49,14 @@ class OnboardingDetailWebViewController: UIViewController, WKNavigationDelegate,
             decisionHandler(.allow)
         }
     }
-    
+
     func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
         if let url = navigationAction.request.url {
             UIApplication.shared.open(url)
         }
         return nil
     }
-    
+
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         let backItem = UIBarButtonItem()
         backItem.title = "Zurück zur Online Ansicht"
@@ -66,7 +66,7 @@ class OnboardingDetailWebViewController: UIViewController, WKNavigationDelegate,
             initialLoadPerformed = true
         }
     }
-    
+
     func showActivityIndicator(show: Bool) {
         if show {
             activityIndicator.startAnimating()
@@ -74,7 +74,7 @@ class OnboardingDetailWebViewController: UIViewController, WKNavigationDelegate,
             activityIndicator.stopAnimating()
         }
     }
-    
+
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         showActivityIndicator(show: false)
     }

@@ -4,6 +4,7 @@
 /* Class = "UILabel"; text = "Copied snippet!"; ObjectID = "cIf-ra-SUA"; */
 "cIf-ra-SUA.text" = "Copied Snippet";
 
-/* Class = "UILabel"; text = "Verwende die Snippet Library mit dem Swift Playground. Wenn du in dem Swift Playground \"Calliope Mini - Vorlage\" arbeitest, kannst du die Snippets Library neben der Playgrounds App öffnen und die Codesnippets ganz bequem von der App in den Playground kopieren."; ObjectID = "sDg-74-hMi"; */
-"sDg-74-hMi.text" = "Use the Snippet Library with the Swift Playground. If you are working in the Swift Playground \"Calliope Mini - Template\", you can open the Snippets Library next to the Playgrounds app and easily copy the code snippets from the app to the Playground.";
+/* Class = "UILabel"; text = "Mit MakeCode Arcade kannst du Spiele für deinen Calliope mini erstellen und diese auf einem Display anzeigen lassen oder sogar einer Spielekonsole spielen. Die Übertragung der Datei funktioniert nur per USB-Kabel."; ObjectID = "sDg-74-hMi"; */
+"sDg-74-hMi.text" = "With MakeCode Arcade, you can create games for your Calliope mini and play them with an additional display or even a game console.
+The files can only be transferred via USB cable.";
 

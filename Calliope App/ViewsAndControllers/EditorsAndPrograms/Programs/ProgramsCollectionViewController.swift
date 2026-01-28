@@ -17,8 +17,11 @@ class ProgramsCollectionViewController: UICollectionViewController, ProgramCellD
     private let reuseIdentifierProgram = "uploadProgramCell"
 
     private lazy var hexFiles: [HexFile] = { () -> [HexFile] in
-        do { return try HexFileManager.stored() }
-        catch { fatalError("could not load files \(error)") }
+        do {
+            return try HexFileManager.stored()
+        } catch {
+            fatalError("could not load files \(error)")
+        }
     }()
 
     private var programSubscription: NSObjectProtocol!
@@ -31,7 +34,7 @@ class ProgramsCollectionViewController: UICollectionViewController, ProgramCellD
                 DispatchQueue.main.async {
                     self?.animateFileChange()
                 }
-        })
+            })
     }
 
     // MARK: UICollectionViewDataSource
@@ -49,23 +52,19 @@ class ProgramsCollectionViewController: UICollectionViewController, ProgramCellD
         cell = createProgramCell(collectionView, indexPath)
         return cell
     }
-    
+
     private func createProgramCell(_ collectionView: UICollectionView, _ indexPath: IndexPath) -> UICollectionViewCell {
         let cell: ProgramCollectionViewCell
-        
-        //TODO: Configure the cell
         cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierProgram, for: indexPath) as! ProgramCollectionViewCell
-
         cell.program = hexFiles[indexPath.row]
         cell.delegate = self
-        
         return cell
     }
-    
+
     private func animateFileChange() {
         let oldItems = hexFiles
         let newItems = (try? HexFileManager.stored()) ?? []
-        let changes = diff(old: oldItems, new: newItems)
+        let changes = diff(old: oldItems as [HexFile], new: newItems as [HexFile])
         collectionView.reload(changes: changes, section: 0, updateData: {
             self.hexFiles = newItems
         })
@@ -73,20 +72,48 @@ class ProgramsCollectionViewController: UICollectionViewController, ProgramCellD
 
     // MARK: UICollectionViewDelegate
 
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
     // Uncomment this method to specify if the specified item should be selected
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         return true
     }
-    
+
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        return
+        guard let cell = collectionView.cellForItem(at: indexPath) as? ProgramCollectionViewCell else {
+            return
+        }
+        
+        let alert = UIAlertController(title: cell.program.name, message: nil, preferredStyle: .actionSheet)
+        
+        let transferAction = UIAlertAction(title: NSLocalizedString("Transfer", comment: ""), style: .default) { _ in
+            self.uploadProgram(of: cell)
+        }
+        transferAction.setValue(UIImage(systemName: "arrow.left.arrow.right"), forKey: "image")
+        alert.addAction(transferAction)
+        
+        let shareAction = UIAlertAction(title: NSLocalizedString("Share", comment: ""), style: .default) { _ in
+            cell.share()
+        }
+        shareAction.setValue(UIImage(systemName: "square.and.arrow.up"), forKey: "image")
+        alert.addAction(shareAction)
+        
+        let renameAction = UIAlertAction(title: NSLocalizedString("Rename", comment: ""), style: .default) { _ in
+            cell.edit()
+        }
+        renameAction.setValue(UIImage(systemName: "rectangle.and.pencil.and.ellipsis"), forKey: "image")
+        alert.addAction(renameAction)
+        
+        let deleteAction = UIAlertAction(title: NSLocalizedString("Delete", comment: ""), style: .destructive) { _ in
+            cell.delete()
+        }
+        deleteAction.setValue(UIImage(systemName: "trash"), forKey: "image")
+        alert.addAction(deleteAction)
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel))
+        
+        alert.popoverPresentationController?.sourceView = cell
+        alert.popoverPresentationController?.sourceRect = cell.bounds
+        
+        present(alert, animated: true)
     }
 
     // menu
@@ -94,7 +121,7 @@ class ProgramsCollectionViewController: UICollectionViewController, ProgramCellD
     override var canBecomeFirstResponder: Bool {
         return true
     }
-    
+
     override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
         UIMenuController.shared.menuItems = [
             UIMenuItem(title: NSLocalizedString("Edit", comment: ""), action: Selector(("edit"))),
@@ -103,18 +130,25 @@ class ProgramsCollectionViewController: UICollectionViewController, ProgramCellD
         return true
     }
 
-    @available(iOS 13.0, *)
     override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedMenuElements -> UIMenu? in
             let actions: [UIMenuElement] = [
-                UIAction(title: NSLocalizedString("Transfer", comment: ""), image: UIImage(systemName: "arrow.left.arrow.right"), handler: { (action) in (
-                    self.uploadProgram(of: collectionView.cellForItem(at: indexPath) as! ProgramCollectionViewCell)) }),
-                UIAction(title: NSLocalizedString("Share", comment: ""), image: UIImage(systemName: "square.and.arrow.up"), handler: { (action) in (
-                            self.collectionView.cellForItem(at: indexPath) as? ProgramCollectionViewCell)?.share() }),
-                UIAction(title: NSLocalizedString("Rename", comment: ""), image: UIImage(systemName: "rectangle.and.pencil.and.ellipsis"), handler: { (action) in (
-                            self.collectionView.cellForItem(at: indexPath) as? ProgramCollectionViewCell)?.edit() }),
-                UIAction(title: NSLocalizedString("Delete", comment: ""), image: UIImage(systemName: "trash"), handler: { (action) in (
-                            self.collectionView.cellForItem(at: indexPath) as? ProgramCollectionViewCell)?.delete(nil) })
+                UIAction(title: NSLocalizedString("Transfer", comment: ""), image: UIImage(systemName: "arrow.left.arrow.right"), handler: { (action) in
+                    (
+                        self.uploadProgram(of: collectionView.cellForItem(at: indexPath) as! ProgramCollectionViewCell))
+                }),
+                UIAction(title: NSLocalizedString("Share", comment: ""), image: UIImage(systemName: "square.and.arrow.up"), handler: { (action) in
+                    (
+                        self.collectionView.cellForItem(at: indexPath) as? ProgramCollectionViewCell)?.share()
+                }),
+                UIAction(title: NSLocalizedString("Rename", comment: ""), image: UIImage(systemName: "rectangle.and.pencil.and.ellipsis"), handler: { (action) in
+                    (
+                        self.collectionView.cellForItem(at: indexPath) as? ProgramCollectionViewCell)?.edit()
+                }),
+                UIAction(title: NSLocalizedString("Delete", comment: ""), image: UIImage(systemName: "trash"), handler: { (action) in
+                    (
+                        self.collectionView.cellForItem(at: indexPath) as? ProgramCollectionViewCell)?.delete(nil)
+                })
             ]
             return UIMenu(title: "", children: actions)
         }
@@ -128,7 +162,8 @@ class ProgramsCollectionViewController: UICollectionViewController, ProgramCellD
     }
 
     //dummy method for having some selector
-    @objc func deleteSelectedProgram(sender: Any) {}
+    @objc func deleteSelectedProgram(sender: Any) {
+    }
 
     // MARK: UICollectionViewDelegateFlowLayout
 
@@ -153,9 +188,10 @@ class ProgramsCollectionViewController: UICollectionViewController, ProgramCellD
     }
 
     func renameFailed(_ cell: ProgramCollectionViewCell, to newName: String) {
-        let alertViewController = UIAlertController(title: String(format:NSLocalizedString("Could not rename %@", comment: ""), cell.program.name), message: String(format:NSLocalizedString("The name %@ could not be given to %@. The name for a program must be unique and not empty.", comment: ""), newName, cell.program.name), preferredStyle: .alert)
-        alertViewController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default)
-        { _ in self.dismiss(animated: true, completion: nil) })
+        let alertViewController = UIAlertController(title: String(format: NSLocalizedString("Could not rename %@", comment: ""), cell.program.name), message: String(format: NSLocalizedString("The name %@ could not be given to %@. The name for a program must be unique and not empty.", comment: ""), newName, cell.program.name), preferredStyle: .alert)
+        alertViewController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
+            self.dismiss(animated: true, completion: nil)
+        })
 
         alertViewController.popoverPresentationController?.sourceView = cell
         alertViewController.popoverPresentationController?.sourceRect = cell.name.frame
@@ -170,13 +206,13 @@ class ProgramsCollectionViewController: UICollectionViewController, ProgramCellD
     }
 
     func deleteProgram(of cell: ProgramCollectionViewCell) {
-        let alert = UIAlertController(title: NSLocalizedString("Delete?", comment: ""), message: String(format:NSLocalizedString("Do you want to delete %@?", comment: ""), cell.program.name), preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("Delete?", comment: ""), message: String(format: NSLocalizedString("Do you want to delete %@?", comment: ""), cell.program.name), preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("Delete", comment: ""), style: .destructive) { _ in
             do {
                 try HexFileManager.delete(file: cell.program)
                 self.animateFileChange()
             } catch {
-                let alert = UIAlertController(title: NSLocalizedString("Delete failed", comment: ""), message: String(format:"Could not delete %@\n", cell.program.name) + error.localizedDescription, preferredStyle: .alert)
+                let alert = UIAlertController(title: NSLocalizedString("Delete failed", comment: ""), message: String(format: "Could not delete %@\n", cell.program.name) + error.localizedDescription, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default))
                 self.present(alert, animated: true)
             }
@@ -189,4 +225,6 @@ class ProgramsCollectionViewController: UICollectionViewController, ProgramCellD
         NotificationCenter.default.removeObserver(programSubscription!)
     }
 
+
 }
+

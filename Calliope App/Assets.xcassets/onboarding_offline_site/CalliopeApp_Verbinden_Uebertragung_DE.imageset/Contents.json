@@ -1,21 +1,21 @@
 {
   "images" : [
     {
-      "filename" : "CalliopeApp_Verbinden_Uebertragung_DE.svg",
-      "idiom" : "universal"
+      "idiom" : "universal",
+      "filename" : "CalliopeApp_Verbinden_Uebertragung_DE.svg"
     },
     {
-      "filename" : "CalliopeApp_Verbinden_Uebertragung_EN.svg",
       "idiom" : "universal",
+      "filename" : "CalliopeApp_Verbinden_Uebertragung_EN.svg",
       "locale" : "en"
     }
   ],
   "info" : {
-    "author" : "xcode",
-    "version" : 1
+    "version" : 1,
+    "author" : "xcode"
   },
   "properties" : {
-    "localizable" : true,
-    "preserves-vector-representation" : true
+    "preserves-vector-representation" : true,
+    "localizable" : true
   }
 }

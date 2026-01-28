@@ -1,0 +1,60 @@
+/* Class = "UILabel"; text = "1. This template can be used with the extension:\n"; ObjectID = "6lB-5y-zkN"; */
+"6lB-5y-zkN.text" = "1. Dazu kann dieses Template mit der Erweiterung verwendet werden:\n";
+
+/* Class = "UILabel"; text = "Data can be recorded on the Calliope mini 3. With the datalogger extension data can be saved in a table and also displayed as a graph.\n"; ObjectID = "80R-el-hVU"; */
+"80R-el-hVU.text" = "Es können auf dem Calliope mini 3 Daten aufgezeichnet werden. Daten können mit der Erweiterung Datenlogger in einer Tabelle gespeichert und zusätzlich als Grafik dargestellt werden.\n";
+
+/* Class = "UIButton"; configuration.title = "Sensordaten aufzeichnen"; ObjectID = "bkL-vr-KqE"; */
+"bkL-vr-KqE.configuration.title" = "Sensordaten aufzeichnen";
+
+/* Class = "UILabel"; text = "Detailed instructions can be found on the website:"; ObjectID = "cMt-qa-gH9"; */
+"cMt-qa-gH9.text" = "Detaillierte Anweisungen findest du auf der Webseite:";
+
+/* Class = "UINavigationController"; title = "Sensordaten"; ObjectID = "cnw-wD-B2K"; */
+"cnw-wD-B2K.title" = "Sensorendaten";
+
+/* Class = "UILabel"; text = "Project Name"; ObjectID = "Dgf-wX-T07"; */
+"Dgf-wX-T07.text" = "Projektname";
+
+/* Class = "UILabel"; text = "Durchschnitt"; ObjectID = "dqZ-FU-7Ks"; */
+"dqZ-FU-7Ks.text" = "Durchschnitt";
+
+/* Class = "UINavigationItem"; title = "Sensordaten"; ObjectID = "DTy-e7-oGc"; */
+"DTy-e7-oGc.title" = "Sensordaten";
+
+/* Class = "UILabel"; text = "Here you will find your projects. You can view, process, and share the recorded data, as well as download it as a table."; ObjectID = "gYD-YY-Lxx"; */
+"gYD-YY-Lxx.text" = "Hier findest du bereits erstellte Projekte. Die aufgenommenen Daten kannst du dir anschauen, weiterverarbeiten und teilen sowie als Tabelle herunterladen.";
+
+/* Class = "UIButton"; configuration.title = "Datalogger View"; ObjectID = "kac-2O-C6o"; */
+"kac-2O-C6o.configuration.title" = "Datenlogger Ansicht";
+
+/* Class = "UITabBarItem"; title = "Sensordaten"; ObjectID = "Kjn-CJ-sdt"; */
+"Kjn-CJ-sdt.title" = "Sensordaten";
+
+/* Class = "UILabel"; text = "\n2. Create the program with the respective data and define the required columns and set the corresponding (sensor) data as values.\n\n3. Transfer the program to your Calliope mini. \n\n4. Open the data logger view.\n"; ObjectID = "M5s-gg-ZTZ"; */
+"M5s-gg-ZTZ.text" = "\n2. Erstelle das Programm mit den jeweiligen Daten und definiere benötigte Spalten und setze entsprechende (Sensor-)Daten als Werte.\n\n3. Übertrage das Programm auf deinen Calliope mini.\n\n4. Öffne die Datenlogger Ansicht.\n";
+
+/* Class = "UILabel"; text = "1. Open MakeCode Editor\n                                                                    2. Add the Bluetooth extension to your project"; ObjectID = "N71-qD-IZn"; */
+"N71-qD-IZn.text" = "1. Starte MakeCode. \n2. Lade die Bluetooth-Erweiterung in dein Projekt oder starte das Template:";
+
+/* Class = "UIViewController"; title = "Sensordaten"; ObjectID = "nJx-VD-M8y"; */
+"nJx-VD-M8y.title" = "Sensoren und Projekte";
+
+/* Class = "UILabel"; text = "3. Select the desired services for your program to view or record.\n                                                                    4. Start the program on your Calliope mini."; ObjectID = "OaB-k3-pOM"; */
+"OaB-k3-pOM.text" = "3. Wähle die gewünschten Dienste für dein Programm aus, um diese anzusehen oder aufzunehmen.\n4. Starte das Programm auf deinem Calliope mini.";
+
+/* Class = "UILabel"; text = "Current"; ObjectID = "On7-FU-yd0"; */
+"On7-FU-yd0.text" = "Aktuell";
+
+/* Class = "UILabel"; text = "Send sensor data directly from Calliope mini to the app"; ObjectID = "Ov1-de-29k"; */
+"Ov1-de-29k.text" = "Sensordaten vom Calliope mini direkt an die App senden";
+
+/* Class = "UILabel"; text = "Maximum"; ObjectID = "QgC-6o-TvH"; */
+"QgC-6o-TvH.text" = "Maximum";
+
+/* Class = "UILabel"; text = "Minimum"; ObjectID = "WEn-Va-AIJ"; */
+"WEn-Va-AIJ.text" = "Minimum";
+
+/* Class = "UIViewController"; title = "Project Overview"; ObjectID = "xWF-af-2iy"; */
+"xWF-af-2iy.title" = "Projektübersicht";
+

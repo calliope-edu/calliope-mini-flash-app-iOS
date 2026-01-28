@@ -37,6 +37,12 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
+			<string>makecode.calliope.cc</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
 			<string>cc.calliope.calliopehex</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
@@ -58,11 +64,15 @@
 		<true/>
 	</dict>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>To connect to the calliope, this app uses bluetooth!</string>
+	<string>To connect to Calliope mini, this app uses bluetooth!</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>To connect to the calliope, this app uses bluetooth!</string>
 	<key>NSCameraUsageDescription</key>
 	<string>To read a QR Code this app uses the camera. </string>
+	<key>NSLocationUsageDescription</key>
+	<string>To record location of specific sensor value, this apps needs to have access to the current location!</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>To record location connected to a sensor value, this apps needs to have access to the current location!</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>To use Open Roberta, this app uses the Microphone</string>
 	<key>UIAppFonts</key>

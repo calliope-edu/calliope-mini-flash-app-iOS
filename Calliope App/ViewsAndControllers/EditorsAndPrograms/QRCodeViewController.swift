@@ -40,6 +40,9 @@ class QRCodeViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         qrCodeFrameView.layer.borderWidth = 4
         view.addSubview(qrCodeFrameView)
         openMakeCodeButton.isHidden = true
+        
+        // Kamera-Orientierung setzen
+        cameraView.layoutView()
     }
     
     public func changeQrCodeFrameViewStaten(isHidden: Bool) {
@@ -80,7 +83,7 @@ class QRCodeViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
             }
             changeQrCodeFrameViewStaten(isHidden: false)
             qrCodeFrameView.frame = self.view.convert(barCodeObject.bounds, from: cameraView.coordinateSpace)
-            // ToDo: Extend Validation of URLs
+            
             if let stringValue = metadataObj.stringValue, stringValue.lowercased().contains("makecode"){
                 openMakeCodeButton.isHidden = false
                 foundQrCodeString = stringValue
@@ -164,16 +167,24 @@ class PreviewView: UIView, AVCaptureMetadataOutputObjectsDelegate {
     }
     
     public func layoutView() {
-        self.previewLayer.connection?.videoOrientation = self.transformOrientation(orientation: UIDevice.current.orientation)
-        self.previewLayer.frame.size = self.frame.size
+        // Nutze die Interface-Orientierung statt Device-Orientierung
+        let orientation: UIInterfaceOrientation
+        if #available(iOS 15.0, *) {
+            orientation = self.window?.windowScene?.interfaceOrientation ?? .portrait
+        } else {
+            orientation = UIApplication.shared.windows.first?.windowScene?.interfaceOrientation ?? .portrait
+        }
+        
+        self.previewLayer.connection?.videoOrientation = self.transformOrientation(orientation: orientation)
+        self.previewLayer.frame = self.bounds
     }
-    
-    func transformOrientation(orientation: UIDeviceOrientation) -> AVCaptureVideoOrientation {
+
+    func transformOrientation(orientation: UIInterfaceOrientation) -> AVCaptureVideoOrientation {
         switch orientation {
         case .landscapeLeft:
-            return .landscapeRight
-        case .landscapeRight:
             return .landscapeLeft
+        case .landscapeRight:
+            return .landscapeRight
         case .portraitUpsideDown:
             return .portraitUpsideDown
         default:

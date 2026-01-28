@@ -1,9 +1,5 @@
-
 /* Class = "UILabel"; text = "Calliope mini V2 / V1"; ObjectID = "0V7-vc-c22"; */
 "0V7-vc-c22.text" = "Calliope mini V2 / V1";
-
-/* Class = "UIViewController"; title = "onboardingOnline"; ObjectID = "36R-pX-sEj"; */
-"36R-pX-sEj.title" = "onboardingOnline";
 
 /* Class = "UILabel"; text = "Verbinden"; ObjectID = "8hk-NK-t7M"; */
 "8hk-NK-t7M.text" = "Verbinden";
@@ -17,6 +13,12 @@
 /* Class = "UILabel"; text = "Programm übertragen"; ObjectID = "GSK-P2-HMZ"; */
 "GSK-P2-HMZ.text" = "Programm übertragen";
 
+/* Class = "UIViewController"; title = "onboardingOffline"; ObjectID = "im2-Km-TNH"; */
+"im2-Km-TNH.title" = "onboardingOffline";
+
+/* Class = "UILabel"; text = "- Über das rote Calliope mini Icon im Bereich Editoren und Programme öffnet sich das Verbindungsfenster\n- Individuelles ID-Muster des Calliope mini auf die Matrix übertragen\n- Wird der Calliope mini gefunden, erscheint eine grüne Schaltfläche\n- Verbinden bestätigen über das Drücken der grünen Schaltfläche"; ObjectID = "p0t-n4-t9x"; */
+"p0t-n4-t9x.text" = "- Über das rote Calliope mini Icon im Bereich Editoren und Programme öffnet sich das Verbindungsfenster\n- Individuelles ID-Muster des Calliope mini auf die Matrix übertragen\n- Wird der Calliope mini gefunden, erscheint eine grüne Schaltfläche\n- Verbinden bestätigen über das Drücken der grünen Schaltfläche";
+
 /* Class = "UILabel"; text = "- Reset Taste 3 x drücken\n- ID-Muster erscheint auf dem Calliope mini"; ObjectID = "Pnh-Fp-zv8"; */
 "Pnh-Fp-zv8.text" = "- Reset Taste 3 x drücken\n- ID-Muster erscheint auf dem Calliope mini";
 
@@ -26,11 +28,6 @@
 /* Class = "UILabel"; text = "Bluetooth Modus starten"; ObjectID = "XZs-1p-JIk"; */
 "XZs-1p-JIk.text" = "Bluetooth Modus starten";
 
-/* Class = "UIViewController"; title = "onboardingOffline"; ObjectID = "im2-Km-TNH"; */
-"im2-Km-TNH.title" = "onboardingOffline";
-
-/* Class = "UILabel"; text = "- Über das rote Calliope mini Icon im Bereich Editoren und Programme öffnet sich das Verbindungsfenster\n- Individuelles ID-Muster des Calliope mini auf die Matrix übertragen\n- Wird der Calliope mini gefunden, erscheint eine grüne Schaltfläche\n- Verbinden bestätigen über das Drücken der grünen Schaltfläche"; ObjectID = "p0t-n4-t9x"; */
-"p0t-n4-t9x.text" = "- Über das rote Calliope mini Icon im Bereich Editoren und Programme öffnet sich das Verbindungsfenster\n- Individuelles ID-Muster des Calliope mini auf die Matrix übertragen\n- Wird der Calliope mini gefunden, erscheint eine grüne Schaltfläche\n- Verbinden bestätigen über das Drücken der grünen Schaltfläche";
-
 /* Class = "UILabel"; text = "- Tasten A+B gedrückt halten\n- Reset Taste für 1 Sekunde zusätzlich drücken\n- Tasten A+B gedrückt halten bis die Bluetooth-Animation beendet ist\n- ID-Muster erscheint auf dem Calliope mini"; ObjectID = "yvV-FM-ayf"; */
 "yvV-FM-ayf.text" = "- Tasten A+B gedrückt halten\n- Reset Taste für 1 Sekunde zusätzlich drücken\n- Tasten A+B gedrückt halten bis die Bluetooth-Animation beendet ist\n- ID-Muster erscheint auf dem Calliope mini";
+

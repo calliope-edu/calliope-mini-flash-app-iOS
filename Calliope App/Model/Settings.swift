@@ -19,8 +19,11 @@ public enum SettingsKey: String, CaseIterable {
     case roberta = "robertaOnPreference"
     case robertaUrl = "robertaUrlPreference"
 
-    case playgrounds = "playgroundsOnPreference"
-    case playgroundTemplateUrl = "playgroundTemplateUrlPreference"
+    case arcade = "arcadeOnPreference"
+    case arcadeUrl = "arcadeUrlPreference"
+    
+    case blocksMiniEditor = "blocksMiniOnPreferences"
+    case blocksMiniEditorUrl = "blocksMiniUrlPreference"
 
     case appVersion = "appVersionInformationPreference"
 
@@ -28,34 +31,48 @@ public enum SettingsKey: String, CaseIterable {
 
     case defaultProgramV3Url = "calliopeDefaultProgramV3HexPreference"
     case defaultProgramV1AndV2Url = "calliopeDefaultProgramV1andV2HexPreference"
-    
+
     case restoreLastMatrix = "restoreLastMatrixPreference" // key for IF to restore the matrix
     case lastMatrix = "lastMatrix" // key for storing the matrix
 
     case resetSettings = "resetSettingsPreference"
-    
+
     case calliopeBlocks = "calliopeBlocksOnPreference"
     case calliopeBlocksUrl = "calliopeBlocksUrlPreference"
+    
+    case microPython = "microPythonOnPreference"
+    case microPythonUrl = "microPythonUrlPreference"
+
+    case campus = "campusOnPreference"
+    case campusUrl = "campusOnUrlPreference"
 }
 
 public struct Settings {
 
     static var defaultNewsUrl = NSLocalizedString("https://calliope.cc/forumassets/news.json", comment: "The url for the news json");
-    static var defaultRobertaUrl = "https://lab.open-roberta.org?loadSystem=calliope2017"
-    static var defaultMakecodeUrl = "https://makecode.calliope.cc"
+    static var defaultOpenRobertaUrl = "https://app.calliope.cc/ios/openroberta/"
+
+    static var defaultMakecodeUrl = "https://makecode.calliope.cc/beta"
     static var defaultProgramV3 = "https://calliope.cc/downloads/miniV3_start.hex"
     static var defaultProgramV2andV1 = "https://calliope.cc/downloads/calliope-demo.hex"
-    static var defaultPlaygroundTemplateUrl = NSLocalizedString("https://calliope.cc/forumassets/snippets.json", comment: "The url for the snippets json")
+    static var defaultArcadeUrl = "https://arcade.makecode.com"
     static var defaultCalliopeBlocksUrl = "https://calliope.cc/downloads/blocks.hex"
-    
-    
+    static var defaultBlocksMiniEditorUrl = "https://blocks.calliope.cc"
+    static var defaultMicroPythonUrl = "https://python.calliope.cc?mobile=true"
+    static var defaultCampusUrl = "https://campus.calliope.cc"
+
     static var defaultLocalEditorEnabled = false
     static var defaultMakeCodeEnabled = true
+    static var defaultBlocksMiniEditorEnabled = UIDevice.current.userInterfaceIdiom != .phone
     static var defaultRobertaEnabled = true
+    static var defaultArcadeEnabled = true
     static var defaultPlaygroundsEnabled = UIDevice.current.userInterfaceIdiom != .phone
-
-    static var defaultRestoreLastMatrixEnabled = true
+    static var defaultMicroPythonEnabled = UIDevice.current.userInterfaceIdiom != .phone
+    static var defaultCampusEnabled = UIDevice.current.userInterfaceIdiom != .phone
     
+    
+    static var defaultRestoreLastMatrixEnabled = true
+
     static var defaultAppVersion = "1.0"
 
     static var defaultResetSettingsValue = false
@@ -71,16 +88,32 @@ public struct Settings {
         case .makecodeUrl:
             return defaultMakecodeUrl
 
+        case .blocksMiniEditor:
+            return defaultBlocksMiniEditorEnabled
+        case .blocksMiniEditorUrl:
+            return defaultBlocksMiniEditorUrl
+            
         case .roberta:
             return defaultRobertaEnabled
         case .robertaUrl:
-            return defaultRobertaUrl
+            return defaultOpenRobertaUrl
 
-        case .playgrounds:
-            return defaultPlaygroundsEnabled
-        case .playgroundTemplateUrl:
-            return defaultPlaygroundTemplateUrl
+        case .arcade:
+            return defaultArcadeEnabled
+        case .arcadeUrl:
+            return defaultArcadeUrl
+            
+        case .microPython:
+            return defaultMicroPythonEnabled
+        case .microPythonUrl:
+            return defaultMicroPythonUrl
 
+        case .campus:
+            return defaultCampusEnabled
+        case .campusUrl:
+            return defaultCampusUrl
+            
+            
         case .appVersion:
             return defaultAppVersion
 
@@ -103,22 +136,22 @@ public struct Settings {
         case .calliopeBlocksUrl:
             return defaultCalliopeBlocksUrl
         }
-}
+    }
 
-static func registerDefaults() {
-		var defaultSettings: [String: Any] = [:]
-		for key in SettingsKey.allCases {
-			let defaultValue = defaultForKey(key)
-			defaultSettings[key.rawValue] = defaultValue
-		}
-		UserDefaults.standard.register(defaults: defaultSettings)
-	}
-    
+    static func registerDefaults() {
+        var defaultSettings: [String: Any] = [:]
+        for key in SettingsKey.allCases {
+            let defaultValue = defaultForKey(key)
+            defaultSettings[key.rawValue] = defaultValue
+        }
+        UserDefaults.standard.register(defaults: defaultSettings)
+    }
+
     static func updateAppVersion() {
         let versionString: String? = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         UserDefaults.standard.set(versionString, forKey: SettingsKey.appVersion.rawValue)
     }
-    
+
 
     static func resetSettingsIfRequired() {
         if UserDefaults.standard.bool(forKey: SettingsKey.resetSettings.rawValue) {

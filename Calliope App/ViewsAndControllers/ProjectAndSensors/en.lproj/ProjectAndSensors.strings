@@ -1,0 +1,123 @@
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "1Ta-ld-GFK"; */
+"1Ta-ld-GFK.normalTitle" = "Button";
+
+/* Class = "UIButton"; configuration.title = " "; ObjectID = "5Mf-7E-FUy"; */
+"5Mf-7E-FUy.configuration.title" = " ";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "5Mf-7E-FUy"; */
+"5Mf-7E-FUy.normalTitle" = "Button";
+
+/* Class = "UINavigationItem"; title = "Sensoren und Projekte"; ObjectID = "DTy-e7-oGc"; */
+"DTy-e7-oGc.title" = "Sensordaten";
+
+/* Class = "UILabel"; text = "Project Name"; ObjectID = "Dgf-wX-T07"; */
+"Dgf-wX-T07.text" = "Project Name";
+
+/* Class = "UITabBarItem"; title = "Projects and Sensors"; ObjectID = "Kjn-CJ-sdt"; */
+"Kjn-CJ-sdt.title" = "Projects and Sensors";
+
+/* Class = "UICommand"; title = "Y"; ObjectID = "MlM-W4-l4K"; */
+"MlM-W4-l4K.title" = "Y";
+
+/* Class = "UICommand"; title = "X"; ObjectID = "MwQ-F7-XGJ"; */
+"MwQ-F7-XGJ.title" = "X";
+
+/* Class = "UILabel"; text = "Maximum"; ObjectID = "QgC-6o-TvH"; */
+"QgC-6o-TvH.text" = "Maximum";
+
+/* Class = "UILabel"; text = "Minimum"; ObjectID = "WEn-Va-AIJ"; */
+"WEn-Va-AIJ.text" = "Minimum";
+
+/* Class = "UICommand"; title = "Item 1"; ObjectID = "X8y-xM-amD"; */
+"X8y-xM-amD.title" = "Item 1";
+
+/* Class = "UIButton"; configuration.title = "Button"; ObjectID = "XBq-b6-ul5"; */
+"XBq-b6-ul5.configuration.title" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "XBq-b6-ul5"; */
+"XBq-b6-ul5.normalTitle" = "Button";
+
+/* Class = "UICommand"; title = "Item 1"; ObjectID = "Y6a-Xn-IV9"; */
+"Y6a-Xn-IV9.title" = "Item 1";
+
+/* Class = "UIButton"; configuration.title = "Record Sensordata"; ObjectID = "bkL-vr-KqE"; */
+"bkL-vr-KqE.configuration.title" = "Record Sensordata";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "bkL-vr-KqE"; */
+"bkL-vr-KqE.normalTitle" = "Button";
+
+/* Class = "UINavigationController"; title = "Sensorendaten"; ObjectID = "cnw-wD-B2K"; */
+"cnw-wD-B2K.title" = "Sensorendaten";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "dYM-tW-0Gf"; */
+"dYM-tW-0Gf.text" = "Label";
+
+/* Class = "UILabel"; text = "Average"; ObjectID = "dqZ-FU-7Ks"; */
+"dqZ-FU-7Ks.text" = "Average";
+
+/* Class = "UILabel"; text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."; ObjectID = "gYD-YY-Lxx"; */
+"gYD-YY-Lxx.text" = "Here you will find your projects. You can view, process, and share the recorded data, as well as download it as a table.";
+
+/* Class = "UICommand"; title = "Item 2"; ObjectID = "hTK-ZH-RqL"; */
+"hTK-ZH-RqL.title" = "Item 2";
+
+/* Class = "UIButton"; configuration.title = "Button"; ObjectID = "k32-SG-WvS"; */
+"k32-SG-WvS.configuration.title" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "k32-SG-WvS"; */
+"k32-SG-WvS.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "0.0"; ObjectID = "k7z-ya-z6E"; */
+"k7z-ya-z6E.text" = "0.0";
+
+/* Class = "UILabel"; text = "0.0"; ObjectID = "nBn-0t-SZp"; */
+"nBn-0t-SZp.text" = "0.0";
+
+/* Class = "UIViewController"; title = "Sensors and Projects"; ObjectID = "nJx-VD-M8y"; */
+"nJx-VD-M8y.title" = "Sensors and Projects";
+
+/* Class = "UILabel"; text = "0.0"; ObjectID = "rN9-hs-kc2"; */
+"rN9-hs-kc2.text" = "0.0";
+
+/* Class = "UICommand"; title = "Item 2"; ObjectID = "vAZ-zR-LYX"; */
+"vAZ-zR-LYX.title" = "Item 2";
+
+/* Class = "UIButton"; configuration.title = " "; ObjectID = "vNv-X5-tfZ"; */
+"vNv-X5-tfZ.configuration.title" = " ";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "vNv-X5-tfZ"; */
+"vNv-X5-tfZ.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "0.0"; ObjectID = "wtX-TM-5dr"; */
+"wtX-TM-5dr.text" = "0.0";
+
+/* Class = "UIViewController"; title = "Project Overview"; ObjectID = "xWF-af-2iy"; */
+"xWF-af-2iy.title" = "Project Overview";
+
+/**/
+"On7-FU-yd0.text" = "Current";
+
+/**/
+"Ov1-de-29k.text" = "Send sensor data directly from Calliope mini to the app";
+
+/**/
+"N71-qD-IZn.text" = "1. Open MakeCode Editor \n2. Add the Bluetooth extension to your project";
+
+/**/
+"OaB-k3-pOM.text" = "3. Select the desired services for your program to view or record. \n4. Start the program on your Calliope mini.";
+
+/**/
+"cMt-qa-gH9.text" = "Detailed instructions can be found on the website:";
+
+"DTy-e7-oGc.title" = "Sensordata";
+
+"cnw-wD-B2K.title" = "Sensordata";
+
+"Kjn-CJ-sdt.title" = "Sensordata";
+
+"80R-el-hVU.text" = "Data can be recorded on the Calliope mini 3. With the datalogger extension data can be saved in a table and also displayed as a graph.\n";
+
+"6lB-5y-zkN.text" = "1. This template can be used with the extension:\n";
+
+"M5s-gg-ZTZ.text" = "\n2. Create the program with the respective data and define the required columns and set the corresponding (sensor) data as values.\n\n3. Transfer the program to your Calliope mini. \n\n4. Open the data logger view.\n";
