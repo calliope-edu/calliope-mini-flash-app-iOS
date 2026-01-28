@@ -4,6 +4,11 @@ import Foundation
 
 /// Manages partial flashing functionality including hash tracking, hex filtering, and data iteration
 struct PartialFlashManager {
+        // MARK: - Settings Integration
+        /// Returns true if partial flashing is enabled in iOS settings
+        static var isPartialFlashingEnabled: Bool {
+            UserDefaults.standard.object(forKey: "partialFlashingEnabled") as? Bool ?? true
+        }
     
     
     // MARK: - Cache Management
@@ -40,6 +45,10 @@ struct PartialFlashManager {
     /// - Parameter url: URL of the hex file
     /// - Returns: Tuple of (fileHash, programHash, partialFlashData) or nil if not a MakeCode file
     static func retrievePartialFlashingInfo(from url: URL) -> (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? {
+                // Check if partial flashing is enabled in settings
+                guard isPartialFlashingEnabled else {
+                    return nil
+                }
         // Step 1: Extract hashes from original hex
         guard let hashInfo = extractHashes(from: url) else {
             return nil
