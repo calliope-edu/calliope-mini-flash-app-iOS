@@ -17,7 +17,14 @@ class LocalEditorViewController: UIViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		self.navigationController?.setNavigationBarHidden(false, animated: true)
+		// Hide the tab bar to provide more screen space for the editor
+		self.tabBarController?.tabBar.isHidden = true
+	}
+
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		// Show the tab bar again when leaving the editor
+		self.tabBarController?.tabBar.isHidden = false
 	}
 
     /*

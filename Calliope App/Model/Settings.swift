@@ -53,8 +53,8 @@ public struct Settings {
     static var defaultOpenRobertaUrl = "https://app.calliope.cc/ios/openroberta/"
 
     static var defaultMakecodeUrl = "https://makecode.calliope.cc/beta"
-    static var defaultProgramV3 = "https://calliope.cc/downloads/miniV3_start.hex"
-    static var defaultProgramV2andV1 = "https://calliope.cc/downloads/calliope-demo.hex"
+    static var defaultProgramV3 = "https://calliope.cc/downloads/Demov3.hex"
+    static var defaultProgramV2andV1 = "https://calliope.cc/downloads/Demov1.hex"
     static var defaultArcadeUrl = "https://arcade.makecode.com"
     static var defaultCalliopeBlocksUrl = "https://calliope.cc/downloads/blocks.hex"
     static var defaultBlocksMiniEditorUrl = "https://blocks.calliope.cc"

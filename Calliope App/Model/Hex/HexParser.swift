@@ -30,6 +30,7 @@ struct HexParser {
     
     enum HexVersion: String, CaseIterable {
         case v3        = ":1000000000040020810A000015070000610A0000BA"
+        case v3Alt     = ":100000000000022011E5010039E501003BE5010097"
         case v2        = ":020000040000FA"
         case universal = ":0400000A9900C0DEBB"
         case arcade    = ":10000000000002202D5A0100555A0100575A0100E4"
@@ -56,15 +57,24 @@ struct HexParser {
         let firstLine = reader.nextLine()?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let secondLine = reader.nextLine()?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let relevantLines: Set<String> = [firstLine, secondLine]
-        
+
+        // Debug logging
+        LogNotify.log("[HexParser] First line: \(firstLine.prefix(60))")
+        LogNotify.log("[HexParser] Second line: \(secondLine.prefix(60))")
+
         // Check which versions match
         var detectedVersions = Set<HexVersion>()
         for version in HexVersion.allCases {
             if relevantLines.contains(version.rawValue) {
                 detectedVersions.insert(version)
+                LogNotify.log("[HexParser] Matched version: \(version)")
             }
         }
-        
+
+        if detectedVersions.isEmpty {
+            LogNotify.log("[HexParser] No matching version found - returning .invalid")
+        }
+
         return detectedVersions.isEmpty ? [.invalid] : detectedVersions
     }
     

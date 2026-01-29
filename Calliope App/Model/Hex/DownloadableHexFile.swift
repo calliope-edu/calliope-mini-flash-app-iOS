@@ -89,6 +89,7 @@ extension DownloadableHexFile {
                 let isValid =
                     types.contains(.v2) ||
                     types.contains(.v3) ||
+                    types.contains(.v3Alt) ||
                     types.contains(.universal) ||
                     types.contains(.arcade)
                 

@@ -19,7 +19,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Settings.updateAppVersion()
         Styles.setupGlobalFont()
         Styles.setGlobalTint()
-        
+
+        // Configure URLCache for offline MakeCode support
+        // 50 MB memory cache, 500 MB disk cache
+        let cache = URLCache(memoryCapacity: 50 * 1024 * 1024,
+                            diskCapacity: 500 * 1024 * 1024,
+                            diskPath: "makecode_cache")
+        URLCache.shared = cache
+
         // Setting up Database
         let _ = DatabaseManager.shared
         return true

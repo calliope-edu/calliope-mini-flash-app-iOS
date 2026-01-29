@@ -16,7 +16,7 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
     static var calliopeLocation: URL?
     
     override var compatibleHexTypes: Set<HexParser.HexVersion> {
-        return [.universal, .v3, .v2, .arcade]
+        return [.universal, .v3, .v3Alt, .v2, .arcade]
     }
     
     var writeInProgress: Bool = false

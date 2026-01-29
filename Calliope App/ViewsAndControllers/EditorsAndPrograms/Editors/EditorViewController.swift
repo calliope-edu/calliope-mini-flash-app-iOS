@@ -52,6 +52,9 @@ final class EditorViewController: UIViewController {
         let configuration = WKWebViewConfiguration()
         configuration.userContentController = controller
         configuration.mediaTypesRequiringUserActionForPlayback = .video
+
+        // Enable persistent caching for offline support
+        configuration.websiteDataStore = WKWebsiteDataStore.default()
         
         
         webview = WKWebView(frame: self.view.bounds, configuration: configuration)
@@ -79,12 +82,19 @@ final class EditorViewController: UIViewController {
         loadingIndicator.startAnimating()
         webview.configuration.applicationNameForUserAgent = editor is BlocksMiniEditor ? "Scrub" : nil
         webview.customUserAgent = traitCollection.userInterfaceIdiom == .pad && !(editor is BlocksMiniEditor) ? "Mozilla/5.0 (iPad; CPU OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.1 Mobile/15E148 Safari/604.1" : nil
-        self.webview?.load(URLRequest(url: url))
+
+        // Use protocol cache policy: respects HTTP cache headers when online,
+        // falls back to cache when offline
+        var request = URLRequest(url: url)
+        request.cachePolicy = .useProtocolCachePolicy
+        self.webview?.load(request)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+
+        // Hide the tab bar to provide more screen space for the editor
+        self.tabBarController?.tabBar.isHidden = true
 
         // Disable all navigation gestures to prevent interference with web view content
         disableNavigationGestures()
@@ -92,6 +102,10 @@ final class EditorViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+
+        // Show the tab bar again when leaving the editor
+        self.tabBarController?.tabBar.isHidden = false
+
         MatrixConnectionViewController.instance.restartFromBLEConnectionDrop()
 
         // Re-enable navigation gestures

@@ -301,11 +301,14 @@ class FirmwareUpload {
 
         // Validating for the correct Version of the Hex File
         let fileHexTypes = file.getHexTypes()
+        LogNotify.log("[FirmwareUpload] File hex types: \(fileHexTypes)")
 
         guard let calliope else {
             return
         }
+        LogNotify.log("[FirmwareUpload] Calliope compatible types: \(calliope.compatibleHexTypes)")
         if !calliope.compatibleHexTypes.contains(where: fileHexTypes.contains) {
+            LogNotify.log("[FirmwareUpload] ERROR: Hex version mismatch!")
             throw "Unexpected Hex file version"
         }
 
