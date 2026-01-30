@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -129,21 +129,10 @@
 		60BBDB862B6B90C2003AD3CE /* DiscoveredDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BBDB852B6B90C2003AD3CE /* DiscoveredDevice.swift */; };
 		60BBDB882B6BA16F003AD3CE /* DiscoveredUSBDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BBDB872B6BA16F003AD3CE /* DiscoveredUSBDevice.swift */; };
 		60C90AFE2F1A75DD006279B2 /* LofiAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C90AFD2F1A75DD006279B2 /* LofiAppViewController.swift */; };
-		60C90B282F237F3E006279B2 /* WBWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C90B232F237F3E006279B2 /* WBWebViewController.swift */; };
-		60C90B2A2F237F3E006279B2 /* WBWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C90B212F237F3E006279B2 /* WBWebView.swift */; };
-		60C90B2C2F237F3E006279B2 /* WBWebViewContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C90B222F237F3E006279B2 /* WBWebViewContainerController.swift */; };
 		60C90B2D2F237F3E006279B2 /* Jsonifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C90B172F237F3E006279B2 /* Jsonifiable.swift */; };
-		60C90B2F2F237F3E006279B2 /* ErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C90B152F237F3E006279B2 /* ErrorViewController.swift */; };
-		60C90B302F237F3E006279B2 /* WBTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C90B202F237F3E006279B2 /* WBTransaction.swift */; };
-		60C90B332F237F3E006279B2 /* WBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C90B1D2F237F3E006279B2 /* WBManager.swift */; };
-		60C90B342F237F3E006279B2 /* WBDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C90B1A2F237F3E006279B2 /* WBDevice.swift */; };
-		60C90B372F237F3E006279B2 /* WBLogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C90B1C2F237F3E006279B2 /* WBLogManager.swift */; };
-		60C90B382F237F3E006279B2 /* WBLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C90B1B2F237F3E006279B2 /* WBLog.swift */; };
 		60C90B3A2F237F3E006279B2 /* WBBluetoothUUID.js in Resources */ = {isa = PBXBuildFile; fileRef = 60C90B0E2F237F3E006279B2 /* WBBluetoothUUID.js */; };
-		60C90B3C2F237F3E006279B2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60C90B162F237F3E006279B2 /* Images.xcassets */; };
 		60C90B3D2F237F3E006279B2 /* WBBluetoothRemoteGATTService.js in Resources */ = {isa = PBXBuildFile; fileRef = 60C90B0D2F237F3E006279B2 /* WBBluetoothRemoteGATTService.js */; };
 		60C90B3E2F237F3E006279B2 /* WBBluetoothRemoteGATTCharacteristic.js in Resources */ = {isa = PBXBuildFile; fileRef = 60C90B0B2F237F3E006279B2 /* WBBluetoothRemoteGATTCharacteristic.js */; };
-		60C90B3F2F237F3E006279B2 /* WBCore.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60C90B192F237F3E006279B2 /* WBCore.storyboard */; };
 		60C90B412F237F3E006279B2 /* WBBluetoothRemoteGATTServer.js in Resources */ = {isa = PBXBuildFile; fileRef = 60C90B0C2F237F3E006279B2 /* WBBluetoothRemoteGATTServer.js */; };
 		60C90B422F237F3E006279B2 /* stringview.js in Resources */ = {isa = PBXBuildFile; fileRef = 60C90B0A2F237F3E006279B2 /* stringview.js */; };
 		60C90B432F237F3E006279B2 /* WBPolyfill.js in Resources */ = {isa = PBXBuildFile; fileRef = 60C90B112F237F3E006279B2 /* WBPolyfill.js */; };
@@ -162,7 +151,6 @@
 		60D02D852BFCA41400D3C34A /* ProjectCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D02D842BFCA41400D3C34A /* ProjectCollectionViewCell.swift */; };
 		60D672522B283D0F00AB974B /* QRCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D672512B283D0F00AB974B /* QRCodeViewController.swift */; };
 		60F1E8A62B1DEB5300CB3A07 /* OnboardingDetailWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F1E8A52B1DEB5300CB3A07 /* OnboardingDetailWebViewController.swift */; };
-		60F6C3DE2F2CC94500A6C193 /* WBMessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F6C3DD2F2CC94500A6C193 /* WBMessageHandler.swift */; };
 		7E25C1EF8B03BE2835268F12 /* UtilityJobState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E25C80C2A4E87716138A0E0 /* UtilityJobState.swift */; };
 		7E25C2F16E2316D7C6EF236F /* UtilityJobProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E25CF0763552A9F4EBCE00E /* UtilityJobProtocol.swift */; };
 		7E25C52A365F804B8AF1752B /* DataLoggerWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E25C0A505857D5F2CC1019C /* DataLoggerWebViewController.swift */; };
@@ -331,18 +319,7 @@
 		60C90B102F237F3E006279B2 /* WBEventTarget.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = WBEventTarget.js; sourceTree = "<group>"; };
 		60C90B112F237F3E006279B2 /* WBPolyfill.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = WBPolyfill.js; sourceTree = "<group>"; };
 		60C90B122F237F3E006279B2 /* WBUtils.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = WBUtils.js; sourceTree = "<group>"; };
-		60C90B152F237F3E006279B2 /* ErrorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorViewController.swift; sourceTree = "<group>"; };
-		60C90B162F237F3E006279B2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		60C90B172F237F3E006279B2 /* Jsonifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jsonifiable.swift; sourceTree = "<group>"; };
-		60C90B192F237F3E006279B2 /* WBCore.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WBCore.storyboard; sourceTree = "<group>"; };
-		60C90B1A2F237F3E006279B2 /* WBDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBDevice.swift; sourceTree = "<group>"; };
-		60C90B1B2F237F3E006279B2 /* WBLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBLog.swift; sourceTree = "<group>"; };
-		60C90B1C2F237F3E006279B2 /* WBLogManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBLogManager.swift; sourceTree = "<group>"; };
-		60C90B1D2F237F3E006279B2 /* WBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBManager.swift; sourceTree = "<group>"; };
-		60C90B202F237F3E006279B2 /* WBTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBTransaction.swift; sourceTree = "<group>"; };
-		60C90B212F237F3E006279B2 /* WBWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBWebView.swift; sourceTree = "<group>"; };
-		60C90B222F237F3E006279B2 /* WBWebViewContainerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBWebViewContainerController.swift; sourceTree = "<group>"; };
-		60C90B232F237F3E006279B2 /* WBWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBWebViewController.swift; sourceTree = "<group>"; };
 		60C915922B1F442F00E4039D /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		60C915962B1F5F5300E4039D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Onboarding.strings; sourceTree = "<group>"; };
 		60C915982B1F61C200E4039D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Onboarding.strings; sourceTree = "<group>"; };
@@ -357,7 +334,6 @@
 		60D02D842BFCA41400D3C34A /* ProjectCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCollectionViewCell.swift; sourceTree = "<group>"; };
 		60D672512B283D0F00AB974B /* QRCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeViewController.swift; sourceTree = "<group>"; };
 		60F1E8A52B1DEB5300CB3A07 /* OnboardingDetailWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingDetailWebViewController.swift; sourceTree = "<group>"; };
-		60F6C3DD2F2CC94500A6C193 /* WBMessageHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBMessageHandler.swift; sourceTree = "<group>"; };
 		60F889132B50225000B6C1F5 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
 		60FF510C2BB55324002B24A2 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = "Calliope App/PrivacyInfo.xcprivacy"; sourceTree = SOURCE_ROOT; };
 		7E25C0A505857D5F2CC1019C /* DataLoggerWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataLoggerWebViewController.swift; sourceTree = "<group>"; };
@@ -367,6 +343,11 @@
 		7E25CF0763552A9F4EBCE00E /* UtilityJobProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityJobProtocol.swift; sourceTree = "<group>"; };
 		BD1AFC4008F992EADC1C557D /* Pods-Calliope App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.release.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		60F6C3E42F2D243500A6C193 /* LofiAppWebView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LofiAppWebView; sourceTree = "<group>"; };
+		60F6C3E52F2D24A300A6C193 /* Web Bluetooth */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Web Bluetooth"; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		2F61450922BF75DE001C2734 /* Frameworks */ = {
@@ -466,7 +447,7 @@
 				2F61453222BF761F001C2734 /* BLEDataTypes.swift */,
 				2F61453322BF761F001C2734 /* BluetoothConstants.swift */,
 				7E25C2CC08B6BEB8F94AAE88 /* MicroBitUtilityJobTypes */,
-				60C90B242F237F3E006279B2 /* WBCore */,
+				60C90B132F237F3E006279B2 /* WB Polyfill */,
 			);
 			path = Bluetooth;
 			sourceTree = "<group>";
@@ -495,6 +476,7 @@
 				2F61454E22BF761F001C2734 /* Extension_Data.swift */,
 				60C915922B1F442F00E4039D /* Network.swift */,
 				600E63252C2EBF810027AE61 /* CSVHandler.swift */,
+				60C90B172F237F3E006279B2 /* Jsonifiable.swift */,
 			);
 			path = GeneralUtilities;
 			sourceTree = "<group>";
@@ -657,6 +639,7 @@
 		2FAA2D0922DB3C4D00BC1A5F /* EditorsAndPrograms */ = {
 			isa = PBXGroup;
 			children = (
+				60F6C3E42F2D243500A6C193 /* LofiAppWebView */,
 				60D672512B283D0F00AB974B /* QRCodeViewController.swift */,
 				2F4B8D8225978D950026B480 /* EditorAndPrograms.storyboard */,
 				60C90AFD2F1A75DD006279B2 /* LofiAppViewController.swift */,
@@ -756,7 +739,7 @@
 			path = DataLogger;
 			sourceTree = "<group>";
 		};
-		60C90B132F237F3E006279B2 /* Polyfill */ = {
+		60C90B132F237F3E006279B2 /* WB Polyfill */ = {
 			isa = PBXGroup;
 			children = (
 				60C90B0A2F237F3E006279B2 /* stringview.js */,
@@ -769,27 +752,7 @@
 				60C90B112F237F3E006279B2 /* WBPolyfill.js */,
 				60C90B122F237F3E006279B2 /* WBUtils.js */,
 			);
-			path = Polyfill;
-			sourceTree = "<group>";
-		};
-		60C90B242F237F3E006279B2 /* WBCore */ = {
-			isa = PBXGroup;
-			children = (
-				60C90B132F237F3E006279B2 /* Polyfill */,
-				60C90B152F237F3E006279B2 /* ErrorViewController.swift */,
-				60C90B162F237F3E006279B2 /* Images.xcassets */,
-				60C90B172F237F3E006279B2 /* Jsonifiable.swift */,
-				60C90B192F237F3E006279B2 /* WBCore.storyboard */,
-				60C90B1A2F237F3E006279B2 /* WBDevice.swift */,
-				60C90B1B2F237F3E006279B2 /* WBLog.swift */,
-				60C90B1C2F237F3E006279B2 /* WBLogManager.swift */,
-				60C90B1D2F237F3E006279B2 /* WBManager.swift */,
-				60C90B202F237F3E006279B2 /* WBTransaction.swift */,
-				60C90B212F237F3E006279B2 /* WBWebView.swift */,
-				60C90B222F237F3E006279B2 /* WBWebViewContainerController.swift */,
-				60C90B232F237F3E006279B2 /* WBWebViewController.swift */,
-			);
-			path = WBCore;
+			path = "WB Polyfill";
 			sourceTree = "<group>";
 		};
 		60CF0EAE2BFCD58E00CB2A38 /* LiveData */ = {
@@ -824,11 +787,11 @@
 		60D1FD692B6BCF3D00BC6202 /* CalliopeModels */ = {
 			isa = PBXGroup;
 			children = (
+				60F6C3E52F2D24A300A6C193 /* Web Bluetooth */,
 				60D1FD6B2B6BCF9800BC6202 /* ConnectedCalliopes */,
 				60D1FD6A2B6BCF8700BC6202 /* DiscoveryCalliopes */,
 				60316BF92B0210CC00130C0D /* CalliopeFactory.swift */,
 				2F61452F22BF761F001C2734 /* CalliopeDiscovery.swift */,
-				60F6C3DD2F2CC94500A6C193 /* WBMessageHandler.swift */,
 			);
 			path = CalliopeModels;
 			sourceTree = "<group>";
@@ -881,6 +844,10 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				60F6C3E42F2D243500A6C193 /* LofiAppWebView */,
+				60F6C3E52F2D24A300A6C193 /* Web Bluetooth */,
 			);
 			name = "Calliope App";
 			productName = "Calliope App";
@@ -1058,10 +1025,8 @@
 				2F9B2A15233F045D009496DD /* RobotoMono-Medium.ttf in Resources */,
 				2F61459E22BFE607001C2734 /* Assets.xcassets in Resources */,
 				60C90B3A2F237F3E006279B2 /* WBBluetoothUUID.js in Resources */,
-				60C90B3C2F237F3E006279B2 /* Images.xcassets in Resources */,
 				60C90B3D2F237F3E006279B2 /* WBBluetoothRemoteGATTService.js in Resources */,
 				60C90B3E2F237F3E006279B2 /* WBBluetoothRemoteGATTCharacteristic.js in Resources */,
-				60C90B3F2F237F3E006279B2 /* WBCore.storyboard in Resources */,
 				60C90B412F237F3E006279B2 /* WBBluetoothRemoteGATTServer.js in Resources */,
 				60C90B422F237F3E006279B2 /* stringview.js in Resources */,
 				60C90B432F237F3E006279B2 /* WBPolyfill.js in Resources */,
@@ -1212,7 +1177,6 @@
 				2F61458A22BF761F001C2734 /* CollapseButtonProtocol.swift in Sources */,
 				609D9BD42B67A15500F2ECAE /* USBCalliope.swift in Sources */,
 				2F5E8F0426C9787400CE03CB /* PlaygroundStartViewController.swift in Sources */,
-				60F6C3DE2F2CC94500A6C193 /* WBMessageHandler.swift in Sources */,
 				60030B9C2DC8B2E200397E69 /* Date.swift in Sources */,
 				60CF0EB02BFCD59D00CB2A38 /* DataController.swift in Sources */,
 				60CF0EAD2BFCD25300CB2A38 /* Value.swift in Sources */,
@@ -1224,16 +1188,7 @@
 				2F1BD9972674D804006A47F2 /* AutoHeightCollectionViewCell.swift in Sources */,
 				2F5E8F0226C94F5F00CE03CB /* PlaygroundInstructionsCollectionCollectionViewController.swift in Sources */,
 				2F61457322BF761F001C2734 /* BluetoothConstants.swift in Sources */,
-				60C90B282F237F3E006279B2 /* WBWebViewController.swift in Sources */,
-				60C90B2A2F237F3E006279B2 /* WBWebView.swift in Sources */,
-				60C90B2C2F237F3E006279B2 /* WBWebViewContainerController.swift in Sources */,
 				60C90B2D2F237F3E006279B2 /* Jsonifiable.swift in Sources */,
-				60C90B2F2F237F3E006279B2 /* ErrorViewController.swift in Sources */,
-				60C90B302F237F3E006279B2 /* WBTransaction.swift in Sources */,
-				60C90B332F237F3E006279B2 /* WBManager.swift in Sources */,
-				60C90B342F237F3E006279B2 /* WBDevice.swift in Sources */,
-				60C90B372F237F3E006279B2 /* WBLogManager.swift in Sources */,
-				60C90B382F237F3E006279B2 /* WBLog.swift in Sources */,
 				2F6145A222C7B3C2001C2734 /* NewsCollectionViewController.swift in Sources */,
 				60D02D812BFC95E000D3C34A /* Project.swift in Sources */,
 				60F1E8A62B1DEB5300CB3A07 /* OnboardingDetailWebViewController.swift in Sources */,
