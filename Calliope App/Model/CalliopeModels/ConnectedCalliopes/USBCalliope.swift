@@ -88,26 +88,75 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
             completion()
             return
         }
-        
+
         let accessResource = USBCalliope.calliopeLocation?.startAccessingSecurityScopedResource()
         defer {
             if accessResource ?? false {
                 USBCalliope.calliopeLocation?.stopAccessingSecurityScopedResource()
             }
         }
-        
+
         // Direkt die komplette Datei kopieren
         LogNotify.log("USB Transfer - copying complete file")
+        let destinationUrl = USBCalliope.calliopeLocation!.appendingPathComponent(file.calliopeUSBUrl.lastPathComponent)
+        var sourceFileSize: Int64 = 0
+
         do {
             let data = try Data(contentsOf: file.calliopeUSBUrl)
-            try data.write(to: USBCalliope.calliopeLocation!.appendingPathComponent(file.calliopeUSBUrl.lastPathComponent))
-            LogNotify.log("File copied successfully")
+            sourceFileSize = Int64(data.count)
+            try data.write(to: destinationUrl, options: .atomic)
+            LogNotify.log("File copied successfully (\(sourceFileSize) bytes)")
         } catch {
             LogNotify.log("Error copying file: \(error)")
+            DispatchQueue.main.async {
+                completion()
+            }
+            return
         }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            completion()
+
+        // Verify file was written correctly by checking it exists and has correct size
+        verifyFileWritten(at: destinationUrl, expectedSize: sourceFileSize, completion: completion)
+    }
+
+    /// Verifies that the file was written to the USB device by polling for its existence and size.
+    /// Uses a short polling interval with a maximum timeout to avoid unnecessary delays.
+    private func verifyFileWritten(at url: URL, expectedSize: Int64, completion: @escaping () -> Void, attempts: Int = 0) {
+        let maxAttempts = 10  // Maximum 1 second total (10 * 100ms)
+        let pollInterval: TimeInterval = 0.1  // 100ms between checks
+
+        let fileManager = FileManager.default
+
+        // Check if file exists and get its attributes
+        if fileManager.fileExists(atPath: url.path) {
+            do {
+                let attributes = try fileManager.attributesOfItem(atPath: url.path)
+                if let fileSize = attributes[.size] as? Int64 {
+                    if fileSize == expectedSize {
+                        LogNotify.log("USB Transfer - file verified: \(fileSize) bytes written")
+                        DispatchQueue.main.async {
+                            completion()
+                        }
+                        return
+                    } else {
+                        LogNotify.log("USB Transfer - size mismatch: expected \(expectedSize), got \(fileSize)")
+                    }
+                }
+            } catch {
+                LogNotify.log("USB Transfer - could not read file attributes: \(error)")
+            }
+        }
+
+        // If we haven't exceeded max attempts, try again after a short delay
+        if attempts < maxAttempts {
+            DispatchQueue.main.asyncAfter(deadline: .now() + pollInterval) { [weak self] in
+                self?.verifyFileWritten(at: url, expectedSize: expectedSize, completion: completion, attempts: attempts + 1)
+            }
+        } else {
+            // Timeout reached - proceed anyway but log warning
+            LogNotify.log("USB Transfer - verification timeout, proceeding anyway")
+            DispatchQueue.main.async {
+                completion()
+            }
         }
     }
     

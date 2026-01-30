@@ -227,9 +227,13 @@ class FirmwareUpload {
         uploadController.view.addSubview(progressView)
         uploadController.view.addSubview(logTextView)
 
+        // BLE uses smaller top margin and larger bottom margin for taller alert
+        let topMargin = (calliope is USBCalliope) ? 80 : 60
+        let bottomMargin = (calliope is USBCalliope) ? 50 : 80
+
         // Vertical constraints for progressView and logTextView
         uploadController.view.addConstraints(
-            NSLayoutConstraint.constraints(withVisualFormat: "V:|-(80)-[progressView(120)]-(8)-[logTextView(logHeight)]-(50)-|", options: [], metrics: ["logHeight": logHeight], views: ["progressView": progressView, "logTextView": logTextView]))
+            NSLayoutConstraint.constraints(withVisualFormat: "V:|-(topMargin)-[progressView(120)]-(8)-[logTextView(logHeight)]-(bottomMargin)-|", options: [], metrics: ["topMargin": topMargin, "logHeight": logHeight, "bottomMargin": bottomMargin], views: ["progressView": progressView, "logTextView": logTextView]))
 
         // Center progressView horizontally with fixed width
         NSLayoutConstraint.activate([
@@ -342,9 +346,7 @@ class FirmwareUpload {
         self.finished = {
             downloadCompletion()
             // self.stopUSBTimer() // Timer deaktiviert
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.0) {
-                finishedCallback()
-            }
+            finishedCallback()
             MatrixConnectionViewController.instance.enableDfuMode(mode: false)
         }
 
