@@ -68,19 +68,19 @@ class WBTransactionManager<K> where K: Hashable {
 }
 
 class WBTransaction: Equatable, CustomStringConvertible {
-
+    
     /*
      * ========== Embedded types ==========
      */
     struct Key: Hashable, CustomStringConvertible {
         let typeComponents: [String]
-
+        
         func hash(into hasher: inout Hasher) {
             for tc in self.typeComponents {
                 hasher.combine(tc)
             }
         }
-
+        
         var description: String {
             let contents = self.typeComponents.reduce("") {
                 (progress: String, next: String) in
@@ -92,7 +92,7 @@ class WBTransaction: Equatable, CustomStringConvertible {
             }
             return contents
         }
-
+        
         static func == (left: Key, right: Key) -> Bool {
             guard left.typeComponents.count == right.typeComponents.count else {
                 return false;
@@ -107,7 +107,7 @@ class WBTransaction: Equatable, CustomStringConvertible {
     }
     class Wrapper {
         let transaction: WBTransaction
-
+        
         /*! @abstract Failable initializer so that subclasses may decide not to accept the transaction. */
         init? (transaction: WBTransaction) {
             self.transaction = transaction
@@ -116,13 +116,13 @@ class WBTransaction: Equatable, CustomStringConvertible {
     
     class View {
         let transaction: WBTransaction
-
+        
         /*! @abstract Failable initializer so that subclasses may decide not to accept the transaction. */
         init? (transaction: WBTransaction) {
             self.transaction = transaction
         }
     }
-
+    
     /*
      * ========== Properties ==========
      */
@@ -135,7 +135,7 @@ class WBTransaction: Equatable, CustomStringConvertible {
     weak var webView: WKWebView?
     var completionHandlers = [(WBTransaction, Bool) -> Void]()
     var resolved: Bool = false
-
+    
     var sourceURL: URL? {
         return self.webView?.url
     }
@@ -150,22 +150,22 @@ class WBTransaction: Equatable, CustomStringConvertible {
         self.webView = webView
     }
     convenience init?(withMessage message: WKScriptMessage) {
-
+        
         guard
             let messageBody = message.body as? NSDictionary,
             let id = messageBody["callbackID"] as? Int,
             let typeString = messageBody["type"] as? String,
             let messageData = messageBody["data"] as? [String: AnyObject] else {
-                NSLog("Bad WebKit request received \(message.body)")
-                message.webView?.evaluateJavaScript(
-                    "receiveMessage('badrequest');",
-                    completionHandler: nil)
-                return nil
+            NSLog("Bad WebKit request received \(message.body)")
+            message.webView?.evaluateJavaScript(
+                "receiveMessage('badrequest');",
+                completionHandler: nil)
+            return nil
         }
         let typeComponents = typeString.components(separatedBy: ":")
         self.init(id: id, typeComponents: typeComponents, messageData: messageData, webView: message.webView)
     }
-
+    
     /*
      * ========== Public methods ==========
      */
@@ -186,18 +186,18 @@ class WBTransaction: Equatable, CustomStringConvertible {
     func resolveAsFailure(withMessage message: String) {
         self.complete(success: false, object: message)
     }
-
+    
     static func == (lhs: WBTransaction, rhs: WBTransaction) -> Bool {
         return lhs.id == rhs.id
     }
-
+    
     /*
      * ========== CustomStringConvertible ==========
      */
     var description: String {
         return "Transaction(id: \(self.id), key: \(self.key))"
     }
-
+    
     /*
      * ========== Private methods ==========
      */
@@ -206,13 +206,13 @@ class WBTransaction: Equatable, CustomStringConvertible {
             NSLog("Attempt to re-resolve transaction \(self.id) ignored")
             return
         }
-
+        
         let commandString = "window.receiveMessageResponse(\(success.jsonify()), \(object.jsonify()), \(self.id));\n"
-
+        
         if !success {
             NSLog("\(self.description) unsuccessful: \(object.jsonify())")
         }
-
+        
         if let wv = self.webView {
             wv.evaluateJavaScript(commandString, completionHandler: {
                 _, error in
@@ -229,3 +229,145 @@ class WBTransaction: Equatable, CustomStringConvertible {
     }
 }
 
+class DeviceTransaction: WBTransaction.Wrapper {
+    let externalDeviceUUID: UUID
+
+    override init?(transaction: WBTransaction) {
+        guard
+            let uuidstr = transaction.messageData["deviceId"] as? String,
+            let uuid = UUID(uuidString: uuidstr)
+            else {
+                return nil
+        }
+        self.externalDeviceUUID = uuid
+        super.init(transaction: transaction)
+    }
+}
+
+class ServicesTransaction: DeviceTransaction {
+    let serviceUUID: CBUUID?
+    
+    override init?(transaction: WBTransaction) {
+        if let pservStr = transaction.messageData["serviceUUID"] as? String {
+            guard let pservUUID = UUID(uuidString: pservStr) else {
+                return nil
+            }
+            self.serviceUUID = CBUUID(nsuuid: pservUUID)
+        } else {
+            self.serviceUUID = nil
+        }
+        super.init(transaction: transaction)
+    }
+    func resolveFromServices(_ services: [CBService]) {
+        let uuids = services.map{$0.uuid}.filter{
+            self.serviceUUID == nil || self.serviceUUID == $0
+        }
+        if uuids.count > 0 {
+            self.transaction.resolveAsSuccess(withObject: uuids)
+        } else {
+            self.transaction.resolveAsFailure(withMessage: self.serviceUUID != nil ? "Service \(self.serviceUUID!.uuidString) not known on device" : "No services found")
+        }
+    }
+}
+
+class ServiceTransaction: DeviceTransaction {
+    let serviceUUID: CBUUID
+
+    override init?(transaction: WBTransaction) {
+        guard
+            let pservStr = transaction.messageData["serviceUUID"] as? String,
+            let pservUUID = UUID(uuidString: pservStr)
+            else {
+                return nil
+        }
+        self.serviceUUID = CBUUID(nsuuid: pservUUID)
+        super.init(transaction: transaction)
+    }
+
+    func resolveUnknownService() {
+        self.transaction.resolveAsFailure(withMessage: "Service \(self.serviceUUID.uuidString) not known on device")
+    }
+}
+
+class CharacteristicTransaction: ServiceTransaction {
+    let characteristicUUID: CBUUID
+
+    override init?(transaction: WBTransaction) {
+        guard
+            let charStr = transaction.messageData["characteristicUUID"] as? String,
+            let charUUID = UUID(uuidString: charStr)
+            else {
+                return nil
+        }
+        self.characteristicUUID = CBUUID(nsuuid: charUUID)
+        super.init(transaction: transaction)
+    }
+    func matchesCharacteristic(_ characteristic: CBCharacteristic) -> Bool {
+        guard
+            let serviceUUID = characteristic.service?.uuid else {
+                return false;
+            }
+        return (
+            self.serviceUUID == serviceUUID
+            && self.characteristicUUID == characteristic.uuid
+        )
+    }
+    func resolveUnknownCharacteristic() {
+        self.transaction.resolveAsFailure(withMessage: "Characteristic \(self.characteristicUUID.uuidString) not known for service \(self.serviceUUID.uuidString) on device")
+    }
+}
+
+class CharacteristicsTransaction: ServiceTransaction {
+    override init?(transaction: WBTransaction) {
+        super.init(transaction: transaction)
+    }
+}
+
+class WriteCharacteristicTransaction: CharacteristicTransaction {
+    enum ResponseMode: String {
+        case optional, required, never
+    }
+
+    let responseMode: ResponseMode
+    let data: Data
+
+    override init?(transaction: WBTransaction) {
+        guard
+            let dstr = transaction.messageData["value"] as? String,
+            let data = Data(base64Encoded: dstr),
+            let rmstr = transaction.messageData["responseMode"] as? String,
+            let responseMode = ResponseMode(rawValue: rmstr)
+        else {
+            NSLog("Invalid WriteCharacteristic message \(transaction.messageData)")
+            return nil
+        }
+        self.data = data
+        self.responseMode = responseMode
+        super.init(transaction: transaction)
+    }
+}
+
+struct ServicesTransactionKey: Hashable {
+    
+}
+
+struct CharacteristicTransactionKey: Hashable {
+    let serviceUUID: CBUUID
+    let characteristicUUID: CBUUID
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self.serviceUUID)
+        hasher.combine(self.characteristicUUID)
+    }
+    static func == (left: CharacteristicTransactionKey, right: CharacteristicTransactionKey) -> Bool {
+        return left.serviceUUID == right.serviceUUID && left.characteristicUUID == right.characteristicUUID
+    }
+}
+
+struct CharacteristicsTransactionKey: Hashable {
+    let serviceUUID: CBUUID
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self.serviceUUID)
+    }
+}

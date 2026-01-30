@@ -43,6 +43,12 @@ class BLECalliope: Calliope, Jsonifiable {
     let peripheral: CBPeripheral
     let name: String
     let servicesChangedCallback: () -> ()?
+    var getPrimaryServicesTM = WBTransactionManager<CBUUID?>()
+    var getCharacteristicTM = WBTransactionManager<CharacteristicTransactionKey>()
+    var getCharacteristicsTM = WBTransactionManager<CharacteristicsTransactionKey>()
+    var readCharacteristicTM = WBTransactionManager<CharacteristicTransactionKey>()
+    /*! @abstract Outstanding transactions for characteristic write requests */
+    var writeCharacteristicTM = WBTransactionManager<CharacteristicTransactionKey>()
     
     // TODO: Set this correctly
     weak var view: WKWebView? = nil
@@ -113,6 +119,20 @@ class BLECalliope: Calliope, Jsonifiable {
     var notifyingCharacteristic: CBCharacteristic? = nil
 
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
+        self.writeCharacteristicTM.apply({
+            if let err = error {
+                $0.resolveAsFailure(withMessage: "Error writing characteristic: \(err.localizedDescription)")
+                return
+            }
+            $0.resolveAsSuccess()
+        },
+            iff: {CharacteristicTransaction(
+                transaction: $0
+                )!.matchesCharacteristic(
+                    characteristic
+                )}
+        )
+        
         if let writingCharacteristic = writingCharacteristic, characteristic.uuid == writingCharacteristic.uuid {
             explicitWriteResponse(error)
             return
@@ -130,6 +150,44 @@ class BLECalliope: Calliope, Jsonifiable {
     }
 
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        if self.readCharacteristicTM.transactions.count > 0 {
+            // We have read transactions outstanding, which means that this is a response after a read request, so complete those transactions.
+            self.readCharacteristicTM.apply({
+                if let err = error {
+                    $0.resolveAsFailure(withMessage: "Error reading characteristic: \(err.localizedDescription)")
+                    return
+                }
+                $0.resolveAsSuccess(withObject: characteristic.value!)
+            },
+                iff: {CharacteristicTransaction(
+                    transaction: $0
+                )!.matchesCharacteristic(
+                    characteristic
+                )}
+            )
+        }
+        else {
+            if let readingCharac = readingCharacteristic, characteristic.uuid == readingCharac.uuid {
+                explicitReadResponse(for: characteristic, error: error)
+                return
+            }
+            
+            guard error == nil, let value = characteristic.value else {
+                LogNotify.log(readError?.localizedDescription ?? "characteristic \(characteristic.uuid) does not have a value")
+                return
+            }
+            
+            guard let calliopeCharacteristic = CalliopeBLEProfile.uuidCharacteristicMap[characteristic.uuid]
+            else {
+                LogNotify.log("received value from unknown characteristic: \(characteristic.uuid)")
+                return
+            }
+            
+            //        handleValueUpdateInternal(calliopeCharacteristic, value) ? Why ?
+            handleValueUpdate(calliopeCharacteristic, value)
+        }
+        
+        // If we're doing notifications on the characteristic send them up.
         if characteristic.isNotifying {
             self.evaluateJavaScript(
                 "receiveCharacteristicValueNotification(" +
@@ -138,25 +196,6 @@ class BLECalliope: Calliope, Jsonifiable {
                 "\(characteristic.value!.jsonify())" +
                 ")")
         }
-
-        if let readingCharac = readingCharacteristic, characteristic.uuid == readingCharac.uuid {
-            explicitReadResponse(for: characteristic, error: error)
-            return
-        }
-
-        guard error == nil, let value = characteristic.value else {
-            LogNotify.log(readError?.localizedDescription ?? "characteristic \(characteristic.uuid) does not have a value")
-            return
-        }
-
-        guard let calliopeCharacteristic = CalliopeBLEProfile.uuidCharacteristicMap[characteristic.uuid]
-        else {
-            LogNotify.log("received value from unknown characteristic: \(characteristic.uuid)")
-            return
-        }
-
-        //        handleValueUpdateInternal(calliopeCharacteristic, value) ? Why ?
-        handleValueUpdate(calliopeCharacteristic, value)
     }
 
     func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
@@ -349,176 +388,6 @@ class BLECalliope: Calliope, Jsonifiable {
         }
     }
     
-    enum DeviceRequests: String {
-        case connectGATT, disconnectGATT, getPrimaryServices,
-        getCharacteristic, getCharacteristics, readCharacteristicValue, startNotifications,
-        stopNotifications,
-        writeCharacteristicValue
-    }
-    
-    func triage(transaction: WBTransaction) {
-        let tc = transaction.key.typeComponents
-        guard
-            tc.count > 1,
-            let deviceMessageType = DeviceRequests(rawValue: tc[1])
-        else {
-            transaction.resolveAsFailure(withMessage: "Unknown request type \(tc.joined(separator: ":"))")
-            return
-        }
-
-        switch deviceMessageType {
-        case .connectGATT:
-            print("Webview tries to connect to GATT")
-            transaction.resolveAsSuccess();
-            
-            
-            
-            
-        case .disconnectGATT:
-            print("Webview tries to connect to GATT")
-            // TODO: Handle disconnect if that is the goal
-            transaction.resolveAsSuccess();
-            
-        case .getPrimaryServices:
-            let serviceUUID: CBUUID?
-            if let pservStr = transaction.messageData["serviceUUID"] as? String {
-                guard let pservUUID = UUID(uuidString: pservStr) else {
-                    return
-                }
-                serviceUUID = CBUUID(nsuuid: pservUUID)
-            } else {
-                serviceUUID = nil
-            }
-            
-            // TODO: Implement service discovery
-            // This line below throws an false usage of the api error
-            // self.peripheral.discoverServices(nil)
-            guard let services = self.peripheral.services else {
-                transaction.resolveAsFailure(withMessage: "Could not get services")
-                return
-            }
-            
-            let uuids = services.map{$0.uuid}.filter{
-                serviceUUID == nil || serviceUUID == $0
-            }
-            if uuids.count > 0 {
-                print(uuids[0])
-                transaction.resolveAsSuccess(withObject: uuids)
-            } else {
-                transaction.resolveAsFailure(withMessage: serviceUUID != nil ? "Service \(serviceUUID!.uuidString) not known on device" : "No services found")
-            }
-
-        case .getCharacteristic:
-            print("Trying to get a characteristic")
-            transaction.resolveAsSuccess()
-
-        case .getCharacteristics:
-            print("Trying to get characteristics")
-            /*guard let view = CharacteristicsView(transaction: transaction)
-            else {
-                transaction.resolveAsFailure(withMessage: "Invalid getCharacteristics message")
-                break
-            }
-
-            guard let service = self.getService(withUUID: view.serviceUUID)
-            else {
-                view.resolveUnknownService()
-                return
-            }
-
-            if let chars = service.characteristics {
-                self.getCharacteristicsTM.apply({
-                    var characteristicUUIDs: [String] = []
-                    chars.forEach({ (characteristic) in
-                        characteristicUUIDs.append(characteristic.uuid.uuidString)
-                    })
-                    $0.resolveAsSuccess(withObject: characteristicUUIDs)
-                })
-                
-                break
-            }
-
-            self.getCharacteristicsTM.addTransaction(transaction, atPath: CharacteristicsTransactionKey(serviceUUID: view.serviceUUID))
-            NSLog("Start discovering characteristics for service \(service.uuid)")
-            self.peripheral.discoverCharacteristics(nil, for: service)*/
-
-        case .readCharacteristicValue:
-            print("Trying to read characteristic value")
-            /*guard
-                let view = CharacteristicView(transaction: transaction)
-            else {
-                transaction.resolveAsFailure(withMessage: "Invalid message")
-                break
-            }
-            guard let service = self.getService(withUUID: view.serviceUUID) else {
-                view.resolveUnknownService()
-                break
-            }
-            guard let chars = service.characteristics else {
-                transaction.resolveAsFailure(withMessage: "Characteristics have not yet been retrieved for service \(service.uuid.uuidString)")
-                break
-            }
-            guard let char = chars.first(where: {$0.uuid == view.characteristicUUID}) else {
-                view.resolveUnknownCharacteristic()
-                break
-            }
-
-            self.readCharacteristicTM.addTransaction(transaction, atPath: CharacteristicTransactionKey(serviceUUID: view.serviceUUID, characteristicUUID: view.characteristicUUID))
-            self.peripheral.readValue(for: char)*/
-
-        case .writeCharacteristicValue:
-            print("Trying to write a characteristic value")
-            /*guard
-                let view = WriteCharacteristicView(transaction: transaction)
-            else {
-                transaction.resolveAsFailure(withMessage: "Invalid write characteristic message")
-                break
-            }
-
-            guard
-                let char = self.getCharacteristic(view.serviceUUID, uuid: view.characteristicUUID)
-            else {
-                view.resolveUnknownCharacteristic()
-                break
-            }
-
-            self.writeCharacteristicValue(char, view)*/
-
-        case .startNotifications:
-            print("Trying to start notifications")
-            
-            guard let view = CharacteristicTransaction(transaction: transaction) else {
-                transaction.resolveAsFailure(withMessage: "Invalid start notifications message")
-                break
-            }
-
-            guard let char = self.getCharacteristic(view.serviceUUID!, uuid: view.characteristicUUID) else {
-                view.resolveUnknownCharacteristic()
-                break
-            }
-            NSLog("Starting notifications for characteristic \(view.characteristicUUID.uuidString) on device \(self.peripheral.name ?? "<no-name>")")
-
-            self.peripheral.setNotifyValue(true, for: char)
-            transaction.resolveAsSuccess()
-
-        case .stopNotifications:
-            print("Trying to stop notification")
-            /*guard let view = CharacteristicView(transaction: transaction) else {
-                transaction.resolveAsFailure(withMessage: "Invalid start notifications message")
-                break
-            }
-
-            guard let char = self.getCharacteristic(view.serviceUUID, uuid: view.characteristicUUID) else {
-                view.resolveUnknownCharacteristic()
-                break
-            }
-            NSLog("Stopping notifications for characteristic \(view.characteristicUUID.uuidString) on device \(self.peripheral.name ?? "<no-name>")")
-
-            self.peripheral.setNotifyValue(false, for: char)
-            transaction.resolveAsSuccess()*/
-        }
-    }
-    
     func jsonify() -> String {
         let props: [String: Any] = [
             "id": self.deviceId.uuidString,
@@ -541,101 +410,206 @@ class BLECalliope: Calliope, Jsonifiable {
         }
     }
     
-    class DeviceTransaction: WBTransaction.Wrapper {
-        let externalDeviceUUID: UUID
-
-        override init?(transaction: WBTransaction) {
-            guard
-                let uuidstr = transaction.messageData["deviceId"] as? String,
-                let uuid = UUID(uuidString: uuidstr)
-                else {
-                    return nil
-            }
-            self.externalDeviceUUID = uuid
-            super.init(transaction: transaction)
+    func getPrimaryServices(transaction: WBTransaction) {
+        guard let servicesTransaction = ServicesTransaction(transaction: transaction)
+        else {
+            transaction.resolveAsFailure(withMessage: "Invalid request")
+            return
         }
+
+        guard let services = self.peripheral.services else {
+            self.getPrimaryServicesTM.addTransaction(transaction, atPath: servicesTransaction.serviceUUID)
+            NSLog("Starting discovering for services on peripheral \(self.peripheral.name ?? "<unknown name>")")
+            self.peripheral.discoverServices(nil)
+            return
+        }
+        servicesTransaction.resolveFromServices(services)
     }
     
-    class ServiceTransaction: DeviceTransaction {
-        let serviceUUID: CBUUID?
+    open func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+        var resolve: (WBTransaction) -> Void
+        if let err = error {
+            resolve = {
+                $0.resolveAsFailure(withMessage: "An error occurred discovering services for the device: \(err)")
+            }
+        } else {
+            resolve = {
+                ServicesTransaction(transaction: $0)!.resolveFromServices(self.peripheral.services!)
+            }
+        }
         
-        override init?(transaction: WBTransaction) {
-            if let pservStr = transaction.messageData["serviceUUID"] as? String {
-                guard let pservUUID = UUID(uuidString: pservStr) else {
-                    return nil
-                }
-                self.serviceUUID = CBUUID(nsuuid: pservUUID)
+        /* All outstanding requests for a primary service can be resolved. */
+        if (self.getPrimaryServicesTM.transactions.count > 0) {
+            self.getPrimaryServicesTM.apply(resolve)
+        }
+    }
+    
+    func getCharacteristic(transaction: WBTransaction) {
+        guard
+            let characteristicTransaction = CharacteristicTransaction(transaction: transaction)
+        else {
+            transaction.resolveAsFailure(withMessage: "Invalid message")
+            return
+        }
+
+        guard let service = self.getService(withUUID: characteristicTransaction.serviceUUID)
+        else {
+            characteristicTransaction.resolveUnknownService()
+            return
+        }
+
+        if let chars = service.characteristics {
+            // Have already discovered characteristics for this device.
+            if chars.contains(where: {$0.uuid == characteristicTransaction.characteristicUUID}) {
+                transaction.resolveAsSuccess()
             } else {
-                self.serviceUUID = nil
+                characteristicTransaction.resolveUnknownCharacteristic()
             }
-            super.init(transaction: transaction)
+            return
         }
-        func resolveFromServices(_ services: [CBService]) {
-            let uuids = services.map{$0.uuid}.filter{
-                self.serviceUUID == nil || self.serviceUUID == $0
-            }
-            if uuids.count > 0 {
-                self.transaction.resolveAsSuccess(withObject: uuids)
-            } else {
-                self.transaction.resolveAsFailure(withMessage: self.serviceUUID != nil ? "Service \(self.serviceUUID!.uuidString) not known on device" : "No services found")
-            }
-        }
+
+        self.getCharacteristicTM.addTransaction(transaction, atPath: CharacteristicTransactionKey(serviceUUID: service.uuid, characteristicUUID: characteristicTransaction.characteristicUUID))
+        NSLog("Start discovering characteristics for service \(service.uuid)")
+        self.peripheral.discoverCharacteristics(nil, for: service)
     }
     
-    class ServicesTransaction: DeviceTransaction {
-        let serviceUUID: CBUUID
-
-        override init?(transaction: WBTransaction) {
-            guard
-                let pservStr = transaction.messageData["serviceUUID"] as? String,
-                let pservUUID = UUID(uuidString: pservStr)
-                else {
-                    return nil
-            }
-            self.serviceUUID = CBUUID(nsuuid: pservUUID)
-            super.init(transaction: transaction)
+    private func getService(withUUID uuid: CBUUID) -> CBService?{
+        guard
+            let pservs = self.peripheral.services,
+            let ind = pservs.firstIndex(where: {$0.uuid == uuid})
+        else {
+            return nil
         }
-
-        func resolveUnknownService() {
-            self.transaction.resolveAsFailure(withMessage: "Service \(self.serviceUUID.uuidString) not known on device")
-        }
+        return pservs[ind]
+    }
+    private func hasService(withUUID uuid: CBUUID) -> Bool {
+        return self.getService(withUUID: uuid) != nil
     }
     
-    class CharacteristicTransaction: ServiceTransaction {
-        let characteristicUUID: CBUUID
-
-        override init?(transaction: WBTransaction) {
-            guard
-                let charStr = transaction.messageData["characteristicUUID"] as? String,
-                let charUUID = UUID(uuidString: charStr)
-                else {
-                    return nil
-            }
-            self.characteristicUUID = CBUUID(nsuuid: charUUID)
-            super.init(transaction: transaction)
+    func getCharacteristics(transaction: WBTransaction) {
+        guard let characteristicsTransaction = CharacteristicsTransaction(transaction: transaction)
+        else {
+            transaction.resolveAsFailure(withMessage: "Invalid getCharacteristics message")
+            return
         }
-        func matchesCharacteristic(_ characteristic: CBCharacteristic) -> Bool {
-            guard
-                let serviceUUID = characteristic.service?.uuid else {
-                    return false;
+
+        guard let service = self.getService(withUUID: characteristicsTransaction.serviceUUID)
+        else {
+            characteristicsTransaction.resolveUnknownService()
+            return
+        }
+
+        if let chars = service.characteristics {
+            self.getCharacteristicsTM.apply({
+                var characteristicUUIDs: [String] = []
+                chars.forEach({ (characteristic) in
+                    characteristicUUIDs.append(characteristic.uuid.uuidString)
+                })
+                $0.resolveAsSuccess(withObject: characteristicUUIDs)
+            })
+            
+            return
+        }
+
+        self.getCharacteristicsTM.addTransaction(transaction, atPath: CharacteristicsTransactionKey(serviceUUID: characteristicsTransaction.serviceUUID))
+        NSLog("Start discovering characteristics for service \(service.uuid)")
+        self.peripheral.discoverCharacteristics(nil, for: service)
+    }
+    
+    open func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+
+        if let error_ = error {
+            // speculative avoid crash judging by potential bug
+            // in error as per https://forums.developer.apple.com/thread/84866
+            NSLog("Error discovering characteristics: \(error_)")
+            return
+        }
+        
+        // Handle multiple characteristics
+        if (self.getCharacteristicsTM.transactions.count > 0) {
+            self.getCharacteristicsTM.apply({
+                var characteristicUUIDs: [String] = []
+                service.characteristics?.forEach({ (characteristic) in
+                    characteristicUUIDs.append(characteristic.uuid.uuidString)
+                })
+                $0.resolveAsSuccess(withObject: characteristicUUIDs)
+            },
+            iff: { CharacteristicTransaction(transaction: $0)?.serviceUUID == service.uuid })
+        }
+        
+        // Handle single characteristic
+        if (self.getCharacteristicTM.transactions.count > 0) {
+            self.getCharacteristicTM.apply({
+                let cview = CharacteristicTransaction(transaction: $0)!
+                guard service.characteristics?.first(where: {$0.uuid == cview.characteristicUUID}) != nil else {
+                    cview.resolveUnknownCharacteristic()
+                    return
                 }
-            return (
-                self.serviceUUID == serviceUUID
-                && self.characteristicUUID == characteristic.uuid
-            )
-        }
-        func resolveUnknownCharacteristic() {
-            self.transaction.resolveAsFailure(withMessage: "Characteristic \(self.characteristicUUID.uuidString) not known for service \(self.serviceUUID?.uuidString) on device")
+                $0.resolveAsSuccess()
+            },
+            iff: {CharacteristicTransaction(transaction: $0)?.serviceUUID == service.uuid})
         }
     }
     
-    class CharacteristicsTransaction: ServiceTransaction {
-        override init?(transaction: WBTransaction) {
-            super.init(transaction: transaction)
+    func readCharacteristicValue(transaction: WBTransaction) {
+        guard
+            let characteristicTransaction = CharacteristicTransaction(transaction: transaction)
+        else {
+            transaction.resolveAsFailure(withMessage: "Invalid message")
+            return
         }
+        guard let service = self.getService(withUUID: characteristicTransaction.serviceUUID) else {
+            characteristicTransaction.resolveUnknownService()
+            return
+        }
+        guard let chars = service.characteristics else {
+            transaction.resolveAsFailure(withMessage: "Characteristics have not yet been retrieved for service \(service.uuid.uuidString)")
+            return
+        }
+        guard let char = chars.first(where: {$0.uuid == characteristicTransaction.characteristicUUID}) else {
+            characteristicTransaction.resolveUnknownCharacteristic()
+            return
+        }
+
+        self.readCharacteristicTM.addTransaction(transaction, atPath: CharacteristicTransactionKey(serviceUUID: characteristicTransaction.serviceUUID, characteristicUUID: characteristicTransaction.characteristicUUID))
+        self.peripheral.readValue(for: char)
     }
     
-    private func getCharacteristic(_ serviceUUID:CBUUID, uuid:CBUUID) -> CBCharacteristic? {
+    private func evaluateJavaScript(_ script: String) {
+        guard let wv = self.view else {
+            NSLog("Can't evaluate javascript as have no webview")
+            return
+        }
+        wv.evaluateJavaScript(
+            script,
+            completionHandler: {
+                _, error in
+                if let err = error {
+                    NSLog("Error evaluating \(script): \(err)")
+                }
+            }
+        )
+    }
+    
+    func writeCharacteristicValue(transaction: WBTransaction) {
+        guard
+            let view = WriteCharacteristicTransaction(transaction: transaction)
+        else {
+            transaction.resolveAsFailure(withMessage: "Invalid write characteristic message")
+            return
+        }
+
+        guard
+            let char = self.getCharacteristicObject(view.serviceUUID, uuid: view.characteristicUUID)
+        else {
+            view.resolveUnknownCharacteristic()
+            return
+        }
+
+        self.writeCharacteristicValuetoDevice(char, view)
+    }
+    
+    private func getCharacteristicObject(_ serviceUUID:CBUUID, uuid:CBUUID) -> CBCharacteristic? {
         if(self.peripheral.services == nil){
             return nil
         }
@@ -659,20 +633,82 @@ class BLECalliope: Calliope, Jsonifiable {
         return nil
     }
     
-    private func evaluateJavaScript(_ script: String) {
-        guard let wv = self.view else {
-            NSLog("Can't evaluate javascript as have no webview")
-            return
-        }
-        wv.evaluateJavaScript(
-            script,
-            completionHandler: {
-                _, error in
-                if let err = error {
-                    NSLog("Error evaluating \(script): \(err)")
+    private func writeCharacteristicValuetoDevice(_ char: CBCharacteristic, _ view: WriteCharacteristicTransaction) {
+
+        switch view.responseMode {
+        case .required:
+                guard char.properties.contains(.write) else {
+                    view.transaction.resolveAsFailure(withMessage: "Write with response not supported")
+                    return
                 }
+
+                self.peripheral.writeValue(view.data, for: char, type: .withResponse)
+                self.writeCharacteristicTM.addTransaction(
+                    view.transaction,
+                    atPath: CharacteristicTransactionKey(
+                        serviceUUID: view.serviceUUID, characteristicUUID: view.characteristicUUID
+                    )
+                )
+        case .never:
+                guard char.properties.contains(.write) || char.properties.contains(.writeWithoutResponse)
+                else {
+                    view.transaction.resolveAsFailure(
+                        withMessage: "Characteristic does not support writing"
+                    )
+                    return
+                }
+                self.peripheral.writeValue(view.data, for: char, type: .withoutResponse)
+                view.transaction.resolveAsSuccess()
+        case .optional:
+            // optional is in fact deprecated and the instructions are "Use any combination of the
+            // sub procedures" in webbluetoothcg.github.io/web-bluetooth/#writecharacteristicvalue
+            // so we do a write with response if possible else without.
+            if char.properties.contains(.write) {
+                self.peripheral.writeValue(view.data, for: char, type: .withResponse)
+                self.writeCharacteristicTM.addTransaction(
+                    view.transaction,
+                    atPath: CharacteristicTransactionKey(
+                        serviceUUID: view.serviceUUID, characteristicUUID: view.characteristicUUID
+                    )
+                )
+            } else if char.properties.contains(.writeWithoutResponse) {
+                self.peripheral.writeValue(view.data, for: char, type: .withoutResponse)
+                view.transaction.resolveAsSuccess()
+            } else {
+                view.transaction.resolveAsFailure(withMessage: "Characteristic does not support writing")
             }
-        )
+        }
     }
     
+    func startNotifications(transaction: WBTransaction) {
+        guard let characteristicTransaction = CharacteristicTransaction(transaction: transaction) else {
+            transaction.resolveAsFailure(withMessage: "Invalid start notifications message")
+            return
+        }
+
+        guard let char = self.getCharacteristicObject(characteristicTransaction.serviceUUID, uuid: characteristicTransaction.characteristicUUID) else {
+            characteristicTransaction.resolveUnknownCharacteristic()
+            return
+        }
+        NSLog("Starting notifications for characteristic \(characteristicTransaction.characteristicUUID.uuidString) on device \(self.peripheral.name ?? "<no-name>")")
+
+        self.peripheral.setNotifyValue(true, for: char)
+        transaction.resolveAsSuccess()
+    }
+    
+    func stopNotifications(transaction: WBTransaction) {
+        guard let characteristicTransaction = CharacteristicTransaction(transaction: transaction) else {
+            transaction.resolveAsFailure(withMessage: "Invalid start notifications message")
+            return
+        }
+
+        guard let char = self.getCharacteristicObject(characteristicTransaction.serviceUUID, uuid: characteristicTransaction.characteristicUUID) else {
+            characteristicTransaction.resolveUnknownCharacteristic()
+            return
+        }
+        NSLog("Stopping notifications for characteristic \(characteristicTransaction.characteristicUUID.uuidString) on device \(self.peripheral.name ?? "<no-name>")")
+
+        self.peripheral.setNotifyValue(false, for: char)
+        transaction.resolveAsSuccess()
+    }
 }
