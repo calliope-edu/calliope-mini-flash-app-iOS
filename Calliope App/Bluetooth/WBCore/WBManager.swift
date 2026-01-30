@@ -26,7 +26,7 @@ protocol WBPicker {
     func updatePicker()
 }
 
-open class WBManager: NSObject, CBCentralManagerDelegate, WKScriptMessageHandler, WBPopUpPickerViewDelegate
+open class WBManager: NSObject, CBCentralManagerDelegate, WKScriptMessageHandler
 {
 
     // MARK: - Embedded types

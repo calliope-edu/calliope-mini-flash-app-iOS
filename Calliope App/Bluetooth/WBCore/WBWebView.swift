@@ -24,17 +24,17 @@ import WebKit
 
 class WBWebView: WKWebView, WKNavigationDelegate {
     let webBluetoothHandlerName = "bluetooth"
-    private var _wbManager: WBManager?
-    var wbManager: WBManager? {
+    private var _wbMessageHandler: WBMessageHandler?
+    var wbMessageHandler: WBMessageHandler? {
         get {
-            return self._wbManager
+            return self._wbMessageHandler
         }
-        set(newWBManager) {
-            if self._wbManager != nil {
+        set(newWBMessageHandler) {
+            if self._wbMessageHandler != nil {
                 self.configuration.userContentController.removeScriptMessageHandler(forName: self.webBluetoothHandlerName)
             }
-            self._wbManager = newWBManager
-            if let newMan = newWBManager {
+            self._wbMessageHandler = newWBMessageHandler
+            if let newMan = newWBMessageHandler {
                 self.configuration.userContentController.add(newMan, name: self.webBluetoothHandlerName)
             }
         }
@@ -45,6 +45,7 @@ class WBWebView: WKWebView, WKNavigationDelegate {
     // MARK: - Initializers
     required public override init(frame: CGRect, configuration: WKWebViewConfiguration) {
         super.init(frame: frame, configuration: configuration)
+        wbMessageHandler = WBMessageHandler()
     }
 
     convenience public required init?(coder: NSCoder) {

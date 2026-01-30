@@ -105,6 +105,15 @@ class WBTransaction: Equatable, CustomStringConvertible {
             return true
         }
     }
+    class Wrapper {
+        let transaction: WBTransaction
+
+        /*! @abstract Failable initializer so that subclasses may decide not to accept the transaction. */
+        init? (transaction: WBTransaction) {
+            self.transaction = transaction
+        }
+    }
+    
     class View {
         let transaction: WBTransaction
 

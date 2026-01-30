@@ -29,8 +29,8 @@ class LofiAppViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        MatrixConnectionViewController.instance?.calliopeClass = nil;
-        MatrixConnectionViewController.instance.moveToBackground();
+        // MatrixConnectionViewController.instance?.calliopeClass = nil;
+        // MatrixConnectionViewController.instance.moveToBackground();
         self.webView.load(URLRequest(url: url))
         #if DEBUG
         if #available(iOS 16.4, *) {
@@ -38,5 +38,13 @@ class LofiAppViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
             print("Inspection enabled")
         }
         #endif
+        if let calliope = MatrixConnectionViewController.instance.usageReadyCalliope,
+        calliope is BLECalliope {
+                (calliope as! BLECalliope).view = webView
+        }
+        else {
+            print("Please connect a calliope via bluetooth before opening this page.")
+        }
+        
     }
 }

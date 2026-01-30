@@ -12,7 +12,7 @@ protocol ConsoleToggler {
     func toggleConsole()
 }
 
-class WBWebViewContainerController: UIViewController, WKNavigationDelegate, WKUIDelegate, WBPicker {
+class WBWebViewContainerController: UIViewController, WKNavigationDelegate, WKUIDelegate {
     
     enum prefKeys: String {
         case lastLocation
@@ -20,14 +20,6 @@ class WBWebViewContainerController: UIViewController, WKNavigationDelegate, WKUI
     
     @IBOutlet var loadingProgressContainer: UIView!
     @IBOutlet var loadingProgressView: UIView!
-    var consoleOpen: Bool = false;
-    
-    // At some point it might be nice to try and handle back and
-    // forward in the browser better, i.e. by managing multiple managers
-    // for recent pages so that you can go back and forward to them
-    // without losing bluetooth connections, or at least notifying that
-    // the devices have been disconnected
-    var wbManager: WBManager?
     
     var webViewController: WBWebViewController {
         get {
@@ -37,31 +29,6 @@ class WBWebViewContainerController: UIViewController, WKNavigationDelegate, WKUI
     var webView: WBWebView {
         get {
             return self.webViewController.webView
-        }
-    }
-    
-    // If the pop up picker is showing, then the
-    // following two vars are not null.
-    @objc var pickerIsShowing = false
-    var popUpPickerController: WBPopUpPickerController!
-    var popUpPickerBottomConstraint: NSLayoutConstraint!
-    
-    var consoleViewBottomConstraint: NSLayoutConstraint!
-    var consoleViewContainerController: ConsoleViewContainerController?
-
-    // MARK: - IBActions
-    @IBAction public func toggleConsole() {
-        print("Trying to toggle console ...")
-        if(consoleOpen) {
-            consoleOpen = false;
-            if(consoleViewContainerController != nil) {
-                consoleViewContainerController!.performSegue(withIdentifier: "HideConsoleSegueID", sender: consoleViewContainerController);
-                consoleViewContainerController = nil;
-            }
-        }
-        else {
-            consoleOpen = true;
-            self.performSegue(withIdentifier: "ShowConsoleSegue", sender: self);
         }
     }
     
@@ -77,24 +44,9 @@ class WBWebViewContainerController: UIViewController, WKNavigationDelegate, WKUI
         }
     }
     
-    // MARK: - WBPicker
-    public func showPicker() {
-        self.performSegue(withIdentifier: "ShowDevicePicker", sender: self)
-    }
-    public func updatePicker() {
-        if self.pickerIsShowing {
-            self.popUpPickerController.pickerView.reloadAllComponents()
-        }
-    }
-    
     // MARK: - WKNavigationDelegate
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        if self.pickerIsShowing {
-            // navigation (refresh, back, link click etc.) attempted while picker visible, so hide it since the navigation implies the user is no longer interested in picking a device
-            self.popUpPickerController.performSegue(withIdentifier: "Cancel", sender: nil)
-        }
         self.loadingProgressContainer.isHidden = false
-        self._configureNewManager()
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -124,44 +76,6 @@ class WBWebViewContainerController: UIViewController, WKNavigationDelegate, WKUI
         self.present(alertController, animated: true, completion: nil)
     }
     
-    // MARK: - Segue handling
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        switch segue.destination {
-        case let obj as WBPopUpPickerController:
-            self.setValue(true, forKey: "pickerIsShowing")
-            self.popUpPickerController = obj
-            obj.wbManager = self.wbManager
-        case let obj as ErrorViewController:
-            let error = sender as! Error
-            obj.errorMessage = error.localizedDescription
-        case let obj as ConsoleViewContainerController:
-            self.consoleViewContainerController = obj;
-        default:
-            break
-        }
-    }
-    
-    @IBAction func unwindToWVContainerController(sender: UIStoryboardSegue) {
-        print("unwindToWVContainerController")
-        if let puvc = sender.source as? WBPopUpPickerController {
-            self.setValue(false, forKey: "pickerIsShowing")
-            puvc.wbManager = nil
-            self.popUpPickerController = nil
-            switch sender.identifier {
-            case "Cancel":
-                self.wbManager?.cancelDeviceSearch()
-                break
-            case "Done":
-                self.wbManager?.selectDeviceAt(
-                    puvc.pickerView.selectedRow
-                )
-                break
-            default:
-                NSLog("Unknown unwind segue ignored: \(sender.identifier ?? "<none>")")
-            }
-        }
-    }
-    
     // MARK: - Observe protocol
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         guard
@@ -186,13 +100,6 @@ class WBWebViewContainerController: UIViewController, WKNavigationDelegate, WKUI
         default:
             NSLog("Unexpected change observed by ViewController: \(defKeyPath)")
         }
-    }
-    
-    // MARK: - Private
-    private func _configureNewManager() {
-        self.wbManager?.clearState()
-        self.wbManager = WBManager(devicePicker: self)
-        self.webView.wbManager = self.wbManager
     }
 
     private func _maybeShowErrorUI(_ error: Error) {

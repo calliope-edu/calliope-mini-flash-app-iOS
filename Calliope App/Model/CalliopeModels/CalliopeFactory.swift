@@ -19,7 +19,7 @@ class FlashableCalliopeFactory {
             //device?.evaluateMode()
         }
         let calliope = calliopeTypes.compactMap { calliopeType in
-            return calliopeType.init(peripheral: device.peripheral, name: device.name, discoveredServices: device.discoveredServices, discoveredCharacteristicUUIDsForServiceUUID: device.serviceToDiscoveredCharacteristicsMap, servicesChangedCallback: servicesChangedCallback)
+            return calliopeType.init(peripheral: device.peripheral, name: device.name, discoveredServices: device.discoveredServices, discoveredCharacteristicUUIDsForServiceUUID: device.serviceToDiscoveredCharacteristicsMap, servicesChangedCallback: servicesChangedCallback, advertisementData: device.advertisementData)
         }
         .first
         return calliope
