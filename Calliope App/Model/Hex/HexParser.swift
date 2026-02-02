@@ -30,7 +30,7 @@ struct HexParser {
     
     enum HexVersion: String, CaseIterable {
         case v3        = ":1000000000040020810A000015070000610A0000BA"
-        case v3Alt     = ":100000000000022011E5010039E501003BE5010097"
+        case v3Shield     = ":100000000000022011E5010039E501003BE5010097"
         case v2        = ":020000040000FA"
         case universal = ":0400000A9900C0DEBB"
         case arcade    = ":10000000000002202D5A0100555A0100575A0100E4"

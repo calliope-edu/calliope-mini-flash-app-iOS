@@ -28,7 +28,7 @@ class ConnectedCalliopeV3: BLECalliope {
     }
     
     override var compatibleHexTypes: Set<HexParser.HexVersion> {
-        [.universal, .v3, .v3Alt]  // Unterstützt V3 Hex-Dateien (nach Wechsel in DFU Mode)
+        [.universal, .v3, .v3Shield]  // Unterstützt V3 Hex-Dateien (nach Wechsel in DFU Mode)
     }
     
     // MARK: - State Tracking

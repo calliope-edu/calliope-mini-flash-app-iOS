@@ -754,7 +754,7 @@ class CalliopeV3: FlashableBLECalliope {
     }
 
     override var compatibleHexTypes: Set<HexParser.HexVersion> {
-        [.universal, .v3, .v3Alt]
+        [.universal, .v3, .v3Shield]
     }
 
     override var requiredServices: Set<CalliopeService> {

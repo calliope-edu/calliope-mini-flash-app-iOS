@@ -35,7 +35,7 @@ struct InitPacket {
 extension HexFile {
     var isValidHexFile: Bool {
         let types = getHexTypes()
-        return types.contains(.v2) || types.contains(.v3) || types.contains(.v3Alt) ||
+        return types.contains(.v2) || types.contains(.v3) || types.contains(.v3Shield) ||
                types.contains(.universal) || types.contains(.arcade)
     }
 }
