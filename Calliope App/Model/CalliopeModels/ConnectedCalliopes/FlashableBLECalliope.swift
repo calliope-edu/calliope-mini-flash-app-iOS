@@ -15,11 +15,15 @@ class FlashableBLECalliope: CalliopeAPI {
     private var rebootingForPartialFlashing = false
     internal var isPartiallyFlashing = false
     
-    // Optimiertes Partial Flashing für V3 ist deaktiviert
-    // TODO: Bei erneutem Versuch hier den Manager wieder aktivieren
-
     // Tracks whether DFU has completed successfully and we're waiting for reconnect
     private var dfuCompletedAwaitingReconnect = false
+    
+    // Callback to request disconnect from CalliopeDiscovery
+    var requestDisconnectCallback: (() -> Void)?
+    
+    // Flow control for BLE buffer management
+    private var isWaitingForBufferReady = false
+    private var bufferReadyObserver: NSObjectProtocol?
     
     internal private(set) var file: Hex?
 
@@ -33,6 +37,7 @@ class FlashableBLECalliope: CalliopeAPI {
         switch newState {
         case .usageReady:
             if rebootingForPartialFlashing {
+                LogNotify.log("[PartialFlash] Device reconnected after reboot, resuming partial flashing...")
                 updateQueue.async {
                     self.startPartialFlashing()
                 }
@@ -49,6 +54,8 @@ class FlashableBLECalliope: CalliopeAPI {
                 DispatchQueue.main.async {
                     self.statusDelegate?.dfuError(.deviceDisconnected, didOccurWithMessage: "connection to calliope lost")
                 }
+            } else if rebootingForPartialFlashing {
+                LogNotify.log("[PartialFlash] Device disconnected after reboot command, waiting for reconnection...")
             }
             // Bei DFU completion ist discovered normal - wir warten auf reconnect
             
@@ -79,6 +86,9 @@ class FlashableBLECalliope: CalliopeAPI {
     internal var uploader: DFUServiceController? = nil
 
     override public func upload(file: Hex, progressReceiver: DFUProgressDelegate? = nil, statusDelegate: DFUServiceDelegate? = nil, logReceiver: LoggerDelegate? = nil) throws {
+        // Clear filtered hex cache to ensure fresh partial flashing info for each upload
+        PartialFlashManager.clearCache()
+        
         let hexTypes = file.getHexTypes()
         if hexTypes.contains(.arcade) {
             LogNotify.log("Arcade files cannot be uploaded via Bluetooth")
@@ -94,36 +104,21 @@ class FlashableBLECalliope: CalliopeAPI {
         // Reset flags
         dfuCompletedAwaitingReconnect = false
 
-        // Partial flashing disabled for now - always use full flashing
-        // To re-enable partial flashing later, uncomment the block below
-        /*
         // Attempt partial flashing first if available
         LogNotify.log("Partial flashing service available: \(discoveredOptionalServices.contains(.partialFlashing))")
 
-        // Prüfe ob Partial Flashing verfügbar ist und sinnvoll (< 700 Zeilen zu ändern)
+        // Check if partial flashing is available and hex has magic markers
+        // The actual decision (partial vs full) is made after connecting and comparing DAL hashes and addresses
         if discoveredOptionalServices.contains(.partialFlashing),
            let partialInfo = file.partialFlashingInfo {
             let lineCount = partialInfo.partialFlashData.lineCount
-            LogNotify.log("Partial flashing: \(lineCount) lines to change")
-
-            if lineCount < 700 {
-                LogNotify.log("Using partial flashing (< 700 lines)")
-                startPartialFlashing()
-            } else {
-                LogNotify.log("Skipping partial flashing (>= 700 lines), using full flash instead")
-                shouldRebootOnDisconnect = true
-                try startFullFlashing()
-            }
+            LogNotify.log("Partial flashing: hex has \(lineCount) lines after magic marker")
+            LogNotify.log("Starting partial flash process (will verify DAL hash and addresses with device)")
+            startPartialFlashing()
         } else {
             shouldRebootOnDisconnect = true
             try startFullFlashing()
         }
-        */
-
-        // Always use full flashing
-        LogNotify.log("Using full flashing (partial flashing disabled)")
-        shouldRebootOnDisconnect = true
-        try startFullFlashing()
     }
 
     internal func startFullFlashing() throws {
@@ -187,6 +182,11 @@ class FlashableBLECalliope: CalliopeAPI {
     private var totalPacketsToSend: Int = 0
     private var currentBlockStartTime: Date?
     
+    // Device's region addresses (from REGION responses)
+    private var deviceDalEndAddress: UInt32 = 0
+    private var deviceCodeStartAddress: UInt32 = 0
+    private var deviceCodeEndAddress: UInt32 = 0
+    
     // Flow control for iOS 11+
     private var packetsToSend: [(index: Int, package: (address: UInt16, data: Data))] = []
     private var currentBlockSendIndex = 0
@@ -228,12 +228,23 @@ class FlashableBLECalliope: CalliopeAPI {
 
         if value[0] == .STATUS {
             //requested the mode of the calliope
-            receivedStatus(value[2] == .MODE_APPLICATION)
+            let needsReboot = value[2] == .MODE_APPLICATION
+            LogNotify.log("[PartialFlash] Device mode: \(needsReboot ? "APPLICATION (needs reboot)" : "BLE (ready)")")
+            receivedStatus(needsReboot)
             return
         }
 
         if value[0] == .REGION && value[1] == .DAL_REGION {
             //requested dal hash and position
+            // Parse DAL end address (big-endian) - kept for informational purposes only
+            deviceDalEndAddress = (UInt32(value[6]) << 24) | 
+                                  (UInt32(value[7]) << 16) | 
+                                  (UInt32(value[8]) << 8) | 
+                                  UInt32(value[9])
+            
+            let hashHex = value[10..<18].map { String(format: "%02X", $0) }.joined()
+            LogNotify.log("[PartialFlash] Device DAL hash: \(hashHex)")
+            
             dalHash = value[10..<18]
             updateCallback("Dal region from \(value[2..<6].hexEncodedString()) to \(value[6..<10].hexEncodedString())")
             receivedDalHash()
@@ -241,8 +252,20 @@ class FlashableBLECalliope: CalliopeAPI {
         }
 
         if value[0] == .REGION && value[1] == .PROGRAM_REGION {
+            // Extract code region addresses (big-endian)
+            deviceCodeStartAddress = (UInt32(value[2]) << 24) | 
+                                      (UInt32(value[3]) << 16) | 
+                                      (UInt32(value[4]) << 8) | 
+                                      UInt32(value[5])
+            deviceCodeEndAddress = (UInt32(value[6]) << 24) | 
+                                    (UInt32(value[7]) << 16) | 
+                                    (UInt32(value[8]) << 8) | 
+                                    UInt32(value[9])
             currentProgramHash = value[10..<18]
-            LogNotify.log("Program region: \(value[2..<6].hexEncodedString()) to \(value[6..<10].hexEncodedString()) - hash: \(currentProgramHash.hexEncodedString()) - new hash: \(hexProgramHash.hexEncodedString())")
+            
+            let hashHex = value[10..<18].map { String(format: "%02X", $0) }.joined()
+            LogNotify.log("[PartialFlash] Device program hash: \(hashHex)")
+            
             receivedProgramHash()
             return
         }
@@ -270,18 +293,16 @@ class FlashableBLECalliope: CalliopeAPI {
                 // Update counters after successful transmission
                 startPackageNumber = startPackageNumber.addingReportingOverflow(UInt8(currentDataToFlash.count)).partialValue
                 linesFlashed += currentDataToFlash.count
+                debugLog("Transmitted \(linesFlashed) lines")
                 
                 // Reset retry counter on success
                 currentBlockRetryCount = 0
                 flowControlRetryCount = 0
                 
-                // Check if this was the last block (had fewer than 4 packets)
-                if currentDataToFlash.count < 4 {
-                    debugLog("Last block completed successfully, ending transmission")
-                    endTransmission()
-                } else {
-                    sendNextPackages()
-                }
+                // This should only be called for full 4-packet blocks
+                // Incomplete blocks are handled immediately in sendNextPacketInBlock()
+                debugLog("Full block (\(currentDataToFlash.count) packets) ACK received, sending next block")
+                sendNextPackages()
             } else {
                 //we do not understand the response
                 LogNotify.log("Unknown write response: \(value[1]), falling back to full flash")
@@ -293,16 +314,24 @@ class FlashableBLECalliope: CalliopeAPI {
 
     func startPartialFlashing() {
         rebootingForPartialFlashing = false
+        
+        LogNotify.log("[PartialFlash] Starting partial flash attempt")
 
         updateCallback("Start partial flashing")
         guard let file = file,
             let partialFlashingInfo = file.partialFlashingInfo,
             let partialFlashingCharacteristic = getCBCharacteristic(.partialFlashing)
         else {
-            LogNotify.log("Partial flashing not found")
+            LogNotify.log("[PartialFlash] Partial flashing not available (missing data or characteristic)")
             fallbackToFullFlash()
             return
         }
+
+        // Initialize enhanced partial flashing state BEFORE enabling notifications
+        // to ensure we don't miss any responses
+        partialFlashingStateLock.lock()
+        isPartialFlashingActive = true
+        partialFlashingStateLock.unlock()
 
         peripheral.setNotifyValue(true, for: partialFlashingCharacteristic)
 
@@ -315,6 +344,10 @@ class FlashableBLECalliope: CalliopeAPI {
         hexFileHash = Data()
         hexProgramHash = Data()
         partialFlashData = nil
+        
+        // Reset device code region addresses
+        deviceCodeStartAddress = 0
+        deviceCodeEndAddress = 0
 
         //current flash package data
         startPackageNumber = 0
@@ -324,11 +357,6 @@ class FlashableBLECalliope: CalliopeAPI {
         //for GUI interaction
         cancel = false
         linesFlashed = 0
-        
-        // Initialize enhanced partial flashing state
-        partialFlashingStateLock.lock()
-        isPartialFlashingActive = true
-        partialFlashingStateLock.unlock()
         
         currentBlockRetryCount = 0
         flowControlRetryCount = 0
@@ -342,21 +370,33 @@ class FlashableBLECalliope: CalliopeAPI {
         hexFileHash = partialFlashingInfo.fileHash
         hexProgramHash = partialFlashingInfo.programHash
         partialFlashData = partialFlashingInfo.partialFlashData
-
-        // request dal hash
-        send(command: .REGION, value: Data([.DAL_REGION]))
+        
+        // Log hex file information now that we have it
+        if let partialData = partialFlashData {
+            LogNotify.log("[PartialFlash] Hex file code start address: 0x\(String(format: "%08X", partialData.codeStartAddress))")
+            LogNotify.log("[PartialFlash] Hex file DAL hash: \(hexFileHash.hexEncodedString())")
+            LogNotify.log("[PartialFlash] Hex file program hash: \(hexProgramHash.hexEncodedString())")
+            LogNotify.log("[PartialFlash] Hex file line count: \(partialData.lineCount)")
+        }
+        
+        LogNotify.log("[PartialFlash] Querying device status...")
+        send(command: .STATUS)
     }
 
     private func receivedDalHash() {
         updateCallback("Received dal hash \(dalHash.hexEncodedString()), hash in hex file is \(hexFileHash.hexEncodedString())")
+        
+        // Check 1: DAL hash must match between device and hex file
         guard dalHash == hexFileHash else {
+            LogNotify.log("[PartialFlash] DAL hash mismatch - device: \(dalHash.hexEncodedString()), file: \(hexFileHash.hexEncodedString()) - falling back to full DFU")
             fallbackToFullFlash()
             return
         }
+        
+        LogNotify.log("[PartialFlash] DAL hash validated")
 
-        // request status
-        LogNotify.log("[PartialFlash] Requesting device status...")
-        send(command: .STATUS)
+        // Device is in BLE mode and DAL verified, continue with embedded region
+        send(command: .REGION, value: Data([.EMBEDDED_REGION]))
     }
 
     func receivedStatus(_ needsRebootIntoBLEOnlyMode: Bool) {
@@ -366,29 +406,86 @@ class FlashableBLECalliope: CalliopeAPI {
             shouldRebootOnDisconnect = true
             rebootingForPartialFlashing = true
             //calliope is in application state and needs to be rebooted
+            LogNotify.log("[PartialFlash] Sending reboot command to enter BLE mode...")
             send(command: .REBOOT, value: Data([.MODE_BLE]))
+            
+            // Immediately disconnect to avoid waiting for iOS to detect timeout (saves ~4s)
+            LogNotify.log("[PartialFlash] Triggering disconnect to speed up reconnection...")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+                self?.requestDisconnectCallback?()
+            }
         } else {
             //calliope is already in bluetooth state
-            // request embedded hash
+            LogNotify.log("[PartialFlash] Device already in BLE mode, verifying DAL hash...")
             isPartiallyFlashing = true
-            send(command: .REGION, value: Data([.EMBEDDED_REGION]))
+            // Now request DAL hash to verify firmware compatibility
+            send(command: .REGION, value: Data([.DAL_REGION]))
         }
     }
 
     private func receivedEmbedHash() {
         updateCallback("Received embed hash")
-        // request program hash
         send(command: .REGION, value: Data([.PROGRAM_REGION]))
     }
 
     private func receivedProgramHash() {
         updateCallback("Received program hash \(hexProgramHash.hexEncodedString())")
+        
+        // Validate addresses match between device and hex file
+        // This prevents partial flashing when device has stale metadata from previous flash
+        guard let partialFlashData = partialFlashData else {
+            fallbackToFullFlash()
+            return
+        }
+        
+        // Get hex file addresses from PartialFlashData
+        let hexFileCodeStartAddress = partialFlashData.codeStartAddress
+        
+        // Check if device's code start address matches hex file
+        // This is the primary validation - matching Android implementation
+        // Note: We do NOT compare DAL end addresses (Android ignores this too)
+        if deviceCodeStartAddress != hexFileCodeStartAddress {
+            LogNotify.log("[PartialFlash] Code start mismatch - hex: 0x\(String(format: "%X", hexFileCodeStartAddress)), device: 0x\(String(format: "%X", deviceCodeStartAddress)) - falling back to full DFU")
+            fallbackToFullFlash()
+            return
+        }
+        
+        LogNotify.log("[PartialFlash] Address validation passed")
+        
+        // Check program hash to detect different user code
+        // Device reports hash of currently running program, hex file contains hash of new program
+        // If they match exactly, no need to flash (program unchanged)
+        // If device hash is all zeros, device might have non-MakeCode firmware (e.g., Samples after full DFU)
+        let deviceHashIsZero = currentProgramHash.allSatisfy { $0 == 0 }
+        
+        if deviceHashIsZero {
+            LogNotify.log("[PartialFlash] Device reports zero program hash - likely non-MakeCode firmware, falling back to full flash")
+            fallbackToFullFlash()
+            return
+        }
+        
         if currentProgramHash == hexProgramHash {
-            linesFlashed = partialFlashData?.lineCount ?? Int.max  //set progress to 100%
+            LogNotify.log("[PartialFlash] Program unchanged - no flashing needed")
+            linesFlashed = partialFlashData.lineCount
             updateCallback("No changes to upload")
-            let _ = cancelUpload()
-            statusDelegate?.dfuStateDidChange(to: .completed)
+            
+            // Clear flashing flag BEFORE reboot to prevent disconnect error
+            partialFlashingStateLock.lock()
+            isPartialFlashingActive = false
+            isPartiallyFlashing = false
+            partialFlashingStateLock.unlock()
+            
+            // Reboot device back to application mode since we're done
+            send(command: .REBOOT, value: Data([.MODE_APPLICATION]))
+            
+            // Wait briefly for reboot command, then complete
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                let _ = self?.cancelUpload()
+                self?.statusDelegate?.dfuStateDidChange(to: .completed)
+            }
         } else {
+            LogNotify.log("[PartialFlash] Starting partial flash - \(partialFlashData.lineCount) lines to flash")
+            
             updateCallback("Partial flashing starts sending new program to Calliope mini")
             startPackageNumber = 0
             sendNextPackages()
@@ -411,16 +508,30 @@ class FlashableBLECalliope: CalliopeAPI {
         }
         self.partialFlashData = partialFlashData
         
+        // Check if we're done - no more data to send
+        if currentDataToFlash.count == 0 {
+            debugLog("No more data to send, ending transmission")
+            endTransmission()
+            return
+        }
+        
+        // Pad incomplete blocks with 0xFF (like Android does)
+        // Device firmware expects blocks of 4 packets
+        if currentDataToFlash.count < 4 {
+            let paddingCount = 4 - currentDataToFlash.count
+            debugLog("Padding last block with \(paddingCount) packets of 0xFF")
+            let paddingData = Data(repeating: 0xFF, count: 16)
+            for _ in 0..<paddingCount {
+                // Use address 0x0000 for padding packets (they'll be ignored by device)
+                currentDataToFlash.append((address: 0x0000, data: paddingData))
+            }
+        }
+        
         // Start timeout timer for this block
         currentBlockStartTime = Date()
         blockTransmissionTimer?.invalidate()
         blockTransmissionTimer = Timer.scheduledTimer(withTimeInterval: blockTimeout, repeats: false) { [weak self] _ in
             self?.handleBlockTimeout()
-        }
-        
-        if currentDataToFlash.count < 4 {
-            debugLog("Last block (\(currentDataToFlash.count) packets), sending END after transmission")
-            // Note: endTransmission will be called after we get WRITE_SUCCESS for last block
         }
         
         sendCurrentPackagesWithFlowControl()
@@ -475,17 +586,15 @@ class FlashableBLECalliope: CalliopeAPI {
         // Check buffer before starting new block (iOS 11+)
         if #available(iOS 11.0, *) {
             if !peripheral.canSendWriteWithoutResponse {
-                // Buffer full, retry in 10ms
-                flowControlRetryCount += 1
-                
-                if flowControlRetryCount >= maxFlowControlRetries {
-                    LogNotify.log("Flow control timeout - buffer stayed full for 1 second before block start")
-                    fallbackToFullFlash()
-                    return
-                }
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) { [weak self] in
-                    self?.sendCurrentPackagesWithFlowControl()
+                // Buffer full - wait for peripheralIsReady callback instead of polling
+                if !isWaitingForBufferReady {
+                    isWaitingForBufferReady = true
+                    debugLog("Buffer full before block start, waiting for peripheralIsReady callback...")
+                    registerBufferReadyCallback { [weak self] in
+                        self?.isWaitingForBufferReady = false
+                        self?.flowControlRetryCount = 0
+                        self?.sendCurrentPackagesWithFlowControl()
+                    }
                 }
                 return
             }
@@ -503,48 +612,50 @@ class FlashableBLECalliope: CalliopeAPI {
     }
     
     private func sendNextPacketInBlock() {
-        // Send all packets in tight loop for maximum speed
-        while currentBlockSendIndex < packetsToSend.count {
-            let (index, package) = packetsToSend[currentBlockSendIndex]
-            
-            // Send packet
-            let packageAddress = currentBlockSendIndex == 1 ? currentSegmentAddress.bigEndianData : package.address.bigEndianData
-            let currentPacketNumber = startPackageNumber.addingReportingOverflow(UInt8(currentBlockSendIndex)).partialValue
-            let packageNumber = Data([currentPacketNumber])
-            let writeData = packageAddress + packageNumber + package.data
-            
-            send(command: .WRITE, value: writeData)
-            
-            // Move to next packet
-            currentBlockSendIndex += 1
+        // Check if we've sent all packets in this block
+        guard currentBlockSendIndex < packetsToSend.count else {
+            // All 4 packets sent (including padding if needed) - wait for device ACK
+            debugLog("All \(packetsToSend.count) packets sent, waiting for device response")
+            return
         }
         
-        // All packets in block sent
-        if packetsToSend.count < 4 {
-            // Incomplete block - device won't send ACK, finish immediately
-            debugLog("Last incomplete block (\(packetsToSend.count) packets) sent, ending transmission")
-            
-            // Update counters for the last block
-            startPackageNumber = startPackageNumber.addingReportingOverflow(UInt8(packetsToSend.count)).partialValue
-            linesFlashed += packetsToSend.count
-            
-            // Cancel timer and end successfully
-            blockTransmissionTimer?.invalidate()
-            blockTransmissionTimer = nil
-            
-            endTransmission()
-        } else {
-            // Full block - wait for device ACK
+        let (index, package) = packetsToSend[currentBlockSendIndex]
+        
+        // Check buffer availability with flow control (iOS 11+)
+        if #available(iOS 11.0, *) {
+            if index > 0 && !peripheral.canSendWriteWithoutResponse {
+                // Buffer full - wait for peripheralIsReady callback
+                if !isWaitingForBufferReady {
+                    isWaitingForBufferReady = true
+                    debugLog("Buffer full for packet \(index), waiting for peripheralIsReady callback...")
+                    registerBufferReadyCallback { [weak self] in
+                        self?.isWaitingForBufferReady = false
+                        self?.flowControlRetryCount = 0
+                        self?.sendNextPacketInBlock()
+                    }
+                }
+                return
+            }
         }
+        
+        // Send packet with flow control
+        let packageAddress = currentBlockSendIndex == 1 ? currentSegmentAddress.bigEndianData : package.address.bigEndianData
+        let currentPacketNumber = startPackageNumber.addingReportingOverflow(UInt8(currentBlockSendIndex)).partialValue
+        let packageNumber = Data([currentPacketNumber])
+        let writeData = packageAddress + packageNumber + package.data
+        
+        debugLog("Sending packet \(currentPacketNumber) (\(currentBlockSendIndex + 1)/\(packetsToSend.count))")
+        send(command: .WRITE, value: writeData)
+        
+        // Move to next packet
+        currentBlockSendIndex += 1
+        flowControlRetryCount = 0 // Reset retry counter on successful send
+        
+        // Continue sending next packet immediately or wait for buffer
+        sendNextPacketInBlock()
     }
 
     private func endTransmission() {
-        // Clean up state
-        partialFlashingStateLock.lock()
-        isPartialFlashingActive = false
-        isPartiallyFlashing = false
-        partialFlashingStateLock.unlock()
-        
         shouldRebootOnDisconnect = false
         blockTransmissionTimer?.invalidate()
         blockTransmissionTimer = nil
@@ -555,25 +666,56 @@ class FlashableBLECalliope: CalliopeAPI {
         updateCallback("Partial flashing done in \(String(format: "%.2f", duration))s (\(Int(avgSpeed)) bytes/s)")
         debugLog("Transmission complete: \(linesFlashed) packets in \(String(format: "%.2f", duration))s")
         
+        
+        // Send TRANSMISSION_END before cleaning up state
+        debugLog("Sending TRANSMISSION_END (0x02) command")
+        updateCallback("Sending end of transmission command...")
         send(command: .TRANSMISSION_END)
         
-        // Signal completion to delegate
-        statusDelegate?.dfuStateDidChange(to: .completed)
+        // Clean up flow control
+        cleanupBufferReadyCallback()
+        isWaitingForBufferReady = false
+        
+        // Now clean up state AFTER sending the command
+        partialFlashingStateLock.lock()
+        isPartialFlashingActive = false
+        isPartiallyFlashing = false
+        partialFlashingStateLock.unlock()
+        
+        // Per BLE partial flash protocol, device firmware should:
+        // 1. Process TRANSMISSION_END command
+        // 2. Remove embedded source magic
+        // 3. Automatically disconnect and reboot into application mode
+        // Give device time to process and initiate reboot before signaling completion.
+        // Android implementation waits 100ms then explicitly disconnects.
+        updateCallback("Waiting for device to reboot into application mode...")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.statusDelegate?.dfuStateDidChange(to: .completed)
+        }
     }
 
 
     //MARK: partial flashing utility functions
 
     private func send(command: UInt8, value: Data = Data()) {
+        let commandData = Data([command]) + value
+        debugLog("Sending command: 0x\(String(format: "%02X", command)) with \(value.count) bytes of data")
         do {
-            try writeWithoutResponse(Data([command]) + value, for: .partialFlashing)
+            try writeWithoutResponse(commandData, for: .partialFlashing)
+            debugLog("Command 0x\(String(format: "%02X", command)) sent successfully")
         } catch {
-            LogNotify.log("Write failed: \(error.localizedDescription)")
+            LogNotify.log("Write failed for command 0x\(String(format: "%02X", command)): \(error.localizedDescription)")
             fallbackToFullFlash()
         }
     }
 
     private func fallbackToFullFlash() {
+        LogNotify.log("[PartialFlash] Falling back to full DFU")
+        
+        // Clean up flow control
+        cleanupBufferReadyCallback()
+        isWaitingForBufferReady = false
+        
         // Clean up partial flashing state
         partialFlashingStateLock.lock()
         isPartialFlashingActive = false
@@ -648,6 +790,7 @@ class FlashableBLECalliope: CalliopeAPI {
             // WICHTIG: shouldRebootOnDisconnect auf true setzen damit Reconnect funktioniert
             shouldRebootOnDisconnect = true
             
+            
         case .aborted:
             LogNotify.log("DFU was aborted")
             rebootingIntoDFUMode = false
@@ -689,20 +832,18 @@ class CalliopeV1AndV2: FlashableBLECalliope {
         [.dfuControlService]
     }
 
-    // Partial flashing disabled for now - to be revisited later
-    // override var optionalServices: Set<CalliopeService> {
-    //     [.partialFlashing]
-    // }
+    override var optionalServices: Set<CalliopeService> {
+        [.partialFlashing]
+    }
 
     override func notify(aboutState newState: DiscoveredDevice.CalliopeBLEDeviceState) {
         super.notify(aboutState: newState)
         if newState == .usageReady {
             //read to trigger pairing if necessary
             shouldRebootOnDisconnect = true
-            // Partial flashing disabled for now
-            // if discoveredOptionalServices.contains(.partialFlashing), let cbCharacteristic = getCBCharacteristic(.partialFlashing) {
-            //     peripheral.setNotifyValue(true, for: cbCharacteristic)
-            // }
+            if discoveredOptionalServices.contains(.partialFlashing), let cbCharacteristic = getCBCharacteristic(.partialFlashing) {
+                peripheral.setNotifyValue(true, for: cbCharacteristic)
+            }
             shouldRebootOnDisconnect = false
         }
     }
@@ -744,11 +885,10 @@ class CalliopeV3: FlashableBLECalliope {
             if let cbCharacteristic = getCBCharacteristic(.secureDfuCharacteristic) {
                 peripheral.setNotifyValue(true, for: cbCharacteristic)
             }
-            // Partial flashing disabled for now
-            // if discoveredOptionalServices.contains(.partialFlashing),
-            //    let pfCharacteristic = getCBCharacteristic(.partialFlashing) {
-            //     peripheral.setNotifyValue(true, for: pfCharacteristic)
-            // }
+            if discoveredOptionalServices.contains(.partialFlashing),
+               let pfCharacteristic = getCBCharacteristic(.partialFlashing) {
+                peripheral.setNotifyValue(true, for: pfCharacteristic)
+            }
             shouldRebootOnDisconnect = false
         }
     }
@@ -761,10 +901,9 @@ class CalliopeV3: FlashableBLECalliope {
         [.secureDfuService]
     }
 
-    // Partial flashing disabled for now - to be revisited later
-    // override var optionalServices: Set<CalliopeService> {
-    //     [.partialFlashing]
-    // }
+    override var optionalServices: Set<CalliopeService> {
+        [.partialFlashing]
+    }
 
     internal override func startFullFlashing() throws {
 
@@ -793,6 +932,7 @@ class CalliopeV3: FlashableBLECalliope {
 // Key requirements:
 // 1. Must use 4-packet blocks with device acknowledgment (WRITE_SUCCESS) between blocks
 // 2. Must respect iOS CoreBluetooth flow control (canSendWriteWithoutResponse on iOS 11+)
+//    - Use peripheralIsReady(toSendWriteWithoutResponse:) callback for event-driven flow control
 // 3. Device firmware protocol:
 //    - Send: WRITE command + 4 packets (address + packet# + 16 bytes data)
 //    - Wait: Device notification with WRITE_SUCCESS (0xFF) or WRITE_FAIL (0xAA)
@@ -801,6 +941,32 @@ class CalliopeV3: FlashableBLECalliope {
 //
 // See micro:bit Android implementation for reference:
 // https://github.com/microbit-foundation/microbit-android
+
+// MARK: - BLE Flow Control Helpers
+
+extension FlashableBLECalliope {
+    /// Register callback for when BLE buffer is ready (via peripheralIsReady notification)
+    private func registerBufferReadyCallback(_ callback: @escaping () -> Void) {
+        cleanupBufferReadyCallback() // Remove any existing observer
+        
+        bufferReadyObserver = NotificationCenter.default.addObserver(
+            forName: .bleBufferReadyForPeripheral,
+            object: peripheral,
+            queue: .main
+        ) { [weak self] _ in
+            self?.cleanupBufferReadyCallback()
+            callback()
+        }
+    }
+    
+    /// Clean up buffer ready callback observer
+    private func cleanupBufferReadyCallback() {
+        if let observer = bufferReadyObserver {
+            NotificationCenter.default.removeObserver(observer)
+            bufferReadyObserver = nil
+        }
+    }
+}
 
 //MARK: constants for partial flashing
 extension UInt8 {

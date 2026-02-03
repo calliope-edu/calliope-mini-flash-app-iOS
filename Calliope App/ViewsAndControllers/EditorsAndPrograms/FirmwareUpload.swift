@@ -352,6 +352,15 @@ class FirmwareUpload {
 
         do {
             MatrixConnectionViewController.instance.enableDfuMode(mode: true)
+            
+            // Set up disconnect callback for partial flashing optimization
+            if let flashableCalliope = calliope as? FlashableBLECalliope {
+                flashableCalliope.requestDisconnectCallback = { [weak self] in
+                    LogNotify.log("[PartialFlash] Disconnect requested - triggering immediate disconnect")
+                    MatrixConnectionViewController.instance.connector.disconnectForReboot()
+                }
+            }
+            
             try calliope.upload(file: file, progressReceiver: self, statusDelegate: self, logReceiver: self)
         } catch {
             DispatchQueue.main.async { [weak self] in

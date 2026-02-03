@@ -217,14 +217,14 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         //start scan only if central manger already connected to bluetooth system service (=poweredOn)
         //alternatively, this is invoked after the state of the central mananger changed to poweredOn.
         if centralManager.state != .poweredOn {
-            if !MatrixConnectionViewController.instance.isInUsbMode {
+            if let instance = MatrixConnectionViewController.instance, !instance.isInUsbMode {
                 updateQueue.async {
                     self.errorBlock(NSLocalizedString("Activate Bluetooth!", comment: ""))
                 }
                 state = .discoveryWaitingForBluetooth
             }
         } else if !centralManager.isScanning {
-            if MatrixConnectionViewController.instance.isInUsbMode, let discoveredCalliope = discoveredCalliopes[CalliopeDiscovery.usbCalliopeName] {
+            if let instance = MatrixConnectionViewController.instance, instance.isInUsbMode, let discoveredCalliope = discoveredCalliopes[CalliopeDiscovery.usbCalliopeName] {
                 discoveredCalliopes = [ CalliopeDiscovery.usbCalliopeName : discoveredCalliope ]
             } else {
                 discoveredCalliopes = [:]
@@ -305,6 +305,15 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         }
         self.connectedUSBCalliope = nil
         self.connectedCalliope = nil
+    }
+    
+    // Disconnect for reboot - keeps connectedCalliope reference for automatic reconnection
+    func disconnectForReboot() {
+        if let connectedCalliope = self.connectedCalliope {
+            LogNotify.log("[PartialFlash] Disconnecting for reboot - will auto-reconnect")
+            self.centralManager.cancelPeripheralConnection(connectedCalliope.peripheral)
+            // Don't clear connectedCalliope - let didDisconnectPeripheral handle reconnection
+        }
     }
 
     func initializeConnectionToUsbCalliope(view: UIViewController) {

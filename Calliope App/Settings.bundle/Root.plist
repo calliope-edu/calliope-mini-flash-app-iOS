@@ -5,17 +5,27 @@
 	<key>StringsTable</key>
 	<string>Settings</string>
 	<key>PreferenceSpecifiers</key>
-	<array>
-		<dict>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-			<key>Title</key>
-			<string>Restore Last Matrix</string>
-			<key>Key</key>
-			<string>restoreLastMatrixPreference</string>
-			<key>DefaultValue</key>
-			<true/>
-		</dict>
+	       <array>
+			<dict>
+				<key>Type</key>
+				<string>PSToggleSwitchSpecifier</string>
+				<key>Title</key>
+				<string>Restore Last Matrix</string>
+				<key>Key</key>
+				<string>restoreLastMatrixPreference</string>
+				<key>DefaultValue</key>
+				<true/>
+			</dict>
+			<dict>
+				<key>Type</key>
+				<string>PSToggleSwitchSpecifier</string>
+				<key>Title</key>
+				<string>Enable Partial Flashing</string>
+				<key>Key</key>
+				<string>partialFlashingEnabled</string>
+				<key>DefaultValue</key>
+				<true/>
+			</dict>
 		<dict>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
