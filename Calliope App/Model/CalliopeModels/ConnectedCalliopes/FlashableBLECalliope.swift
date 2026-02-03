@@ -21,6 +21,10 @@ class FlashableBLECalliope: CalliopeAPI {
     // Callback to request disconnect from CalliopeDiscovery
     var requestDisconnectCallback: (() -> Void)?
     
+    // Flow control for BLE buffer management
+    private var isWaitingForBufferReady = false
+    private var bufferReadyObserver: NSObjectProtocol?
+    
     internal private(set) var file: Hex?
 
     weak internal private(set) var progressReceiver: DFUProgressDelegate?
@@ -582,17 +586,15 @@ class FlashableBLECalliope: CalliopeAPI {
         // Check buffer before starting new block (iOS 11+)
         if #available(iOS 11.0, *) {
             if !peripheral.canSendWriteWithoutResponse {
-                // Buffer full, retry in 10ms
-                flowControlRetryCount += 1
-                
-                if flowControlRetryCount >= maxFlowControlRetries {
-                    LogNotify.log("Flow control timeout - buffer stayed full for 1 second before block start")
-                    fallbackToFullFlash()
-                    return
-                }
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) { [weak self] in
-                    self?.sendCurrentPackagesWithFlowControl()
+                // Buffer full - wait for peripheralIsReady callback instead of polling
+                if !isWaitingForBufferReady {
+                    isWaitingForBufferReady = true
+                    debugLog("Buffer full before block start, waiting for peripheralIsReady callback...")
+                    registerBufferReadyCallback { [weak self] in
+                        self?.isWaitingForBufferReady = false
+                        self?.flowControlRetryCount = 0
+                        self?.sendCurrentPackagesWithFlowControl()
+                    }
                 }
                 return
             }
@@ -622,18 +624,15 @@ class FlashableBLECalliope: CalliopeAPI {
         // Check buffer availability with flow control (iOS 11+)
         if #available(iOS 11.0, *) {
             if index > 0 && !peripheral.canSendWriteWithoutResponse {
-                // Buffer full, retry in 10ms
-                flowControlRetryCount += 1
-                
-                if flowControlRetryCount >= maxFlowControlRetries {
-                    LogNotify.log("Flow control timeout - buffer stayed full for 1 second while sending packet \(index)")
-                    fallbackToFullFlash()
-                    return
-                }
-                
-                debugLog("Buffer full for packet \(index), retrying in 10ms (retry \(flowControlRetryCount)/\(maxFlowControlRetries))")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) { [weak self] in
-                    self?.sendNextPacketInBlock()
+                // Buffer full - wait for peripheralIsReady callback
+                if !isWaitingForBufferReady {
+                    isWaitingForBufferReady = true
+                    debugLog("Buffer full for packet \(index), waiting for peripheralIsReady callback...")
+                    registerBufferReadyCallback { [weak self] in
+                        self?.isWaitingForBufferReady = false
+                        self?.flowControlRetryCount = 0
+                        self?.sendNextPacketInBlock()
+                    }
                 }
                 return
             }
@@ -650,8 +649,9 @@ class FlashableBLECalliope: CalliopeAPI {
         
         // Move to next packet
         currentBlockSendIndex += 1
+        flowControlRetryCount = 0 // Reset retry counter on successful send
         
-        // Continue sending next packet immediately (flow control will throttle if needed)
+        // Continue sending next packet immediately or wait for buffer
         sendNextPacketInBlock()
     }
 
@@ -671,6 +671,10 @@ class FlashableBLECalliope: CalliopeAPI {
         debugLog("Sending TRANSMISSION_END (0x02) command")
         updateCallback("Sending end of transmission command...")
         send(command: .TRANSMISSION_END)
+        
+        // Clean up flow control
+        cleanupBufferReadyCallback()
+        isWaitingForBufferReady = false
         
         // Now clean up state AFTER sending the command
         partialFlashingStateLock.lock()
@@ -707,6 +711,10 @@ class FlashableBLECalliope: CalliopeAPI {
 
     private func fallbackToFullFlash() {
         LogNotify.log("[PartialFlash] Falling back to full DFU")
+        
+        // Clean up flow control
+        cleanupBufferReadyCallback()
+        isWaitingForBufferReady = false
         
         // Clean up partial flashing state
         partialFlashingStateLock.lock()
@@ -924,6 +932,7 @@ class CalliopeV3: FlashableBLECalliope {
 // Key requirements:
 // 1. Must use 4-packet blocks with device acknowledgment (WRITE_SUCCESS) between blocks
 // 2. Must respect iOS CoreBluetooth flow control (canSendWriteWithoutResponse on iOS 11+)
+//    - Use peripheralIsReady(toSendWriteWithoutResponse:) callback for event-driven flow control
 // 3. Device firmware protocol:
 //    - Send: WRITE command + 4 packets (address + packet# + 16 bytes data)
 //    - Wait: Device notification with WRITE_SUCCESS (0xFF) or WRITE_FAIL (0xAA)
@@ -932,6 +941,32 @@ class CalliopeV3: FlashableBLECalliope {
 //
 // See micro:bit Android implementation for reference:
 // https://github.com/microbit-foundation/microbit-android
+
+// MARK: - BLE Flow Control Helpers
+
+extension FlashableBLECalliope {
+    /// Register callback for when BLE buffer is ready (via peripheralIsReady notification)
+    private func registerBufferReadyCallback(_ callback: @escaping () -> Void) {
+        cleanupBufferReadyCallback() // Remove any existing observer
+        
+        bufferReadyObserver = NotificationCenter.default.addObserver(
+            forName: .bleBufferReadyForPeripheral,
+            object: peripheral,
+            queue: .main
+        ) { [weak self] _ in
+            self?.cleanupBufferReadyCallback()
+            callback()
+        }
+    }
+    
+    /// Clean up buffer ready callback observer
+    private func cleanupBufferReadyCallback() {
+        if let observer = bufferReadyObserver {
+            NotificationCenter.default.removeObserver(observer)
+            bufferReadyObserver = nil
+        }
+    }
+}
 
 //MARK: constants for partial flashing
 extension UInt8 {

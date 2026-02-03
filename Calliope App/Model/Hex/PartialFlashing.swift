@@ -71,9 +71,9 @@ struct PartialFlashManager {
             return nil
         }
         // If too many packets, fall back to full DFU
-        if partialData.lineCount > 700 {
-            return nil
-        }
+        // if partialData.lineCount > 700 {
+        //     return nil
+        // }
         return (fileHash, programHash, partialData)
     }
     
