@@ -146,7 +146,6 @@
 		7E25CB63E012B25A80606449 /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E25C5F2B4FF55234B28A749 /* UIDevice+Extensions.swift */; };
 		7E25CE114DDEDC718EAB742D /* UtilityLogJob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E25C8370320F1AE86E741A5 /* UtilityLogJob.swift */; };
 		806801512EF5A2D00010448D /* ConnectedCalliopeV3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806801502EF5A2D00010448D /* ConnectedCalliopeV3.swift */; };
-		806801532EF700920010448D /* PartialFlashingOptimized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806801522EF7008B0010448D /* PartialFlashingOptimized.swift */; };
 		80EB0D422F0ECA3C000C3269 /* PartialFlashing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB0D412F0ECA3A000C3269 /* PartialFlashing.swift */; };
 		B16DD0D6E28647BDAC9EA8CB /* Pods_Calliope_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B15F9E6DE42C49A76EC47B /* Pods_Calliope_App.framework */; };
 /* End PBXBuildFile section */
