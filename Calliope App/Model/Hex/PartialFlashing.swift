@@ -45,35 +45,51 @@ struct PartialFlashManager {
     /// - Parameter url: URL of the hex file
     /// - Returns: Tuple of (fileHash, programHash, partialFlashData) or nil if not a MakeCode file
     static func retrievePartialFlashingInfo(from url: URL) -> (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? {
-                // Check if partial flashing is enabled in settings
-                guard isPartialFlashingEnabled else {
-                    return nil
-                }
-        // Step 1: Extract hashes from original hex
-        guard let (fileHash, programHash) = extractHashes(from: url) else {
+        LogNotify.log("[PartialFlash] Starting retrievePartialFlashingInfo for: \(url.lastPathComponent)")
+        
+        // Check if partial flashing is enabled in settings
+        guard isPartialFlashingEnabled else {
+            LogNotify.log("[PartialFlash] ❌ Partial flashing disabled in settings - falling back to full DFU")
             return nil
         }
+        LogNotify.log("[PartialFlash] ✓ Partial flashing enabled in settings")
+        // Step 1: Extract hashes from original hex
+        guard let (fileHash, programHash) = extractHashes(from: url) else {
+            LogNotify.log("[PartialFlash] ❌ No magic marker or hashes found - not a MakeCode file, falling back to full DFU")
+            return nil
+        }
+        LogNotify.log("[PartialFlash] ✓ Hashes extracted - fileHash: \(fileHash.hexEncodedString()), programHash: \(programHash.hexEncodedString())")
         
         // Step 2: Get or create filtered hex for data transmission (for speed)
         let filteredURL: URL
         if let cached = getCachedFilteredURL(for: url) {
+            LogNotify.log("[PartialFlash] ✓ Using cached filtered hex")
             filteredURL = cached
         } else if let lines = UniversalHexFilter.filterUniversalHex(sourceURL: url, hexBlock: .v2),
                   let newURL = UniversalHexFilter.writeFilteredHex(lines) {
+            LogNotify.log("[PartialFlash] ✓ Created new filtered hex (\(lines.count) lines)")
             setCachedFilteredURL(newURL, for: url)
             filteredURL = newURL
         } else {
+            LogNotify.log("[PartialFlash] ⚠️ Filtering failed, using original hex")
             filteredURL = url
         }
         
         // Step 3: Create PartialFlashData from filtered hex (fallback to original if needed)
         guard let partialData = createPartialFlashData(from: filteredURL) ?? createPartialFlashData(from: url) else {
+            LogNotify.log("[PartialFlash] ❌ Failed to create PartialFlashData - falling back to full DFU")
             return nil
         }
+        
+        LogNotify.log("[PartialFlash] ✓ PartialFlashData created successfully with \(partialData.lineCount) lines")
+        
         // If too many packets, fall back to full DFU
-        // if partialData.lineCount > 700 {
-        //     return nil
-        // }
+        if partialData.lineCount > 1200 {
+            LogNotify.log("[PartialFlash] ❌ Too many packets (\(partialData.lineCount) > 1200) - falling back to full DFU")
+            return nil
+        }
+        
+        LogNotify.log("[PartialFlash] ✅ Partial flashing approved - returning data for transmission")
         return (fileHash, programHash, partialData)
     }
     
@@ -84,17 +100,21 @@ struct PartialFlashManager {
     /// - Returns: Tuple of (fileHash/DAL hash, programHash) or nil if no magic marker found
     static func extractHashes(from url: URL) -> (fileHash: Data, programHash: Data)? {
         guard let reader = StreamReader(path: url.path) else {
+            LogNotify.log("[PartialFlash] extractHashes: Failed to create StreamReader")
             return nil
         }
         defer { reader.close() }
         
-        let (magicLine, _, _) = forwardToMagicNumber(reader)
+        let (magicLine, _, codeStartAddr) = forwardToMagicNumber(reader)
         guard magicLine != nil else {
+            LogNotify.log("[PartialFlash] extractHashes: No magic marker found in hex file")
             return nil
         }
+        LogNotify.log("[PartialFlash] extractHashes: Magic marker found at address 0x\(String(codeStartAddr, radix: 16))")
         
         // Read hash line immediately after magic
         guard let hashesLine = reader.nextLine() else {
+            LogNotify.log("[PartialFlash] extractHashes: Failed to read hash line after magic marker")
             return nil
         }
         
@@ -103,15 +123,18 @@ struct PartialFlashManager {
         let hashRecordLength = PartialFlashHexReader.length(of: hashesLine)
         
         guard hashRecordType == 0, hashRecordLength == 16 else {
+            LogNotify.log("[PartialFlash] extractHashes: Invalid hash line format (type=\(hashRecordType ?? -1), length=\(hashRecordLength ?? -1))")
             return nil
         }
         
         guard hashesLine.count >= 41,
               let templateHash = hashesLine[9..<25].toData(using: .hex),
               let programHash = (hashesLine[25..<41]).toData(using: .hex) else {
+            LogNotify.log("[PartialFlash] extractHashes: Failed to parse hashes from line (length=\(hashesLine.count))")
             return nil
         }
         
+        LogNotify.log("[PartialFlash] extractHashes: Successfully parsed hashes")
         return (templateHash, programHash)
     }
     
@@ -121,47 +144,58 @@ struct PartialFlashManager {
     /// - Parameter url: URL of the hex file (original or filtered)
     /// - Returns: PartialFlashData iterator or nil if no magic marker found
     static func createPartialFlashData(from url: URL) -> PartialFlashData? {
+        LogNotify.log("[PartialFlash] createPartialFlashData: Processing \(url.lastPathComponent)")
         guard let reader = StreamReader(path: url.path) else {
+            LogNotify.log("[PartialFlash] createPartialFlashData: Failed to create StreamReader")
             return nil
         }
         
         let (magicLine, _, _) = forwardToMagicNumber(reader)
         guard magicLine != nil else {
+            LogNotify.log("[PartialFlash] createPartialFlashData: No magic marker found")
             return nil
         }
         
         // Read hash line
         guard let hashesLine = reader.nextLine() else {
+            LogNotify.log("[PartialFlash] createPartialFlashData: Failed to read hash line")
             return nil
         }
         
         // Count lines from current position to magic end
         var numLinesToFlash = 0
+        var totalLines = 0
         while let line = reader.nextLine() {
             if PartialFlashHexReader.isEndOfFileOrMagicEnd(line) {
                 break
             }
             if line.starts(with: ":") && PartialFlashHexReader.type(of: line) == 0 {
+                totalLines += 1
                 if let data = PartialFlashHexReader.readData(line), !data.data.allSatisfy({ $0 == 0xFF }) {
                     numLinesToFlash += 1
                 }
             }
         }
+        LogNotify.log("[PartialFlash] createPartialFlashData: Counted \(numLinesToFlash) non-empty lines out of \(totalLines) total data lines")
         
         // Open fresh reader for data transmission
         guard let freshReader = StreamReader(path: url.path) else {
+            LogNotify.log("[PartialFlash] createPartialFlashData: Failed to create fresh StreamReader")
             return nil
         }
         
         let (freshMagicLine, freshSegmentAddress, codeStart) = forwardToMagicNumber(freshReader)
         guard let freshMagicLine = freshMagicLine else {
+            LogNotify.log("[PartialFlash] createPartialFlashData: Failed to find magic marker in fresh reader")
             return nil
         }
         
         guard let hashesLineForData = freshReader.nextLine() else {
+            LogNotify.log("[PartialFlash] createPartialFlashData: Failed to read hash line in fresh reader")
             return nil
         }
         
+        LogNotify.log("[PartialFlash] createPartialFlashData: Successfully created PartialFlashData iterator")
         return PartialFlashData(
             nextLines: [hashesLineForData, freshMagicLine],
             currentSegmentAddress: freshSegmentAddress,
@@ -179,8 +213,10 @@ struct PartialFlashManager {
         var magicLine: String?
         var currentSegmentAddress: UInt16 = 0
         var codeStartAddress: UInt32 = 0
+        var lineCount = 0
         
         while let record = reader.nextLine() {
+            lineCount += 1
             // Track ELA (type 04) segment changes
             if PartialFlashHexReader.type(of: record) == 4,
                let length = PartialFlashHexReader.length(of: record), length == 2,
@@ -189,21 +225,22 @@ struct PartialFlashManager {
                 continue
             }
             
-            // Check for magic marker with address validation
+            // Check for magic marker pattern (accept at any address, like Android implementation)
             if PartialFlashHexReader.isMagicStart(record) {
                 let recordAddress = PartialFlashHexReader.address(of: record) ?? 0
                 let absoluteAddress = UInt32(currentSegmentAddress) << 16 | UInt32(recordAddress)
                 
-                // Valid magic marker addresses:
-                // 0x47000 (V3 standard), 0x4f000 (V3 with some extensions, shield, datalogger)
-                // 0x1F000 (V1/V2)
-                if [0x47000, 0x4f000, 0x1F000].contains(absoluteAddress) {
-                    magicLine = record
-                    codeStartAddress = absoluteAddress
-                    break
-                }
+                LogNotify.log("[PartialFlash] forwardToMagicNumber: Found magic marker at 0x\(String(absoluteAddress, radix: 16)) on line \(lineCount)")
+                magicLine = record
+                codeStartAddress = absoluteAddress
+                break
             }
         }
+        
+        if magicLine == nil {
+            LogNotify.log("[PartialFlash] forwardToMagicNumber: Scanned \(lineCount) lines, no magic marker pattern found (looking for \(PartialFlashHexReader.MAGIC_START_NUMBER))")
+        }
+        
         return (magicLine, currentSegmentAddress, codeStartAddress)
     }
 }
