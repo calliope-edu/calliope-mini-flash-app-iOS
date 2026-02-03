@@ -194,8 +194,10 @@ struct PartialFlashManager {
                 let recordAddress = PartialFlashHexReader.address(of: record) ?? 0
                 let absoluteAddress = UInt32(currentSegmentAddress) << 16 | UInt32(recordAddress)
                 
-                // Valid magic marker addresses: 0x47000 (V3), 0x1F000 (V1/V2)
-                if [0x47000, 0x1F000].contains(absoluteAddress) {
+                // Valid magic marker addresses:
+                // 0x47000 (V3 standard), 0x4f000 (V3 with some extensions, shield, datalogger)
+                // 0x1F000 (V1/V2)
+                if [0x47000, 0x4f000, 0x1F000].contains(absoluteAddress) {
                     magicLine = record
                     codeStartAddress = absoluteAddress
                     break
