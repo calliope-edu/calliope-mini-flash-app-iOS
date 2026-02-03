@@ -50,7 +50,7 @@ struct PartialFlashManager {
                     return nil
                 }
         // Step 1: Extract hashes from original hex
-        guard let hashInfo = extractHashes(from: url) else {
+        guard let (fileHash, programHash) = extractHashes(from: url) else {
             return nil
         }
         
@@ -74,7 +74,7 @@ struct PartialFlashManager {
         if partialData.lineCount > 700 {
             return nil
         }
-        return (hashInfo.fileHash, hashInfo.programHash, partialData)
+        return (fileHash, programHash, partialData)
     }
     
     // MARK: - Hash Extraction
@@ -88,7 +88,7 @@ struct PartialFlashManager {
         }
         defer { reader.close() }
         
-        let (magicLine, _) = forwardToMagicNumber(reader)
+        let (magicLine, _, _) = forwardToMagicNumber(reader)
         guard magicLine != nil else {
             return nil
         }
@@ -125,7 +125,7 @@ struct PartialFlashManager {
             return nil
         }
         
-        let (magicLine, _) = forwardToMagicNumber(reader)
+        let (magicLine, _, _) = forwardToMagicNumber(reader)
         guard magicLine != nil else {
             return nil
         }
@@ -153,7 +153,7 @@ struct PartialFlashManager {
             return nil
         }
         
-        let (freshMagicLine, freshSegmentAddress) = forwardToMagicNumber(freshReader)
+        let (freshMagicLine, freshSegmentAddress, codeStart) = forwardToMagicNumber(freshReader)
         guard let freshMagicLine = freshMagicLine else {
             return nil
         }
@@ -165,6 +165,7 @@ struct PartialFlashManager {
         return PartialFlashData(
             nextLines: [hashesLineForData, freshMagicLine],
             currentSegmentAddress: freshSegmentAddress,
+            codeStartAddress: codeStart,
             reader: freshReader,
             lineCount: numLinesToFlash)
     }
@@ -173,10 +174,11 @@ struct PartialFlashManager {
     
     /// Forward reader to magic marker, tracking ELA segments
     /// - Parameter reader: StreamReader positioned at start of hex file
-    /// - Returns: Tuple of (magic line or nil, current segment address)
-    private static func forwardToMagicNumber(_ reader: StreamReader) -> (String?, UInt16) {
+    /// - Returns: Tuple of (magic line or nil, current segment address, code start address)
+    private static func forwardToMagicNumber(_ reader: StreamReader) -> (String?, UInt16, UInt32) {
         var magicLine: String?
         var currentSegmentAddress: UInt16 = 0
+        var codeStartAddress: UInt32 = 0
         
         while let record = reader.nextLine() {
             // Track ELA (type 04) segment changes
@@ -195,11 +197,12 @@ struct PartialFlashManager {
                 // Valid magic marker addresses: 0x47000 (V3), 0x1F000 (V1/V2)
                 if [0x47000, 0x1F000].contains(absoluteAddress) {
                     magicLine = record
+                    codeStartAddress = absoluteAddress
                     break
                 }
             }
         }
-        return (magicLine, currentSegmentAddress)
+        return (magicLine, currentSegmentAddress, codeStartAddress)
     }
 }
 
@@ -212,14 +215,16 @@ struct PartialFlashData: Sequence, IteratorProtocol {
 
     public let lineCount: Int
     public private(set) var currentSegmentAddress: UInt16
+    public let codeStartAddress: UInt32
     private var nextData: [(address: UInt16, data: Data)] = []
     private var reader: StreamReader?
     private var skippedCount: Int = 0
 
-    init(nextLines: [String], currentSegmentAddress: UInt16, reader: StreamReader, lineCount: Int) {
+    init(nextLines: [String], currentSegmentAddress: UInt16, codeStartAddress: UInt32, reader: StreamReader, lineCount: Int) {
         self.reader = reader
         self.nextData = []
         self.currentSegmentAddress = currentSegmentAddress
+        self.codeStartAddress = codeStartAddress
         self.lineCount = lineCount
         // Extract data from initial lines
         nextLines.forEach { read($0) }

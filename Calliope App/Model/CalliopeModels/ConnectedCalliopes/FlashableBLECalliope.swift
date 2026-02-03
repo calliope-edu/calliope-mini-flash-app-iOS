@@ -104,12 +104,12 @@ class FlashableBLECalliope: CalliopeAPI {
         LogNotify.log("Partial flashing service available: \(discoveredOptionalServices.contains(.partialFlashing))")
 
         // Check if partial flashing is available and hex has magic markers
-        // The actual decision (partial vs full) is made after connecting and comparing DAL hashes
+        // The actual decision (partial vs full) is made after connecting and comparing DAL hashes and addresses
         if discoveredOptionalServices.contains(.partialFlashing),
            let partialInfo = file.partialFlashingInfo {
             let lineCount = partialInfo.partialFlashData.lineCount
             LogNotify.log("Partial flashing: hex has \(lineCount) lines after magic marker")
-            LogNotify.log("Starting partial flash process (will verify DAL hash with device)")
+            LogNotify.log("Starting partial flash process (will verify DAL hash and addresses with device)")
             startPartialFlashing()
         } else {
             shouldRebootOnDisconnect = true
@@ -178,6 +178,11 @@ class FlashableBLECalliope: CalliopeAPI {
     private var totalPacketsToSend: Int = 0
     private var currentBlockStartTime: Date?
     
+    // Device's region addresses (from REGION responses)
+    private var deviceDalEndAddress: UInt32 = 0
+    private var deviceCodeStartAddress: UInt32 = 0
+    private var deviceCodeEndAddress: UInt32 = 0
+    
     // Flow control for iOS 11+
     private var packetsToSend: [(index: Int, package: (address: UInt16, data: Data))] = []
     private var currentBlockSendIndex = 0
@@ -219,12 +224,23 @@ class FlashableBLECalliope: CalliopeAPI {
 
         if value[0] == .STATUS {
             //requested the mode of the calliope
-            receivedStatus(value[2] == .MODE_APPLICATION)
+            let needsReboot = value[2] == .MODE_APPLICATION
+            LogNotify.log("[PartialFlash] Device mode: \(needsReboot ? "APPLICATION (needs reboot)" : "BLE (ready)")")
+            receivedStatus(needsReboot)
             return
         }
 
         if value[0] == .REGION && value[1] == .DAL_REGION {
             //requested dal hash and position
+            // Parse DAL end address (big-endian) - kept for informational purposes only
+            deviceDalEndAddress = (UInt32(value[6]) << 24) | 
+                                  (UInt32(value[7]) << 16) | 
+                                  (UInt32(value[8]) << 8) | 
+                                  UInt32(value[9])
+            
+            let hashHex = value[10..<18].map { String(format: "%02X", $0) }.joined()
+            LogNotify.log("[PartialFlash] Device DAL hash: \(hashHex)")
+            
             dalHash = value[10..<18]
             updateCallback("Dal region from \(value[2..<6].hexEncodedString()) to \(value[6..<10].hexEncodedString())")
             receivedDalHash()
@@ -232,7 +248,20 @@ class FlashableBLECalliope: CalliopeAPI {
         }
 
         if value[0] == .REGION && value[1] == .PROGRAM_REGION {
+            // Extract code region addresses (big-endian)
+            deviceCodeStartAddress = (UInt32(value[2]) << 24) | 
+                                      (UInt32(value[3]) << 16) | 
+                                      (UInt32(value[4]) << 8) | 
+                                      UInt32(value[5])
+            deviceCodeEndAddress = (UInt32(value[6]) << 24) | 
+                                    (UInt32(value[7]) << 16) | 
+                                    (UInt32(value[8]) << 8) | 
+                                    UInt32(value[9])
             currentProgramHash = value[10..<18]
+            
+            let hashHex = value[10..<18].map { String(format: "%02X", $0) }.joined()
+            LogNotify.log("[PartialFlash] Device program hash: \(hashHex)")
+            
             receivedProgramHash()
             return
         }
@@ -281,16 +310,24 @@ class FlashableBLECalliope: CalliopeAPI {
 
     func startPartialFlashing() {
         rebootingForPartialFlashing = false
+        
+        LogNotify.log("[PartialFlash] Starting partial flash attempt")
 
         updateCallback("Start partial flashing")
         guard let file = file,
             let partialFlashingInfo = file.partialFlashingInfo,
             let partialFlashingCharacteristic = getCBCharacteristic(.partialFlashing)
         else {
-            LogNotify.log("Partial flashing not found")
+            LogNotify.log("[PartialFlash] Partial flashing not available (missing data or characteristic)")
             fallbackToFullFlash()
             return
         }
+
+        // Initialize enhanced partial flashing state BEFORE enabling notifications
+        // to ensure we don't miss any responses
+        partialFlashingStateLock.lock()
+        isPartialFlashingActive = true
+        partialFlashingStateLock.unlock()
 
         peripheral.setNotifyValue(true, for: partialFlashingCharacteristic)
 
@@ -303,6 +340,10 @@ class FlashableBLECalliope: CalliopeAPI {
         hexFileHash = Data()
         hexProgramHash = Data()
         partialFlashData = nil
+        
+        // Reset device code region addresses
+        deviceCodeStartAddress = 0
+        deviceCodeEndAddress = 0
 
         //current flash package data
         startPackageNumber = 0
@@ -312,11 +353,6 @@ class FlashableBLECalliope: CalliopeAPI {
         //for GUI interaction
         cancel = false
         linesFlashed = 0
-        
-        // Initialize enhanced partial flashing state
-        partialFlashingStateLock.lock()
-        isPartialFlashingActive = true
-        partialFlashingStateLock.unlock()
         
         currentBlockRetryCount = 0
         flowControlRetryCount = 0
@@ -330,7 +366,16 @@ class FlashableBLECalliope: CalliopeAPI {
         hexFileHash = partialFlashingInfo.fileHash
         hexProgramHash = partialFlashingInfo.programHash
         partialFlashData = partialFlashingInfo.partialFlashData
-
+        
+        // Log hex file information now that we have it
+        if let partialData = partialFlashData {
+            LogNotify.log("[PartialFlash] Hex file code start address: 0x\(String(format: "%08X", partialData.codeStartAddress))")
+            LogNotify.log("[PartialFlash] Hex file DAL hash: \(hexFileHash.hexEncodedString())")
+            LogNotify.log("[PartialFlash] Hex file program hash: \(hexProgramHash.hexEncodedString())")
+            LogNotify.log("[PartialFlash] Hex file line count: \(partialData.lineCount)")
+        }
+        
+        LogNotify.log("[PartialFlash] Querying device status...")
         send(command: .STATUS)
     }
 
@@ -339,11 +384,12 @@ class FlashableBLECalliope: CalliopeAPI {
         
         // Check 1: DAL hash must match between device and hex file
         guard dalHash == hexFileHash else {
-            LogNotify.log("[PartialFlash] DAL hash mismatch - falling back to full flash")
+            LogNotify.log("[PartialFlash] DAL hash mismatch - device: \(dalHash.hexEncodedString()), file: \(hexFileHash.hexEncodedString()) - falling back to full DFU")
             fallbackToFullFlash()
             return
         }
         
+        LogNotify.log("[PartialFlash] DAL hash validated")
 
         // Device is in BLE mode and DAL verified, continue with embedded region
         send(command: .REGION, value: Data([.EMBEDDED_REGION]))
@@ -381,9 +427,42 @@ class FlashableBLECalliope: CalliopeAPI {
     private func receivedProgramHash() {
         updateCallback("Received program hash \(hexProgramHash.hexEncodedString())")
         
+        // Validate addresses match between device and hex file
+        // This prevents partial flashing when device has stale metadata from previous flash
+        guard let partialFlashData = partialFlashData else {
+            fallbackToFullFlash()
+            return
+        }
+        
+        // Get hex file addresses from PartialFlashData
+        let hexFileCodeStartAddress = partialFlashData.codeStartAddress
+        
+        // Check if device's code start address matches hex file
+        // This is the primary validation - matching Android implementation
+        // Note: We do NOT compare DAL end addresses (Android ignores this too)
+        if deviceCodeStartAddress != hexFileCodeStartAddress {
+            LogNotify.log("[PartialFlash] Code start mismatch - hex: 0x\(String(format: "%X", hexFileCodeStartAddress)), device: 0x\(String(format: "%X", deviceCodeStartAddress)) - falling back to full DFU")
+            fallbackToFullFlash()
+            return
+        }
+        
+        LogNotify.log("[PartialFlash] Address validation passed")
+        
+        // Check program hash to detect different user code
+        // Device reports hash of currently running program, hex file contains hash of new program
+        // If they match exactly, no need to flash (program unchanged)
+        // If device hash is all zeros, device might have non-MakeCode firmware (e.g., Samples after full DFU)
+        let deviceHashIsZero = currentProgramHash.allSatisfy { $0 == 0 }
+        
+        if deviceHashIsZero {
+            LogNotify.log("[PartialFlash] Device reports zero program hash - likely non-MakeCode firmware, falling back to full flash")
+            fallbackToFullFlash()
+            return
+        }
+        
         if currentProgramHash == hexProgramHash {
-            LogNotify.log("[PartialFlash] Program unchanged - rebooting to application mode")
-            linesFlashed = partialFlashData?.lineCount ?? Int.max  //set progress to 100%
+            LogNotify.log("[PartialFlash] Program unchanged - no flashing needed")
+            linesFlashed = partialFlashData.lineCount
             updateCallback("No changes to upload")
             
             // Clear flashing flag BEFORE reboot to prevent disconnect error
@@ -401,6 +480,8 @@ class FlashableBLECalliope: CalliopeAPI {
                 self?.statusDelegate?.dfuStateDidChange(to: .completed)
             }
         } else {
+            LogNotify.log("[PartialFlash] Starting partial flash - \(partialFlashData.lineCount) lines to flash")
+            
             updateCallback("Partial flashing starts sending new program to Calliope mini")
             startPackageNumber = 0
             sendNextPackages()
@@ -625,6 +706,8 @@ class FlashableBLECalliope: CalliopeAPI {
     }
 
     private func fallbackToFullFlash() {
+        LogNotify.log("[PartialFlash] Falling back to full DFU")
+        
         // Clean up partial flashing state
         partialFlashingStateLock.lock()
         isPartialFlashingActive = false
