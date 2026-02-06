@@ -22,7 +22,7 @@ import Foundation
 import UIKit
 import WebKit
 
-class WBWebView: WKWebView, WKNavigationDelegate {
+class WBWebView: WKWebView, WKNavigationDelegate, WKUIDelegate {
     let webBluetoothHandlerName = "bluetooth"
     private var _wbMessageHandler: WBMessageHandler?
     var wbMessageHandler: WBMessageHandler? {
@@ -45,7 +45,7 @@ class WBWebView: WKWebView, WKNavigationDelegate {
     // MARK: - Initializers
     required public override init(frame: CGRect, configuration: WKWebViewConfiguration) {
         super.init(frame: frame, configuration: configuration)
-        wbMessageHandler = WBMessageHandler()
+        wbMessageHandler = WBMessageHandler(webView: self)
     }
 
     convenience public required init?(coder: NSCoder) {
@@ -162,6 +162,13 @@ class WBWebView: WKWebView, WKNavigationDelegate {
             }
         )
     }
+    
+    func webViewDidClose(_ webView: WKWebView) {
+        if let handler = _wbMessageHandler {
+            handler.unregisterDisconnectNotification()
+        }
+    }
+
 }
 
 class SpecialTapRecognizer: UITapGestureRecognizer {

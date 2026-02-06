@@ -10,7 +10,7 @@ import UIKit
 import UniformTypeIdentifiers
 
 class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDelegate {
-
+    
     enum CalliopeDiscoveryState {
         case initialized  //no discovered calliopes, doing nothing
         case discoveryWaitingForBluetooth  //invoked discovery but waiting for the system bluetooth (might be off)
@@ -22,17 +22,17 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         case usbConnecting  // connecting to a usb calliope
         case usbConnected  // connected to a usb calliope
     }
-
+    
     private static let usbCalliopeName = "USB_CALLIOPE"
-
+    
     var updateQueue = DispatchQueue.main
     var updateBlock: () -> Void = {
     }
     var errorBlock: (Error) -> Void = { _ in
     }
-
+    
     var calliopeBuilder: (_ peripheral: CBPeripheral, _ name: String, _ advertisementData: [String: Any], _ RSSI: NSNumber) -> DiscoveredBLEDDevice
-
+    
     private(set) var state: CalliopeDiscoveryState = .initialized {
         didSet {
             LogNotify.log("Calliope mini discovery state: \(state)")
@@ -41,16 +41,16 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
             }
         }
     }
-
+    
     private(set) var discoveredCalliopes: [String: DiscoveredDevice] = [:] {
         didSet {
             LogNotify.log("discovered: \(discoveredCalliopes)")
             redetermineState()
         }
     }
-
+    
     private var discoveredCalliopeUUIDNameMap: [UUID: String] = [:]
-
+    
     private(set) var connectingCalliope: DiscoveredDevice? {
         didSet {
             if let connectingCalliope = self.connectingCalliope {
@@ -81,18 +81,18 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
                     } catch {
                         LogNotify.log("Connecting to USB Calliope mini failed")
                     }
-
+                    
                 }
-
+                
             }
             redetermineState()
         }
     }
-
+    
     private(set) var connectedCalliope: DiscoveredBLEDDevice? {
         didSet {
             if let uuid = connectedCalliope?.peripheral.identifier,
-                let name = discoveredCalliopeUUIDNameMap[uuid]
+               let name = discoveredCalliopeUUIDNameMap[uuid]
             {
                 lastConnected = (uuid, name)
             }
@@ -104,7 +104,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
             redetermineState()
         }
     }
-
+    
     private(set) var connectedUSBCalliope: DiscoveredUSBDevice? {
         didSet {
             oldValue?.hasDisconnected()
@@ -116,19 +116,19 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
             redetermineState()
         }
     }
-
+    
     private let bluetoothQueue = DispatchQueue.global(qos: .userInitiated)
     private lazy var centralManager: CBCentralManager = {
         return CBCentralManager(delegate: nil, queue: bluetoothQueue)
     }()
-
+    
     private var lastConnected: (UUID, String)? {
         get {
             let defaults = UserDefaults.standard
             guard let dict = defaults.dictionary(forKey: BluetoothConstants.lastConnectedKey),
-                let name = dict[BluetoothConstants.lastConnectedNameKey] as? String,
-                let uuidString = dict[BluetoothConstants.lastConnectedUUIDKey] as? String,
-                let uuid = UUID(uuidString: uuidString)
+                  let name = dict[BluetoothConstants.lastConnectedNameKey] as? String,
+                  let uuidString = dict[BluetoothConstants.lastConnectedUUIDKey] as? String,
+                  let uuid = UUID(uuidString: uuidString)
             else {
                 return nil
             }
@@ -137,7 +137,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         set {
             let defaults = UserDefaults.standard
             guard let newUUIDString = newValue?.0.uuidString,
-                let newName = newValue?.1
+                  let newName = newValue?.1
             else {
                 defaults.removeObject(forKey: BluetoothConstants.lastConnectedKey)
                 return
@@ -150,10 +150,10 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
                 forKey: BluetoothConstants.lastConnectedKey)
         }
     }
-
+    
     private var retryCount = 0
     public var isInBackground = false
-
+    
     init(_ calliopeBuilder: @escaping (_ peripheral: CBPeripheral, _ name: String, _ advertisementData: [String: Any], _ RSSI: NSNumber) -> DiscoveredBLEDDevice) {
         self.calliopeBuilder = calliopeBuilder
         super.init()
@@ -162,7 +162,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         }
         centralManager.delegate = self
     }
-
+    
     private func redetermineState() {
         if connectedCalliope != nil {
             state = .connected
@@ -176,18 +176,18 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
             state = discoveredCalliopes.isEmpty ? .initialized : .discoveredAll
         }
     }
-
+    
     private func attemptReconnect() {
         LogNotify.log("attempt reconnect")
         guard let (lastConnectedUUID, lastConnectedName) = self.lastConnected,
-            let lastCalliope = centralManager.retrievePeripherals(withIdentifiers: [lastConnectedUUID]).first
+              let lastCalliope = centralManager.retrievePeripherals(withIdentifiers: [lastConnectedUUID]).first
         else {
             return
         }
         
         // TODO: Input values for the advertisement that make sense
         let calliope = calliopeBuilder(lastCalliope, lastConnectedName,  [:], 0)
-
+        
         self.discoveredCalliopes.updateValue(calliope, forKey: lastConnectedName)
         self.discoveredCalliopeUUIDNameMap.updateValue(lastConnectedName, forKey: lastCalliope.identifier)
         //auto-reconnect
@@ -196,8 +196,8 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
             self.connectingCalliope = calliope
         }
     }
-
-
+    
+    
     /// allows another CalliopeBLEDiscovery to use lastConnected variable to reconnect to the same calliope
     public func giveUpResponsibility() {
         self.updateBlock = {
@@ -209,9 +209,9 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
             self.centralManager.cancelPeripheralConnection(connectedCalliope.peripheral)
         }
     }
-
+    
     // MARK: discovery
-
+    
     func startCalliopeDiscovery() {
         //start scan only if central manger already connected to bluetooth system service (=poweredOn)
         //alternatively, this is invoked after the state of the central mananger changed to poweredOn.
@@ -223,6 +223,9 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
                 state = .discoveryWaitingForBluetooth
             }
         } else if !centralManager.isScanning {
+            // The follwing line creates the following error on startup:
+            // Calliope_App/CalliopeDiscovery.swift:228: Fatal error: Unexpectedly found nil while implicitly unwrapping an Optional value
+            // It seems to be that MatrixConnectionViewController.instance is somehow nil
             if MatrixConnectionViewController.instance.isInUsbMode, let discoveredCalliope = discoveredCalliopes[CalliopeDiscovery.usbCalliopeName] {
                 discoveredCalliopes = [ CalliopeDiscovery.usbCalliopeName : discoveredCalliope ]
             } else {
@@ -237,37 +240,37 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
             redetermineState()
         }
     }
-
+    
     func retryCalliopeDiscovery(_ targetCalliope: DiscoveredDevice) {
         if isInBackground || self.connectedCalliope != nil || self.retryCount >= BluetoothConstants.maxRetryCount {
             LogNotify.log("Stopping retrying due to: isInBackground \(isInBackground) - retrycount (current: \(retryCount), max: \(BluetoothConstants.maxRetryCount)) - connected - \(connectedCalliope != nil)")
             retryCount = 0
             return
         }
-
+        
         self.retryCount += 1
         LogNotify.log("Trying reconnection \(retryCount)/\(BluetoothConstants.maxRetryCount)")
         self.connectToCalliope(targetCalliope)
-
+        
         bluetoothQueue.asyncAfter(deadline: DispatchTime.now() + .seconds(BluetoothConstants.retryDelay)) {
             self.retryCalliopeDiscovery(targetCalliope)
         }
     }
-
+    
     func stopCalliopeDiscovery() {
         if centralManager.isScanning {
             self.centralManager.stopScan()
         }
         redetermineState()
     }
-
+    
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String: Any], rssi RSSI: NSNumber) {
         if let connectable = advertisementData[CBAdvertisementDataIsConnectable] as? NSNumber,
-            connectable.boolValue == true,
-            let localName = advertisementData[CBAdvertisementDataLocalNameKey],
-            let lowerName = (localName as? String)?.lowercased(),
-            BluetoothConstants.deviceNames.map({ lowerName.contains($0) }).contains(true),
-            let friendlyName = Matrix.full2Friendly(fullName: lowerName)
+           connectable.boolValue == true,
+           let localName = advertisementData[CBAdvertisementDataLocalNameKey],
+           let lowerName = (localName as? String)?.lowercased(),
+           BluetoothConstants.deviceNames.map({ lowerName.contains($0) }).contains(true),
+           let friendlyName = Matrix.full2Friendly(fullName: lowerName)
         {
             //FIXME: hard-coded name for testing
             //let friendlyName = Optional("gepeg") {
@@ -280,9 +283,9 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
             }
         }
     }
-
+    
     // MARK: connection
-
+    
     func connectToCalliope(_ calliope: DiscoveredDevice) {
         //when we first connect, we stop searching further
         stopCalliopeDiscovery()
@@ -294,7 +297,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         lastConnected = nil
         connectingCalliope = calliope
     }
-
+    
     func disconnectFromCalliope() {
         if let connectedCalliope = self.connectedCalliope {
             self.centralManager.cancelPeripheralConnection(connectedCalliope.peripheral)
@@ -305,7 +308,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         self.connectedUSBCalliope = nil
         self.connectedCalliope = nil
     }
-
+    
     func initializeConnectionToUsbCalliope(view: UIViewController) {
         state = .usbConnecting
         let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.folder])
@@ -313,7 +316,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         documentPicker.allowsMultipleSelection = false
         view.present(documentPicker, animated: true, completion: nil)
     }
-
+    
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         let url = urls.first
         let discoveredCalliope = DiscoveredUSBDevice(url: url!, name: CalliopeDiscovery.usbCalliopeName)
@@ -328,10 +331,10 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         discoveredCalliope.state = DiscoveredDevice.CalliopeBLEDeviceState.discovered
         self.discoveredCalliopes.updateValue(discoveredCalliope, forKey: CalliopeDiscovery.usbCalliopeName)
     }
-
+    
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         guard let name = discoveredCalliopeUUIDNameMap[peripheral.identifier],
-            let calliope = discoveredCalliopes[name]
+              let calliope = discoveredCalliopes[name]
         else {
             updateQueue.async {
                 self.errorBlock(NSLocalizedString("Could not find connected Calliope mini in discovered Calliope minis", comment: ""))
@@ -340,10 +343,35 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         }
         connectedCalliope = calliope as? DiscoveredBLEDDevice
     }
+    
+    var disconnectNotificationCallbacks = [Int: (String) -> Void]()
+    
+    func registerDisconnectNotification(_ callback: @escaping (String) -> Void) -> Int {
+        var newId = 0;
+        while(disconnectNotificationCallbacks[newId] != nil) {
+            newId = newId + 1
+        }
+        disconnectNotificationCallbacks[newId] = callback
+        return newId
+    }
+    
+    func unregisterDisconnectNotification(id: Int) {
+        disconnectNotificationCallbacks.removeValue(forKey: id)
+    }
 
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         LogNotify.log("disconnected from \(peripheral.name ?? "unknown device"), with error: \(error?.localizedDescription ?? "none")")
         // If Usage Ready Calliope is rebooting, automatically reconnect to the calliope
+        
+        let calliope = MatrixConnectionViewController.instance.usageReadyCalliope
+        print(calliope)
+        var uuid: String? = nil
+        if(calliope != nil && calliope is BLECalliope) {
+            uuid = (calliope! as! BLECalliope).deviceId.uuidString
+        }
+        
+        print(connectedCalliope)
+        
         if let connectedCalliope = connectedCalliope, connectedCalliope.shouldReconnectAfterReboot() {
             connectedCalliope.rebootingCalliope = connectedCalliope.usageReadyCalliope
             self.connectedCalliope = nil
@@ -362,6 +390,12 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         connectedCalliope = nil
         connectingCalliope = nil
         lastConnected = nil
+        
+        print(peripheral.identifier)
+        print(uuid)
+        if(uuid != nil) {
+            self.disconnectNotificationCallbacks.values.forEach{$0(uuid!)}
+        }
     }
 
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {

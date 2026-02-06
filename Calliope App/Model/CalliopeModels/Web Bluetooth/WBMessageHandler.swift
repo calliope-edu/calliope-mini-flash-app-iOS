@@ -5,6 +5,20 @@ import Dispatch
 
 open class WBMessageHandler: NSObject, WKScriptMessageHandler
 {
+    let webView: WKWebView
+    var disconnectNotificationId: Int?
+    
+    init(webView: WKWebView) {
+        self.webView = webView
+        super.init()
+        disconnectNotificationId = MatrixConnectionViewController.instance.connector.registerDisconnectNotification(onDeviceDisconnect)
+    }
+    
+    func unregisterDisconnectNotification() {
+        if let id = disconnectNotificationId {
+            MatrixConnectionViewController.instance.connector.unregisterDisconnectNotification(id: id)
+        }
+    }
     
     // MARK: - Embedded types
     enum ManagerRequests: String {
@@ -104,5 +118,16 @@ open class WBMessageHandler: NSObject, WKScriptMessageHandler
         case .stopNotifications:
             calliope.stopNotifications(transaction: transaction)
         }
+    }
+    
+    func onDeviceDisconnect(_ uuid: String) {
+        print("Sending Disconnect to Webview")
+        let commandString = "window.receiveDeviceDisconnectEvent({uuid});\n"
+        
+        self.webView.evaluateJavaScript(commandString, completionHandler: {
+            _, error in
+            if let err = error {
+                NSLog("Error evaluating javascript: \(err)")
+            }})
     }
 }
