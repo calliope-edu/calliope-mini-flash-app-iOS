@@ -218,13 +218,10 @@
       }
     },
     receiveDeviceDisconnectEvent: function (deviceId) {
-      console.log(`${deviceId} disconnected`);
-      console.log(native.devicesBeingNotified);
       nslog(`${deviceId} disconnected`);
       let devices = native.devicesBeingNotified[deviceId];
       if (devices !== undefined) {
         devices.forEach(function (device) {
-          console.log(`Disconnecting from ${devices.id}`)
           device.handleSpontaneousDisconnectEvent();
           native.unregisterDeviceForNotifications(device);
         });

@@ -362,16 +362,6 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         LogNotify.log("disconnected from \(peripheral.name ?? "unknown device"), with error: \(error?.localizedDescription ?? "none")")
         // If Usage Ready Calliope is rebooting, automatically reconnect to the calliope
-        
-        let calliope = MatrixConnectionViewController.instance.usageReadyCalliope
-        print(calliope)
-        var uuid: String? = nil
-        if(calliope != nil && calliope is BLECalliope) {
-            uuid = (calliope! as! BLECalliope).deviceId.uuidString
-        }
-        
-        print(connectedCalliope)
-        
         if let connectedCalliope = connectedCalliope, connectedCalliope.shouldReconnectAfterReboot() {
             connectedCalliope.rebootingCalliope = connectedCalliope.usageReadyCalliope
             self.connectedCalliope = nil
@@ -391,11 +381,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         connectingCalliope = nil
         lastConnected = nil
         
-        print(peripheral.identifier)
-        print(uuid)
-        if(uuid != nil) {
-            self.disconnectNotificationCallbacks.values.forEach{$0(uuid!)}
-        }
+        self.disconnectNotificationCallbacks.values.forEach{$0(peripheral.identifier.uuidString)}
     }
 
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
@@ -407,7 +393,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         connectingCalliope = nil
     }
 
-    // MARK: state of the bluetooth manager
+    // MARK: state of =the bluetooth manager
 
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         switch central.state {

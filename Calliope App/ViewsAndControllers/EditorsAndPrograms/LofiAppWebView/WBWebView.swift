@@ -22,7 +22,7 @@ import Foundation
 import UIKit
 import WebKit
 
-class WBWebView: WKWebView, WKNavigationDelegate, WKUIDelegate {
+class WBWebView: WKWebView, WKNavigationDelegate {
     let webBluetoothHandlerName = "bluetooth"
     private var _wbMessageHandler: WBMessageHandler?
     var wbMessageHandler: WBMessageHandler? {
@@ -164,6 +164,7 @@ class WBWebView: WKWebView, WKNavigationDelegate, WKUIDelegate {
     }
     
     func webViewDidClose(_ webView: WKWebView) {
+        print("Webview closed")
         if let handler = _wbMessageHandler {
             handler.unregisterDisconnectNotification()
         }

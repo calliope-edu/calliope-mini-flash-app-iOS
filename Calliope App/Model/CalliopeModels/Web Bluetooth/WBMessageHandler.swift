@@ -68,6 +68,9 @@ open class WBMessageHandler: NSObject, WKScriptMessageHandler
             if(connectedCalliope != nil && connectedCalliope is BLECalliope) {
                 transaction.resolveAsSuccess(withObject: connectedCalliope! as! BLECalliope)
             }
+            else {
+                transaction.resolveAsFailure(withMessage: "Not connected")
+            }
         }
     }
     
@@ -82,7 +85,7 @@ open class WBMessageHandler: NSObject, WKScriptMessageHandler
         }
         
         guard let calliope = MatrixConnectionViewController.instance.usageReadyCalliope as? BLECalliope else {
-            print("Somehow you connected to a Calliope without bluetooth")
+            transaction.resolveAsFailure(withMessage: "There is no bluetooth device connected!")
             return
         }
 
@@ -121,8 +124,7 @@ open class WBMessageHandler: NSObject, WKScriptMessageHandler
     }
     
     func onDeviceDisconnect(_ uuid: String) {
-        print("Sending Disconnect to Webview")
-        let commandString = "window.receiveDeviceDisconnectEvent({uuid});\n"
+        let commandString = "window.receiveDeviceDisconnectEvent('\(uuid)');\n"
         
         self.webView.evaluateJavaScript(commandString, completionHandler: {
             _, error in

@@ -47,7 +47,6 @@
       // https://webbluetoothcg.github.io/web-bluetooth/#disconnection-events
       // 1. not implemented
       // 2.
-      console.log(this.gatt.connected)
       if (!this.gatt.connected) {
         return;
       }
@@ -56,7 +55,6 @@
       // 3.2-3.7 not implemented
       // 3.8
       this.dispatchEvent(new wb.BluetoothEvent('gattserverdisconnected', this));
-      console.log("Send event")
     }
   };
   wbutils.mixin(wb.BluetoothDevice, wbutils.EventTarget);

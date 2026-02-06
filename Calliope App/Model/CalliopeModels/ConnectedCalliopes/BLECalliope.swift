@@ -39,7 +39,6 @@ class BLECalliope: Calliope, Jsonifiable {
 
     var updateQueue = DispatchQueue.main
 
-    var deviceId = UUID()
     let peripheral: CBPeripheral
     let name: String
     let servicesChangedCallback: () -> ()?
@@ -191,7 +190,7 @@ class BLECalliope: Calliope, Jsonifiable {
         if characteristic.isNotifying {
             self.evaluateJavaScript(
                 "receiveCharacteristicValueNotification(" +
-                "\(self.deviceId.uuidString.jsonify()), " +
+                "\(self.peripheral.identifier.uuidString), " +
                 "\(characteristic.uuid.uuidString.lowercased().jsonify()), " +
                 "\(characteristic.value!.jsonify())" +
                 ")")
@@ -390,7 +389,7 @@ class BLECalliope: Calliope, Jsonifiable {
     
     func jsonify() -> String {
         let props: [String: Any] = [
-            "id": self.deviceId.uuidString,
+            "id": self.peripheral.identifier.uuidString,
             "name": (self.peripheral.name ?? NSNull()) as Any,
             "adData": self.adData.toDict(),
             "deviceClass": 0,
