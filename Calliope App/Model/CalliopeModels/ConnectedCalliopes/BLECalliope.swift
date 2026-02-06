@@ -56,9 +56,7 @@ class BLECalliope: Calliope, Jsonifiable {
         self.peripheral = peripheral
         self.name = name
         self.servicesChangedCallback = servicesChangedCallback
-        print("Created Calliope")
         self.adData = advertisementData
-        print(advertisementData.toDict())
         super.init()
 
         self.discoveredOptionalServices = discoveredServices.intersection(optionalServices)
@@ -190,7 +188,7 @@ class BLECalliope: Calliope, Jsonifiable {
         if characteristic.isNotifying {
             self.evaluateJavaScript(
                 "receiveCharacteristicValueNotification(" +
-                "\(self.peripheral.identifier.uuidString), " +
+                "'\(self.peripheral.identifier.uuidString)', " +
                 "\(characteristic.uuid.uuidString.lowercased().jsonify()), " +
                 "\(characteristic.value!.jsonify())" +
                 ")")
@@ -539,9 +537,9 @@ class BLECalliope: Calliope, Jsonifiable {
         // Handle single characteristic
         if (self.getCharacteristicTM.transactions.count > 0) {
             self.getCharacteristicTM.apply({
-                let cview = CharacteristicTransaction(transaction: $0)!
-                guard service.characteristics?.first(where: {$0.uuid == cview.characteristicUUID}) != nil else {
-                    cview.resolveUnknownCharacteristic()
+                let transaction = CharacteristicTransaction(transaction: $0)!
+                guard service.characteristics?.first(where: {$0.uuid == transaction.characteristicUUID}) != nil else {
+                    transaction.resolveUnknownCharacteristic()
                     return
                 }
                 $0.resolveAsSuccess()
@@ -592,20 +590,20 @@ class BLECalliope: Calliope, Jsonifiable {
     
     func writeCharacteristicValue(transaction: WBTransaction) {
         guard
-            let view = WriteCharacteristicTransaction(transaction: transaction)
+            let transaction = WriteCharacteristicTransaction(transaction: transaction)
         else {
             transaction.resolveAsFailure(withMessage: "Invalid write characteristic message")
             return
         }
 
         guard
-            let char = self.getCharacteristicObject(view.serviceUUID, uuid: view.characteristicUUID)
+            let char = self.getCharacteristicObject(transaction.serviceUUID, uuid: transaction.characteristicUUID)
         else {
-            view.resolveUnknownCharacteristic()
+            transaction.resolveUnknownCharacteristic()
             return
         }
 
-        self.writeCharacteristicValuetoDevice(char, view)
+        self.writeCharacteristicValuetoDevice(char, transaction)
     }
     
     private func getCharacteristicObject(_ serviceUUID:CBUUID, uuid:CBUUID) -> CBCharacteristic? {
@@ -632,49 +630,49 @@ class BLECalliope: Calliope, Jsonifiable {
         return nil
     }
     
-    private func writeCharacteristicValuetoDevice(_ char: CBCharacteristic, _ view: WriteCharacteristicTransaction) {
+    private func writeCharacteristicValuetoDevice(_ char: CBCharacteristic, _ transaction: WriteCharacteristicTransaction) {
 
-        switch view.responseMode {
+        switch transaction.responseMode {
         case .required:
                 guard char.properties.contains(.write) else {
-                    view.transaction.resolveAsFailure(withMessage: "Write with response not supported")
+                    transaction.transaction.resolveAsFailure(withMessage: "Write with response not supported")
                     return
                 }
 
-                self.peripheral.writeValue(view.data, for: char, type: .withResponse)
+                self.peripheral.writeValue(transaction.data, for: char, type: .withResponse)
                 self.writeCharacteristicTM.addTransaction(
-                    view.transaction,
+                    transaction.transaction,
                     atPath: CharacteristicTransactionKey(
-                        serviceUUID: view.serviceUUID, characteristicUUID: view.characteristicUUID
+                        serviceUUID: transaction.serviceUUID, characteristicUUID: transaction.characteristicUUID
                     )
                 )
         case .never:
                 guard char.properties.contains(.write) || char.properties.contains(.writeWithoutResponse)
                 else {
-                    view.transaction.resolveAsFailure(
+                    transaction.transaction.resolveAsFailure(
                         withMessage: "Characteristic does not support writing"
                     )
                     return
                 }
-                self.peripheral.writeValue(view.data, for: char, type: .withoutResponse)
-                view.transaction.resolveAsSuccess()
+                self.peripheral.writeValue(transaction.data, for: char, type: .withoutResponse)
+                transaction.transaction.resolveAsSuccess()
         case .optional:
             // optional is in fact deprecated and the instructions are "Use any combination of the
             // sub procedures" in webbluetoothcg.github.io/web-bluetooth/#writecharacteristicvalue
             // so we do a write with response if possible else without.
             if char.properties.contains(.write) {
-                self.peripheral.writeValue(view.data, for: char, type: .withResponse)
+                self.peripheral.writeValue(transaction.data, for: char, type: .withResponse)
                 self.writeCharacteristicTM.addTransaction(
-                    view.transaction,
+                    transaction.transaction,
                     atPath: CharacteristicTransactionKey(
-                        serviceUUID: view.serviceUUID, characteristicUUID: view.characteristicUUID
+                        serviceUUID: transaction.serviceUUID, characteristicUUID: transaction.characteristicUUID
                     )
                 )
             } else if char.properties.contains(.writeWithoutResponse) {
-                self.peripheral.writeValue(view.data, for: char, type: .withoutResponse)
-                view.transaction.resolveAsSuccess()
+                self.peripheral.writeValue(transaction.data, for: char, type: .withoutResponse)
+                transaction.transaction.resolveAsSuccess()
             } else {
-                view.transaction.resolveAsFailure(withMessage: "Characteristic does not support writing")
+                transaction.transaction.resolveAsFailure(withMessage: "Characteristic does not support writing")
             }
         }
     }

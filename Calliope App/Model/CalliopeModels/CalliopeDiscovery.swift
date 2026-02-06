@@ -226,6 +226,8 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
             // The follwing line creates the following error on startup:
             // Calliope_App/CalliopeDiscovery.swift:228: Fatal error: Unexpectedly found nil while implicitly unwrapping an Optional value
             // It seems to be that MatrixConnectionViewController.instance is somehow nil
+            LogNotify.log("MatrixConnectionViewController.instance is nil: \(MatrixConnectionViewController.instance == nil)", level: LogNotify.LEVEL.DEBUG)
+            LogNotify.log("discoveredCalliopes[CalliopeDiscovery.usbCalliopeName] is nil: \(discoveredCalliopes[CalliopeDiscovery.usbCalliopeName] == nil)", level: LogNotify.LEVEL.DEBUG)
             if MatrixConnectionViewController.instance.isInUsbMode, let discoveredCalliope = discoveredCalliopes[CalliopeDiscovery.usbCalliopeName] {
                 discoveredCalliopes = [ CalliopeDiscovery.usbCalliopeName : discoveredCalliope ]
             } else {

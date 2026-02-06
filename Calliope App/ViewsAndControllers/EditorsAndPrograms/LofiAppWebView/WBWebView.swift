@@ -162,13 +162,6 @@ class WBWebView: WKWebView, WKNavigationDelegate {
             }
         )
     }
-    
-    func webViewDidClose(_ webView: WKWebView) {
-        print("Webview closed")
-        if let handler = _wbMessageHandler {
-            handler.unregisterDisconnectNotification()
-        }
-    }
 
 }
 

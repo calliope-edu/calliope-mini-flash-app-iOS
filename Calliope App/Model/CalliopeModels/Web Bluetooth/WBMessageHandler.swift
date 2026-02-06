@@ -91,13 +91,13 @@ open class WBMessageHandler: NSObject, WKScriptMessageHandler
 
         switch deviceMessageType {
         case .connectGATT:
-            print("Webview tries to connect to GATT")
+            LogNotify.log("Webview tries to connect to GATT", level: LogNotify.LEVEL.DEBUG)
             // already ensured that the app is connected to the calliope
             transaction.resolveAsSuccess();
             
         case .disconnectGATT:
-            print("Webview tries to connect to GATT")
-            // TODO: Handle disconnect if that is the goal
+            LogNotify.log("Webview tries to disconnect to GATT", level: LogNotify.LEVEL.DEBUG)
+            // the webview is not allowed to disconnect the app
             transaction.resolveAsSuccess();
             
         case .getPrimaryServices:

@@ -29,13 +29,11 @@ class LofiAppViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // MatrixConnectionViewController.instance?.calliopeClass = nil;
-        // MatrixConnectionViewController.instance.moveToBackground();
         self.webView.load(URLRequest(url: url))
         #if DEBUG
         if #available(iOS 16.4, *) {
             webView.isInspectable = true
-            print("Inspection enabled")
+            LogNotify.log("Inspection of the webview is enabled in debug mode", level: LogNotify.LEVEL.DEBUG)
         }
         #endif
         if let calliope = MatrixConnectionViewController.instance.usageReadyCalliope,
