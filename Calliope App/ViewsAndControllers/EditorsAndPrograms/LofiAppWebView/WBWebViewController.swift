@@ -11,36 +11,29 @@ import WebKit
 class WBWebViewController: UIViewController, WKNavigationDelegate {
     class WBLogger: NSObject, WKScriptMessageHandler {
 
-        var manager: WBLogManager! = nil
-
         // MARK: - WKScriptMessageHandler
         open func userContentController(
             _ userContentController: WKUserContentController,
             didReceive message: WKScriptMessage
             ) {
-            var log: WBLog
             switch (message.body) {
             case let bodyDict as [String: Any]:
                 guard
                     let levelString = bodyDict["level"] as? String,
-                    let level = WBLog.Level(rawValue: levelString),
                     let message = bodyDict["message"] as? String
                     else {
                         NSLog("Badly formed dictionary \(bodyDict.description) passed to the logger")
                         return
                 }
-                log = WBLog(level: level, message: message, args: [])
+                LogNotify.log("Log from WB Webview with level \(levelString): \(message)", level: LogNotify.LEVEL.DEBUG)
             case let bodyString as String:
-                log = WBLog(level: .log, message: bodyString, args: [])
+                LogNotify.log("Log from WB Webview: \(bodyString)", level: LogNotify.LEVEL.DEBUG)
             default:
-                log = WBLog(level: .warn, message: "Unexpected message type from console log: \(message.body)", args: [])
+                LogNotify.log("Unexpected message type from console log: \(message.body)", level: LogNotify.LEVEL.DEBUG)
             }
-            self.manager.addLog(log)
         }
     }
     let wbLogger = WBLogger()
-
-    let logManager = WBLogManager()
 
     var webView: WBWebView {
         get {
@@ -49,16 +42,10 @@ class WBWebViewController: UIViewController, WKNavigationDelegate {
     }
 
     override func viewDidLoad() {
-        self.wbLogger.manager = self.logManager
         self.webView.addNavigationDelegate(self)
        // Add logging script
         self.webView.configuration.userContentController.add(
             self.wbLogger, name: "logger"
         )
-    }
-
-    // MARK: - WKNavigationDelegate
-    public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        self.logManager.clearLogs()
     }
 }
