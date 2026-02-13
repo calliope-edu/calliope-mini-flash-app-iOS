@@ -28,7 +28,8 @@
     wbutils.defineROProperties(this, roProps);
 
     this.name = deviceJSON.name;
-
+    
+    // No adData is passed by the webview. Could be added if there is any relevance.
     if (deviceJSON.adData) {
       this.adData.appearance = deviceJSON.adData.appearance || '';
       this.adData.txPower = deviceJSON.adData.txPower || 0;

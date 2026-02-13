@@ -12,9 +12,6 @@ import UIKit
 import WebKit
 
 class BLECalliope: Calliope, Jsonifiable {
-    
-    var adData: BluetoothAdvertisingData
-
     //the services required for the usage
     var requiredServices: Set<CalliopeService> {
         []
@@ -52,11 +49,10 @@ class BLECalliope: Calliope, Jsonifiable {
     // TODO: Set this correctly
     weak var view: WKWebView? = nil
 
-    required init?(peripheral: CBPeripheral, name: String, discoveredServices: Set<CalliopeService>, discoveredCharacteristicUUIDsForServiceUUID: [CBUUID: Set<CBUUID>], servicesChangedCallback: @escaping () -> ()?, advertisementData: BluetoothAdvertisingData) {
+    required init?(peripheral: CBPeripheral, name: String, discoveredServices: Set<CalliopeService>, discoveredCharacteristicUUIDsForServiceUUID: [CBUUID: Set<CBUUID>], servicesChangedCallback: @escaping () -> ()?) {
         self.peripheral = peripheral
         self.name = name
         self.servicesChangedCallback = servicesChangedCallback
-        self.adData = advertisementData
         super.init()
 
         self.discoveredOptionalServices = discoveredServices.intersection(optionalServices)
@@ -389,7 +385,6 @@ class BLECalliope: Calliope, Jsonifiable {
         let props: [String: Any] = [
             "id": self.peripheral.identifier.uuidString,
             "name": (self.peripheral.name ?? NSNull()) as Any,
-            "adData": self.adData.toDict(),
             "deviceClass": 0,
             "vendorIDSource": 0,
             "vendorID": 0,

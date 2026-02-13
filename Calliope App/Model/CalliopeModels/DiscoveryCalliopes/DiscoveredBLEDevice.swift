@@ -23,12 +23,9 @@ class DiscoveredBLEDDevice: DiscoveredDevice {
     lazy var servicesWithUndiscoveredCharacteristics: Set<CBUUID> = {
         return discoveredServicesUUIDs
     }()
-    
-    let advertisementData: BluetoothAdvertisingData
 
-    required init(peripheral: CBPeripheral, name: String, advertisementData: [String: Any], RSSI: NSNumber) {
+    required init(peripheral: CBPeripheral, name: String) {
         self.peripheral = peripheral
-        self.advertisementData = BluetoothAdvertisingData(advertisementData:advertisementData,RSSI: RSSI)
         super.init(name: name)
         peripheral.delegate = self
         

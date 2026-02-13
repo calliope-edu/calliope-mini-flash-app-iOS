@@ -91,8 +91,8 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
             guard let calliopeClass = calliopeClass else {
                 return
             }
-            let calliopeBuilder = { (_ peripheral: CBPeripheral, _ name: String, _ advertisementData: [String: Any], _ RSSI: NSNumber) -> DiscoveredBLEDDevice in
-                return calliopeClass.init(peripheral: peripheral, name: name, advertisementData: advertisementData, RSSI: RSSI)
+            let calliopeBuilder = { (_ peripheral: CBPeripheral, _ name: String) -> DiscoveredBLEDDevice in
+                return calliopeClass.init(peripheral: peripheral, name: name)
             }
             connector = CalliopeDiscovery(calliopeBuilder)
         }
@@ -108,8 +108,8 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
         }
     }
 
-    public var connector: CalliopeDiscovery = CalliopeDiscovery({ peripheral, name, advertisementData, RSSI in
-        DiscoveredBLEDDevice(peripheral: peripheral, name: name, advertisementData: advertisementData, RSSI: RSSI)
+    public var connector: CalliopeDiscovery = CalliopeDiscovery({ peripheral, name in
+        DiscoveredBLEDDevice(peripheral: peripheral, name: name)
     })
     {
         didSet {

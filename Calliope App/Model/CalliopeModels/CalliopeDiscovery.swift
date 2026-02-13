@@ -31,7 +31,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
     var errorBlock: (Error) -> Void = { _ in
     }
     
-    var calliopeBuilder: (_ peripheral: CBPeripheral, _ name: String, _ advertisementData: [String: Any], _ RSSI: NSNumber) -> DiscoveredBLEDDevice
+    var calliopeBuilder: (_ peripheral: CBPeripheral, _ name: String) -> DiscoveredBLEDDevice
     
     private(set) var state: CalliopeDiscoveryState = .initialized {
         didSet {
@@ -154,7 +154,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
     private var retryCount = 0
     public var isInBackground = false
     
-    init(_ calliopeBuilder: @escaping (_ peripheral: CBPeripheral, _ name: String, _ advertisementData: [String: Any], _ RSSI: NSNumber) -> DiscoveredBLEDDevice) {
+    init(_ calliopeBuilder: @escaping (_ peripheral: CBPeripheral, _ name: String) -> DiscoveredBLEDDevice) {
         self.calliopeBuilder = calliopeBuilder
         super.init()
         if centralManager.state == .poweredOn {
@@ -186,7 +186,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         }
         
         // TODO: Input values for the advertisement that make sense
-        let calliope = calliopeBuilder(lastCalliope, lastConnectedName,  [:], 0)
+        let calliope = calliopeBuilder(lastCalliope, lastConnectedName)
         
         self.discoveredCalliopes.updateValue(calliope, forKey: lastConnectedName)
         self.discoveredCalliopeUUIDNameMap.updateValue(lastConnectedName, forKey: lastCalliope.identifier)
@@ -279,7 +279,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
             //never create a calliope twice, since this would clear its state
             if discoveredCalliopes[friendlyName] == nil {
                 //we found a calliope device (or one that pretends to be a calliope at least)
-                let calliope = calliopeBuilder(peripheral, friendlyName, advertisementData, RSSI)
+                let calliope = calliopeBuilder(peripheral, friendlyName)
                 discoveredCalliopes.updateValue(calliope, forKey: friendlyName)
                 discoveredCalliopeUUIDNameMap.updateValue(friendlyName, forKey: peripheral.identifier)
             }
