@@ -36,7 +36,7 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
     let lofiAppURLs : [URL] = [URL(string: "https://cardboard.lofirobot.com/control-calliope/")!,
                                URL(string: "https://cardboard.lofirobot.com/apps/talking-robots/")!,
                                URL(string: "https://cardboard.lofirobot.com/apps/telepresence/")!,
-                               URL(string: "https://cardboard.lofirobot.com/face-app/")!]
+                               URL(string: "https://go.calliope.cc/facerobot/?mobile=true")!]
     var selectedLofiApp : Int = 0;
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
