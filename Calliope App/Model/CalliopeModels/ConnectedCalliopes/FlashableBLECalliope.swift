@@ -61,6 +61,18 @@ class FlashableBLECalliope: CalliopeAPI {
         case .discovered:
             if isPartiallyFlashing {
                 LogNotify.log("Lost connection to Calliope mini during partial flashing")
+                
+                // Clear ALL partial flashing state to prevent inconsistent state on reconnect
+                rebootingForPartialFlashing = false
+                partialFlashingStateLock.lock()
+                isPartialFlashingActive = false
+                isPartiallyFlashing = false
+                partialFlashingStateLock.unlock()
+                
+                // Cancel any pending timers
+                blockTransmissionTimer?.invalidate()
+                blockTransmissionTimer = nil
+                
                 DispatchQueue.main.async {
                     self.statusDelegate?.dfuError(.deviceDisconnected, didOccurWithMessage: "connection to calliope lost")
                 }
@@ -111,8 +123,20 @@ class FlashableBLECalliope: CalliopeAPI {
         self.statusDelegate = statusDelegate
         self.logReceiver = logReceiver
         
+        // Reset ALL state from any previous upload to prevent stale data
+        partialFlashingStateLock.lock()
+        isPartialFlashingActive = false
+        isPartiallyFlashing = false
+        partialFlashingStateLock.unlock()
+        
+        linesFlashed = 0
+        cancel = false
+        partialFlashData = nil
+        partialFlashStartTime = nil
+        
         // Reset flags
         dfuCompletedAwaitingReconnect = false
+        rebootingForPartialFlashing = false
 
         // Attempt partial flashing first if available
         LogNotify.log("Partial flashing service available: \(discoveredOptionalServices.contains(.partialFlashing))")
@@ -327,7 +351,6 @@ class FlashableBLECalliope: CalliopeAPI {
         
         LogNotify.log("[PartialFlash] Starting partial flash attempt")
 
-        updateCallback("Start partial flashing")
         guard let file = file,
             let partialFlashingInfo = file.partialFlashingInfo,
             let partialFlashingCharacteristic = getCBCharacteristic(.partialFlashing)
@@ -374,6 +397,9 @@ class FlashableBLECalliope: CalliopeAPI {
         totalPacketsToSend = partialFlashingInfo.partialFlashData.lineCount
         blockTransmissionTimer?.invalidate()
         blockTransmissionTimer = nil
+        
+        // Now that state is reset, safe to call updateCallback
+        updateCallback("Start partial flashing")
         
         debugLog("Starting partial flashing: \(totalPacketsToSend) packets to send")
 
@@ -647,8 +673,9 @@ class FlashableBLECalliope: CalliopeAPI {
         let (index, package) = packetsToSend[currentBlockSendIndex]
         
         // Check buffer availability with flow control (iOS 11+)
+        // Check for ALL packets, including the first one (removed index > 0 condition)
         if #available(iOS 11.0, *) {
-            if index > 0 && !peripheral.canSendWriteWithoutResponse {
+            if !peripheral.canSendWriteWithoutResponse {
                 // Buffer full - wait for peripheralIsReady callback
                 if !isWaitingForBufferReady {
                     isWaitingForBufferReady = true
@@ -743,6 +770,9 @@ class FlashableBLECalliope: CalliopeAPI {
         
         // CRITICAL: Set failure flag BEFORE cleanup to persist across any crashes
         FlashableBLECalliope.lastPartialFlashFailed = true
+        
+        // Clear rebootingForPartialFlashing to prevent automatic resumption on reconnect
+        rebootingForPartialFlashing = false
         
         // Clean up flow control
         cleanupBufferReadyCallback()
