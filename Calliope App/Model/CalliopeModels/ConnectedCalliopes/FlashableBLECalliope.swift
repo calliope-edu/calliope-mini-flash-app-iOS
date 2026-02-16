@@ -488,10 +488,7 @@ class FlashableBLECalliope: CalliopeAPI {
         
         LogNotify.log("[PartialFlash] Address validation passed")
         
-        // Check program hash to detect different user code
-        // Device reports hash of currently running program, hex file contains hash of new program
-        // If they match exactly, no need to flash (program unchanged)
-        // If device hash is all zeros, device might have non-MakeCode firmware (e.g., Samples after full DFU)
+        // Check if device hash is all zeros (might have non-MakeCode firmware)
         let deviceHashIsZero = currentProgramHash.allSatisfy { $0 == 0 }
         
         if deviceHashIsZero {
@@ -500,47 +497,11 @@ class FlashableBLECalliope: CalliopeAPI {
             return
         }
         
-        if currentProgramHash == hexProgramHash {
-            // If last partial flash failed, don't skip - do a full reflash for safety
-            if FlashableBLECalliope.lastPartialFlashFailed {
-                LogNotify.log("[PartialFlash] ⚠️ Hashes match but last flash failed - reflashing for safety")
-                updateCallback("Program hashes match but reflashing due to previous failure")
-                // Note: Flag will be cleared only after successful completion in endTransmission()
-                LogNotify.log("[PartialFlash] Starting partial flash - \(partialFlashData.lineCount) lines to flash")
-                updateCallback("Partial flashing starts sending new program to Calliope mini")
-                startPackageNumber = 0
-                sendNextPackages()
-                return
-            }
-            
-            LogNotify.log("[PartialFlash] Program unchanged - no flashing needed")
-            linesFlashed = partialFlashData.lineCount
-            updateCallback("No changes to upload")
-            
-            // Clear flashing flag BEFORE reboot to prevent disconnect error
-            partialFlashingStateLock.lock()
-            isPartialFlashingActive = false
-            isPartiallyFlashing = false
-            partialFlashingStateLock.unlock()
-            
-            // Clear failure flag (defensive)
-            FlashableBLECalliope.lastPartialFlashFailed = false
-            
-            // Reboot device back to application mode since we're done
-            send(command: .REBOOT, value: Data([.MODE_APPLICATION]))
-            
-            // Wait 1 second to show 100% progress, then complete
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-                let _ = self?.cancelUpload()
-                self?.statusDelegate?.dfuStateDidChange(to: .completed)
-            }
-        } else {
-            LogNotify.log("[PartialFlash] Starting partial flash - \(partialFlashData.lineCount) lines to flash")
-            
-            updateCallback("Partial flashing starts sending new program to Calliope mini")
-            startPackageNumber = 0
-            sendNextPackages()
-        }
+        // Always proceed with partial flash (even if hashes match)
+        LogNotify.log("[PartialFlash] Starting partial flash - \(partialFlashData.lineCount) lines to flash")
+        updateCallback("Partial flashing starts sending new program to Calliope mini")
+        startPackageNumber = 0
+        sendNextPackages()
     }
 
     private func sendNextPackages() {
