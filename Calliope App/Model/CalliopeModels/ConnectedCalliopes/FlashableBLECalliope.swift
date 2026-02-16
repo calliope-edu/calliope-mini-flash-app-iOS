@@ -18,6 +18,16 @@ class FlashableBLECalliope: CalliopeAPI {
     // Tracks whether DFU has completed successfully and we're waiting for reconnect
     private var dfuCompletedAwaitingReconnect = false
     
+    // MARK: Partial flashing failure tracking
+    /// UserDefaults key for tracking if last partial flash failed
+    private static let lastPartialFlashFailedKey = "lastPartialFlashFailed"
+    
+    /// Returns true if the last partial flash attempt failed
+    private static var lastPartialFlashFailed: Bool {
+        get { UserDefaults.standard.bool(forKey: lastPartialFlashFailedKey) }
+        set { UserDefaults.standard.set(newValue, forKey: lastPartialFlashFailedKey) }
+    }
+    
     // Callback to request disconnect from CalliopeDiscovery
     var requestDisconnectCallback: (() -> Void)?
     
@@ -465,6 +475,18 @@ class FlashableBLECalliope: CalliopeAPI {
         }
         
         if currentProgramHash == hexProgramHash {
+            // If last partial flash failed, don't skip - do a full reflash for safety
+            if FlashableBLECalliope.lastPartialFlashFailed {
+                LogNotify.log("[PartialFlash] ⚠️ Hashes match but last flash failed - reflashing for safety")
+                updateCallback("Program hashes match but reflashing due to previous failure")
+                // Note: Flag will be cleared only after successful completion in endTransmission()
+                LogNotify.log("[PartialFlash] Starting partial flash - \(partialFlashData.lineCount) lines to flash")
+                updateCallback("Partial flashing starts sending new program to Calliope mini")
+                startPackageNumber = 0
+                sendNextPackages()
+                return
+            }
+            
             LogNotify.log("[PartialFlash] Program unchanged - no flashing needed")
             linesFlashed = partialFlashData.lineCount
             updateCallback("No changes to upload")
@@ -475,11 +497,14 @@ class FlashableBLECalliope: CalliopeAPI {
             isPartiallyFlashing = false
             partialFlashingStateLock.unlock()
             
+            // Clear failure flag (defensive)
+            FlashableBLECalliope.lastPartialFlashFailed = false
+            
             // Reboot device back to application mode since we're done
             send(command: .REBOOT, value: Data([.MODE_APPLICATION]))
             
-            // Wait briefly for reboot command, then complete
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            // Wait 1 second to show 100% progress, then complete
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
                 let _ = self?.cancelUpload()
                 self?.statusDelegate?.dfuStateDidChange(to: .completed)
             }
@@ -682,6 +707,10 @@ class FlashableBLECalliope: CalliopeAPI {
         isPartiallyFlashing = false
         partialFlashingStateLock.unlock()
         
+        // Clear failure flag on successful completion
+        FlashableBLECalliope.lastPartialFlashFailed = false
+        LogNotify.log("[PartialFlash] ✅ Partial flash completed successfully, cleared failure flag")
+        
         // Per BLE partial flash protocol, device firmware should:
         // 1. Process TRANSMISSION_END command
         // 2. Remove embedded source magic
@@ -710,27 +739,52 @@ class FlashableBLECalliope: CalliopeAPI {
     }
 
     private func fallbackToFullFlash() {
-        LogNotify.log("[PartialFlash] Falling back to full DFU")
+        LogNotify.log("[PartialFlash] ⚠️ Falling back to full DFU")
+        
+        // CRITICAL: Set failure flag BEFORE cleanup to persist across any crashes
+        FlashableBLECalliope.lastPartialFlashFailed = true
         
         // Clean up flow control
         cleanupBufferReadyCallback()
         isWaitingForBufferReady = false
         
-        // Clean up partial flashing state
+        // Clean up partial flashing state completely
         partialFlashingStateLock.lock()
         isPartialFlashingActive = false
         isPartiallyFlashing = false
         partialFlashingStateLock.unlock()
         
+        // Cancel all timers
         blockTransmissionTimer?.invalidate()
         blockTransmissionTimer = nil
         
-        updateCallback("Partial flash failed, resort to full flashing")
-        do {
-            try startFullFlashing()
-        } catch {
-            LogNotify.log("Full flashing failed, cancel upload")
-            _ = cancelUpload()
+        // Stop listening to partial flash characteristic notifications
+        if let partialFlashChar = getCBCharacteristic(.partialFlashing) {
+            peripheral.setNotifyValue(false, for: partialFlashChar)
+            LogNotify.log("[PartialFlash] Disabled notifications for partial flashing characteristic")
+        }
+        
+        // Clear data to prevent any lingering references
+        partialFlashData = nil
+        currentDataToFlash = []
+        packetsToSend = []
+        
+        // Add a small delay to ensure cleanup completes and any in-flight packets are cleared
+        // This prevents simultaneous partial flash packets + full DFU commands
+        updateCallback("Partial flash failed, switching to full DFU...")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
+            guard let self = self else { return }
+            
+            LogNotify.log("[PartialFlash] Starting full DFU after cleanup delay")
+            self.updateCallback("Starting full DFU flash")
+            
+            do {
+                try self.startFullFlashing()
+            } catch {
+                LogNotify.log("Full flashing failed: \(error.localizedDescription)")
+                _ = self.cancelUpload()
+            }
         }
     }
 
