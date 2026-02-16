@@ -371,8 +371,10 @@ class FirmwareUpload {
 
     func showUploadError(_ error: Error) {
         alertView.title = NSLocalizedString("Upload failed!", comment: "")
-        alertView.message = "\(error.localizedDescription)"
-        progressRing.outerRingColor = #colorLiteral(red: 0.99, green: 0.29, blue: 0.15, alpha: 1)
+        // Don't set alertView.message to prevent overlap with progress ring
+        // Instead show error in logTextView
+        logTextView.text = error.localizedDescription
+        // Don't change ring color to red - keep original color
         failed()
     }
     func startUSBTimer() {

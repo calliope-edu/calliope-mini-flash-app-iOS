@@ -50,6 +50,9 @@
 "Connection to calliope timed out!" = "Zeitüberschreitung bei der Übertragung";
 
 /* No comment provided by engineer. */
+"Connection to Calliope lost" = "Verbindung zum Calliope verloren";
+
+/* No comment provided by engineer. */
 "Could not find connected calliope in discovered calliopes" = "Es konnte kein Calliope mini gefunden werden";
 
 /* No comment provided by engineer. */
