@@ -1067,26 +1067,3 @@ extension FlashableBLECalliope {
         }
     }
 }
-
-//MARK: constants for partial flashing
-extension UInt8 {
-    //commands
-    fileprivate static let REBOOT = UInt8(0xFF)
-    fileprivate static let STATUS = UInt8(0xEE)
-    fileprivate static let REGION = UInt8(0)
-    fileprivate static let WRITE = UInt8(1)
-    fileprivate static let TRANSMISSION_END = UInt8(2)
-
-    //REGION parameters
-    fileprivate static let EMBEDDED_REGION = UInt8(0)
-    fileprivate static let DAL_REGION = UInt8(1)
-    fileprivate static let PROGRAM_REGION = UInt8(2)
-
-    //STATUS and REBOOT parameters
-    fileprivate static let MODE_APPLICATION = UInt8(1)
-    fileprivate static let MODE_BLE = UInt8(0)
-
-    //WRITE response values
-    fileprivate static let WRITE_FAIL = UInt8(0xAA)
-    fileprivate static let WRITE_SUCCESS = UInt8(0xFF)
-}

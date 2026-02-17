@@ -531,3 +531,26 @@ struct UniversalHexFilter {
                      byteCount, address, recordType, dataHigh, dataLow, checksum)
     }
 }
+
+//MARK: constants for partial flashing
+extension UInt8 {
+    //commands
+    internal static let REBOOT = UInt8(0xFF)
+    internal static let STATUS = UInt8(0xEE)
+    internal static let REGION = UInt8(0)
+    internal static let WRITE = UInt8(1)
+    internal static let TRANSMISSION_END = UInt8(2)
+
+    //REGION parameters
+    internal static let EMBEDDED_REGION = UInt8(0)
+    internal static let DAL_REGION = UInt8(1)
+    internal static let PROGRAM_REGION = UInt8(2)
+
+    //STATUS and REBOOT parameters
+    internal static let MODE_APPLICATION = UInt8(1)
+    internal static let MODE_BLE = UInt8(0)
+
+    //WRITE response values
+    internal static let WRITE_FAIL = UInt8(0xAA)
+    internal static let WRITE_SUCCESS = UInt8(0xFF)
+}
