@@ -47,10 +47,9 @@ class FlashableBLECalliope: CalliopeAPI {
         switch newState {
         case .usageReady:
             if rebootingForPartialFlashing {
-                LogNotify.log("[PartialFlash] Device reconnected after reboot, waiting 200ms for characteristic setup...")
+                LogNotify.log("[PartialFlash] Device reconnected after reboot, resuming partial flashing...")
                 // Add delay to allow subclass to finish notification setup
                 updateQueue.asyncAfter(deadline: .now() + 0.2) {
-                    LogNotify.log("[PartialFlash] Delay complete, resuming partial flashing...")
                     self.startPartialFlashing()
                 }
             } else if dfuCompletedAwaitingReconnect {
@@ -78,8 +77,6 @@ class FlashableBLECalliope: CalliopeAPI {
                 DispatchQueue.main.async {
                     self.statusDelegate?.dfuError(.deviceDisconnected, didOccurWithMessage: NSLocalizedString("Connection to Calliope lost", comment: ""))
                 }
-            } else if rebootingForPartialFlashing {
-                LogNotify.log("[PartialFlash] Device disconnected after reboot command, waiting for reconnection...")
             }
             // Bei DFU completion ist discovered normal - wir warten auf reconnect
             
@@ -360,13 +357,13 @@ class FlashableBLECalliope: CalliopeAPI {
         rebootingForPartialFlashing = false
         
         LogNotify.log("[PartialFlash] Starting partial flash attempt")
-        LogNotify.log("[PartialFlash] Checking prerequisites - file: \(file != nil), partialFlashingInfo: \(file?.partialFlashingInfo != nil)")
+        // LogNotify.log("[PartialFlash] Checking prerequisites - file: \(file != nil), partialFlashingInfo: \(file?.partialFlashingInfo != nil)")
 
         guard let file = file,
             let partialFlashingInfo = file.partialFlashingInfo,
             let partialFlashingCharacteristic = getCBCharacteristic(.partialFlashing)
         else {
-            LogNotify.log("[PartialFlash] Partial flashing not available - file: \(file != nil), info: \(file?.partialFlashingInfo != nil), characteristic: \(getCBCharacteristic(.partialFlashing) != nil)")
+            // LogNotify.log("[PartialFlash] Partial flashing not available - file: \(file != nil), info: \(file?.partialFlashingInfo != nil), characteristic: \(getCBCharacteristic(.partialFlashing) != nil)")
             fallbackToFullFlash()
             return
         }
@@ -377,9 +374,7 @@ class FlashableBLECalliope: CalliopeAPI {
         isPartialFlashingActive = true
         partialFlashingStateLock.unlock()
 
-        LogNotify.log("[PartialFlash] Enabling notifications for partial flashing characteristic")
         peripheral.setNotifyValue(true, for: partialFlashingCharacteristic)
-        LogNotify.log("[PartialFlash] Notifications enabled successfully")
 
         //reset variables in case we use the same calliope object twice
 
@@ -414,19 +409,19 @@ class FlashableBLECalliope: CalliopeAPI {
         // Now that state is reset, safe to call updateCallback
         updateCallback("Start partial flashing")
         
-        debugLog("Starting partial flashing: \(totalPacketsToSend) packets to send")
+        // debugLog("Starting partial flashing: \(totalPacketsToSend) packets to send")
 
         hexFileHash = partialFlashingInfo.fileHash
         hexProgramHash = partialFlashingInfo.programHash
         partialFlashData = partialFlashingInfo.partialFlashData
         
         // Log hex file information now that we have it
-        if let partialData = partialFlashData {
-            LogNotify.log("[PartialFlash] Hex file code start address: 0x\(String(format: "%08X", partialData.codeStartAddress))")
-            LogNotify.log("[PartialFlash] Hex file DAL hash: \(hexFileHash.hexEncodedString())")
-            LogNotify.log("[PartialFlash] Hex file program hash: \(hexProgramHash.hexEncodedString())")
-            LogNotify.log("[PartialFlash] Hex file line count: \(partialData.lineCount)")
-        }
+        // if let partialData = partialFlashData {
+        //     LogNotify.log("[PartialFlash] Hex file code start address: 0x\(String(format: "%08X", partialData.codeStartAddress))")
+        //     LogNotify.log("[PartialFlash] Hex file DAL hash: \(hexFileHash.hexEncodedString())")
+        //     LogNotify.log("[PartialFlash] Hex file program hash: \(hexProgramHash.hexEncodedString())")
+        //     LogNotify.log("[PartialFlash] Hex file line count: \(partialData.lineCount)")
+        // }
         
         LogNotify.log("[PartialFlash] Querying device status...")
         send(command: .STATUS)
@@ -455,17 +450,16 @@ class FlashableBLECalliope: CalliopeAPI {
             shouldRebootOnDisconnect = true
             rebootingForPartialFlashing = true
             //calliope is in application state and needs to be rebooted
-            LogNotify.log("[PartialFlash] Sending reboot command to enter BLE mode...")
+            // LogNotify.log("[PartialFlash] Sending reboot command to enter BLE mode...")
             send(command: .REBOOT, value: Data([.MODE_BLE]))
             
             // Immediately disconnect to avoid waiting for iOS to detect timeout (saves ~4s)
-            LogNotify.log("[PartialFlash] Triggering disconnect to speed up reconnection...")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
                 self?.requestDisconnectCallback?()
             }
         } else {
             //calliope is already in bluetooth state
-            LogNotify.log("[PartialFlash] Device already in BLE mode, verifying DAL hash...")
+            //  LogNotify.log("[PartialFlash] Device already in BLE mode, verifying DAL hash...")
             isPartiallyFlashing = true
             // Now request DAL hash to verify firmware compatibility
             send(command: .REGION, value: Data([.DAL_REGION]))
@@ -860,7 +854,7 @@ class FlashableBLECalliope: CalliopeAPI {
             }
         }
         
-        LogNotify.log("Partial flashing: \(progressPercent)% (\(linesFlashed)/\(total) packets, \(Int(avgSpeed)) bytes/s)")
+        // LogNotify.log("Partial flashing: \(progressPercent)% (\(linesFlashed)/\(total) packets, \(Int(avgSpeed)) bytes/s)")
         
         progressReceiver?.dfuProgressDidChange(
             for: 1,
@@ -986,22 +980,16 @@ class CalliopeV3: FlashableBLECalliope {
     override func notify(aboutState newState: DiscoveredDevice.CalliopeBLEDeviceState) {
         super.notify(aboutState: newState)
         if newState == .usageReady {
-            LogNotify.log("[CalliopeV3] usageReady state - setting up characteristics")
             //read to trigger pairing if necessary
             shouldRebootOnDisconnect = true
             if let cbCharacteristic = getCBCharacteristic(.secureDfuCharacteristic) {
-                LogNotify.log("[CalliopeV3] Enabling notifications for secureDfuCharacteristic")
                 peripheral.setNotifyValue(true, for: cbCharacteristic)
             }
             if discoveredOptionalServices.contains(.partialFlashing),
                let pfCharacteristic = getCBCharacteristic(.partialFlashing) {
-                LogNotify.log("[CalliopeV3] Enabling notifications for partialFlashing characteristic")
                 peripheral.setNotifyValue(true, for: pfCharacteristic)
-            } else {
-                LogNotify.log("[CalliopeV3] Partial flashing characteristic not available - service discovered: \(discoveredOptionalServices.contains(.partialFlashing)), characteristic: \(getCBCharacteristic(.partialFlashing) != nil)")
             }
             shouldRebootOnDisconnect = false
-            LogNotify.log("[CalliopeV3] Characteristic setup complete")
         }
     }
 
