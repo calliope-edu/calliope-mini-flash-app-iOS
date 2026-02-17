@@ -47,8 +47,10 @@ class FlashableBLECalliope: CalliopeAPI {
         switch newState {
         case .usageReady:
             if rebootingForPartialFlashing {
-                LogNotify.log("[PartialFlash] Device reconnected after reboot, resuming partial flashing...")
-                updateQueue.async {
+                LogNotify.log("[PartialFlash] Device reconnected after reboot, waiting 200ms for characteristic setup...")
+                // Add delay to allow subclass to finish notification setup
+                updateQueue.asyncAfter(deadline: .now() + 0.2) {
+                    LogNotify.log("[PartialFlash] Delay complete, resuming partial flashing...")
                     self.startPartialFlashing()
                 }
             } else if dfuCompletedAwaitingReconnect {
@@ -74,7 +76,7 @@ class FlashableBLECalliope: CalliopeAPI {
                 blockTransmissionTimer = nil
                 
                 DispatchQueue.main.async {
-                    self.statusDelegate?.dfuError(.deviceDisconnected, didOccurWithMessage: "connection to calliope lost")
+                    self.statusDelegate?.dfuError(.deviceDisconnected, didOccurWithMessage: NSLocalizedString("Connection to Calliope lost", comment: ""))
                 }
             } else if rebootingForPartialFlashing {
                 LogNotify.log("[PartialFlash] Device disconnected after reboot command, waiting for reconnection...")
@@ -148,6 +150,13 @@ class FlashableBLECalliope: CalliopeAPI {
             let lineCount = partialInfo.partialFlashData.lineCount
             LogNotify.log("Partial flashing: hex has \(lineCount) lines after magic marker")
             LogNotify.log("Starting partial flash process (will verify DAL hash and addresses with device)")
+            
+            // Set flag BEFORE calling startPartialFlashing to catch any early notifications
+            // (CalliopeV3 may have already enabled notifications in usageReady handler)
+            partialFlashingStateLock.lock()
+            isPartialFlashingActive = true
+            partialFlashingStateLock.unlock()
+            
             startPartialFlashing()
         } else {
             shouldRebootOnDisconnect = true
@@ -226,6 +235,7 @@ class FlashableBLECalliope: CalliopeAPI {
     private var currentBlockSendIndex = 0
     private var flowControlRetryCount = 0
     private let maxFlowControlRetries = 100  // Max 1 second total wait (10ms * 100)
+    private var bufferCheckFallbackTimer: Timer?  // Fallback if peripheralIsReady doesn't fire
 
     override func handleValueUpdate(_ characteristic: CalliopeCharacteristic, _ value: Data) {
         guard characteristic == .partialFlashing else {
@@ -350,12 +360,13 @@ class FlashableBLECalliope: CalliopeAPI {
         rebootingForPartialFlashing = false
         
         LogNotify.log("[PartialFlash] Starting partial flash attempt")
+        LogNotify.log("[PartialFlash] Checking prerequisites - file: \(file != nil), partialFlashingInfo: \(file?.partialFlashingInfo != nil)")
 
         guard let file = file,
             let partialFlashingInfo = file.partialFlashingInfo,
             let partialFlashingCharacteristic = getCBCharacteristic(.partialFlashing)
         else {
-            LogNotify.log("[PartialFlash] Partial flashing not available (missing data or characteristic)")
+            LogNotify.log("[PartialFlash] Partial flashing not available - file: \(file != nil), info: \(file?.partialFlashingInfo != nil), characteristic: \(getCBCharacteristic(.partialFlashing) != nil)")
             fallbackToFullFlash()
             return
         }
@@ -366,7 +377,9 @@ class FlashableBLECalliope: CalliopeAPI {
         isPartialFlashingActive = true
         partialFlashingStateLock.unlock()
 
+        LogNotify.log("[PartialFlash] Enabling notifications for partial flashing characteristic")
         peripheral.setNotifyValue(true, for: partialFlashingCharacteristic)
+        LogNotify.log("[PartialFlash] Notifications enabled successfully")
 
         //reset variables in case we use the same calliope object twice
 
@@ -602,10 +615,30 @@ class FlashableBLECalliope: CalliopeAPI {
                 if !isWaitingForBufferReady {
                     isWaitingForBufferReady = true
                     debugLog("Buffer full before block start, waiting for peripheralIsReady callback...")
+                    
+                    // Register callback for efficiency
                     registerBufferReadyCallback { [weak self] in
                         self?.isWaitingForBufferReady = false
                         self?.flowControlRetryCount = 0
+                        self?.bufferCheckFallbackTimer?.invalidate()
+                        self?.bufferCheckFallbackTimer = nil
                         self?.sendCurrentPackagesWithFlowControl()
+                    }
+                    
+                    // Add polling fallback in case iOS doesn't call peripheralIsReady
+                    bufferCheckFallbackTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+                        guard let self = self else { return }
+                        
+                        // Check if buffer cleared
+                        if self.peripheral.canSendWriteWithoutResponse {
+                            self.debugLog("Buffer cleared via fallback polling (block start) - proceeding")
+                            self.isWaitingForBufferReady = false
+                            self.flowControlRetryCount = 0
+                            self.bufferCheckFallbackTimer?.invalidate()
+                            self.bufferCheckFallbackTimer = nil
+                            self.cleanupBufferReadyCallback()
+                            self.sendCurrentPackagesWithFlowControl()
+                        }
                     }
                 }
                 return
@@ -641,10 +674,31 @@ class FlashableBLECalliope: CalliopeAPI {
                 if !isWaitingForBufferReady {
                     isWaitingForBufferReady = true
                     debugLog("Buffer full for packet \(index), waiting for peripheralIsReady callback...")
+                    
+                    // Register callback for efficiency
                     registerBufferReadyCallback { [weak self] in
                         self?.isWaitingForBufferReady = false
                         self?.flowControlRetryCount = 0
+                        self?.bufferCheckFallbackTimer?.invalidate()
+                        self?.bufferCheckFallbackTimer = nil
                         self?.sendNextPacketInBlock()
+                    }
+                    
+                    // Add polling fallback in case iOS doesn't call peripheralIsReady
+                    // This prevents 5-second timeouts
+                    bufferCheckFallbackTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+                        guard let self = self else { return }
+                        
+                        // Check if buffer cleared
+                        if self.peripheral.canSendWriteWithoutResponse {
+                            self.debugLog("Buffer cleared via fallback polling - proceeding")
+                            self.isWaitingForBufferReady = false
+                            self.flowControlRetryCount = 0
+                            self.bufferCheckFallbackTimer?.invalidate()
+                            self.bufferCheckFallbackTimer = nil
+                            self.cleanupBufferReadyCallback()
+                            self.sendNextPacketInBlock()
+                        }
                     }
                 }
                 return
@@ -672,6 +726,8 @@ class FlashableBLECalliope: CalliopeAPI {
         shouldRebootOnDisconnect = false
         blockTransmissionTimer?.invalidate()
         blockTransmissionTimer = nil
+        bufferCheckFallbackTimer?.invalidate()
+        bufferCheckFallbackTimer = nil
         
         let duration = partialFlashStartTime.map { Date().timeIntervalSince($0) } ?? 0
         let avgSpeed = duration > 0 ? Double(linesFlashed * 16) / duration : 0
@@ -688,6 +744,8 @@ class FlashableBLECalliope: CalliopeAPI {
         // Clean up flow control
         cleanupBufferReadyCallback()
         isWaitingForBufferReady = false
+        bufferCheckFallbackTimer?.invalidate()
+        bufferCheckFallbackTimer = nil
         
         // Now clean up state AFTER sending the command
         partialFlashingStateLock.lock()
@@ -738,6 +796,8 @@ class FlashableBLECalliope: CalliopeAPI {
         // Clean up flow control
         cleanupBufferReadyCallback()
         isWaitingForBufferReady = false
+        bufferCheckFallbackTimer?.invalidate()
+        bufferCheckFallbackTimer = nil
         
         // Clean up partial flashing state completely
         partialFlashingStateLock.lock()
@@ -785,7 +845,8 @@ class FlashableBLECalliope: CalliopeAPI {
         logReceiver?.logWith(.info, message: logMessage)
         
         let total = max(partialFlashData?.lineCount ?? 1, 1)  // Avoid division by zero
-        let progressPercent = Int(floor(Double(linesFlashed * 100) / Double(total)))
+        // Cap progress at 100% (linesFlashed can exceed total due to block padding)
+        let progressPercent = min(100, Int(floor(Double(linesFlashed * 100) / Double(total))))
         
         // Calculate speed if we have timing data
         var avgSpeed: Double = 0
@@ -925,16 +986,22 @@ class CalliopeV3: FlashableBLECalliope {
     override func notify(aboutState newState: DiscoveredDevice.CalliopeBLEDeviceState) {
         super.notify(aboutState: newState)
         if newState == .usageReady {
+            LogNotify.log("[CalliopeV3] usageReady state - setting up characteristics")
             //read to trigger pairing if necessary
             shouldRebootOnDisconnect = true
             if let cbCharacteristic = getCBCharacteristic(.secureDfuCharacteristic) {
+                LogNotify.log("[CalliopeV3] Enabling notifications for secureDfuCharacteristic")
                 peripheral.setNotifyValue(true, for: cbCharacteristic)
             }
             if discoveredOptionalServices.contains(.partialFlashing),
                let pfCharacteristic = getCBCharacteristic(.partialFlashing) {
+                LogNotify.log("[CalliopeV3] Enabling notifications for partialFlashing characteristic")
                 peripheral.setNotifyValue(true, for: pfCharacteristic)
+            } else {
+                LogNotify.log("[CalliopeV3] Partial flashing characteristic not available - service discovered: \(discoveredOptionalServices.contains(.partialFlashing)), characteristic: \(getCBCharacteristic(.partialFlashing) != nil)")
             }
             shouldRebootOnDisconnect = false
+            LogNotify.log("[CalliopeV3] Characteristic setup complete")
         }
     }
 
