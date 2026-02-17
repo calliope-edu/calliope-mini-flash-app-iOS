@@ -143,6 +143,7 @@ class FlashableBLECalliope: CalliopeAPI {
         // Check if partial flashing is available and hex has magic markers
         // The actual decision (partial vs full) is made after connecting and comparing DAL hashes and addresses
         if discoveredOptionalServices.contains(.partialFlashing),
+           PartialFlashManager.isPartialFlashingEnabled,
            let partialInfo = file.partialFlashingInfo {
             let lineCount = partialInfo.partialFlashData.lineCount
             LogNotify.log("Partial flashing: hex has \(lineCount) lines after magic marker")
@@ -156,6 +157,15 @@ class FlashableBLECalliope: CalliopeAPI {
             
             startPartialFlashing()
         } else {
+            // Log reason for not using partial flash
+            if !discoveredOptionalServices.contains(.partialFlashing) {
+                LogNotify.log("Using full DFU: partial flashing service not available on device")
+            } else if !PartialFlashManager.isPartialFlashingEnabled {
+                LogNotify.log("Using full DFU: partial flashing disabled in settings")
+            } else {
+                LogNotify.log("Using full DFU: hex file does not support partial flashing (no magic marker)")
+            }
+            
             shouldRebootOnDisconnect = true
             try startFullFlashing()
         }

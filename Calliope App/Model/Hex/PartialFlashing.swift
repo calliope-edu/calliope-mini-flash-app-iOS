@@ -7,7 +7,15 @@ struct PartialFlashManager {
         // MARK: - Settings Integration
         /// Returns true if partial flashing is enabled in iOS settings
         static var isPartialFlashingEnabled: Bool {
-            UserDefaults.standard.object(forKey: "partialFlashingEnabled") as? Bool ?? true
+            // Ensure UserDefaults are synchronized (important when settings changed in Settings app)
+            UserDefaults.standard.synchronize()
+            
+            // Check if key exists first - if not, default to true
+            if UserDefaults.standard.object(forKey: "partialFlashingEnabled") == nil {
+                return true
+            }
+            // If key exists, return its boolean value
+            return UserDefaults.standard.bool(forKey: "partialFlashingEnabled")
         }
     
     
@@ -84,8 +92,9 @@ struct PartialFlashManager {
         LogNotify.log("[PartialFlash] ✓ PartialFlashData created successfully with \(partialData.lineCount) lines")
         
         // If too many packets, fall back to full DFU
-        if partialData.lineCount > 1200 {
-            LogNotify.log("[PartialFlash] ❌ Too many packets (\(partialData.lineCount) > 1200) - falling back to full DFU")
+        // V3 has ~443 packets, V1/V2 has ~1348 packets - both are worthwhile vs full DFU
+        if partialData.lineCount > 2000 {
+            LogNotify.log("[PartialFlash] ❌ Too many packets (\(partialData.lineCount) > 2000) - falling back to full DFU")
             return nil
         }
         
