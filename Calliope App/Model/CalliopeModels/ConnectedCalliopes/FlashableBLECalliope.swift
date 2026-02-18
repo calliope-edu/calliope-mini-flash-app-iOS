@@ -133,6 +133,9 @@ class FlashableBLECalliope: CalliopeAPI {
         partialFlashData = nil
         partialFlashStartTime = nil
         
+        // Reset transfer flag
+        hasPartialFlashStartedTransfer = false
+        
         // Reset flags
         dfuCompletedAwaitingReconnect = false
         rebootingForPartialFlashing = false
@@ -220,6 +223,10 @@ class FlashableBLECalliope: CalliopeAPI {
     //for GUI interaction
     var cancel: Bool = false
     var linesFlashed = 0
+    
+    // Flag to track if partial flash has started transferring data
+    // Once true, prevents fallback to full DFU
+    private var hasPartialFlashStartedTransfer = false
     
     // MARK: Enhanced partial flashing state (flow control, timeout, retry)
     private let partialFlashingStateLock = NSLock()
@@ -518,6 +525,12 @@ class FlashableBLECalliope: CalliopeAPI {
         LogNotify.log("[PartialFlash] Starting partial flash - \(partialFlashData.lineCount) lines to flash")
         updateCallback("Partial flashing starts sending new program to Calliope mini")
         startPackageNumber = 0
+        
+        // Set flag to indicate we're starting the transfer
+        // Once set, we won't fallback to full DFU
+        hasPartialFlashStartedTransfer = true
+        LogNotify.log("[PartialFlash] Transfer started - full DFU fallback now disabled")
+        
         sendNextPackages()
     }
 
@@ -790,6 +803,28 @@ class FlashableBLECalliope: CalliopeAPI {
 
     private func fallbackToFullFlash() {
         LogNotify.log("[PartialFlash] ⚠️ Falling back to full DFU")
+        
+        // Check if we've already started transferring partial flash data
+        // If so, don't fallback to full DFU - user should retry
+        if hasPartialFlashStartedTransfer {
+            LogNotify.log("[PartialFlash] Transfer already started - not falling back to full DFU")
+            
+            // Clean up partial flashing state
+            partialFlashingStateLock.lock()
+            isPartialFlashingActive = false
+            isPartiallyFlashing = false
+            partialFlashingStateLock.unlock()
+            
+            // Cancel timers
+            blockTransmissionTimer?.invalidate()
+            blockTransmissionTimer = nil
+            cleanupBufferReadyCallback()
+            
+            // Report error through delegate to properly dismiss UI
+            let errorMessage = NSLocalizedString("Partial flash failed. Please try again or use a different program.", comment: "")
+            statusDelegate?.dfuError(.failedToConnect, didOccurWithMessage: errorMessage)
+            return
+        }
         
         // CRITICAL: Set failure flag BEFORE cleanup to persist across any crashes
         FlashableBLECalliope.lastPartialFlashFailed = true
