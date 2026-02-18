@@ -5,17 +5,27 @@
 	<key>StringsTable</key>
 	<string>Settings</string>
 	<key>PreferenceSpecifiers</key>
-	<array>
-		<dict>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-			<key>Title</key>
-			<string>Restore Last Matrix</string>
-			<key>Key</key>
-			<string>restoreLastMatrixPreference</string>
-			<key>DefaultValue</key>
-			<true/>
-		</dict>
+	       <array>
+			<dict>
+				<key>Type</key>
+				<string>PSToggleSwitchSpecifier</string>
+				<key>Title</key>
+				<string>Restore Last Matrix</string>
+				<key>Key</key>
+				<string>restoreLastMatrixPreference</string>
+				<key>DefaultValue</key>
+				<true/>
+			</dict>
+			<dict>
+				<key>Type</key>
+				<string>PSToggleSwitchSpecifier</string>
+				<key>Title</key>
+				<string>Enable Partial Flashing</string>
+				<key>Key</key>
+				<string>partialFlashingEnabled</string>
+				<key>DefaultValue</key>
+				<true/>
+			</dict>
 		<dict>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
@@ -202,7 +212,7 @@
 			<key>Key</key>
 			<string>calliopeDefaultProgramV3HexPreference</string>
 			<key>DefaultValue</key>
-			<string>https://calliope.cc/downloads/miniV3_start.hex</string>
+			<string>https://go.calliope.cc/downloads/Demov3.hex</string>
 			<key>IsSecure</key>
 			<false/>
 			<key>KeyboardType</key>
@@ -220,7 +230,7 @@
 			<key>Key</key>
 			<string>calliopeDefaultProgramV1andV2HexPreference</string>
 			<key>DefaultValue</key>
-			<string>http://calliope.cc/downloads/calliope-demo_mobil.hex</string>
+			<string>https://go.calliope.cc/downloads/Demov1.hex</string>
 			<key>IsSecure</key>
 			<false/>
 			<key>KeyboardType</key>

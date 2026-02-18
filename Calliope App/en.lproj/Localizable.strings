@@ -41,6 +41,9 @@
 "Connection to Calliope mini timed out!" = "Connection to Calliope mini timed out!";
 
 /* No comment provided by engineer. */
+"Connection to Calliope lost" = "Connection to Calliope lost";
+
+/* No comment provided by engineer. */
 "Could not find connected calliope in discovered calliopes" = "Could not find connected Calliope mini";
 
 /* No comment provided by engineer. */

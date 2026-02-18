@@ -6,19 +6,6 @@ struct HexParser {
     
     private var url: URL
     
-    // MARK: - Cache Management
-    
-    /// Cache filtered hex to avoid re-filtering on every call
-    private static var filteredHexCache: [URL: URL] = [:]
-    private static let cacheLock = NSLock()
-    
-    /// Clears all cached filtered hex files
-    static func clearCache() {
-        cacheLock.lock()
-        defer { cacheLock.unlock() }
-        filteredHexCache.removeAll()
-        LogNotify.log("[PartialFlash] Cleared filtered hex cache")
-    }
 
     // MARK: - Initialization
     
@@ -187,251 +174,9 @@ struct HexParser {
     }
 
     /// Retrieves partial flashing information from hex file
-    /// Uses cached filtered hex if available, otherwise filters and caches
-    /// - Returns: Tuple of (fileHash, programHash, partialFlashData) or nil on error
+    /// Delegates to PartialFlashManager for all partial flash functionality
     func retrievePartialFlashingInfo() -> (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? {
-        // Check cache first
-        if let cachedURL = getCachedFilteredURL() {
-            LogNotify.log("[PartialFlash] Using cached filtered hex")
-            return retrievePartialFlashingInfoFromFile(url: cachedURL)
-        }
-        
-        // Filter universal hex to application region (preserves magic markers)
-        LogNotify.log("[PartialFlash] Filtering universal hex to application region...")
-        if let filteredLines = UniversalHexFilter.filterUniversalHex(sourceURL: url, hexBlock: .v2),
-           let filteredURL = UniversalHexFilter.writeFilteredHex(filteredLines) {
-            LogNotify.log("[PartialFlash] Using filtered hex with \(filteredLines.count) lines")
-            
-            // Cache the filtered result
-            setCachedFilteredURL(filteredURL)
-            
-            return retrievePartialFlashingInfoFromFile(url: filteredURL)
-        }
-        
-        // Fallback to original universal hex if filtering fails
-        LogNotify.log("[PartialFlash] Filtering failed, using original hex")
-        return retrievePartialFlashingInfoFromFile(url: url)
-    }
-    
-    // MARK: - Cache Management
-    
-    /// Get cached filtered URL for current hex file
-    private func getCachedFilteredURL() -> URL? {
-        HexParser.cacheLock.lock()
-        defer { HexParser.cacheLock.unlock() }
-        return HexParser.filteredHexCache[url]
-    }
-    
-    /// Cache filtered URL for current hex file
-    private func setCachedFilteredURL(_ filteredURL: URL) {
-        HexParser.cacheLock.lock()
-        defer { HexParser.cacheLock.unlock() }
-        HexParser.filteredHexCache[url] = filteredURL
-    }
-    
-    private func retrievePartialFlashingInfoFromFile(url: URL) -> (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? {
-        guard let reader = StreamReader(path: url.path) else {
-            return nil
-        }
-        defer { reader.close() }
-
-        let (magicLine, currentSegmentAddress) = forwardToMagicNumber(reader)
-        if magicLine == nil {
-            print("[PartialFlash] ERROR: Magic start marker not found!")
-            return nil
-        }
-        let magicRecordType = HexReader.type(of: magicLine!)
-        let magicRecordLength = HexReader.length(of: magicLine!)
-        let magicRecordAddress = HexReader.address(of: magicLine!)
-        print("[PartialFlash] Found magic line (type=\(magicRecordType ?? -1), len=\(magicRecordLength ?? -1), addr=\(String(format: "0x%04X", magicRecordAddress ?? 0))): \(magicLine!.prefix(60))...")
-
-        // Validate magic record: must be type 0 (data) with exactly 16 bytes
-        guard magicRecordType == 0, magicRecordLength == 16 else {
-            print("[PartialFlash] ERROR: Magic record has wrong format (expected type=0, len=16)")
-            return nil
-        }
-
-        // Read hashes line immediately (it's right after magic)
-        guard let hashesLine = reader.nextLine() else {
-            print("[PartialFlash] ERROR: Could not read line after magic marker")
-            return nil
-        }
-
-        // Validate hash line format: must be a 16-byte data record (type 0) at sequential address
-        let hashRecordType = HexReader.type(of: hashesLine)
-        let hashRecordLength = HexReader.length(of: hashesLine)
-        let hashRecordAddress = HexReader.address(of: hashesLine)
-
-        print("[PartialFlash] Hash line (type=\(hashRecordType ?? -1), len=\(hashRecordLength ?? -1), addr=\(String(format: "0x%04X", hashRecordAddress ?? 0))): \(hashesLine.prefix(50))...")
-
-        // Strict validation: hash record must be type 0 (data) with 16 bytes
-        // and address must be sequential (magic address + 16)
-        guard hashRecordType == 0,
-              hashRecordLength == 16,
-              let magicAddr = magicRecordAddress,
-              let hashAddr = hashRecordAddress,
-              hashAddr == magicAddr + 16 else {
-            print("[PartialFlash] ERROR: Invalid hash record format - not a valid MakeCode partial flashing marker")
-            print("[PartialFlash] Expected: type=0, len=16, addr=\(String(format: "0x%04X", (magicRecordAddress ?? 0) + 16))")
-            print("[PartialFlash] Got: type=\(hashRecordType ?? -1), len=\(hashRecordLength ?? -1), addr=\(String(format: "0x%04X", hashRecordAddress ?? 0))")
-            return nil
-        }
-
-        guard hashesLine.count >= 41,
-              let templateHash = hashesLine[9..<25].toData(using: .hex),
-              let programHash = (hashesLine[25..<41]).toData(using: .hex) else {
-            print("[PartialFlash] ERROR: Could not extract hashes from hash line")
-            return nil
-        }
-        print("[PartialFlash] Extracted DAL hash (templateHash): \(templateHash.hexEncodedString())")
-        print("[PartialFlash] Extracted program hash: \(programHash.hexEncodedString())")
-        
-        // Count remaining lines from current position to magic end
-        var numLinesToFlash = 0
-        var totalLines = 0
-        var emptyLines = 0
-        var lineNumber = 0
-        while let line = reader.nextLine() {
-            lineNumber += 1
-            if HexReader.isEndOfFileOrMagicEnd(line) {
-                print("[PartialFlash] Stopped at magic end/EOF after reading \(lineNumber) lines from hashes")
-                break
-            }
-            if line.starts(with: ":") && HexReader.type(of: line) == 0 {
-                totalLines += 1
-                if let data = HexReader.readData(line), !data.data.allSatisfy({ $0 == 0xFF }) {
-                    numLinesToFlash += 1
-                } else {
-                    emptyLines += 1
-                }
-            }
-        }
-        print("[PartialFlash] Found \(totalLines) type-0 lines (\(emptyLines) empty, \(numLinesToFlash) with data)")
-        
-        // Don't rewind - open a fresh reader positioned at magic marker
-        guard let freshReader = StreamReader(path: url.path) else {
-            return nil
-        }
-        
-        let (freshMagicLine, freshSegmentAddress) = forwardToMagicNumber(freshReader)
-        guard let magicLineForData = freshMagicLine else {
-            return nil
-        }
-        print("[PartialFlash] Fresh reader: segment address: \(String(format: "0x%04X", freshSegmentAddress))")
-        
-        // Read hashes line again for the fresh reader
-        guard let hashesLineForData = freshReader.nextLine() else {
-            return nil
-        }
-
-        return (templateHash,
-            programHash,
-            PartialFlashData(
-                nextLines: [hashesLineForData, magicLineForData],
-                currentSegmentAddress: freshSegmentAddress,
-                reader: freshReader,
-                lineCount: numLinesToFlash))
-    }
-
-    private func forwardToMagicNumber(_ reader: StreamReader) -> (String?, UInt16) {
-        var magicLine: String?
-
-        var currentSegmentAddress: UInt16 = 0
-        while let record = reader.nextLine() {
-            if HexReader.isMagicStart(record) {
-                magicLine = record
-                break
-            } else if HexReader.type(of: record) == 4,
-                      let segmentAddress = HexReader.readSegmentAddress(record) {
-                currentSegmentAddress = segmentAddress
-            }
-        }
-        return (magicLine, currentSegmentAddress)
-    }
-}
-
-struct PartialFlashData: Sequence, IteratorProtocol {
-    typealias Element = (address: UInt16, data: Data)
-
-    public let lineCount: Int
-    public private(set) var currentSegmentAddress: UInt16
-    private var nextData: [(address: UInt16, data: Data)] = []
-    private var reader: StreamReader?
-    private var iterationCount: Int = 0
-    private var skippedCount: Int = 0
-
-    init(nextLines: [String], currentSegmentAddress: UInt16, reader: StreamReader, lineCount: Int) {
-        self.reader = reader
-        self.nextData = []
-        self.currentSegmentAddress = currentSegmentAddress
-        self.lineCount = lineCount
-        print("[PartialFlash] PartialFlashData init: segment address=\(String(format: "0x%04X", currentSegmentAddress)), lineCount=\(lineCount)")
-        //extract data from nextLines
-        nextLines.forEach {
-            read($0)
-        }
-        print("[PartialFlash] After processing nextLines, have \(nextData.count) packets in buffer")
-    }
-
-    mutating func next() -> (address: UInt16, data: Data)? {
-        // Skip empty blocks (only 0xFF) like Android does
-        while true {
-            let line = nextData.popLast()
-            while let reader = reader, nextData.count == 0 {
-                guard let record = reader.nextLine() else {
-                    break
-                }
-                read(record)
-            }
-            
-            // Check if we got a line
-            guard let result = line else {
-                return nil
-            }
-            
-            // Check if block is empty (all 0xFF) - skip these
-            if isEmptyBlock(result.data) {
-                skippedCount += 1
-                continue  // Skip this block and get next one
-            }
-            
-            iterationCount += 1
-            return result
-        }
-    }
-    
-    private func isEmptyBlock(_ data: Data) -> Bool {
-        // A block is empty if all bytes are 0xFF (erased flash)
-        return data.allSatisfy { $0 == 0xFF }
-    }
-
-    mutating private func read(_ record: String) {
-        if HexReader.isEndOfFileOrMagicEnd(record) {
-            print("[PartialFlash] Hit magic end during iteration - closing reader")
-            reader?.close()
-            reader = nil
-            return
-        }
-        switch HexReader.type(of: record) {
-        case 0: //record type 0 means data for program
-            if record.contains("00000001FF") {
-                break
-            } else if let data = HexReader.readData(record) {
-                // Don't filter here - we'll filter in next() to keep lineCount accurate
-                nextData.append(data)
-
-            }
-        case 2: // extended segment adress
-            if let segmentAddress = HexReader.readSegmentAddress(record) {
-                currentSegmentAddress = segmentAddress
-            }
-        case 4: //segment address type
-            if let segmentAddress = HexReader.readSegmentAddress(record) {
-                currentSegmentAddress = segmentAddress
-            }
-        default:
-            break
-        }
+        return PartialFlashManager.retrievePartialFlashingInfo(from: url)
     }
 }
 
@@ -463,7 +208,6 @@ struct HexReader {
     }
 
     static func validate(_ record: String, _ length: Int) -> Bool {
-        //string starting at 10th character must be 2*length characters long plus two characters for the checksum
         return record.trimmingCharacters(in: .whitespacesAndNewlines).count == 9 + 2 * length + 2
     }
 
@@ -482,7 +226,6 @@ struct HexReader {
     }
 
     static func address(of record: String) -> UInt16? {
-        //address in the program is encoded with two bytes
         guard record.count >= 7 else {
             return nil
         }
@@ -490,7 +233,6 @@ struct HexReader {
     }
 
     static func data(of record: String, _ length: Int) -> Data? {
-        //data area with given byte length
         return record[9..<(9 + 2 * length)].toData(using: .hex)
     }
 
@@ -499,7 +241,6 @@ struct HexReader {
     }
 
     static func isEndOfFileOrMagicEnd(_ record: String) -> Bool {
-        //magic end of program data (start of embedded source)
         return record.count >= 24 && record[9..<24] == MAGIC_END_NUMBER || record.contains("00000001FF")
     }
 }

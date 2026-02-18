@@ -566,7 +566,7 @@ class ChartController: NSObject, ChartViewDelegate, UIScrollViewDelegate {
     // The number of data points that exist for each display point. The resulting number of view
     // points will be double this number since we record a min and a max.
     let points = Int(exactly: ceil(CGFloat(dataPoints.count) / chartView.bounds.width))
-    guard let pointsPerDisplayPoint = points else {
+    guard let pointsPerDisplayPoint = points, pointsPerDisplayPoint > 0 else {
       return nil
     }
 

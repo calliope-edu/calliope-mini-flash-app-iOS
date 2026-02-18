@@ -76,7 +76,7 @@ final class HexFileManager {
             try data.write(to: file)
             // Clear filtered hex cache when new hex file is written
             if isHexFile {
-                HexParser.clearCache()
+                PartialFlashManager.clearCache()
             }
         } catch {
             LogNotify.log("\(error)")

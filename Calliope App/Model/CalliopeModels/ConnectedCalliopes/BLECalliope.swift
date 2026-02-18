@@ -150,6 +150,14 @@ class BLECalliope: Calliope {
             LogNotify.log("updated notification state for for characteristic that we did not subscribe to!")
         }
     }
+    
+    func peripheralIsReady(toSendWriteWithoutResponse peripheral: CBPeripheral) {
+        // Post notification for flow control in partial flashing
+        NotificationCenter.default.post(
+            name: .bleBufferReadyForPeripheral,
+            object: peripheral
+        )
+    }
 
     func handleValueUpdate(_ characteristic: CalliopeCharacteristic, _ value: Data) {
         LogNotify.log("value for \(characteristic) updated (\(value.hexEncodedString()))")
@@ -331,4 +339,10 @@ class BLECalliope: Calliope {
             }
         }
     }
+}
+
+// MARK: - Notification Names
+extension Notification.Name {
+    /// Posted when peripheral is ready to send more data without response (BLE flow control)
+    static let bleBufferReadyForPeripheral = Notification.Name("bleBufferReadyForPeripheral")
 }
