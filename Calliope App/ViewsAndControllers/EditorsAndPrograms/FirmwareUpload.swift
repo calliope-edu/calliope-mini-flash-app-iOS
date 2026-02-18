@@ -375,6 +375,10 @@ class FirmwareUpload {
         // Instead show error in logTextView
         logTextView.text = error.localizedDescription
         // Don't change ring color to red - keep original color
+        
+        // Re-enable cancel button so user can dismiss the alert
+        cancelUploadAction.isEnabled = true
+        
         failed()
     }
     func startUSBTimer() {
@@ -420,6 +424,7 @@ class FirmwareUpload {
         usbTimer = nil
         usbStartTime = nil
     }
+    
     deinit {
         // stopUSBTimer() // Timer deaktiviert
         NSLog("FirmwareUpload deinited")
