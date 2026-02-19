@@ -143,42 +143,24 @@ class BLECalliope: Calliope, Jsonifiable {
     }
 
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        if self.readCharacteristicTM.transactions.count > 0 {
-            // We have read transactions outstanding, which means that this is a response after a read request, so complete those transactions.
-            self.readCharacteristicTM.apply({
-                if let err = error {
-                    $0.resolveAsFailure(withMessage: "Error reading characteristic: \(err.localizedDescription)")
-                    return
-                }
-                $0.resolveAsSuccess(withObject: characteristic.value!)
-            },
-                iff: {CharacteristicTransaction(
-                    transaction: $0
-                )!.matchesCharacteristic(
-                    characteristic
-                )}
-            )
+        if let readingCharac = readingCharacteristic, characteristic.uuid == readingCharac.uuid {
+            explicitReadResponse(for: characteristic, error: error)
+            return
         }
+        
+        guard error == nil, let value = characteristic.value else {
+            LogNotify.log(readError?.localizedDescription ?? "characteristic \(characteristic.uuid) does not have a value")
+            return
+        }
+        
+        guard let calliopeCharacteristic = CalliopeBLEProfile.uuidCharacteristicMap[characteristic.uuid]
         else {
-            if let readingCharac = readingCharacteristic, characteristic.uuid == readingCharac.uuid {
-                explicitReadResponse(for: characteristic, error: error)
-                return
-            }
-            
-            guard error == nil, let value = characteristic.value else {
-                LogNotify.log(readError?.localizedDescription ?? "characteristic \(characteristic.uuid) does not have a value")
-                return
-            }
-            
-            guard let calliopeCharacteristic = CalliopeBLEProfile.uuidCharacteristicMap[characteristic.uuid]
-            else {
-                LogNotify.log("received value from unknown characteristic: \(characteristic.uuid)")
-                return
-            }
-            
-            //        handleValueUpdateInternal(calliopeCharacteristic, value) ? Why ?
-            handleValueUpdate(calliopeCharacteristic, value)
+            LogNotify.log("received value from unknown characteristic: \(characteristic.uuid)")
+            return
         }
+        
+        //        handleValueUpdateInternal(calliopeCharacteristic, value) ? Why ?
+        handleValueUpdate(calliopeCharacteristic, value)
         
         // If we're doing notifications on the characteristic send them up.
         if characteristic.isNotifying {
@@ -543,9 +525,14 @@ class BLECalliope: Calliope, Jsonifiable {
             characteristicTransaction.resolveUnknownCharacteristic()
             return
         }
-
-        self.readCharacteristicTM.addTransaction(transaction, atPath: CharacteristicTransactionKey(serviceUUID: characteristicTransaction.serviceUUID, characteristicUUID: characteristicTransaction.characteristicUUID))
-        self.peripheral.readValue(for: char)
+        
+        do {
+            let data = try self.read(characteristic: char)
+            transaction.resolveAsSuccess(withObject: data!)
+        }
+        catch {
+            transaction.resolveAsFailure(withMessage: "Error reading characteristic: \(error)")
+        }
     }
     
     private func evaluateJavaScript(_ script: String) {
