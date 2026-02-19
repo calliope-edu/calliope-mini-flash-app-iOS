@@ -42,9 +42,6 @@ class BLECalliope: Calliope, Jsonifiable {
     var getPrimaryServicesTM = WBTransactionManager<CBUUID?>()
     var getCharacteristicTM = WBTransactionManager<CharacteristicTransactionKey>()
     var getCharacteristicsTM = WBTransactionManager<CharacteristicsTransactionKey>()
-    var readCharacteristicTM = WBTransactionManager<CharacteristicTransactionKey>()
-    /*! @abstract Outstanding transactions for characteristic write requests */
-    var writeCharacteristicTM = WBTransactionManager<CharacteristicTransactionKey>()
     
     // TODO: Set this correctly
     weak var view: WKWebView? = nil
@@ -112,20 +109,6 @@ class BLECalliope: Calliope, Jsonifiable {
     var notifyingCharacteristic: CBCharacteristic? = nil
 
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
-        self.writeCharacteristicTM.apply({
-            if let err = error {
-                $0.resolveAsFailure(withMessage: "Error writing characteristic: \(err.localizedDescription)")
-                return
-            }
-            $0.resolveAsSuccess()
-        },
-            iff: {CharacteristicTransaction(
-                transaction: $0
-                )!.matchesCharacteristic(
-                    characteristic
-                )}
-        )
-        
         if let writingCharacteristic = writingCharacteristic, characteristic.uuid == writingCharacteristic.uuid {
             explicitWriteResponse(error)
             return
@@ -597,18 +580,18 @@ class BLECalliope: Calliope, Jsonifiable {
 
         switch transaction.responseMode {
         case .required:
-                guard char.properties.contains(.write) else {
-                    transaction.transaction.resolveAsFailure(withMessage: "Write with response not supported")
-                    return
-                }
-
-                self.peripheral.writeValue(transaction.data, for: char, type: .withResponse)
-                self.writeCharacteristicTM.addTransaction(
-                    transaction.transaction,
-                    atPath: CharacteristicTransactionKey(
-                        serviceUUID: transaction.serviceUUID, characteristicUUID: transaction.characteristicUUID
-                    )
-                )
+            guard char.properties.contains(.write) else {
+                transaction.transaction.resolveAsFailure(withMessage: "Write with response not supported")
+                return
+            }
+            
+            do {
+                try self.write(transaction.data, for: char)
+                transaction.transaction.resolveAsSuccess()
+            }
+            catch {
+                transaction.transaction.resolveAsFailure(withMessage: "Error writing characteristic: \(error)")
+            }
         case .never:
                 guard char.properties.contains(.write) || char.properties.contains(.writeWithoutResponse)
                 else {
@@ -624,13 +607,13 @@ class BLECalliope: Calliope, Jsonifiable {
             // sub procedures" in webbluetoothcg.github.io/web-bluetooth/#writecharacteristicvalue
             // so we do a write with response if possible else without.
             if char.properties.contains(.write) {
-                self.peripheral.writeValue(transaction.data, for: char, type: .withResponse)
-                self.writeCharacteristicTM.addTransaction(
-                    transaction.transaction,
-                    atPath: CharacteristicTransactionKey(
-                        serviceUUID: transaction.serviceUUID, characteristicUUID: transaction.characteristicUUID
-                    )
-                )
+                do {
+                    try self.write(transaction.data, for: char)
+                    transaction.transaction.resolveAsSuccess()
+                }
+                catch {
+                    transaction.transaction.resolveAsFailure(withMessage: "Error writing characteristic: \(error)")
+                }
             } else if char.properties.contains(.writeWithoutResponse) {
                 self.peripheral.writeValue(transaction.data, for: char, type: .withoutResponse)
                 transaction.transaction.resolveAsSuccess()
