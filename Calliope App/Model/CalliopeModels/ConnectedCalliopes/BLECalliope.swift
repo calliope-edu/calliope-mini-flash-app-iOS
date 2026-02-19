@@ -410,30 +410,11 @@ class BLECalliope: Calliope, Jsonifiable {
         }
 
         guard let services = self.peripheral.services else {
-            self.getPrimaryServicesTM.addTransaction(transaction, atPath: servicesTransaction.serviceUUID)
-            NSLog("Starting discovering for services on peripheral \(self.peripheral.name ?? "<unknown name>")")
-            self.peripheral.discoverServices(nil)
+            transaction.resolveAsFailure(withMessage: "No discover for services started.")
+            LogNotify.log("Expected for services to already be discovered.", level: LogNotify.LEVEL.ERROR)
             return
         }
         servicesTransaction.resolveFromServices(services)
-    }
-    
-    open func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-        var resolve: (WBTransaction) -> Void
-        if let err = error {
-            resolve = {
-                $0.resolveAsFailure(withMessage: "An error occurred discovering services for the device: \(err)")
-            }
-        } else {
-            resolve = {
-                ServicesTransaction(transaction: $0)!.resolveFromServices(self.peripheral.services!)
-            }
-        }
-        
-        /* All outstanding requests for a primary service can be resolved. */
-        if (self.getPrimaryServicesTM.transactions.count > 0) {
-            self.getPrimaryServicesTM.apply(resolve)
-        }
     }
     
     func getCharacteristic(transaction: WBTransaction) {
