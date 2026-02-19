@@ -47,7 +47,7 @@ class BLECalliope: Calliope, Jsonifiable {
     var writeCharacteristicTM = WBTransactionManager<CharacteristicTransactionKey>()
     
     // TODO: Set this correctly
-    weak var view: WKWebView? = nil
+    weak var webView: WKWebView? = nil
 
     required init?(peripheral: CBPeripheral, name: String, discoveredServices: Set<CalliopeService>, discoveredCharacteristicUUIDsForServiceUUID: [CBUUID: Set<CBUUID>], servicesChangedCallback: @escaping () -> ()?) {
         self.peripheral = peripheral
@@ -549,8 +549,8 @@ class BLECalliope: Calliope, Jsonifiable {
     }
     
     private func evaluateJavaScript(_ script: String) {
-        guard let wv = self.view else {
-            NSLog("Can't evaluate javascript as have no webview")
+        guard let wv = self.webView else {
+            LogNotify.log("Can't evaluate javascript as have no webview", level: LogNotify.LEVEL.ERROR)
             return
         }
         wv.evaluateJavaScript(
@@ -653,7 +653,8 @@ class BLECalliope: Calliope, Jsonifiable {
         }
     }
     
-    func startNotifications(transaction: WBTransaction) {
+    func startNotifications(transaction: WBTransaction, webView: WKWebView) {
+        self.webView = webView
         guard let characteristicTransaction = CharacteristicTransaction(transaction: transaction) else {
             transaction.resolveAsFailure(withMessage: "Invalid start notifications message")
             return

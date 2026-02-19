@@ -36,13 +36,6 @@ class LofiAppViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
             LogNotify.log("Inspection of the webview is enabled in debug mode", level: LogNotify.LEVEL.DEBUG)
         }
         #endif
-        if let calliope = MatrixConnectionViewController.instance.usageReadyCalliope,
-        calliope is BLECalliope {
-                (calliope as! BLECalliope).view = webView
-        }
-        else {
-            print("Please connect a calliope via bluetooth before opening this page.")
-        }
         
     }
 }
