@@ -5,8 +5,12 @@ import Dispatch
 
 open class WBMessageHandler: NSObject, WKScriptMessageHandler
 {
-    let webView: WKWebView
+    private weak var webView: WKWebView?
     var disconnectNotificationId: Int?
+    
+    func tearDown() {
+        unregisterDisconnectNotification()
+    }
     
     init(webView: WKWebView) {
         self.webView = webView
@@ -18,6 +22,10 @@ open class WBMessageHandler: NSObject, WKScriptMessageHandler
         if let id = disconnectNotificationId {
             MatrixConnectionViewController.instance.connector.unregisterDisconnectNotification(id: id)
         }
+    }
+    
+    deinit {
+        tearDown()
     }
     
     // MARK: - Embedded types
@@ -86,6 +94,7 @@ open class WBMessageHandler: NSObject, WKScriptMessageHandler
         
         guard let calliope = MatrixConnectionViewController.instance.usageReadyCalliope as? BLECalliope else {
             transaction.resolveAsFailure(withMessage: "There is no bluetooth device connected!")
+            LogNotify.log("WB Bluetooth device call although no device was connected", level: LogNotify.LEVEL.ERROR)
             return
         }
 
@@ -126,10 +135,12 @@ open class WBMessageHandler: NSObject, WKScriptMessageHandler
     func onDeviceDisconnect(_ uuid: String) {
         let commandString = "window.receiveDeviceDisconnectEvent('\(uuid)');\n"
         
-        self.webView.evaluateJavaScript(commandString, completionHandler: {
-            _, error in
-            if let err = error {
-                NSLog("Error evaluating javascript: \(err)")
-            }})
+        if let webView = self.webView {
+            webView.evaluateJavaScript(commandString, completionHandler: {
+                _, error in
+                if let err = error {
+                    NSLog("Error evaluating javascript: \(err)")
+                }})
+        }
     }
 }
