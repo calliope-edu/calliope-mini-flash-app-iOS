@@ -1108,7 +1108,6 @@
 				2F61459922BF761F001C2734 /* Hex.swift in Sources */,
 				60CF0EB22BFCD5D400CB2A38 /* Sensor.swift in Sources */,
 				2F763FE625A607A400C2029D /* SwiftCodeSnippetHighlighter.swift in Sources */,
-				806801532EF700920010448D /* PartialFlashingOptimized.swift in Sources */,
 				2F1BD9952674D48C006A47F2 /* AutoHeightCollectionViewFlowLayout.swift in Sources */,
 				601040AC2B592B7300526735 /* HexFileManager.swift in Sources */,
 				2F61458E22BF761F001C2734 /* Matrix.swift in Sources */,
@@ -1423,7 +1422,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Calliope App/Calliope App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 34;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = GKA87N33H4;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "Calliope App/Info.plist";
@@ -1432,7 +1431,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.2.15;
+				MARKETING_VERSION = 3.2.16;
 				PRODUCT_BUNDLE_IDENTIFIER = "cc.calliope.ios.flash-debug";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1451,7 +1450,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Calliope App/Calliope AppRelease.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 34;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = GKA87N33H4;
 				INFOPLIST_FILE = "Calliope App/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -1459,7 +1458,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.2.15;
+				MARKETING_VERSION = 3.2.16;
 				PRODUCT_BUNDLE_IDENTIFIER = cc.calliope.ios.flash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
