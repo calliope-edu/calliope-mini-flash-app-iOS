@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Txf-OB-dRE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Txf-OB-dRE">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -47,7 +47,8 @@
                     <connections>
                         <segue destination="QC6-jX-Y4m" kind="relationship" relationship="viewControllers" id="og1-gc-qTa"/>
                         <segue destination="kl6-xA-Pcd" kind="relationship" relationship="viewControllers" id="OLi-i6-ZEQ"/>
-                        <segue destination="3fe-JX-xi2" kind="relationship" relationship="viewControllers" id="Va3-Tx-8iS"/>
+                        <segue destination="bCa-df-eRO" kind="relationship" relationship="viewControllers" id="6Vi-fq-vK4"/>
+                        <segue destination="3fe-JX-xi2" kind="relationship" relationship="viewControllers" id="HQ6-4n-fuX"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hYA-TX-bOA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -83,6 +84,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Ct-Cb-uDp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-30" y="243"/>
+        </scene>
+        <!--LofiApps-->
+        <scene sceneID="Xg8-NT-NZl">
+            <objects>
+                <viewControllerPlaceholder storyboardName="LofiApps" id="bCa-df-eRO" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="JRE-fX-fPw"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yli-4P-XoO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-82" y="156"/>
         </scene>
     </scenes>
     <color key="tintColor" name="calliope-lilablau"/>

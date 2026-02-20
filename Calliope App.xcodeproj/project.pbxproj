@@ -109,6 +109,8 @@
 		600E63322C3424580027AE61 /* BaseChartViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600E63312C3424580027AE61 /* BaseChartViewCell.swift */; };
 		600E63352C342DC10027AE61 /* ProjectAndSensors.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 600E63342C342DC10027AE61 /* ProjectAndSensors.storyboard */; };
 		601040AC2B592B7300526735 /* HexFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601040AB2B592B7300526735 /* HexFileManager.swift */; };
+		60107F912F48830E00A15101 /* LofiAppsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60107F902F48830E00A15101 /* LofiAppsViewController.swift */; };
+		60107F9A2F4888B800A15101 /* LofiApps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60107F992F4888B800A15101 /* LofiApps.storyboard */; };
 		60316BF82B01FEC300130C0D /* BLECalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60316BF72B01FEC300130C0D /* BLECalliope.swift */; };
 		60316BFA2B0210CC00130C0D /* CalliopeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60316BF92B0210CC00130C0D /* CalliopeFactory.swift */; };
 		604841D52B1F328A0037A825 /* OnboardingOfflineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604841D42B1F328A0037A825 /* OnboardingOfflineViewController.swift */; };
@@ -282,6 +284,8 @@
 		600E63332C342DC10027AE61 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ProjectAndSensors.storyboard; sourceTree = "<group>"; };
 		600E63432C343ABB0027AE61 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		601040AB2B592B7300526735 /* HexFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexFileManager.swift; sourceTree = "<group>"; };
+		60107F902F48830E00A15101 /* LofiAppsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LofiAppsViewController.swift; sourceTree = "<group>"; };
+		60107F962F4888B800A15101 /* HomeScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = HomeScreen.storyboard; path = Base.lproj/LofiApps.storyboard; sourceTree = "<group>"; };
 		601A19142B30658200E98E69 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
 		60316BF72B01FEC300130C0D /* BLECalliope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLECalliope.swift; sourceTree = "<group>"; };
 		60316BF92B0210CC00130C0D /* CalliopeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeFactory.swift; sourceTree = "<group>"; };
@@ -484,6 +488,7 @@
 		2F61454F22BF761F001C2734 /* ViewsAndControllers */ = {
 			isa = PBXGroup;
 			children = (
+				60107F932F48841900A15101 /* LofiApps */,
 				2F61451A22BF75DF001C2734 /* LaunchScreen.storyboard */,
 				2F526C2B26E9688B004BA8FF /* CalliopeApp.storyboard */,
 				2F61455A22BF761F001C2734 /* MainContainerViewController.swift */,
@@ -701,6 +706,15 @@
 				2F61456422BF761F001C2734 /* Hex.swift */,
 			);
 			path = Hex;
+			sourceTree = "<group>";
+		};
+		60107F932F48841900A15101 /* LofiApps */ = {
+			isa = PBXGroup;
+			children = (
+				60107F902F48830E00A15101 /* LofiAppsViewController.swift */,
+				60107F992F4888B800A15101 /* LofiApps.storyboard */,
+			);
+			path = LofiApps;
 			sourceTree = "<group>";
 		};
 		604938B32E1BAF16008BCE40 /* Packages */ = {
@@ -1026,6 +1040,7 @@
 				2F61459E22BFE607001C2734 /* Assets.xcassets in Resources */,
 				60C90B3A2F237F3E006279B2 /* WBBluetoothUUID.js in Resources */,
 				60C90B3D2F237F3E006279B2 /* WBBluetoothRemoteGATTService.js in Resources */,
+				60107F9A2F4888B800A15101 /* LofiApps.storyboard in Resources */,
 				60C90B3E2F237F3E006279B2 /* WBBluetoothRemoteGATTCharacteristic.js in Resources */,
 				60C90B412F237F3E006279B2 /* WBBluetoothRemoteGATTServer.js in Resources */,
 				60C90B422F237F3E006279B2 /* stringview.js in Resources */,
@@ -1129,6 +1144,7 @@
 				2F61459022BF761F001C2734 /* MainContainerViewController.swift in Sources */,
 				2F61459722BF761F001C2734 /* Editors.swift in Sources */,
 				2F375ABB237F28BC004ED8D7 /* DefaultProgram.swift in Sources */,
+				60107F912F48830E00A15101 /* LofiAppsViewController.swift in Sources */,
 				60BBDB882B6BA16F003AD3CE /* DiscoveredUSBDevice.swift in Sources */,
 				2F61458222BF761F001C2734 /* Checksum.swift in Sources */,
 				2F61459A22BF761F001C2734 /* HexParser.swift in Sources */,
@@ -1332,6 +1348,14 @@
 				60676F4E2C41328D00014388 /* de */,
 			);
 			name = ProjectAndSensors.storyboard;
+			sourceTree = "<group>";
+		};
+		60107F992F4888B800A15101 /* LofiApps.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				60107F962F4888B800A15101 /* HomeScreen.storyboard */,
+			);
+			name = LofiApps.storyboard;
 			sourceTree = "<group>";
 		};
 		609F74C82BC587A600FE35E2 /* CalliopeBlocks.storyboard */ = {
