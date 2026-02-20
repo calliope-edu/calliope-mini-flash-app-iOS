@@ -4,8 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -13,75 +11,14 @@
         <scene sceneID="bhu-hj-7In">
             <objects>
                 <viewController title="Lofi Apps" id="9eT-f2-X1q" customClass="LofiAppsViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="JaZ-Ul-ygF" userLabel="LofiAppCollectionView">
+                    <containerView key="view" opaque="NO" contentMode="scaleToFill" id="Gfx-RA-uXg">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="uDh-OJ-Cw2">
-                            <size key="itemSize" width="290" height="260"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LofiAppCell" id="cOV-Tj-Y9k" userLabel="LofiAppCell" customClass="LofiAppsCollectionViewCell" customModule="Calliope_App">
-                                <rect key="frame" x="0.0" y="0.0" width="290" height="260"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                    <rect key="frame" x="0.0" y="0.0" width="290" height="260"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x3G-cY-faL">
-                                            <rect key="frame" x="0.0" y="0.0" width="290" height="193.5"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" secondItem="x3G-cY-faL" secondAttribute="height" multiplier="3:2" priority="998" id="RBf-Qt-E6c"/>
-                                            </constraints>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="There is veeery long text which could end up in two lines" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="FLq-gV-ulY">
-                                            <rect key="frame" x="16" y="198.5" width="258" height="53.5"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
-                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p62-Bc-913">
-                                            <rect key="frame" x="16" y="193.5" width="258" height="2"/>
-                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="2" id="SLy-7m-Mnh"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                </view>
-                                <color key="backgroundColor" name="calliope-lightgray"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="x3G-cY-faL" secondAttribute="trailing" priority="999" constant="8" id="1T0-J6-p41"/>
-                                    <constraint firstItem="p62-Bc-913" firstAttribute="leading" secondItem="cOV-Tj-Y9k" secondAttribute="leading" constant="16" id="DHf-hM-rmk"/>
-                                    <constraint firstAttribute="bottom" secondItem="FLq-gV-ulY" secondAttribute="bottom" priority="999" constant="8" id="Jo1-d9-hFY"/>
-                                    <constraint firstItem="x3G-cY-faL" firstAttribute="leading" secondItem="cOV-Tj-Y9k" secondAttribute="leading" id="Kt9-cF-A9a"/>
-                                    <constraint firstItem="x3G-cY-faL" firstAttribute="width" secondItem="cOV-Tj-Y9k" secondAttribute="width" id="OOh-jV-SkY"/>
-                                    <constraint firstItem="p62-Bc-913" firstAttribute="top" secondItem="x3G-cY-faL" secondAttribute="bottom" id="Vnn-nY-Zdf"/>
-                                    <constraint firstItem="FLq-gV-ulY" firstAttribute="top" secondItem="x3G-cY-faL" secondAttribute="bottom" constant="5" id="XLK-AW-vGD"/>
-                                    <constraint firstAttribute="trailing" secondItem="FLq-gV-ulY" secondAttribute="trailing" priority="999" constant="16" id="bVK-tU-fsL"/>
-                                    <constraint firstItem="FLq-gV-ulY" firstAttribute="leading" secondItem="cOV-Tj-Y9k" secondAttribute="leading" constant="16" id="dCO-3L-7cA"/>
-                                    <constraint firstItem="x3G-cY-faL" firstAttribute="top" secondItem="cOV-Tj-Y9k" secondAttribute="top" id="rB1-OF-FMX"/>
-                                    <constraint firstAttribute="trailing" secondItem="p62-Bc-913" secondAttribute="trailing" constant="16" id="ssG-hP-SxF"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="7"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <outlet property="imageView" destination="x3G-cY-faL" id="Xnt-w2-hIb"/>
-                                    <outlet property="titleLabel" destination="FLq-gV-ulY" id="kPC-j6-bFl"/>
-                                </connections>
-                            </collectionViewCell>
-                        </cells>
-                    </collectionView>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <connections>
+                            <segue destination="0Rh-9C-Uu9" kind="embed" destinationCreationSelector="addSwiftUIView:" id="CYb-7B-uMT"/>
+                        </connections>
+                    </containerView>
                     <navigationItem key="navigationItem" title="Lofi Apps" id="w16-hI-VJ6"/>
-                    <connections>
-                        <outlet property="collectionView" destination="JaZ-Ul-ygF" id="kKJ-bf-fag"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xQY-Z1-230" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -106,18 +43,20 @@
             </objects>
             <point key="canvasLocation" x="1214.0625" y="-251.95312499999997"/>
         </scene>
+        <!--Hosting Controller-->
+        <scene sceneID="EW4-n1-PNG">
+            <objects>
+                <hostingController id="0Rh-9C-Uu9" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XbG-hI-LZc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2759" y="-252"/>
+        </scene>
     </scenes>
     <color key="tintColor" name="calliope-lilablau"/>
     <resources>
         <image name="rectangle.grid.3x3" catalog="system" width="128" height="92"/>
-        <namedColor name="calliope-lightgray">
-            <color red="0.92900002002716064" green="0.93300002813339233" blue="0.93699997663497925" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="calliope-lilablau">
             <color red="0.3919999897480011" green="0.46200001239776611" blue="0.99199998378753662" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

@@ -111,7 +111,7 @@
 		601040AC2B592B7300526735 /* HexFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601040AB2B592B7300526735 /* HexFileManager.swift */; };
 		60107F912F48830E00A15101 /* LofiAppsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60107F902F48830E00A15101 /* LofiAppsViewController.swift */; };
 		60107F9A2F4888B800A15101 /* LofiApps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60107F992F4888B800A15101 /* LofiApps.storyboard */; };
-		60107F9C2F48941000A15101 /* LofiAppsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60107F9B2F48941000A15101 /* LofiAppsCollectionViewCell.swift */; };
+		60107FB02F48A3D800A15101 /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60107FAF2F48A3D800A15101 /* SwiftUIView.swift */; };
 		60316BF82B01FEC300130C0D /* BLECalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60316BF72B01FEC300130C0D /* BLECalliope.swift */; };
 		60316BFA2B0210CC00130C0D /* CalliopeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60316BF92B0210CC00130C0D /* CalliopeFactory.swift */; };
 		604841D52B1F328A0037A825 /* OnboardingOfflineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604841D42B1F328A0037A825 /* OnboardingOfflineViewController.swift */; };
@@ -287,7 +287,7 @@
 		601040AB2B592B7300526735 /* HexFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexFileManager.swift; sourceTree = "<group>"; };
 		60107F902F48830E00A15101 /* LofiAppsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LofiAppsViewController.swift; sourceTree = "<group>"; };
 		60107F962F4888B800A15101 /* HomeScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = HomeScreen.storyboard; path = Base.lproj/LofiApps.storyboard; sourceTree = "<group>"; };
-		60107F9B2F48941000A15101 /* LofiAppsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LofiAppsCollectionViewCell.swift; sourceTree = "<group>"; };
+		60107FAF2F48A3D800A15101 /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
 		601A19142B30658200E98E69 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
 		60316BF72B01FEC300130C0D /* BLECalliope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLECalliope.swift; sourceTree = "<group>"; };
 		60316BF92B0210CC00130C0D /* CalliopeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeFactory.swift; sourceTree = "<group>"; };
@@ -715,7 +715,7 @@
 				60107F992F4888B800A15101 /* LofiApps.storyboard */,
 				60F6C3E42F2D243500A6C193 /* LofiAppWebView */,
 				60C90AFD2F1A75DD006279B2 /* LofiAppViewController.swift */,
-				60107F9B2F48941000A15101 /* LofiAppsCollectionViewCell.swift */,
+				60107FAF2F48A3D800A15101 /* SwiftUIView.swift */,
 			);
 			path = LofiApps;
 			sourceTree = "<group>";
@@ -1173,7 +1173,6 @@
 				6094AC582E20F2410066D07A /* WebLogHandler.swift in Sources */,
 				2F61457022BF761F001C2734 /* Extension_CBUUID.swift in Sources */,
 				6094C3962C047549006F4CB4 /* ChartViewCell.swift in Sources */,
-				60107F9C2F48941000A15101 /* LofiAppsCollectionViewCell.swift in Sources */,
 				2F61457122BF761F001C2734 /* FlashableBLECalliope.swift in Sources */,
 				2F61451022BF75DE001C2734 /* AppDelegate.swift in Sources */,
 				2F61457F22BF761F001C2734 /* Async.swift in Sources */,
@@ -1196,6 +1195,7 @@
 				60CF0EA92BFCBE1E00CB2A38 /* ProjectViewController.swift in Sources */,
 				2F61458A22BF761F001C2734 /* CollapseButtonProtocol.swift in Sources */,
 				609D9BD42B67A15500F2ECAE /* USBCalliope.swift in Sources */,
+				60107FB02F48A3D800A15101 /* SwiftUIView.swift in Sources */,
 				2F5E8F0426C9787400CE03CB /* PlaygroundStartViewController.swift in Sources */,
 				60030B9C2DC8B2E200397E69 /* Date.swift in Sources */,
 				60CF0EB02BFCD59D00CB2A38 /* DataController.swift in Sources */,
