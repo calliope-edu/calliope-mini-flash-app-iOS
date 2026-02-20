@@ -9,24 +9,48 @@ import UIKit
 
 /// A blank view controller displayed under the new "LofiApps" tab.
 final class LofiAppsViewController: UIViewController {
-    // MARK: - Lifecycle
+    @IBOutlet private weak var collectionView: UICollectionView!
+    private var apps: [String] = ["Test 1", "Test 2", "Test 3", "Test 1", "Test 2", "Test 3"]
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        setupLabel()
+        configureCollectionView()
+        collectionView.reloadData()
     }
-    
-    // MARK: - Private UI
-    private func setupLabel() {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Lofi Apps"
-        label.textColor = .label
-        label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-        view.addSubview(label)
-        NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
+
+    private func configureCollectionView() {
+        // Register the nib if you used a separate xib for the cell
+        // collectionView.register(UINib(nibName: "PhotoCell", bundle: nil),
+        //                         forCellWithReuseIdentifier: PhotoCell.reuseIdentifier)
+
+        // Set datasource & delegate (if you use the classic API)
+        collectionView.dataSource = self
+        // collectionView.delegate   = self
+    }
+}
+
+extension LofiAppsViewController: UICollectionViewDataSource {
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1               // you can have more than one section
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
+        return apps.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        // Dequeue the custom cell
+        guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: LofiAppsCollectionViewCell.reuseIdentifier,
+                for: indexPath) as? LofiAppsCollectionViewCell else {
+            fatalError("Unable to dequeue PhotoCell")
+        }
+
+        let app = apps[indexPath.item]
+        cell.configure(app)
+        return cell
     }
 }
