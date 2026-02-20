@@ -29,7 +29,7 @@ struct AdaptiveStack<Content: View>: View {
 struct LofiAppsPage : View {
     var body: some View {
         AdaptiveStack {
-            AppCell(app: AppItem(title: "Maps", imageName: "calliope_datalogger_extension", color: Color("calliope-pink")))
+            AppCell(app: AppItem(title: "INFO", imageName: "info", color: Color("calliope-pink")))
             ContentView()
        }
         .padding()
@@ -58,15 +58,34 @@ struct AppsGridView: View {
         GridItem(.flexible(), spacing: 0),
     ]
 
+    private let widthRatio: CGFloat = 1.2
+
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: columns, spacing: 16) {
-                ForEach(apps) { app in
-                    AppCell(app: app)
-                        .onTapGesture { onSelect(app) }
+        GeometryReader { geo in
+            let scrollDir: Axis.Set =
+                geo.size.width > geo.size.height * widthRatio
+                ? .horizontal
+                : .vertical
+
+            ScrollView(scrollDir) {
+                if scrollDir == .horizontal {
+                    LazyHGrid(rows: columns, spacing: 16) {
+                        ForEach(apps) { app in
+                            AppCell(app: app)
+                                .onTapGesture { onSelect(app) }
+                        }
+                    }
+                    .padding(.vertical, 8)
+                } else {
+                    LazyVGrid(columns: columns, spacing: 16) {
+                        ForEach(apps) { app in
+                            AppCell(app: app)
+                                .onTapGesture { onSelect(app) }
+                        }
+                    }
+                    .padding(.vertical, 8)
                 }
             }
-            .padding(.vertical, 8)
         }
     }
 }
@@ -94,7 +113,6 @@ struct AppCell: View {
             Text(app.title)
                 .font(.system(size: 30, weight: .bold))
                 .foregroundColor(.white)
-                .lineLimit(1)
                 .padding(.vertical, 8)       // space below the text
         }
         .frame(maxWidth: .infinity)         // fill the column width
@@ -108,10 +126,10 @@ struct AppCell: View {
 struct ContentView: View {
     // sample data
     let sampleApps = [
-        AppItem(title: "ROBOTER MIT GESICHTSERKENNUNG STEUERN",    imageName: "calliope_datalogger_extension", color: Color("calliope-lilablau")),
-        AppItem(title: "SPRACHROBOTER",  imageName: "calliope_datalogger_extension", color: Color("calliope-orange")),
-        AppItem(title: "STEUERUNG PER COMPUTER",    imageName: "calliope_datalogger_extension", color: Color("calliope-turqoise")),
-        AppItem(title: "OBJEKTERKENNUNG MIT KÜNSTLICHER INTELLIGENZ",   imageName: "calliope_datalogger_extension", color: Color("calliope-darkgreen")),
+        AppItem(title: "ROBOTER MIT GESICHTSERKENNUNG STEUERN",    imageName: "facerobot", color: Color("calliope-lilablau")),
+        AppItem(title: "SPRACHROBOTER",  imageName: "speak", color: Color("calliope-orange")),
+        AppItem(title: "STEUERUNG PER COMPUTER",    imageName: "control", color: Color("calliope-turqoise")),
+        AppItem(title: "OBJEKTERKENNUNG MIT KÜNSTLICHER INTELLIGENZ",   imageName: "teachablemachine", color: Color("calliope-darkgreen")),
     ]
 
     var body: some View {
