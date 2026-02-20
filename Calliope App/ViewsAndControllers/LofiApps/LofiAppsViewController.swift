@@ -12,7 +12,7 @@ import SwiftUI
 final class LofiAppsViewController: UIViewController {
 
     @IBSegueAction func addSwiftUIView(_ coder: NSCoder) -> UIViewController? {
-        return UIHostingController(coder: coder, rootView: SwiftUIView())
+        return UIHostingController(coder: coder, rootView: LofiAppsPage())
     }
     
     override func viewDidLoad() {
