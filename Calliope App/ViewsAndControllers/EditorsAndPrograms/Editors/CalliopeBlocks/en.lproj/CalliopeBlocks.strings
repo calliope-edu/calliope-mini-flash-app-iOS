@@ -9,7 +9,7 @@
 "jLK-BP-fl1.text" = "An introduction to Scratch programming with the Calliope mini Blocks app, instructions and project ideas can be found on the website.";
 
 /* Class = "UILabel"; text = "Lade die Calliope mini Blocks App aus dem App Store und lege direkt los!"; ObjectID = "arp-ou-dSV"; */
-"arp-ou-dSV.text" = "Load the Calliope mini blocks app from the app store and get started!";
+"arp-ou-dSV.text" = "Load the Calliope mini Blocks app from the app store and get started!";
 
 /* Class = "UIButton"; configuration.title = "Los geht's!"; ObjectID = "pHa-mM-14B"; */
 "pHa-mM-14B.normalTitle" = "Let's get started!";

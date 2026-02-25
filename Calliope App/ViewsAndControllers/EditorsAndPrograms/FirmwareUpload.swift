@@ -352,6 +352,15 @@ class FirmwareUpload {
 
         do {
             MatrixConnectionViewController.instance.enableDfuMode(mode: true)
+            
+            // Set up disconnect callback for partial flashing optimization
+            if let flashableCalliope = calliope as? FlashableBLECalliope {
+                flashableCalliope.requestDisconnectCallback = { [weak self] in
+                    LogNotify.log("[PartialFlash] Disconnect requested - triggering immediate disconnect")
+                    MatrixConnectionViewController.instance.connector.disconnectForReboot()
+                }
+            }
+            
             try calliope.upload(file: file, progressReceiver: self, statusDelegate: self, logReceiver: self)
         } catch {
             DispatchQueue.main.async { [weak self] in
@@ -362,8 +371,14 @@ class FirmwareUpload {
 
     func showUploadError(_ error: Error) {
         alertView.title = NSLocalizedString("Upload failed!", comment: "")
-        alertView.message = "\(error.localizedDescription)"
-        progressRing.outerRingColor = #colorLiteral(red: 0.99, green: 0.29, blue: 0.15, alpha: 1)
+        // Don't set alertView.message to prevent overlap with progress ring
+        // Instead show error in logTextView
+        logTextView.text = error.localizedDescription
+        // Don't change ring color to red - keep original color
+        
+        // Re-enable cancel button so user can dismiss the alert
+        cancelUploadAction.isEnabled = true
+        
         failed()
     }
     func startUSBTimer() {
@@ -409,6 +424,7 @@ class FirmwareUpload {
         usbTimer = nil
         usbStartTime = nil
     }
+    
     deinit {
         // stopUSBTimer() // Timer deaktiviert
         NSLog("FirmwareUpload deinited")

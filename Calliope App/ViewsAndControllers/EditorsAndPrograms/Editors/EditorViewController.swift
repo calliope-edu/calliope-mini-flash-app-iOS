@@ -68,13 +68,16 @@ final class EditorViewController: UIViewController {
         // This helps with selecting items in MakeCode project lists
         webview.scrollView.delaysContentTouches = false
         webview.scrollView.canCancelContentTouches = true
+        webview.scrollView.contentInsetAdjustmentBehavior = .never
 
         self.view.insertSubview(webview, at: 0)
-        let bounds: UILayoutGuide = self.view.safeAreaLayoutGuide
-        webview.topAnchor.constraint(equalTo: bounds.topAnchor).isActive = true
-        webview.bottomAnchor.constraint(equalTo: bounds.bottomAnchor).isActive = true
-        webview.leftAnchor.constraint(equalTo: bounds.leftAnchor).isActive = true
-        webview.rightAnchor.constraint(equalTo: bounds.rightAnchor).isActive = true
+        let safeArea: UILayoutGuide = self.view.safeAreaLayoutGuide
+        NSLayoutConstraint.activate([
+            webview.topAnchor.constraint(equalTo: safeArea.topAnchor),
+            webview.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            webview.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            webview.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+        ])
 
         scratchLink.setup(webView: self.webview)
         scratchLink.delegate = self
