@@ -483,7 +483,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
             // Das passiert nach Verwendung einer anderen App (z.B. Blocks mit UART)
             alertController = UIAlertController(
                 title: NSLocalizedString("Bluetooth-Verbindung zurücksetzen", comment: "Reset Bluetooth connection"),
-                message: NSLocalizedString("Der Calliope mini wurde zuvor mit Blocks verbunden. Um ihn wieder hier zu verbinden:\n\n1. Gehe zu Einstellungen → Bluetooth\n2. Tippe auf das (i) neben dem Calliope mini\n3. Wähle \"Dieses Gerät ignorieren\"\n4. Kehre zur Calliope mini App zurück und verbinde erneut", comment: "Instructions to reset Bluetooth pairing"),
+                message: NSLocalizedString("Der Calliope mini wurde schon einmal gekoppelt. Diese Informationen müssen erneut angelegt werden:\n\n1. Gehe zu Einstellungen → Bluetooth\n2. Tippe auf das (i) neben dem Calliope mini\n3. Wähle \"Dieses Gerät ignorieren\"\n4. Kehre zur Calliope mini App zurück und verbinde erneut", comment: "Instructions to reset Bluetooth pairing"),
                 preferredStyle: .alert
             )
 
