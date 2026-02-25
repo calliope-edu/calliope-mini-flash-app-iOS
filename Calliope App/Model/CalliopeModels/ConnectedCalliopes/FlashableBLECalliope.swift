@@ -512,16 +512,8 @@ class FlashableBLECalliope: CalliopeAPI {
         
         LogNotify.log("[PartialFlash] Address validation passed")
         
-        // Check if device hash is all zeros (might have non-MakeCode firmware)
-        let deviceHashIsZero = currentProgramHash.allSatisfy { $0 == 0 }
-        
-        if deviceHashIsZero {
-            LogNotify.log("[PartialFlash] Device reports zero program hash - likely non-MakeCode firmware, falling back to full flash")
-            fallbackToFullFlash()
-            return
-        }
-        
         // Always proceed with partial flash (even if hashes match)
+        // Note: Android never checks the program region hash value — if DAL hash and addresses match, flash.
         LogNotify.log("[PartialFlash] Starting partial flash - \(partialFlashData.lineCount) lines to flash")
         updateCallback("Partial flashing starts sending new program to Calliope mini")
         startPackageNumber = 0

@@ -61,14 +61,20 @@ struct PartialFlashManager {
             return nil
         }
         LogNotify.log("[PartialFlash] ✓ Partial flashing enabled in settings")
-        // Step 1: Extract hashes from original hex
-        guard let (fileHash, programHash) = extractHashes(from: url) else {
-            LogNotify.log("[PartialFlash] ❌ No magic marker or hashes found - not a MakeCode file, falling back to full DFU")
-            return nil
+
+        // Step 1: Try MakeCode path (magic marker + inline hashes)
+        if let (fileHash, programHash) = extractHashes(from: url) {
+            LogNotify.log("[PartialFlash] ✓ MakeCode hashes extracted - fileHash: \(fileHash.hexEncodedString()), programHash: \(programHash.hexEncodedString())")
+            return retrieveMakeCodePartialFlashingInfo(from: url, fileHash: fileHash, programHash: programHash)
         }
-        LogNotify.log("[PartialFlash] ✓ Hashes extracted - fileHash: \(fileHash.hexEncodedString()), programHash: \(programHash.hexEncodedString())")
-        
-        // Step 2: Get or create filtered hex for data transmission (for speed)
+
+        // Step 2: Try MicroPython path (region table with CRC32 hash)
+        LogNotify.log("[PartialFlash] No MakeCode magic found, checking for MicroPython...")
+        return retrieveMicroPythonPartialFlashingInfo(from: url)
+    }
+
+    private static func retrieveMakeCodePartialFlashingInfo(from url: URL, fileHash: Data, programHash: Data) -> (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? {
+        // Get or create filtered hex for data transmission (for speed)
         let filteredURL: URL
         if let cached = getCachedFilteredURL(for: url) {
             LogNotify.log("[PartialFlash] ✓ Using cached filtered hex")
@@ -82,23 +88,21 @@ struct PartialFlashManager {
             LogNotify.log("[PartialFlash] ⚠️ Filtering failed, using original hex")
             filteredURL = url
         }
-        
-        // Step 3: Create PartialFlashData from filtered hex (fallback to original if needed)
+
+        // Create PartialFlashData from filtered hex (fallback to original if needed)
         guard let partialData = createPartialFlashData(from: filteredURL) ?? createPartialFlashData(from: url) else {
             LogNotify.log("[PartialFlash] ❌ Failed to create PartialFlashData - falling back to full DFU")
             return nil
         }
-        
-        LogNotify.log("[PartialFlash] ✓ PartialFlashData created successfully with \(partialData.lineCount) lines")
-        
-        // If too many packets, fall back to full DFU
+
+        LogNotify.log("[PartialFlash] ✓ MakeCode PartialFlashData created with \(partialData.lineCount) lines")
         // V3 has ~443 packets, V1/V2 has ~1348 packets - both are worthwhile vs full DFU
         if partialData.lineCount > 2000 {
             LogNotify.log("[PartialFlash] ❌ Too many packets (\(partialData.lineCount) > 2000) - falling back to full DFU")
             return nil
         }
-        
-        LogNotify.log("[PartialFlash] ✅ Partial flashing approved - returning data for transmission")
+
+        LogNotify.log("[PartialFlash] ✅ MakeCode partial flashing approved")
         return (fileHash, programHash, partialData)
     }
     
@@ -252,6 +256,265 @@ struct PartialFlashManager {
         
         return (magicLine, currentSegmentAddress, codeStartAddress)
     }
+
+    // MARK: - MicroPython Support
+
+    private struct MicroPythonInfo {
+        let dalHash: Data
+        let codeStart: UInt32
+        let codeLength: UInt32
+    }
+
+    /// Retrieve partial flashing info for a MicroPython hex file.
+    private static func retrieveMicroPythonPartialFlashingInfo(from url: URL) -> (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? {
+        guard let info = extractMicroPythonInfo(from: url) else {
+            LogNotify.log("[PartialFlash] ❌ Not a MicroPython hex file")
+            return nil
+        }
+
+        LogNotify.log("[PartialFlash] ✓ MicroPython detected - dalHash: \(info.dalHash.hexEncodedString()), codeStart: 0x\(String(info.codeStart, radix: 16)), length: \(info.codeLength)")
+
+        guard let partialData = createMicroPythonPartialFlashData(from: url, startAddress: info.codeStart, codeLength: info.codeLength) else {
+            LogNotify.log("[PartialFlash] ❌ Failed to create MicroPython PartialFlashData")
+            return nil
+        }
+
+        if partialData.lineCount > 2000 {
+            LogNotify.log("[PartialFlash] ❌ Too many MicroPython packets (\(partialData.lineCount) > 2000) - falling back to full DFU")
+            return nil
+        }
+
+        LogNotify.log("[PartialFlash] ✅ MicroPython partial flashing approved (\(partialData.lineCount) lines)")
+        // programHash is not used for MicroPython (device program hash will be zero — expected)
+        return (info.dalHash, info.dalHash, partialData)
+    }
+
+    /// Parse the MicroPython region table from a hex file.
+    /// Builds a flat byte map for random-access reads (needed for region table + hash pointer).
+    /// Returns DAL hash, filesystem code start address, and length — or nil if not MicroPython.
+    private static func extractMicroPythonInfo(from url: URL) -> MicroPythonInfo? {
+        guard let reader = StreamReader(path: url.path) else { return nil }
+        defer { reader.close() }
+
+        var dataMap: [UInt32: UInt8] = [:]
+        var currentSegment: UInt32 = 0
+        var headerAbsAddress: UInt32? = nil
+
+        while let line = reader.nextLine() {
+            guard let recType = PartialFlashHexReader.type(of: line) else { continue }
+
+            if recType == 4,
+               let len = PartialFlashHexReader.length(of: line), len == 2,
+               let segData = PartialFlashHexReader.data(of: line, len) {
+                currentSegment = (UInt32(segData[0]) << 24) | (UInt32(segData[1]) << 16)
+                continue
+            }
+
+            // type 0 = data, type 0x0D = micro:bit universal hex Block Start (also contains raw data)
+            if (recType == 0 || recType == 0x0D),
+               let len = PartialFlashHexReader.length(of: line),
+               let addr = PartialFlashHexReader.address(of: line),
+               let recData = PartialFlashHexReader.data(of: line, len) {
+                let absAddr = currentSegment | UInt32(addr)
+                for (i, byte) in recData.enumerated() {
+                    dataMap[absAddr + UInt32(i)] = byte
+                }
+                // Detect the MicroPython header (both magic bytes in the same record)
+                if headerAbsAddress == nil && PartialFlashHexReader.isMicroPythonStart(line) {
+                    let dataStr = line[9..<(9 + len * 2)]
+                    if let magicRange = dataStr.range(of: PartialFlashHexReader.MICROPYTHON_MAGIC1) {
+                        let charOffset = dataStr.distance(from: dataStr.startIndex, to: magicRange.lowerBound)
+                        headerAbsAddress = absAddr + UInt32(charOffset / 2)
+                    }
+                }
+            }
+        }
+
+        guard let hdrAddr = headerAbsAddress else {
+            LogNotify.log("[PartialFlash] extractMicroPythonInfo: No MicroPython header found")
+            return nil
+        }
+
+        // Byte-level helpers — all region fields are little-endian
+        func byte(_ a: UInt32) -> UInt8  { dataMap[a] ?? 0xFF }
+        func le16(_ a: UInt32) -> UInt16 { UInt16(byte(a)) | (UInt16(byte(a + 1)) << 8) }
+        func le32(_ a: UInt32) -> UInt32 { UInt32(le16(a)) | (UInt32(le16(a + 2)) << 16) }
+
+        // 16-byte header layout at hdrAddr:
+        //   bytes  0-3:  magic1 FE307F59
+        //   bytes  4-5:  version (LE u16, must be 1)
+        //   bytes  6-7:  table_len (LE u16) = num_reg × 16
+        //   bytes  8-9:  num_reg (LE u16)
+        //   bytes 10-11: pageLog2 (LE u16)  12 = 4 KB pages for Calliope V3
+        //   bytes 12-15: magic2 9DD7B1C1
+        let version   = le16(hdrAddr + 4)
+        let tableLen  = le16(hdrAddr + 6)
+        let numReg    = le16(hdrAddr + 8)
+        let pageLog2  = le16(hdrAddr + 10)
+
+        guard version == 1 else {
+            LogNotify.log("[PartialFlash] MicroPython: invalid version \(version)")
+            return nil
+        }
+        guard tableLen == numReg * 16 else {
+            LogNotify.log("[PartialFlash] MicroPython: table_len \(tableLen) != numReg \(numReg) × 16")
+            return nil
+        }
+
+        let pageSize    = UInt32(1) << pageLog2
+        let regionsBase = hdrAddr - UInt32(tableLen)
+        LogNotify.log("[PartialFlash] MicroPython header @ 0x\(String(hdrAddr, radix: 16)): version=\(version), numReg=\(numReg), pageSize=0x\(String(pageSize, radix: 16))")
+
+        // 16-byte region entry layout at regAddr:
+        //   byte   0:    regionID   (1=softdevice, 2=micropython_app, 3=filesystem)
+        //   byte   1:    hashType   (0=none, 1=verbatim 8 bytes, 2=CRC32 of string at ptr)
+        //   bytes  2-3:  startPage  (LE u16)
+        //   bytes  4-7:  length     (LE u32) — meaningful for filesystem region
+        //   bytes  8-11: hashPtr    (LE u32) — pointer to null-terminated string (hashType=2)
+        //   bytes  8-15: hashData   (8 bytes) — verbatim hash (hashType=1)
+        var dalHash: Data? = nil
+        var codeStart: UInt32? = nil
+        var codeLength: UInt32? = nil
+
+        for i in 0..<Int(numReg) {
+            let regAddr   = regionsBase + UInt32(i * 16)
+            let regionID  = byte(regAddr + 0)
+            let hashType  = byte(regAddr + 1)
+            let startPage = le16(regAddr + 2)
+            let length    = le32(regAddr + 4)
+            let hashPtr   = le32(regAddr + 8)
+            let hashData  = Data((0..<8).map { byte(regAddr + 8 + $0) })
+
+            LogNotify.log("[PartialFlash] Region \(i): id=\(regionID) hashType=\(hashType) startPage=\(startPage) length=\(length)")
+
+            switch regionID {
+            case 2: // micropython_app — provides the DAL hash compared against device
+                switch hashType {
+                case 0:
+                    LogNotify.log("[PartialFlash] MicroPython app region has no hash (type=0)")
+                    dalHash = Data(repeating: 0, count: 8)
+                case 1:
+                    dalHash = hashData
+                    LogNotify.log("[PartialFlash] MicroPython DAL hash (verbatim): \(hashData.hexEncodedString())")
+                case 2:
+                    if let hash = computeCRC32Hash(fromAddress: hashPtr, dataMap: dataMap) {
+                        dalHash = hash
+                        LogNotify.log("[PartialFlash] MicroPython DAL hash (CRC32): \(hash.hexEncodedString())")
+                    } else {
+                        LogNotify.log("[PartialFlash] MicroPython: failed to compute CRC32 hash")
+                        return nil
+                    }
+                default:
+                    LogNotify.log("[PartialFlash] MicroPython: unknown hash type \(hashType) for app region")
+                    return nil
+                }
+            case 3: // filesystem — the region to actually transmit via partial flash
+                let start = UInt32(startPage) * pageSize
+                codeStart  = start
+                codeLength = length
+                LogNotify.log("[PartialFlash] Filesystem region: start=0x\(String(start, radix: 16)) length=\(length)")
+            default:
+                break
+            }
+        }
+
+        guard let hash = dalHash, let start = codeStart, let len = codeLength, len > 0 else {
+            LogNotify.log("[PartialFlash] MicroPython: missing DAL hash or filesystem region")
+            return nil
+        }
+
+        return MicroPythonInfo(dalHash: hash, codeStart: start, codeLength: len)
+    }
+
+    /// Compute CRC32 of a null-terminated ASCII string at the given address in the data map.
+    /// Returns the value as an 8-byte little-endian Data, matching Android's ByteBuffer.LITTLE_ENDIAN putLong.
+    private static func computeCRC32Hash(fromAddress address: UInt32, dataMap: [UInt32: UInt8]) -> Data? {
+        var bytes: [UInt8] = []
+        for i in 0..<100 {
+            guard let b = dataMap[address + UInt32(i)] else { break }
+            if b == 0 { break }
+            bytes.append(b)
+        }
+        guard !bytes.isEmpty else { return nil }
+        let versionString = String(bytes: bytes, encoding: .utf8) ?? "<non-utf8>"
+        let crc = CRC32.checksum(bytes: bytes)
+        LogNotify.log("[PartialFlash] CRC32 input: \"\(versionString)\" -> CRC32=0x\(String(format: "%08X", crc))")
+        // Store as LE uint64 (upper 32 bits zero), matching Android's putLong of a 32-bit CRC
+        var value = UInt64(crc)
+        return Data(bytes: &value, count: 8)
+    }
+
+    /// Create a PartialFlashData iterator covering the MicroPython filesystem region.
+    /// Performs two passes: one to count non-0xFF lines, one to position the reader.
+    private static func createMicroPythonPartialFlashData(from url: URL, startAddress: UInt32, codeLength: UInt32) -> PartialFlashData? {
+        let endAddress = startAddress + codeLength
+
+        // --- Count pass: tally non-0xFF data records in [startAddress, endAddress) ---
+        guard let countReader = StreamReader(path: url.path) else { return nil }
+        var countSegment: UInt32 = 0
+        var numLinesToFlash = 0
+        while let line = countReader.nextLine() {
+            guard let recType = PartialFlashHexReader.type(of: line) else { continue }
+            if recType == 4,
+               let len = PartialFlashHexReader.length(of: line), len == 2,
+               let data = PartialFlashHexReader.data(of: line, len) {
+                countSegment = (UInt32(data[0]) << 24) | (UInt32(data[1]) << 16)
+                continue
+            }
+            if (recType == 0 || recType == 0x0D), let addr = PartialFlashHexReader.address(of: line) {
+                let absAddr = countSegment | UInt32(addr)
+                if absAddr >= endAddress { continue } // skip out-of-range (e.g. V1 universal hex block at 0x10000000+)
+                if absAddr >= startAddress,
+                   let dataRec = PartialFlashHexReader.readData(line),
+                   !dataRec.data.allSatisfy({ $0 == 0xFF }) {
+                    numLinesToFlash += 1
+                }
+            }
+        }
+        countReader.close()
+        LogNotify.log("[PartialFlash] MicroPython filesystem: \(numLinesToFlash) non-empty lines to flash")
+
+        // --- Data pass: position a fresh reader at the first record at/after startAddress ---
+        guard let dataReader = StreamReader(path: url.path) else { return nil }
+        var dataSegment: UInt32 = 0
+        var firstLine: String? = nil
+        var segmentAtFirst: UInt16 = 0
+        while let line = dataReader.nextLine() {
+            guard let recType = PartialFlashHexReader.type(of: line) else { continue }
+            if recType == 4,
+               let len = PartialFlashHexReader.length(of: line), len == 2,
+               let data = PartialFlashHexReader.data(of: line, len) {
+                dataSegment = (UInt32(data[0]) << 24) | (UInt32(data[1]) << 16)
+                continue
+            }
+            if (recType == 0 || recType == 0x0D), let addr = PartialFlashHexReader.address(of: line) {
+                let absAddr = dataSegment | UInt32(addr)
+                if absAddr >= startAddress && absAddr < endAddress {
+                    firstLine = line
+                    segmentAtFirst = UInt16((dataSegment >> 16) & 0xFFFF)
+                    break
+                }
+            }
+        }
+
+        guard let first = firstLine else {
+            LogNotify.log("[PartialFlash] MicroPython: could not locate start address 0x\(String(startAddress, radix: 16))")
+            dataReader.close()
+            return nil
+        }
+
+        LogNotify.log("[PartialFlash] MicroPython reader positioned at 0x\(String(format: "%X", UInt32(segmentAtFirst) << 16)), endAddress=0x\(String(endAddress, radix: 16))")
+
+        return PartialFlashData(
+            nextLines: [first],
+            currentSegmentAddress: segmentAtFirst,
+            codeStartAddress: startAddress,
+            reader: dataReader,
+            lineCount: numLinesToFlash,
+            isMicroPython: true,
+            endAddress: endAddress
+        )
+    }
 }
 
 // MARK: - Partial Flash Data Iterator
@@ -262,18 +525,24 @@ struct PartialFlashData: Sequence, IteratorProtocol {
     typealias Element = (address: UInt16, data: Data)
 
     public let lineCount: Int
+    /// True when this data belongs to a MicroPython filesystem region (not MakeCode).
+    public let isMicroPython: Bool
     public private(set) var currentSegmentAddress: UInt16
     public let codeStartAddress: UInt32
     private var nextData: [(address: UInt16, data: Data)] = []
     private var reader: StreamReader?
     private var skippedCount: Int = 0
+    /// For MicroPython: stop iteration when absolute address reaches this value.
+    private let endAddress: UInt32?
 
-    init(nextLines: [String], currentSegmentAddress: UInt16, codeStartAddress: UInt32, reader: StreamReader, lineCount: Int) {
+    init(nextLines: [String], currentSegmentAddress: UInt16, codeStartAddress: UInt32, reader: StreamReader, lineCount: Int, isMicroPython: Bool = false, endAddress: UInt32? = nil) {
         self.reader = reader
         self.nextData = []
         self.currentSegmentAddress = currentSegmentAddress
         self.codeStartAddress = codeStartAddress
         self.lineCount = lineCount
+        self.isMicroPython = isMicroPython
+        self.endAddress = endAddress
         // Extract data from initial lines
         nextLines.forEach { read($0) }
     }
@@ -310,10 +579,19 @@ struct PartialFlashData: Sequence, IteratorProtocol {
             return
         }
         switch PartialFlashHexReader.type(of: record) {
-        case 0: // Data record
+        case 0, 0x0D: // Data record (0x0D = micro:bit universal hex Block Start, also raw flash data)
             if record.contains("00000001FF") {
                 break
             } else if let data = PartialFlashHexReader.readData(record) {
+                // For MicroPython: stop when we reach the end of the filesystem region
+                if let end = endAddress {
+                    let absAddr = (UInt32(currentSegmentAddress) << 16) | UInt32(data.address)
+                    if absAddr >= end {
+                        reader?.close()
+                        reader = nil
+                        return
+                    }
+                }
                 nextData.append(data)
             }
         case 2: // Extended segment address
@@ -337,6 +615,14 @@ struct PartialFlashHexReader {
 
     static let MAGIC_START_NUMBER = "708E3B92C615A841C49866C975EE5197"
     static let MAGIC_END_NUMBER = "41140E2FB82FA2B"
+    static let MICROPYTHON_MAGIC1 = "FE307F59"
+    static let MICROPYTHON_MAGIC2 = "9DD7B1C1"
+
+    /// Returns true if the record's data payload contains the MicroPython region table header:
+    /// FE307F59 + 16 hex chars (version/table_len/num_reg/pageLog2) + 9DD7B1C1
+    static func isMicroPythonStart(_ record: String) -> Bool {
+        return !record.matches(regex: ".*FE307F59[0-9A-Fa-f]{16}9DD7B1C1.*").isEmpty
+    }
 
     static func readSegmentAddress(_ record: String) -> UInt16? {
         if let length = length(of: record), length == 2,
@@ -538,6 +824,25 @@ struct UniversalHexFilter {
         
         return String(format: ":%02X%04X%02X%02X%02X%02X", 
                      byteCount, address, recordType, dataHigh, dataLow, checksum)
+    }
+}
+
+// MARK: - CRC32
+
+/// Standard CRC32 implementation (polynomial 0xEDB88320), matching Java's java.util.zip.CRC32.
+struct CRC32 {
+    private static let table: [UInt32] = (0..<256).map { i -> UInt32 in
+        var crc = UInt32(i)
+        for _ in 0..<8 {
+            crc = (crc & 1) != 0 ? (crc >> 1) ^ 0xEDB88320 : crc >> 1
+        }
+        return crc
+    }
+
+    static func checksum(bytes: [UInt8]) -> UInt32 {
+        bytes.reduce(0xFFFFFFFF as UInt32) { crc, byte in
+            (crc >> 8) ^ table[Int((crc ^ UInt32(byte)) & 0xFF)]
+        } ^ 0xFFFFFFFF
     }
 }
 
