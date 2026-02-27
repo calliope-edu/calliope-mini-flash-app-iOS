@@ -16,9 +16,9 @@ struct AdaptiveStack<Content: View>: View {
         GeometryReader { geo in
             // Decide orientation from the *available* size
             if geo.size.width > geo.size.height {
-                HStack(content: content)          // landscape
+                HStack(spacing:16, content: content)          // landscape
             } else {
-                VStack(content: content)          // portrait
+                VStack(spacing:16, content: content)          // portrait
             }
         }
         // GeometryReader expands to fill its parent, so we collapse it:
@@ -80,7 +80,7 @@ struct AppsGridView: View {
 
             ScrollView(scrollDir) {
                 if scrollDir == .horizontal {
-                    LazyHGrid(rows: columns, spacing: 16) {
+                    LazyHGrid(rows: columns, spacing: 8) {
                         ForEach(apps) { app in
                             AppCell(app: app)
                                 .onTapGesture { onSelect(app) }
@@ -88,7 +88,7 @@ struct AppsGridView: View {
                     }
                     .padding(.vertical, 8)
                 } else {
-                    LazyVGrid(columns: columns, spacing: 16) {
+                    LazyVGrid(columns: columns, spacing: 8) {
                         ForEach(apps) { app in
                             AppCell(app: app)
                                 .onTapGesture { onSelect(app) }
@@ -112,7 +112,7 @@ struct AppCell: View {
                 .resizable()
                 .scaledToFit()
                 .frame(height: 250)          // choose any height you like
-                .padding(.vertical, 8)            // space above the image
+                .padding(.vertical, 12)            // space above the image
             
             // ---- Divider (white thin line) ----
             Rectangle()
@@ -121,15 +121,11 @@ struct AppCell: View {
                 .padding(.horizontal, 12)   // inset a little from the sides
             
             // ---- Title ----
-            Text(app.title)
-                .font(.system(size: 30, weight: .bold))
-                .foregroundColor(.white)
-                .padding(.vertical, 8)       // space below the text
+            TwoLineText(content: app.title)
         }
         .frame(maxWidth: .infinity)         // fill the column width
         .background(app.color)    // cell background (light gray)
         .cornerRadius(12)
-        .padding(.vertical, 8)               // **extra space between cells**
     }
 }
 
@@ -155,5 +151,21 @@ struct ContentView: View {
 struct LofiAppsPage_Previews: PreviewProvider {
     static var previews: some View {
         LofiAppsPage(parentViewController: nil)
+    }
+}
+
+struct TwoLineText: View {
+    let content: String
+    
+    var body: some View {
+        Text("\n").font(.system(size: 30, weight: .regular))
+                  .frame(maxWidth: .infinity)
+                  .padding(12)
+                .overlay(
+                        Text(content).font(.system(size: 30, weight: .regular))
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(12)
+                    , alignment: .center)
     }
 }
