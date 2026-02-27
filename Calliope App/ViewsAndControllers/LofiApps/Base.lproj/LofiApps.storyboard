@@ -19,6 +19,9 @@
                         </connections>
                     </containerView>
                     <navigationItem key="navigationItem" title="Lofi Apps" id="w16-hI-VJ6"/>
+                    <connections>
+                        <segue destination="rVu-bA-ejL" kind="show" identifier="showLofiWebView" id="sgO-pV-4iA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xQY-Z1-230" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -43,6 +46,16 @@
             </objects>
             <point key="canvasLocation" x="1214.0625" y="-251.95312499999997"/>
         </scene>
+        <!--WebViewContainerController-->
+        <scene sceneID="iBY-k2-LKC">
+            <objects>
+                <viewControllerPlaceholder storyboardName="WBCore" referencedIdentifier="WebViewContainerController" id="C2p-19-M8z" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="V14-cE-kBI"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AUi-kr-Q1T" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4171" y="-285"/>
+        </scene>
         <!--Hosting Controller-->
         <scene sceneID="EW4-n1-PNG">
             <objects>
@@ -50,6 +63,23 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XbG-hI-LZc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2759" y="-252"/>
+        </scene>
+        <!--Lofi App Detail View Controller-->
+        <scene sceneID="dkf-zq-cBY">
+            <objects>
+                <viewController id="rVu-bA-ejL" customClass="LofiAppDetailViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <containerView key="view" opaque="NO" contentMode="scaleToFill" id="u6S-Pu-ymd">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <connections>
+                            <segue destination="C2p-19-M8z" kind="embed" id="YhF-7c-pRF"/>
+                        </connections>
+                    </containerView>
+                    <navigationItem key="navigationItem" id="l6X-dT-OCp"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="X2G-4S-gJt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3569" y="-285"/>
         </scene>
     </scenes>
     <color key="tintColor" name="calliope-lilablau"/>

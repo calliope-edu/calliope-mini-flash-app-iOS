@@ -12,10 +12,11 @@ import Foundation
 import UIKit
 @preconcurrency import WebKit
 
-class LofiAppViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
+class LofiAppDetailViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
     
     public var url: URL!
-
+    public var appTitle: String!
+    
     var WBWebViewContainerController: WBWebViewContainerController {
         get {
             return self.children.first(where: {$0 as? WBWebViewContainerController != nil}) as! WBWebViewContainerController
@@ -29,6 +30,7 @@ class LofiAppViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = appTitle
         self.webView.load(URLRequest(url: url))
         #if DEBUG
         if #available(iOS 16.4, *) {

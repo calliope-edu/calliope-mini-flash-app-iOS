@@ -10,12 +10,30 @@ import SwiftUI
 
 /// A blank view controller displayed under the new "LofiApps" tab.
 final class LofiAppsViewController: UIViewController {
+    
+    private var selectedApp: AppItem?
 
     @IBSegueAction func addSwiftUIView(_ coder: NSCoder) -> UIViewController? {
-        return UIHostingController(coder: coder, rootView: LofiAppsPage())
+        return UIHostingController(coder: coder, rootView: LofiAppsPage(parentViewController: self))
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+            if segue.identifier == "showLofiWebView" {
+                guard selectedApp != nil else {
+                    LogNotify.log("Selected App is not set. This should not happen.", level: LogNotify.LEVEL.ERROR)
+                    return
+                }
+                let lofiAppDetailViewController = segue.destination as! LofiAppDetailViewController
+                lofiAppDetailViewController.appTitle = selectedApp!.title
+                lofiAppDetailViewController.url = URL(string: selectedApp!.url)
+            }
+        }
+    
+    func setSelectedApp(app: AppItem) {
+        selectedApp = app
     }
 }

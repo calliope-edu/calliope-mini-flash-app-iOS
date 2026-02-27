@@ -131,7 +131,7 @@
 		60B58BCE2C132ABA00050FE3 /* Chart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B58BCD2C132ABA00050FE3 /* Chart.swift */; };
 		60BBDB862B6B90C2003AD3CE /* DiscoveredDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BBDB852B6B90C2003AD3CE /* DiscoveredDevice.swift */; };
 		60BBDB882B6BA16F003AD3CE /* DiscoveredUSBDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BBDB872B6BA16F003AD3CE /* DiscoveredUSBDevice.swift */; };
-		60C90AFE2F1A75DD006279B2 /* LofiAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C90AFD2F1A75DD006279B2 /* LofiAppViewController.swift */; };
+		60C90AFE2F1A75DD006279B2 /* LofiAppDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C90AFD2F1A75DD006279B2 /* LofiAppDetailViewController.swift */; };
 		60C90B2D2F237F3E006279B2 /* Jsonifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C90B172F237F3E006279B2 /* Jsonifiable.swift */; };
 		60C90B3A2F237F3E006279B2 /* WBBluetoothUUID.js in Resources */ = {isa = PBXBuildFile; fileRef = 60C90B0E2F237F3E006279B2 /* WBBluetoothUUID.js */; };
 		60C90B3D2F237F3E006279B2 /* WBBluetoothRemoteGATTService.js in Resources */ = {isa = PBXBuildFile; fileRef = 60C90B0D2F237F3E006279B2 /* WBBluetoothRemoteGATTService.js */; };
@@ -315,7 +315,7 @@
 		60BBDB852B6B90C2003AD3CE /* DiscoveredDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredDevice.swift; sourceTree = "<group>"; };
 		60BBDB872B6BA16F003AD3CE /* DiscoveredUSBDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredUSBDevice.swift; sourceTree = "<group>"; };
 		60C345D32DA5757400430DA8 /* Calliope AppRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Calliope AppRelease.entitlements"; sourceTree = "<group>"; };
-		60C90AFD2F1A75DD006279B2 /* LofiAppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LofiAppViewController.swift; sourceTree = "<group>"; };
+		60C90AFD2F1A75DD006279B2 /* LofiAppDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LofiAppDetailViewController.swift; sourceTree = "<group>"; };
 		60C90B0A2F237F3E006279B2 /* stringview.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = stringview.js; sourceTree = "<group>"; };
 		60C90B0B2F237F3E006279B2 /* WBBluetoothRemoteGATTCharacteristic.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = WBBluetoothRemoteGATTCharacteristic.js; sourceTree = "<group>"; };
 		60C90B0C2F237F3E006279B2 /* WBBluetoothRemoteGATTServer.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = WBBluetoothRemoteGATTServer.js; sourceTree = "<group>"; };
@@ -714,7 +714,7 @@
 				60107F902F48830E00A15101 /* LofiAppsViewController.swift */,
 				60107F992F4888B800A15101 /* LofiApps.storyboard */,
 				60F6C3E42F2D243500A6C193 /* LofiAppWebView */,
-				60C90AFD2F1A75DD006279B2 /* LofiAppViewController.swift */,
+				60C90AFD2F1A75DD006279B2 /* LofiAppDetailViewController.swift */,
 				60107FB12F48A64500A15101 /* LofiAppsPage.swift */,
 			);
 			path = LofiApps;
@@ -1181,7 +1181,7 @@
 				60CF0EB22BFCD5D400CB2A38 /* Sensor.swift in Sources */,
 				2F763FE625A607A400C2029D /* SwiftCodeSnippetHighlighter.swift in Sources */,
 				2F1BD9952674D48C006A47F2 /* AutoHeightCollectionViewFlowLayout.swift in Sources */,
-				60C90AFE2F1A75DD006279B2 /* LofiAppViewController.swift in Sources */,
+				60C90AFE2F1A75DD006279B2 /* LofiAppDetailViewController.swift in Sources */,
 				601040AC2B592B7300526735 /* HexFileManager.swift in Sources */,
 				2F61458E22BF761F001C2734 /* Matrix.swift in Sources */,
 				6055CDB62BBEE1E50007F6B0 /* CalliopeBlocksStartViewController.swift in Sources */,

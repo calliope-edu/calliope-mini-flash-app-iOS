@@ -27,12 +27,24 @@ struct AdaptiveStack<Content: View>: View {
 }
 
 struct LofiAppsPage : View {
+    let parentViewController: LofiAppsViewController?
+    
     var body: some View {
         AdaptiveStack {
-            AppCell(app: AppItem(title: "INFO", imageName: "info", color: Color("calliope-pink")))
-            ContentView()
-       }
+            AppCell(app: AppItem(title: "INFO", imageName: "info", color: Color("calliope-pink"), url: ""))
+            ContentView(lofiAppsPage: self)
+        }
         .padding()
+    }
+    
+    func selectLofiApp(app: AppItem) {
+        // isShowingDetailView = true
+        guard parentViewController != nil else {
+            LogNotify.log("HostingViewController is nil. This should not happen.", level: LogNotify.LEVEL.ERROR)
+            return
+        }
+        parentViewController?.setSelectedApp(app: app)
+        parentViewController!.performSegue(withIdentifier: "showLofiWebView", sender: self)
     }
 }
 
@@ -43,6 +55,7 @@ struct AppItem: Identifiable {
     let title: String
     let imageName: String // name of an asset in the catalog
     let color: Color
+    let url: String
 }
 
 // MARK: – Grid view
@@ -124,25 +137,25 @@ struct AppCell: View {
 
 // MARK: – Example usage
 struct ContentView: View {
+    let lofiAppsPage: LofiAppsPage
+    
     // sample data
     let sampleApps = [
-        AppItem(title: "ROBOTER MIT GESICHTSERKENNUNG STEUERN",    imageName: "facerobot", color: Color("calliope-lilablau")),
-        AppItem(title: "SPRACHROBOTER",  imageName: "speak", color: Color("calliope-orange")),
-        AppItem(title: "STEUERUNG PER COMPUTER",    imageName: "control", color: Color("calliope-turqoise")),
-        AppItem(title: "OBJEKTERKENNUNG MIT KÜNSTLICHER INTELLIGENZ",   imageName: "teachablemachine", color: Color("calliope-darkgreen")),
+        AppItem(title: "ROBOTER MIT GESICHTSERKENNUNG STEUERN",    imageName: "facerobot", color: Color("calliope-lilablau"), url: "https://go.calliope.cc/facerobot/?mobile=true"),
+        AppItem(title: "SPRACHROBOTER",  imageName: "speak", color: Color("calliope-orange"), url: "https://go.calliope.cc/facerobot/?mobile=true"),
+        AppItem(title: "STEUERUNG PER COMPUTER",    imageName: "control", color: Color("calliope-turqoise"), url: "https://go.calliope.cc/facerobot/?mobile=true"),
+        AppItem(title: "OBJEKTERKENNUNG MIT KÜNSTLICHER INTELLIGENZ",   imageName: "teachablemachine", color: Color("calliope-darkgreen"), url: "https://go.calliope.cc/facerobot/?mobile=true"),
     ]
 
     var body: some View {
         AppsGridView(apps: sampleApps) { selectedApp in
-            // ← this is the function that runs when a cell is tapped
-            print("🚀 Selected app: \(selectedApp.title)")
-            // you can push a new view, open a URL, etc.
+            lofiAppsPage.selectLofiApp(app: selectedApp)
         }
     }}
 
 // MARK: – Preview
 struct LofiAppsPage_Previews: PreviewProvider {
     static var previews: some View {
-        LofiAppsPage()
+        LofiAppsPage(parentViewController: nil)
     }
 }
