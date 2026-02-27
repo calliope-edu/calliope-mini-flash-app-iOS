@@ -21,6 +21,7 @@
                     <navigationItem key="navigationItem" title="Lofi Apps" id="w16-hI-VJ6"/>
                     <connections>
                         <segue destination="rVu-bA-ejL" kind="show" identifier="showLofiWebView" id="sgO-pV-4iA"/>
+                        <segue destination="HQI-pA-Fhu" kind="show" identifier="showInfo" id="DXs-eB-npS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xQY-Z1-230" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -80,6 +81,28 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X2G-4S-gJt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3569" y="-285"/>
+        </scene>
+        <!--Info View Controller-->
+        <scene sceneID="2sH-gE-h8D">
+            <objects>
+                <viewController id="HQI-pA-Fhu" customClass="InfoViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <wkWebView key="view" contentMode="scaleToFill" id="CaC-70-RLe">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <wkWebViewConfiguration key="configuration">
+                            <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                            <wkPreferences key="preferences"/>
+                        </wkWebViewConfiguration>
+                    </wkWebView>
+                    <navigationItem key="navigationItem" id="gBk-wT-Yld"/>
+                    <connections>
+                        <outlet property="webView" destination="CaC-70-RLe" id="DGP-4T-Ydq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RWc-1g-UJZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1143" y="399"/>
         </scene>
     </scenes>
     <color key="tintColor" name="calliope-lilablau"/>

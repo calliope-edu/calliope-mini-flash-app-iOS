@@ -12,6 +12,7 @@ import SwiftUI
 final class LofiAppsViewController: UIViewController {
     
     private var selectedApp: AppItem?
+    private var infoUrl: String?
 
     @IBSegueAction func addSwiftUIView(_ coder: NSCoder) -> UIViewController? {
         return UIHostingController(coder: coder, rootView: LofiAppsPage(parentViewController: self))
@@ -31,9 +32,21 @@ final class LofiAppsViewController: UIViewController {
                 lofiAppDetailViewController.appTitle = selectedApp!.title
                 lofiAppDetailViewController.url = URL(string: selectedApp!.url)
             }
+        else if segue.identifier == "showInfo" {
+            guard infoUrl != nil else {
+                LogNotify.log("InfoUrl is not set. This should not happen.", level: LogNotify.LEVEL.ERROR)
+                return
+            }
+            let infoViewController = segue.destination as! InfoViewController
+            infoViewController.url = URL(string: infoUrl!)
+        }
         }
     
     func setSelectedApp(app: AppItem) {
         selectedApp = app
+    }
+    
+    func selectedInfo(url: String) {
+        self.infoUrl = url
     }
 }

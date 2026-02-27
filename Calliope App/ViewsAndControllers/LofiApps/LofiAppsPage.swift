@@ -30,21 +30,32 @@ struct LofiAppsPage : View {
     let parentViewController: LofiAppsViewController?
     
     var body: some View {
+        let infoAppItem = AppItem(title: "INFO", imageName: "info", color: Color("calliope-pink"), url: "https://calliope.cc/programmieren/mobil/ble-anwendungen")
         AdaptiveStack {
-            AppCell(app: AppItem(title: "INFO", imageName: "info", color: Color("calliope-pink"), url: ""))
+            AppCell(app: infoAppItem).onTapGesture {
+                self.selectInfo(url: infoAppItem.url)
+            }
             ContentView(lofiAppsPage: self)
         }
         .padding()
     }
     
     func selectLofiApp(app: AppItem) {
-        // isShowingDetailView = true
         guard parentViewController != nil else {
             LogNotify.log("HostingViewController is nil. This should not happen.", level: LogNotify.LEVEL.ERROR)
             return
         }
-        parentViewController?.setSelectedApp(app: app)
+        parentViewController!.setSelectedApp(app: app)
         parentViewController!.performSegue(withIdentifier: "showLofiWebView", sender: self)
+    }
+    
+    func selectInfo(url: String) {
+        guard parentViewController != nil else {
+            LogNotify.log("HostingViewController is nil. This should not happen.", level: LogNotify.LEVEL.ERROR)
+            return
+        }
+        parentViewController!.selectedInfo(url: url)
+        parentViewController!.performSegue(withIdentifier: "showInfo", sender: self)
     }
 }
 
@@ -135,10 +146,10 @@ struct ContentView: View {
     
     // sample data
     let sampleApps = [
-        AppItem(title: "ROBOTER MIT GESICHTSERKENNUNG STEUERN",    imageName: "facerobot", color: Color("calliope-lilablau"), url: "https://go.calliope.cc/facerobot/?mobile=true"),
-        AppItem(title: "SPRACHROBOTER",  imageName: "speak", color: Color("calliope-orange"), url: "https://go.calliope.cc/facerobot/?mobile=true"),
-        AppItem(title: "STEUERUNG PER COMPUTER",    imageName: "control", color: Color("calliope-turqoise"), url: "https://go.calliope.cc/facerobot/?mobile=true"),
-        AppItem(title: "OBJEKTERKENNUNG MIT KÜNSTLICHER INTELLIGENZ",   imageName: "teachablemachine", color: Color("calliope-darkgreen"), url: "https://go.calliope.cc/facerobot/?mobile=true"),
+        AppItem(title: "ROBOTER MIT GESICHTSERKENNUNG STEUERN",    imageName: "facerobot", color: Color("calliope-lilablau"), url: "https://go.calliope.cc/facerobot?mobile=true"),
+        AppItem(title: "SPRACHROBOTER",  imageName: "speak", color: Color("calliope-orange"), url: "https://cardboard.lofirobot.com/apps/talking-robots"),
+        AppItem(title: "STEUERUNG PER COMPUTER",    imageName: "control", color: Color("calliope-turqoise"), url: "https://go.calliope.cc/apps/control/index.html?mobile=true"),
+        AppItem(title: "OBJEKTERKENNUNG MIT KÜNSTLICHER INTELLIGENZ",   imageName: "teachablemachine", color: Color("calliope-darkgreen"), url: "https://go.calliope.cc/teachablemachine/index.html?mobile=true"),
     ]
 
     var body: some View {
