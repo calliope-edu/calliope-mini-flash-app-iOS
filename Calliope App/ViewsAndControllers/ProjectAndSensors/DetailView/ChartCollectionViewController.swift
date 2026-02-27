@@ -10,10 +10,8 @@ import Foundation
 import UIKit
 import DGCharts
 import SwiftUI
-import CoreLocation
 
-
-class ChartCollectionViewController: UITableViewController, UIDocumentPickerDelegate, ChartCellDelegate, CLLocationManagerDelegate {
+class ChartCollectionViewController: UITableViewController, UIDocumentPickerDelegate, ChartCellDelegate {
 
     private lazy var charts: [Chart] = {
        return Chart.fetchChartsBy(projectsId: project?.id)
@@ -26,9 +24,9 @@ class ChartCollectionViewController: UITableViewController, UIDocumentPickerDele
     var chartKvo: Any?
     
     required init?(coder: NSCoder) {
-        locationManager = CLLocationManager()
+//        locationManager = CLLocationManager()
         super.init(coder: coder)
-        self.setupLocationManager()
+//        self.setupLocationManager()
     }
 
     override func viewDidLoad() {
@@ -36,13 +34,13 @@ class ChartCollectionViewController: UITableViewController, UIDocumentPickerDele
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        if isAuthorizedForLocation() {
-            locationManager.startUpdatingLocation()
-        }
+//        if isAuthorizedForLocation() {
+//            locationManager.startUpdatingLocation()
+//        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        locationManager.stopUpdatingLocation()
+//        locationManager.stopUpdatingLocation()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -62,8 +60,8 @@ class ChartCollectionViewController: UITableViewController, UIDocumentPickerDele
         cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifierProgram, for: indexPath) as! ChartViewCell
         cell.chart = charts[indexPath.item]
         cell.setupCellView()
-        cell.mapview.isHidden = !isAuthorizedForLocation()
-        cell.getLastLocation = getLastLocation
+        cell.mapview.isHidden = true // !isAuthorizedForLocation()
+//        cell.getLastLocation = getLastLocation
         cell.delegate = self
         return cell
     }
@@ -101,30 +99,30 @@ class ChartCollectionViewController: UITableViewController, UIDocumentPickerDele
     }
     
     // #MARK: LOCATION RELEVANT FUNCTIONS
-    
-    private let COORDINATE_PRECISION = 4
-    
-    private var locationManager: CLLocationManager
-
-    func setupLocationManager() {
-        LogNotify.log("Init Location Updates; Auth status \(locationManager.authorizationStatus)")
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        locationManager.requestWhenInUseAuthorization()
-    }
-
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        LogNotify.log("Maps will be \(self.isAuthorizedForLocation() ? "shown" : "hidden"), as Auth Status \(locationManager.authorizationStatus)")
-        self.tableView.reloadData()
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        LogNotify.log("Got new Location Data - Location Manager holds Long: \(self.locationManager.location?.coordinate.longitude ?? 0.0) Lat: \(self.locationManager.location?.coordinate.latitude ?? 0.0)")
-    }
-
-    private func getLastLocation() -> CLLocationCoordinate2D? {
-        self.locationManager.location?.coordinate.rounded(toPlaces: COORDINATE_PRECISION) ?? nil
-    }
+//   TODO: WILL BECOME RELEVANT LATER
+//    private let COORDINATE_PRECISION = 4
+//    
+//    private var locationManager: CLLocationManager
+//
+//    func setupLocationManager() {
+//        LogNotify.log("Init Location Updates; Auth status \(locationManager.authorizationStatus)")
+//        locationManager.delegate = self
+//        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+//        locationManager.requestWhenInUseAuthorization()
+//    }
+//
+//    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+//        LogNotify.log("Maps will be \(self.isAuthorizedForLocation() ? "shown" : "hidden"), as Auth Status \(locationManager.authorizationStatus)")
+//        self.tableView.reloadData()
+//    }
+//    
+//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        LogNotify.log("Got new Location Data - Location Manager holds Long: \(self.locationManager.location?.coordinate.longitude ?? 0.0) Lat: \(self.locationManager.location?.coordinate.latitude ?? 0.0)")
+//    }
+//
+//    private func getLastLocation() -> CLLocationCoordinate2D? {
+//        self.locationManager.location?.coordinate.rounded(toPlaces: COORDINATE_PRECISION) ?? nil
+//    }
     
     private func isAuthorizedForLocation() -> Bool {
 //        [CLAuthorizationStatus.authorizedAlways, CLAuthorizationStatus.authorizedWhenInUse].contains(self.locationManager.authorizationStatus)

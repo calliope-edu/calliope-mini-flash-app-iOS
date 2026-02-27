@@ -12,26 +12,32 @@ import UIKit
 import UniformTypeIdentifiers
 
 class EditorAndProgramsContainerViewController: UIViewController, UINavigationControllerDelegate, UIDocumentPickerDelegate {
-
+    
     @IBOutlet weak var stackView: UIStackView?
-
+    
     @IBOutlet weak var editorContainerView: UIView?
-
+    
     @IBOutlet weak var programContainerView: UIView?
-
+    
     @IBOutlet weak var scanButton: UIButton?
-
+    
     @objc var editorsCollectionViewController: EditorsCollectionViewController?
     @IBOutlet var editorTopToSafeArea: NSLayoutConstraint?
     @IBOutlet var editorBottomToSafeArea: NSLayoutConstraint?
     var editorsHeightConstraint: NSLayoutConstraint?
-
+    
     @objc var programsCollectionViewController: ProgramsCollectionViewController?
     var programsHeightConstraint: NSLayoutConstraint?
-
+    
     var editorsKvo: Any?
     var programsKvo: Any?
     var bottomInsetKvo: Any?
+    
+    let lofiAppURLs : [URL] = [URL(string: "https://cardboard.lofirobot.com/control-calliope/")!,
+                               URL(string: "https://cardboard.lofirobot.com/apps/talking-robots/")!,
+                               URL(string: "https://cardboard.lofirobot.com/apps/telepresence/")!,
+                               URL(string: "https://go.calliope.cc/facerobot/?mobile=true")!]
+    var selectedLofiApp : Int = 0;
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)

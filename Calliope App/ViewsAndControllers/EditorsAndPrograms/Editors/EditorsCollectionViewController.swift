@@ -24,7 +24,6 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
     private lazy var activatedEditors: [SettingsKey] = {
         var keys: [SettingsKey] = []
         let settings = UserDefaults.standard
-        let isPhone = UIDevice.current.userInterfaceIdiom == .phone
         if settings.bool(forKey: SettingsKey.localEditor.rawValue) {
             keys.append(.localEditor)
         }
@@ -34,7 +33,8 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
         if settings.bool(forKey: SettingsKey.roberta.rawValue) {
             keys.append(.roberta)
         }
-        if settings.bool(forKey: SettingsKey.calliopeBlocks.rawValue)  && !isPhone { keys.append(.calliopeBlocks)
+        if settings.bool(forKey: SettingsKey.calliopeBlocks.rawValue) {
+            keys.append(.calliopeBlocks)
         }
 //        TODO: Next release, we will include the Blocks Editor, but for now we disable this
 //        if settings.bool(forKey: SettingsKey.blocksMiniEditor.rawValue) {
@@ -170,7 +170,7 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
     @IBSegueAction func createBlocksEditor(_ coder: NSCoder, sender: Any?) -> EditorViewController? {
         EditorViewController(coder: coder, editor: BlocksMiniEditor())
     }
-    
+
     @IBSegueAction func createArcadeStartView(_ coder: NSCoder, sender: Any?) -> ArcadeStartViewController? {
         let storyboard = UIStoryboard(name: "PlaygroundSnippets", bundle: nil)
         return storyboard.instantiateViewController(identifier: "ArcadeStartViewController") { coder in

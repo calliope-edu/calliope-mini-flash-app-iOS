@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="F4j-4J-3aW">
+    <device id="ipad9_7" orientation="landscape" layout="fullscreen" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Lofi Apps-->
+        <scene sceneID="bhu-hj-7In">
+            <objects>
+                <viewController title="Lofi Apps" id="9eT-f2-X1q" customClass="LofiAppsViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <containerView key="view" opaque="NO" contentMode="scaleToFill" id="Gfx-RA-uXg">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <connections>
+                            <segue destination="0Rh-9C-Uu9" kind="embed" destinationCreationSelector="addSwiftUIView:" id="CYb-7B-uMT"/>
+                        </connections>
+                    </containerView>
+                    <navigationItem key="navigationItem" title="Lofi Apps" id="w16-hI-VJ6"/>
+                    <connections>
+                        <segue destination="rVu-bA-ejL" kind="show" identifier="showLofiWebView" id="sgO-pV-4iA"/>
+                        <segue destination="HQI-pA-Fhu" kind="show" identifier="showInfo" id="DXs-eB-npS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xQY-Z1-230" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1979.6875" y="-251.95312499999997"/>
+        </scene>
+        <!--Apps-->
+        <scene sceneID="AXI-It-g7Q">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="F4j-4J-3aW" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Apps" image="rectangle.grid.3x3" catalog="system" id="fxY-KR-WSy"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="1ML-ui-xQn">
+                        <rect key="frame" x="0.0" y="20" width="1024" height="54"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="9eT-f2-X1q" kind="relationship" relationship="rootViewController" id="Dja-Dx-8z4"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="y1e-n7-9LN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1214.0625" y="-251.95312499999997"/>
+        </scene>
+        <!--WebViewContainerController-->
+        <scene sceneID="iBY-k2-LKC">
+            <objects>
+                <viewControllerPlaceholder storyboardName="WBCore" referencedIdentifier="WebViewContainerController" id="C2p-19-M8z" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="V14-cE-kBI"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AUi-kr-Q1T" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4171" y="-285"/>
+        </scene>
+        <!--Hosting Controller-->
+        <scene sceneID="EW4-n1-PNG">
+            <objects>
+                <hostingController id="0Rh-9C-Uu9" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XbG-hI-LZc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2759" y="-252"/>
+        </scene>
+        <!--Lofi App Detail View Controller-->
+        <scene sceneID="dkf-zq-cBY">
+            <objects>
+                <viewController id="rVu-bA-ejL" customClass="LofiAppDetailViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <containerView key="view" opaque="NO" contentMode="scaleToFill" id="u6S-Pu-ymd">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <connections>
+                            <segue destination="C2p-19-M8z" kind="embed" id="YhF-7c-pRF"/>
+                        </connections>
+                    </containerView>
+                    <navigationItem key="navigationItem" id="l6X-dT-OCp"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="X2G-4S-gJt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3569" y="-285"/>
+        </scene>
+        <!--Info View Controller-->
+        <scene sceneID="2sH-gE-h8D">
+            <objects>
+                <viewController id="HQI-pA-Fhu" customClass="InfoViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <wkWebView key="view" contentMode="scaleToFill" id="CaC-70-RLe">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <wkWebViewConfiguration key="configuration">
+                            <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                            <wkPreferences key="preferences"/>
+                        </wkWebViewConfiguration>
+                    </wkWebView>
+                    <navigationItem key="navigationItem" id="gBk-wT-Yld"/>
+                    <connections>
+                        <outlet property="webView" destination="CaC-70-RLe" id="DGP-4T-Ydq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RWc-1g-UJZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1143" y="399"/>
+        </scene>
+    </scenes>
+    <color key="tintColor" name="calliope-lilablau"/>
+    <resources>
+        <image name="rectangle.grid.3x3" catalog="system" width="128" height="92"/>
+        <namedColor name="calliope-lilablau">
+            <color red="0.3919999897480011" green="0.46200001239776611" blue="0.99199998378753662" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

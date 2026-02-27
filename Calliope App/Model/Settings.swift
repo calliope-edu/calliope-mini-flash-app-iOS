@@ -21,7 +21,7 @@ public enum SettingsKey: String, CaseIterable {
 
     case arcade = "arcadeOnPreference"
     case arcadeUrl = "arcadeUrlPreference"
-    
+
     case blocksMiniEditor = "blocksMiniOnPreferences"
     case blocksMiniEditorUrl = "blocksMiniUrlPreference"
 
@@ -66,7 +66,6 @@ public struct Settings {
     static var defaultBlocksMiniEditorEnabled = UIDevice.current.userInterfaceIdiom != .phone
     static var defaultRobertaEnabled = true
     static var defaultArcadeEnabled = true
-    static var defaultPlaygroundsEnabled = UIDevice.current.userInterfaceIdiom != .phone
     static var defaultMicroPythonEnabled = UIDevice.current.userInterfaceIdiom != .phone
     static var defaultCampusEnabled = UIDevice.current.userInterfaceIdiom != .phone
     

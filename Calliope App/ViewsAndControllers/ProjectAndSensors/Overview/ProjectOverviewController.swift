@@ -64,6 +64,8 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
         projectHeightConstraint = projectContainerView?.heightAnchor.constraint(equalToConstant: 10)
         projectHeightConstraint?.isActive = true
 
+        configureLayout(UIApplication.shared.keyWindow!.frame.size)
+        
         addNotificationSubscriptions()
     }
 

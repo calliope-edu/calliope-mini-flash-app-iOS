@@ -108,8 +108,8 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
         }
     }
 
-    // Made internal for partial flashing disconnect optimization
-    internal var connector: CalliopeDiscovery = CalliopeDiscovery({ peripheral, name in
+    // Made public for LofiApps and partial flashing access
+    public var connector: CalliopeDiscovery = CalliopeDiscovery({ peripheral, name in
         DiscoveredBLEDDevice(peripheral: peripheral, name: name)
     })
     {

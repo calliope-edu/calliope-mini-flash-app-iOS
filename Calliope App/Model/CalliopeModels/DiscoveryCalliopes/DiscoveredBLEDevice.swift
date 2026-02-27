@@ -28,7 +28,7 @@ class DiscoveredBLEDDevice: DiscoveredDevice {
         self.peripheral = peripheral
         super.init(name: name)
         peripheral.delegate = self
-
+        
     }
 
     public func shouldReconnectAfterReboot() -> Bool {
