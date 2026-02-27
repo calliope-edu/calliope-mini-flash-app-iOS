@@ -71,12 +71,10 @@ struct AppsGridView: View {
         GridItem(.flexible(), spacing: 0),
     ]
 
-    private let widthRatio: CGFloat = 1.2
-
     var body: some View {
         GeometryReader { geo in
             let scrollDir: Axis.Set =
-                geo.size.width > geo.size.height * widthRatio
+                geo.size.width > geo.size.height
                 ? .horizontal
                 : .vertical
 
