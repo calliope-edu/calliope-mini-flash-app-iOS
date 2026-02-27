@@ -9,35 +9,87 @@
 import Foundation
 import SwiftUI
 
-struct AdaptiveStack<Content: View>: View {
-    @ViewBuilder let content: () -> Content
-    
-    var body: some View {
-        GeometryReader { geo in
-            // Decide orientation from the *available* size
-            if geo.size.width > geo.size.height {
-                HStack(spacing:16, content: content)          // landscape
-            } else {
-                VStack(spacing:16, content: content)          // portrait
-            }
-        }
-        // GeometryReader expands to fill its parent, so we collapse it:
-        .ignoresSafeArea(edges: .all)   // optional – remove if you need safe‑area padding
-    }
+enum Orientation {
+    case landscape
+    case portrait
 }
 
 struct LofiAppsPage : View {
     let parentViewController: LofiAppsViewController?
     
+    let apps = [
+        AppItem(title: "ROBOTER MIT GESICHTSERKENNUNG STEUERN",    imageName: "facerobot", color: Color("calliope-lilablau"), url: "https://go.calliope.cc/facerobot?mobile=true"),
+        AppItem(title: "SPRACHROBOTER",  imageName: "speak", color: Color("calliope-orange"), url: "https://cardboard.lofirobot.com/apps/talking-robots"),
+        AppItem(title: "STEUERUNG PER COMPUTER",    imageName: "control", color: Color("calliope-turqoise"), url: "https://go.calliope.cc/apps/control/index.html?mobile=true"),
+        AppItem(title: "OBJEKTERKENNUNG MIT KÜNSTLICHER INTELLIGENZ",   imageName: "teachablemachine", color: Color("calliope-darkgreen"), url: "https://go.calliope.cc/teachablemachine/index.html?mobile=true"),
+    ]
+    
+    let infoAppItem = AppItem(title: "INFO", imageName: "info", color: Color("calliope-pink"), url: "https://calliope.cc/programmieren/mobil/ble-anwendungen")
+    
+    @State private var orientation: Orientation = Orientation.landscape
+    @State private var cellSize: CGSize = CGSize(width: 0, height: 0)
+    
+    
     var body: some View {
-        let infoAppItem = AppItem(title: "INFO", imageName: "info", color: Color("calliope-pink"), url: "https://calliope.cc/programmieren/mobil/ble-anwendungen")
-        AdaptiveStack {
-            AppCell(app: infoAppItem).onTapGesture {
+        GeometryReader(content: self.updateGeometry).padding()
+        
+    }
+    
+    func updateGeometry(geometry: GeometryProxy) -> some View {
+        DispatchQueue.main.async {
+            orientation = calculateOrientation(pageSize: geometry.size)
+            cellSize = calculateCellSize(pageSize: geometry.size, orientation: orientation)
+        }
+        
+        if orientation == .landscape {
+            return AnyView(HStack(spacing: 16) {
+                getStackContent(orientation: orientation, cellSize: cellSize)
+            })
+        } else {
+            return AnyView(VStack(spacing: 16) {
+                getStackContent(orientation: orientation, cellSize: cellSize)
+            })
+        }
+    }
+
+    func getStackContent(orientation: Orientation, cellSize: CGSize) -> some View {
+        Group {
+            AppCell(app: infoAppItem, size: cellSize).onTapGesture {
                 self.selectInfo(url: infoAppItem.url)
             }
-            ContentView(lofiAppsPage: self)
+            AppsGridView(cellSize: cellSize, orientation: orientation, apps: apps) { selectedApp in
+                self.selectLofiApp(app: selectedApp)
+            }
         }
-        .padding()
+    }
+
+    
+    func calculateOrientation(pageSize: CGSize) -> Orientation {
+        return pageSize.width > pageSize.height ? Orientation.landscape : Orientation.portrait
+    }
+    
+    func calculateCellSize(pageSize: CGSize, orientation: Orientation) -> CGSize {
+        var width = pageSize.width
+        var height = pageSize.height
+        if orientation == Orientation.landscape {
+            width = width / 2
+        }
+        else {
+            height = height / 2
+        }
+        
+        let spacing: CGFloat = 8
+        let widthRatio: CGFloat = 1.2
+        
+        if height * widthRatio < (width - spacing) {
+            let height = height
+            let width = height * widthRatio
+            return CGSize(width: width, height: height)
+        } else {
+            let width = width - spacing
+            let height = width / widthRatio
+            return CGSize(width: width, height: height)
+        }
     }
     
     func selectLofiApp(app: AppItem) {
@@ -60,17 +112,14 @@ struct LofiAppsPage : View {
 }
 
 
-// MARK: – Model
-struct AppItem: Identifiable {
-    let id = UUID()
-    let title: String
-    let imageName: String // name of an asset in the catalog
-    let color: Color
-    let url: String
-}
-
 // MARK: – Grid view
 struct AppsGridView: View {
+    @State private var widthRatio: CGFloat = 1.2
+    
+    let cellSize: CGSize
+    
+    let orientation: Orientation
+    
     // data source
     let apps: [AppItem]
 
@@ -83,38 +132,42 @@ struct AppsGridView: View {
     ]
 
     var body: some View {
-        GeometryReader { geo in
-            let scrollDir: Axis.Set =
-                geo.size.width > geo.size.height
-                ? .horizontal
-                : .vertical
-
-            ScrollView(scrollDir) {
-                if scrollDir == .horizontal {
-                    LazyHGrid(rows: columns, spacing: 8) {
-                        ForEach(apps) { app in
-                            AppCell(app: app)
-                                .onTapGesture { onSelect(app) }
-                        }
+        ScrollView(orientation == Orientation.landscape ? Axis.Set.vertical : Axis.Set.horizontal) {
+            if orientation == Orientation.portrait {
+                LazyHGrid(rows: columns, spacing: 8) {
+                    ForEach(apps) { app in
+                        AppCell(app: app, size: cellSize)
+                            .onTapGesture { onSelect(app) }
                     }
-                    .padding(.vertical, 8)
-                } else {
-                    LazyVGrid(columns: columns, spacing: 8) {
-                        ForEach(apps) { app in
-                            AppCell(app: app)
-                                .onTapGesture { onSelect(app) }
-                        }
-                    }
-                    .padding(.vertical, 8)
                 }
+                .padding(.vertical, 8)
+            } else {
+                LazyVGrid(columns: columns, spacing: 8) {
+                    ForEach(apps) { app in
+                        AppCell(app: app, size: cellSize)
+                            .onTapGesture { onSelect(app) }
+                    }
+                }
+                .padding(.vertical, 8)
             }
         }
     }
 }
 
+// MARK: – Model
+struct AppItem: Identifiable {
+    let id = UUID()
+    let title: String
+    let imageName: String // name of an asset in the catalog
+    let color: Color
+    let url: String
+}
+
+
 // MARK: – Single cell
 struct AppCell: View {
     let app: AppItem
+    let size: CGSize
     
     var body: some View {
         VStack(spacing: 0) {                 // we’ll control spacing ourselves
@@ -122,7 +175,6 @@ struct AppCell: View {
             Image(app.imageName)
                 .resizable()
                 .scaledToFit()
-                .frame(height: 250)          // choose any height you like
                 .padding(.vertical, 12)            // space above the image
             
             // ---- Divider (white thin line) ----
@@ -134,34 +186,9 @@ struct AppCell: View {
             // ---- Title ----
             TwoLineText(content: app.title)
         }
-        .frame(maxWidth: .infinity)         // fill the column width
+        .frame(width: size.width, height: size.height)
         .background(app.color)    // cell background (light gray)
         .cornerRadius(12)
-    }
-}
-
-// MARK: – Example usage
-struct ContentView: View {
-    let lofiAppsPage: LofiAppsPage
-    
-    // sample data
-    let sampleApps = [
-        AppItem(title: "ROBOTER MIT GESICHTSERKENNUNG STEUERN",    imageName: "facerobot", color: Color("calliope-lilablau"), url: "https://go.calliope.cc/facerobot?mobile=true"),
-        AppItem(title: "SPRACHROBOTER",  imageName: "speak", color: Color("calliope-orange"), url: "https://cardboard.lofirobot.com/apps/talking-robots"),
-        AppItem(title: "STEUERUNG PER COMPUTER",    imageName: "control", color: Color("calliope-turqoise"), url: "https://go.calliope.cc/apps/control/index.html?mobile=true"),
-        AppItem(title: "OBJEKTERKENNUNG MIT KÜNSTLICHER INTELLIGENZ",   imageName: "teachablemachine", color: Color("calliope-darkgreen"), url: "https://go.calliope.cc/teachablemachine/index.html?mobile=true"),
-    ]
-
-    var body: some View {
-        AppsGridView(apps: sampleApps) { selectedApp in
-            lofiAppsPage.selectLofiApp(app: selectedApp)
-        }
-    }}
-
-// MARK: – Preview
-struct LofiAppsPage_Previews: PreviewProvider {
-    static var previews: some View {
-        LofiAppsPage(parentViewController: nil)
     }
 }
 
@@ -180,3 +207,12 @@ struct TwoLineText: View {
                     , alignment: .center)
     }
 }
+
+// MARK: – Preview
+struct LofiAppsPage_Previews: PreviewProvider {
+    static var previews: some View {
+        LofiAppsPage(parentViewController: nil)
+    }
+}
+
+
