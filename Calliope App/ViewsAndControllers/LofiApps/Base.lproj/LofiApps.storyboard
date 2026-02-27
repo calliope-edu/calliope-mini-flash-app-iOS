@@ -27,11 +27,11 @@
             </objects>
             <point key="canvasLocation" x="1979.6875" y="-251.95312499999997"/>
         </scene>
-        <!--Lofi Apps-->
+        <!--Apps-->
         <scene sceneID="AXI-It-g7Q">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="F4j-4J-3aW" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Lofi Apps" image="rectangle.grid.3x3" catalog="system" id="fxY-KR-WSy"/>
+                    <tabBarItem key="tabBarItem" title="Apps" image="rectangle.grid.3x3" catalog="system" id="fxY-KR-WSy"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="1ML-ui-xQn">
                         <rect key="frame" x="0.0" y="20" width="1024" height="54"/>
