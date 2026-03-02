@@ -401,8 +401,11 @@ struct PartialFlashManager {
                         dalHash = hash
                         LogNotify.log("[PartialFlash] MicroPython DAL hash (CRC32): \(hash.hexEncodedString())")
                     } else {
-                        LogNotify.log("[PartialFlash] MicroPython: failed to compute CRC32 hash")
-                        return nil
+                        // hashPtr points to memory not included in this hex (e.g. OpenRoberta only
+                        // ships the filesystem region, not the full MicroPython runtime).
+                        // Fall back to a zeroed hash so partial flashing can still proceed.
+                        LogNotify.log("[PartialFlash] MicroPython: CRC32 hash pointer not in hex data — using zero hash, will force filesystem re-flash")
+                        dalHash = Data(repeating: 0, count: 8)
                     }
                 default:
                     LogNotify.log("[PartialFlash] MicroPython: unknown hash type \(hashType) for app region")

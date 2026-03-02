@@ -131,6 +131,7 @@ class FlashableBLECalliope: CalliopeAPI {
         linesFlashed = 0
         cancel = false
         partialFlashData = nil
+        pendingPartialFlashingInfo = nil
         partialFlashStartTime = nil
         
         // Reset transfer flag
@@ -151,6 +152,9 @@ class FlashableBLECalliope: CalliopeAPI {
             let lineCount = partialInfo.partialFlashData.lineCount
             LogNotify.log("Partial flashing: hex has \(lineCount) lines after magic marker")
             LogNotify.log("Starting partial flash process (will verify DAL hash and addresses with device)")
+            
+            // Cache the parsed info so startPartialFlashing() doesn't re-scan the whole file
+            pendingPartialFlashingInfo = partialInfo
             
             // Set flag BEFORE calling startPartialFlashing to catch any early notifications
             // (CalliopeV3 may have already enabled notifications in usageReady handler)
@@ -214,6 +218,9 @@ class FlashableBLECalliope: CalliopeAPI {
     var hexFileHash = Data()
     var hexProgramHash = Data()
     var partialFlashData: PartialFlashData?
+    /// Cached result of the first partialFlashingInfo parse — avoids re-scanning the hex file
+    /// a second time when startPartialFlashing() is called (including after a reboot).
+    private var pendingPartialFlashingInfo: (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)?
 
     //current flash package data
     var startPackageNumber: UInt8 = 0
@@ -376,8 +383,7 @@ class FlashableBLECalliope: CalliopeAPI {
         LogNotify.log("[PartialFlash] Starting partial flash attempt")
         // LogNotify.log("[PartialFlash] Checking prerequisites - file: \(file != nil), partialFlashingInfo: \(file?.partialFlashingInfo != nil)")
 
-        guard let file = file,
-            let partialFlashingInfo = file.partialFlashingInfo,
+        guard let partialFlashingInfo = pendingPartialFlashingInfo,
             let partialFlashingCharacteristic = getCBCharacteristic(.partialFlashing)
         else {
             // LogNotify.log("[PartialFlash] Partial flashing not available - file: \(file != nil), info: \(file?.partialFlashingInfo != nil), characteristic: \(getCBCharacteristic(.partialFlashing) != nil)")
