@@ -352,7 +352,6 @@
 		7E25C8370320F1AE86E741A5 /* UtilityLogJob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityLogJob.swift; sourceTree = "<group>"; };
 		7E25CF0763552A9F4EBCE00E /* UtilityJobProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityJobProtocol.swift; sourceTree = "<group>"; };
 		806801502EF5A2D00010448D /* ConnectedCalliopeV3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedCalliopeV3.swift; sourceTree = "<group>"; };
-		806801522EF7008B0010448D /* PartialFlashingOptimized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartialFlashingOptimized.swift; sourceTree = "<group>"; };
 		80EB0D412F0ECA3A000C3269 /* PartialFlashing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartialFlashing.swift; sourceTree = "<group>"; };
 		BD1AFC4008F992EADC1C557D /* Pods-Calliope App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.release.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -835,7 +834,6 @@
 		60D1FD6B2B6BCF9800BC6202 /* ConnectedCalliopes */ = {
 			isa = PBXGroup;
 			children = (
-				806801522EF7008B0010448D /* PartialFlashingOptimized.swift */,
 				60316BF72B01FEC300130C0D /* BLECalliope.swift */,
 				6094C3902C045FA9006F4CB4 /* ApiCalliope.swift */,
 				609D9BD52B67AD2200F2ECAE /* Calliope.swift */,
