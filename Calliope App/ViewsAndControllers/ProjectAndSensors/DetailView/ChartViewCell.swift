@@ -40,7 +40,7 @@ class ChartViewCell: BaseChartViewCell {
 
     fileprivate func addNotificationSubscriptions() {
         calliopeConnectedSubcription = NotificationCenter.default.addObserver(
-            forName: DiscoveredBLEDDevice.usageReadyNotificationName, object: nil, queue: nil,
+            forName: DiscoveredBLEDevice.usageReadyNotificationName, object: nil, queue: nil,
             using: { [weak self] (_) in
                 DispatchQueue.main.async {
                     LogNotify.log("Received usage ready Notification")
@@ -51,7 +51,7 @@ class ChartViewCell: BaseChartViewCell {
             })
 
         calliopeDisconnectedSubscription = NotificationCenter.default.addObserver(
-            forName: DiscoveredBLEDDevice.disconnectedNotificationName, object: nil, queue: nil,
+            forName: DiscoveredBLEDevice.disconnectedNotificationName, object: nil, queue: nil,
             using: { [weak self] (_) in
                 DispatchQueue.main.async {
                     self?.recordingButton.isEnabled = false

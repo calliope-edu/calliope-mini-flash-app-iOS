@@ -69,7 +69,7 @@ class DiscoveredDevice: NSObject, CBPeripheralDelegate {
         if state == .discovered {
             discoveredServices = []
             if oldState == .usageReady {
-                NotificationCenter.default.post(name: DiscoveredBLEDDevice.disconnectedNotificationName, object: self)
+                NotificationCenter.default.post(name: DiscoveredBLEDevice.disconnectedNotificationName, object: self)
             }
         } else if state == .connected {
             //immediately evaluate whether in playground mode
@@ -88,7 +88,7 @@ class DiscoveredDevice: NSObject, CBPeripheralDelegate {
             }
         } else if state == .usageReady {
             NotificationCenter.default.post(
-                name: DiscoveredBLEDDevice.usageReadyNotificationName,
+                name: DiscoveredBLEDevice.usageReadyNotificationName,
                 object: self)
         }
     }

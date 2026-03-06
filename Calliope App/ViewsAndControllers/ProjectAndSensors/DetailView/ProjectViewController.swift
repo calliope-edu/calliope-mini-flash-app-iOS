@@ -72,7 +72,7 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
 
     override func viewDidAppear(_ animated: Bool) {
         calliopeConnectedSubcription = NotificationCenter.default.addObserver(
-            forName: DiscoveredBLEDDevice.usageReadyNotificationName, object: nil, queue: nil,
+            forName: DiscoveredBLEDevice.usageReadyNotificationName, object: nil, queue: nil,
             using: { [weak self] (_) in
                 DispatchQueue.main.async {
                     UIView.animate(withDuration: 0.5) {
@@ -82,7 +82,7 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
             })
 
         calliopeDisconnectedSubscription = NotificationCenter.default.addObserver(
-            forName: DiscoveredBLEDDevice.disconnectedNotificationName, object: nil, queue: nil,
+            forName: DiscoveredBLEDevice.disconnectedNotificationName, object: nil, queue: nil,
             using: { [weak self] (_) in
                 DispatchQueue.main.async {
                     UIView.animate(withDuration: 0.5) {

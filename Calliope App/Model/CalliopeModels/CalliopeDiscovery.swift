@@ -31,7 +31,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
     var errorBlock: (Error) -> Void = { _ in
     }
     
-    var calliopeBuilder: (_ peripheral: CBPeripheral, _ name: String) -> DiscoveredBLEDDevice
+    var calliopeBuilder: (_ peripheral: CBPeripheral, _ name: String) -> DiscoveredBLEDevice
     
     private(set) var state: CalliopeDiscoveryState = .initialized {
         didSet {
@@ -54,9 +54,9 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
     private(set) var connectingCalliope: DiscoveredDevice? {
         didSet {
             if let connectingCalliope = self.connectingCalliope {
-                if connectingCalliope is DiscoveredBLEDDevice {
+                if connectingCalliope is DiscoveredBLEDevice {
                     LogNotify.log("Connect to Bluetooth Calliope mini")
-                    let connectingBLECalliope = connectingCalliope as! DiscoveredBLEDDevice
+                    let connectingBLECalliope = connectingCalliope as! DiscoveredBLEDevice
                     connectedCalliope = nil
                     self.centralManager.connect(connectingBLECalliope.peripheral, options: nil)
                     //manual timeout (system timeout is too long)
@@ -89,7 +89,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         }
     }
     
-    private(set) var connectedCalliope: DiscoveredBLEDDevice? {
+    private(set) var connectedCalliope: DiscoveredBLEDevice? {
         didSet {
             if let uuid = connectedCalliope?.peripheral.identifier,
                let name = discoveredCalliopeUUIDNameMap[uuid]
@@ -154,7 +154,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
     private var retryCount = 0
     public var isInBackground = false
     
-    init(_ calliopeBuilder: @escaping (_ peripheral: CBPeripheral, _ name: String) -> DiscoveredBLEDDevice) {
+    init(_ calliopeBuilder: @escaping (_ peripheral: CBPeripheral, _ name: String) -> DiscoveredBLEDevice) {
         self.calliopeBuilder = calliopeBuilder
         super.init()
         if centralManager.state == .poweredOn {
@@ -341,7 +341,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
             }
             return
         }
-        connectedCalliope = calliope as? DiscoveredBLEDDevice
+        connectedCalliope = calliope as? DiscoveredBLEDevice
     }
     
     var disconnectNotificationCallbacks = [Int: (String) -> Void]()

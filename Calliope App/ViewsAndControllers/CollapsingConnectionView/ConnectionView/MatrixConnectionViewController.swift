@@ -82,7 +82,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
         }
     }
 
-    public var calliopeClass: DiscoveredBLEDDevice.Type? = nil {
+    public var calliopeClass: DiscoveredBLEDevice.Type? = nil {
         didSet {
             guard calliopeClass != oldValue else {
                 return
@@ -91,7 +91,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
             guard let calliopeClass = calliopeClass else {
                 return
             }
-            let calliopeBuilder = { (_ peripheral: CBPeripheral, _ name: String) -> DiscoveredBLEDDevice in
+            let calliopeBuilder = { (_ peripheral: CBPeripheral, _ name: String) -> DiscoveredBLEDevice in
                 return calliopeClass.init(peripheral: peripheral, name: name)
             }
             connector = CalliopeDiscovery(calliopeBuilder)
@@ -109,7 +109,7 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     }
 
     public var connector: CalliopeDiscovery = CalliopeDiscovery({ peripheral, name in
-        DiscoveredBLEDDevice(peripheral: peripheral, name: name)
+        DiscoveredBLEDevice(peripheral: peripheral, name: name)
     })
     {
         didSet {

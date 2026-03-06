@@ -78,7 +78,7 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
         }
 
         MatrixConnectionViewController.instance?.connectionDescriptionText = NSLocalizedString("Calliope mini verbinden!", comment: "")
-        MatrixConnectionViewController.instance?.calliopeClass = DiscoveredBLEDDevice.self
+        MatrixConnectionViewController.instance?.calliopeClass = DiscoveredBLEDevice.self
 
         self.connectedCalliope = MatrixConnectionViewController.instance.usageReadyCalliope
         self.isUsbMode = MatrixConnectionViewController.instance.isInUsbMode
@@ -241,7 +241,7 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
 
     fileprivate func addNotificationSubscriptions() {
         calliopeConnectedSubcription = NotificationCenter.default.addObserver(
-            forName: DiscoveredBLEDDevice.usageReadyNotificationName, object: nil, queue: nil,
+            forName: DiscoveredBLEDevice.usageReadyNotificationName, object: nil, queue: nil,
             using: { [weak self] (_) in
                 DispatchQueue.main.async {
                     LogNotify.log("Received usage ready Notification")
@@ -252,7 +252,7 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
             })
 
         calliopeDisconnectedSubscription = NotificationCenter.default.addObserver(
-            forName: DiscoveredBLEDDevice.disconnectedNotificationName, object: nil, queue: nil,
+            forName: DiscoveredBLEDevice.disconnectedNotificationName, object: nil, queue: nil,
             using: { [weak self] (_) in
                 DispatchQueue.main.async {
                     self?.connectedCalliope = nil

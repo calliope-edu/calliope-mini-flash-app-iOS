@@ -33,12 +33,6 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
     var programsKvo: Any?
     var bottomInsetKvo: Any?
     
-    let lofiAppURLs : [URL] = [URL(string: "https://cardboard.lofirobot.com/control-calliope/")!,
-                               URL(string: "https://cardboard.lofirobot.com/apps/talking-robots/")!,
-                               URL(string: "https://cardboard.lofirobot.com/apps/telepresence/")!,
-                               URL(string: "https://go.calliope.cc/facerobot/?mobile=true")!]
-    var selectedLofiApp : Int = 0;
-
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(
@@ -102,7 +96,7 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
         }
 
         MatrixConnectionViewController.instance?.connectionDescriptionText = NSLocalizedString("Calliope mini verbinden!", comment: "")
-        MatrixConnectionViewController.instance?.calliopeClass = DiscoveredBLEDDevice.self
+        MatrixConnectionViewController.instance?.calliopeClass = DiscoveredBLEDevice.self
     }
 
     override func viewWillDisappear(_ animated: Bool) {

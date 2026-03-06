@@ -8,7 +8,7 @@
 import CoreBluetooth
 import UIKit
 
-class DiscoveredBLEDDevice: DiscoveredDevice {
+class DiscoveredBLEDevice: DiscoveredDevice {
 
     public static let usageReadyNotificationName = NSNotification.Name("calliope_is_usage_ready")
     public static let disconnectedNotificationName = NSNotification.Name("calliope_connection_lost")
@@ -144,19 +144,19 @@ class DiscoveredBLEDDevice: DiscoveredDevice {
 
 //MARK: Equatable (conformance inherited default implementation by NSObject)
 
-extension DiscoveredBLEDDevice {
+extension DiscoveredBLEDevice {
     /*static func == (lhs: CalliopeBLEDevice, rhs: CalliopeBLEDevice) -> Bool {
      return lhs.peripheral == rhs.peripheral
      }*/
 
     override func isEqual(_ object: Any?) -> Bool {
-        return self.peripheral == (object as? DiscoveredBLEDDevice)?.peripheral
+        return self.peripheral == (object as? DiscoveredBLEDevice)?.peripheral
     }
 }
 
 //MARK: CustomStringConvertible (conformance inherited default implementation by NSObject)
 
-extension DiscoveredBLEDDevice {
+extension DiscoveredBLEDevice {
     override var description: String {
         return "name: \(String(describing: name)), state: \(state)"
     }
