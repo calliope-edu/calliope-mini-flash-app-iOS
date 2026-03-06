@@ -92,9 +92,8 @@ class BLECalliope: Calliope, Jsonifiable {
     //MARK: reading and writing characteristics (asynchronously/ scheduled/ synchronously)
     //to sequentialize reads and writes
     
-    let readWriteQueue = DispatchQueue.global(qos: .userInitiated)
-    let readWriteSem = DispatchSemaphore(value: 1)
-    var readWriteGroup: DispatchGroup? = nil
+    let bleOperationsQueue = DispatchQueue(label: "bleOperationsQueue")
+    var bleOperationsGroup: DispatchGroup? = nil
     
     var writeError: Error? = nil
     var writingCharacteristic: CBCharacteristic? = nil
@@ -174,7 +173,7 @@ class BLECalliope: Calliope, Jsonifiable {
         } else {
             LogNotify.log("received write success message")
         }
-        readWriteGroup?.leave()
+        bleOperationsGroup?.leave()
     }
     
     private func explicitSetNotifyResponse(_ error: Error?) {
@@ -184,9 +183,9 @@ class BLECalliope: Calliope, Jsonifiable {
         if let error = error {
             LogNotify.log("received error from writing: \(error)")
         } else {
-            LogNotify.log("received write success message")
+            LogNotify.log("received set notify success message")
         }
-        readWriteGroup?.leave()
+        bleOperationsGroup?.leave()
     }
     
     private func explicitReadResponse(for characteristic: CBCharacteristic, error: Error?) {
@@ -200,7 +199,7 @@ class BLECalliope: Calliope, Jsonifiable {
             readValue = characteristic.value
             LogNotify.log("received read response from \(characteristic): \(String(describing: readValue?.hexEncodedString()))")
         }
-        readWriteGroup?.leave()
+        bleOperationsGroup?.leave()
     }
     
     func getCBCharacteristic(_ characteristic: CalliopeCharacteristic) -> CBCharacteristic? {
@@ -240,19 +239,16 @@ class BLECalliope: Calliope, Jsonifiable {
     }
     
     func write(_ data: Data, for characteristic: CBCharacteristic) throws {
-        try applySemaphore(readWriteSem) {
+        try bleOperationsQueue.sync {
             writingCharacteristic = characteristic
             
-            asyncAndWait(on: readWriteQueue) {
-                //write value and wait for delegate call (or error)
-                self.readWriteGroup = DispatchGroup()
-                self.readWriteGroup!.enter()
-                self.peripheral.writeValue(data, for: characteristic, type: .withResponse)
-                
-                if self.readWriteGroup!.wait(timeout: DispatchTime.now() + BluetoothConstants.writeTimeout) == .timedOut {
-                    LogNotify.log("write to \(characteristic) timed out")
-                    self.writeError = CBError(.connectionTimeout)
-                }
+            self.bleOperationsGroup = DispatchGroup()
+            self.bleOperationsGroup!.enter()
+            self.peripheral.writeValue(data, for: characteristic, type: .withResponse)
+            
+            if self.bleOperationsGroup!.wait(timeout: DispatchTime.now() + BluetoothConstants.writeTimeout) == .timedOut {
+                LogNotify.log("write to \(characteristic) timed out")
+                self.writeError = CBError(.connectionTimeout)
             }
             
             guard writeError == nil else {
@@ -276,18 +272,15 @@ class BLECalliope: Calliope, Jsonifiable {
     }
     
     func read(characteristic: CBCharacteristic) throws -> Data? {
-        return try applySemaphore(readWriteSem) {
+        return try bleOperationsQueue.sync {
             readingCharacteristic = characteristic
             
-            asyncAndWait(on: readWriteQueue) {
-                //read value and wait for delegate call (or error)
-                self.readWriteGroup = DispatchGroup()
-                self.readWriteGroup!.enter()
-                self.peripheral.readValue(for: characteristic)
-                if self.readWriteGroup!.wait(timeout: DispatchTime.now() + BluetoothConstants.readTimeout) == .timedOut {
-                    LogNotify.log("read from \(characteristic) timed out")
-                    self.readError = CBError(.connectionTimeout)
-                }
+            self.bleOperationsGroup = DispatchGroup()
+            self.bleOperationsGroup!.enter()
+            self.peripheral.readValue(for: characteristic)
+            if self.bleOperationsGroup!.wait(timeout: DispatchTime.now() + BluetoothConstants.readTimeout) == .timedOut {
+                LogNotify.log("read from \(characteristic) timed out")
+                self.readError = CBError(.connectionTimeout)
             }
             
             guard readError == nil else {
@@ -314,18 +307,18 @@ class BLECalliope: Calliope, Jsonifiable {
     }
     
     func setNotify(characteristic: CBCharacteristic, _ activate: Bool) throws {
-        return try applySemaphore(readWriteSem) {
+        try bleOperationsQueue.sync{
             notifyingCharacteristic = characteristic
             
-            asyncAndWait(on: readWriteQueue) {
-                //read value and wait for delegate call (or error)
-                self.readWriteGroup = DispatchGroup()
-                self.readWriteGroup!.enter()
-                self.peripheral.setNotifyValue(activate, for: characteristic)
-                if self.readWriteGroup!.wait(timeout: DispatchTime.now() + BluetoothConstants.readTimeout) == .timedOut {
-                    LogNotify.log("activate notifications from \(characteristic) timed out")
-                    self.setNotifyError = CBError(.connectionTimeout)
-                }
+            self.bleOperationsGroup = DispatchGroup()
+            self.bleOperationsGroup!.enter()
+            self.peripheral.setNotifyValue(activate, for: characteristic)
+            LogNotify.log("This is thread: \(Thread.current.debugDescription)")
+            LogNotify.log(self.bleOperationsGroup!.debugDescription)
+            
+            if self.bleOperationsGroup!.wait(timeout: DispatchTime.now() + BluetoothConstants.readTimeout) == .timedOut {
+                LogNotify.log("activate notifications from \(characteristic) timed out")
+                self.setNotifyError = CBError(.connectionTimeout)
             }
             
             guard setNotifyError == nil else {
