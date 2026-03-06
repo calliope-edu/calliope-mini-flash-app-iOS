@@ -18,8 +18,9 @@ final class LofiAppsViewController: UIViewController {
         return UIHostingController(coder: coder, rootView: LofiAppsPage(parentViewController: self))
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool)  {
+        MatrixConnectionViewController.instance?.connectionDescriptionText = NSLocalizedString("Calliope mini verbinden!", comment: "")
+        MatrixConnectionViewController.instance?.calliopeClass = DiscoveredBLEDevice.self
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

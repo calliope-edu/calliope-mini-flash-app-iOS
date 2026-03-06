@@ -5,14 +5,14 @@ import Dispatch
 
 open class WBMessageHandler: NSObject, WKScriptMessageHandler
 {
-    private weak var webView: WKWebView?
+    private weak var webView: WBWebView?
     var disconnectNotificationId: Int?
     
     func tearDown() {
         unregisterDisconnectNotification()
     }
     
-    init(webView: WKWebView) {
+    init(webView: WBWebView) {
         self.webView = webView
         super.init()
         disconnectNotificationId = MatrixConnectionViewController.instance.connector.registerDisconnectNotification(onDeviceDisconnect)
@@ -126,7 +126,7 @@ open class WBMessageHandler: NSObject, WKScriptMessageHandler
 
         case .startNotifications:
             if let webView = webView {
-                calliope.startNotifications(transaction: transaction, webView: webView)
+                calliope.startNotifications(transaction: transaction, onNotificationCallback: onNotificationReceived)
             }
             else {
                 transaction.resolveAsFailure(withMessage: "Error in Swift Message Handler")
@@ -137,15 +137,23 @@ open class WBMessageHandler: NSObject, WKScriptMessageHandler
         }
     }
     
-    func onDeviceDisconnect(_ uuid: String) {
-        let commandString = "window.receiveDeviceDisconnectEvent('\(uuid)');\n"
-        
-        if let webView = self.webView {
-            webView.evaluateJavaScript(commandString, completionHandler: {
-                _, error in
-                if let err = error {
-                    NSLog("Error evaluating javascript: \(err)")
-                }})
+    func onNotificationReceived(deviceUUID: String, characteristicUUID: String, characteristicValue: String) {
+        guard let webView = self.webView else {
+            LogNotify.log("No webview attached to this message handler. This should not happen.", level: LogNotify.LEVEL.ERROR)
+            return
         }
+        webView.threadsafeEvaluateJavaScript("receiveCharacteristicValueNotification(" +
+                "'\(deviceUUID)', " +
+                "\(characteristicUUID.lowercased().jsonify()), " +
+                "\(characteristicValue)" +
+                ")")
+    }
+    
+    func onDeviceDisconnect(_ uuid: String) {
+        guard let webView = self.webView else {
+            LogNotify.log("No webview attached to this message handler. This should not happen.", level: LogNotify.LEVEL.ERROR)
+            return
+        }
+        webView.threadsafeEvaluateJavaScript("window.receiveDeviceDisconnectEvent('\(uuid)');\n")
     }
 }
