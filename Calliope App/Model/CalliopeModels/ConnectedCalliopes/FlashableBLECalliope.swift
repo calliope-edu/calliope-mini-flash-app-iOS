@@ -978,7 +978,7 @@ class CalliopeV1AndV2: FlashableBLECalliope {
     }
 
     override var optionalServices: Set<CalliopeService> {
-        [.partialFlashing]
+        CalliopeAPI.services
     }
 
     override func notify(aboutState newState: DiscoveredDevice.CalliopeBLEDeviceState) {
@@ -1047,7 +1047,7 @@ class CalliopeV3: FlashableBLECalliope {
     }
 
     override var optionalServices: Set<CalliopeService> {
-        [.partialFlashing]
+        CalliopeAPI.services
     }
 
     internal override func startFullFlashing() throws {

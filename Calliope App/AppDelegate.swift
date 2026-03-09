@@ -41,13 +41,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         LogNotify.log("App Entered Background")
-        MatrixConnectionViewController.instance.moveToBackground()
+        MatrixConnectionViewController.instance?.moveToBackground()
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
         LogNotify.log("App Entered Foreground")
-        MatrixConnectionViewController.instance.moveToForeground()
+        MatrixConnectionViewController.instance?.moveToForeground()
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
@@ -84,8 +84,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-        if let rootViewController = window?.rootViewController, let tabBarController = findTabBarController(from: rootViewController),
-            let targetViewController = setupTargetViewController(targetActivity: userActivity)
+        if let rootViewController = window?.rootViewController,
+           let tabBarController = findTabBarController(from: rootViewController),
+           let targetViewController = setupTargetViewController(targetActivity: userActivity)
         {
             pushNewViewController(from: tabBarController, for: targetViewController)
             return true
@@ -120,6 +121,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func pushNewViewController(from tabBarController: UITabBarController, for targetViewController: UIViewController) {
+        // Switch to the Editors and Programs tab so the editor is pushed in the correct context
+        tabBarController.selectedIndex = 1
+
         guard let selectedNavController = tabBarController.selectedViewController as? UINavigationController else {
             LogNotify.log("The selected view controller is not a UINavigationController.")
             return
@@ -140,21 +144,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func setupMakeCodeEditorViewController(for url: URL) -> UIViewController? {
         let storyboard = UIStoryboard(name: "EditorAndPrograms", bundle: Bundle.main)
-        let viewController = storyboard.instantiateViewController(withIdentifier: "EditorViewControllerInEditorAndPrograms") as? EditorViewController
+        let viewController = storyboard.instantiateViewController(withIdentifier: "EditorViewController") as? EditorViewController
 
         guard let viewController = viewController else {
             LogNotify.log("Could not create new ViewController")
             return nil
         }
 
+        let editorUrl: URL?
         #if DEBUG
-        let originialUrl = url.absoluteString
-        let url = URL.init(string: "https://makecode.calliope.cc\(url.path)?\(url.query ?? "")#\(url.fragment ?? "")")
-        LogNotify.log("Redirected development domain (\(originialUrl)) to makecode (\(url?.absoluteString ?? "none?"))")
+        // Only redirect non-makecode domains (e.g. ngrok development URLs) to makecode
+        if url.host != "makecode.calliope.cc" {
+            var components = URLComponents()
+            components.scheme = "https"
+            components.host = "makecode.calliope.cc"
+            components.path = url.path
+            components.query = url.query
+            components.fragment = url.fragment
+            editorUrl = components.url
+            LogNotify.log("Redirected development domain (\(url.absoluteString)) to makecode (\(editorUrl?.absoluteString ?? "nil"))")
+        } else {
+            editorUrl = url
+        }
+        #else
+        editorUrl = url
         #endif
 
+        guard let finalUrl = editorUrl else {
+            LogNotify.log("Constructed URL is nil, cannot open editor")
+            return nil
+        }
+
         let editor = MakeCode()
-        editor.url = url
+        editor.url = finalUrl
         viewController.editor = editor
 
         return viewController

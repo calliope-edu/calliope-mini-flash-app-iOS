@@ -13,18 +13,18 @@ import CoreBluetooth
 import NordicDFU
 import UIKit
 
-/// Ein Calliope V3 der im Application Mode verbunden ist (nach dem Flashen eines Programms).
+/// Ein Calliope mini der im Application Mode verbunden ist (nach dem Flashen eines Programms).
 /// Diese Klasse kann bei Bedarf automatisch in den DFU Mode wechseln um ein neues Programm zu flashen.
-class ConnectedCalliopeV3: BLECalliope {
+class ConnectedCalliopeV3: CalliopeAPI {
     
-    // Im Application Mode akzeptieren wir den Calliope auch ohne DFU-Services
+    // Im Application Mode akzeptieren wir den Calliope mini auch ohne DFU-Services
     // Wir benötigen nur den Partial Flashing Service um in den DFU Mode zu wechseln
     override var requiredServices: Set<CalliopeService> {
         []  // Keine required Services im Application Mode
     }
     
     override var optionalServices: Set<CalliopeService> {
-        [.partialFlashing, .secureDfuService]
+        CalliopeAPI.services.union([.secureDfuService])
     }
     
     override var compatibleHexTypes: Set<HexParser.HexVersion> {
