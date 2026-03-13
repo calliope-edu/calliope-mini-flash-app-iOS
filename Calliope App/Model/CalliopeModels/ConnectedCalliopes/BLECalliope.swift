@@ -306,8 +306,6 @@ class BLECalliope: Calliope {
             self.bleOperationsGroup = DispatchGroup()
             self.bleOperationsGroup!.enter()
             self.peripheral.setNotifyValue(activate, for: characteristic)
-            LogNotify.log("This is thread: \(Thread.current.debugDescription)")
-            LogNotify.log(self.bleOperationsGroup!.debugDescription)
             
             if self.bleOperationsGroup!.wait(timeout: DispatchTime.now() + BluetoothConstants.readTimeout) == .timedOut {
                 LogNotify.log("activate notifications from \(characteristic) timed out")
@@ -334,103 +332,59 @@ extension BLECalliope: Jsonifiable {
             return
         }
         
-        if let services = self.peripheral.services {
-            let knownCalliopeServices = services.filter {
-                CalliopeService(rawValue: $0.uuid.uuidString) != nil
-            }
-            servicesTransaction.resolveFromServices(knownCalliopeServices)
+        if let services = getKnownCalliopeServices() {
+            servicesTransaction.resolveFromServices(services)
         }
         else {
-            LogNotify.log("Expected for services to already be discovered. This should not happen.")
-            transaction.resolveAsFailure(withMessage: "No discovery for services started.")
+            transaction.resolveAsFailure(withMessage: "Could not get services.")
         }
     }
     
     func getCharacteristic(transaction: WBTransaction) {
-        guard
-            let characteristicTransaction = CharacteristicTransaction(transaction: transaction)
-        else {
+        guard let characteristicTransaction = CharacteristicTransaction(transaction: transaction) else {
             transaction.resolveAsFailure(withMessage: "Invalid message")
             return
         }
         
-        guard let service = self.getService(withUUID: characteristicTransaction.serviceUUID)
+        if let characteristic = getKnownCalliopeCharactersitic(serviceUUID: characteristicTransaction.serviceUUID, characteristicUUID: characteristicTransaction.characteristicUUID) {
+            transaction.resolveAsSuccess()
+        }
         else {
-            characteristicTransaction.resolveUnknownService()
-            return
+            characteristicTransaction.resolveUnknownCharacteristic()
         }
-        
-        if let chars = service.characteristics {
-            // Have already discovered characteristics for this device.
-            if chars.contains(where: {$0.uuid == characteristicTransaction.characteristicUUID}) {
-                transaction.resolveAsSuccess()
-            } else {
-                characteristicTransaction.resolveUnknownCharacteristic()
-            }
-            return
-        }
-        
-        LogNotify.log("Characteristics were not already discovered. This is not supposed to happen.", level: LogNotify.LEVEL.ERROR)
-        transaction.resolveAsFailure(withMessage: "No discovered characteristics available.")
-    }
-    
-    private func getService(withUUID uuid: CBUUID) -> CBService?{
-        guard
-            let pservs = self.peripheral.services,
-            let ind = pservs.firstIndex(where: {$0.uuid == uuid})
-        else {
-            return nil
-        }
-        return pservs[ind]
     }
     
     func getCharacteristics(transaction: WBTransaction) {
-        guard let characteristicsTransaction = CharacteristicsTransaction(transaction: transaction)
-        else {
+        guard let characteristicsTransaction = CharacteristicsTransaction(transaction: transaction) else {
             transaction.resolveAsFailure(withMessage: "Invalid getCharacteristics message")
             return
         }
         
-        guard let service = self.getService(withUUID: characteristicsTransaction.serviceUUID)
-        else {
-            characteristicsTransaction.resolveUnknownService()
-            return
-        }
-        
-        if let chars = service.characteristics {
-            let characteristicUUIDs = chars.map{ characteristic in
+        if let characteristics = getKnownCalliopeCharacteristics(withUUID: characteristicsTransaction.serviceUUID) {
+            let characteristicUUIDs = characteristics.map{ characteristic in
                 characteristic.uuid.uuidString
             }
             transaction.resolveAsSuccess(withObject: characteristicUUIDs)
-            return
         }
-        LogNotify.log("Characteristics were not already discovered. This is not supposed to happen.", level: LogNotify.LEVEL.ERROR)
-        transaction.resolveAsFailure(withMessage: "No discovered characteristics available.")
-    }
+        else {
+            transaction.resolveAsFailure(withMessage: "Could not get characteristics.")
+        }
+   }
     
     func readCharacteristicValue(transaction: WBTransaction) {
-        guard
-            let characteristicTransaction = CharacteristicTransaction(transaction: transaction)
-        else {
+        guard let characteristicTransaction = CharacteristicTransaction(transaction: transaction) else {
             transaction.resolveAsFailure(withMessage: "Invalid message")
             return
         }
-        guard let service = self.getService(withUUID: characteristicTransaction.serviceUUID) else {
-            characteristicTransaction.resolveUnknownService()
-            return
-        }
-        guard let chars = service.characteristics else {
-            transaction.resolveAsFailure(withMessage: "Characteristics have not yet been retrieved for service \(service.uuid.uuidString)")
-            return
-        }
-        guard let char = chars.first(where: {$0.uuid == characteristicTransaction.characteristicUUID}) else {
+        
+        guard let characteristic = getKnownCalliopeCharactersitic(serviceUUID: characteristicTransaction.serviceUUID, characteristicUUID: characteristicTransaction.characteristicUUID) else {
             characteristicTransaction.resolveUnknownCharacteristic()
             return
         }
         
-        let result = try? self.read(characteristic: char)
+        let result = try? self.read(characteristic: characteristic)
         if result == nil {
-            transaction.resolveAsFailure(withMessage: "Could not read characteristic \(char.uuid.uuidString)")
+            transaction.resolveAsFailure(withMessage: "Could not read characteristic \(characteristic.uuid.uuidString)")
         }
         else {
             transaction.resolveAsSuccess(withObject: result!)
@@ -438,45 +392,17 @@ extension BLECalliope: Jsonifiable {
     }
     
     func writeCharacteristicValue(transaction: WBTransaction) {
-        guard
-            let transaction = WriteCharacteristicTransaction(transaction: transaction)
-        else {
+        guard let writeCharacteristicTransaction = WriteCharacteristicTransaction(transaction: transaction) else {
             transaction.resolveAsFailure(withMessage: "Invalid write characteristic message")
             return
         }
         
-        guard
-            let char = self.getCharacteristicObject(transaction.serviceUUID, uuid: transaction.characteristicUUID)
-        else {
-            transaction.resolveUnknownCharacteristic()
+        guard let characteristic = getKnownCalliopeCharactersitic(serviceUUID: writeCharacteristicTransaction.serviceUUID, characteristicUUID: writeCharacteristicTransaction.characteristicUUID) else {
+            writeCharacteristicTransaction.resolveUnknownCharacteristic()
             return
         }
         
-        self.writeCharacteristicValuetoDevice(char, transaction)
-    }
-    
-    private func getCharacteristicObject(_ serviceUUID:CBUUID, uuid:CBUUID) -> CBCharacteristic? {
-        if(self.peripheral.services == nil){
-            return nil
-        }
-        var service:CBService? = nil
-        for s in self.peripheral.services!{
-            if(s.uuid == serviceUUID){
-                service = s
-                break
-            }
-        }
-        
-        guard let chars = service?.characteristics else {
-            return nil
-        }
-        
-        for char in chars{
-            if(char.uuid == uuid){
-                return char
-            }
-        }
-        return nil
+        self.writeCharacteristicValuetoDevice(characteristic, writeCharacteristicTransaction)
     }
     
     private func writeCharacteristicValuetoDevice(_ char: CBCharacteristic, _ transaction: WriteCharacteristicTransaction) {
@@ -555,26 +481,27 @@ extension BLECalliope: Jsonifiable {
             transaction.resolveAsFailure(withMessage: "Invalid start notifications message")
             return
         }
-
-        guard let char = self.getCharacteristicObject(characteristicTransaction.serviceUUID, uuid: characteristicTransaction.characteristicUUID) else {
+        
+        guard let characteristic = self.getKnownCalliopeCharactersitic(serviceUUID: characteristicTransaction.serviceUUID, characteristicUUID: characteristicTransaction.characteristicUUID) else {
             characteristicTransaction.resolveUnknownCharacteristic()
             return
         }
+        
         LogNotify.log("Starting notifications for characteristic \(characteristicTransaction.characteristicUUID.uuidString) on device \(self.peripheral.name ?? "<no-name>")")
-
-        if let calliopeCharacteristic = CalliopeCharacteristic(rawValue: char.uuid.uuidString) {
+        
+        if let calliopeCharacteristic = CalliopeCharacteristic(rawValue: characteristic.uuid.uuidString) {
             do {
-                try self.setNotify(characteristic: char, true)
+                try self.setNotify(characteristic: characteristic, true)
             }
             catch {
-                transaction.resolveAsFailure(withMessage: "Starting notifications for characteristic \(char.uuid.uuidString) failed")
+                transaction.resolveAsFailure(withMessage: "Starting notifications for characteristic \(characteristic.uuid.uuidString) failed")
                 return
             }
             wbNotifications[calliopeCharacteristic] = onNotificationCallback
             transaction.resolveAsSuccess()
         }
         else {
-            transaction.resolveAsFailure(withMessage: "Characteristic \(char.uuid.uuidString) is not a known Calliope Characteristic")
+            transaction.resolveAsFailure(withMessage: "Characteristic \(characteristic.uuid.uuidString) is not a known Calliope Characteristic")
         }
     }
     
@@ -583,27 +510,82 @@ extension BLECalliope: Jsonifiable {
             transaction.resolveAsFailure(withMessage: "Invalid start notifications message")
             return
         }
-
-        guard let char = self.getCharacteristicObject(characteristicTransaction.serviceUUID, uuid: characteristicTransaction.characteristicUUID) else {
+        
+        guard let characteristic = self.getKnownCalliopeCharactersitic(serviceUUID: characteristicTransaction.serviceUUID, characteristicUUID: characteristicTransaction.characteristicUUID) else {
             characteristicTransaction.resolveUnknownCharacteristic()
             return
         }
+        
         LogNotify.log("Stopping notifications for characteristic \(characteristicTransaction.characteristicUUID.uuidString) on device \(self.peripheral.name ?? "<no-name>")")
         
-        if let calliopeCharacteristic = CalliopeCharacteristic(rawValue: char.uuid.uuidString) {
+        if let calliopeCharacteristic = CalliopeCharacteristic(rawValue: characteristic.uuid.uuidString) {
             do {
-                try self.setNotify(characteristic: char, false)
+                try self.setNotify(characteristic: characteristic, false)
             }
             catch {
-                transaction.resolveAsFailure(withMessage: "Stopping notifications for characteristic \(char.uuid.uuidString) failed")
+                transaction.resolveAsFailure(withMessage: "Stopping notifications for characteristic \(characteristic.uuid.uuidString) failed")
                 return
             }
             wbNotifications[calliopeCharacteristic] = nil
             transaction.resolveAsSuccess()
         }
         else {
-            transaction.resolveAsFailure(withMessage: "Characteristic \(char.uuid.uuidString) is not a known Calliope Characteristic")
+            transaction.resolveAsFailure(withMessage: "Characteristic \(characteristic.uuid.uuidString) is not a known Calliope Characteristic")
         }
+    }
+    
+    private func getKnownCalliopeServices() -> [CBService]? {
+        guard let services = self.peripheral.services else {
+            LogNotify.log("Expected for services to already be discovered. This should not happen.")
+            return nil
+        }
+        
+        let knownCalliopeServices = services.filter {
+            CalliopeService(rawValue: $0.uuid.uuidString) != nil
+        }
+        
+        return knownCalliopeServices
+    }
+    
+    private func getKownCalliopeService(withUUID uuid: CBUUID) -> CBService?{
+        guard let services = getKnownCalliopeServices() else {
+            return nil
+        }
+        
+        guard let index = services.firstIndex(where: {$0.uuid == uuid}) else {
+            return nil
+        }
+        
+        return services[index]
+    }
+    
+    private func getKnownCalliopeCharacteristics(withUUID uuid: CBUUID) -> [CBCharacteristic]? {
+        guard let service = getKownCalliopeService(withUUID: uuid) else {
+            return nil
+        }
+        
+        guard let characteristics = service.characteristics else {
+            LogNotify.log("Characteristics have not yet been retrieved for service \(service.uuid.uuidString)")
+            return nil
+        }
+        
+        let knownCalliopeCharacteristics = characteristics.filter {
+            CalliopeCharacteristic(rawValue: $0.uuid.uuidString) != nil
+        }
+        
+        return knownCalliopeCharacteristics
+    }
+    
+    private func getKnownCalliopeCharactersitic(serviceUUID: CBUUID, characteristicUUID: CBUUID) -> CBCharacteristic? {
+        guard let characteristics = getKnownCalliopeCharacteristics(withUUID: serviceUUID) else {
+            return nil
+        }
+        
+        guard let index = characteristics.firstIndex(where: {$0.uuid == characteristicUUID}) else {
+            return nil
+        }
+        
+        return characteristics[index]
     }
     
     func jsonify() -> String {
