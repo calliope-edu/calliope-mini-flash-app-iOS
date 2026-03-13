@@ -125,13 +125,8 @@ open class WBMessageHandler: NSObject, WKScriptMessageHandler
             calliope.writeCharacteristicValue(transaction: transaction)
 
         case .startNotifications:
-            if let webView = webView {
-                calliope.startNotifications(transaction: transaction, onNotificationCallback: onNotificationReceived)
-            }
-            else {
-                transaction.resolveAsFailure(withMessage: "Error in Swift Message Handler")
-                LogNotify.log("WebView is nil, but it should not.", level: LogNotify.LEVEL.ERROR)
-            }
+            calliope.startNotifications(transaction: transaction, onNotificationCallback: onNotificationReceived)
+            
         case .stopNotifications:
             calliope.stopNotifications(transaction: transaction)
         }
