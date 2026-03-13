@@ -11,8 +11,8 @@ struct BluetoothConstants {
 	static let discoveryTimeout = 20.0
 	static let connectTimeout = 5
 	static let serviceDiscoveryTimeout = 10.0
-	static let readTimeout = 10.0
-	static let writeTimeout = 10.0
+	static let readTimeout = 1.0
+	static let writeTimeout = 1.0
 	static let startDfuProcessDelay = 2.0
 
 	static let maxRetryCount = 5;
