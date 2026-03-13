@@ -24,73 +24,31 @@ import WebKit
 
 class WBTransaction: Equatable, CustomStringConvertible {
     
-    /*
-     * ========== Embedded types ==========
-     */
-    struct Key: Hashable, CustomStringConvertible {
-        let typeComponents: [String]
-        
-        func hash(into hasher: inout Hasher) {
-            for tc in self.typeComponents {
-                hasher.combine(tc)
-            }
-        }
-        
-        var description: String {
-            let contents = self.typeComponents.reduce("") {
-                (progress: String, next: String) in
-                if (progress.isEmpty) {
-                    return next
-                } else {
-                    return "\(progress):\(next)"
-                }
-            }
-            return contents
-        }
-        
-        static func == (left: Key, right: Key) -> Bool {
-            guard left.typeComponents.count == right.typeComponents.count else {
-                return false;
-            }
-            for (lstr, rstr) in zip(left.typeComponents, right.typeComponents) {
-                if (lstr != rstr) {
-                    return false
-                }
-            }
-            return true
-        }
-    }
     class Wrapper {
         let transaction: WBTransaction
         
-        /*! @abstract Failable initializer so that subclasses may decide not to accept the transaction. */
+        // Failable initializer so that subclasses may decide not to accept the transaction.
         init? (transaction: WBTransaction) {
             self.transaction = transaction
         }
     }
     
-    /*
-     * ========== Properties ==========
-     */
-    /*! @abstract The unique ID for this transaction which is provided for us by the web page */
-    let id: Int
-    let key: Key
+    // ========== Properties ==========
+    let id: Int // The unique ID for this transaction which is provided for us by the web page
+    let typeComponents: [String]
     let messageData: [String: AnyObject]
-    /*! @abstract The web view that initiated this transaction, and where we can send the response.
-     */
-    weak var webView: WBWebView?
+    weak var webView: WBWebView? // The web view that initiated this transaction, and where we can send the response.
     var completionHandlers = [(WBTransaction, Bool) -> Void]()
     var resolved: Bool = false
     
-    /*
-     * ========== Initializers ==========
-     */
+    // ========== Initializers ==========
     init(id: Int, typeComponents: [String], messageData: [String: AnyObject], webView: WKWebView?){
         self.id = id
-        self.key = Key(typeComponents: typeComponents)
+        self.typeComponents = typeComponents
         self.messageData = messageData
         self.webView = webView as? WBWebView
     }
+    
     convenience init?(withMessage message: WKScriptMessage) {
         
         guard
@@ -112,7 +70,7 @@ class WBTransaction: Equatable, CustomStringConvertible {
     /*
      * ========== Public methods ==========
      */
-    /*! @abstract Abandon the transaction and release all completion handlers. */
+    // Abandon the transaction and release all completion handlers.
     func abandon() {
         self.completionHandlers = []
         self.resolved = true
@@ -138,7 +96,16 @@ class WBTransaction: Equatable, CustomStringConvertible {
      * ========== CustomStringConvertible ==========
      */
     var description: String {
-        return "Transaction(id: \(self.id), key: \(self.key))"
+        if(typeComponents.count <= 0) {
+            return "Transaction(id: \(self.id))"
+        }
+        else if(typeComponents.count == 1) {
+            return "Transaction(id: \(self.id), type: \(typeComponents[0]))"
+
+        }
+        else {
+            return "Transaction(id: \(self.id), type: \(typeComponents[0]): \(typeComponents[1])"
+        }
     }
     
     /*
@@ -146,14 +113,14 @@ class WBTransaction: Equatable, CustomStringConvertible {
      */
     private func complete(success: Bool, object: Jsonifiable) {
         if self.resolved {
-            NSLog("Attempt to re-resolve transaction \(self.id) ignored")
+            LogNotify.log("Attempt to re-resolve transaction \(self.id) ignored")
             return
         }
         
         let commandString = "window.receiveMessageResponse(\(success.jsonify()), \(object.jsonify()), \(self.id));\n"
         
         if !success {
-            NSLog("\(self.description) unsuccessful: \(object.jsonify())")
+            LogNotify.log("\(self.description) unsuccessful: \(object.jsonify())")
         }
         
         if let wv = self.webView {
@@ -162,6 +129,7 @@ class WBTransaction: Equatable, CustomStringConvertible {
         else {
             LogNotify.log("Webview not configured on transaction or dealloced", level: LogNotify.LEVEL.ERROR)
         }
+        
         self.resolved = true
         self.completionHandlers.forEach {$0(self, success)}
         self.completionHandlers.removeAll()

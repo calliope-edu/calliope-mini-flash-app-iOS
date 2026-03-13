@@ -55,11 +55,11 @@ open class WBMessageHandler: NSObject, WKScriptMessageHandler
     private func triageManagerRequests(transaction: WBTransaction){
         
         guard
-            transaction.key.typeComponents.count > 0,
+            transaction.typeComponents.count > 0,
             let managerMessageType = ManagerRequests(
-                rawValue: transaction.key.typeComponents[0])
+                rawValue: transaction.typeComponents[0])
         else {
-            transaction.resolveAsFailure(withMessage: "Request type components not recognised \(transaction.key)")
+            transaction.resolveAsFailure(withMessage: "Request type components not recognised \(transaction.typeComponents)")
             return
         }
         
@@ -83,7 +83,7 @@ open class WBMessageHandler: NSObject, WKScriptMessageHandler
     }
     
     func triageDeviceRequests(transaction: WBTransaction) {
-        let tc = transaction.key.typeComponents
+        let tc = transaction.typeComponents
         guard
             tc.count > 1,
             let deviceMessageType = DeviceRequests(rawValue: tc[1])
