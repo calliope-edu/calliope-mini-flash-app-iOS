@@ -178,6 +178,10 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
     }
     
     private func attemptReconnect() {
+        // Make shure that we want to connect to a calliope right now. Otherwise it connects on the home screen without the ConnectionView even showing.
+        guard MatrixConnectionViewController.instance.calliopeClass != nil else {
+           return
+        }
         LogNotify.log("attempt reconnect")
         guard let (lastConnectedUUID, lastConnectedName) = self.lastConnected,
               let lastCalliope = centralManager.retrievePeripherals(withIdentifiers: [lastConnectedUUID]).first
