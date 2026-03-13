@@ -48,4 +48,9 @@ class WBWebViewController: UIViewController, WKNavigationDelegate {
             self.wbLogger, name: "logger"
         )
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.webView.removeNavigationDelegate(self)
+    }
 }

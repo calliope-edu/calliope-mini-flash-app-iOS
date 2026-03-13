@@ -172,8 +172,6 @@ class WBWebView: WKWebView, WKNavigationDelegate {
             }
         })
     }
-    }
-
 }
 
 class SpecialTapRecognizer: UITapGestureRecognizer {

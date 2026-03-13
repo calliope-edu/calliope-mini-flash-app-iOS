@@ -112,4 +112,9 @@ class WBWebViewContainerController: UIViewController, WKNavigationDelegate, WKUI
         }
         self.performSegue(withIdentifier: "nav-error-segue", sender: error)
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        webView.removeNavigationDelegate(self)
+    }
 }
