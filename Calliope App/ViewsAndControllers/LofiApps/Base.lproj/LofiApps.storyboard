@@ -18,7 +18,7 @@
                             <segue destination="0Rh-9C-Uu9" kind="embed" destinationCreationSelector="addSwiftUIView:" id="CYb-7B-uMT"/>
                         </connections>
                     </containerView>
-                    <navigationItem key="navigationItem" title="Lofi Apps" id="w16-hI-VJ6"/>
+                    <navigationItem key="navigationItem" title="Apps" id="w16-hI-VJ6"/>
                     <connections>
                         <segue destination="rVu-bA-ejL" kind="show" identifier="showLofiWebView" id="sgO-pV-4iA"/>
                         <segue destination="HQI-pA-Fhu" kind="show" identifier="showInfo" id="DXs-eB-npS"/>
