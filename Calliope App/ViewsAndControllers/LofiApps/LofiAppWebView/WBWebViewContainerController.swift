@@ -44,6 +44,14 @@ class WBWebViewContainerController: UIViewController, WKNavigationDelegate, WKUI
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        // On the new IOS version the gestureRecognizer creates unwanted behaviour, because swipes are not always for navigating back.
+        if #available(iOS 26.0, *), let gestureRecognizer = self.navigationController?.interactiveContentPopGestureRecognizer {
+            gestureRecognizer.isEnabled = false
+        }
+    }
+    
     // MARK: - WKNavigationDelegate
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         self.loadingProgressContainer.isHidden = false
