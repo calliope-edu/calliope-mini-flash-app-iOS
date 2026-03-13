@@ -346,7 +346,7 @@ extension BLECalliope: Jsonifiable {
             return
         }
         
-        if let characteristic = getKnownCalliopeCharactersitic(serviceUUID: characteristicTransaction.serviceUUID, characteristicUUID: characteristicTransaction.characteristicUUID) {
+        if getKnownCalliopeCharactersitic(serviceUUID: characteristicTransaction.serviceUUID, characteristicUUID: characteristicTransaction.characteristicUUID) != nil {
             transaction.resolveAsSuccess()
         }
         else {
@@ -402,77 +402,60 @@ extension BLECalliope: Jsonifiable {
             return
         }
         
-        self.writeCharacteristicValuetoDevice(characteristic, writeCharacteristicTransaction)
-    }
-    
-    private func writeCharacteristicValuetoDevice(_ char: CBCharacteristic, _ transaction: WriteCharacteristicTransaction) {
-        
-        switch transaction.responseMode {
+        switch writeCharacteristicTransaction.responseMode {
         case .required:
-            guard char.properties.contains(.write) else {
-                transaction.transaction.resolveAsFailure(withMessage: "Write with response not supported")
-                return
-            }
-            
-            do {
-                try self.write(transaction.data, for: char)
-            }
-            catch {
-                transaction.transaction.resolveAsFailure(withMessage: "Write to characteristic \(char.uuid.uuidString) failed")
-                return
-            }
-            transaction.transaction.resolveAsSuccess()
+           writeTransactionWithResponse(characteristic: characteristic, transaction: writeCharacteristicTransaction)
         case .never:
-            guard char.properties.contains(.write) || char.properties.contains(.writeWithoutResponse)
-            else {
-                transaction.transaction.resolveAsFailure(
-                    withMessage: "Characteristic does not support writing"
-                )
-                return
-            }
-            if let calliopeCharacteristic = CalliopeCharacteristic(rawValue: char.uuid.uuidString) {
-                do {
-                    try self.writeWithoutResponse(transaction.data, for: calliopeCharacteristic)
-                }
-                catch {
-                    transaction.transaction.resolveAsFailure(withMessage: "Write to characteristic \(char.uuid.uuidString) failed")
-                    return
-                }
-                transaction.transaction.resolveAsSuccess()
-            }
-            else {
-                transaction.transaction.resolveAsFailure(withMessage: "Characteristic \(char.uuid.uuidString) is not a known Calliope Characteristic")
-            }
-        case .optional:
+            writeTransactionWithoutResponse(characteristic: characteristic, transaction: writeCharacteristicTransaction)
+       case .optional:
             // optional is in fact deprecated and the instructions are "Use any combination of the
             // sub procedures" in webbluetoothcg.github.io/web-bluetooth/#writecharacteristicvalue
             // so we do a write with response if possible else without.
-            if char.properties.contains(.write) {
-                do {
-                    try self.write(transaction.data, for: char)
-                }
-                catch {
-                    transaction.transaction.resolveAsFailure(withMessage: "Write to characteristic \(char.uuid.uuidString) failed")
-                    return
-                }
-                transaction.transaction.resolveAsSuccess()
-            } else if char.properties.contains(.writeWithoutResponse) {
-                if let calliopeCharacteristic = CalliopeCharacteristic(rawValue: char.uuid.uuidString) {
-                    do {
-                        try self.writeWithoutResponse(transaction.data, for: calliopeCharacteristic)
-                    }
-                    catch {
-                        transaction.transaction.resolveAsFailure(withMessage: "Write to characteristic \(char.uuid.uuidString) failed")
-                        return
-                    }
-                    transaction.transaction.resolveAsSuccess()
-                }
-                else {
-                    transaction.transaction.resolveAsFailure(withMessage: "Characteristic \(char.uuid.uuidString) is not a known Calliope Characteristic")
-                }
+            if characteristic.properties.contains(.write) {
+                writeTransactionWithResponse(characteristic: characteristic, transaction: writeCharacteristicTransaction)
+            } else if characteristic.properties.contains(.writeWithoutResponse) {
+                writeTransactionWithoutResponse(characteristic: characteristic, transaction: writeCharacteristicTransaction)
             } else {
-                transaction.transaction.resolveAsFailure(withMessage: "Characteristic does not support writing")
+                writeCharacteristicTransaction.transaction.resolveAsFailure(withMessage: "Characteristic does not support writing")
             }
+        }
+    }
+    
+    private func writeTransactionWithResponse(characteristic: CBCharacteristic, transaction: WriteCharacteristicTransaction) {
+        guard characteristic.properties.contains(.write) else {
+            transaction.transaction.resolveAsFailure(withMessage: "Write with response not supported")
+            return
+        }
+        
+        do {
+            try self.write(transaction.data, for: characteristic)
+        }
+        catch {
+            transaction.transaction.resolveAsFailure(withMessage: "Write to characteristic \(characteristic.uuid.uuidString) failed")
+            return
+        }
+        transaction.transaction.resolveAsSuccess()
+
+    }
+    
+    private func writeTransactionWithoutResponse(characteristic: CBCharacteristic, transaction: WriteCharacteristicTransaction) {
+        guard characteristic.properties.contains(.write) || characteristic.properties.contains(.writeWithoutResponse) else {
+            transaction.transaction.resolveAsFailure(withMessage: "Characteristic does not support writing"            )
+            return
+        }
+        
+        if let calliopeCharacteristic = CalliopeCharacteristic(rawValue: characteristic.uuid.uuidString) {
+            do {
+                try self.writeWithoutResponse(transaction.data, for: calliopeCharacteristic)
+            }
+            catch {
+                transaction.transaction.resolveAsFailure(withMessage: "Write to characteristic \(characteristic.uuid.uuidString) failed")
+                return
+            }
+            transaction.transaction.resolveAsSuccess()
+        }
+        else {
+            transaction.transaction.resolveAsFailure(withMessage: "Characteristic \(characteristic.uuid.uuidString) is not a known Calliope Characteristic")
         }
     }
     
