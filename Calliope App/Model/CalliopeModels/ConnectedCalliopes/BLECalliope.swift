@@ -11,7 +11,7 @@ import NordicDFU
 import UIKit
 import WebKit
 
-class BLECalliope: Calliope, Jsonifiable {
+class BLECalliope: Calliope {
     //the services required for the usage
     var requiredServices: Set<CalliopeService> {
         []
@@ -39,9 +39,7 @@ class BLECalliope: Calliope, Jsonifiable {
     let peripheral: CBPeripheral
     let name: String
     let servicesChangedCallback: () -> ()?
-    
-    // TODO: Set this correctly
-    weak var webView: WKWebView? = nil
+    var wbNotifications: [CalliopeCharacteristic: (String, String, String) -> Void] // This allows the WBMessageHandler to subscribe to notifications via the extension of this class
     
     required init?(peripheral: CBPeripheral, name: String, discoveredServices: Set<CalliopeService>, discoveredCharacteristicUUIDsForServiceUUID: [CBUUID: Set<CBUUID>], servicesChangedCallback: @escaping () -> ()?) {
         self.peripheral = peripheral
@@ -91,7 +89,6 @@ class BLECalliope: Calliope, Jsonifiable {
     
     //MARK: reading and writing characteristics (asynchronously/ scheduled/ synchronously)
     //to sequentialize reads and writes
-    
     let bleOperationsQueue = DispatchQueue(label: "bleOperationsQueue")
     var bleOperationsGroup: DispatchGroup? = nil
     
@@ -139,9 +136,9 @@ class BLECalliope: Calliope, Jsonifiable {
             return
         }
         
-        //        handleValueUpdateInternal(calliopeCharacteristic, value) ? Why ?
         handleValueUpdate(calliopeCharacteristic, value)
-        
+       
+        // notifying a possible WBWebView that started notifications on this characteristic
         if let calliopeCharacteristic = CalliopeCharacteristic(rawValue: characteristic.uuid.uuidString), let callback = wbNotifications[calliopeCharacteristic] {
             callback(peripheral.identifier.uuidString, characteristic.uuid.uuidString, value.jsonify())
         }
@@ -157,10 +154,6 @@ class BLECalliope: Calliope, Jsonifiable {
     }
     
     func handleValueUpdate(_ characteristic: CalliopeCharacteristic, _ value: Data) {
-        LogNotify.log("value for \(characteristic) updated (\(value.hexEncodedString()))")
-    }
-    
-    private func handleValueUpdateInternal(_ characteristic: CalliopeCharacteristic, _ value: Data) {
         LogNotify.log("value for \(characteristic) updated (\(value.hexEncodedString()))")
     }
     
@@ -330,28 +323,10 @@ class BLECalliope: Calliope, Jsonifiable {
             }
         }
     }
-    
-    func jsonify() -> String {
-        let props: [String: Any] = [
-            "id": self.peripheral.identifier.uuidString,
-            "name": (self.peripheral.name ?? NSNull()) as Any,
-            "deviceClass": 0,
-            "vendorIDSource": 0,
-            "vendorID": 0,
-            "productID": 0,
-            "productVersion": 0,
-            "uuids": [] as [String],
-        ]
-        
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: props)
-            return String(data: jsonData, encoding: String.Encoding.utf8)!
-        } catch let error {
-            assert(false, "error converting to json: \(error)")
-            return ""
-        }
-    }
-    
+}
+
+// Extension with the API used by the WBMessageHandler
+extension BLECalliope: Jsonifiable {
     func getPrimaryServices(transaction: WBTransaction) {
         guard let servicesTransaction = ServicesTransaction(transaction: transaction)
         else {
@@ -575,8 +550,6 @@ class BLECalliope: Calliope, Jsonifiable {
         }
     }
     
-    var wbNotifications: [CalliopeCharacteristic: (String, String, String) -> Void]
-    
     func startNotifications(transaction: WBTransaction, onNotificationCallback: @escaping (String, String, String) -> Void) {
         guard let characteristicTransaction = CharacteristicTransaction(transaction: transaction) else {
             transaction.resolveAsFailure(withMessage: "Invalid start notifications message")
@@ -630,6 +603,27 @@ class BLECalliope: Calliope, Jsonifiable {
         }
         else {
             transaction.resolveAsFailure(withMessage: "Characteristic \(char.uuid.uuidString) is not a known Calliope Characteristic")
+        }
+    }
+    
+    func jsonify() -> String {
+        let props: [String: Any] = [
+            "id": self.peripheral.identifier.uuidString,
+            "name": (self.peripheral.name ?? NSNull()) as Any,
+            "deviceClass": 0,
+            "vendorIDSource": 0,
+            "vendorID": 0,
+            "productID": 0,
+            "productVersion": 0,
+            "uuids": [] as [String],
+        ]
+        
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: props)
+            return String(data: jsonData, encoding: String.Encoding.utf8)!
+        } catch let error {
+            assert(false, "error converting to json: \(error)")
+            return ""
         }
     }
 }
