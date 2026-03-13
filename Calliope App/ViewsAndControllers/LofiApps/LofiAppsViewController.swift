@@ -12,10 +12,18 @@ import SwiftUI
 final class LofiAppsViewController: UIViewController {
     
     private var selectedApp: AppItem?
-    private var infoUrl: String?
+    
+    private let infoItem = AppItem(tileItem: TileItem(title: "INFO", imageName: "info", color: Color("calliope-pink")), url: "https://calliope.cc/programmieren/mobil/ble-anwendungen")
+    private let appItems = [
+        AppItem(tileItem: TileItem(title: "ROBOTER MIT GESICHTSERKENNUNG STEUERN",    imageName: "facerobot", color: Color("calliope-lilablau")), url: "https://go.calliope.cc/facerobot?mobile=true"),
+        AppItem(tileItem: TileItem(title: "SPRACHROBOTER",  imageName: "speak", color: Color("calliope-orange")), url: "https://cardboard.lofirobot.com/apps/talking-robots"),
+        AppItem(tileItem: TileItem(title: "STEUERUNG PER COMPUTER",    imageName: "control", color: Color("calliope-turqoise")), url: "https://go.calliope.cc/apps/control/index.html?mobile=true"),
+        AppItem(tileItem: TileItem(title: "OBJEKTERKENNUNG MIT KÜNSTLICHER INTELLIGENZ",   imageName: "teachablemachine", color: Color("calliope-darkgreen")), url: "https://go.calliope.cc/teachablemachine/index.html?mobile=true"),
+    ]
 
     @IBSegueAction func addSwiftUIView(_ coder: NSCoder) -> UIViewController? {
-        return UIHostingController(coder: coder, rootView: LofiAppsPage(parentViewController: self))
+        let appsPage = TilePageLayout(leftItem: infoItem, rightItems: appItems, leftItemOnTap: onInfoSelected, rightItemsOnTap: onAppSelected)
+        return UIHostingController(coder: coder, rootView: appsPage)
     }
     
     override func viewWillAppear(_ animated: Bool)  {
@@ -30,24 +38,26 @@ final class LofiAppsViewController: UIViewController {
                     return
                 }
                 let lofiAppDetailViewController = segue.destination as! LofiAppDetailViewController
-                lofiAppDetailViewController.appTitle = selectedApp!.title
+                lofiAppDetailViewController.appTitle = selectedApp!.tileItem.title
                 lofiAppDetailViewController.url = URL(string: selectedApp!.url)
             }
         else if segue.identifier == "showInfo" {
-            guard infoUrl != nil else {
-                LogNotify.log("InfoUrl is not set. This should not happen.", level: LogNotify.LEVEL.ERROR)
-                return
-            }
             let infoViewController = segue.destination as! InfoViewController
-            infoViewController.url = URL(string: infoUrl!)
+            infoViewController.url = URL(string: infoItem.url)
         }
-        }
+    }
     
-    func setSelectedApp(app: AppItem) {
+    func onAppSelected(app: AppItem) {
         selectedApp = app
+        performSegue(withIdentifier: "showLofiWebView", sender: self)
     }
     
-    func selectedInfo(url: String) {
-        self.infoUrl = url
+    func onInfoSelected(info: AppItem) {
+        performSegue(withIdentifier: "showInfo", sender: self)
     }
+}
+
+struct AppItem: HasTileItem {
+    let tileItem: TileItem
+    let url: String
 }
