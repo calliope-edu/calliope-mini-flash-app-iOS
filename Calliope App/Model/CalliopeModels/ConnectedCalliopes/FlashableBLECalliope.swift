@@ -1045,7 +1045,7 @@ class CalliopeV3: FlashableBLECalliope {
     }
 
     override var optionalServices: Set<CalliopeService> {
-        [.partialFlashing]
+        [.partialFlashing, .microbitUtilityService]
     }
 
     internal override func startFullFlashing() throws {
