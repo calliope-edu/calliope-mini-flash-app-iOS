@@ -43,6 +43,9 @@ class ChartCollectionViewController: UITableViewController, UIDocumentPickerDele
     
     override func viewWillDisappear(_ animated: Bool) {
         locationManager.stopUpdatingLocation()
+        for cell in tableView.visibleCells.compactMap({ $0 as? ChartViewCell }) where cell.isRecordingData {
+            cell.stopDataRecording()
+        }
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {

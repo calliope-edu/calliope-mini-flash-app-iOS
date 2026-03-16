@@ -79,7 +79,7 @@ class ChartViewCell: BaseChartViewCell {
             recordingButton.isEnabled = false
         } else {
             sensorTypeButton.isEnabled = true
-            recordingButton.isEnabled = true
+            recordingButton.isEnabled = (chart.sensorType != nil)
         }
     }
 

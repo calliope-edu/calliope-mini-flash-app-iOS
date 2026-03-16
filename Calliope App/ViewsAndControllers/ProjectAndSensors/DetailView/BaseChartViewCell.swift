@@ -113,8 +113,8 @@ class BaseChartViewCell: UITableViewCell, ChartViewDelegate {
 
         UIView.animate(withDuration: 0.5) {
             self.deleteButton.isEnabled = true
-            self.recordingButton.isEnabled = false
-            self.recordingButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+            self.recordingButton.isEnabled = true
+            self.recordingButton.setImage(UIImage(systemName: "record.circle"), for: .normal)
         }
 
     }
@@ -242,6 +242,7 @@ class BaseChartViewCell: UITableViewCell, ChartViewDelegate {
         Chart.deleteChart(id: chart.id)
         self.chart = Chart.insertChart(sensorType: sensor.calliopeService, projectsId: chart.projectsId)
         lineChartView.setupView(service: sensor.calliopeService)
+        recordingButton.isEnabled = true
     }
 
     func updateDataLabels() {
