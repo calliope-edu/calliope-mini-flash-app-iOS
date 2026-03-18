@@ -36,6 +36,7 @@ class ChartViewCell: BaseChartViewCell {
             sensorTypeButton.isEnabled = false
             return
         }
+        recordingButton.isEnabled = (chart.sensorType != nil && chart.sensorType != .empty)
     }
 
     private func exportAsCSV() {

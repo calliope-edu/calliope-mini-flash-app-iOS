@@ -46,6 +46,7 @@ class ChartCollectionViewController: UITableViewController, UIDocumentPickerDele
         for cell in tableView.visibleCells.compactMap({ $0 as? ChartViewCell }) where cell.isRecordingData {
             cell.stopDataRecording()
         }
+        DataController.activeServices.removeAll()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
