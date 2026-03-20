@@ -209,9 +209,9 @@ class BLECalliope: Calliope {
             }
     }
     
-    func write(_ data: Data, for characteristic: CalliopeCharacteristic) throws {
+    func write(_ data: Data, for characteristic: CalliopeCharacteristic, _ completion: @escaping (Result<Void, Error>) -> Void) throws {
         let cbCharacteristic = try checkWritePreconditions(for: characteristic)
-        try write(data, for: cbCharacteristic)
+        write(data, for: cbCharacteristic, completion)
     }
     
     func writeWithoutResponse(_ data: Data, for characteristic: CalliopeCharacteristic) throws {
@@ -231,9 +231,9 @@ class BLECalliope: Calliope {
         return cbCharacteristic
     }
     
-    func write(_ data: Data, for characteristic: CBCharacteristic) throws {
-        try bleOperationsQueue.sync {
-            writingCharacteristic = characteristic
+    func write(_ data: Data, for characteristic: CBCharacteristic,_ completion: @escaping (Result<Void, Error>) -> Void) {
+        bleOperationsQueue.async {
+            self.writingCharacteristic = characteristic
             
             self.bleOperationsGroup = DispatchGroup()
             self.bleOperationsGroup!.enter()
@@ -244,13 +244,15 @@ class BLECalliope: Calliope {
                 self.writeError = CBError(.connectionTimeout)
             }
             
-            guard writeError == nil else {
-                LogNotify.log("write resulted in error: \(writeError!)")
-                let error = writeError!
+            guard self.writeError == nil else {
+                LogNotify.log("write resulted in error: \(self.writeError!)")
+                let error = self.writeError!
                 //prepare for next write
-                writeError = nil
-                throw error
+                self.writeError = nil
+                completion(.failure(error))
+                return
             }
+            completion(.success(()))
             LogNotify.log("wrote \(characteristic)")
         }
     }
@@ -427,15 +429,14 @@ extension BLECalliope: Jsonifiable {
             return
         }
         
-        do {
-            try self.write(transaction.data, for: characteristic)
-        }
-        catch {
-            transaction.transaction.resolveAsFailure(withMessage: "Write to characteristic \(characteristic.uuid.uuidString) failed")
-            return
-        }
-        transaction.transaction.resolveAsSuccess()
-
+        self.write(transaction.data, for: characteristic, { result in
+            switch(result) {
+            case .success():
+                transaction.transaction.resolveAsSuccess()
+            case .failure(let error):
+                transaction.transaction.resolveAsFailure(withMessage: "Write to characteristic \(characteristic.uuid.uuidString) failed with error \(error)")
+            }
+       })
     }
     
     private func writeTransactionWithoutResponse(characteristic: CBCharacteristic, transaction: WriteCharacteristicTransaction) {
