@@ -89,8 +89,11 @@ class BLECalliope: Calliope {
     
     //MARK: reading and writing characteristics (asynchronously/ scheduled/ synchronously)
     //to sequentialize reads and writes
-    let bleOperationsQueue = DispatchQueue(label: "bleOperationsQueue")
+    let bleOperationsQueue = DispatchQueue(label: "com.yourapp.bluetooth.operations")
     var bleOperationsGroup: DispatchGroup? = nil
+    var bleError: Error? = nil
+    var operationCharacteristic: CBCharacteristic? = nil
+    var bleResultValue: Data? = nil
     
     var writeError: Error? = nil
     var writingCharacteristic: CBCharacteristic? = nil
@@ -103,7 +106,7 @@ class BLECalliope: Calliope {
     var notifyingCharacteristic: CBCharacteristic? = nil
     
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
-        if let writingCharacteristic = writingCharacteristic, characteristic.uuid == writingCharacteristic.uuid {
+        if let writingCharacteristic = operationCharacteristic, characteristic.uuid == writingCharacteristic.uuid {
             explicitWriteResponse(error)
             return
         } else {
@@ -232,27 +235,17 @@ class BLECalliope: Calliope {
     }
     
     func write(_ data: Data, for characteristic: CBCharacteristic,_ completion: @escaping (Result<Void, Error>) -> Void) {
-        bleOperationsQueue.async {
-            self.writingCharacteristic = characteristic
-            
-            self.bleOperationsGroup = DispatchGroup()
-            self.bleOperationsGroup!.enter()
+        executeBLEOperation(characteristic: characteristic, operation: {
             self.peripheral.writeValue(data, for: characteristic, type: .withResponse)
-            
-            if self.bleOperationsGroup!.wait(timeout: DispatchTime.now() + BluetoothConstants.writeTimeout) == .timedOut {
-                self.writeError = CBError(.connectionTimeout)
-            }
-            
-            guard self.writeError == nil else {
-                let error = self.writeError!
-                self.writeError = nil
-                LogNotify.log("Write to \(characteristic) resulted in Error \(error).")
+        }, timeout: BluetoothConstants.writeTimeout, completion: {
+            result in
+            switch(result) {
+            case .success():
+                completion(.success(()))
+            case .failure(let error):
                 completion(.failure(error))
-                return
             }
-            LogNotify.log("Successfully wrote \(data) to \(characteristic).")
-            completion(.success(()))
-        }
+        }, type: OperationType.write)
     }
     
     
@@ -319,6 +312,38 @@ class BLECalliope: Calliope {
                 setNotifyError = nil
                 throw error
             }
+        }
+    }
+    
+    enum OperationType: String {
+        case read = "Read"
+        case write = "Write"
+        case setNotify = "Set Notify"
+    }
+    
+    private func executeBLEOperation(characteristic: CBCharacteristic, operation: @escaping () -> Void, timeout: Double, completion: @escaping (Result<Void, Error>) -> Void, type: OperationType) {
+        bleOperationsQueue.async {
+            self.operationCharacteristic = characteristic
+            
+            self.bleOperationsGroup = DispatchGroup()
+            self.bleOperationsGroup!.enter()
+            
+            operation()
+            
+            if self.bleOperationsGroup!.wait(timeout: DispatchTime.now() + timeout) == .timedOut {
+                self.bleError = CBError(.connectionTimeout)
+            }
+            
+            guard self.bleError == nil else {
+                let error = self.bleError!
+                self.bleError = nil
+                LogNotify.log("\(type.rawValue) of \(characteristic) failed with error: \(error)")
+                completion(.failure(error))
+                return
+            }
+            
+            LogNotify.log("\(type.rawValue) of \(characteristic) successfull")
+            completion(.success(()))
         }
     }
 }
