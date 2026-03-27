@@ -156,7 +156,7 @@ class BLECalliope: Calliope {
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
-        if let writingCharacteristic = notifyingCharacteristic, characteristic.uuid == writingCharacteristic.uuid {
+        if let writingCharacteristic = operationCharacteristic, characteristic.uuid == writingCharacteristic.uuid {
             explicitSetNotifyResponse(error)
             return
         } else {
@@ -169,9 +169,9 @@ class BLECalliope: Calliope {
     }
     
     private func explicitSetNotifyResponse(_ error: Error?) {
-        notifyingCharacteristic = nil
+        operationCharacteristic = nil
         //set potential error and move on
-        setNotifyError = error
+        bleError = error
         if let error = error {
             LogNotify.log("received error from writing: \(error)")
         } else {
@@ -279,30 +279,21 @@ class BLECalliope: Calliope {
         else {
             throw "no service that contains characteristic \(characteristic)"
         }
-        return try setNotify(characteristic: cbCharacteristic, activate)
+        return setNotify(characteristic: cbCharacteristic, activate, nil)
     }
     
-    func setNotify(characteristic: CBCharacteristic, _ activate: Bool) throws {
-        try bleOperationsQueue.sync{
-            notifyingCharacteristic = characteristic
-            
-            self.bleOperationsGroup = DispatchGroup()
-            self.bleOperationsGroup!.enter()
+    func setNotify(characteristic: CBCharacteristic, _ activate: Bool, _ completion: ((Result<Void, Error>) -> Void)?) {
+        executeBLEOperation(characteristic: characteristic, operation: {
             self.peripheral.setNotifyValue(activate, for: characteristic)
-            
-            if self.bleOperationsGroup!.wait(timeout: DispatchTime.now() + BluetoothConstants.readTimeout) == .timedOut {
-                LogNotify.log("activate notifications from \(characteristic) timed out")
-                self.setNotifyError = CBError(.connectionTimeout)
+        }, timeout: BluetoothConstants.readTimeout, completion: {
+           result in
+            switch(result) {
+            case .success():
+                completion?(.success(()))
+            case .failure(let error):
+                completion?(.failure(error))
             }
-            
-            guard setNotifyError == nil else {
-                LogNotify.log("read resulted in error: \(setNotifyError!)")
-                let error = setNotifyError!
-                //prepare for next read
-                setNotifyError = nil
-                throw error
-            }
-        }
+        }, type: OperationType.setNotify)
     }
     
     enum OperationType: String {
@@ -331,7 +322,7 @@ class BLECalliope: Calliope {
             guard self.bleError == nil else {
                 let error = self.bleError!
                 self.bleError = nil
-                LogNotify.log("\(type.rawValue) of \(characteristic) failed with error: \(error)")
+                LogNotify.log("\(type.rawValue) of \(characteristic) failed with error: \(error)", level: LogNotify.LEVEL.ERROR)
                 completion(.failure(error))
                 return
             }
@@ -401,7 +392,7 @@ extension BLECalliope: Jsonifiable {
             return
         }
         
-        let result = try? self.read(characteristic: characteristic, {
+        self.read(characteristic: characteristic, {
             result in
             switch(result) {
             case .success(let data):
@@ -493,13 +484,15 @@ extension BLECalliope: Jsonifiable {
         LogNotify.log("Starting notifications for characteristic \(characteristicTransaction.characteristicUUID.uuidString) on device \(self.peripheral.name ?? "<no-name>")")
         
         if let calliopeCharacteristic = CalliopeCharacteristic(rawValue: characteristic.uuid.uuidString) {
-            do {
-                try self.setNotify(characteristic: characteristic, true)
-            }
-            catch {
-                transaction.resolveAsFailure(withMessage: "Starting notifications for characteristic \(characteristic.uuid.uuidString) failed")
-                return
-            }
+            self.setNotify(characteristic: characteristic, true, {
+                result in
+                switch(result) {
+                case .success():
+                    break
+                case .failure(let error):
+                    transaction.resolveAsFailure(withMessage: "Starting notifications for characteristic \(characteristic.uuid.uuidString) failed with error: \(error)")
+                }
+            })
             wbNotifications[calliopeCharacteristic] = onNotificationCallback
             transaction.resolveAsSuccess()
         }
@@ -522,13 +515,15 @@ extension BLECalliope: Jsonifiable {
         LogNotify.log("Stopping notifications for characteristic \(characteristicTransaction.characteristicUUID.uuidString) on device \(self.peripheral.name ?? "<no-name>")")
         
         if let calliopeCharacteristic = CalliopeCharacteristic(rawValue: characteristic.uuid.uuidString) {
-            do {
-                try self.setNotify(characteristic: characteristic, false)
-            }
-            catch {
-                transaction.resolveAsFailure(withMessage: "Stopping notifications for characteristic \(characteristic.uuid.uuidString) failed")
-                return
-            }
+            self.setNotify(characteristic: characteristic, false, {
+                result in
+                switch(result) {
+                case .success():
+                    break
+                case .failure(let error):
+                    transaction.resolveAsFailure(withMessage: "Starting notifications for characteristic \(characteristic.uuid.uuidString) failed with error: \(error)")
+                }
+            })
             wbNotifications[calliopeCharacteristic] = nil
             transaction.resolveAsSuccess()
         }
