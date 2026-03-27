@@ -427,7 +427,7 @@ class CalliopeAPI: BLECalliope {
 				throw "could not convert \(value) to data for \(characteristic)"
 			}
 			LogNotify.log("encoded \(value) to \(data.hexEncodedString())")
-			try write(data, for: characteristic)
+            try write(data, for: characteristic, {result in }) // Result gets automatically logged. Is there anything else here to do on completion?
 		} catch {
 			LogNotify.log("failed writing to \(characteristic) with error \(error)")
 		}

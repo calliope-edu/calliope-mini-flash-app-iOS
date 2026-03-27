@@ -240,20 +240,18 @@ class BLECalliope: Calliope {
             self.peripheral.writeValue(data, for: characteristic, type: .withResponse)
             
             if self.bleOperationsGroup!.wait(timeout: DispatchTime.now() + BluetoothConstants.writeTimeout) == .timedOut {
-                LogNotify.log("write to \(characteristic) timed out")
                 self.writeError = CBError(.connectionTimeout)
             }
             
             guard self.writeError == nil else {
-                LogNotify.log("write resulted in error: \(self.writeError!)")
                 let error = self.writeError!
-                //prepare for next write
                 self.writeError = nil
+                LogNotify.log("Write to \(characteristic) resulted in Error \(error).")
                 completion(.failure(error))
                 return
             }
+            LogNotify.log("Successfully wrote \(data) to \(characteristic).")
             completion(.success(()))
-            LogNotify.log("wrote \(characteristic)")
         }
     }
     

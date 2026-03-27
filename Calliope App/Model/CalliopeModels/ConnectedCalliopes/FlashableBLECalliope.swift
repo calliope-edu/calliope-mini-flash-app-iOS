@@ -83,16 +83,10 @@ class FlashableBLECalliope: CalliopeAPI {
         _ = try read(characteristic: .dfuControl)
     }
 
-    internal func triggerDfuMode() throws {
+    internal func triggerDfuMode(_ completion: @escaping (Result<Void, Error>) -> Void) throws {
         let data = Data([0x01])
         rebootingIntoDFUMode = true
-        do {
-            try write(data, for: .dfuControl)
-        } catch {
-            dfuError(.failedToConnect, didOccurWithMessage: "Could not start DFU mode")
-            throw error
-        }
-
+        try write(data, for: .dfuControl, completion)
     }
 
     internal func transferFirmware() {
@@ -421,12 +415,20 @@ class CalliopeV1AndV2: FlashableBLECalliope {
         initiator?.logger = logReceiver
         initiator?.delegate = self
         initiator?.progressDelegate = progressReceiver
-
-        try triggerDfuMode()
-
-        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: DispatchTime.now() + BluetoothConstants.startDfuProcessDelay) {
-            self.transferFirmware()
-        }
+        
+        LogNotify.log("Triggering Dfu Mode.")
+        try triggerDfuMode({
+            result in
+            switch(result) {
+            case .success():
+                 DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: DispatchTime.now() + BluetoothConstants.startDfuProcessDelay) {
+                    self.transferFirmware()
+                }
+            case .failure(let error):
+                LogNotify.log("Could not start DFU mode. Full Flashing failed.", level: LogNotify.LEVEL.ERROR)
+                _ = self.cancelUpload()
+            }
+        })
     }
 }
 
