@@ -387,6 +387,7 @@
 			children = (
 				2F1BD9942674D48C006A47F2 /* AutoHeightCollectionViewFlowLayout.swift */,
 				2F1BD9962674D804006A47F2 /* AutoHeightCollectionViewCell.swift */,
+				6042149E2F646DD30060064F /* TilePageLayout.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -718,7 +719,6 @@
 				60F6C3E42F2D243500A6C193 /* LofiAppWebView */,
 				60C90AFD2F1A75DD006279B2 /* LofiAppDetailViewController.swift */,
 				60EE6AC72F51EF730081CE15 /* InfoViewController.swift */,
-				6042149E2F646DD30060064F /* TilePageLayout.swift */,
 			);
 			path = LofiApps;
 			sourceTree = "<group>";

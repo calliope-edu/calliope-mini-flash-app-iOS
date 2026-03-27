@@ -8,6 +8,7 @@
 
 import UIKit
 import Network
+import SwiftUI
 
 class HomeScreenViewController: UIViewController {
 
@@ -15,28 +16,44 @@ class HomeScreenViewController: UIViewController {
     
     var network: Network = Network()
     
+    private let gettingStartedItem = NewsItem2(tileItem: TileItem(title: "GETTING STARTED", imageName: "teaser_onboarding", color: Color("calliope-pink"), textColor: .white), url: "https://calliope.cc/programmieren/mobil/ble-anwendungen")
+    private var newsItems: [NewsItem2] = []
+    private var loadedOnlineContent = false
+    private var appsPage: TilePageLayout<NewsItem2>? = nil
+    private var tileData: TileData<NewsItem2> = TileData(rightItems: [])
+    
+    func loadNews() {
+        NewsManager.getNews { [weak self] result in
+            switch result {
+            case .success(let news):
+                self?.newsItems = news.map{newsItem in NewsItem2(tileItem: TileItem(title: newsItem.text, imageName: "", color: Color(hex: newsItem.color!) ?? Color("calliope-pink"), textColor: Color(hex: newsItem.textcolor!) ?? Color(.black)), url: newsItem.url.absoluteString)}
+                self?.loadedOnlineContent = true
+            case .failure(_):
+                self?.newsItems = NewsManager.getDefaultNews().map{newsItem in NewsItem2(tileItem: TileItem(title: newsItem.text, imageName: "", color: Color(newsItem.color!), textColor: Color(newsItem.textcolor!)), url: newsItem.url.absoluteString)}
+                self?.loadedOnlineContent = false
+            }
+            DispatchQueue.main.async {
+                self!.tileData.rightItems = self!.newsItems
+                print(self!.newsItems)
+            }
+        }
+    }
+    
+    @IBSegueAction func addSwiftUIView(_ coder: NSCoder) -> UIViewController? {
+        if !loadedOnlineContent {
+            loadNews()
+        }
+        appsPage = TilePageLayout(leftItem: gettingStartedItem, data:tileData, leftItemOnTap: {_ in}, rightItemsOnTap: {_ in})
+        return UIHostingController(coder: coder, rootView: appsPage)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.rearrangeStackview(view.bounds.size)
         // MatrixConnectionViewController.instance?.calliopeClass = nil // TODO: Removes Connector on HomePage -> Is this desired behaviour?
-    }
-    
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        
-        coordinator.animate(alongsideTransition: { (_) in
-            self.rearrangeStackview(size)
-        }, completion: nil)
-    }
-    
-    private func rearrangeStackview(_ size: CGSize) {
-        let landscape: Bool = size.width > size.height
-        homeStackView.axis = landscape ? .horizontal : .vertical
-    }
-    
-    override func size(forChildContentContainer container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
-        let landscape: Bool = parentSize.width > parentSize.height
-        return CGSize(width: landscape ? parentSize.width / 2.0 : parentSize.width, height: landscape ? parentSize.height : parentSize.height / 2.0)
     }
     
     @IBAction func performSegueToIntro(_ sender: Any) {
@@ -46,4 +63,10 @@ class HomeScreenViewController: UIViewController {
             performSegue(withIdentifier: "toOfflineView", sender: sender)
         }
     }
+}
+
+struct NewsItem2: HasTileItem {
+    let tileItem: TileItem
+    let url: String
+    
 }
