@@ -437,14 +437,32 @@ class CalliopeAPI: BLECalliope {
 ///
 /// - Parameters:
 ///   - characteristic: some characteristic to read from. Required type needs to match value read by characteristic
+///   This function waits for the read to complete. This is not really desired, but the callers expect a synchronous function.
 	private func read<T>(_ characteristic: CalliopeCharacteristic) -> T? {
-		guard let dataBytes = try? read(characteristic: characteristic) else {
-			LogNotify.log("read nothing from \(characteristic)")
-			NotificationCenter.default.post(name: DiscoveredBLEDevice.disconnectedNotificationName, object: self)
-			return nil
-		}
-		LogNotify.log("read \(dataBytes.hexEncodedString()) from \(characteristic)")
-		return characteristic.interpret(dataBytes: dataBytes)
+        var value: T? = nil
+        let readGroup = DispatchGroup()
+        readGroup.enter()
+       
+        do {
+         try read(characteristic: characteristic, {
+            result in
+            switch(result) {
+            case .success(let data):
+                value = characteristic.interpret(dataBytes: data)
+                readGroup.leave()
+            case .failure(_):
+                LogNotify.log("read nothing from \(characteristic)")
+                NotificationCenter.default.post(name: DiscoveredBLEDevice.disconnectedNotificationName, object: self)
+                readGroup.leave()
+            }
+        })   
+        }
+        catch(let error) {
+            LogNotify.log("Encountered error when reading characteristic \(characteristic): \(error)")
+        }
+        
+        readGroup.wait()
+        return value
 	}
 
 	private func setNotifyListener(for characteristic: CalliopeCharacteristic, _ listener: Any?) {

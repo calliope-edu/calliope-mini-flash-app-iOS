@@ -107,7 +107,15 @@ class BLECalliope: Calliope {
     
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
         if let writingCharacteristic = operationCharacteristic, characteristic.uuid == writingCharacteristic.uuid {
-            explicitWriteResponse(error)
+            operationCharacteristic = nil
+            //set potential error and move on
+            bleError = error
+            if let error = error {
+                LogNotify.log("received error from writing: \(error)")
+            } else {
+                LogNotify.log("received write success message")
+            }
+            bleOperationsGroup?.leave()
             return
         } else {
             LogNotify.log("didWrite called for characteristic that we did not write to!")
@@ -123,7 +131,7 @@ class BLECalliope: Calliope {
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        if let readingCharac = readingCharacteristic, characteristic.uuid == readingCharac.uuid {
+        if let readingCharac = operationCharacteristic, characteristic.uuid == readingCharac.uuid {
             explicitReadResponse(for: characteristic, error: error)
             return
         }
@@ -160,18 +168,6 @@ class BLECalliope: Calliope {
         LogNotify.log("value for \(characteristic) updated (\(value.hexEncodedString()))")
     }
     
-    private func explicitWriteResponse(_ error: Error?) {
-        writingCharacteristic = nil
-        //set potential error and move on
-        writeError = error
-        if let error = error {
-            LogNotify.log("received error from writing: \(error)")
-        } else {
-            LogNotify.log("received write success message")
-        }
-        bleOperationsGroup?.leave()
-    }
-    
     private func explicitSetNotifyResponse(_ error: Error?) {
         notifyingCharacteristic = nil
         //set potential error and move on
@@ -185,14 +181,14 @@ class BLECalliope: Calliope {
     }
     
     private func explicitReadResponse(for characteristic: CBCharacteristic, error: Error?) {
-        readingCharacteristic = nil
+        operationCharacteristic = nil
         //answer to explicit read request
         if let error = error {
             LogNotify.log("received error from reading \(characteristic): \(error)")
-            readError = error
+            bleError = error
             LogNotify.log(error.localizedDescription)
         } else {
-            readValue = characteristic.value
+            bleResultValue =  characteristic.value
             LogNotify.log("received read response from \(characteristic): \(String(describing: readValue?.hexEncodedString()))")
         }
         bleOperationsGroup?.leave()
@@ -249,39 +245,33 @@ class BLECalliope: Calliope {
     }
     
     
-    func read(characteristic: CalliopeCharacteristic) throws -> Data? {
+    func read(characteristic: CalliopeCharacteristic, _ completion: @escaping (Result<Data, Error>) -> Void) throws {
         guard let cbCharacteristic = getCBCharacteristic(characteristic)
         else {
             throw "no service that contains characteristic \(characteristic)"
         }
-        return try read(characteristic: cbCharacteristic)
+        read(characteristic: cbCharacteristic, completion)
     }
     
-    func read(characteristic: CBCharacteristic) throws -> Data? {
-        return try bleOperationsQueue.sync {
-            readingCharacteristic = characteristic
-            
-            self.bleOperationsGroup = DispatchGroup()
-            self.bleOperationsGroup!.enter()
+    func read(characteristic: CBCharacteristic, _ completion: @escaping (Result<Data, Error>) -> Void) {
+        executeBLEOperation(characteristic: characteristic, operation: {
             self.peripheral.readValue(for: characteristic)
-            if self.bleOperationsGroup!.wait(timeout: DispatchTime.now() + BluetoothConstants.readTimeout) == .timedOut {
-                LogNotify.log("read from \(characteristic) timed out")
-                self.readError = CBError(.connectionTimeout)
+        }, timeout: BluetoothConstants.readTimeout, completion: {
+            result in
+            switch(result) {
+            case .success():
+                let data = self.bleResultValue
+                self.bleResultValue = nil
+                if(data != nil) {
+                    completion(.success(data!))
+                }
+                else {
+                    completion(.failure(OperationError.dataMissing("Did not get any data.")))
+                }
+            case .failure(let error):
+                completion(.failure(error))
             }
-            
-            guard readError == nil else {
-                LogNotify.log("read resulted in error: \(readError!)")
-                let error = readError!
-                //prepare for next read
-                readError = nil
-                throw error
-            }
-            
-            let data = readValue
-            LogNotify.log("read \(String(describing: data)) from \(characteristic)")
-            readValue = nil
-            return data
-        }
+        }, type: OperationType.read)
     }
     
     func setNotify(characteristic: CalliopeCharacteristic, _ activate: Bool) throws {
@@ -319,6 +309,10 @@ class BLECalliope: Calliope {
         case read = "Read"
         case write = "Write"
         case setNotify = "Set Notify"
+    }
+    
+    enum OperationError: Error {
+        case dataMissing(String)
     }
     
     private func executeBLEOperation(characteristic: CBCharacteristic, operation: @escaping () -> Void, timeout: Double, completion: @escaping (Result<Void, Error>) -> Void, type: OperationType) {
@@ -407,13 +401,15 @@ extension BLECalliope: Jsonifiable {
             return
         }
         
-        let result = try? self.read(characteristic: characteristic)
-        if result == nil {
-            transaction.resolveAsFailure(withMessage: "Could not read characteristic \(characteristic.uuid.uuidString)")
-        }
-        else {
-            transaction.resolveAsSuccess(withObject: result!)
-        }
+        let result = try? self.read(characteristic: characteristic, {
+            result in
+            switch(result) {
+            case .success(let data):
+                transaction.resolveAsSuccess(withObject: data)
+            case .failure(let error):
+                transaction.resolveAsFailure(withMessage: "Read resulted in error: \(error)")
+            }
+        })
     }
     
     func writeCharacteristicValue(transaction: WBTransaction) {

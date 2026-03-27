@@ -77,10 +77,10 @@ class FlashableBLECalliope: CalliopeAPI {
     internal func startFullFlashing() throws {
     }
 
-    internal func preparePairing() throws {
+    internal func preparePairing(_ completion: @escaping (Result<Data, Error>) -> Void) throws {
         //this apparently is necessary before DFU characteristic can be properly used
         //was like this in the old app version
-        _ = try read(characteristic: .dfuControl)
+        try read(characteristic: .dfuControl, completion)
     }
 
     internal func triggerDfuMode(_ completion: @escaping (Result<Void, Error>) -> Void) throws {
@@ -409,26 +409,40 @@ class CalliopeV1AndV2: FlashableBLECalliope {
         let dat = HexFile.calliopeV1AndV2InitPacket(bin)
 
         let firmware = DFUFirmware(binFile: bin, datFile: dat, type: .application)
-        try preparePairing()
-
-        initiator = DFUServiceInitiator().with(firmware: firmware)
-        initiator?.logger = logReceiver
-        initiator?.delegate = self
-        initiator?.progressDelegate = progressReceiver
-        
-        LogNotify.log("Triggering Dfu Mode.")
-        try triggerDfuMode({
+        try preparePairing({
             result in
             switch(result) {
-            case .success():
-                 DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: DispatchTime.now() + BluetoothConstants.startDfuProcessDelay) {
-                    self.transferFirmware()
+            case .success(_):
+                self.initiator = DFUServiceInitiator().with(firmware: firmware)
+                self.initiator?.logger = self.logReceiver
+                self.initiator?.delegate = self
+                self.initiator?.progressDelegate = self.progressReceiver
+               
+                do {
+                    try self.triggerDfuMode({
+                        result in
+                        switch(result) {
+                        case .success():
+                            DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: DispatchTime.now() + BluetoothConstants.startDfuProcessDelay) {
+                                self.transferFirmware()
+                            }
+                        case .failure(_):
+                            LogNotify.log("Could not start DFU mode. Full Flashing failed.", level: LogNotify.LEVEL.ERROR)
+                            _ = self.cancelUpload()
+                        }
+                    })}
+                catch {
+                    LogNotify.log("Could not start DFU mode. Full Flashing failed.", level: LogNotify.LEVEL.ERROR)
+                    _ = self.cancelUpload()
                 }
-            case .failure(let error):
-                LogNotify.log("Could not start DFU mode. Full Flashing failed.", level: LogNotify.LEVEL.ERROR)
+            case .failure(_):
+                LogNotify.log("Could not prepare pairing. Full Flashing failed.", level: LogNotify.LEVEL.ERROR)
                 _ = self.cancelUpload()
+
             }
         })
+
+        
     }
 }
 
