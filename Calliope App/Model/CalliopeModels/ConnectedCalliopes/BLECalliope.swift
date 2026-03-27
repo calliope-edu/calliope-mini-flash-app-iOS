@@ -95,16 +95,6 @@ class BLECalliope: Calliope {
     var operationCharacteristic: CBCharacteristic? = nil
     var bleResultValue: Data? = nil
     
-    var writeError: Error? = nil
-    var writingCharacteristic: CBCharacteristic? = nil
-    
-    var readError: Error? = nil
-    var readingCharacteristic: CBCharacteristic? = nil
-    var readValue: Data? = nil
-    
-    var setNotifyError: Error? = nil
-    var notifyingCharacteristic: CBCharacteristic? = nil
-    
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
         if let writingCharacteristic = operationCharacteristic, characteristic.uuid == writingCharacteristic.uuid {
             operationCharacteristic = nil
@@ -137,7 +127,7 @@ class BLECalliope: Calliope {
         }
         
         guard error == nil, let value = characteristic.value else {
-            LogNotify.log(readError?.localizedDescription ?? "characteristic \(characteristic.uuid) does not have a value")
+            LogNotify.log(bleError?.localizedDescription ?? "characteristic \(characteristic.uuid) does not have a value")
             return
         }
         
@@ -189,7 +179,7 @@ class BLECalliope: Calliope {
             LogNotify.log(error.localizedDescription)
         } else {
             bleResultValue =  characteristic.value
-            LogNotify.log("received read response from \(characteristic): \(String(describing: readValue?.hexEncodedString()))")
+            LogNotify.log("received read response from \(characteristic): \(String(describing: bleResultValue?.hexEncodedString()))")
         }
         bleOperationsGroup?.leave()
     }
