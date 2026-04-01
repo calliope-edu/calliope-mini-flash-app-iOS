@@ -21,7 +21,10 @@
 "o4x-rk-KvC.title" = "Programs and Editors";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "BFG-S8-jhv"; */
-"BFG-S8-jhv.normalTitle" = "Start program";
+"BFG-S8-jhv.normalTitle" = "BlocksV2.hex    ";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "bV3-s8-K9x"; */
+"bV3-s8-K9x.normalTitle" = "BlocksV3.hex    ";
 
 /* Class = "UILabel"; text = "Programmiere deinen Calliope mini mit Scratch! "; ObjectID = "wgS-ky-ppb"; */
 "wgS-ky-ppb.text" = "Program your Calliope mini with Scratch! ";

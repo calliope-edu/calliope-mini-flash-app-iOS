@@ -81,14 +81,35 @@ class CalliopeBlocksStartViewController: UIViewController {
         }
     }
     
+    /// URL scheme of the Calliope mini Blocks app used to launch it directly.
+    /// Update this value if the app registers a different custom URL scheme.
+    private let calliopeBlocksAppURLScheme = "scrub://"
+
     @IBAction func openLinkToCalliopeBlocksGetStatedPage(_ sender: Any) {
-        if let url = URL(string: "https://calliope.cc/programmieren/editoren/calliope-mini-blocks-scratch-programmieren") {
-            UIApplication.shared.open(url)
+        // 1. Reset the saved bluetooth pattern so the connection button starts blank
+        let blankMatrix = String(repeating: "0", count: 25)
+        UserDefaults.standard.set("", forKey: SettingsKey.lastMatrix.rawValue)
+        if let connectionVC = MatrixConnectionViewController.instance {
+            connectionVC.matrixView.setMatrixString(pattern: blankMatrix)
+            connectionVC.matrixView.updateBlock()
+        }
+
+        // 2. Open the Calliope mini Blocks app; fall back to the App Store if not installed
+        if let appURL = URL(string: calliopeBlocksAppURLScheme),
+           UIApplication.shared.canOpenURL(appURL) {
+            UIApplication.shared.open(appURL)
+        } else if let storeURL = URL(string: "https://apps.apple.com/app/id6480199471") {
+            UIApplication.shared.open(storeURL)
         }
     }
     
-    @IBAction func uploadCalliopeMiniBlocksStandardProgram(_sender: Any) {
-        let program = DefaultProgram(programName: NSLocalizedString("Mini_Blocks_Program", comment:""), url: UserDefaults.standard.string(forKey: SettingsKey.calliopeBlocksUrl.rawValue)!)
+    @IBAction func uploadBlocksV2Program(_ sender: Any) {
+        let program = DefaultProgram(programName: NSLocalizedString("Mini_Blocks_Program", comment: ""), url: "https://go.calliope.cc/downloads/BlocksV2.hex")
+        FirmwareUpload.showUIForDownloadableProgram(controller: self, program: program)
+    }
+
+    @IBAction func uploadBlocksV3Program(_ sender: Any) {
+        let program = DefaultProgram(programName: NSLocalizedString("Mini_Blocks_Program", comment: ""), url: "https://go.calliope.cc/downloads/BlocksV3.hex")
         FirmwareUpload.showUIForDownloadableProgram(controller: self, program: program)
     }
 }
