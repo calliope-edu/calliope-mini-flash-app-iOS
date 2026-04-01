@@ -121,12 +121,12 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
     }
 
     @IBAction func initializeBluetoothSensorInfoWebView() {
-        self.targetUrl = URL.init(string: "https://makecode.calliope.cc/#pub:_9fXFUpYu1c72")
+        self.targetUrl = URL.init(string: "https://makecode.calliope.cc/#pub:_30A13o6dM9L2")
         self.performSegue(withIdentifier: "showEditor", sender: self)
     }
 
     @IBAction func initializeDataLoggerInfoWebView() {
-        self.targetUrl = URL.init(string: "https://makecode.calliope.cc/#pub:_C9T4rtEUoUfy")
+        self.targetUrl = URL.init(string: "https://makecode.calliope.cc/#pub:_Dv9J1xCp6HRy")
         self.performSegue(withIdentifier: "showEditor", sender: self)
     }
 
