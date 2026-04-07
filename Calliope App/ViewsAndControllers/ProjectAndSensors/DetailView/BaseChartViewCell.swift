@@ -33,7 +33,6 @@ class BaseChartViewCell: UITableViewCell, ChartViewDelegate {
     @IBOutlet weak var sensorTypeButton: ContextMenuButton!
     @IBOutlet weak var sensorAxisMenu: UIMenu!
     @IBOutlet weak var sensorAxisButton: ContextMenuButton!
-    @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var recordingButton: UIButton!
     @IBOutlet weak var maxValueLabel: UILabel!
     @IBOutlet weak var minValueLabel: UILabel!
@@ -67,7 +66,6 @@ class BaseChartViewCell: UITableViewCell, ChartViewDelegate {
         }
         UIView.animate(withDuration: 0.5) {
             self.sensorTypeButton.isEnabled = false
-            self.deleteButton.isEnabled = false
             self.recordingButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
         }
         startDataRecording()
@@ -88,6 +86,7 @@ class BaseChartViewCell: UITableViewCell, ChartViewDelegate {
         }
         if baseTime == nil {
             baseTime = (Date().timeIntervalSinceReferenceDate * 100).rounded(toPlaces: 0)
+            lineChartView.xAxis.valueFormatter = TimeAxisValueFormatter(baseTime: baseTime!)
         }
         dataController.sensorStartRecordingFor(chart: chart) { (axis, time, value, coordinates) in
             if self.isRecordingData {
@@ -112,9 +111,8 @@ class BaseChartViewCell: UITableViewCell, ChartViewDelegate {
         isRecordingData = false
 
         UIView.animate(withDuration: 0.5) {
-            self.deleteButton.isEnabled = true
-            self.recordingButton.isEnabled = false
-            self.recordingButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+            self.recordingButton.isEnabled = true
+            self.recordingButton.setImage(UIImage(systemName: "record.circle"), for: .normal)
         }
 
     }
@@ -242,6 +240,7 @@ class BaseChartViewCell: UITableViewCell, ChartViewDelegate {
         Chart.deleteChart(id: chart.id)
         self.chart = Chart.insertChart(sensorType: sensor.calliopeService, projectsId: chart.projectsId)
         lineChartView.setupView(service: sensor.calliopeService)
+        recordingButton.isEnabled = true
     }
 
     func updateDataLabels() {

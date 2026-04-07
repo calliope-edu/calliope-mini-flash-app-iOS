@@ -140,7 +140,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func setupMakeCodeEditorViewController(for url: URL) -> UIViewController? {
         let storyboard = UIStoryboard(name: "EditorAndPrograms", bundle: Bundle.main)
-        let viewController = storyboard.instantiateViewController(withIdentifier: "EditorViewControllerInEditorAndPrograms") as? EditorViewController
+        let viewController = storyboard.instantiateViewController(withIdentifier: "EditorViewController") as? EditorViewController
 
         guard let viewController = viewController else {
             LogNotify.log("Could not create new ViewController")
@@ -148,9 +148,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         #if DEBUG
-        let originialUrl = url.absoluteString
-        let url = URL.init(string: "https://makecode.calliope.cc\(url.path)?\(url.query ?? "")#\(url.fragment ?? "")")
-        LogNotify.log("Redirected development domain (\(originialUrl)) to makecode (\(url?.absoluteString ?? "none?"))")
+        var url = url
+        if url.host != "makecode.calliope.cc" {
+            var components = URLComponents()
+            components.scheme = "https"
+            components.host = "makecode.calliope.cc"
+            components.path = url.path
+            components.query = url.query
+            components.fragment = url.fragment
+            let originalUrl = url.absoluteString
+            if let redirectedUrl = components.url {
+                url = redirectedUrl
+                LogNotify.log("Redirected development domain (\(originalUrl)) to makecode (\(url.absoluteString))")
+            }
+        }
         #endif
 
         let editor = MakeCode()

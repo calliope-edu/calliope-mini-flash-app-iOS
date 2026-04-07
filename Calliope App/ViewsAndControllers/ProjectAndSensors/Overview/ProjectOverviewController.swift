@@ -80,7 +80,7 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
 
         self.connectedCalliope = MatrixConnectionViewController.instance.usageReadyCalliope
         self.isUsbMode = MatrixConnectionViewController.instance.isInUsbMode
-        self.loadDataLoggerDataButton.isEnabled = (self.connectedCalliope as? CalliopeAPI)?.discoveredOptionalServices.contains(.microbitUtilityService) ?? false || self.isUsbMode
+        self.loadDataLoggerDataButton.isEnabled = (self.connectedCalliope as? BLECalliope)?.discoveredOptionalServices.contains(.microbitUtilityService) ?? false || self.isUsbMode
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -121,12 +121,12 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
     }
 
     @IBAction func initializeBluetoothSensorInfoWebView() {
-        self.targetUrl = URL.init(string: "https://makecode.calliope.cc/#pub:_9fXFUpYu1c72")
+        self.targetUrl = URL.init(string: "https://makecode.calliope.cc/#pub:_30A13o6dM9L2")
         self.performSegue(withIdentifier: "showEditor", sender: self)
     }
 
     @IBAction func initializeDataLoggerInfoWebView() {
-        self.targetUrl = URL.init(string: "https://makecode.calliope.cc/#pub:_C9T4rtEUoUfy")
+        self.targetUrl = URL.init(string: "https://makecode.calliope.cc/#pub:_Dv9J1xCp6HRy")
         self.performSegue(withIdentifier: "showEditor", sender: self)
     }
 
@@ -207,6 +207,7 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
             return
         }
 
+        progressRing.resetProgress()
         self.present(alertView, animated: true)
         calliope.startUtilityJob(
             for: .LOG_HTML,
@@ -245,7 +246,7 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
                     LogNotify.log("Received usage ready Notification")
                     self?.connectedCalliope = MatrixConnectionViewController.instance.usageReadyCalliope
                     self?.isUsbMode = MatrixConnectionViewController.instance.isInUsbMode
-                    self?.loadDataLoggerDataButton.isEnabled = (self?.connectedCalliope as? CalliopeAPI)?.discoveredOptionalServices.contains(.microbitUtilityService) ?? false || self?.isUsbMode ?? false
+                    self?.loadDataLoggerDataButton.isEnabled = (self?.connectedCalliope as? BLECalliope)?.discoveredOptionalServices.contains(.microbitUtilityService) ?? false || self?.isUsbMode ?? false
                 }
             })
 
@@ -274,11 +275,9 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
         uploadController.view.addSubview(progressView)
         uploadController.view.addSubview(logTextView)
         uploadController.view.addConstraints(
-            NSLayoutConstraint.constraints(withVisualFormat: "V:|-(80)-[progressView(120)]-(8)-[logTextView(logHeight)]-(50)-|", options: [], metrics: ["logHeight": logHeight], views: ["progressView": progressView, "logTextView": logTextView]))
-        uploadController.view.addConstraints(
-            NSLayoutConstraint.constraints(
-                withVisualFormat: "H:|-(80@900)-[progressView(120)]-(80@900)-|",
-                options: [], metrics: nil, views: ["progressView": progressView]))
+            NSLayoutConstraint.constraints(withVisualFormat: "V:|-(80)-[progressView(120)]-(8)-[logTextView(logHeight)]-(80)-|", options: [], metrics: ["logHeight": logHeight], views: ["progressView": progressView, "logTextView": logTextView]))
+        progressView.widthAnchor.constraint(equalToConstant: 120).isActive = true
+        progressView.centerXAnchor.constraint(equalTo: uploadController.view.centerXAnchor).isActive = true
 
         uploadController.view.addConstraints(
             NSLayoutConstraint.constraints(

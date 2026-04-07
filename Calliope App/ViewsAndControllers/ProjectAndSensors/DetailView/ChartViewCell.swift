@@ -21,7 +21,6 @@ class ChartViewCell: BaseChartViewCell {
     }
     
     func setupCellView() {
-        deleteButton.setTitle("", for: .normal)
         guard let chart = chart else {
             LogNotify.log("Setup of chart failed, no chart has been set")
             return
@@ -30,14 +29,109 @@ class ChartViewCell: BaseChartViewCell {
         addNotificationSubscriptions()
         loadDatabaseDataIntoChart(chart)
         setupSensorMenu()
+        addInteraction(UIContextMenuInteraction(delegate: self))
 
         guard let _ = MatrixConnectionViewController.instance.usageReadyCalliope else {
             recordingButton.isEnabled = false
             sensorTypeButton.isEnabled = false
             return
         }
+        recordingButton.isEnabled = (chart.sensorType != nil && chart.sensorType != .empty)
     }
 
+    private func exportAsCSV() {
+        guard let chart = chart else { return }
+        let values = Value.fetchValuesBy(chartId: chart.id)
+        guard !values.isEmpty else { return }
+
+        var allKeys: [String] = []
+        for value in values {
+            let decoded = DataParser.decode(data: value.value, service: chart.sensorType ?? .empty)
+            for key in decoded.keys where !allKeys.contains(key) { allKeys.append(key) }
+        }
+        allKeys.sort()
+
+        let timeFmt = DateFormatter()
+        timeFmt.dateFormat = "HH:mm:ss"
+        let dateFmt = DateFormatter()
+        dateFmt.dateFormat = "dd/MM/yy"
+
+        var lines = ["date,time," + allKeys.joined(separator: ",")]
+        for value in values {
+            let date = Date(timeIntervalSinceReferenceDate: value.time / 100.0)
+            let decoded = DataParser.decode(data: value.value, service: chart.sensorType ?? .empty)
+            let cols = allKeys.map { decoded[$0].map { String($0) } ?? "" }
+            lines.append("\(dateFmt.string(from: date)),\(timeFmt.string(from: date)),\(cols.joined(separator: ","))")
+        }
+
+        let tmpURL = FileManager.default.temporaryDirectory
+            .appendingPathComponent("sensor_\(chart.id ?? 0).csv")
+        do {
+            try lines.joined(separator: "\n").write(to: tmpURL, atomically: true, encoding: .utf8)
+        } catch {
+            LogNotify.log("Failed to write CSV: \(error)")
+            return
+        }
+
+        let activityVC = UIActivityViewController(activityItems: [tmpURL], applicationActivities: nil)
+        if let popover = activityVC.popoverPresentationController {
+            popover.sourceView = self
+            popover.sourceRect = self.bounds
+        }
+        nearestViewController()?.present(activityVC, animated: true)
+    }
+
+    private func nearestViewController() -> UIViewController? {
+        var responder: UIResponder? = self
+        while let r = responder {
+            if let vc = r as? UIViewController { return vc }
+            responder = r.next
+        }
+        return nil
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(calliopeConnectedSubcription!)
+        NotificationCenter.default.removeObserver(calliopeDisconnectedSubscription!)
+    }
+}
+
+extension ChartViewCell: UIContextMenuInteractionDelegate {
+    func contextMenuInteraction(
+        _ interaction: UIContextMenuInteraction,
+        configurationForMenuAtLocation location: CGPoint
+    ) -> UIContextMenuConfiguration? {
+        UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { [weak self] _ in
+            guard let self = self else { return nil }
+            let export = UIAction(
+                title: NSLocalizedString("Export as CSV", comment: ""),
+                image: UIImage(systemName: "square.and.arrow.up")
+            ) { [weak self] _ in
+                self?.exportAsCSV()
+            }
+            let delete = UIAction(
+                title: NSLocalizedString("Delete", comment: ""),
+                image: UIImage(systemName: "trash"),
+                attributes: .destructive
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.stopDataRecording()
+                self.delegate.deleteChart(of: self, chart: self.chart)
+            }
+            return UIMenu(title: "", children: [export, delete])
+        }
+    }
+
+    func contextMenuInteraction(
+        _ interaction: UIContextMenuInteraction,
+        willEndFor configuration: UIContextMenuConfiguration,
+        animator: UIContextMenuInteractionAnimating?
+    ) {
+        // no-op
+    }
+}
+
+extension ChartViewCell {
     fileprivate func addNotificationSubscriptions() {
         calliopeConnectedSubcription = NotificationCenter.default.addObserver(
             forName: DiscoveredBLEDDevice.usageReadyNotificationName, object: nil, queue: nil,
@@ -67,6 +161,9 @@ class ChartViewCell: BaseChartViewCell {
         if !rawValues.isEmpty {
             if baseTime == nil {
                 baseTime = rawValues.first?.time
+                if let baseTime = baseTime {
+                    lineChartView.xAxis.valueFormatter = TimeAxisValueFormatter(baseTime: baseTime)
+                }
             }
             for value in rawValues {
                 let decodedValue = DataParser.decode(data: value.value, service: chart.sensorType ?? .empty)
@@ -79,7 +176,7 @@ class ChartViewCell: BaseChartViewCell {
             recordingButton.isEnabled = false
         } else {
             sensorTypeButton.isEnabled = true
-            recordingButton.isEnabled = true
+            recordingButton.isEnabled = (chart.sensorType != nil)
         }
     }
 
@@ -96,10 +193,6 @@ class ChartViewCell: BaseChartViewCell {
         self.currentValueLabel.text = String(entry.y.rounded(toPlaces: 2))
     }
 
-    deinit {
-        NotificationCenter.default.removeObserver(calliopeConnectedSubcription!)
-        NotificationCenter.default.removeObserver(calliopeDisconnectedSubscription!)
-    }
 }
 
 extension LineChartDataSet {
@@ -127,15 +220,6 @@ class ContextMenuButton: UIButton {
     }
 
     func setup() {
-        let interaction = UIContextMenuInteraction(delegate: self)
-        addInteraction(interaction)
-    }
-
-    public override func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
-        UIContextMenuConfiguration(
-            identifier: nil,
-            previewProvider: previewProvider,
-            actionProvider: actionProvider
-        )
+        showsMenuAsPrimaryAction = true
     }
 }

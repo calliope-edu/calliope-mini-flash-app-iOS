@@ -43,9 +43,9 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
         if settings.bool(forKey: SettingsKey.microPython.rawValue) {
             keys.append(.microPython)
         }
-        if settings.bool(forKey: SettingsKey.campus.rawValue) {
-            keys.append(.campus)
-        }
+//        if settings.bool(forKey: SettingsKey.campus.rawValue) {
+//            keys.append(.campus)
+//        }
         if settings.bool(forKey: SettingsKey.arcade.rawValue) {
             keys.append(.arcade)
         }

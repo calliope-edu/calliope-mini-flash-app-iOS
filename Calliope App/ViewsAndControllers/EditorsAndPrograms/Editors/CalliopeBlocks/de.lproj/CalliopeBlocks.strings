@@ -18,7 +18,10 @@
 "j4T-gw-7rn.text" = "Scratch is a project of the Scratch Foundation, in collaboration with the Lifelong Kindergarten Group at the MIT Media Lab. It is available for free at https://scratch.mit.edu.";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "BFG-S8-jhv"; */
-"BFG-S8-jhv.normalTitle" = "Startprogramm";
+"BFG-S8-jhv.normalTitle" = "BlocksV2.hex    ";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "bV3-s8-K9x"; */
+"bV3-s8-K9x.normalTitle" = "BlocksV3.hex    ";
 
 /* Class = "UILabel"; text = "Programmiere deinen Calliope mini mit Scratch! "; ObjectID = "wgS-ky-ppb"; */
 "wgS-ky-ppb.text" = "Programmiere deinen Calliope mini mit Scratch! ";

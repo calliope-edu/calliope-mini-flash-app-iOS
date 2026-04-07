@@ -12,9 +12,13 @@ import DGCharts
 
 extension LineChartView {
     func layoutChartView() {
-        self.xAxis.enabled = false
+        self.xAxis.enabled = true
         self.xAxis.drawGridLinesEnabled = false
-        self.xAxis.drawLabelsEnabled = false
+        self.xAxis.drawLabelsEnabled = true
+        self.xAxis.labelPosition = .bottom
+        self.xAxis.granularityEnabled = true
+        self.xAxis.granularity = 1000  // label every 10 seconds
+        self.xAxis.labelRotationAngle = 0
 
         self.leftAxis.enabled = true
         self.leftAxis.drawGridLinesEnabled = true
@@ -38,6 +42,24 @@ extension LineChartView {
         self.data?.clearValues()
         self.notifyDataSetChanged()
         self.layoutChartView()
+    }
+}
+
+class TimeAxisValueFormatter: AxisValueFormatter {
+    private let baseTime: Double
+    private let formatter: DateFormatter = {
+        let f = DateFormatter()
+        f.dateFormat = "HH:mm:ss"
+        return f
+    }()
+
+    init(baseTime: Double) {
+        self.baseTime = baseTime
+    }
+
+    func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+        let date = Date(timeIntervalSinceReferenceDate: (value + baseTime) / 100.0)
+        return formatter.string(from: date)
     }
 }
 

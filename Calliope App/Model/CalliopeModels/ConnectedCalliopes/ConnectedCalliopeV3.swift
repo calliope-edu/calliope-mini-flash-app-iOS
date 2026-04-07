@@ -15,17 +15,14 @@ import UIKit
 
 /// Ein Calliope V3 der im Application Mode verbunden ist (nach dem Flashen eines Programms).
 /// Diese Klasse kann bei Bedarf automatisch in den DFU Mode wechseln um ein neues Programm zu flashen.
-class ConnectedCalliopeV3: BLECalliope {
+class ConnectedCalliopeV3: CalliopeAPI {
     
     // Im Application Mode akzeptieren wir den Calliope auch ohne DFU-Services
-    // Wir benötigen nur den Partial Flashing Service um in den DFU Mode zu wechseln
     override var requiredServices: Set<CalliopeService> {
         []  // Keine required Services im Application Mode
     }
     
-    override var optionalServices: Set<CalliopeService> {
-        [.partialFlashing, .secureDfuService]
-    }
+    // optionalServices is inherited from CalliopeAPI (includes all sensor + utility services)
     
     override var compatibleHexTypes: Set<HexParser.HexVersion> {
         [.universal, .v3, .v3Shield]  // Unterstützt V3 Hex-Dateien (nach Wechsel in DFU Mode)
