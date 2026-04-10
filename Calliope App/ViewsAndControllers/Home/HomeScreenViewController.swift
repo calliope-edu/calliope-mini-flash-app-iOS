@@ -16,7 +16,7 @@ class HomeScreenViewController: UIViewController {
     
     var network: Network = Network()
     
-    private let gettingStartedItem = NewsItem2(tileItem: TileItem(title: "GETTING STARTED", imageName: "teaser_onboarding", color: Color("calliope-pink"), textColor: .white), url: "https://calliope.cc/programmieren/mobil/ble-anwendungen")
+    private let gettingStartedItem = NewsItem2(tileItem: TileItem(title: "GETTING STARTED", imageSource: ImageSource.local("teaser_onboarding"), color: Color("calliope-pink"), textColor: .white), url: "https://calliope.cc/programmieren/mobil/ble-anwendungen")
     private var newsItems: [NewsItem2] = []
     private var loadedOnlineContent = false
     private var appsPage: TilePageLayout<NewsItem2>? = nil
@@ -26,15 +26,14 @@ class HomeScreenViewController: UIViewController {
         NewsManager.getNews { [weak self] result in
             switch result {
             case .success(let news):
-                self?.newsItems = news.map{newsItem in NewsItem2(tileItem: TileItem(title: newsItem.text, imageName: "", color: Color(hex: newsItem.color!) ?? Color("calliope-pink"), textColor: Color(hex: newsItem.textcolor!) ?? Color(.black)), url: newsItem.url.absoluteString)}
+                self?.newsItems = news.map{newsItem in NewsItem2(tileItem: TileItem(title: newsItem.text, imageSource: newsItem.getImage(), color: Color(hex: newsItem.color!) ?? Color("calliope-pink"), textColor: Color(hex: newsItem.textcolor!) ?? Color(.black)), url: newsItem.url.absoluteString)}
                 self?.loadedOnlineContent = true
             case .failure(_):
-                self?.newsItems = NewsManager.getDefaultNews().map{newsItem in NewsItem2(tileItem: TileItem(title: newsItem.text, imageName: "", color: Color(newsItem.color!), textColor: Color(newsItem.textcolor!)), url: newsItem.url.absoluteString)}
+                self?.newsItems = NewsManager.getDefaultNews().map{newsItem in NewsItem2(tileItem: TileItem(title: newsItem.text, imageSource: newsItem.getImage(), color: Color(newsItem.color!), textColor: Color(newsItem.textcolor!)), url: newsItem.url.absoluteString)}
                 self?.loadedOnlineContent = false
             }
             DispatchQueue.main.async {
                 self!.tileData.rightItems = self!.newsItems
-                print(self!.newsItems)
             }
         }
     }
