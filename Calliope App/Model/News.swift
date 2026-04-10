@@ -98,6 +98,6 @@ struct NewsItemWithStaticImage: NewsItemProtocol {
     }
     
     func getImage() -> ImageSource {
-        return ImageSource.local("photo")
+        return ImageSource.local("AnimError/0015")
     }
 }
