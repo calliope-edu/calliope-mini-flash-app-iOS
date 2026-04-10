@@ -43,7 +43,7 @@ class HomeScreenViewController: UIViewController {
         if !loadedOnlineContent {
             loadNews()
         }
-        appsPage = TilePageLayout(leftItem: gettingStartedItem, data:tileData, leftItemOnTap: onIntroSelected, rightItemsOnTap: onTileSelected)
+        appsPage = TilePageLayout(leftItem: gettingStartedItem, data:tileData, leftItemOnTap: onTileSelected, rightItemsOnTap: onTileSelected)
         return UIHostingController(coder: coder, rootView: appsPage)
     }
     
@@ -57,16 +57,6 @@ class HomeScreenViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // MatrixConnectionViewController.instance?.calliopeClass = nil // TODO: Removes Connector on HomePage -> Is this desired behaviour?
-    }
-    
-    func onIntroSelected(introTile: NewsItem2) {
-        if network.isNetworkAvailable() {
-            selectedTile = introTile
-            performSegue(withIdentifier: "showDetails", sender: self)
-
-        } else {
-            performSegue(withIdentifier: "showOnboardingOffline", sender: self)
-        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -85,8 +75,13 @@ class HomeScreenViewController: UIViewController {
     }
     
     func onTileSelected(tile: NewsItem2) {
-        selectedTile = tile
-        performSegue(withIdentifier: "showDetails", sender: self)
+        if network.isNetworkAvailable() {
+            selectedTile = tile
+            performSegue(withIdentifier: "showDetails", sender: self)
+
+        } else {
+            performSegue(withIdentifier: "showOnboardingOffline", sender: self)
+        }
     }
 }
 

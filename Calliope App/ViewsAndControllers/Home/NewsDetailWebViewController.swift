@@ -1,29 +1,29 @@
 //
-//  OnboardingDetailWebViewController.swift
+//  NewsDetailWebViewController.swift
 //  Calliope App
 //
-//  Created by itestra on 04.12.23.
-//  Copyright © 2023 calliope. All rights reserved.
+//  Created by Tassilo Karge on 30.06.19.
+//  Copyright © 2019 calliope. All rights reserved.
 //
 
 import UIKit
 import WebKit
 
-class OnboardingDetailWebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
+class NewsDetailWebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
 
     @IBOutlet weak var webView: WKWebView!
     var activityIndicator: UIActivityIndicatorView!
 
+    public var url: URL!
 
-    private var url: URL = URL(string: "https://calliope.cc/programmieren/mobil/ipad")!
-    private var initialLoadPerformed: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         webView.navigationDelegate = self
         webView.uiDelegate = self
-        initialLoadPerformed = false
+
+        webView.load(URLRequest(url: url))
 
         // add activity indicator
         activityIndicator = UIActivityIndicatorView()
@@ -34,12 +34,6 @@ class OnboardingDetailWebViewController: UIViewController, WKNavigationDelegate,
         view.addSubview(activityIndicator)
         showActivityIndicator(show: true)
     }
-
-    override func viewDidAppear(_ animated: Bool) {
-        showActivityIndicator(show: true)
-        webView.load(URLRequest(url: url))
-    }
-
 
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url {
@@ -57,21 +51,24 @@ class OnboardingDetailWebViewController: UIViewController, WKNavigationDelegate,
         return nil
     }
 
-    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        let backItem = UIBarButtonItem()
-        backItem.title = "Zurück zur Online Ansicht"
-        navigationItem.backBarButtonItem = backItem
-        if !initialLoadPerformed {
-            performSegue(withIdentifier: "showOfflineFallback", sender: nil)
-            initialLoadPerformed = true
-        }
-    }
-
     func showActivityIndicator(show: Bool) {
         if show {
             activityIndicator.startAnimating()
         } else {
             activityIndicator.stopAnimating()
+        }
+    }
+    
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        if let navigationController = self.navigationController {
+            var stack = navigationController.viewControllers
+
+            stack.removeLast()
+
+            let fallbackVC = storyboard!.instantiateViewController(withIdentifier: "onboardingOffline")
+            stack.append(fallbackVC)
+
+            navigationController.setViewControllers(stack, animated: true)
         }
     }
 
