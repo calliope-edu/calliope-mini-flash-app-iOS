@@ -48,6 +48,9 @@ class HomeScreenViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        if !loadedOnlineContent {
+            loadNews()
+        }
         super.viewDidAppear(animated)
     }
     
