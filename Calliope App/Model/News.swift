@@ -15,6 +15,7 @@ protocol NewsItemProtocol {
     var textcolor: String? { get set }
 
     func loadImage(_ completion: @escaping (Result<UIImage, Error>) -> ())
+    func getImage() -> ImageSource
 }
 
 struct NewsManager {
@@ -75,6 +76,10 @@ struct NewsItem: NewsItemProtocol, Codable {
 		}
 		task.resume()
 	}
+    
+    func getImage() -> ImageSource {
+        return ImageSource.remote(image ?? URL("")!)
+    }
 }
 
 struct NewsItemWithStaticImage: NewsItemProtocol {
@@ -90,5 +95,9 @@ struct NewsItemWithStaticImage: NewsItemProtocol {
             return
         }
         completion(.success(image))
+    }
+    
+    func getImage() -> ImageSource {
+        return ImageSource.local("photo")
     }
 }
