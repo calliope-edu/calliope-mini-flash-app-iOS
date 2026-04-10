@@ -16,11 +16,12 @@ class HomeScreenViewController: UIViewController {
     
     var network: Network = Network()
     
-    private let gettingStartedItem = NewsItem2(tileItem: TileItem(title: "GETTING STARTED", imageSource: ImageSource.local("teaser_onboarding"), color: Color("calliope-pink"), textColor: .white), url: "https://calliope.cc/programmieren/mobil/ble-anwendungen")
+    private let gettingStartedItem = NewsItem2(tileItem: TileItem(title: "GETTING STARTED", imageSource: ImageSource.local("teaser_onboarding"), color: Color("calliope-pink"), textColor: .white), url: "https://calliope.cc/programmieren/mobil/ipad")
     private var newsItems: [NewsItem2] = []
     private var loadedOnlineContent = false
     private var appsPage: TilePageLayout<NewsItem2>? = nil
     private var tileData: TileData<NewsItem2> = TileData(rightItems: [])
+    private var selectedTile: NewsItem2?
     
     func loadNews() {
         NewsManager.getNews { [weak self] result in
@@ -42,7 +43,7 @@ class HomeScreenViewController: UIViewController {
         if !loadedOnlineContent {
             loadNews()
         }
-        appsPage = TilePageLayout(leftItem: gettingStartedItem, data:tileData, leftItemOnTap: {_ in}, rightItemsOnTap: {_ in})
+        appsPage = TilePageLayout(leftItem: gettingStartedItem, data:tileData, leftItemOnTap: onTileSelected, rightItemsOnTap: onTileSelected)
         return UIHostingController(coder: coder, rootView: appsPage)
     }
     
@@ -61,6 +62,26 @@ class HomeScreenViewController: UIViewController {
         } else {
             performSegue(withIdentifier: "toOfflineView", sender: sender)
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetails" {
+            guard selectedTile != nil else {
+                LogNotify.log("Selected Tile is not set. This should not happen.", level: LogNotify.LEVEL.ERROR)
+                return
+            }
+            let newsDetailWebViewController = segue.destination as! NewsDetailWebViewController
+            guard let url = URL(string: selectedTile!.url) else {
+                LogNotify.log("String \(selectedTile!.url) is not a valid URL.", level: LogNotify.LEVEL.ERROR)
+                return
+            }
+            newsDetailWebViewController.url = url
+        }
+    }
+    
+    func onTileSelected(tile: NewsItem2) {
+        selectedTile = tile
+        performSegue(withIdentifier: "showDetails", sender: self)
     }
 }
 
