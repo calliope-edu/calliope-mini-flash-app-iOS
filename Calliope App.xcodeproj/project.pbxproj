@@ -397,6 +397,9 @@
 				2F526C4026E9694D004BA8FF /* PlaygroundSnippets.storyboard */,
 				2F5E8F0126C94F5F00CE03CB /* PlaygroundInstructionsCollectionCollectionViewController.swift */,
 				2F5E8F0326C9787400CE03CB /* ArcadeStartViewController.swift */,
+				2F5E8F0326C9787400CE03CB /* PlaygroundStartViewController.swift */,
+				608CE91D2F8954B8004EACA7 /* NewsCollectionViewCell.swift */,
+				608CE91B2F89544D004EACA7 /* NewsCollectionViewController.swift */,
 			);
 			path = Playground;
 			sourceTree = "<group>";
@@ -612,9 +615,7 @@
 		2FAA2D0822DB3C2500BC1A5F /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				608CE91D2F8954B8004EACA7 /* NewsCollectionViewCell.swift */,
 				2F00EAB722DA195A000B5FDE /* HomeScreenViewController.swift */,
-				608CE91B2F89544D004EACA7 /* NewsCollectionViewController.swift */,
 				2F4B8DA12598D7980026B480 /* HomeScreen.storyboard */,
 				2FC2A12A22C962D100675C2F /* NewsDetailWebViewController.swift */,
 				604841D42B1F328A0037A825 /* OnboardingOfflineViewController.swift */,
