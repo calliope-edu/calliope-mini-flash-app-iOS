@@ -108,24 +108,43 @@ struct TileGridView<ItemType: HasTileItem>: View {
     ]
 
     var body: some View {
-        ScrollView(orientation == Orientation.landscape ? Axis.Set.vertical : Axis.Set.horizontal) {
-            if orientation == Orientation.portrait {
-                LazyHGrid(rows: columns, spacing: 8) {
-                    ForEach(items) { item in
-                        Tile(tileItem: item.tileItem, size: tileSize)
-                            .onTapGesture { onSelect(item) }
-                    }
+        if items.count == 1 {
+            if orientation == .landscape {
+                VStack {
+                    Spacer()
+                    gridContent
+                    Spacer()
                 }
-                .padding(.vertical, 8)
             } else {
-                LazyVGrid(columns: columns, spacing: 8) {
-                    ForEach(items) { item in
-                        Tile(tileItem: item.tileItem, size: tileSize)
-                            .onTapGesture { onSelect(item) }
+                HStack {
+                    Spacer()
+                    gridContent
+                    Spacer()
+                }
+            }
+        } else {
+            ScrollView(orientation == .landscape ? .vertical : .horizontal) {
+                Group {
+                    if orientation == .portrait {
+                        LazyHGrid(rows: columns, spacing: 8) {
+                            gridContent
+                        }
+                    } else {
+                        LazyVGrid(columns: columns, spacing: 8) {
+                            gridContent
+                        }
                     }
                 }
                 .padding(.vertical, 8)
             }
+        }
+    }
+    
+    @ViewBuilder
+    private var gridContent: some View {
+        ForEach(items) { item in
+            Tile(tileItem: item.tileItem, size: tileSize)
+                .onTapGesture { onSelect(item) }
         }
     }
 }

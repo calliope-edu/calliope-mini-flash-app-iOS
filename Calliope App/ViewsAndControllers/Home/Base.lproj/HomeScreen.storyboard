@@ -4,6 +4,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -21,6 +23,7 @@
                     <navigationItem key="navigationItem" title="Home" id="w16-hI-VJ6"/>
                     <connections>
                         <segue destination="oYP-xn-CRG" kind="show" identifier="showDetails" id="DOr-tS-zAg"/>
+                        <segue destination="dQR-js-4sn" kind="show" identifier="showOnboardingOffline" id="Jz9-oL-Bk6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xQY-Z1-230" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -77,12 +80,153 @@
             </objects>
             <point key="canvasLocation" x="2038" y="663"/>
         </scene>
+        <!--onboardingOffline-->
+        <scene sceneID="2cS-Hb-6f4">
+            <objects>
+                <viewController restorationIdentifier="onboardingOffline" storyboardIdentifier="onboardingOffline" title="onboardingOffline" id="dQR-js-4sn" customClass="OnboardingOfflineViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="AJH-8p-6GX">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UQz-RO-kl9">
+                                <rect key="frame" x="0.0" y="74" width="1024" height="694"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="avw-Cg-7QK">
+                                        <rect key="frame" x="30" y="0.0" width="964" height="1864.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Du bist leider offline. Dennoch haben wir ein paar Informationen für dich!" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sip-8t-jCD">
+                                                <rect key="frame" x="0.0" y="0.0" width="964" height="82"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bluetooth Modus starten" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Njr-oY-CFW">
+                                                <rect key="frame" x="0.0" y="92" width="964" height="33.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CalliopeApp_Verbinden_Bluetooth" translatesAutoresizingMaskIntoConstraints="NO" id="HoY-gR-mAk">
+                                                <rect key="frame" x="0.0" y="135.5" width="964" height="350"/>
+                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calliope mini V3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DaZ-3T-KYa">
+                                                <rect key="frame" x="0.0" y="495.5" width="964" height="20.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CQV-id-NRD" userLabel="* Reset Taste 3 x drücken * ID-Muster erscheint auf dem Calliope mini">
+                                                <rect key="frame" x="0.0" y="526" width="964" height="41"/>
+                                                <string key="text">- Reset Taste 3 x drücken
+- ID-Muster erscheint auf dem Calliope mini</string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calliope mini V2 / V1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Nk-e1-k8S">
+                                                <rect key="frame" x="0.0" y="577" width="964" height="20.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mhl-nW-bgq">
+                                                <rect key="frame" x="0.0" y="607.5" width="964" height="81.5"/>
+                                                <string key="text">- Tasten A+B gedrückt halten
+- Reset Taste für 1 Sekunde zusätzlich drücken
+- Tasten A+B gedrückt halten bis die Bluetooth-Animation beendet ist
+- ID-Muster erscheint auf dem Calliope mini</string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Verbinden" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nrm-mk-1y2" userLabel="Verbinden">
+                                                <rect key="frame" x="0.0" y="699" width="964" height="33.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CalliopeApp_Verbinden_ID-Muster" translatesAutoresizingMaskIntoConstraints="NO" id="3gY-VG-anD">
+                                                <rect key="frame" x="0.0" y="742.5" width="964" height="386"/>
+                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EK1-fy-p89">
+                                                <rect key="frame" x="0.0" y="1138.5" width="964" height="81.5"/>
+                                                <string key="text">- Über das rote Calliope mini Icon im Bereich Editoren und Programme öffnet sich das Verbindungsfenster
+- Individuelles ID-Muster des Calliope mini auf die Matrix übertragen
+- Wird der Calliope mini gefunden, erscheint eine grüne Schaltfläche
+- Verbinden bestätigen über das Drücken der grünen Schaltfläche</string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Programm übertragen" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Odw-Sd-Jna">
+                                                <rect key="frame" x="0.0" y="1230" width="964" height="33.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CalliopeApp_Verbinden_Uebertragung_DE" translatesAutoresizingMaskIntoConstraints="NO" id="qOo-im-ums">
+                                                <rect key="frame" x="0.0" y="1273.5" width="964" height="459"/>
+                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q5n-ot-AaT">
+                                                <rect key="frame" x="0.0" y="1742.5" width="964" height="122"/>
+                                                <string key="text">- Verwende einen Editor, um ein Programm zu erstellen und zu übertragen
+- Ab jetzt kannst du Programme aus der App über Bluetooth übertragen. 
+- Übertragung des Programms an den Calliope mini mit folgenden Schritten: Programm herunterladen, sichern und übertragen. Die Übertragung kann einige Sekunden dauern. Der Fortschritt wird angezeigt.
+- Nun erscheint das Programm auf dem Calliope mini!
+</string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                                <string key="userLabel">* Verwende einen Editor, um ein Programm zu erstellen und zu übertragen * Ab jetzt kannst du Programme aus der App über Bluetooth übertragen.  * Übertragung des Programms an den Calliope mini mit folgenden Schritten: Programm herunterladen, sichern und übertragen. Die Übertragung kann einige Sekunden dauern. Der Fortschritt wird angezeigt. * Nun erscheint das Programm auf dem Calliope mini!</string>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="avw-Cg-7QK" firstAttribute="bottom" secondItem="thH-NJ-4YZ" secondAttribute="bottom" id="9OA-rU-lLy"/>
+                                    <constraint firstItem="avw-Cg-7QK" firstAttribute="leading" secondItem="thH-NJ-4YZ" secondAttribute="leading" id="Cx9-Qa-DP9"/>
+                                    <constraint firstItem="avw-Cg-7QK" firstAttribute="trailing" secondItem="thH-NJ-4YZ" secondAttribute="trailing" id="Fwl-51-Gme"/>
+                                    <constraint firstItem="avw-Cg-7QK" firstAttribute="trailing" secondItem="thH-NJ-4YZ" secondAttribute="trailing" id="JIV-Kh-zV3"/>
+                                    <constraint firstItem="avw-Cg-7QK" firstAttribute="top" secondItem="thH-NJ-4YZ" secondAttribute="top" id="gxV-kB-Zu7"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="thH-NJ-4YZ"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="rCi-Mz-k2P"/>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="hSB-2C-3FD"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="UQz-RO-kl9" secondAttribute="trailing" id="Dti-K3-rrW"/>
+                            <constraint firstItem="UQz-RO-kl9" firstAttribute="top" secondItem="hSB-2C-3FD" secondAttribute="top" id="EBd-FE-gLB"/>
+                            <constraint firstItem="UQz-RO-kl9" firstAttribute="leading" secondItem="hSB-2C-3FD" secondAttribute="leading" id="J7H-qk-DfA"/>
+                            <constraint firstItem="avw-Cg-7QK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hSB-2C-3FD" secondAttribute="leading" constant="30" id="VPZ-gW-aeH"/>
+                            <constraint firstItem="UQz-RO-kl9" firstAttribute="centerY" secondItem="hSB-2C-3FD" secondAttribute="centerY" id="jgZ-DY-HwC"/>
+                            <constraint firstItem="hSB-2C-3FD" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="avw-Cg-7QK" secondAttribute="trailing" constant="30" id="l82-nD-6pu"/>
+                            <constraint firstItem="UQz-RO-kl9" firstAttribute="trailing" secondItem="hSB-2C-3FD" secondAttribute="trailing" id="o6K-RH-rWl"/>
+                            <constraint firstItem="hSB-2C-3FD" firstAttribute="bottom" secondItem="UQz-RO-kl9" secondAttribute="bottom" id="qh3-KB-cbL"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="CUr-PC-LRd"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2lL-cg-Vqy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1963" y="-942"/>
+        </scene>
     </scenes>
     <color key="tintColor" name="calliope-lilablau"/>
     <resources>
+        <image name="CalliopeApp_Verbinden_Bluetooth" width="350" height="350"/>
+        <image name="CalliopeApp_Verbinden_ID-Muster" width="386.30999755859375" height="386.30999755859375"/>
+        <image name="CalliopeApp_Verbinden_Uebertragung_DE" width="481.8900146484375" height="459.20999145507812"/>
         <image name="IconDevice" width="36" height="33"/>
         <namedColor name="calliope-lilablau">
             <color red="0.3919999897480011" green="0.46200001239776611" blue="0.99199998378753662" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>
