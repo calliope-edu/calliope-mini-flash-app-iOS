@@ -23,7 +23,6 @@
 		2F526C2426E00696004BA8FF /* HexFileStoreDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F526C2326E00696004BA8FF /* HexFileStoreDialog.swift */; };
 		2F526C2926E9688B004BA8FF /* CalliopeApp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F526C2B26E9688B004BA8FF /* CalliopeApp.storyboard */; };
 		2F526C3E26E9694D004BA8FF /* PlaygroundSnippets.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F526C4026E9694D004BA8FF /* PlaygroundSnippets.storyboard */; };
-		2F526C4526E9698B004BA8FF /* News.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F526C4726E9698B004BA8FF /* News.storyboard */; };
 		2F526C5D26E96FC7004BA8FF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2F526C5F26E96FC7004BA8FF /* Localizable.strings */; };
 		2F57C3B42394F78B008B0D69 /* DownloadableHexFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3B32394F78B008B0D69 /* DownloadableHexFile.swift */; };
 		2F5E8F0226C94F5F00CE03CB /* PlaygroundInstructionsCollectionCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5E8F0126C94F5F00CE03CB /* PlaygroundInstructionsCollectionCollectionViewController.swift */; };
@@ -67,12 +66,9 @@
 		2F61459A22BF761F001C2734 /* HexParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61456522BF761F001C2734 /* HexParser.swift */; };
 		2F61459C22BF9D26001C2734 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2F61459B22BF9D26001C2734 /* Settings.bundle */; };
 		2F61459E22BFE607001C2734 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F61459D22BFE607001C2734 /* Assets.xcassets */; };
-		2F6145A222C7B3C2001C2734 /* NewsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6145A122C7B3C2001C2734 /* NewsCollectionViewController.swift */; };
-		2F6145A422C7BE3E001C2734 /* NewsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6145A322C7BE3E001C2734 /* NewsCollectionViewCell.swift */; };
 		2F6145A622C7D71B001C2734 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6145A522C7D71B001C2734 /* Settings.swift */; };
 		2F684E3026E977FC008A39CD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2F684E3226E977FC008A39CD /* InfoPlist.strings */; };
 		2F6C1B87258FC7C600F4B5AC /* ConnectionView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F6C1B89258FC7C600F4B5AC /* ConnectionView.storyboard */; };
-		2F6C1B98258FC90300F4B5AC /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F6C1B9A258FC90300F4B5AC /* Onboarding.storyboard */; };
 		2F763FE625A607A400C2029D /* SwiftCodeSnippetHighlighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F763FE525A607A400C2029D /* SwiftCodeSnippetHighlighter.swift */; };
 		2F91665B235405AA0065AD81 /* EditorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F91665A235405A90065AD81 /* EditorCollectionViewCell.swift */; };
 		2F9B29FC233F0456009496DD /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F9B29EF233F0456009496DD /* Roboto-Medium.ttf */; };
@@ -120,6 +116,8 @@
 		604938BE2E1BAF6C008BCE40 /* DummyModules in Frameworks */ = {isa = PBXBuildFile; productRef = 604938BD2E1BAF6C008BCE40 /* DummyModules */; };
 		604938C02E1BAF6C008BCE40 /* ScratchLinkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 604938BF2E1BAF6C008BCE40 /* ScratchLinkKit */; };
 		6055CDB62BBEE1E50007F6B0 /* CalliopeBlocksStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6055CDB52BBEE1E50007F6B0 /* CalliopeBlocksStartViewController.swift */; };
+		608CE91C2F89544D004EACA7 /* NewsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608CE91B2F89544D004EACA7 /* NewsCollectionViewController.swift */; };
+		608CE91E2F8954B8004EACA7 /* NewsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608CE91D2F8954B8004EACA7 /* NewsCollectionViewCell.swift */; };
 		6094AC582E20F2410066D07A /* WebLogHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6094AC572E20F2380066D07A /* WebLogHandler.swift */; };
 		6094C3912C045FA9006F4CB4 /* ApiCalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6094C3902C045FA9006F4CB4 /* ApiCalliope.swift */; };
 		6094C3962C047549006F4CB4 /* ChartViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6094C3952C047549006F4CB4 /* ChartViewCell.swift */; };
@@ -154,7 +152,6 @@
 		60D02D852BFCA41400D3C34A /* ProjectCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D02D842BFCA41400D3C34A /* ProjectCollectionViewCell.swift */; };
 		60D672522B283D0F00AB974B /* QRCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D672512B283D0F00AB974B /* QRCodeViewController.swift */; };
 		60EE6AC82F51EF730081CE15 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EE6AC72F51EF730081CE15 /* InfoViewController.swift */; };
-		60F1E8A62B1DEB5300CB3A07 /* OnboardingDetailWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F1E8A52B1DEB5300CB3A07 /* OnboardingDetailWebViewController.swift */; };
 		7E25C1EF8B03BE2835268F12 /* UtilityJobState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E25C80C2A4E87716138A0E0 /* UtilityJobState.swift */; };
 		7E25C2F16E2316D7C6EF236F /* UtilityJobProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E25CF0763552A9F4EBCE00E /* UtilityJobProtocol.swift */; };
 		7E25C52A365F804B8AF1752B /* DataLoggerWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E25C0A505857D5F2CC1019C /* DataLoggerWebViewController.swift */; };
@@ -188,9 +185,6 @@
 		2F526C3F26E9694D004BA8FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/PlaygroundSnippets.storyboard; sourceTree = "<group>"; };
 		2F526C4226E9694F004BA8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PlaygroundSnippets.strings; sourceTree = "<group>"; };
 		2F526C4426E9697D004BA8FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/PlaygroundSnippets.strings; sourceTree = "<group>"; };
-		2F526C4626E9698B004BA8FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/News.storyboard; sourceTree = "<group>"; };
-		2F526C4926E9698F004BA8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/News.strings; sourceTree = "<group>"; };
-		2F526C4B26E969BF004BA8FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/News.strings; sourceTree = "<group>"; };
 		2F526C5E26E96FC7004BA8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2F526C6526E970D4004BA8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Settings.strings; sourceTree = "<group>"; };
 		2F526C6726E970DE004BA8FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Settings.strings; sourceTree = "<group>"; };
@@ -238,12 +232,9 @@
 		2F61456522BF761F001C2734 /* HexParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexParser.swift; sourceTree = "<group>"; };
 		2F61459B22BF9D26001C2734 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		2F61459D22BFE607001C2734 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		2F6145A122C7B3C2001C2734 /* NewsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewController.swift; sourceTree = "<group>"; };
-		2F6145A322C7BE3E001C2734 /* NewsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewCell.swift; sourceTree = "<group>"; };
 		2F6145A522C7D71B001C2734 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		2F684E3126E977FC008A39CD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2F6C1B88258FC7C600F4B5AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ConnectionView.storyboard; sourceTree = "<group>"; };
-		2F6C1B99258FC90300F4B5AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Onboarding.storyboard; sourceTree = "<group>"; };
 		2F763FE125A1F4A100C2029D /* Calliope App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Calliope App.entitlements"; sourceTree = "<group>"; };
 		2F763FE525A607A400C2029D /* SwiftCodeSnippetHighlighter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftCodeSnippetHighlighter.swift; sourceTree = "<group>"; };
 		2F91665A235405A90065AD81 /* EditorCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -301,6 +292,8 @@
 		60676F4E2C41328D00014388 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ProjectAndSensors.strings; sourceTree = "<group>"; };
 		607E71C52B8E30D8008EC146 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ConnectionView.strings; sourceTree = "<group>"; };
 		607E71C72B8E30DA008EC146 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ConnectionView.strings; sourceTree = "<group>"; };
+		608CE91B2F89544D004EACA7 /* NewsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewController.swift; sourceTree = "<group>"; };
+		608CE91D2F8954B8004EACA7 /* NewsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewCell.swift; sourceTree = "<group>"; };
 		6094AC572E20F2380066D07A /* WebLogHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLogHandler.swift; sourceTree = "<group>"; };
 		6094C3902C045FA9006F4CB4 /* ApiCalliope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiCalliope.swift; sourceTree = "<group>"; };
 		6094C3952C047549006F4CB4 /* ChartViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewCell.swift; sourceTree = "<group>"; };
@@ -328,8 +321,6 @@
 		60C90B122F237F3E006279B2 /* WBUtils.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = WBUtils.js; sourceTree = "<group>"; };
 		60C90B172F237F3E006279B2 /* Jsonifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jsonifiable.swift; sourceTree = "<group>"; };
 		60C915922B1F442F00E4039D /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
-		60C915962B1F5F5300E4039D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Onboarding.strings; sourceTree = "<group>"; };
-		60C915982B1F61C200E4039D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Onboarding.strings; sourceTree = "<group>"; };
 		60CF0EA82BFCBE1E00CB2A38 /* ProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewController.swift; sourceTree = "<group>"; };
 		60CF0EAC2BFCD25300CB2A38 /* Value.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Value.swift; sourceTree = "<group>"; };
 		60CF0EAF2BFCD59D00CB2A38 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
@@ -341,7 +332,6 @@
 		60D02D842BFCA41400D3C34A /* ProjectCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCollectionViewCell.swift; sourceTree = "<group>"; };
 		60D672512B283D0F00AB974B /* QRCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeViewController.swift; sourceTree = "<group>"; };
 		60EE6AC72F51EF730081CE15 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
-		60F1E8A52B1DEB5300CB3A07 /* OnboardingDetailWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingDetailWebViewController.swift; sourceTree = "<group>"; };
 		60F889132B50225000B6C1F5 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
 		60FF510C2BB55324002B24A2 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = "Calliope App/PrivacyInfo.xcprivacy"; sourceTree = SOURCE_ROOT; };
 		7E25C0A505857D5F2CC1019C /* DataLoggerWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataLoggerWebViewController.swift; sourceTree = "<group>"; };
@@ -493,13 +483,13 @@
 		2F61454F22BF761F001C2734 /* ViewsAndControllers */ = {
 			isa = PBXGroup;
 			children = (
-				60107F932F48841900A15101 /* LofiApps */,
 				2F61451A22BF75DF001C2734 /* LaunchScreen.storyboard */,
 				2F526C2B26E9688B004BA8FF /* CalliopeApp.storyboard */,
 				2F61455A22BF761F001C2734 /* MainContainerViewController.swift */,
 				2FAA2D0822DB3C2500BC1A5F /* Home */,
 				2FAA2D0922DB3C4D00BC1A5F /* EditorsAndPrograms */,
 				60A40DED2BF782C80069A3B5 /* ProjectAndSensors */,
+				60107F932F48841900A15101 /* LofiApps */,
 				2F61455122BF761F001C2734 /* CollapsingConnectionView */,
 				2F1BD9982674D910006A47F2 /* Common */,
 			);
@@ -614,34 +604,15 @@
 			path = Roboto_Mono;
 			sourceTree = "<group>";
 		};
-		2FAA2D0522DB3BFB00BC1A5F /* Onboarding */ = {
-			isa = PBXGroup;
-			children = (
-				2F6C1B9A258FC90300F4B5AC /* Onboarding.storyboard */,
-				60F1E8A52B1DEB5300CB3A07 /* OnboardingDetailWebViewController.swift */,
-				604841D42B1F328A0037A825 /* OnboardingOfflineViewController.swift */,
-			);
-			path = Onboarding;
-			sourceTree = "<group>";
-		};
-		2FAA2D0622DB3C0B00BC1A5F /* News */ = {
-			isa = PBXGroup;
-			children = (
-				2F526C4726E9698B004BA8FF /* News.storyboard */,
-				2F6145A122C7B3C2001C2734 /* NewsCollectionViewController.swift */,
-				2F6145A322C7BE3E001C2734 /* NewsCollectionViewCell.swift */,
-				2FC2A12A22C962D100675C2F /* NewsDetailWebViewController.swift */,
-			);
-			path = News;
-			sourceTree = "<group>";
-		};
 		2FAA2D0822DB3C2500BC1A5F /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				608CE91D2F8954B8004EACA7 /* NewsCollectionViewCell.swift */,
 				2F00EAB722DA195A000B5FDE /* HomeScreenViewController.swift */,
+				608CE91B2F89544D004EACA7 /* NewsCollectionViewController.swift */,
 				2F4B8DA12598D7980026B480 /* HomeScreen.storyboard */,
-				2FAA2D0622DB3C0B00BC1A5F /* News */,
-				2FAA2D0522DB3BFB00BC1A5F /* Onboarding */,
+				2FC2A12A22C962D100675C2F /* NewsDetailWebViewController.swift */,
+				604841D42B1F328A0037A825 /* OnboardingOfflineViewController.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1033,7 +1004,6 @@
 				2F9B2A18233F045D009496DD /* RobotoMono-BoldItalic.ttf in Resources */,
 				2F9B29FC233F0456009496DD /* Roboto-Medium.ttf in Resources */,
 				2F9B2A06233F0456009496DD /* Roboto-Bold.ttf in Resources */,
-				2F6C1B98258FC90300F4B5AC /* Onboarding.storyboard in Resources */,
 				2F684E3026E977FC008A39CD /* InfoPlist.strings in Resources */,
 				2F61451C22BF75DF001C2734 /* LaunchScreen.storyboard in Resources */,
 				2F9B29FD233F0456009496DD /* Roboto-Light.ttf in Resources */,
@@ -1057,7 +1027,6 @@
 				2F9B2A1F233F045D009496DD /* RobotoMono-Thin.ttf in Resources */,
 				2F4B8D8425978D950026B480 /* EditorAndPrograms.storyboard in Resources */,
 				2F9B2A19233F045D009496DD /* RobotoMono-ThinItalic.ttf in Resources */,
-				2F526C4526E9698B004BA8FF /* News.storyboard in Resources */,
 				2F526C3E26E9694D004BA8FF /* PlaygroundSnippets.storyboard in Resources */,
 				2F9B2A00233F0456009496DD /* Roboto-ThinItalic.ttf in Resources */,
 				609F74C92BC587A600FE35E2 /* CalliopeBlocks.storyboard in Resources */,
@@ -1213,17 +1182,15 @@
 				2F5E8F0226C94F5F00CE03CB /* PlaygroundInstructionsCollectionCollectionViewController.swift in Sources */,
 				2F61457322BF761F001C2734 /* BluetoothConstants.swift in Sources */,
 				60C90B2D2F237F3E006279B2 /* Jsonifiable.swift in Sources */,
-				2F6145A222C7B3C2001C2734 /* NewsCollectionViewController.swift in Sources */,
 				60D02D812BFC95E000D3C34A /* Project.swift in Sources */,
-				60F1E8A62B1DEB5300CB3A07 /* OnboardingDetailWebViewController.swift in Sources */,
 				2F61458022BF761F001C2734 /* NotificationConstants.swift in Sources */,
 				2F08A0E3234AD4320088A8D6 /* EditorsCollectionViewController.swift in Sources */,
 				2F61457222BF761F001C2734 /* BLEDataTypes.swift in Sources */,
 				600E63262C2EBF810027AE61 /* CSVHandler.swift in Sources */,
 				2F61458D22BF761F001C2734 /* ConnectionViewCollapseButton.swift in Sources */,
+				608CE91E2F8954B8004EACA7 /* NewsCollectionViewCell.swift in Sources */,
 				60B58BCE2C132ABA00050FE3 /* Chart.swift in Sources */,
 				2F9E404A259DFB00002FFE0B /* PlaygroundSnippetTableViewController.swift in Sources */,
-				2F6145A422C7BE3E001C2734 /* NewsCollectionViewCell.swift in Sources */,
 				2F61458122BF761F001C2734 /* Binary.swift in Sources */,
 				609D9BD62B67AD2200F2ECAE /* Calliope.swift in Sources */,
 				2F61459122BF761F001C2734 /* FirmwareUpload.swift in Sources */,
@@ -1233,6 +1200,7 @@
 				7E25C2F16E2316D7C6EF236F /* UtilityJobProtocol.swift in Sources */,
 				604938852E151BB1008BCE40 /* OperationStatusEnum.swift in Sources */,
 				7E25C1EF8B03BE2835268F12 /* UtilityJobState.swift in Sources */,
+				608CE91C2F89544D004EACA7 /* NewsCollectionViewController.swift in Sources */,
 				7E25CE114DDEDC718EAB742D /* UtilityLogJob.swift in Sources */,
 				7E25C52A365F804B8AF1752B /* DataLoggerWebViewController.swift in Sources */,
 			);
@@ -1281,16 +1249,6 @@
 			name = PlaygroundSnippets.storyboard;
 			sourceTree = "<group>";
 		};
-		2F526C4726E9698B004BA8FF /* News.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2F526C4626E9698B004BA8FF /* Base */,
-				2F526C4926E9698F004BA8FF /* en */,
-				2F526C4B26E969BF004BA8FF /* de */,
-			);
-			name = News.storyboard;
-			sourceTree = "<group>";
-		};
 		2F526C5F26E96FC7004BA8FF /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1336,16 +1294,6 @@
 				607E71C72B8E30DA008EC146 /* en */,
 			);
 			name = ConnectionView.storyboard;
-			sourceTree = "<group>";
-		};
-		2F6C1B9A258FC90300F4B5AC /* Onboarding.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2F6C1B99258FC90300F4B5AC /* Base */,
-				60C915962B1F5F5300E4039D /* en */,
-				60C915982B1F61C200E4039D /* de */,
-			);
-			name = Onboarding.storyboard;
 			sourceTree = "<group>";
 		};
 		600E63342C342DC10027AE61 /* ProjectAndSensors.storyboard */ = {
