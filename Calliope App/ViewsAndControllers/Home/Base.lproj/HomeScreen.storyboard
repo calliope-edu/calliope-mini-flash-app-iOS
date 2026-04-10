@@ -74,6 +74,7 @@
                     <connections>
                         <outlet property="view" destination="y9Q-I4-3da" id="Cdz-FM-6Sy"/>
                         <outlet property="webView" destination="y9Q-I4-3da" id="EHU-l8-9yb"/>
+                        <segue destination="dQR-js-4sn" kind="show" identifier="showOfflineOnboardingFallback" id="inb-TQ-qkc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z5p-ke-VPK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -213,9 +214,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2lL-cg-Vqy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1963" y="-942"/>
+            <point key="canvasLocation" x="2825" y="680"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="inb-TQ-qkc"/>
+    </inferredMetricsTieBreakers>
     <color key="tintColor" name="calliope-lilablau"/>
     <resources>
         <image name="CalliopeApp_Verbinden_Bluetooth" width="350" height="350"/>
