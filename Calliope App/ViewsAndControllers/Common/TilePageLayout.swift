@@ -145,7 +145,7 @@ extension HasTileItem {
 struct TileItem: Identifiable {
     let id = UUID()
     let title: String
-    let imageName: String // name of an asset in the catalog
+    let imageSource: ImageSource
     let color: Color
     let textColor: Color
 }
@@ -155,6 +155,10 @@ enum Orientation {
     case portrait
 }
 
+enum ImageSource {
+    case remote(URL)
+    case local(String) // asset name
+}
 
 // MARK: – Single cell
 struct Tile: View {
@@ -162,13 +166,40 @@ struct Tile: View {
     let size: CGSize
     
     var body: some View {
-        print(tileItem.color)
         return VStack(spacing: 0) {
-            Image(tileItem.imageName)
-                .resizable()
-                .scaledToFit()
-                .padding(.vertical, 12)
-            
+            switch(tileItem.imageSource) {
+            case .local(let imageName):
+                Image(imageName)
+                    .resizable()
+                    .scaledToFit()
+                    .padding(.vertical, 12)
+            case .remote(let imageUrl):
+                AsyncImage(url: imageUrl) { phase in
+                    ZStack {
+                        switch phase {
+                        case .empty:
+                            ProgressView()
+                            
+                        case .success(let image):
+                            image
+                             .resizable()
+                             .scaledToFit()
+                            
+                        case .failure:
+                            Image(systemName: "photo")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height:75)
+                                .foregroundColor(.gray)
+                            
+                        @unknown default:
+                            EmptyView()
+                        }
+                    }.frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+
+            }
+                        
             Rectangle()
                 .fill(.white)
                 .frame(height: 2)
@@ -188,12 +219,11 @@ struct TwoLineText: View {
     
     var body: some View {
         Text("\n").font(.system(size: 30, weight: .regular))
-            .foregroundColor(color)
             .frame(maxWidth: .infinity)
             .padding(12)
             .overlay(
                 Text(content).font(.system(size: 30, weight: .regular))
-                    .foregroundColor(.white)
+                    .foregroundColor(color)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(12)
                 , alignment: .center)
@@ -208,12 +238,12 @@ struct TestTile: HasTileItem {
 
 struct TilePageLayout_Previews: PreviewProvider {
     static var previews: some View {
-    let leftItem = TestTile(tileItem: TileItem(title: "Left Tile", imageName: "info", color: Color("calliope-pink"), textColor: .white))
+        let leftItem = TestTile(tileItem: TileItem(title: "Left Tile", imageSource: ImageSource.local("info"), color: Color("calliope-pink"), textColor: .white))
         let rightItems = [
-            TestTile(tileItem: TileItem(title: "Right Tile 1",    imageName: "facerobot", color: Color("calliope-lilablau"), textColor: .white)),
-            TestTile(tileItem: TileItem(title: "Right Tile 2",    imageName: "speak", color: Color("calliope-orange"), textColor: .white)),
-            TestTile(tileItem: TileItem(title: "Right Tile 3",    imageName: "control", color: Color("calliope-turqoise"), textColor: .white)),
-            TestTile(tileItem: TileItem(title: "Right Tile 4",    imageName: "teachablemachine", color: Color("calliope-darkgreen"), textColor: .white))
+            TestTile(tileItem: TileItem(title: "Right Tile 1",    imageSource: ImageSource.local("facerobot"), color: Color("calliope-lilablau"), textColor: .white)),
+            TestTile(tileItem: TileItem(title: "Right Tile 2",    imageSource: ImageSource.local("speak"), color: Color("calliope-orange"), textColor: .white)),
+            TestTile(tileItem: TileItem(title: "Right Tile 3",    imageSource: ImageSource.local("control"), color: Color("calliope-turqoise"), textColor: .white)),
+            TestTile(tileItem: TileItem(title: "Right Tile 4",    imageSource: ImageSource.local("teachablemachine"), color: Color("calliope-darkgreen"), textColor: .white))
         ]
         let callback: (TestTile) -> Void =  { testTile in
             LogNotify.log("Clicked on \(testTile.tileItem.title)")
