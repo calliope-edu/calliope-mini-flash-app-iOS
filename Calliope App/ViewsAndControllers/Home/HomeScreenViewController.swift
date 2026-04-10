@@ -30,7 +30,7 @@ class HomeScreenViewController: UIViewController {
                 self?.newsItems = news.map{newsItem in NewsItem2(tileItem: TileItem(title: newsItem.text, imageSource: newsItem.getImage(), color: Color(hex: newsItem.color!) ?? Color("calliope-pink"), textColor: Color(hex: newsItem.textcolor!) ?? Color(.black)), url: newsItem.url.absoluteString)}
                 self?.loadedOnlineContent = true
             case .failure(_):
-                self?.newsItems = NewsManager.getDefaultNews().map{newsItem in NewsItem2(tileItem: TileItem(title: newsItem.text, imageSource: newsItem.getImage(), color: Color(newsItem.color!), textColor: Color(newsItem.textcolor!)), url: newsItem.url.absoluteString)}
+                self?.newsItems = NewsManager.getDefaultNews().map{newsItem in NewsItem2(tileItem: TileItem(title: newsItem.text, imageSource: newsItem.getImage(), color: Color(hex: newsItem.color!) ?? Color("calliope-pink"), textColor: Color(hex: newsItem.textcolor!) ?? Color(.black)), url: newsItem.url.absoluteString)}
                 self?.loadedOnlineContent = false
             }
             DispatchQueue.main.async {
@@ -43,7 +43,7 @@ class HomeScreenViewController: UIViewController {
         if !loadedOnlineContent {
             loadNews()
         }
-        appsPage = TilePageLayout(leftItem: gettingStartedItem, data:tileData, leftItemOnTap: onTileSelected, rightItemsOnTap: onTileSelected)
+        appsPage = TilePageLayout(leftItem: gettingStartedItem, data:tileData, leftItemOnTap: onIntroSelected, rightItemsOnTap: onTileSelected)
         return UIHostingController(coder: coder, rootView: appsPage)
     }
     
@@ -56,11 +56,13 @@ class HomeScreenViewController: UIViewController {
         // MatrixConnectionViewController.instance?.calliopeClass = nil // TODO: Removes Connector on HomePage -> Is this desired behaviour?
     }
     
-    @IBAction func performSegueToIntro(_ sender: Any) {
+    func onIntroSelected(introTile: NewsItem2) {
         if network.isNetworkAvailable() {
-            performSegue(withIdentifier: "toOnlineView", sender: sender)
+            selectedTile = introTile
+            performSegue(withIdentifier: "showDetails", sender: self)
+
         } else {
-            performSegue(withIdentifier: "toOfflineView", sender: sender)
+            performSegue(withIdentifier: "showOnboardingOffline", sender: self)
         }
     }
     
