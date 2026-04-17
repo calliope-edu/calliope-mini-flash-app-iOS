@@ -14,9 +14,6 @@ class NewsCollectionViewController: UICollectionViewController, UICollectionView
 
     let widthRatio: CGFloat = 1.2
     
-    
-    var loadedOnlineContent: Bool = false
-    
 	var news: [NewsItemProtocol] = [] {
 		didSet {
 			DispatchQueue.main.async {
@@ -24,27 +21,6 @@ class NewsCollectionViewController: UICollectionViewController, UICollectionView
 			}
 		}
 	}
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        if !loadedOnlineContent {
-            loadNews()
-        }
-    }
-
-    func loadNews() {
-        NewsManager.getNews { [weak self] result in
-            switch result {
-            case .success(let news):
-                self?.news = news
-                self?.loadedOnlineContent = true
-            case .failure(_):
-                self?.news = NewsManager.getDefaultNews()
-                self?.loadedOnlineContent = false
-                break
-            }
-        }
-    }
     
     var intermediarySize: CGSize? = nil
     
