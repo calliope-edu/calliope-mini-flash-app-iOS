@@ -21,12 +21,12 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
 //    @IBOutlet weak var settingsButton: UIButton!
 //    @IBOutlet weak var addChartButton: UIButton!
 
-    @objc var chartCollectionViewController: ChartCollectionViewController?
-    var chartHeightConstraint: NSLayoutConstraint?
-    var chartsKvo: Any?
+//    @objc var chartCollectionViewController: ChartCollectionViewController?
+//    var chartHeightConstraint: NSLayoutConstraint?
+//    var chartsKvo: Any?
 
-    private var calliopeConnectedSubcription: NSObjectProtocol!
-    private var calliopeDisconnectedSubscription: NSObjectProtocol!
+//    private var calliopeConnectedSubcription: NSObjectProtocol!
+//    private var calliopeDisconnectedSubscription: NSObjectProtocol!
 
     init?(coder: NSCoder, project: Project) {
         self.project = project
@@ -48,32 +48,32 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
 //
 //        chartsContainerView?.translatesAutoresizingMaskIntoConstraints = false
 //        chartHeightConstraint = chartsContainerView?.heightAnchor.constraint(equalToConstant: 10)
-        chartHeightConstraint?.isActive = true
-
-        chartCollectionViewController?.project = project
+//        chartHeightConstraint?.isActive = true
+//
+//        chartCollectionViewController?.project = project
         setupProjectSettingsMenu()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        chartsKvo = observe(\.chartCollectionViewController?.tableView.contentSize) { (containerVC, _) in
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
-                UIView.animate(withDuration: 0.3) {
-                    containerVC.chartHeightConstraint!.constant = containerVC.chartCollectionViewController!.tableView.contentSize.height
-                    containerVC.chartCollectionViewController?.tableView.layoutIfNeeded()
-                    self.view.layoutIfNeeded()
-                }
-            }
-        }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//
+//        chartsKvo = observe(\.chartCollectionViewController?.tableView.contentSize) { (containerVC, _) in
+//            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
+//                UIView.animate(withDuration: 0.3) {
+//                    containerVC.chartHeightConstraint!.constant = containerVC.chartCollectionViewController!.tableView.contentSize.height
+//                    containerVC.chartCollectionViewController?.tableView.layoutIfNeeded()
+//                    self.view.layoutIfNeeded()
+//                }
+//            }
+//        }
 
 //        addChartButton.isEnabled = false
-    }
+//    }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        chartsKvo = nil
-    }
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        chartsKvo = nil
+//    }
 
     override func viewDidAppear(_ animated: Bool) {
 //        calliopeConnectedSubcription = NotificationCenter.default.addObserver(
@@ -109,44 +109,44 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
 //        self.addChartButton.isEnabled = true
     }
     
-    @IBSegueAction func initializeCharts(_ coder: NSCoder) -> ChartCollectionViewController? {
-        chartCollectionViewController = ChartCollectionViewController(coder: coder)
-        self.reloadInputViews()
-        return chartCollectionViewController
-    }
+//    @IBSegueAction func initializeCharts(_ coder: NSCoder) -> ChartCollectionViewController? {
+//        chartCollectionViewController = ChartCollectionViewController(coder: coder)
+//        self.reloadInputViews()
+//        return chartCollectionViewController
+//    }
+//
+//    @IBAction func recordNewSensor() {
+//        chartCollectionViewController?.addChart()
+//    }
 
-    @IBAction func recordNewSensor() {
-        chartCollectionViewController?.addChart()
-    }
-
-    func renameProject() {
-        let alertController = UIAlertController(title: NSLocalizedString("Change project name", comment: ""), message: NSLocalizedString("Enter the new project name", comment: ""), preferredStyle: .alert)
-        alertController.addTextField { textField in
-            textField.placeholder = NSLocalizedString("New project", comment: "")
-        }
-
-        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil)
-        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
-            if let textField = alertController.textFields?.first, let inputText = textField.text {
-                self.project?.name = inputText
-//                self.projectNameLabel.text = inputText
-                if let project = self.project {
-                    Project.updateProject(project: project)
-                    NotificationCenter.default.post(name: NotificationConstants.projectsChanged, object: self)
-                }
-            }
-        }
-        alertController.addAction(cancelAction)
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
-    }
-
-    func deleteProject() {
-        Project.deleteProject(id: project?.id)
-        NotificationCenter.default.post(name: NotificationConstants.projectsChanged, object: self)
-        dismiss(animated: true, completion: nil)
-        navigationController?.popViewController(animated: true)
-    }
+//    func renameProject() {
+//        let alertController = UIAlertController(title: NSLocalizedString("Change project name", comment: ""), message: NSLocalizedString("Enter the new project name", comment: ""), preferredStyle: .alert)
+//        alertController.addTextField { textField in
+//            textField.placeholder = NSLocalizedString("New project", comment: "")
+//        }
+//
+//        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil)
+//        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+//            if let textField = alertController.textFields?.first, let inputText = textField.text {
+//                self.project?.name = inputText
+////                self.projectNameLabel.text = inputText
+//                if let project = self.project {
+//                    Project.updateProject(project: project)
+//                    NotificationCenter.default.post(name: NotificationConstants.projectsChanged, object: self)
+//                }
+//            }
+//        }
+//        alertController.addAction(cancelAction)
+//        alertController.addAction(okAction)
+//        present(alertController, animated: true, completion: nil)
+//    }
+//
+//    func deleteProject() {
+//        Project.deleteProject(id: project?.id)
+//        NotificationCenter.default.post(name: NotificationConstants.projectsChanged, object: self)
+//        dismiss(animated: true, completion: nil)
+//        navigationController?.popViewController(animated: true)
+//    }
 
     func setupProjectSettingsMenu() {
 //        settingsButton.showsMenuAsPrimaryAction = true
@@ -182,16 +182,16 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
         present(alertController, animated: true, completion: nil)
     }
 
-    deinit {
-        NotificationCenter.default.removeObserver(calliopeConnectedSubcription!)
-        NotificationCenter.default.removeObserver(calliopeDisconnectedSubscription!)
-    }
+//    deinit {
+//        NotificationCenter.default.removeObserver(calliopeConnectedSubcription!)
+//        NotificationCenter.default.removeObserver(calliopeDisconnectedSubscription!)
+//    }
 
-    override func viewDidDisappear(_ animated: Bool) {
-        for cell in chartCollectionViewController!.tableView.visibleCells {
-            let dataCell = cell as! ChartViewCell
-            dataCell.stopDataRecording()
-        }
-    }
+//    override func viewDidDisappear(_ animated: Bool) {
+//        for cell in chartCollectionViewController!.tableView.visibleCells {
+//            let dataCell = cell as! ChartViewCell
+//            dataCell.stopDataRecording()
+//        }
+//    }
 
 }
