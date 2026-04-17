@@ -16,21 +16,21 @@ class HomeScreenViewController: UIViewController {
     
     var network: Network = Network()
     
-    private let gettingStartedItem = NewsItem2(tileItem: TileItem(title: "GETTING STARTED", imageSource: ImageSource.local("teaser_onboarding"), color: Color("calliope-pink"), textColor: .white), url: "https://calliope.cc/programmieren/mobil/ipad")
-    private var newsItems: [NewsItem2] = []
+    private let gettingStartedItem = NewsItem(tileItem: TileItem(title: "GETTING STARTED", imageSource: ImageSource.local("teaser_onboarding"), color: Color("calliope-pink"), textColor: .white), url: "https://calliope.cc/programmieren/mobil/ipad")
+    private var newsItems: [NewsItem] = []
     private var loadedOnlineContent = false
-    private var appsPage: TilePageLayout<NewsItem2>? = nil
-    private var tileData: TileData<NewsItem2> = TileData(rightItems: [])
-    private var selectedTile: NewsItem2?
+    private var appsPage: TilePageLayout<NewsItem>? = nil
+    private var tileData: TileData<NewsItem> = TileData(rightItems: [])
+    private var selectedTile: NewsItem?
     
     func loadNews() {
         NewsManager.getNews { [weak self] result in
             switch result {
             case .success(let news):
-                self?.newsItems = news.map{newsItem in NewsItem2(tileItem: TileItem(title: newsItem.text, imageSource: newsItem.getImage(), color: Color(hex: newsItem.color!) ?? Color("calliope-pink"), textColor: Color(hex: newsItem.textcolor!) ?? Color(.black)), url: newsItem.url.absoluteString)}
+                self?.newsItems = news
                 self?.loadedOnlineContent = true
             case .failure(_):
-                self?.newsItems = NewsManager.getDefaultNews().map{newsItem in NewsItem2(tileItem: TileItem(title: newsItem.text, imageSource: newsItem.getImage(), color: Color(hex: newsItem.color!) ?? Color("calliope-pink"), textColor: Color(hex: newsItem.textcolor!) ?? Color(.black)), url: newsItem.url.absoluteString)}
+                self?.newsItems = NewsManager.getDefaultNews()
                 self?.loadedOnlineContent = false
             }
             DispatchQueue.main.async {
@@ -74,7 +74,7 @@ class HomeScreenViewController: UIViewController {
         }
     }
     
-    func onTileSelected(tile: NewsItem2) {
+    func onTileSelected(tile: NewsItem) {
         if network.isNetworkAvailable() {
             selectedTile = tile
             performSegue(withIdentifier: "showDetails", sender: self)
@@ -85,7 +85,7 @@ class HomeScreenViewController: UIViewController {
     }
 }
 
-struct NewsItem2: HasTileItem {
+struct NewsItem: HasTileItem {
     let tileItem: TileItem
     let url: String
     
