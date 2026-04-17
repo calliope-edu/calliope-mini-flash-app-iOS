@@ -10,7 +10,9 @@ import Foundation
 import SwiftUI
 
 struct ProjectView: View {
-    let project: Project
+    let projectViewController: ProjectViewController
+    @Binding var project: Project
+    @State var showMenu = false
     
     var body: some View {
         VStack {
@@ -21,7 +23,14 @@ struct ProjectView: View {
                 
                 Spacer()
                 
-                IconButton(imageSystemName: "ellipsis.circle", action: {print("More tapped")}, rotation: 90, iconColor: Color(.white), backgroundColor: Color(.white).opacity(0))
+                IconButton(imageSystemName: "ellipsis.circle", action: {showMenu = true}, rotation: 90, iconColor: Color(.white), backgroundColor: Color(.white).opacity(0))
+                    .confirmationDialog("",
+                      isPresented: $showMenu,
+                      titleVisibility: .visible) {
+                        Button("Delete", role: .destructive) { projectViewController.deleteProject() }
+                        Button("Export (CSV)") { projectViewController.exportToCSVFile() }
+                        Button("Rename") { projectViewController.renameProject() }
+                  }
             }
             .padding()
             .background(
@@ -32,38 +41,14 @@ struct ProjectView: View {
             
             ScrollView {
                 VStack {
-                    GroupView()
+                    ChartView()
+                    ChartView()
+                    ChartView()
+                    IconButton(imageSystemName: "plus.circle", action: {print("Add tapped")}, rotation: 0, iconColor: Color(.white), backgroundColor: Color("calliope-turqoise"))
                 }
             }
         }.frame(maxHeight: .infinity, alignment: .top)
             .padding(.top, 20)
-    }
-}
-
-struct GroupView: View {
-    var body: some View {
-         VStack {
-            ChartView()
-             Divider()
-             ChartView()
-             Divider()
-             ChartView()
-             Divider()
-             
-             IconButton(imageSystemName: "plus.circle", action: {print("Add tapped")}, rotation: 0, iconColor: Color(.white), backgroundColor: Color(.white).opacity(0))
-
-             Rectangle()
-                 .fill(Color.gray.opacity(0.2))
-                 .frame(maxWidth: .infinity)
-                 .frame(height: 250)
-         }
-            .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(Color("calliope-turqoise"))
-            )
-            .padding(.horizontal)
-
     }
 }
 
@@ -97,7 +82,18 @@ struct ChartView: View {
                 IconButton(imageSystemName: "play.circle", action: {print("PLay tapped")}, rotation: 0, iconColor: Color(.white), backgroundColor: Color(.white).opacity(0))
                 Spacer()
             }
-        }
+            
+            // Placeholder for map
+            /*Rectangle()
+                 .fill(Color.gray.opacity(0.2))
+                 .frame(maxWidth: .infinity)
+                 .frame(height: 250)*/
+        }.padding()
+            .background(
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(Color("calliope-turqoise"))
+            )
+            .padding(.horizontal)
     }
 }
 
@@ -160,6 +156,8 @@ struct IconButton: View {
 
 struct ProjectView_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectView(project: Project(name: "Test Project"))
+        @State var project = Project(name: "Demo")
+        
+        ProjectView(projectViewController: ProjectViewController(coder: NSCoder())!, project: $project)
     }
 }
