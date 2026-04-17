@@ -12,27 +12,27 @@ import UIKit
 import UniformTypeIdentifiers
 
 class EditorAndProgramsContainerViewController: UIViewController, UINavigationControllerDelegate, UIDocumentPickerDelegate {
-
+    
     @IBOutlet weak var stackView: UIStackView?
-
+    
     @IBOutlet weak var editorContainerView: UIView?
-
+    
     @IBOutlet weak var programContainerView: UIView?
-
+    
     @IBOutlet weak var scanButton: UIButton?
-
+    
     @objc var editorsCollectionViewController: EditorsCollectionViewController?
     @IBOutlet var editorTopToSafeArea: NSLayoutConstraint?
     @IBOutlet var editorBottomToSafeArea: NSLayoutConstraint?
     var editorsHeightConstraint: NSLayoutConstraint?
-
+    
     @objc var programsCollectionViewController: ProgramsCollectionViewController?
     var programsHeightConstraint: NSLayoutConstraint?
-
+    
     var editorsKvo: Any?
     var programsKvo: Any?
     var bottomInsetKvo: Any?
-
+    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(
@@ -96,7 +96,7 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
         }
 
         MatrixConnectionViewController.instance?.connectionDescriptionText = NSLocalizedString("Calliope mini verbinden!", comment: "")
-        MatrixConnectionViewController.instance?.calliopeClass = DiscoveredBLEDDevice.self
+        MatrixConnectionViewController.instance?.calliopeClass = DiscoveredBLEDevice.self
     }
 
     override func viewWillDisappear(_ animated: Bool) {
