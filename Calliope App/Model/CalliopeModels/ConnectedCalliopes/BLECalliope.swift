@@ -108,7 +108,7 @@ class BLECalliope: Calliope {
             bleOperationsGroup?.leave()
             return
         } else {
-            LogNotify.log("didWrite called for characteristic that we did not write to!")
+            LogNotify.log("didWrite called for characteristic \(characteristic) that we did not write to!")
         }
     }
     
@@ -150,7 +150,7 @@ class BLECalliope: Calliope {
             explicitSetNotifyResponse(error)
             return
         } else {
-            LogNotify.log("updated notification state for for characteristic that we did not subscribe to!")
+            LogNotify.log("updated notification state for for characteristic \(characteristic) that we did not subscribe to!")
         }
     }
     
