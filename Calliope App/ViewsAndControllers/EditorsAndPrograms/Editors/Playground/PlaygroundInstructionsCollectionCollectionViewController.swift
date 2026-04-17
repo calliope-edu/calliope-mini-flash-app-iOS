@@ -23,10 +23,6 @@ class PlaygroundInstructionsCollectionCollectionViewController: NewsCollectionVi
         }
     }
 
-    override func loadNews() {
-        //deliberately does nothing, "news items" are statically defined
-    }
-
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 1 {
             let program = DefaultProgram(programName: NSLocalizedString("Calliope mini 3", comment:""), url: UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV3Url.rawValue)!)
