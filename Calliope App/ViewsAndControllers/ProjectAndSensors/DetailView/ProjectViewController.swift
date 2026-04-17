@@ -38,7 +38,11 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
     }
 
     @IBSegueAction func addSwiftUI(_ coder: NSCoder) -> UIViewController? {
-        return UIHostingController(coder: coder, rootView: ProjectView())
+        guard project != nil else {
+            LogNotify.log("Project nil in this class. This should not happen.", level: LogNotify.LEVEL.ERROR)
+            return nil
+        }
+        return UIHostingController(coder: coder, rootView: ProjectView(project: project!))
     }
     
     override func viewDidLoad() {
