@@ -126,6 +126,7 @@
 		609D9BD42B67A15500F2ECAE /* USBCalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609D9BD32B67A15500F2ECAE /* USBCalliope.swift */; };
 		609D9BD62B67AD2200F2ECAE /* Calliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609D9BD52B67AD2200F2ECAE /* Calliope.swift */; };
 		609F74C92BC587A600FE35E2 /* CalliopeBlocks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 609F74C82BC587A600FE35E2 /* CalliopeBlocks.storyboard */; };
+		60AA95552F925D3400308FE3 /* ProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AA95542F925D3400308FE3 /* ProjectView.swift */; };
 		60B58BCE2C132ABA00050FE3 /* Chart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B58BCD2C132ABA00050FE3 /* Chart.swift */; };
 		60BBDB862B6B90C2003AD3CE /* DiscoveredDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BBDB852B6B90C2003AD3CE /* DiscoveredDevice.swift */; };
 		60BBDB882B6BA16F003AD3CE /* DiscoveredUSBDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BBDB872B6BA16F003AD3CE /* DiscoveredUSBDevice.swift */; };
@@ -307,6 +308,7 @@
 		609F74C72BC587A600FE35E2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/CalliopeBlocks.storyboard; sourceTree = "<group>"; };
 		609F74CC2BC5885F00FE35E2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CalliopeBlocks.strings; sourceTree = "<group>"; };
 		609F74CE2BC5886000FE35E2 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/CalliopeBlocks.strings; sourceTree = "<group>"; };
+		60AA95542F925D3400308FE3 /* ProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectView.swift; sourceTree = "<group>"; };
 		60B58BCD2C132ABA00050FE3 /* Chart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chart.swift; sourceTree = "<group>"; };
 		60BBDB852B6B90C2003AD3CE /* DiscoveredDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredDevice.swift; sourceTree = "<group>"; };
 		60BBDB872B6BA16F003AD3CE /* DiscoveredUSBDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredUSBDevice.swift; sourceTree = "<group>"; };
@@ -672,6 +674,7 @@
 				6094C39E2C04A869006F4CB4 /* ChartCollectionViewController.swift */,
 				600E632B2C33D0750027AE61 /* ChartView.swift */,
 				600E63312C3424580027AE61 /* BaseChartViewCell.swift */,
+				60AA95542F925D3400308FE3 /* ProjectView.swift */,
 			);
 			path = DetailView;
 			sourceTree = "<group>";
@@ -1119,6 +1122,7 @@
 				600E632C2C33D0750027AE61 /* ChartView.swift in Sources */,
 				2F08A0E5234B11890088A8D6 /* ProgramsCollectionViewController.swift in Sources */,
 				2F526C2426E00696004BA8FF /* HexFileStoreDialog.swift in Sources */,
+				60AA95552F925D3400308FE3 /* ProjectView.swift in Sources */,
 				60BBDB862B6B90C2003AD3CE /* DiscoveredDevice.swift in Sources */,
 				2F61458F22BF761F001C2734 /* MatrixConnectionViewController.swift in Sources */,
 				2F61459822BF761F001C2734 /* StreamReader.swift in Sources */,
