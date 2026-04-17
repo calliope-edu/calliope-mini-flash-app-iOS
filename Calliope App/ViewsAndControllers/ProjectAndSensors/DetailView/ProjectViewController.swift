@@ -9,16 +9,17 @@
 import Foundation
 import UIKit
 import DGCharts
+import SwiftUI
 
 class ProjectViewController: UIViewController, ChartViewDelegate {
 
     var project: Project?
     var projectId: Int?
 
-    @IBOutlet weak var chartsContainerView: UIView?
-    @IBOutlet weak var projectNameLabel: UILabel!
-    @IBOutlet weak var settingsButton: UIButton!
-    @IBOutlet weak var addChartButton: UIButton!
+//    @IBOutlet weak var chartsContainerView: UIView?
+//    @IBOutlet weak var projectNameLabel: UILabel!
+//    @IBOutlet weak var settingsButton: UIButton!
+//    @IBOutlet weak var addChartButton: UIButton!
 
     @objc var chartCollectionViewController: ChartCollectionViewController?
     var chartHeightConstraint: NSLayoutConstraint?
@@ -36,13 +37,17 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
         super.init(coder: coder)
     }
 
+    @IBSegueAction func addSwiftUI(_ coder: NSCoder) -> UIViewController? {
+        return UIHostingController(coder: coder, rootView: ProjectView())
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        projectNameLabel.text = project?.name
-
-        chartsContainerView?.translatesAutoresizingMaskIntoConstraints = false
-        chartHeightConstraint = chartsContainerView?.heightAnchor.constraint(equalToConstant: 10)
+//        projectNameLabel.text = project?.name
+//
+//        chartsContainerView?.translatesAutoresizingMaskIntoConstraints = false
+//        chartHeightConstraint = chartsContainerView?.heightAnchor.constraint(equalToConstant: 10)
         chartHeightConstraint?.isActive = true
 
         chartCollectionViewController?.project = project
@@ -62,7 +67,7 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
             }
         }
 
-        addChartButton.isEnabled = false
+//        addChartButton.isEnabled = false
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -71,28 +76,28 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        calliopeConnectedSubcription = NotificationCenter.default.addObserver(
-            forName: DiscoveredBLEDevice.usageReadyNotificationName, object: nil, queue: nil,
-            using: { [weak self] (_) in
-                DispatchQueue.main.async {
-                    UIView.animate(withDuration: 0.5) {
-                        self?.addChartButton.isEnabled = true
-                    }
-                }
-            })
-
-        calliopeDisconnectedSubscription = NotificationCenter.default.addObserver(
-            forName: DiscoveredBLEDevice.disconnectedNotificationName, object: nil, queue: nil,
-            using: { [weak self] (_) in
-                DispatchQueue.main.async {
-                    UIView.animate(withDuration: 0.5) {
-                        self?.addChartButton.isEnabled = false
-                    }
-                }
-            })
+//        calliopeConnectedSubcription = NotificationCenter.default.addObserver(
+//            forName: DiscoveredBLEDevice.usageReadyNotificationName, object: nil, queue: nil,
+//            using: { [weak self] (_) in
+//                DispatchQueue.main.async {
+//                    UIView.animate(withDuration: 0.5) {
+//                        self?.addChartButton.isEnabled = true
+//                    }
+//                }
+//            })
+//
+//        calliopeDisconnectedSubscription = NotificationCenter.default.addObserver(
+//            forName: DiscoveredBLEDevice.disconnectedNotificationName, object: nil, queue: nil,
+//            using: { [weak self] (_) in
+//                DispatchQueue.main.async {
+//                    UIView.animate(withDuration: 0.5) {
+//                        self?.addChartButton.isEnabled = false
+//                    }
+//                }
+//            })
 
         guard let _ = MatrixConnectionViewController.instance.usageReadyCalliope else {
-            self.addChartButton.isEnabled = false
+//            self.addChartButton.isEnabled = false
             DispatchQueue.main.async {
                 let alert = UIAlertController(title: NSLocalizedString("Calliope mini verbinden!", comment: ""), message: NSLocalizedString("Verbindung notwendig, um Daten anzeigen zu lassen.", comment: ""), preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
@@ -101,7 +106,7 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
             }
             return
         }
-        self.addChartButton.isEnabled = true
+//        self.addChartButton.isEnabled = true
     }
     
     @IBSegueAction func initializeCharts(_ coder: NSCoder) -> ChartCollectionViewController? {
@@ -124,7 +129,7 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
         let okAction = UIAlertAction(title: "OK", style: .default) { _ in
             if let textField = alertController.textFields?.first, let inputText = textField.text {
                 self.project?.name = inputText
-                self.projectNameLabel.text = inputText
+//                self.projectNameLabel.text = inputText
                 if let project = self.project {
                     Project.updateProject(project: project)
                     NotificationCenter.default.post(name: NotificationConstants.projectsChanged, object: self)
@@ -144,19 +149,19 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
     }
 
     func setupProjectSettingsMenu() {
-        settingsButton.showsMenuAsPrimaryAction = true
+//        settingsButton.showsMenuAsPrimaryAction = true
 
-        settingsButton.menu = UIMenu(children: [
-            UIAction(title: NSLocalizedString("Delete", comment: ""), image: UIImage(systemName: "trash")) { (action: UIAction) in
-                self.deleteProject()
-            },
-            UIAction(title: NSLocalizedString("Export (CSV)", comment: ""), image: UIImage(systemName: "square.and.arrow.up")) { (action: UIAction) in
-                self.exportToCSVFile()
-            },
-            UIAction(title: NSLocalizedString("Rename", comment: ""), image: UIImage(systemName: "pencil")) { (action: UIAction) in
-                self.renameProject()
-            }
-        ])
+//        settingsButton.menu = UIMenu(children: [
+//            UIAction(title: NSLocalizedString("Delete", comment: ""), image: UIImage(systemName: "trash")) { (action: UIAction) in
+//                self.deleteProject()
+//            },
+//            UIAction(title: NSLocalizedString("Export (CSV)", comment: ""), image: UIImage(systemName: "square.and.arrow.up")) { (action: UIAction) in
+//                self.exportToCSVFile()
+//            },
+//            UIAction(title: NSLocalizedString("Rename", comment: ""), image: UIImage(systemName: "pencil")) { (action: UIAction) in
+//                self.renameProject()
+//            }
+//        ])
     }
 
     func exportToCSVFile() {
