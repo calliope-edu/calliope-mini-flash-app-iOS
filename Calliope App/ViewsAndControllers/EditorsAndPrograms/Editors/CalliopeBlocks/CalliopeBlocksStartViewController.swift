@@ -43,7 +43,7 @@ class CalliopeBlocksStartViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.rearrangeStackview(view.bounds.size)
-        MatrixConnectionViewController.instance?.calliopeClass = DiscoveredBLEDDevice.self
+        MatrixConnectionViewController.instance?.calliopeClass = DiscoveredBLEDevice.self
     }
 
     override func viewDidAppear(_ animated: Bool) {
