@@ -10,14 +10,13 @@ import Foundation
 import SwiftUI
 
 struct ProjectView: View {
-    let projectViewController: ProjectViewController
-    @Binding var project: Project
+    @ObservedObject var projectViewController: ProjectViewController
     @State var showMenu = false
     
     var body: some View {
         VStack {
             HStack {
-                Text(project.name)
+                Text(projectViewController.project!.name)
                     .foregroundColor(.white)
                     .font(.title)
                 
@@ -44,7 +43,7 @@ struct ProjectView: View {
                     ChartView()
                     ChartView()
                     ChartView()
-                    IconButton(imageSystemName: "plus.circle", action: {print("Add tapped")}, rotation: 0, iconColor: Color(.white), backgroundColor: Color("calliope-turqoise"))
+                    IconButton(imageSystemName: "plus.circle", action: {projectViewController.addNewSensor()}, rotation: 0, iconColor: Color(.white), backgroundColor: projectViewController.addChartButtonEnabled ? Color("calliope-turqoise") : Color(.gray)).disabled(!projectViewController.addChartButtonEnabled)
                 }
             }
         }.frame(maxHeight: .infinity, alignment: .top)
@@ -156,8 +155,6 @@ struct IconButton: View {
 
 struct ProjectView_Previews: PreviewProvider {
     static var previews: some View {
-        @State var project = Project(name: "Demo")
-        
-        ProjectView(projectViewController: ProjectViewController(coder: NSCoder())!, project: $project)
+        ProjectView(projectViewController: ProjectViewController(coder: NSCoder())!)
     }
 }
