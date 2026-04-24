@@ -40,9 +40,9 @@ struct ProjectView: View {
             
             ScrollView {
                 VStack {
-                    ChartView()
-                    ChartView()
-                    ChartView()
+                    ForEach(projectViewController.charts) { chart in
+                        ChartView(onRemoveTapped: {projectViewController.deleteChart(chart: chart)})
+                    }
                     IconButton(imageSystemName: "plus.circle", action: {projectViewController.addNewSensor()}, rotation: 0, iconColor: Color(.white), backgroundColor: projectViewController.addChartButtonEnabled ? Color("calliope-turqoise") : Color(.gray)).disabled(!projectViewController.addChartButtonEnabled)
                 }
             }
@@ -52,6 +52,8 @@ struct ProjectView: View {
 }
 
 struct ChartView: View {
+    let onRemoveTapped: () -> Void
+    
     var body: some View {
         VStack {
             HStack {
@@ -59,7 +61,7 @@ struct ChartView: View {
                 Spacer()
                 DropDownMenu(options: [DropDownOption(name: "All"), DropDownOption(name: "x")], placeholder: "Select Axis")
                 Spacer()
-                IconButton(imageSystemName: "xmark.circle", action: {print("Close tapped")}, rotation: 0, iconColor: Color(.white), backgroundColor: Color(.white).opacity(0))
+                IconButton(imageSystemName: "xmark.circle", action: onRemoveTapped, rotation: 0, iconColor: Color(.white), backgroundColor: Color(.white).opacity(0))
            }
             HStack {
                 Spacer()

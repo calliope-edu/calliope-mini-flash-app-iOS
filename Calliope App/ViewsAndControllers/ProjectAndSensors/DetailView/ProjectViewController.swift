@@ -10,13 +10,21 @@ import Foundation
 import UIKit
 import DGCharts
 import SwiftUI
+import Charts
 
 class ProjectViewController: UIViewController, ChartViewDelegate, ObservableObject {
 
     @Published var project: Project?
     @Published var addChartButtonEnabled = false
-
-//    @objc var chartCollectionViewController: ChartCollectionViewController?
+    @Published var charts: [Chart] = []
+    
+    func loadCharts() {
+        guard project != nil else {
+            LogNotify.log("Project was not set. This is not supposed to happen.", level: LogNotify.LEVEL.ERROR)
+            return
+        }
+        charts = Chart.fetchChartsBy(projectsId: project!.id)
+    }
 
     private var calliopeConnectedSubcription: NSObjectProtocol!
     private var calliopeDisconnectedSubscription: NSObjectProtocol!
@@ -35,6 +43,7 @@ class ProjectViewController: UIViewController, ChartViewDelegate, ObservableObje
             LogNotify.log("Project was not set. This is not supposed to happen.", level: LogNotify.LEVEL.ERROR)
             return nil
         }
+        loadCharts()
         return UIHostingController(coder: coder, rootView: ProjectView(projectViewController: self))
     }
     
@@ -73,14 +82,26 @@ class ProjectViewController: UIViewController, ChartViewDelegate, ObservableObje
         addChartButtonEnabled = true
     }
     
-//    @IBSegueAction func initializeCharts(_ coder: NSCoder) -> ChartCollectionViewController? {
-//        chartCollectionViewController = ChartCollectionViewController(coder: coder)
-//        self.reloadInputViews()
-//        return chartCollectionViewController
-//    }
-//
     func addNewSensor() {
-        // TODO: imlement
+        guard project != nil else {
+            LogNotify.log("Project was not set. This is not supposed to happen.", level: LogNotify.LEVEL.ERROR)
+            return
+        }
+        guard let chart = Chart.insertChart(sensorType: nil, projectsId: project!.id) else {
+            return
+        }
+        withAnimation(nil) { // disables an unideal animation of the add button
+            charts.append(chart)
+        }
+    }
+    
+    func deleteChart(chart: Chart) {
+        guard project != nil else {
+            LogNotify.log("Project was not set. This is not supposed to happen.", level: LogNotify.LEVEL.ERROR)
+            return
+        }
+        Chart.deleteChart(id: chart.id)
+        charts = Chart.fetchChartsBy(projectsId: project!.id) // Update charts list after deleting chart
     }
 
     func renameProject() {
