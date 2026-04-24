@@ -8,6 +8,7 @@
 
 import UIKit
 import Network
+import SwiftUI
 
 class HomeScreenViewController: UIViewController {
 
@@ -15,35 +16,77 @@ class HomeScreenViewController: UIViewController {
     
     var network: Network = Network()
     
+    private let gettingStartedItem = NewsItem(tileItem: TileItem(title: "GETTING STARTED", imageSource: ImageSource.local("teaser_onboarding"), color: Color("calliope-pink"), textColor: .white), url: "https://calliope.cc/programmieren/mobil/ipad")
+    private var newsItems: [NewsItem] = []
+    private var loadedOnlineContent = false
+    private var appsPage: TilePageLayout<NewsItem>? = nil
+    private var tileData: TileData<NewsItem> = TileData(rightItems: [])
+    private var selectedTile: NewsItem?
+    
+    func loadNews() {
+        NewsManager.getNews { [weak self] result in
+            switch result {
+            case .success(let news):
+                self?.newsItems = news
+                self?.loadedOnlineContent = true
+            case .failure(_):
+                self?.newsItems = NewsManager.getDefaultNews()
+                self?.loadedOnlineContent = false
+            }
+            DispatchQueue.main.async {
+                self!.tileData.rightItems = self!.newsItems
+            }
+        }
+    }
+    
+    @IBSegueAction func addSwiftUIView(_ coder: NSCoder) -> UIViewController? {
+        if !loadedOnlineContent {
+            loadNews()
+        }
+        appsPage = TilePageLayout(leftItem: gettingStartedItem, data:tileData, leftItemOnTap: onTileSelected, rightItemsOnTap: onTileSelected)
+        return UIHostingController(coder: coder, rootView: appsPage)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if !loadedOnlineContent {
+            loadNews()
+        }
+        super.viewDidAppear(animated)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.rearrangeStackview(view.bounds.size)
         // MatrixConnectionViewController.instance?.calliopeClass = nil // TODO: Removes Connector on HomePage -> Is this desired behaviour?
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        
-        coordinator.animate(alongsideTransition: { (_) in
-            self.rearrangeStackview(size)
-        }, completion: nil)
-    }
-    
-    private func rearrangeStackview(_ size: CGSize) {
-        let landscape: Bool = size.width > size.height
-        homeStackView.axis = landscape ? .horizontal : .vertical
-    }
-    
-    override func size(forChildContentContainer container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
-        let landscape: Bool = parentSize.width > parentSize.height
-        return CGSize(width: landscape ? parentSize.width / 2.0 : parentSize.width, height: landscape ? parentSize.height : parentSize.height / 2.0)
-    }
-    
-    @IBAction func performSegueToIntro(_ sender: Any) {
-        if network.isNetworkAvailable() {
-            performSegue(withIdentifier: "toOnlineView", sender: sender)
-        } else {
-            performSegue(withIdentifier: "toOfflineView", sender: sender)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetails" {
+            guard selectedTile != nil else {
+                LogNotify.log("Selected Tile is not set. This should not happen.", level: LogNotify.LEVEL.ERROR)
+                return
+            }
+            let newsDetailWebViewController = segue.destination as! NewsDetailWebViewController
+            guard let url = URL(string: selectedTile!.url) else {
+                LogNotify.log("String \(selectedTile!.url) is not a valid URL.", level: LogNotify.LEVEL.ERROR)
+                return
+            }
+            newsDetailWebViewController.url = url
         }
     }
+    
+    func onTileSelected(tile: NewsItem) {
+        if network.isNetworkAvailable() {
+            selectedTile = tile
+            performSegue(withIdentifier: "showDetails", sender: self)
+
+        } else {
+            performSegue(withIdentifier: "showOnboardingOffline", sender: self)
+        }
+    }
+}
+
+struct NewsItem: HasTileItem {
+    let tileItem: TileItem
+    let url: String
+    
 }

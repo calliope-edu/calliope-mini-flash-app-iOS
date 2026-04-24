@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 protocol NewsItemProtocol {
     var text: String { get set }
@@ -18,7 +19,7 @@ protocol NewsItemProtocol {
 }
 
 struct NewsManager {
-	static func getNews(_ completion: @escaping (Result<[NewsItemProtocol], Error>) -> ()) {
+	static func getNews(_ completion: @escaping (Result<[NewsItem], Error>) -> ()) {
 
 		#if DEBUG
 		URLCache.shared.removeAllCachedResponses()
@@ -37,7 +38,8 @@ struct NewsManager {
 			let result: [NewsItem]?
 			if error == nil, let data = data {
 				let decoder = JSONDecoder()
-				result = try? decoder.decode([NewsItem].self, from: data)
+                let apiNewsItems = try? decoder.decode([APINewsItem].self, from: data)
+                result = apiNewsItems != nil ? (apiNewsItems! as [APINewsItem]).map{ apiNewsItem in apiNewsItem.toNewsItem() } : nil
 			} else {
 				result = nil
 			}
@@ -46,35 +48,25 @@ struct NewsManager {
 		task.resume()
 	}
 
-	static func getDefaultNews() -> [NewsItemProtocol] {
-		return [NewsItemWithStaticImage(image: #imageLiteral(resourceName: "teaser_noInternet.pdf"), text: "No Internet", url: URL(string: "http://calliope.cc")!, color: #colorLiteral(red: 0.5019999743, green: 0.451000005, blue: 0.8980000019, alpha: 1).hex, textcolor: #colorLiteral(red: 0.4079999924, green: 0.8309999704, blue: 0.8309999704, alpha: 1).hex)]
+	static func getDefaultNews() -> [NewsItem] {
+        return [NewsItem(tileItem: TileItem(title: "No Internet", imageSource: ImageSource.local("AnimError/0015"), color: Color(hex: "#8073E5")!, textColor: Color(hex: "#68D5D5")!), url: "http://calliope.cc")]
         //color: #colorLiteral(red: 0.5019999743, green: 0.451000005, blue: 0.8980000019, alpha: 1).hex, textcolor: #colorLiteral(red: 0.4079999924, green: 0.8309999704, blue: 0.8309999704, alpha: 1).hex
 	}
 }
 
-struct NewsItem: NewsItemProtocol, Codable {
-	var image: URL?
-	var text: String
-	var url: URL
-	var color: String?
+struct APINewsItem: Codable {
+    var image: URL?
+    var text: String
+    var url: URL
+    var color: String?
     var textcolor: String?
-
-	func loadImage(_ completion: @escaping (Result<UIImage, Error>) -> ()) {
-		guard let imageUrl = image else {
-			completion(.success(#imageLiteral(resourceName: "teaser_noInternet.pdf")))
-			return
-		}
-		let task = URLSession.shared.dataTask(with: imageUrl) {data, response, error in
-			let result: UIImage?
-			if error == nil, let data = data {
-				result = UIImage(data: data)
-			} else {
-				result = nil
-			}
-			completion(result != nil ? .success(result!) : .failure(error ?? "Could not decode image"))
-		}
-		task.resume()
-	}
+    
+    func toNewsItem() -> NewsItem {
+        let imageSource = image != nil ? ImageSource.remote(image!) : ImageSource.local("AnimError/0015")
+        let swiftUIColor = color.flatMap { Color(hex: $0) } ?? Color("calliope-pink")
+        let swiftUITextColor = textcolor.flatMap { Color(hex: $0) } ?? Color(.black)
+        return NewsItem(tileItem: TileItem(title: text, imageSource: imageSource, color: swiftUIColor, textColor: swiftUITextColor), url: url.absoluteString)
+    }
 }
 
 struct NewsItemWithStaticImage: NewsItemProtocol {

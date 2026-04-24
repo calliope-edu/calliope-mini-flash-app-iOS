@@ -9,12 +9,20 @@
 import Foundation
 import SwiftUI
 
+class TileData<ItemType: HasTileItem>: ObservableObject {
+    @Published var rightItems: [ItemType] = []
+    
+    init(rightItems: [ItemType]) {
+        self.rightItems = rightItems
+    }
+}
+
 struct TilePageLayout<ItemType: HasTileItem>: View {
     @State private var orientation: Orientation = Orientation.landscape
     @State private var tileSize: CGSize = CGSize(width: 0, height: 0)
     
     let leftItem: ItemType
-    let rightItems: [ItemType]
+    @ObservedObject var data: TileData<ItemType>
     let leftItemOnTap: (ItemType) -> Void
     let rightItemsOnTap: (ItemType) -> Void
     
@@ -46,7 +54,7 @@ struct TilePageLayout<ItemType: HasTileItem>: View {
             Tile(tileItem: leftItem.tileItem, size: tileSize).onTapGesture {
                 leftItemOnTap(leftItem)
             }
-            TileGridView(tileSize: tileSize, orientation: orientation, items: rightItems) { selectedItem in
+            TileGridView(tileSize: tileSize, orientation: orientation, items: data.rightItems) { selectedItem in
                 rightItemsOnTap(selectedItem)
             }
         }
@@ -100,24 +108,43 @@ struct TileGridView<ItemType: HasTileItem>: View {
     ]
 
     var body: some View {
-        ScrollView(orientation == Orientation.landscape ? Axis.Set.vertical : Axis.Set.horizontal) {
-            if orientation == Orientation.portrait {
-                LazyHGrid(rows: columns, spacing: 8) {
-                    ForEach(items) { item in
-                        Tile(tileItem: item.tileItem, size: tileSize)
-                            .onTapGesture { onSelect(item) }
-                    }
+        if items.count == 1 {
+            if orientation == .landscape {
+                VStack {
+                    Spacer()
+                    gridContent
+                    Spacer()
                 }
-                .padding(.vertical, 8)
             } else {
-                LazyVGrid(columns: columns, spacing: 8) {
-                    ForEach(items) { item in
-                        Tile(tileItem: item.tileItem, size: tileSize)
-                            .onTapGesture { onSelect(item) }
+                HStack {
+                    Spacer()
+                    gridContent
+                    Spacer()
+                }
+            }
+        } else {
+            ScrollView(orientation == .landscape ? .vertical : .horizontal) {
+                Group {
+                    if orientation == .portrait {
+                        LazyHGrid(rows: columns, spacing: 8) {
+                            gridContent
+                        }
+                    } else {
+                        LazyVGrid(columns: columns, spacing: 8) {
+                            gridContent
+                        }
                     }
                 }
                 .padding(.vertical, 8)
             }
+        }
+    }
+    
+    @ViewBuilder
+    private var gridContent: some View {
+        ForEach(items) { item in
+            Tile(tileItem: item.tileItem, size: tileSize)
+                .onTapGesture { onSelect(item) }
         }
     }
 }
@@ -137,8 +164,9 @@ extension HasTileItem {
 struct TileItem: Identifiable {
     let id = UUID()
     let title: String
-    let imageName: String // name of an asset in the catalog
+    let imageSource: ImageSource
     let color: Color
+    let textColor: Color
 }
 
 enum Orientation {
@@ -146,6 +174,10 @@ enum Orientation {
     case portrait
 }
 
+enum ImageSource {
+    case remote(URL)
+    case local(String) // asset name
+}
 
 // MARK: – Single cell
 struct Tile: View {
@@ -153,18 +185,46 @@ struct Tile: View {
     let size: CGSize
     
     var body: some View {
-        VStack(spacing: 0) {
-            Image(tileItem.imageName)
-                .resizable()
-                .scaledToFit()
-                .padding(.vertical, 12)
-            
+        return VStack(spacing: 0) {
+            switch(tileItem.imageSource) {
+            case .local(let imageName):
+                Image(imageName)
+                    .resizable()
+                    .scaledToFit()
+                    .padding(.vertical, 12)
+            case .remote(let imageUrl):
+                AsyncImage(url: imageUrl) { phase in
+                    ZStack {
+                        switch phase {
+                        case .empty:
+                            ProgressView()
+                            
+                        case .success(let image):
+                            image
+                             .resizable()
+                             .scaledToFit()
+                            
+                        case .failure:
+                            Image(systemName: "photo")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height:75)
+                                .foregroundColor(.gray)
+                            
+                        @unknown default:
+                            EmptyView()
+                        }
+                    }.frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+
+            }
+                        
             Rectangle()
                 .fill(.white)
                 .frame(height: 2)
                 .padding(.horizontal, 12)
             
-            TwoLineText(content: tileItem.title)
+            TwoLineText(content: tileItem.title, color: tileItem.textColor)
         }
         .frame(width: size.width, height: size.height)
         .background(tileItem.color)
@@ -174,17 +234,18 @@ struct Tile: View {
 
 struct TwoLineText: View {
     let content: String
+    let color: Color
     
     var body: some View {
         Text("\n").font(.system(size: 30, weight: .regular))
-                  .frame(maxWidth: .infinity)
-                  .padding(12)
-                .overlay(
-                        Text(content).font(.system(size: 30, weight: .regular))
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(12)
-                    , alignment: .center)
+            .frame(maxWidth: .infinity)
+            .padding(12)
+            .overlay(
+                Text(content).font(.system(size: 30, weight: .regular))
+                    .foregroundColor(color)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(12)
+                , alignment: .center)
     }
 }
 
@@ -196,17 +257,19 @@ struct TestTile: HasTileItem {
 
 struct TilePageLayout_Previews: PreviewProvider {
     static var previews: some View {
-        let leftItem = TestTile(tileItem: TileItem(title: "Left Tile", imageName: "info", color: Color("calliope-pink")))
+        let leftItem = TestTile(tileItem: TileItem(title: "Left Tile", imageSource: ImageSource.local("info"), color: Color("calliope-pink"), textColor: .white))
         let rightItems = [
-            TestTile(tileItem: TileItem(title: "Right Tile 1",    imageName: "facerobot", color: Color("calliope-lilablau"))),
-            TestTile(tileItem: TileItem(title: "Right Tile 2",    imageName: "speak", color: Color("calliope-orange"))),
-            TestTile(tileItem: TileItem(title: "Right Tile 3",    imageName: "control", color: Color("calliope-turqoise"))),
-            TestTile(tileItem: TileItem(title: "Right Tile 4",    imageName: "teachablemachine", color: Color("calliope-darkgreen")))
+            TestTile(tileItem: TileItem(title: "Right Tile 1",    imageSource: ImageSource.local("facerobot"), color: Color("calliope-lilablau"), textColor: .white)),
+            TestTile(tileItem: TileItem(title: "Right Tile 2",    imageSource: ImageSource.local("speak"), color: Color("calliope-orange"), textColor: .white)),
+            TestTile(tileItem: TileItem(title: "Right Tile 3",    imageSource: ImageSource.local("control"), color: Color("calliope-turqoise"), textColor: .white)),
+            TestTile(tileItem: TileItem(title: "Right Tile 4",    imageSource: ImageSource.local("teachablemachine"), color: Color("calliope-darkgreen"), textColor: .white))
         ]
         let callback: (TestTile) -> Void =  { testTile in
             LogNotify.log("Clicked on \(testTile.tileItem.title)")
         }
-        TilePageLayout(leftItem: leftItem, rightItems: rightItems, leftItemOnTap: callback, rightItemsOnTap: callback)
+        let tileData = TileData<TestTile>(rightItems: rightItems)
+        TilePageLayout(leftItem: leftItem, data: tileData, leftItemOnTap: callback, rightItemsOnTap: callback)
+        
     }
 }
 
