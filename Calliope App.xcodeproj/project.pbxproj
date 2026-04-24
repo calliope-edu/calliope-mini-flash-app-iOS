@@ -130,6 +130,7 @@
 		60B58BCE2C132ABA00050FE3 /* Chart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B58BCD2C132ABA00050FE3 /* Chart.swift */; };
 		60BBDB862B6B90C2003AD3CE /* DiscoveredDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BBDB852B6B90C2003AD3CE /* DiscoveredDevice.swift */; };
 		60BBDB882B6BA16F003AD3CE /* DiscoveredUSBDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BBDB872B6BA16F003AD3CE /* DiscoveredUSBDevice.swift */; };
+		60C626F82F9BC1EB00D23A43 /* MultiLineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C626F72F9BC1EB00D23A43 /* MultiLineChartView.swift */; };
 		60C90AFE2F1A75DD006279B2 /* LofiAppDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C90AFD2F1A75DD006279B2 /* LofiAppDetailViewController.swift */; };
 		60C90B2D2F237F3E006279B2 /* Jsonifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C90B172F237F3E006279B2 /* Jsonifiable.swift */; };
 		60C90B3A2F237F3E006279B2 /* WBBluetoothUUID.js in Resources */ = {isa = PBXBuildFile; fileRef = 60C90B0E2F237F3E006279B2 /* WBBluetoothUUID.js */; };
@@ -152,6 +153,7 @@
 		60D02D832BFCA0C400D3C34A /* ProjectCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D02D822BFCA0C400D3C34A /* ProjectCollectionViewController.swift */; };
 		60D02D852BFCA41400D3C34A /* ProjectCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D02D842BFCA41400D3C34A /* ProjectCollectionViewCell.swift */; };
 		60D672522B283D0F00AB974B /* QRCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D672512B283D0F00AB974B /* QRCodeViewController.swift */; };
+		60EBC64C2F9BAD5B00A6DD84 /* ChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EBC64B2F9BAD5A00A6DD84 /* ChartViewModel.swift */; };
 		60EE6AC82F51EF730081CE15 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EE6AC72F51EF730081CE15 /* InfoViewController.swift */; };
 		7E25C1EF8B03BE2835268F12 /* UtilityJobState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E25C80C2A4E87716138A0E0 /* UtilityJobState.swift */; };
 		7E25C2F16E2316D7C6EF236F /* UtilityJobProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E25CF0763552A9F4EBCE00E /* UtilityJobProtocol.swift */; };
@@ -313,6 +315,7 @@
 		60BBDB852B6B90C2003AD3CE /* DiscoveredDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredDevice.swift; sourceTree = "<group>"; };
 		60BBDB872B6BA16F003AD3CE /* DiscoveredUSBDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredUSBDevice.swift; sourceTree = "<group>"; };
 		60C345D32DA5757400430DA8 /* Calliope AppRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Calliope AppRelease.entitlements"; sourceTree = "<group>"; };
+		60C626F72F9BC1EB00D23A43 /* MultiLineChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLineChartView.swift; sourceTree = "<group>"; };
 		60C90AFD2F1A75DD006279B2 /* LofiAppDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LofiAppDetailViewController.swift; sourceTree = "<group>"; };
 		60C90B0A2F237F3E006279B2 /* stringview.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = stringview.js; sourceTree = "<group>"; };
 		60C90B0B2F237F3E006279B2 /* WBBluetoothRemoteGATTCharacteristic.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = WBBluetoothRemoteGATTCharacteristic.js; sourceTree = "<group>"; };
@@ -335,6 +338,7 @@
 		60D02D822BFCA0C400D3C34A /* ProjectCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCollectionViewController.swift; sourceTree = "<group>"; };
 		60D02D842BFCA41400D3C34A /* ProjectCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCollectionViewCell.swift; sourceTree = "<group>"; };
 		60D672512B283D0F00AB974B /* QRCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeViewController.swift; sourceTree = "<group>"; };
+		60EBC64B2F9BAD5A00A6DD84 /* ChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewModel.swift; sourceTree = "<group>"; };
 		60EE6AC72F51EF730081CE15 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		60F889132B50225000B6C1F5 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
 		60FF510C2BB55324002B24A2 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = "Calliope App/PrivacyInfo.xcprivacy"; sourceTree = SOURCE_ROOT; };
@@ -399,7 +403,6 @@
 				2F526C4026E9694D004BA8FF /* PlaygroundSnippets.storyboard */,
 				2F5E8F0126C94F5F00CE03CB /* PlaygroundInstructionsCollectionCollectionViewController.swift */,
 				2F5E8F0326C9787400CE03CB /* ArcadeStartViewController.swift */,
-				2F5E8F0326C9787400CE03CB /* PlaygroundStartViewController.swift */,
 				608CE91D2F8954B8004EACA7 /* NewsCollectionViewCell.swift */,
 				608CE91B2F89544D004EACA7 /* NewsCollectionViewController.swift */,
 			);
@@ -669,12 +672,14 @@
 		600E63292C328DAE0027AE61 /* DetailView */ = {
 			isa = PBXGroup;
 			children = (
+				60C626F72F9BC1EB00D23A43 /* MultiLineChartView.swift */,
 				60CF0EA82BFCBE1E00CB2A38 /* ProjectViewController.swift */,
 				6094C3952C047549006F4CB4 /* ChartViewCell.swift */,
 				6094C39E2C04A869006F4CB4 /* ChartCollectionViewController.swift */,
 				600E632B2C33D0750027AE61 /* ChartView.swift */,
 				600E63312C3424580027AE61 /* BaseChartViewCell.swift */,
 				60AA95542F925D3400308FE3 /* ProjectView.swift */,
+				60EBC64B2F9BAD5A00A6DD84 /* ChartViewModel.swift */,
 			);
 			path = DetailView;
 			sourceTree = "<group>";
@@ -1131,6 +1136,7 @@
 				2F61458722BF761F001C2734 /* Extension_Data.swift in Sources */,
 				2F61459022BF761F001C2734 /* MainContainerViewController.swift in Sources */,
 				2F61459722BF761F001C2734 /* Editors.swift in Sources */,
+				60EBC64C2F9BAD5B00A6DD84 /* ChartViewModel.swift in Sources */,
 				2F375ABB237F28BC004ED8D7 /* DefaultProgram.swift in Sources */,
 				60107F912F48830E00A15101 /* LofiAppsViewController.swift in Sources */,
 				60BBDB882B6BA16F003AD3CE /* DiscoveredUSBDevice.swift in Sources */,
@@ -1160,6 +1166,7 @@
 				6094AC582E20F2410066D07A /* WebLogHandler.swift in Sources */,
 				2F61457022BF761F001C2734 /* Extension_CBUUID.swift in Sources */,
 				6094C3962C047549006F4CB4 /* ChartViewCell.swift in Sources */,
+				60C626F82F9BC1EB00D23A43 /* MultiLineChartView.swift in Sources */,
 				2F61457122BF761F001C2734 /* FlashableBLECalliope.swift in Sources */,
 				2F61451022BF75DE001C2734 /* AppDelegate.swift in Sources */,
 				2F61457F22BF761F001C2734 /* Async.swift in Sources */,

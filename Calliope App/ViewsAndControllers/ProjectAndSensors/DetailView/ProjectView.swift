@@ -41,7 +41,7 @@ struct ProjectView: View {
             ScrollView {
                 VStack {
                     ForEach(projectViewController.charts) { chart in
-                        ChartView(onRemoveTapped: {projectViewController.deleteChart(chart: chart)})
+                        ChartView(onRemoveTapped: {projectViewController.deleteChart(chart: chart)}, chartViewModel: ChartViewModel(chart: chart))
                     }
                     IconButton(imageSystemName: "plus.circle", action: {projectViewController.addNewSensor()}, rotation: 0, iconColor: Color(.white), backgroundColor: projectViewController.addChartButtonEnabled ? Color("calliope-turqoise") : Color(.gray)).disabled(!projectViewController.addChartButtonEnabled)
                 }
@@ -53,16 +53,18 @@ struct ProjectView: View {
 
 struct ChartView: View {
     let onRemoveTapped: () -> Void
+    @ObservedObject var chartViewModel: ChartViewModel
     
     var body: some View {
         VStack {
-            HStack {
-                DropDownMenu(options: [DropDownOption(name: "Accelerometer"), DropDownOption(name: "Temperature")], placeholder: "Select Sensor")
-                Spacer()
-                DropDownMenu(options: [DropDownOption(name: "All"), DropDownOption(name: "x")], placeholder: "Select Axis")
-                Spacer()
-                IconButton(imageSystemName: "xmark.circle", action: onRemoveTapped, rotation: 0, iconColor: Color(.white), backgroundColor: Color(.white).opacity(0))
-           }
+            ZStack {
+                DropDownMenu(options: chartViewModel.axisOptions, selectedOption: $chartViewModel.selectedAxis, onSelectionChanged: chartViewModel.selectAxis,  placeholder: chartViewModel.axisOptions.count == 0 ? "-" : "Select Axis").disabled(chartViewModel.axisOptions.count == 0)
+                HStack {
+                    DropDownMenu(options: chartViewModel.sensorOptions, selectedOption: $chartViewModel.selectedSensor, onSelectionChanged: chartViewModel.selectSensor, placeholder: chartViewModel.sensorOptions.count > 0 ? "Select Sensor" : "No Sensor Available").disabled(chartViewModel.sensorOptions.count == 0)
+                    Spacer()
+                    IconButton(imageSystemName: "xmark.circle", action: onRemoveTapped, rotation: 0, iconColor: Color(.white), backgroundColor: Color(.white).opacity(0))
+                }
+            }
             HStack {
                 Spacer()
                 MetricView(metricName: "Minimum", metricValue: 0)
@@ -74,13 +76,12 @@ struct ChartView: View {
                 MetricView(metricName: "Current", metricValue: 0)
                 Spacer()
             }
-            Rectangle()
-                .fill(Color.gray.opacity(0.2))
-                .frame(maxWidth: .infinity)
-                .frame(height: 250)
+            MultiLineChartView(dataSets: $chartViewModel.data)
+                    .frame(height: 250)
+                    .padding()
             HStack {
                 Spacer()
-                IconButton(imageSystemName: "play.circle", action: {print("PLay tapped")}, rotation: 0, iconColor: Color(.white), backgroundColor: Color(.white).opacity(0))
+                IconButton(imageSystemName: chartViewModel.isRecording ? "pause.circle" : "play.circle", action: chartViewModel.toggleRecording, rotation: 0, iconColor: chartViewModel.selectedSensor==nil ? Color(.gray) : Color(.white), backgroundColor: Color(.white).opacity(0)).disabled(chartViewModel.selectedSensor==nil)
                 Spacer()
             }
             
@@ -112,23 +113,25 @@ struct MetricView: View {
     }
 }
 
-struct DropDownOption: Identifiable {
+struct DropDownOption<T>: Identifiable {
     var id = UUID()
     var name: String
+    var object: T
 }
 
-struct DropDownMenu: View {
-    var options: [DropDownOption]
-    @State var selectedOption: DropDownOption?
+struct DropDownMenu<T>: View {
+    var options: [DropDownOption<T>]
+    @Binding var selectedOption: DropDownOption<T>?
+    let onSelectionChanged: (DropDownOption<T>) -> Void
     var placeholder: String
     
     var body: some View {
         Menu {
             ForEach(options) { option in
-                Button(option.name, action: { selectedOption = option })
+                Button(option.name, action: { onSelectionChanged(option) })
             }
         } label: {
-            Label(selectedOption != nil ? selectedOption!.name : placeholder, systemImage: "chevron.down")
+            Label(selectedOption?.name ?? placeholder, systemImage: "chevron.down")
             .padding()
             .background(Color.gray.opacity(0.2))
             .cornerRadius(32)
