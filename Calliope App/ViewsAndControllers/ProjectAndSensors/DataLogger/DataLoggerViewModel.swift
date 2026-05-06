@@ -33,7 +33,14 @@ class DataLoggerViewModel: ObservableObject, Alertable {
     }
 
     func saveCSV(csv: String) {
-        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let documentsURL: URL
+        do {
+            documentsURL = try StorageDirectory.shared.documentsDirectory()
+        } catch {
+            print("Error getting documents directory: \(error)")
+            showAlert(for: .failure)
+            return
+        }
         let fileURL = documentsURL.appendingPathComponent("MY_DATA.csv")
 
         do {
@@ -55,7 +62,11 @@ class DataLoggerViewModel: ObservableObject, Alertable {
 
         let message =
             switch status {
-            case .success: NSLocalizedString("You can find the CSV file containing your datalogger data, named MY_DATA.csv, in the Calliope directory on your device.", comment: "")
+            case .success:
+                NSLocalizedString(
+                    "You can find the CSV file containing your datalogger data, named MY_DATA.csv, in the Calliope directory on your device.",
+                    comment: ""
+                )
             default: NSLocalizedString("The download of the CSV file containing your datalogger data was unsuccessful.", comment: "")
             }
 

@@ -19,12 +19,7 @@ final class HexFileManager {
     }()
     
     private static func dir() throws -> URL {
-        return try FileManager.default.url(
-            for: .documentDirectory,
-            in: .userDomainMask,
-            appropriateFor:nil,
-            create:false
-        )
+        try StorageDirectory.shared.documentsDirectory()
     }
     
     private static func dateFor(url:URL) throws -> Date {
@@ -50,12 +45,13 @@ final class HexFileManager {
         let dir = try self.dir()
         let urls = try FileManager.default.contentsOfDirectory(
             at: dir,
-            includingPropertiesForKeys: nil,
+            includingPropertiesForKeys: [.ubiquitousItemDownloadingStatusKey],
             options: .skipsSubdirectoryDescendants)
         return try urls.filter({ url -> Bool in
             return url.absoluteString.hasSuffix(".hex")
         })
         .map { url -> HexFile in
+            StorageDirectory.shared.startDownloadIfNeeded(at: url)
             let name = String(url.lastPathComponent.dropLast(4))
             let date = try dateFor(url:url)
             return HexFile(url: url, name: name, date: date)

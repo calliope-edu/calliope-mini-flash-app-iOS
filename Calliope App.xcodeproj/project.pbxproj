@@ -133,6 +133,7 @@
 		60C90B452F237F3E006279B2 /* WBEventTarget.js in Resources */ = {isa = PBXBuildFile; fileRef = 60C90B102F237F3E006279B2 /* WBEventTarget.js */; };
 		60C90B462F237F3E006279B2 /* WBDevice.js in Resources */ = {isa = PBXBuildFile; fileRef = 60C90B0F2F237F3E006279B2 /* WBDevice.js */; };
 		60C915932B1F442F00E4039D /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C915922B1F442F00E4039D /* Network.swift */; };
+		60CA110D2E40000000000001 /* StorageDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CA110D2E40000000000002 /* StorageDirectory.swift */; };
 		60CA11B1000000000000A1A1 /* CalliopeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CA11B3000000000000A1A3 /* CalliopeApp.swift */; };
 		60CA11B2000000000000A1A2 /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CA11B4000000000000A1A4 /* RootTabView.swift */; };
 		60CA11B5000000000000A1A5 /* RootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CA11B6000000000000A1A6 /* RootCoordinator.swift */; };
@@ -289,6 +290,7 @@
 		60C90B122F237F3E006279B2 /* WBUtils.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = WBUtils.js; sourceTree = "<group>"; };
 		60C90B172F237F3E006279B2 /* Jsonifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jsonifiable.swift; sourceTree = "<group>"; };
 		60C915922B1F442F00E4039D /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		60CA110D2E40000000000002 /* StorageDirectory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageDirectory.swift; sourceTree = "<group>"; };
 		60CA11B3000000000000A1A3 /* CalliopeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeApp.swift; sourceTree = "<group>"; };
 		60CA11B4000000000000A1A4 /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
 		60CA11B6000000000000A1A6 /* RootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinator.swift; sourceTree = "<group>"; };
@@ -438,6 +440,7 @@
 				2F61453C22BF761F001C2734 /* ValueLocalizer.swift */,
 				2F61453D22BF761F001C2734 /* ExtColor.swift */,
 				2F61453E22BF761F001C2734 /* LogNotify.swift */,
+				60CA110D2E40000000000002 /* StorageDirectory.swift */,
 				2F61454022BF761F001C2734 /* Async.swift */,
 				2F61454122BF761F001C2734 /* NotificationConstants.swift */,
 				2F61454222BF761F001C2734 /* Binary.swift */,
@@ -1137,6 +1140,7 @@
 				2F61457922BF761F001C2734 /* Ext.swift in Sources */,
 				2F61457D22BF761F001C2734 /* LogNotify.swift in Sources */,
 				60C051DC3000D98800DFA868 /* MatrixConnectionView.swift in Sources */,
+				60CA110D2E40000000000001 /* StorageDirectory.swift in Sources */,
 				7E25CB63E012B25A80606449 /* UIDevice+Extensions.swift in Sources */,
 				80EB0D422F0ECA3C000C3269 /* PartialFlashing.swift in Sources */,
 				7E25C2F16E2316D7C6EF236F /* UtilityJobProtocol.swift in Sources */,
