@@ -27,6 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             diskPath: "makecode_cache")
         URLCache.shared = cache
 
+        // Initialize iCloud container so the app folder appears in Files app
+        StorageDirectory.shared.initializeCloudStorage()
+
         // Setting up Database
         let _ = DatabaseManager.shared
         return true

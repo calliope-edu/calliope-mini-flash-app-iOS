@@ -88,7 +88,14 @@ class DataLoggerWebViewController: UIViewController, WKNavigationDelegate, WKScr
     }
 
     private func saveCSV(csv: String) {
-        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let documentsURL: URL
+        do {
+            documentsURL = try StorageDirectory.shared.documentsDirectory()
+        } catch {
+            print("Error getting documents directory: \(error)")
+            showAlert(for: .failure)
+            return
+        }
         let fileURL = documentsURL.appendingPathComponent("MY_DATA.csv")
 
         do {

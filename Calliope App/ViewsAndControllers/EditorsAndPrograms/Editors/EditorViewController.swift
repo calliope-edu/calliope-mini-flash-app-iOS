@@ -384,8 +384,9 @@ extension EditorViewController: WKDownloadDelegate {
             return
         }
         
-        let destination = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(location.lastPathComponent)
         do {
+            let documentsDir = try StorageDirectory.shared.documentsDirectory()
+            let destination = documentsDir.appendingPathComponent(location.lastPathComponent)
             try FileManager.default.moveItem(at: location, to: destination)
             showAlertSessionDataDownload(for: .success)
         } catch {

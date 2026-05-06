@@ -77,6 +77,18 @@
 	<string>To record location of specific sensor value, this apps needs to have access to the current location!</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>To record location connected to a sensor value, this apps needs to have access to the current location!</string>
+	<key>NSUbiquitousContainers</key>
+	<dict>
+		<key>iCloud.cc.calliope.ios.flash</key>
+		<dict>
+			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
+			<true/>
+			<key>NSUbiquitousContainerName</key>
+			<string>Calliope mini App</string>
+			<key>NSUbiquitousContainerSupportedFolderLevels</key>
+			<string>Any</string>
+		</dict>
+	</dict>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>To use Open Roberta, this app uses the Microphone</string>
 	<key>UIAppFonts</key>
