@@ -361,6 +361,10 @@ class FirmwareUpload {
                 }
             }
             
+            // Shared-iPad export-picker flow needs a view controller to present from.
+            if let usbCalliope = calliope as? USBCalliope, usbCalliope.useExportPicker {
+                usbCalliope.presentingController = self.controller
+            }
             try calliope.upload(file: file, progressReceiver: self, statusDelegate: self, logReceiver: self)
         } catch {
             DispatchQueue.main.async { [weak self] in

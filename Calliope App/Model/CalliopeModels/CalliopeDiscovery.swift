@@ -78,13 +78,20 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
                     let connectingUSBCalliope = connectingCalliope as! DiscoveredUSBDevice
                     do {
                         connectedUSBCalliope = connectingUSBCalliope
-                        connectedUSBCalliope?.usageReadyCalliope = try USBCalliope(calliopeLocation: connectingUSBCalliope.url)
-                        dispatchUSBCalliopePolling()
+                        if connectingUSBCalliope.useExportPicker {
+                            // Shared iPad: no folder URL, every flash uses an export picker.
+                            connectedUSBCalliope?.usageReadyCalliope = USBCalliope(exportPickerMode: true)
+                            // Skip reachability polling — there is no persistent volume URL.
+                            LogNotify.log("USB Calliope (export-picker mode) ready")
+                        } else if let url = connectingUSBCalliope.url {
+                            connectedUSBCalliope?.usageReadyCalliope = try USBCalliope(calliopeLocation: url)
+                            dispatchUSBCalliopePolling()
+                        }
                         LogNotify.log("Calliope mini Discovery State now: \(state)")
                     } catch {
                         LogNotify.log("Connecting to USB Calliope mini failed")
                     }
-                    
+
                 }
                 
             }
@@ -327,11 +334,24 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
 
     func initializeConnectionToUsbCalliope(view: UIViewController) {
         state = .usbConnecting
-        // Use the broadest directory-conforming types so that mounted USB volumes
-        // (such as the Calliope mini's MAINTENANCE drive) are pickable. On Shared iPad
-        // the picker filters mounted volumes more strictly than on a personal iPad —
-        // including UTType.volume and UTType.directory makes the DAPLink mass-storage
-        // volume selectable there too.
+
+        // Shared iPad: the system silently rejects folder selection on mounted
+        // USB volumes, so the folder picker is unusable. Skip it and connect a
+        // virtual USB Calliope that asks for the destination per-flash via an
+        // export picker.
+        if UIDevice.current.isSharedIPad {
+            LogNotify.log("Shared iPad detected — skipping folder picker, using export-picker flow")
+            let discovered = DiscoveredUSBDevice(exportPickerName: CalliopeDiscovery.usbCalliopeName)
+            disconnectFromCalliope()
+            discovered.state = .discovered
+            self.discoveredCalliopes.updateValue(discovered, forKey: CalliopeDiscovery.usbCalliopeName)
+            self.connectToCalliope(discovered)
+            return
+        }
+
+        // Personal iPad: use the existing folder-picker flow.
+        // Including .folder, .directory and .volume makes the DAPLink mass-storage
+        // volume reliably selectable in the picker.
         let contentTypes: [UTType] = [.folder, .directory, .volume]
         let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: contentTypes)
         documentPicker.delegate = self

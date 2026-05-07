@@ -17,6 +17,29 @@ extension UIDevice {
         }
     }
 
+    /// True if the device is running in Shared iPad mode (Managed Apple ID, e.g. ASM/ASE).
+    ///
+    /// Detection priority:
+    /// 1. **MDM Managed App Configuration**: admins push a key `sharedIPad` (Bool)
+    ///    via Managed App Config; we read it from `com.apple.configuration.managed`.
+    /// 2. **Manual override**: `UserDefaults` key `sharedIPadOverride` (Bool) — useful for
+    ///    development/testing without an MDM.
+    ///
+    /// On Shared iPad the Files app picker silently rejects folder selections on
+    /// mounted external USB volumes (e.g. the Calliope MAINTENANCE/MINI drive).
+    /// The app uses this flag to switch the USB flashing flow to a per-flash
+    /// export picker, which works in the Shared iPad sandbox.
+    var isSharedIPad: Bool {
+        if let override = UserDefaults.standard.object(forKey: "sharedIPadOverride") as? Bool {
+            return override
+        }
+        if let managed = UserDefaults.standard.dictionary(forKey: "com.apple.configuration.managed"),
+           let flag = managed["sharedIPad"] as? Bool {
+            return flag
+        }
+        return false
+    }
+
     var hasUSBC: Bool {
         get {
             let pattern = "([A-z]+)(\\d+),(\\d+)"
