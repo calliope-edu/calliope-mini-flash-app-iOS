@@ -327,9 +327,16 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
 
     func initializeConnectionToUsbCalliope(view: UIViewController) {
         state = .usbConnecting
-        let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.folder])
+        // Use the broadest directory-conforming types so that mounted USB volumes
+        // (such as the Calliope mini's MAINTENANCE drive) are pickable. On Shared iPad
+        // the picker filters mounted volumes more strictly than on a personal iPad —
+        // including UTType.volume and UTType.directory makes the DAPLink mass-storage
+        // volume selectable there too.
+        let contentTypes: [UTType] = [.folder, .directory, .volume]
+        let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: contentTypes)
         documentPicker.delegate = self
         documentPicker.allowsMultipleSelection = false
+        documentPicker.shouldShowFileExtensions = true
         view.present(documentPicker, animated: true, completion: nil)
     }
     
