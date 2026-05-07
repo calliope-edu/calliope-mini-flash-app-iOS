@@ -76,8 +76,9 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
         }
     }
 
+    @ViewBuilder
     var selectUSBCalliopeButton: some View {
-        Button {
+        let folderPicker = Button {
             viewModel.startUsbConnect()
         } label: {
             Text(NSLocalizedString("Select Calliope mini", comment: ""))
@@ -87,10 +88,16 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
                 .foregroundColor(.white)
                 .cornerRadius(12)
         }
-        .fileImporter(isPresented: $viewModel.isFolderPickerPresented, allowedContentTypes: [.folder]) { result in
+        // broad directory types allow selecting the Calliope on shared iPads
+        .fileImporter(isPresented: $viewModel.isFolderPickerPresented, allowedContentTypes: [.folder, .directory, .volume]) { result in
             if case .success(let url) = result {
                 viewModel.handleUSBFolderPicked(url)
             }
+        }
+        if #available(iOS 17, *) {
+            folderPicker.fileDialogBrowserOptions(.displayFileExtensions)
+        } else {
+            folderPicker
         }
     }
 
