@@ -76,13 +76,20 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate {
                     let connectingUSBCalliope = connectingCalliope as! DiscoveredUSBDevice
                     do {
                         connectedUSBCalliope = connectingUSBCalliope
-                        connectedUSBCalliope?.usageReadyCalliope = try USBCalliope(calliopeLocation: connectingUSBCalliope.url)
-                        dispatchUSBCalliopePolling()
+                        if connectingUSBCalliope.useExportPicker {
+                            // Shared iPad: no folder URL, every flash uses an export picker.
+                            connectedUSBCalliope?.usageReadyCalliope = USBCalliope(exportPickerMode: true)
+                            // Skip reachability polling — there is no persistent volume URL.
+                            LogNotify.log("USB Calliope (export-picker mode) ready")
+                        } else if let url = connectingUSBCalliope.url {
+                            connectedUSBCalliope?.usageReadyCalliope = try USBCalliope(calliopeLocation: url)
+                            dispatchUSBCalliopePolling()
+                        }
                         LogNotify.log("Calliope mini Discovery State now: \(state)")
                     } catch {
                         LogNotify.log("Connecting to USB Calliope mini failed")
                     }
-                    
+
                 }
                 
             }
@@ -321,6 +328,18 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate {
             self.centralManager.cancelPeripheralConnection(connectedCalliope.peripheral)
             // Don't clear connectedCalliope - let didDisconnectPeripheral handle reconnection
         }
+    }
+    
+    func startUsbConnect() {
+        state = .usbConnecting
+    }
+    
+    func initializeVirtualUSBCalliope() {
+        let discovered = DiscoveredUSBDevice(exportPickerName: CalliopeDiscovery.usbCalliopeName)
+            disconnectFromCalliope()
+            discovered.state = .discovered
+            self.discoveredCalliopes.updateValue(discovered, forKey: CalliopeDiscovery.usbCalliopeName)
+            self.connectToCalliope(discovered)
     }
 
     func handleUSBFolderPicked(_ url: URL) {

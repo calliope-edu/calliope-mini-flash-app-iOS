@@ -212,6 +212,19 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
     }
 
     func startUsbConnect() {
+        connector.startUsbConnect()
+        
+        // Shared iPad: the system silently rejects folder selection on mounted
+        // USB volumes, so the folder picker is unusable. Skip it and connect a
+        // virtual USB Calliope that asks for the destination per-flash via an
+        // export picker.
+        if UIDevice.current.isSharedIPad {
+            LogNotify.log("Shared iPad detected — skipping folder picker, using export-picker flow")
+            connector.initializeVirtualUSBCalliope()
+            return
+        }
+        
+        // Personal iPad: use the existing folder-picker flow.
         isFolderPickerPresented = true
     }
 
