@@ -32,9 +32,10 @@ struct RootTabView: View {
                 SensordataView(viewModel: sensordataViewModel)
                     .tabItem { Label("Sensordaten", systemImage: "menubar.rectangle") }
                     .tag(2)
-                LofiAppsView(viewModel: lofiAppsViewModel)
-                    .tabItem { Label("Apps", systemImage: "rectangle.grid.3x3") }
-                    .tag(3)
+// Temporarily feature flagged Apps
+//                LofiAppsView(viewModel: lofiAppsViewModel)
+//                    .tabItem { Label("Apps", systemImage: "rectangle.grid.3x3") }
+//                    .tag(3)
             }
             .tint(Color("calliope-lilablau"))
             
