@@ -16,7 +16,7 @@ struct DataPoint {
 }
 
 class ChartViewModel: ObservableObject {
-    let chart: Chart
+    var chart: Chart
     @Published var sensorOptions: [DropDownOption<Sensor>] = []
     @Published var selectedSensor: DropDownOption<Sensor>?
     let dataController: DataController
@@ -45,6 +45,7 @@ class ChartViewModel: ObservableObject {
     
     func selectSensor(selection: DropDownOption<Sensor>) {
         selectedSensor = selection
+        chart.sensorType = selection.object.calliopeService
     }
     
     func selectAxis(selection: DropDownOption<Void>) {
@@ -76,7 +77,7 @@ class ChartViewModel: ObservableObject {
                 if self.data[axis] == nil {
                     self.data[axis] = []
                 }
-                self.data[axis]?.append(DataPoint(x: time, y: value, location: coordinates))
+                self.data[axis]?.append(DataPoint(x: time - (self.baseTime ?? 0), y: value, location: coordinates))
 //                self.getDataEntries(data: [axis: value], timestep: time, service: chart.sensorType ?? .empty)
 //                self.handleLocationData(coordinates, time)
 //                self.addDataEntries(dataEntries: self.axisToData)
