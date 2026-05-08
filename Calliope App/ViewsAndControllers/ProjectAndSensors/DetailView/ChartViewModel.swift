@@ -98,24 +98,28 @@ class ChartViewModel: ObservableObject {
         let rawValues = Value.fetchValuesBy(chartId: chart.id)
         LogNotify.log("Got the raw values")
         if !rawValues.isEmpty {
-            /*if baseTime == nil {
+            if baseTime == nil {
                 baseTime = rawValues.first?.time
                 if let baseTime = baseTime {
-                    lineChartView.xAxis.valueFormatter = TimeAxisValueFormatter(baseTime: baseTime)
+//                    lineChartView.xAxis.valueFormatter = TimeAxisValueFormatter(baseTime: baseTime)
                 }
-            }*/
+            }
             for value in rawValues {
                 let decodedValue = DataParser.decode(data: value.value, service: chart.sensorType ?? .empty)
                 for key in decodedValue.keys {
-                    print(key)
                     if key == "" {
                         break
                     }
                     guard let datapoint = decodedValue[key], let baseTime = baseTime else {
                         return
                     }
-                    data[key]?.append(DataPoint(x: Double(value.time) - baseTime, y: datapoint, location: nil))
-                    print(Double(value.time) - baseTime, datapoint)
+                    let newDataPoint: DataPoint = DataPoint(x: Double(value.time) - baseTime, y: datapoint, location: nil)
+                    if(data[key] != nil) {
+                        data[key]!.append(newDataPoint)
+                    }
+                    else {
+                        data.updateValue([newDataPoint], forKey: key)
+                    }
                 }
 //                getDataEntries(data: decodedValue, timestep: value.time, service: chart.sensorType ?? .empty)
 //                handleLocationData(CLLocationCoordinate2D(latitude: value.lat, longitude: value.long), value.time)
@@ -128,7 +132,8 @@ class ChartViewModel: ObservableObject {
 //            sensorTypeButton.isEnabled = true
 //            recordingButton.isEnabled = (chart.sensorType != nil)
         }
-        print(data)
+        print(data.count)
+        print(data.keys)
         LogNotify.log("Done")
     }
     

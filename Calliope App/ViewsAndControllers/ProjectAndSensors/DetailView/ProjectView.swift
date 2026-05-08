@@ -101,9 +101,6 @@ struct ChartView: View {
             } else {
                 Text("Too old iOS Version")
             }
-//            MultiLineChartView(dataSets: $chartViewModel.data)
-//                    .frame(height: 250)
-//                    .padding()
             
             HStack {
                 Spacer()
