@@ -99,7 +99,7 @@ class BaseChartViewCell: UITableViewCell, ChartViewDelegate {
             }
         }
 
-        dataController.getLastLocation = getLastLocation
+        // dataController.getLastLocation = getLastLocation
         isRecordingData = true
     }
 

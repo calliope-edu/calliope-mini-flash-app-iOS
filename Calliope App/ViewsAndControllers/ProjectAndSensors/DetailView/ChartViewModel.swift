@@ -15,6 +15,27 @@ struct DataPoint {
     let location: CLLocationCoordinate2D?
 }
 
+struct IdentifiableLocation: Identifiable, Hashable {
+    let id: UUID
+    let location: CLLocationCoordinate2D
+    init(id: UUID = UUID(), lat: Double, long: Double) {
+        self.id = id
+        self.location = CLLocationCoordinate2D(
+            latitude: lat,
+            longitude: long)
+    }
+    
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.location.latitude == rhs.location.latitude &&
+        lhs.location.longitude == rhs.location.longitude
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(location.latitude)
+        hasher.combine(location.longitude)
+    }
+}
+
 class ChartViewModel: ObservableObject {
     var chart: Chart
     @Published var sensorOptions: [DropDownOption<Sensor>] = []
@@ -25,6 +46,7 @@ class ChartViewModel: ObservableObject {
     @Published var axisOptions: [DropDownOption<Bool?>] = []
     @Published var selectedAxis: DropDownOption<Bool?>?
     @Published var data: [String: [DataPoint]] = [:]
+    @Published var uniqueLocations: Set<IdentifiableLocation> = Set<IdentifiableLocation>()
     
     @Published var minimumMetric: Double?
     @Published var averageMetric: Double?
@@ -129,6 +151,9 @@ class ChartViewModel: ObservableObject {
                 self.updateMetrics()
                 self.updateAvailableAxis()
 //                self.getDataEntries(data: [axis: value], timestep: time, service: chart.sensorType ?? .empty)
+                if coordinates != nil {
+                    self.uniqueLocations.insert(IdentifiableLocation(lat: coordinates!.latitude, long: coordinates!.longitude))
+                }
 //                self.handleLocationData(coordinates, time)
 //                self.addDataEntries(dataEntries: self.axisToData)
             }
@@ -172,6 +197,9 @@ class ChartViewModel: ObservableObject {
                     }
                 }
 //                getDataEntries(data: decodedValue, timestep: value.time, service: chart.sensorType ?? .empty)
+                if(value.lat != nil && value.long != nil) {
+                    uniqueLocations.insert(IdentifiableLocation(lat: value.lat!, long: value.long!))
+                }
 //                handleLocationData(CLLocationCoordinate2D(latitude: value.lat, longitude: value.long), value.time)
             }
 //            addDataEntries(dataEntries: axisToData)
@@ -182,9 +210,8 @@ class ChartViewModel: ObservableObject {
 //            sensorTypeButton.isEnabled = true
 //            recordingButton.isEnabled = (chart.sensorType != nil)
         }
-        print(data.count)
-        print(data.keys)
-        LogNotify.log("Done")
+        updateAvailableSensors()
+        updateAvailableSensors()
     }
     
     

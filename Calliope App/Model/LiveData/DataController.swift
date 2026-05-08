@@ -9,7 +9,7 @@
 import CoreLocation
 import Foundation
 
-class DataController {
+class DataController: NSObject, CLLocationManagerDelegate {
 
     var availableSensors: [Sensor] = []
     static var activeServices: [CalliopeService] = []
@@ -19,9 +19,10 @@ class DataController {
 
     var uartValue: [Any] = []
 
-    var getLastLocation: (() -> CLLocationCoordinate2D?)?
+//    var getLastLocation: (() -> CLLocationCoordinate2D?)?
+    let locationManager = CLLocationManager()
 
-    init() {
+    override init() {
         guard let connectedCalliope = MatrixConnectionViewController.instance.usageReadyCalliope else {
             return
         }
@@ -51,11 +52,12 @@ class DataController {
                 self.sensorStopRecordingFor(chart: chart)
                 return
             }
+            askForLocationAuthorization()
             self.timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
                 let newValue = self.fetchValue(service: chart.sensorType ?? .empty)
                 for (axis, time, value) in newValue {
                     let parsedValue = DataParser.encode(data: [axis: value], service: chart.sensorType ?? .empty)
-                    let coordinates = self.getLastLocation?()
+                    let coordinates = self.getLastLocation()
                     Value.insertValue(value: parsedValue, coordinates: coordinates, chartsId: chart.id!)
                     response((axis, time, value, coordinates))
                 }
@@ -117,6 +119,38 @@ class DataController {
             default:
                 return [("", 0, 0.0)]
             }
+        }
+    }
+    
+    // #MARK: LOCATION RELEVANT FUNCTIONS
+    private let COORDINATE_PRECISION = 4
+
+    func setupLocationManager() {
+        LogNotify.log("Init Location Updates; Auth status \(locationManager.authorizationStatus)")
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.requestWhenInUseAuthorization()
+    }
+
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        LogNotify.log("Maps will be \(self.isAuthorizedForLocation() ? "shown" : "hidden"), as Auth Status \(locationManager.authorizationStatus)")
+    }
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        LogNotify.log("Got new Location Data - Location Manager holds Long: \(self.locationManager.location?.coordinate.longitude ?? 0.0) Lat: \(self.locationManager.location?.coordinate.latitude ?? 0.0)")
+    }
+
+    private func getLastLocation() -> CLLocationCoordinate2D? {
+        return self.locationManager.location?.coordinate.rounded(toPlaces: COORDINATE_PRECISION) ?? nil
+    }
+    
+    private func isAuthorizedForLocation() -> Bool {
+        [CLAuthorizationStatus.authorizedAlways, CLAuthorizationStatus.authorizedWhenInUse].contains(self.locationManager.authorizationStatus)
+    }
+    
+    private func askForLocationAuthorization() {
+        if !isAuthorizedForLocation() && self.locationManager.authorizationStatus == CLAuthorizationStatus.notDetermined {
+            locationManager.requestWhenInUseAuthorization()
         }
     }
 }

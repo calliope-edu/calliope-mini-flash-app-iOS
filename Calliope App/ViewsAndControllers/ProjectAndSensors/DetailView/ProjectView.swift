@@ -9,6 +9,7 @@
 import Foundation
 import SwiftUI
 import Charts
+import MapKit
 
 struct ProjectView: View {
     @ObservedObject var projectViewController: ProjectViewController
@@ -55,6 +56,7 @@ struct ProjectView: View {
 struct ChartView: View {
     let onRemoveTapped: () -> Void
     @ObservedObject var chartViewModel: ChartViewModel
+    @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 51.507222, longitude: -0.1275), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5))
     
     var body: some View {
         VStack {
@@ -95,12 +97,16 @@ struct ChartView: View {
                     
                     Charts.Chart {
                         ForEach(chartData) { dataPoint in
+                            let xValue: PlottableValue = .value("Time", dataPoint.x)
+                            let yValue: PlottableValue = .value(dataPoint.series, dataPoint.y)
+                            let seriesValue: PlottableValue = .value("Axis", dataPoint.series)
+                            
                             LineMark(
-                                x: .value("Time", dataPoint.x),
-                                y: .value(dataPoint.series, dataPoint.y),
-                                series: .value("Axis", dataPoint.series)
+                                x: xValue,
+                                y: yValue,
+                                series: seriesValue
                             )
-                            .foregroundStyle(by: .value("Axis", dataPoint.series))
+                            .foregroundStyle(by: seriesValue)
                         }
                     }.chartLegend(.hidden)
                         .chartYAxis {
@@ -124,17 +130,61 @@ struct ChartView: View {
                 Spacer()
             }
             
-            // Placeholder for map
-            /*Rectangle()
-             .fill(Color.gray.opacity(0.2))
-             .frame(maxWidth: .infinity)
-             .frame(height: 250)*/
+            ZStack {
+                Map(coordinateRegion: $region,
+                    annotationItems: Array(chartViewModel.uniqueLocations)
+                ) { place in
+                    MapAnnotation(coordinate: place.location) {
+                        Circle().frame(width: 20, height: 20)
+                    }
+                }
+                .frame(height: 300)
+                .cornerRadius(12)
+                
+                Text("\(chartViewModel.uniqueLocations.count) unique locations").padding()
+                    .frame(maxWidth: .infinity,
+                           maxHeight: .infinity,
+                           alignment: .topTrailing)
+
+                
+                IconButton(imageSystemName: "scope", action: resetRegion, rotation: 0, iconColor: Color(.black), backgroundColor: Color(.white)).padding()
+                    .frame(maxWidth: .infinity,
+                           maxHeight: .infinity,
+                           alignment: .bottomTrailing)
+            }
+            
+            
         }.padding()
             .background(
                 RoundedRectangle(cornerRadius: 16)
                     .fill(Color("calliope-turqoise"))
             )
             .padding(.horizontal)
+        
+        
+    }
+    
+    func resetRegion() {
+        var center = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+        if(chartViewModel.uniqueLocations.count > 0) {
+            for place in chartViewModel.uniqueLocations {
+                center.latitude += place.location.latitude
+                center.longitude += place.location.longitude
+            }
+            center.latitude /= Double(chartViewModel.uniqueLocations.count)
+            center.longitude /= Double(chartViewModel.uniqueLocations.count)
+        }
+        
+        var maxDistanceFromCenter = 0.002
+        let centerCL = CLLocation(latitude: center.latitude, longitude: center.longitude)
+        for place in chartViewModel.uniqueLocations {
+            let distance = centerCL.distance(from: CLLocation(latitude: place.location.latitude, longitude: place.location.longitude))
+            if distance > maxDistanceFromCenter {
+                maxDistanceFromCenter = distance
+            }
+        }
+        
+        region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: maxDistanceFromCenter, longitudeDelta: maxDistanceFromCenter))
     }
 }
 
