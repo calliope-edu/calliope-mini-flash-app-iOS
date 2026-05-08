@@ -22,8 +22,8 @@ class ChartViewModel: ObservableObject {
     let dataController: DataController
     var baseTime: Double?
     @Published var isRecording: Bool = false
-    @Published var axisOptions: [DropDownOption<Void>] = []
-    @Published var selectedAxis: DropDownOption<Void>?
+    @Published var axisOptions: [DropDownOption<Bool?>] = []
+    @Published var selectedAxis: DropDownOption<Bool?>?
     @Published var data: [String: [DataPoint]] = [:]
     
     private var calliopeConnectedSubcription: NSObjectProtocol!
@@ -34,7 +34,9 @@ class ChartViewModel: ObservableObject {
         dataController = DataController()
         loadDatabaseDataIntoChart(chart)
         updateAvailableSensors()
+        updateAvailableAxis()
         addNotificationSubscriptions()
+        self.selectedSensor = sensorOptions.first(where: {sensorOption in sensorOption.object.calliopeService.uuid == self.chart.sensorType?.uuid})
     }
     
     func updateAvailableSensors() {
@@ -48,12 +50,23 @@ class ChartViewModel: ObservableObject {
         chart.sensorType = selection.object.calliopeService
     }
     
-    func selectAxis(selection: DropDownOption<Void>) {
+    func selectAxis(selection: DropDownOption<Bool?>) {
         selectedAxis = selection
     }
     
     func updateAvailableAxis() {
+        for (axis, _) in data {
+            axisOptions.append(DropDownOption(name: axis, object: nil))
+        }
         
+        if axisOptions.count > 1 {
+            let allOption = DropDownOption<Bool?>(name: "all", object: nil)
+            axisOptions.append(allOption)
+            selectedAxis = allOption
+        }
+        else if axisOptions.count == 1 {
+            selectedAxis = axisOptions[0]
+        }
     }
     
     func toggleRecording() {

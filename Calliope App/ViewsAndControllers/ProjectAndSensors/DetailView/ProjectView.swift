@@ -25,12 +25,12 @@ struct ProjectView: View {
                 
                 IconButton(imageSystemName: "ellipsis.circle", action: {showMenu = true}, rotation: 90, iconColor: Color(.white), backgroundColor: Color(.white).opacity(0))
                     .confirmationDialog("",
-                      isPresented: $showMenu,
-                      titleVisibility: .visible) {
+                                        isPresented: $showMenu,
+                                        titleVisibility: .visible) {
                         Button("Delete", role: .destructive) { projectViewController.deleteProject() }
                         Button("Export (CSV)") { projectViewController.exportToCSVFile() }
                         Button("Rename") { projectViewController.renameProject() }
-                  }
+                    }
             }
             .padding()
             .background(
@@ -61,7 +61,7 @@ struct ChartView: View {
             ZStack {
                 DropDownMenu(options: chartViewModel.axisOptions, selectedOption: $chartViewModel.selectedAxis, onSelectionChanged: chartViewModel.selectAxis,  placeholder: chartViewModel.axisOptions.count == 0 ? "-" : "Select Axis").disabled(chartViewModel.axisOptions.count == 0)
                 HStack {
-                    DropDownMenu(options: chartViewModel.sensorOptions, selectedOption: $chartViewModel.selectedSensor, onSelectionChanged: chartViewModel.selectSensor, placeholder: chartViewModel.sensorOptions.count > 0 ? "Select Sensor" : "No Sensor Available").disabled(chartViewModel.sensorOptions.count == 0)
+                    DropDownMenu(options: chartViewModel.sensorOptions, selectedOption: $chartViewModel.selectedSensor, onSelectionChanged: chartViewModel.selectSensor, placeholder: chartViewModel.sensorOptions.count > 0 ? "Select Sensor" : "No Sensor Available").disabled(chartViewModel.sensorOptions.count == 0 || chartViewModel.data.count != 0)
                     Spacer()
                     IconButton(imageSystemName: "xmark.circle", action: onRemoveTapped, rotation: 0, iconColor: Color(.white), backgroundColor: Color(.white).opacity(0))
                 }
@@ -78,17 +78,22 @@ struct ChartView: View {
                 Spacer()
             }
             
-            if #available(iOS 16.0, *) {
-                let chartData: [ChartDataPoint] = chartViewModel.data.flatMap { series, dataPoints in
-                        dataPoints.map {
-                            ChartDataPoint(
-                                x: $0.x,
-                                y: $0.y,
-                                series: series
-                            )
+            VStack {
+                if #available(iOS 16.0, *) {
+                    let chartData: [ChartDataPoint] = chartViewModel.data.flatMap { series, dataPoints in
+                        if(chartViewModel.selectedAxis == nil || chartViewModel.selectedAxis!.name == "all" || chartViewModel.selectedAxis!.name == series) {
+                            return dataPoints.map {
+                                ChartDataPoint(
+                                    x: $0.x,
+                                    y: $0.y,
+                                    series: series
+                                )
+                            }
                         }
+                        return []
                     }
-                Charts.Chart {
+                    
+                    Charts.Chart {
                         ForEach(chartData) { dataPoint in
                             LineMark(
                                 x: .value("Time", dataPoint.x),
@@ -97,10 +102,21 @@ struct ChartView: View {
                             )
                             .foregroundStyle(by: .value("Axis", dataPoint.series))
                         }
-                }.frame(height: 250).background(Color.white)
-            } else {
-                Text("Too old iOS Version")
+                    }.chartLegend(.hidden)
+                        .chartYAxis {
+                            AxisMarks(position: .leading)
+                        }
+                        .chartXAxis(.hidden)
+                        .frame(minHeight: 250)
+                        .background(Color.white)
+                    
+                } else {
+                    Text("Too old iOS Version")
+                }
             }
+            .padding() // space between chart and container edge
+            .background(Color.white)
+            .cornerRadius(12)
             
             HStack {
                 Spacer()
@@ -110,9 +126,9 @@ struct ChartView: View {
             
             // Placeholder for map
             /*Rectangle()
-                 .fill(Color.gray.opacity(0.2))
-                 .frame(maxWidth: .infinity)
-                 .frame(height: 250)*/
+             .fill(Color.gray.opacity(0.2))
+             .frame(maxWidth: .infinity)
+             .frame(height: 250)*/
         }.padding()
             .background(
                 RoundedRectangle(cornerRadius: 16)
@@ -138,7 +154,7 @@ struct MetricView: View {
             Text(metricName).foregroundColor(Color(.white))
                 .fontWeight(.bold)
             Text(String(format: "%.1f", metricValue)
-)
+            )
         }
     }
 }
@@ -162,9 +178,9 @@ struct DropDownMenu<T>: View {
             }
         } label: {
             Label(selectedOption?.name ?? placeholder, systemImage: "chevron.down")
-            .padding()
-            .background(Color.gray.opacity(0.2))
-            .cornerRadius(32)
+                .padding()
+                .background(Color.gray.opacity(0.2))
+                .cornerRadius(32)
         }
     }
 }
