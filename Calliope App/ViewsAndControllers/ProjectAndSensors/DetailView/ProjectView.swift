@@ -68,13 +68,13 @@ struct ChartView: View {
             }
             HStack {
                 Spacer()
-                MetricView(metricName: "Minimum", metricValue: 0)
+                MetricView(metricName: "Minimum", metricValue: chartViewModel.minimumMetric)
                 Spacer()
-                MetricView(metricName: "Average", metricValue: 0)
+                MetricView(metricName: "Average", metricValue: chartViewModel.averageMetric)
                 Spacer()
-                MetricView(metricName: "Maximum", metricValue: 0)
+                MetricView(metricName: "Maximum", metricValue: chartViewModel.maximumMetric)
                 Spacer()
-                MetricView(metricName: "Current", metricValue: 0)
+                MetricView(metricName: "Current", metricValue: chartViewModel.currentMetric)
                 Spacer()
             }
             
@@ -147,14 +147,13 @@ struct ChartDataPoint: Identifiable {
 
 struct MetricView: View {
     var metricName: String
-    var metricValue: Double
+    var metricValue: Double?
     
     var body: some View {
         VStack{
             Text(metricName).foregroundColor(Color(.white))
                 .fontWeight(.bold)
-            Text(String(format: "%.1f", metricValue)
-            )
+            Text(metricValue != nil ? String(format: "%.1f", metricValue!) : "-")
         }
     }
 }

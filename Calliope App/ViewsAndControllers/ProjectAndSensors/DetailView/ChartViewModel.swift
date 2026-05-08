@@ -26,6 +26,11 @@ class ChartViewModel: ObservableObject {
     @Published var selectedAxis: DropDownOption<Bool?>?
     @Published var data: [String: [DataPoint]] = [:]
     
+    @Published var minimumMetric: Double?
+    @Published var averageMetric: Double?
+    @Published var maximumMetric: Double?
+    @Published var currentMetric: Double?
+
     private var calliopeConnectedSubcription: NSObjectProtocol!
     private var calliopeDisconnectedSubscription: NSObjectProtocol!
 
@@ -37,6 +42,7 @@ class ChartViewModel: ObservableObject {
         updateAvailableAxis()
         addNotificationSubscriptions()
         self.selectedSensor = sensorOptions.first(where: {sensorOption in sensorOption.object.calliopeService.uuid == self.chart.sensorType?.uuid})
+        updateMetrics()
     }
     
     func updateAvailableSensors() {
@@ -69,6 +75,35 @@ class ChartViewModel: ObservableObject {
         }
     }
     
+    func updateMetrics() {
+        let values = data.flatMap{ axis, dataPoints in dataPoints.map{ $0.y}}
+        if data.count > 1 {
+            minimumMetric = values.min()
+            maximumMetric = values.max()
+            averageMetric = nil
+            currentMetric = nil
+        }
+        else if data.count == 1 {
+            minimumMetric = values.min()
+            maximumMetric = values.max()
+            averageMetric = calculateAverageMetric(values: values)
+            currentMetric = values.last
+
+        }
+        else {
+            minimumMetric = nil
+            maximumMetric = nil
+            averageMetric = nil
+            currentMetric = nil
+        }
+    }
+    
+    func calculateAverageMetric(values: [Double]) -> Double {
+        var sum = 0.0
+        values.forEach{ sum += $0}
+        return sum / Double(values.count)
+    }
+    
     func toggleRecording() {
         if isRecording {
             stopRecording()
@@ -91,6 +126,8 @@ class ChartViewModel: ObservableObject {
                     self.data[axis] = []
                 }
                 self.data[axis]?.append(DataPoint(x: time - (self.baseTime ?? 0), y: value, location: coordinates))
+                self.updateMetrics()
+                self.updateAvailableAxis()
 //                self.getDataEntries(data: [axis: value], timestep: time, service: chart.sensorType ?? .empty)
 //                self.handleLocationData(coordinates, time)
 //                self.addDataEntries(dataEntries: self.axisToData)
