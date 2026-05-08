@@ -54,4 +54,31 @@ class CSVHandler {
         return dataValues
     }
     
+    static func convertToCSVString(chartId: Int64, sensorType: CalliopeService?) -> String {
+        let values = Value.fetchValuesBy(chartId: chartId)
+        guard !values.isEmpty else { return "" }
+
+        var allKeys: [String] = []
+        for value in values {
+            let decoded = DataParser.decode(data: value.value, service: sensorType ?? .empty)
+            for key in decoded.keys where !allKeys.contains(key) { allKeys.append(key) }
+        }
+        allKeys.sort()
+
+        let timeFmt = DateFormatter()
+        timeFmt.dateFormat = "HH:mm:ss"
+        let dateFmt = DateFormatter()
+        dateFmt.dateFormat = "dd/MM/yy"
+
+        var lines = ["date,time," + allKeys.joined(separator: ",")]
+        for value in values {
+            let date = Date(timeIntervalSinceReferenceDate: value.time / 100.0)
+            let decoded = DataParser.decode(data: value.value, service: sensorType ?? .empty)
+            let cols = allKeys.map { decoded[$0].map { String($0) } ?? "" }
+            lines.append("\(dateFmt.string(from: date)),\(timeFmt.string(from: date)),\(cols.joined(separator: ","))")
+        }
+        
+        return lines.joined(separator: "\n")
+    }
+    
 }

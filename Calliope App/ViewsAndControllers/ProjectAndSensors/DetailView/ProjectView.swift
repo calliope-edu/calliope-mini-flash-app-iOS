@@ -42,8 +42,8 @@ struct ProjectView: View {
             
             ScrollView {
                 VStack {
-                    ForEach(projectViewController.charts) { chart in
-                        ChartView(onRemoveTapped: {projectViewController.deleteChart(chart: chart)}, chartViewModel: ChartViewModel(chart: chart))
+                    ForEach(projectViewController.chartViewModels) { chartViewModel in
+                        ChartView(onRemoveTapped: {projectViewController.deleteChart(chart: chartViewModel.chart)}, chartViewModel: chartViewModel)
                     }
                     IconButton(imageSystemName: "plus.circle", action: {projectViewController.addNewSensor()}, rotation: 0, iconColor: Color(.white), backgroundColor: projectViewController.addChartButtonEnabled ? Color("calliope-turqoise") : Color(.gray)).disabled(!projectViewController.addChartButtonEnabled)
                 }
@@ -57,6 +57,7 @@ struct ChartView: View {
     let onRemoveTapped: () -> Void
     @ObservedObject var chartViewModel: ChartViewModel
     @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 51.507222, longitude: -0.1275), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5))
+    @State var showMenu = false
     
     var body: some View {
         VStack {
@@ -65,7 +66,13 @@ struct ChartView: View {
                 HStack {
                     DropDownMenu(options: chartViewModel.sensorOptions, selectedOption: $chartViewModel.selectedSensor, onSelectionChanged: chartViewModel.selectSensor, placeholder: chartViewModel.sensorOptions.count > 0 ? "Select Sensor" : "No Sensor Available").disabled(chartViewModel.sensorOptions.count == 0 || chartViewModel.data.count != 0)
                     Spacer()
-                    IconButton(imageSystemName: "xmark.circle", action: onRemoveTapped, rotation: 0, iconColor: Color(.white), backgroundColor: Color(.white).opacity(0))
+                    IconButton(imageSystemName: "ellipsis.circle", action: {showMenu = true}, rotation: 90, iconColor: Color(.white), backgroundColor: Color(.white).opacity(0))
+                        .confirmationDialog("",
+                                            isPresented: $showMenu,
+                                            titleVisibility: .visible) {
+                            Button("Delete", role: .destructive) { onRemoveTapped() }
+                            Button("Export (CSV)") { chartViewModel.exportAsCSV() }
+                        }
                 }
             }
             HStack {
@@ -81,54 +88,49 @@ struct ChartView: View {
             }
             
             VStack {
-                if #available(iOS 16.0, *) {
-                    let chartData: [ChartDataPoint] = chartViewModel.data.flatMap { series, dataPoints in
-                        if(chartViewModel.selectedAxis == nil || chartViewModel.selectedAxis!.name == "all" || chartViewModel.selectedAxis!.name == series) {
-                            return dataPoints.map {
-                                ChartDataPoint(
-                                    x: $0.x,
-                                    y: $0.y,
-                                    series: series
-                                )
-                            }
-                        }
-                        return []
-                    }
-                    
-                    Charts.Chart {
-                        ForEach(chartData) { dataPoint in
-                            let xValue: PlottableValue = .value("Time", dataPoint.x)
-                            let yValue: PlottableValue = .value(dataPoint.series, dataPoint.y)
-                            let seriesValue: PlottableValue = .value("Axis", dataPoint.series)
-                            
-                            LineMark(
-                                x: xValue,
-                                y: yValue,
-                                series: seriesValue
+                let chartData: [ChartDataPoint] = chartViewModel.data.flatMap { series, dataPoints in
+                    if(chartViewModel.selectedAxis == nil || chartViewModel.selectedAxis!.name == "all" || chartViewModel.selectedAxis!.name == series) {
+                        return dataPoints.map {
+                            ChartDataPoint(
+                                x: $0.x,
+                                y: $0.y,
+                                series: series
                             )
-                            .foregroundStyle(by: seriesValue)
                         }
-                    }.chartLegend(.hidden)
-                        .chartYAxis {
-                            AxisMarks(position: .leading)
-                        }
-                        .chartXAxis {
-                            AxisMarks() { value in
-                                AxisGridLine()
-                                AxisValueLabel() {
-                                    if let timestamp = value.as(Double.self) {
-                                        Text(TimeAxisValueFormatter.stringForValue(baseTime: chartViewModel.baseTime ?? 0, timestamp))
-                                    }
+                    }
+                    return []
+                }
+                
+                Charts.Chart {
+                    ForEach(chartData) { dataPoint in
+                        let xValue: PlottableValue = .value("Time", dataPoint.x)
+                        let yValue: PlottableValue = .value(dataPoint.series, dataPoint.y)
+                        let seriesValue: PlottableValue = .value("Axis", dataPoint.series)
+                        
+                        LineMark(
+                            x: xValue,
+                            y: yValue,
+                            series: seriesValue
+                        )
+                        .foregroundStyle(by: seriesValue)
+                    }
+                }.chartLegend(.hidden)
+                    .chartYAxis {
+                        AxisMarks(position: .leading)
+                    }
+                    .chartXAxis {
+                        AxisMarks() { value in
+                            AxisGridLine()
+                            AxisValueLabel() {
+                                if let timestamp = value.as(Double.self) {
+                                    Text(TimeAxisValueFormatter.stringForValue(baseTime: chartViewModel.baseTime ?? 0, timestamp))
                                 }
                             }
                         }
-//                        .chartXAxis(.hidden)
-                        .frame(minHeight: 250)
-                        .background(Color.white)
-                    
-                } else {
-                    Text("Too old iOS Version")
-                }
+                    }
+                    .frame(minHeight: 250)
+                    .background(Color.white)
+                
             }
             .padding() // space between chart and container edge
             .background(Color.white)
@@ -155,15 +157,13 @@ struct ChartView: View {
                     .frame(maxWidth: .infinity,
                            maxHeight: .infinity,
                            alignment: .topTrailing)
-
+                
                 
                 IconButton(imageSystemName: "scope", action: resetRegion, rotation: 0, iconColor: Color(.black), backgroundColor: Color(.white)).padding()
                     .frame(maxWidth: .infinity,
                            maxHeight: .infinity,
                            alignment: .bottomTrailing)
             }
-            
-            
         }.padding()
             .background(
                 RoundedRectangle(cornerRadius: 16)
@@ -275,7 +275,7 @@ class TimeAxisValueFormatter {
         f.dateFormat = "HH:mm:ss"
         return f
     }()
-
+    
     static func stringForValue(baseTime: Double, _ value: Double) -> String {
         let date = Date(timeIntervalSinceReferenceDate: (value + baseTime) / 100.0)
         return formatter.string(from: date)

@@ -13,10 +13,11 @@ import SwiftUI
 import Charts
 
 class ProjectViewController: UIViewController, ChartViewDelegate, ObservableObject {
-
+    
     @Published var project: Project?
     @Published var addChartButtonEnabled = false
     @Published var charts: [Chart] = []
+    var chartViewModels: [ChartViewModel] = []
     
     func loadCharts() {
         guard project != nil else {
@@ -24,8 +25,9 @@ class ProjectViewController: UIViewController, ChartViewDelegate, ObservableObje
             return
         }
         charts = Chart.fetchChartsBy(projectsId: project!.id)
+        charts.forEach{ chartViewModels.append(ChartViewModel(chart: $0, openFileNameDialog: openFileNameDialog))}
     }
-
+    
     private var calliopeConnectedSubcription: NSObjectProtocol!
     private var calliopeDisconnectedSubscription: NSObjectProtocol!
     
@@ -33,11 +35,11 @@ class ProjectViewController: UIViewController, ChartViewDelegate, ObservableObje
         self.project = project
         super.init(coder: coder)
     }
-
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-
+    
     @IBSegueAction func addSwiftUI(_ coder: NSCoder) -> UIViewController? {
         guard project != nil else {
             LogNotify.log("Project was not set. This is not supposed to happen.", level: LogNotify.LEVEL.ERROR)
@@ -57,7 +59,7 @@ class ProjectViewController: UIViewController, ChartViewDelegate, ObservableObje
                     }
                 }
             })
-
+        
         calliopeDisconnectedSubscription = NotificationCenter.default.addObserver(
             forName: DiscoveredBLEDevice.disconnectedNotificationName, object: nil, queue: nil,
             using: { [weak self] (_) in
@@ -67,7 +69,7 @@ class ProjectViewController: UIViewController, ChartViewDelegate, ObservableObje
                     }
                 }
             })
-
+        
         guard let _ = MatrixConnectionViewController.instance.usageReadyCalliope else {
             addChartButtonEnabled = false
             DispatchQueue.main.async {
@@ -92,6 +94,7 @@ class ProjectViewController: UIViewController, ChartViewDelegate, ObservableObje
         }
         withAnimation(nil) { // disables an unideal animation of the add button
             charts.append(chart)
+            chartViewModels.append(ChartViewModel(chart: chart, openFileNameDialog: openFileNameDialog))
         }
     }
     
@@ -102,65 +105,70 @@ class ProjectViewController: UIViewController, ChartViewDelegate, ObservableObje
         }
         Chart.deleteChart(id: chart.id)
         charts = Chart.fetchChartsBy(projectsId: project!.id) // Update charts list after deleting chart
+        chartViewModels.removeAll()
+        charts.forEach{ chartViewModels.append(ChartViewModel(chart: $0, openFileNameDialog: openFileNameDialog))}
     }
-
+    
     func renameProject() {
         let alertController = UIAlertController(title: NSLocalizedString("Change project name", comment: ""), message: NSLocalizedString("Enter the new project name", comment: ""), preferredStyle: .alert)
         alertController.addTextField { textField in
             textField.placeholder = NSLocalizedString("New project", comment: "")
         }
-
+        
         let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil)
         let okAction = UIAlertAction(title: "OK", style: .default) { _ in
             if let textField = alertController.textFields?.first, let inputText = textField.text {
                 self.project?.name = inputText
-//                self.projectNameLabel.text = inputText
-                 if let project = self.project {
-                Project.updateProject(project: project)
+                if let project = self.project {
+                    Project.updateProject(project: project)
                     NotificationCenter.default.post(name: NotificationConstants.projectsChanged, object: self)
-                 }
+                }
             }
         }
         alertController.addAction(cancelAction)
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
     }
-
+    
     func deleteProject() {
         Project.deleteProject(id: project?.id)
         NotificationCenter.default.post(name: NotificationConstants.projectsChanged, object: self)
         dismiss(animated: true, completion: nil)
         navigationController?.popViewController(animated: true)
     }
-
+    
     func exportToCSVFile() {
+        openFileNameDialog(onOk: { filename in
+            let string = CSVHandler.convertToCSVString(project: self.project?.id ?? nil)
+            CSVHandler.exportToCSVFile(contents: string, fileName: filename)
+        })
+    }
+    
+    func openFileNameDialog(onOk: @escaping (_ filename: String) -> Void) {
         let alertController = UIAlertController(title: NSLocalizedString("Export Data", comment: ""), message: NSLocalizedString("Enter the CSV file name", comment: ""), preferredStyle: .alert)
         alertController.addTextField { textField in
             textField.placeholder = "CSV_Export"
         }
-
+        
         let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil)
         let okAction = UIAlertAction(title: "OK", style: .default) { _ in
             if let textField = alertController.textFields?.first, let inputText = textField.text {
-                let string = CSVHandler.convertToCSVString(project: self.project?.id ?? nil)
-                CSVHandler.exportToCSVFile(contents: string, fileName: (inputText == "" ? textField.placeholder : inputText) ?? "placeholder")
+                onOk((inputText == "" ? textField.placeholder : inputText) ?? "placeholder")
             }
         }
         alertController.addAction(cancelAction)
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
+        
     }
-
+    
     deinit {
         NotificationCenter.default.removeObserver(calliopeConnectedSubcription!)
         NotificationCenter.default.removeObserver(calliopeDisconnectedSubscription!)
     }
-
-//    override func viewDidDisappear(_ animated: Bool) {
-//        for cell in chartCollectionViewController!.tableView.visibleCells {
-//            let dataCell = cell as! ChartViewCell
-//            dataCell.stopDataRecording()
-//        }
-//    }
-
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        chartViewModels.forEach{ $0.stopRecording() }
+    }
+    
 }

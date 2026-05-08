@@ -36,7 +36,7 @@ struct IdentifiableLocation: Identifiable, Hashable {
     }
 }
 
-class ChartViewModel: ObservableObject {
+class ChartViewModel: ObservableObject, Identifiable {
     var chart: Chart
     @Published var sensorOptions: [DropDownOption<Sensor>] = []
     @Published var selectedSensor: DropDownOption<Sensor>?
@@ -52,12 +52,16 @@ class ChartViewModel: ObservableObject {
     @Published var averageMetric: Double?
     @Published var maximumMetric: Double?
     @Published var currentMetric: Double?
-
+    
     private var calliopeConnectedSubcription: NSObjectProtocol!
     private var calliopeDisconnectedSubscription: NSObjectProtocol!
-
-    init(chart: Chart) {
+    
+    @Published var fileShareLink: URL?
+    var openFileNameDialog: (@escaping (_ filename: String) -> Void) -> ()
+    
+    init(chart: Chart, openFileNameDialog: @escaping (@escaping (_ filename: String) -> Void) -> ()) {
         self.chart = chart
+        self.openFileNameDialog = openFileNameDialog
         dataController = DataController()
         loadDatabaseDataIntoChart(chart)
         updateAvailableSensors()
@@ -110,7 +114,7 @@ class ChartViewModel: ObservableObject {
             maximumMetric = values.max()
             averageMetric = calculateAverageMetric(values: values)
             currentMetric = values.last
-
+            
         }
         else {
             minimumMetric = nil
@@ -150,16 +154,11 @@ class ChartViewModel: ObservableObject {
                 self.data[axis]?.append(DataPoint(x: time - (self.baseTime ?? 0), y: value, location: coordinates))
                 self.updateMetrics()
                 self.updateAvailableAxis()
-//                self.getDataEntries(data: [axis: value], timestep: time, service: chart.sensorType ?? .empty)
                 if coordinates != nil {
                     self.uniqueLocations.insert(IdentifiableLocation(lat: coordinates!.latitude, long: coordinates!.longitude))
                 }
-//                self.handleLocationData(coordinates, time)
-//                self.addDataEntries(dataEntries: self.axisToData)
             }
         }
-        
-//        dataController.getLastLocation = getLastLocation
         isRecording = true
     }
     
@@ -167,60 +166,20 @@ class ChartViewModel: ObservableObject {
         dataController.sensorStopRecordingFor(chart: chart)
         isRecording = false
     }
-   
+    
     //TODO: Add button to execute this
-    private func exportAsCSV() {
-//        guard let chart = chart else { return }
-//        let values = Value.fetchValuesBy(chartId: chart.id)
-//        guard !values.isEmpty else { return }
-//
-//        var allKeys: [String] = []
-//        for value in values {
-//            let decoded = DataParser.decode(data: value.value, service: chart.sensorType ?? .empty)
-//            for key in decoded.keys where !allKeys.contains(key) { allKeys.append(key) }
-//        }
-//        allKeys.sort()
-//
-//        let timeFmt = DateFormatter()
-//        timeFmt.dateFormat = "HH:mm:ss"
-//        let dateFmt = DateFormatter()
-//        dateFmt.dateFormat = "dd/MM/yy"
-//
-//        var lines = ["date,time," + allKeys.joined(separator: ",")]
-//        for value in values {
-//            let date = Date(timeIntervalSinceReferenceDate: value.time / 100.0)
-//            let decoded = DataParser.decode(data: value.value, service: chart.sensorType ?? .empty)
-//            let cols = allKeys.map { decoded[$0].map { String($0) } ?? "" }
-//            lines.append("\(dateFmt.string(from: date)),\(timeFmt.string(from: date)),\(cols.joined(separator: ","))")
-//        }
-//
-//        let tmpURL = FileManager.default.temporaryDirectory
-//            .appendingPathComponent("sensor_\(chart.id ?? 0).csv")
-//        do {
-//            try lines.joined(separator: "\n").write(to: tmpURL, atomically: true, encoding: .utf8)
-//        } catch {
-//            LogNotify.log("Failed to write CSV: \(error)")
-//            return
-//        }
-//
-//        let activityVC = UIActivityViewController(activityItems: [tmpURL], applicationActivities: nil)
-//        if let popover = activityVC.popoverPresentationController {
-//            popover.sourceView = self
-//            popover.sourceRect = self.bounds
-//        }
-//        nearestViewController()?.present(activityVC, animated: true)
+    func exportAsCSV() {
+        openFileNameDialog({ filename in
+            let string = CSVHandler.convertToCSVString(chartId: self.chart.id!, sensorType: self.chart.sensorType)
+            CSVHandler.exportToCSVFile(contents: string, fileName: filename)
+        })
     }
     
     fileprivate func loadDatabaseDataIntoChart(_ chart: Chart) {
-        LogNotify.log("Starting to load existing Data into Chart")
         let rawValues = Value.fetchValuesBy(chartId: chart.id)
-        LogNotify.log("Got the raw values")
         if !rawValues.isEmpty {
             if baseTime == nil {
                 baseTime = rawValues.first?.time
-                if let baseTime = baseTime {
-//                    lineChartView.xAxis.valueFormatter = TimeAxisValueFormatter(baseTime: baseTime)
-                }
             }
             for value in rawValues {
                 let decodedValue = DataParser.decode(data: value.value, service: chart.sensorType ?? .empty)
@@ -239,19 +198,10 @@ class ChartViewModel: ObservableObject {
                         data.updateValue([newDataPoint], forKey: key)
                     }
                 }
-//                getDataEntries(data: decodedValue, timestep: value.time, service: chart.sensorType ?? .empty)
                 if(value.lat != nil && value.long != nil) {
                     uniqueLocations.insert(IdentifiableLocation(lat: value.lat!, long: value.long!))
                 }
-//                handleLocationData(CLLocationCoordinate2D(latitude: value.lat, longitude: value.long), value.time)
             }
-//            addDataEntries(dataEntries: axisToData)
-            
-//            sensorTypeButton.isEnabled = false
-//            recordingButton.isEnabled = false
-        } else {
-//            sensorTypeButton.isEnabled = true
-//            recordingButton.isEnabled = (chart.sensorType != nil)
         }
         updateAvailableSensors()
         updateAvailableSensors()
@@ -267,7 +217,7 @@ class ChartViewModel: ObservableObject {
                     self?.updateAvailableSensors()
                 }
             })
-
+        
         calliopeDisconnectedSubscription = NotificationCenter.default.addObserver(
             forName: DiscoveredBLEDevice.disconnectedNotificationName, object: nil, queue: nil,
             using: { [weak self] (_) in
@@ -282,5 +232,5 @@ class ChartViewModel: ObservableObject {
         NotificationCenter.default.removeObserver(calliopeConnectedSubcription!)
         NotificationCenter.default.removeObserver(calliopeDisconnectedSubscription!)
     }
-
+    
 }
