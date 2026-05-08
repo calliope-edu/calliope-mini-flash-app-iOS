@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftUI
+import Charts
 
 struct ProjectView: View {
     @ObservedObject var projectViewController: ProjectViewController
@@ -76,9 +77,34 @@ struct ChartView: View {
                 MetricView(metricName: "Current", metricValue: 0)
                 Spacer()
             }
-            MultiLineChartView(dataSets: $chartViewModel.data)
-                    .frame(height: 250)
-                    .padding()
+            
+            if #available(iOS 16.0, *) {
+                let chartData: [ChartDataPoint] = chartViewModel.data.flatMap { series, dataPoints in
+                        dataPoints.map {
+                            ChartDataPoint(
+                                x: $0.x,
+                                y: $0.y,
+                                series: series
+                            )
+                        }
+                    }
+                Charts.Chart {
+                        ForEach(chartData) { dataPoint in
+                            LineMark(
+                                x: .value("Time", dataPoint.x),
+                                y: .value(dataPoint.series, dataPoint.y),
+                                series: .value("Axis", dataPoint.series)
+                            )
+                            .foregroundStyle(by: .value("Axis", dataPoint.series))
+                        }
+                }.frame(height: 250).background(Color.white)
+            } else {
+                Text("Too old iOS Version")
+            }
+//            MultiLineChartView(dataSets: $chartViewModel.data)
+//                    .frame(height: 250)
+//                    .padding()
+            
             HStack {
                 Spacer()
                 IconButton(imageSystemName: chartViewModel.isRecording ? "pause.circle" : "play.circle", action: chartViewModel.toggleRecording, rotation: 0, iconColor: chartViewModel.selectedSensor==nil ? Color(.gray) : Color(.white), backgroundColor: Color(.white).opacity(0)).disabled(chartViewModel.selectedSensor==nil)
@@ -97,6 +123,13 @@ struct ChartView: View {
             )
             .padding(.horizontal)
     }
+}
+
+struct ChartDataPoint: Identifiable {
+    let id = UUID()
+    let x: Double
+    let y: Double
+    let series: String
 }
 
 struct MetricView: View {
