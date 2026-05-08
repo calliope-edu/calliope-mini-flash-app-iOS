@@ -167,6 +167,49 @@ class ChartViewModel: ObservableObject {
         dataController.sensorStopRecordingFor(chart: chart)
         isRecording = false
     }
+   
+    //TODO: Add button to execute this
+    private func exportAsCSV() {
+//        guard let chart = chart else { return }
+//        let values = Value.fetchValuesBy(chartId: chart.id)
+//        guard !values.isEmpty else { return }
+//
+//        var allKeys: [String] = []
+//        for value in values {
+//            let decoded = DataParser.decode(data: value.value, service: chart.sensorType ?? .empty)
+//            for key in decoded.keys where !allKeys.contains(key) { allKeys.append(key) }
+//        }
+//        allKeys.sort()
+//
+//        let timeFmt = DateFormatter()
+//        timeFmt.dateFormat = "HH:mm:ss"
+//        let dateFmt = DateFormatter()
+//        dateFmt.dateFormat = "dd/MM/yy"
+//
+//        var lines = ["date,time," + allKeys.joined(separator: ",")]
+//        for value in values {
+//            let date = Date(timeIntervalSinceReferenceDate: value.time / 100.0)
+//            let decoded = DataParser.decode(data: value.value, service: chart.sensorType ?? .empty)
+//            let cols = allKeys.map { decoded[$0].map { String($0) } ?? "" }
+//            lines.append("\(dateFmt.string(from: date)),\(timeFmt.string(from: date)),\(cols.joined(separator: ","))")
+//        }
+//
+//        let tmpURL = FileManager.default.temporaryDirectory
+//            .appendingPathComponent("sensor_\(chart.id ?? 0).csv")
+//        do {
+//            try lines.joined(separator: "\n").write(to: tmpURL, atomically: true, encoding: .utf8)
+//        } catch {
+//            LogNotify.log("Failed to write CSV: \(error)")
+//            return
+//        }
+//
+//        let activityVC = UIActivityViewController(activityItems: [tmpURL], applicationActivities: nil)
+//        if let popover = activityVC.popoverPresentationController {
+//            popover.sourceView = self
+//            popover.sourceRect = self.bounds
+//        }
+//        nearestViewController()?.present(activityVC, animated: true)
+    }
     
     fileprivate func loadDatabaseDataIntoChart(_ chart: Chart) {
         LogNotify.log("Starting to load existing Data into Chart")
