@@ -112,7 +112,17 @@ struct ChartView: View {
                         .chartYAxis {
                             AxisMarks(position: .leading)
                         }
-                        .chartXAxis(.hidden)
+                        .chartXAxis {
+                            AxisMarks() { value in
+                                AxisGridLine()
+                                AxisValueLabel() {
+                                    if let timestamp = value.as(Double.self) {
+                                        Text(TimeAxisValueFormatter.stringForValue(baseTime: chartViewModel.baseTime ?? 0, timestamp))
+                                    }
+                                }
+                            }
+                        }
+//                        .chartXAxis(.hidden)
                         .frame(minHeight: 250)
                         .background(Color.white)
                     
@@ -256,5 +266,18 @@ struct IconButton: View {
 struct ProjectView_Previews: PreviewProvider {
     static var previews: some View {
         ProjectView(projectViewController: ProjectViewController(coder: NSCoder())!)
+    }
+}
+
+class TimeAxisValueFormatter {
+    static private let formatter: DateFormatter = {
+        let f = DateFormatter()
+        f.dateFormat = "HH:mm:ss"
+        return f
+    }()
+
+    static func stringForValue(baseTime: Double, _ value: Double) -> String {
+        let date = Date(timeIntervalSinceReferenceDate: (value + baseTime) / 100.0)
+        return formatter.string(from: date)
     }
 }
