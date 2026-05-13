@@ -243,12 +243,18 @@ class FirmwareUploadSwiftUI {
 
     func showUploadError(_ error: Error) {
         LogNotify.error("Upload failed")
-        let failedAlert = AppAlert.uploadFailed(goToInformation: {
-            let informationLink: String = "https://calliope.cc/programmieren/mobil/ipad#hardware"
-            if let url = URL(string: informationLink) {
-                UIApplication.shared.open(url)
-            }
-        })
+        let failedAlert: AppAlert
+        // TODO: Do these two different errors make sense and should the raw error be outputted?
+        if calliope is USBCalliope {
+            failedAlert = AppAlert.usbUploadFailed()
+        } else {
+            failedAlert = AppAlert.uploadFailed(goToInformation: {
+                let informationLink: String = "https://calliope.cc/programmieren/mobil/ipad#hardware"
+                if let url = URL(string: informationLink) {
+                    UIApplication.shared.open(url)
+                }
+            })
+        }
         alertPublisher.setAlert(failedAlert)
         failed()
     }

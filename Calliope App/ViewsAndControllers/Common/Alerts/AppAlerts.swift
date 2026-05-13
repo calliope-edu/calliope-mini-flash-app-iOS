@@ -126,6 +126,20 @@ extension AppAlert {
             severity: .warning
         )
     }
+    
+    static func usbUploadFailed() -> AppAlert {
+        AppAlert(
+            title: NSLocalizedString("Upload failed", comment: ""),
+            message: NSLocalizedString(
+                "The file could not be transferred. Please select your Calliope mini again (tap the icon at the top right) and try again!",
+                comment: ""
+            ),
+            actions: [
+                StandardAlertAction(NSLocalizedString("OK", comment: ""), handler: {}),
+            ],
+            severity: .warning
+        )
+    }
 
     static func cannotUpload() -> AppAlert {
         AppAlert(

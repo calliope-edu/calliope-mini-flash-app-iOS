@@ -299,6 +299,9 @@
         }
       }
     },
+    "Apps" : {
+
+    },
     "Apps Info" : {
 
     },
@@ -2595,6 +2598,16 @@
     },
     "The downloaded program is empty" : {
 
+    },
+    "The file could not be transferred. Please select your Calliope mini again (tap the icon at the top right) and try again!" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Datei konnte nicht übertragen werden, bitte wähle deinen Calliope mini erneut aus (das Icon oben rechts drücken) und versuche es erneut!"
+          }
+        }
+      }
     },
     "The name %@ could not be given to %@. The name for a program must be unique and not empty." : {
       "localizations" : {

@@ -27,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialize iCloud container so the app folder appears in Files app
         StorageDirectory.shared.initializeCloudStorage()
 
+        HexFileManager.startWatchingForExternalChanges()
+
         // Setting up Database
         let _ = DatabaseManager.shared
 
