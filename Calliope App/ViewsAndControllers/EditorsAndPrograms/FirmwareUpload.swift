@@ -194,42 +194,25 @@ class FirmwareUpload {
 
         if calliope is USBCalliope {
             uploadController.message = NSLocalizedString("Calliope mini will start the program as soon as the transmission is complete.", comment: "")
-            
-            // Container für Spinner + Timer
-            let containerView = UIView()
-            containerView.translatesAutoresizingMaskIntoConstraints = false
-            
-            let activityIndicator = UIActivityIndicatorView(style: .large)
-            activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-            activityIndicator.startAnimating()
-            
-            containerView.addSubview(activityIndicator)
-            containerView.addSubview(usbTimerLabel)
-            
-            NSLayoutConstraint.activate([
-                activityIndicator.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-                activityIndicator.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 30),
-
-                usbTimerLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-                usbTimerLabel.topAnchor.constraint(equalTo: activityIndicator.bottomAnchor, constant: 30),
-                usbTimerLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -10)
-            ])
-
-            // Statische Nachricht anzeigen (kein Timer wegen Blocking-Operationen)
-            usbTimerLabel.text = NSLocalizedString("Duration: about 10 seconds", comment: "USB transfer duration message")
-
-            progressView = containerView
-        } else {
-            progressView = progressRing
         }
+
+        // Both BLE and USB now use the same progress ring. For BLE the percentage
+        // comes from Nordic's DFU progress callbacks; for USB it is driven by
+        // the time-based progress animation in USBCalliope (the file copy itself
+        // is opaque, so the bar fills smoothly over the typical flash duration
+        // and snaps to 100 % when the copy syscall returns).
+        progressView = progressRing
         progressView.translatesAutoresizingMaskIntoConstraints = false
 
         uploadController.view.addSubview(progressView)
         uploadController.view.addSubview(logTextView)
 
-        // BLE uses smaller top margin and larger bottom margin for taller alert
-        let topMargin = (calliope is USBCalliope) ? 80 : 60
-        let bottomMargin = (calliope is USBCalliope) ? 50 : 80
+        // USB shows a multi-line message above the ring ("Calliope mini will
+        // start the program as soon as the transmission is complete." or the
+        // failure-retry text); BLE has no message. The extra top margin keeps
+        // the message from overlapping the ring on USB.
+        let topMargin = (calliope is USBCalliope) ? 140 : 60
+        let bottomMargin = 80
 
         // Vertical constraints for progressView and logTextView
         uploadController.view.addConstraints(
@@ -375,14 +358,23 @@ class FirmwareUpload {
 
     func showUploadError(_ error: Error) {
         alertView.title = NSLocalizedString("Upload failed!", comment: "")
-        // Don't set alertView.message to prevent overlap with progress ring
-        // Instead show error in logTextView
-        logTextView.text = error.localizedDescription
-        // Don't change ring color to red - keep original color
-        
+
+        if calliope is USBCalliope {
+            // USB failures get a user-friendly retry instruction instead of the
+            // raw DFU error text — and the progress ring is hidden since the
+            // operation didn't complete.
+            alertView.message = NSLocalizedString("USB transfer failed retry instructions", comment: "")
+            progressRing.isHidden = true
+            logTextView.text = ""
+        } else {
+            // BLE keeps the original behavior: technical error in the log view,
+            // ring stays visible at whatever value it had.
+            logTextView.text = error.localizedDescription
+        }
+
         // Re-enable cancel button so user can dismiss the alert
         cancelUploadAction.isEnabled = true
-        
+
         failed()
     }
     func startUSBTimer() {

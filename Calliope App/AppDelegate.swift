@@ -30,6 +30,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialize iCloud container so the app folder appears in Files app
         StorageDirectory.shared.initializeCloudStorage()
 
+        // Watch the hex storage directory for external changes (drag-and-drop
+        // from Files app, iCloud sync) so the Programs list refreshes without
+        // requiring an app restart.
+        HexFileManager.startWatchingForExternalChanges()
+
         // Setting up Database
         let _ = DatabaseManager.shared
         return true
@@ -51,6 +56,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
         LogNotify.log("App Entered Foreground")
         MatrixConnectionViewController.instance.moveToForeground()
+        // Re-arm the storage watcher and trigger one immediate refresh — covers
+        // the case where files were added/removed via Files app while we were
+        // backgrounded (the watcher's fd may have been suspended by the system).
+        HexFileManager.startWatchingForExternalChanges()
+        NotificationCenter.default.post(name: NotificationConstants.hexFileChanged, object: nil)
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

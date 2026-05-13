@@ -107,10 +107,94 @@ final class HexFileManager {
             }
         }
     }
-    
+
     private static func notifyChange() {
         if !bulkChange {
             NotificationCenter.default.post(name: NotificationConstants.hexFileChanged, object: self)
         }
+    }
+
+    // MARK: - External change watcher
+    //
+    // Watches the storage directory (iCloud or local Documents) for files added,
+    // deleted or renamed by *outside* the app — e.g. drag-and-drop from the Files
+    // app, iCloud sync from another device, share-sheet imports.
+    //
+    // Implementation uses kqueue via DispatchSourceFileSystemObject. This is a
+    // zero-cost listener: the dispatch source sleeps until the kernel signals a
+    // change on the directory's file descriptor. No polling, no CPU.
+
+    private static var dirWatcherSource: DispatchSourceFileSystemObject?
+    private static var dirWatcherFD: CInt = -1
+    private static let watcherQueue = DispatchQueue(label: "cc.calliope.hexFileWatcher", qos: .utility)
+
+    /// Starts (or re-starts) the file-system watcher on the current storage
+    /// directory. Safe to call multiple times; idempotent. Call once at app
+    /// launch — and again if the storage directory might have changed
+    /// (e.g. after iCloud became available).
+    public static func startWatchingForExternalChanges() {
+        watcherQueue.async {
+            stopWatchingInternal()
+
+            let dirURL: URL
+            do {
+                dirURL = try self.dir()
+            } catch {
+                LogNotify.log("HexFile watcher: could not resolve storage dir: \(error)")
+                return
+            }
+
+            let fd = open(dirURL.path, O_EVTONLY)
+            guard fd >= 0 else {
+                LogNotify.log("HexFile watcher: open() failed for \(dirURL.path), errno=\(errno)")
+                return
+            }
+
+            let source = DispatchSource.makeFileSystemObjectSource(
+                fileDescriptor: fd,
+                eventMask: [.write, .delete, .rename, .extend],
+                queue: watcherQueue
+            )
+
+            source.setEventHandler {
+                // Any change in directory contents → notify listeners.
+                // The Programs list controller re-queries HexFileManager.stored().
+                LogNotify.log("HexFile watcher: directory changed, posting hexFileChanged")
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: NotificationConstants.hexFileChanged, object: self)
+                }
+                // If the directory itself disappears (rare — e.g. iCloud reset),
+                // restart the watcher so we pick up the new descriptor.
+                let event = source.data
+                if event.contains(.delete) || event.contains(.rename) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        startWatchingForExternalChanges()
+                    }
+                }
+            }
+
+            source.setCancelHandler {
+                close(fd)
+            }
+
+            dirWatcherFD = fd
+            dirWatcherSource = source
+            source.resume()
+            LogNotify.log("HexFile watcher: now watching \(dirURL.path)")
+        }
+    }
+
+    /// Stops the watcher. Call this on shutdown if needed; otherwise it is
+    /// torn down automatically when the app is terminated.
+    public static func stopWatchingForExternalChanges() {
+        watcherQueue.async { stopWatchingInternal() }
+    }
+
+    private static func stopWatchingInternal() {
+        if let src = dirWatcherSource {
+            src.cancel()
+        }
+        dirWatcherSource = nil
+        dirWatcherFD = -1
     }
 }

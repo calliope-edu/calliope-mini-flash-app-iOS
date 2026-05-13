@@ -54,6 +54,8 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
         editorBottomToSafeArea?.isActive = landscape
     }
 
+    private weak var pullScrollView: UIScrollView?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -69,6 +71,48 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
         scanButton?.imageView?.contentMode = UIView.ContentMode.scaleAspectFit
         scanButton?.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         scanButton?.tintColor = UIColor.white
+
+        installPullToRefresh()
+    }
+
+    /// Mounts a UIRefreshControl on the outer scroll view of this screen so the
+    /// user can pull the whole "Editoren & Programme" view downwards to re-check
+    /// for new hex files (e.g. ones just dropped into the iCloud folder from the
+    /// Files app). The inner programs collection view doesn't scroll on its own
+    /// — its height is KVO-bound to its content — so the refresh control has to
+    /// live on the outer scroll view, not on the collection view.
+    private func installPullToRefresh() {
+        guard let scrollView = findOuterScrollView(in: view) else {
+            LogNotify.log("Pull-to-refresh: no outer scroll view found")
+            return
+        }
+        pullScrollView = scrollView
+        let refresh = UIRefreshControl()
+        refresh.addTarget(self, action: #selector(handlePullToRefresh(_:)), for: .valueChanged)
+        scrollView.refreshControl = refresh
+        scrollView.alwaysBounceVertical = true
+    }
+
+    private func findOuterScrollView(in root: UIView) -> UIScrollView? {
+        if let sv = root as? UIScrollView { return sv }
+        for sub in root.subviews {
+            if let found = findOuterScrollView(in: sub) { return found }
+        }
+        return nil
+    }
+
+    @objc private func handlePullToRefresh(_ sender: UIRefreshControl) {
+        // Minimum spinner duration so the gesture always feels like it did
+        // something — even when no new files are present. The actual diff
+        // happens at the end of the wait so the batch update doesn't yank the
+        // refresh control off-screen prematurely.
+        let minimumSpinnerDuration: TimeInterval = 0.8
+        DispatchQueue.main.asyncAfter(deadline: .now() + minimumSpinnerDuration) { [weak self] in
+            self?.programsCollectionViewController?.refreshFromExternalChanges()
+            DispatchQueue.main.async {
+                sender.endRefreshing()
+            }
+        }
     }
 
     @IBSegueAction func initializeEditor(_ coder: NSCoder) -> EditorsCollectionViewController? {

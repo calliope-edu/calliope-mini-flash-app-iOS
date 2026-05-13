@@ -298,6 +298,9 @@
 /* No comment provided by engineer. */
 "Upload failed!" = "Übertragung fehlgeschlagen";
 
+/* Body text shown in the upload alert when a USB transfer fails. */
+"USB transfer failed retry instructions" = "Die Datei konnte nicht übertragen werden, bitte wähle deinen Calliope mini erneut aus (das Icon oben rechts drücken) und versuche es erneut!";
+
 /* No comment provided by engineer. */
 "Upload the start program to your Calliope" = "Übertrag das Startprogramm auf den Calliope mini";
 

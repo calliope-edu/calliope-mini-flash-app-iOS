@@ -35,6 +35,18 @@ class ProgramsCollectionViewController: UICollectionViewController, ProgramCellD
                     self?.animateFileChange()
                 }
             })
+
+        // NOTE: Pull-to-refresh is mounted on the *outer* scroll view of
+        // EditorAndProgramsContainerViewController, not here — because this
+        // collection view's height is bound to its contentSize by the parent
+        // KVO, so it never scrolls itself.
+    }
+
+    /// Public entry point used by the parent container's pull-to-refresh handler.
+    /// Re-arms the watcher and animates any added/removed files into the list.
+    func refreshFromExternalChanges() {
+        HexFileManager.startWatchingForExternalChanges()
+        animateFileChange()
     }
 
     // MARK: UICollectionViewDataSource
