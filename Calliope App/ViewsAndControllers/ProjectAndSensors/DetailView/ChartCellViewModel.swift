@@ -336,8 +336,9 @@ class ChartCellViewModel: ObservableObject, Identifiable {
                 }
             }
         }
-        updateAvailableSensors()
-        updateAvailableSensors()
+        if data.isEmpty { // allow to choose a new sensor,if no data has been recorded yet
+            updateAvailableSensors()
+        }
     }
 
     fileprivate func addNotificationSubscriptions() {
