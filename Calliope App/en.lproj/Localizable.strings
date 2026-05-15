@@ -296,7 +296,7 @@
 "Datalogger Download fehlgeschlagen!" = "Datalogger Download Failed!";
 
 /* (No Comment) */
-"Es gab ein Problem beim Herunterladen der Datalogger-Daten von Ihrem Calliope mini. Bitte stellen Sie sicher, dass Sie mit dem Calliope verbunden sind, und versuchen Sie es erneut." = "There was an issue downloading the datalogger data from your Calliope mini. Please ensure you are connected to the Calliope mini and try again.";
+"Es gab ein Problem beim Herunterladen der Datalogger-Daten von deinem Calliope mini. Bitte stelle sicher, dass du mit deinem Calliope mini verbunden bist, und versuche es erneut." = "There was an issue downloading the datalogger data from your Calliope mini. Please ensure you are connected to the Calliope mini and try again.";
 
 /* (No Comment) */
 "Übertragung der Datalogger-Daten" = "Transfering Datalogger Data";
@@ -306,7 +306,7 @@
 
 "Fehler beim Herunterladen der Datalogger CSV!" = "Failed to download Datalogger CSV!";
 
-"Du findest die CSV-Datei mit den Datalogger-Daten im Calliope-Verzeichnis  auf deinem Gerät, unter den namen MY_DATA.csv" = "You can find the CSV file containing your datalogger data, named MY_DATA.csv, in the Calliope directory on your device.";
+"Du findest die CSV-Datei mit den Datalogger-Daten im Calliope-Verzeichnis auf deinem Gerät unter den namen MY_DATA.csv" = "You can find the CSV file containing your datalogger data, named MY_DATA.csv, in the Calliope directory on your device.";
 
 "Der Download der CSV-Datei mit deinen Datalogger-Daten war nicht erfolgreich." = "The download of the CSV file containing your datalogger data was unsuccessful.";
 
