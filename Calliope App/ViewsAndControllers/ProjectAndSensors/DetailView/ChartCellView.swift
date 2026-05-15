@@ -14,82 +14,17 @@ import SwiftUI
 struct ChartCellView: View {
     let onRemoveTapped: () -> Void
     @ObservedObject var chartViewModel: ChartViewModel
-    @State private var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 51.507222, longitude: -0.1275),
-        span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
-    )
 
     var body: some View {
         VStack {
-            ChartHeaderView(viewModel: chartViewModel, onRemoveTapped: onRemoveTapped)
+            ChartHeaderView(
+                viewModel: chartViewModel,
+                onRemoveTapped: onRemoveTapped
+            )
 
             MetricsRowView(viewModel: chartViewModel)
 
-            VStack {
-                let chartData: [ChartDataPoint] = chartViewModel.data.flatMap {
-                    series,
-                    dataPoints in
-                    if chartViewModel.selectedAxis == nil
-                        || chartViewModel.selectedAxis!.name == "all"
-                        || chartViewModel.selectedAxis!.name == series
-                    {
-                        return dataPoints.map {
-                            ChartDataPoint(
-                                x: $0.x,
-                                y: $0.y,
-                                series: series
-                            )
-                        }
-                    }
-                    return []
-                }
-
-                Charts.Chart {
-                    ForEach(chartData) { dataPoint in
-                        let xValue: PlottableValue = .value("Time", dataPoint.x)
-                        let yValue: PlottableValue = .value(
-                            dataPoint.series,
-                            dataPoint.y
-                        )
-                        let seriesValue: PlottableValue = .value(
-                            "Axis",
-                            dataPoint.series
-                        )
-
-                        LineMark(
-                            x: xValue,
-                            y: yValue,
-                            series: seriesValue
-                        )
-                        .foregroundStyle(by: seriesValue)
-                    }
-                }.chartLegend(.hidden)
-                    .chartYAxis {
-                        AxisMarks(position: .leading)
-                    }
-                    .chartXAxis {
-                        AxisMarks { value in
-                            AxisGridLine()
-                            AxisValueLabel {
-                                if let timestamp = value.as(Double.self) {
-                                    Text(
-                                        TimeAxisValueFormatter.stringForValue(
-                                            baseTime: chartViewModel.baseTime
-                                                ?? 0,
-                                            timestamp
-                                        )
-                                    )
-                                }
-                            }
-                        }
-                    }
-                    .frame(minHeight: 250)
-                    .background(Color.white)
-
-            }
-            .padding()  // space between chart and container edge
-            .background(Color.white)
-            .cornerRadius(12)
+            ChartView(viewModel: chartViewModel)
 
             HStack {
                 Spacer()
@@ -105,39 +40,7 @@ struct ChartCellView: View {
                 Spacer()
             }
 
-            ZStack {
-                Map(
-                    coordinateRegion: $region,
-                    annotationItems: Array(chartViewModel.uniqueLocations)
-                ) { place in
-                    MapAnnotation(coordinate: place.location) {
-                        Circle().frame(width: 20, height: 20)
-                    }
-                }
-                .frame(height: 300)
-                .cornerRadius(12)
-
-                Text("\(chartViewModel.uniqueLocations.count) unique locations")
-                    .padding()
-                    .frame(
-                        maxWidth: .infinity,
-                        maxHeight: .infinity,
-                        alignment: .topTrailing
-                    )
-
-                IconButton(
-                    imageSystemName: "scope",
-                    action: resetRegion,
-                    rotation: 0,
-                    iconColor: Color(.black),
-                    backgroundColor: Color(.white)
-                ).padding()
-                    .frame(
-                        maxWidth: .infinity,
-                        maxHeight: .infinity,
-                        alignment: .bottomTrailing
-                    )
-            }
+            MapView(viewModel: chartViewModel)
         }.padding()
             .background(
                 RoundedRectangle(cornerRadius: 16)
@@ -146,16 +49,60 @@ struct ChartCellView: View {
             .padding(.horizontal)
 
     }
+}
+
+struct MapView: View {
+    @ObservedObject var viewModel: ChartViewModel
+    @State private var region = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: 51.507222, longitude: -0.1275),
+        span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
+    )
+
+    var body: some View {
+        ZStack {
+            Map(
+                coordinateRegion: $region,
+                annotationItems: Array(viewModel.uniqueLocations)
+            ) { place in
+                MapAnnotation(coordinate: place.location) {
+                    Circle().frame(width: 20, height: 20)
+                }
+            }
+            .frame(height: 300)
+            .cornerRadius(12)
+
+            Text("\(viewModel.uniqueLocations.count) unique locations")
+                .padding()
+                .frame(
+                    maxWidth: .infinity,
+                    maxHeight: .infinity,
+                    alignment: .topTrailing
+                )
+
+            IconButton(
+                imageSystemName: "scope",
+                action: resetRegion,
+                rotation: 0,
+                iconColor: Color(.black),
+                backgroundColor: Color(.white)
+            ).padding()
+                .frame(
+                    maxWidth: .infinity,
+                    maxHeight: .infinity,
+                    alignment: .bottomTrailing
+                )
+        }
+    }
 
     func resetRegion() {
         var center = CLLocationCoordinate2D(latitude: 0, longitude: 0)
-        if chartViewModel.uniqueLocations.count > 0 {
-            for place in chartViewModel.uniqueLocations {
+        if viewModel.uniqueLocations.count > 0 {
+            for place in viewModel.uniqueLocations {
                 center.latitude += place.location.latitude
                 center.longitude += place.location.longitude
             }
-            center.latitude /= Double(chartViewModel.uniqueLocations.count)
-            center.longitude /= Double(chartViewModel.uniqueLocations.count)
+            center.latitude /= Double(viewModel.uniqueLocations.count)
+            center.longitude /= Double(viewModel.uniqueLocations.count)
         }
 
         var maxDistanceFromCenter = 0.002
@@ -163,7 +110,7 @@ struct ChartCellView: View {
             latitude: center.latitude,
             longitude: center.longitude
         )
-        for place in chartViewModel.uniqueLocations {
+        for place in viewModel.uniqueLocations {
             let distance = centerCL.distance(
                 from: CLLocation(
                     latitude: place.location.latitude,
@@ -182,6 +129,78 @@ struct ChartCellView: View {
                 longitudeDelta: maxDistanceFromCenter
             )
         )
+    }
+}
+
+struct ChartView: View {
+    @ObservedObject var viewModel: ChartViewModel
+
+    var body: some View {
+        VStack {
+            let chartData: [ChartDataPoint] = viewModel.data.flatMap {
+                series,
+                dataPoints in
+                if viewModel.selectedAxis == nil
+                    || viewModel.selectedAxis!.name == "all"
+                    || viewModel.selectedAxis!.name == series
+                {
+                    return dataPoints.map {
+                        ChartDataPoint(
+                            x: $0.x,
+                            y: $0.y,
+                            series: series
+                        )
+                    }
+                }
+                return []
+            }
+
+            Charts.Chart {
+                ForEach(chartData) { dataPoint in
+                    let xValue: PlottableValue = .value("Time", dataPoint.x)
+                    let yValue: PlottableValue = .value(
+                        dataPoint.series,
+                        dataPoint.y
+                    )
+                    let seriesValue: PlottableValue = .value(
+                        "Axis",
+                        dataPoint.series
+                    )
+
+                    LineMark(
+                        x: xValue,
+                        y: yValue,
+                        series: seriesValue
+                    )
+                    .foregroundStyle(by: seriesValue)
+                }
+            }.chartLegend(.hidden)
+                .chartYAxis {
+                    AxisMarks(position: .leading)
+                }
+                .chartXAxis {
+                    AxisMarks { value in
+                        AxisGridLine()
+                        AxisValueLabel {
+                            if let timestamp = value.as(Double.self) {
+                                Text(
+                                    TimeAxisValueFormatter.stringForValue(
+                                        baseTime: viewModel.baseTime
+                                            ?? 0,
+                                        timestamp
+                                    )
+                                )
+                            }
+                        }
+                    }
+                }
+                .frame(minHeight: 250)
+                .background(Color.white)
+
+        }
+        .padding()  // space between chart and container edge
+        .background(Color.white)
+        .cornerRadius(12)
     }
 }
 
