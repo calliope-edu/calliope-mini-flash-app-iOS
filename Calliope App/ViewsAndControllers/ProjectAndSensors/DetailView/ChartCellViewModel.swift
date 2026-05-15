@@ -52,31 +52,60 @@ class ChartCellViewModel: ObservableObject, Identifiable {
         IdentifiableLocation
     >()
     @Published var region: MKCoordinateRegion = getDefaultRegion()
-    var displayedChartData: [ChartDataPoint] {
+
+    var flatChartData: [ChartDataPoint] {
         return data.flatMap {
             series,
             dataPoints in
-            if selectedAxis == nil
-                || selectedAxis!.name == "all"
-                || selectedAxis!.name == series
-            {
-                return dataPoints.map {
-                    ChartDataPoint(
-                        x: $0.x,
-                        y: $0.y,
-                        series: series
-                    )
-                }
+            return dataPoints.map {
+                ChartDataPoint(
+                    x: $0.x,
+                    y: $0.y,
+                    series: series
+                )
             }
-            return []
         }
     }
 
-    @Published var minimumMetric: Double?
-    @Published var averageMetric: Double?
-    @Published var maximumMetric: Double?
-    @Published var currentMetric: Double?
+    var displayedChartData: [ChartDataPoint] {
+        return flatChartData.filter {
+            selectedAxis == nil || selectedAxis!.name == "all"
+                || selectedAxis!.name == $0.series
+        }
+    }
+    
+    var displayedYs: [Double] {
+        return displayedChartData.map { $0.y }
+    }
 
+    var dataYs: [Double] {
+        return flatChartData.map { $0.y }
+    }
+    
+    var dislpayedMinimum: Double? {
+        return displayedYs.min()
+    }
+    var absoluteMinimum: Double? {
+        return dataYs.min()
+    }
+    
+    var dislpayedMaximum: Double? {
+        return displayedYs.max()
+    }
+    var absoluteMaximum: Double? {
+        return dataYs.max()
+    }
+    
+    var displayedAverage: Double? {
+        if selectedAxis == nil || selectedAxis!.name == "all" { return nil } // only calculate if the displayed data has only one axis
+        return calculateAverageMetric(values: displayedYs)
+    }
+    
+    var displayedCurrent: Double? {
+        if selectedAxis == nil || selectedAxis!.name == "all" { return nil } // only calculate if the displayed data has only one axis
+        return displayedYs.last
+    }
+    
     private var calliopeConnectedSubcription: NSObjectProtocol!
     private var calliopeDisconnectedSubscription: NSObjectProtocol!
 
@@ -100,7 +129,6 @@ class ChartCellViewModel: ObservableObject, Identifiable {
             sensorOption.object.calliopeService.uuid
                 == self.chart.sensorType?.uuid
         })
-        updateMetrics()
     }
 
     func calculateCenterRegion() {
@@ -155,11 +183,13 @@ class ChartCellViewModel: ObservableObject, Identifiable {
             )
         )
     }
-    
-    let colors = [Color.red, Color.green, Color.blue, Color.orange, Color.purple]
-    
+
+    let colors = [
+        Color.red, Color.green, Color.blue, Color.orange, Color.purple,
+    ]
+
     func getColorForAxis(axis: String) -> Color {
-        let index = axisOptions.firstIndex{ axisOption in
+        let index = axisOptions.firstIndex { axisOption in
             axisOption.name == axis
         }
         return colors[index ?? 0]
@@ -194,29 +224,7 @@ class ChartCellViewModel: ObservableObject, Identifiable {
         }
     }
 
-    func updateMetrics() {
-        let values = data.flatMap { axis, dataPoints in dataPoints.map { $0.y }
-        }
-        if data.count > 1 {
-            minimumMetric = values.min()
-            maximumMetric = values.max()
-            averageMetric = nil
-            currentMetric = nil
-        } else if data.count == 1 {
-            minimumMetric = values.min()
-            maximumMetric = values.max()
-            averageMetric = calculateAverageMetric(values: values)
-            currentMetric = values.last
-
-        } else {
-            minimumMetric = nil
-            maximumMetric = nil
-            averageMetric = nil
-            currentMetric = nil
-        }
-    }
-
-    func calculateAverageMetric(values: [Double]) -> Double {
+    private func calculateAverageMetric(values: [Double]) -> Double {
         var sum = 0.0
         values.forEach { sum += $0 }
         return sum / Double(values.count)
@@ -257,7 +265,6 @@ class ChartCellViewModel: ObservableObject, Identifiable {
                         location: coordinates
                     )
                 )
-                self.updateMetrics()
                 self.updateAvailableAxis()
                 if coordinates != nil {
                     self.uniqueLocations.insert(

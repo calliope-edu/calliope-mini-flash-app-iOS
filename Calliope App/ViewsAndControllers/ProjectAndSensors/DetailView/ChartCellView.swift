@@ -119,9 +119,9 @@ struct ChartView: View {
                 }
             }.chartLegend(.hidden)
                 .chartYAxis {
-                    AxisMarks(position: .leading)
+                    AxisMarks(position: .leading) // puts the y axis on the left side of the view
                 }
-                .chartYScale(domain: (viewModel.minimumMetric ?? 0)...(viewModel.maximumMetric ?? 1))
+                .chartYScale(domain: (viewModel.absoluteMinimum ?? 0)...(viewModel.absoluteMaximum ?? 1))
                 .chartXAxis {
                     AxisMarks { value in
                         AxisGridLine()
@@ -156,22 +156,22 @@ struct MetricsRowView: View {
             Spacer()
             MetricView(
                 metricName: "Minimum",
-                metricValue: viewModel.minimumMetric
+                metricValue: viewModel.dislpayedMinimum
             )
             Spacer()
             MetricView(
                 metricName: "Average",
-                metricValue: viewModel.averageMetric
+                metricValue: viewModel.displayedAverage
             )
             Spacer()
             MetricView(
                 metricName: "Maximum",
-                metricValue: viewModel.maximumMetric
+                metricValue: viewModel.dislpayedMaximum
             )
             Spacer()
             MetricView(
                 metricName: "Current",
-                metricValue: viewModel.currentMetric
+                metricValue: viewModel.displayedCurrent
             )
             Spacer()
         }
