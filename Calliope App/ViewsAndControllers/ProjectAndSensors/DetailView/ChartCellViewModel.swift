@@ -192,7 +192,7 @@ class ChartCellViewModel: ObservableObject, Identifiable {
         let index = axisOptions.firstIndex { axisOption in
             axisOption.name == axis
         }
-        return colors[index ?? 0]
+        return colors[(index ?? 0) % colors.count]
     }
 
     func updateAvailableSensors() {
