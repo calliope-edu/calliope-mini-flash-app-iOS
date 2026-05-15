@@ -11,7 +11,7 @@ import Foundation
 import MapKit
 import SwiftUI
 
-struct ChartView: View {
+struct ChartCellView: View {
     let onRemoveTapped: () -> Void
     @ObservedObject var chartViewModel: ChartViewModel
     @State private var region = MKCoordinateRegion(
