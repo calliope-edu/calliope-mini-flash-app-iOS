@@ -54,10 +54,20 @@ struct ChartCellView: View {
 struct MapView: View {
     @ObservedObject var viewModel: ChartCellViewModel
 
+    private var region: Binding<MKCoordinateRegion> {
+        Binding {
+            viewModel.region
+        } set: { region in
+            DispatchQueue.main.async {
+                viewModel.region = region
+            }
+        }
+    }
+
     var body: some View {
         ZStack {
             Map(
-                coordinateRegion: $viewModel.region,
+                coordinateRegion: region,
                 annotationItems: Array(viewModel.uniqueLocations)
             ) { place in
                 MapAnnotation(coordinate: place.location) {
@@ -119,9 +129,12 @@ struct ChartView: View {
                 }
             }.chartLegend(.hidden)
                 .chartYAxis {
-                    AxisMarks(position: .leading) // puts the y axis on the left side of the view
+                    AxisMarks(position: .leading)  // puts the y axis on the left side of the view
                 }
-                .chartYScale(domain: (viewModel.absoluteMinimum ?? 0)...(viewModel.absoluteMaximum ?? 1))
+                .chartYScale(
+                    domain: (viewModel.absoluteMinimum ?? 0)...(viewModel
+                        .absoluteMaximum ?? 1)
+                )
                 .chartXAxis {
                     AxisMarks { value in
                         AxisGridLine()
