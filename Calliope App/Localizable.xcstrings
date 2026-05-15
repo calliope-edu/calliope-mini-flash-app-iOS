@@ -2571,7 +2571,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Die Datei konnte nicht übertragen werden, bitte wähle deinen Calliope mini erneut aus (das Icon oben rechts drücken) und versuche es erneut!"
+            "value" : "Die Datei konnte nicht übertragen werden, probiere es noch einmal oder erstelle eine neue Verbindung zu deinem Calliope mini (das Icon oben rechts drücken) und versuche es danach erneut!"
           }
         }
       }
