@@ -96,26 +96,8 @@ struct ChartView: View {
 
     var body: some View {
         VStack {
-            let chartData: [ChartDataPoint] = viewModel.data.flatMap {
-                series,
-                dataPoints in
-                if viewModel.selectedAxis == nil
-                    || viewModel.selectedAxis!.name == "all"
-                    || viewModel.selectedAxis!.name == series
-                {
-                    return dataPoints.map {
-                        ChartDataPoint(
-                            x: $0.x,
-                            y: $0.y,
-                            series: series
-                        )
-                    }
-                }
-                return []
-            }
-
             Charts.Chart {
-                ForEach(chartData) { dataPoint in
+                ForEach(viewModel.displayedChartData) { dataPoint in
                     let xValue: PlottableValue = .value("Time", dataPoint.x)
                     let yValue: PlottableValue = .value(
                         dataPoint.series,

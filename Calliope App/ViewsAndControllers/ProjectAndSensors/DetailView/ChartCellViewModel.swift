@@ -51,6 +51,25 @@ class ChartCellViewModel: ObservableObject, Identifiable {
         IdentifiableLocation
     >()
     @Published var region: MKCoordinateRegion = getDefaultRegion()
+    var displayedChartData: [ChartDataPoint] {
+        return data.flatMap {
+            series,
+            dataPoints in
+            if selectedAxis == nil
+                || selectedAxis!.name == "all"
+                || selectedAxis!.name == series
+            {
+                return dataPoints.map {
+                    ChartDataPoint(
+                        x: $0.x,
+                        y: $0.y,
+                        series: series
+                    )
+                }
+            }
+            return []
+        }
+    }
 
     @Published var minimumMetric: Double?
     @Published var averageMetric: Double?
