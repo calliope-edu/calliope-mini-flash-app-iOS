@@ -1180,17 +1180,6 @@
         }
       }
     },
-    "Du findest die CSV-Datei mit den Datalogger-Daten im Calliope-Verzeichnis  auf deinem Gerät, unter den namen MY_DATA.csv" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You can find the CSV file containing your datalogger data, named MY_DATA.csv, in the Calliope directory on your device."
-          }
-        }
-      }
-    },
     "Duration: about 10 seconds" : {
       "comment" : "USB transfer duration message",
       "extractionState" : "stale",
@@ -1284,17 +1273,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fehler"
-          }
-        }
-      }
-    },
-    "Es gab ein Problem beim Herunterladen der Datalogger-Daten von Ihrem Calliope mini. Bitte stellen Sie sicher, dass Sie mit dem Calliope verbunden sind, und versuchen Sie es erneut." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "There was an issue downloading the datalogger data from your Calliope mini. Please ensure you are connected to the Calliope mini and try again."
           }
         }
       }
@@ -2495,17 +2473,6 @@
         }
       }
     },
-    "Sie können die Sitzungsdaten im Calliope-Verzeichnis auf Ihrem Gerät finden." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You can find the session data, in the Calliope directory on your device."
-          }
-        }
-      }
-    },
     "Speaker" : {
       "localizations" : {
         "de" : {
@@ -2718,7 +2685,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Es gab ein Problem beim Herunterladen der Datalogger-Daten von Ihrem Calliope mini. Bitte stelle sicher, dass du mit dem Calliope mini verbunden bist, und versuche es erneut."
+            "value" : "Es gab ein Problem beim Herunterladen der Datalogger-Daten von deinem Calliope mini. Bitte stelle sicher, dass du mit deinem Calliope mini verbunden bist, und versuche es erneut."
           }
         }
       }
@@ -3170,7 +3137,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Du findest die CSV-Datei mit den Datalogger-Daten im Calliope-Verzeichnis auf deinem Gerät, unter den namen MY_DATA.csv"
+            "value" : "Du findest die CSV-Datei mit den Datalogger-Daten im Calliope-Verzeichnis auf deinem Gerät unter den namen MY_DATA.csv\" = \"You can find the CSV file containing your datalogger data, named MY_DATA.csv, in the Calliope directory on your device."
           }
         }
       }
