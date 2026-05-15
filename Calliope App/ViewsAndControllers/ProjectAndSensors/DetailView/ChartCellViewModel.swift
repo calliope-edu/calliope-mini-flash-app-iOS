@@ -277,6 +277,7 @@ class ChartCellViewModel: ObservableObject, Identifiable {
                 }
             }
         }
+        Chart.setSensorType(chart: chart)
         isRecording = true
     }
 

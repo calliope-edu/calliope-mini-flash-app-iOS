@@ -40,6 +40,20 @@ struct Chart: Codable, FetchableRecord, PersistableRecord, DiffAware, Identifiab
         DatabaseManager.notifyChange()
         return tmpChart
     }
+    
+    static func setSensorType(chart: Chart) {
+        guard chart.sensorType != nil else {
+            LogNotify.log("Tried to set sensor type, but no sensor type given.", level: LogNotify.LEVEL.ERROR)
+            return
+        }
+        do {
+            try DatabaseManager.shared.databaseQueue?.write { db in
+                try chart.update(db)
+            }
+        } catch {
+            LogNotify.log("Error setting the sensor type of chart: \(error)")
+        }
+    }
 
     static func fetchChartsBy(projectsId: Int64?) -> [Chart] {
         var retrievedCharts: [Chart] = []
