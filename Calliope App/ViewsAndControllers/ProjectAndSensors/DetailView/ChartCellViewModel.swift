@@ -211,6 +211,7 @@ class ChartCellViewModel: ObservableObject, Identifiable {
     }
 
     func updateAvailableAxis() {
+        axisOptions = []
         for (axis, _) in data {
             axisOptions.append(DropDownOption(name: axis, object: nil))
         }
