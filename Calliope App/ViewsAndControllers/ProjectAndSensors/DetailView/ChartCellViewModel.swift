@@ -8,6 +8,7 @@
 
 import Foundation
 import MapKit
+import SwiftUI
 
 struct DataPoint {
     let x: Double
@@ -153,6 +154,15 @@ class ChartCellViewModel: ObservableObject, Identifiable {
                 longitudeDelta: 0.1
             )
         )
+    }
+    
+    let colors = [Color.red, Color.green, Color.blue, Color.orange, Color.purple]
+    
+    func getColorForAxis(axis: String) -> Color {
+        let index = axisOptions.firstIndex{ axisOption in
+            axisOption.name == axis
+        }
+        return colors[index ?? 0]
     }
 
     func updateAvailableSensors() {

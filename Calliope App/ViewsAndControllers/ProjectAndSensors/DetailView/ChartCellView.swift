@@ -113,7 +113,9 @@ struct ChartView: View {
                         y: yValue,
                         series: seriesValue
                     )
-                    .foregroundStyle(by: seriesValue)
+                    .foregroundStyle(
+                        viewModel.getColorForAxis(axis: dataPoint.series)
+                    )
                 }
             }.chartLegend(.hidden)
                 .chartYAxis {
