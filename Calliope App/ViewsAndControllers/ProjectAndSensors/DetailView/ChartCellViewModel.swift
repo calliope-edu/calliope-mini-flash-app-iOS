@@ -36,7 +36,7 @@ struct IdentifiableLocation: Identifiable, Hashable {
     }
 }
 
-class ChartViewModel: ObservableObject, Identifiable {
+class ChartCellViewModel: ObservableObject, Identifiable {
     var chart: Chart
     @Published var sensorOptions: [DropDownOption<Sensor>] = []
     @Published var selectedSensor: DropDownOption<Sensor>?

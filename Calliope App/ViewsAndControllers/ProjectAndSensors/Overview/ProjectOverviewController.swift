@@ -156,7 +156,7 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showNewlyCreatedProject" {
             LogNotify.log("Preparing for segue showNewlyCreatedProject")
-            guard let destinationVC = segue.destination as? ProjectViewController else {
+            guard let destinationVC = segue.destination as? ProjectViewModel else {
                 return
             }
             destinationVC.project = Project.fetchProject(id: sender as! Int)!

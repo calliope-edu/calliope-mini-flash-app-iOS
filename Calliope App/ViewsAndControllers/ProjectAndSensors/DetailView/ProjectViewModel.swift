@@ -12,12 +12,12 @@ import DGCharts
 import SwiftUI
 import Charts
 
-class ProjectViewController: UIViewController, ChartViewDelegate, ObservableObject {
+class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
     
     @Published var project: Project?
     @Published var addChartButtonEnabled = false
     @Published var charts: [Chart] = []
-    var chartViewModels: [ChartViewModel] = []
+    var chartViewModels: [ChartCellViewModel] = []
     
     func loadCharts() {
         guard project != nil else {
@@ -25,7 +25,7 @@ class ProjectViewController: UIViewController, ChartViewDelegate, ObservableObje
             return
         }
         charts = Chart.fetchChartsBy(projectsId: project!.id)
-        charts.forEach{ chartViewModels.append(ChartViewModel(chart: $0, openFileNameDialog: openFileNameDialog))}
+        charts.forEach{ chartViewModels.append(ChartCellViewModel(chart: $0, openFileNameDialog: openFileNameDialog))}
     }
     
     private var calliopeConnectedSubcription: NSObjectProtocol!
@@ -94,7 +94,7 @@ class ProjectViewController: UIViewController, ChartViewDelegate, ObservableObje
         }
         withAnimation(nil) { // disables an unideal animation of the add button
             charts.append(chart)
-            chartViewModels.append(ChartViewModel(chart: chart, openFileNameDialog: openFileNameDialog))
+            chartViewModels.append(ChartCellViewModel(chart: chart, openFileNameDialog: openFileNameDialog))
         }
     }
     
@@ -106,7 +106,7 @@ class ProjectViewController: UIViewController, ChartViewDelegate, ObservableObje
         Chart.deleteChart(id: chart.id)
         charts = Chart.fetchChartsBy(projectsId: project!.id) // Update charts list after deleting chart
         chartViewModels.removeAll()
-        charts.forEach{ chartViewModels.append(ChartViewModel(chart: $0, openFileNameDialog: openFileNameDialog))}
+        charts.forEach{ chartViewModels.append(ChartCellViewModel(chart: $0, openFileNameDialog: openFileNameDialog))}
     }
     
     func renameProject() {

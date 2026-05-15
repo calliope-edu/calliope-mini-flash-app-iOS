@@ -139,7 +139,7 @@
 		60C90B452F237F3E006279B2 /* WBEventTarget.js in Resources */ = {isa = PBXBuildFile; fileRef = 60C90B102F237F3E006279B2 /* WBEventTarget.js */; };
 		60C90B462F237F3E006279B2 /* WBDevice.js in Resources */ = {isa = PBXBuildFile; fileRef = 60C90B0F2F237F3E006279B2 /* WBDevice.js */; };
 		60C915932B1F442F00E4039D /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C915922B1F442F00E4039D /* Network.swift */; };
-		60CF0EA92BFCBE1E00CB2A38 /* ProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CF0EA82BFCBE1E00CB2A38 /* ProjectViewController.swift */; };
+		60CF0EA92BFCBE1E00CB2A38 /* ProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CF0EA82BFCBE1E00CB2A38 /* ProjectViewModel.swift */; };
 		60CF0EAD2BFCD25300CB2A38 /* Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CF0EAC2BFCD25300CB2A38 /* Value.swift */; };
 		60CF0EB02BFCD59D00CB2A38 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CF0EAF2BFCD59D00CB2A38 /* DataController.swift */; };
 		60CF0EB22BFCD5D400CB2A38 /* Sensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CF0EB12BFCD5D400CB2A38 /* Sensor.swift */; };
@@ -149,7 +149,7 @@
 		60D02D832BFCA0C400D3C34A /* ProjectCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D02D822BFCA0C400D3C34A /* ProjectCollectionViewController.swift */; };
 		60D02D852BFCA41400D3C34A /* ProjectCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D02D842BFCA41400D3C34A /* ProjectCollectionViewCell.swift */; };
 		60D672522B283D0F00AB974B /* QRCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D672512B283D0F00AB974B /* QRCodeViewController.swift */; };
-		60EBC64C2F9BAD5B00A6DD84 /* ChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EBC64B2F9BAD5A00A6DD84 /* ChartViewModel.swift */; };
+		60EBC64C2F9BAD5B00A6DD84 /* ChartCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EBC64B2F9BAD5A00A6DD84 /* ChartCellViewModel.swift */; };
 		60EE6AC82F51EF730081CE15 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EE6AC72F51EF730081CE15 /* InfoViewController.swift */; };
 		7E25C1EF8B03BE2835268F12 /* UtilityJobState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E25C80C2A4E87716138A0E0 /* UtilityJobState.swift */; };
 		7E25C2F16E2316D7C6EF236F /* UtilityJobProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E25CF0763552A9F4EBCE00E /* UtilityJobProtocol.swift */; };
@@ -320,7 +320,7 @@
 		60C90B122F237F3E006279B2 /* WBUtils.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = WBUtils.js; sourceTree = "<group>"; };
 		60C90B172F237F3E006279B2 /* Jsonifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jsonifiable.swift; sourceTree = "<group>"; };
 		60C915922B1F442F00E4039D /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
-		60CF0EA82BFCBE1E00CB2A38 /* ProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewController.swift; sourceTree = "<group>"; };
+		60CF0EA82BFCBE1E00CB2A38 /* ProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewModel.swift; sourceTree = "<group>"; };
 		60CF0EAC2BFCD25300CB2A38 /* Value.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Value.swift; sourceTree = "<group>"; };
 		60CF0EAF2BFCD59D00CB2A38 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		60CF0EB12BFCD5D400CB2A38 /* Sensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sensor.swift; sourceTree = "<group>"; };
@@ -330,7 +330,7 @@
 		60D02D822BFCA0C400D3C34A /* ProjectCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCollectionViewController.swift; sourceTree = "<group>"; };
 		60D02D842BFCA41400D3C34A /* ProjectCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCollectionViewCell.swift; sourceTree = "<group>"; };
 		60D672512B283D0F00AB974B /* QRCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeViewController.swift; sourceTree = "<group>"; };
-		60EBC64B2F9BAD5A00A6DD84 /* ChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewModel.swift; sourceTree = "<group>"; };
+		60EBC64B2F9BAD5A00A6DD84 /* ChartCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartCellViewModel.swift; sourceTree = "<group>"; };
 		60EE6AC72F51EF730081CE15 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		60F889132B50225000B6C1F5 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
 		60FF510C2BB55324002B24A2 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = "Calliope App/PrivacyInfo.xcprivacy"; sourceTree = SOURCE_ROOT; };
@@ -664,9 +664,9 @@
 		600E63292C328DAE0027AE61 /* DetailView */ = {
 			isa = PBXGroup;
 			children = (
-				60CF0EA82BFCBE1E00CB2A38 /* ProjectViewController.swift */,
+				60CF0EA82BFCBE1E00CB2A38 /* ProjectViewModel.swift */,
 				60AA95542F925D3400308FE3 /* ProjectView.swift */,
-				60EBC64B2F9BAD5A00A6DD84 /* ChartViewModel.swift */,
+				60EBC64B2F9BAD5A00A6DD84 /* ChartCellViewModel.swift */,
 				60C627F92FAE4BF100D23A43 /* ChartCellView.swift */,
 			);
 			path = DetailView;
@@ -1123,7 +1123,7 @@
 				2F61458722BF761F001C2734 /* Extension_Data.swift in Sources */,
 				2F61459022BF761F001C2734 /* MainContainerViewController.swift in Sources */,
 				2F61459722BF761F001C2734 /* Editors.swift in Sources */,
-				60EBC64C2F9BAD5B00A6DD84 /* ChartViewModel.swift in Sources */,
+				60EBC64C2F9BAD5B00A6DD84 /* ChartCellViewModel.swift in Sources */,
 				2F375ABB237F28BC004ED8D7 /* DefaultProgram.swift in Sources */,
 				60107F912F48830E00A15101 /* LofiAppsViewController.swift in Sources */,
 				60BBDB882B6BA16F003AD3CE /* DiscoveredUSBDevice.swift in Sources */,
@@ -1169,7 +1169,7 @@
 				2F61457522BF761F001C2734 /* DiscoveredBLEDevice.swift in Sources */,
 				2F61458922BF761F001C2734 /* CollapsingViewControllerProtocol.swift in Sources */,
 				2F2B809A25A0E01500A7CCF7 /* CodeSnippets.swift in Sources */,
-				60CF0EA92BFCBE1E00CB2A38 /* ProjectViewController.swift in Sources */,
+				60CF0EA92BFCBE1E00CB2A38 /* ProjectViewModel.swift in Sources */,
 				2F61458A22BF761F001C2734 /* CollapseButtonProtocol.swift in Sources */,
 				609D9BD42B67A15500F2ECAE /* USBCalliope.swift in Sources */,
 				60C627FA2FAE4BF100D23A43 /* ChartCellView.swift in Sources */,

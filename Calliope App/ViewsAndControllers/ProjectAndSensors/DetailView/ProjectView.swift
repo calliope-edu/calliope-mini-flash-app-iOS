@@ -12,7 +12,7 @@ import Charts
 import MapKit
 
 struct ProjectView: View {
-    @ObservedObject var projectViewController: ProjectViewController
+    @ObservedObject var projectViewController: ProjectViewModel
     @State var showMenu = false
     
     var body: some View {
@@ -74,6 +74,6 @@ struct IconButton: View {
 
 struct ProjectView_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectView(projectViewController: ProjectViewController(coder: NSCoder())!)
+        ProjectView(projectViewController: ProjectViewModel(coder: NSCoder())!)
     }
 }

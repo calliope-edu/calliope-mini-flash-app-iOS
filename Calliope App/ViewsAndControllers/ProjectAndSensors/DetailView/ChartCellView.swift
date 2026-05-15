@@ -13,7 +13,7 @@ import SwiftUI
 
 struct ChartCellView: View {
     let onRemoveTapped: () -> Void
-    @ObservedObject var chartViewModel: ChartViewModel
+    @ObservedObject var chartViewModel: ChartCellViewModel
 
     var body: some View {
         VStack {
@@ -52,7 +52,7 @@ struct ChartCellView: View {
 }
 
 struct MapView: View {
-    @ObservedObject var viewModel: ChartViewModel
+    @ObservedObject var viewModel: ChartCellViewModel
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 51.507222, longitude: -0.1275),
         span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
@@ -133,7 +133,7 @@ struct MapView: View {
 }
 
 struct ChartView: View {
-    @ObservedObject var viewModel: ChartViewModel
+    @ObservedObject var viewModel: ChartCellViewModel
 
     var body: some View {
         VStack {
@@ -205,7 +205,7 @@ struct ChartView: View {
 }
 
 struct MetricsRowView: View {
-    @ObservedObject var viewModel: ChartViewModel
+    @ObservedObject var viewModel: ChartCellViewModel
 
     var body: some View {
         HStack {
@@ -242,7 +242,7 @@ struct ChartDataPoint: Identifiable {
 }
 
 struct ChartHeaderView: View {
-    @ObservedObject var viewModel: ChartViewModel
+    @ObservedObject var viewModel: ChartCellViewModel
     var onRemoveTapped: () -> Void
     @State var showMenu = false
 
