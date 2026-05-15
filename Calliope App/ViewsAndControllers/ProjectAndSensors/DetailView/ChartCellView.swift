@@ -121,6 +121,7 @@ struct ChartView: View {
                 .chartYAxis {
                     AxisMarks(position: .leading)
                 }
+                .chartYScale(domain: (viewModel.minimumMetric ?? 0)...(viewModel.maximumMetric ?? 1))
                 .chartXAxis {
                     AxisMarks { value in
                         AxisGridLine()
