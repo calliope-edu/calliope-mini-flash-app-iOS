@@ -274,6 +274,7 @@ class ChartCellViewModel: ObservableObject, Identifiable {
                             long: coordinates!.longitude
                         )
                     )
+                    self.calculateCenterRegion()
                 }
             }
         }
