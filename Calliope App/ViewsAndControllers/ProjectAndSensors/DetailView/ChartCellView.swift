@@ -53,15 +53,11 @@ struct ChartCellView: View {
 
 struct MapView: View {
     @ObservedObject var viewModel: ChartCellViewModel
-    @State private var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 51.507222, longitude: -0.1275),
-        span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
-    )
 
     var body: some View {
         ZStack {
             Map(
-                coordinateRegion: $region,
+                coordinateRegion: $viewModel.region,
                 annotationItems: Array(viewModel.uniqueLocations)
             ) { place in
                 MapAnnotation(coordinate: place.location) {
@@ -81,7 +77,7 @@ struct MapView: View {
 
             IconButton(
                 imageSystemName: "scope",
-                action: resetRegion,
+                action: viewModel.calculateCenterRegion,
                 rotation: 0,
                 iconColor: Color(.black),
                 backgroundColor: Color(.white)
@@ -92,43 +88,6 @@ struct MapView: View {
                     alignment: .bottomTrailing
                 )
         }
-    }
-
-    func resetRegion() {
-        var center = CLLocationCoordinate2D(latitude: 0, longitude: 0)
-        if viewModel.uniqueLocations.count > 0 {
-            for place in viewModel.uniqueLocations {
-                center.latitude += place.location.latitude
-                center.longitude += place.location.longitude
-            }
-            center.latitude /= Double(viewModel.uniqueLocations.count)
-            center.longitude /= Double(viewModel.uniqueLocations.count)
-        }
-
-        var maxDistanceFromCenter = 0.002
-        let centerCL = CLLocation(
-            latitude: center.latitude,
-            longitude: center.longitude
-        )
-        for place in viewModel.uniqueLocations {
-            let distance = centerCL.distance(
-                from: CLLocation(
-                    latitude: place.location.latitude,
-                    longitude: place.location.longitude
-                )
-            )
-            if distance > maxDistanceFromCenter {
-                maxDistanceFromCenter = distance
-            }
-        }
-
-        region = MKCoordinateRegion(
-            center: center,
-            span: MKCoordinateSpan(
-                latitudeDelta: maxDistanceFromCenter,
-                longitudeDelta: maxDistanceFromCenter
-            )
-        )
     }
 }
 
