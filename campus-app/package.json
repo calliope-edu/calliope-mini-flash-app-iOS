@@ -1,0 +1,20 @@
+{
+  "name": "calliope-campus-ios-wrapper",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Capacitor shell that loads calliope-campus from Cloudflare and routes BLE through iOS CoreBluetooth.",
+  "scripts": {
+    "sync": "cap sync ios",
+    "open": "cap open ios",
+    "run": "cap run ios"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.3.4",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "@capacitor/core": "^8.3.4",
+    "@capacitor/ios": "^8.3.4",
+    "@capacitor-community/bluetooth-le": "^8.1.3"
+  }
+}
