@@ -357,6 +357,16 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         documentPicker.delegate = self
         documentPicker.allowsMultipleSelection = false
         documentPicker.shouldShowFileExtensions = true
+        // On older iPadOS versions (< 26) the picker, when shown as a sheet,
+        // hides the "Open"/"Auswählen" button because the navigation bar is
+        // too short — leaving the user unable to confirm a volume selection.
+        // Full-screen presentation gives the nav bar enough room for the
+        // action button. iPadOS 26+ uses a new layout that already shows the
+        // button reliably in the default sheet, so we don't force full-screen
+        // there and keep the system's native look.
+        if ProcessInfo.processInfo.operatingSystemVersion.majorVersion < 26 {
+            documentPicker.modalPresentationStyle = .fullScreen
+        }
         view.present(documentPicker, animated: true, completion: nil)
     }
     
