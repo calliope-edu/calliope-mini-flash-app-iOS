@@ -149,7 +149,7 @@ class DatabaseManager {
             
             let chartRows = try Row.fetchCursor(db, sql: "SELECT * FROM charts")
             while let row = try chartRows.next() {
-                try db.execute(sql: "INSERT INTO groups (projects_id) VALUES (?)", arguments: [row["projectsId"]])
+                try db.execute(sql: "INSERT INTO groups (projectsId) VALUES (?)", arguments: [row["projectsId"]])
                 try db.execute(sql: "INSERT INTO chart_migration (id, sensorType, groupsId) VALUES (?, ?, ?)", arguments: [row["id"], row["sensorType"], db.lastInsertedRowID])
             }
             
