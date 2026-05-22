@@ -107,7 +107,7 @@ struct ChartView: View {
     @State private var currentOffset: CGSize = .zero
     @GestureState private var gestureScale: CGFloat = 1.0
     @GestureState private var gestureOffset: CGSize = .zero
-    @State var displayedRange: ClosedRange<Double>?
+    @State private var displayedRange: ClosedRange<Double>?
 
     var zoom: CGFloat {
         return currentScale * gestureScale
@@ -133,6 +133,44 @@ struct ChartView: View {
         let displayedMinimumX = offset - totalRangeWidth * zoom / 2
         let displayedMaximumX = offset + totalRangeWidth * zoom / 2
         displayedRange = displayedMinimumX...displayedMaximumX
+    }
+    
+    fileprivate func zoomGesture(_ geo: GeometryProxy) -> _EndedGesture<GestureStateGesture<MagnificationGesture, CGFloat>> {
+        return MagnificationGesture()
+            .updating($gestureScale) { value, state, _ in
+                state = 1 / value
+                state = max(0.001 / currentScale, min(1.5 / currentScale, state))
+                calculateDisplayedRange(
+                    graphWidth: geo.size.width
+                )
+            }
+            .onEnded { value in
+                currentScale /= value
+                currentScale = max(0.001, min(1.5, currentScale))
+                calculateDisplayedRange(
+                    graphWidth: geo.size.width
+                )
+            }
+    }
+    
+    fileprivate func dragGesture(_ geo: GeometryProxy) -> _EndedGesture<GestureStateGesture<DragGesture, CGSize>> {
+        return DragGesture()
+            .updating($gestureOffset) { value, state, _ in
+                state.width = -value.translation.width * zoom * (totalRangeWidth / geo.size.width)
+                state.width = max(minimumX - currentOffset.width, min(maximumX - currentOffset.width, state.width))
+                calculateDisplayedRange(
+                    graphWidth: geo.size.width
+                )
+            }
+        
+            .onEnded { value in
+                currentOffset.width -=
+                value.translation.width * zoom * (totalRangeWidth / geo.size.width)
+                currentOffset.width = max(minimumX, min(maximumX, currentOffset.width))
+                calculateDisplayedRange(
+                    graphWidth: geo.size.width
+                )
+            }
     }
     
     var body: some View {
@@ -188,37 +226,8 @@ struct ChartView: View {
                     )
                     .gesture(
                         SimultaneousGesture(
-                            MagnificationGesture()
-                                .updating($gestureScale) { value, state, _ in
-                                    state = 1 / value
-                                    calculateDisplayedRange(
-                                        graphWidth: geo.size.width
-                                    )
-                                }
-                                .onEnded { value in
-                                    currentScale /= value
-                                    currentScale = max(0.001, min(1.5, currentScale))
-                                    calculateDisplayedRange(
-                                        graphWidth: geo.size.width
-                                    )
-                                },
-                            DragGesture()
-                                .updating($gestureOffset) { value, state, _ in
-                                    state.width = -value.translation.width * zoom * (totalRangeWidth / geo.size.width)
-                                    calculateDisplayedRange(
-                                        graphWidth: geo.size.width
-                                    )
-                                }
-
-                                .onEnded { value in
-                                    currentOffset.width -=
-                                        value.translation.width * zoom * (totalRangeWidth / geo.size.width)
-                                    currentOffset.width = max(minimumX, min(maximumX, currentOffset.width))
-                                    calculateDisplayedRange(
-                                        graphWidth: geo.size.width
-                                    )
-                                }
-
+                            zoomGesture(geo),
+                            dragGesture(geo)
                         )
                     )
                     .onAppear {
