@@ -12,13 +12,13 @@ import Charts
 import MapKit
 
 struct ProjectView: View {
-    @ObservedObject var projectViewController: ProjectViewModel
+    @ObservedObject var viewModel: ProjectViewModel
     @State var showMenu = false
     
     var body: some View {
         VStack {
             HStack {
-                Text(projectViewController.project!.name)
+                Text(viewModel.project!.name)
                     .foregroundColor(.white)
                     .font(.title)
                 
@@ -28,9 +28,9 @@ struct ProjectView: View {
                     .confirmationDialog("",
                                         isPresented: $showMenu,
                                         titleVisibility: .visible) {
-                        Button("Delete", role: .destructive) { projectViewController.deleteProject() }
-                        Button("Export (CSV)") { projectViewController.exportToCSVFile() }
-                        Button("Rename") { projectViewController.renameProject() }
+                        Button("Delete", role: .destructive) { viewModel.deleteProject() }
+                        Button("Export (CSV)") { viewModel.exportToCSVFile() }
+                        Button("Rename") { viewModel.renameProject() }
                     }
             }
             .padding()
@@ -42,10 +42,10 @@ struct ProjectView: View {
             
             ScrollView {
                 VStack {
-                    ForEach(projectViewController.groupViewModels) { groupViewModel in
-                        GroupView(onRemoveTapped: {/* TODO: Reimplement */}, viewModel: groupViewModel)
+                    ForEach(viewModel.groupViewModels) { groupViewModel in
+                        GroupView(viewModel: groupViewModel)
                     }
-                    IconButton(imageSystemName: "plus.circle", action: {projectViewController.addNewSensor()}, rotation: 0, iconColor: Color(.white), backgroundColor: projectViewController.addChartButtonEnabled ? Color("calliope-turqoise") : Color(.gray)).disabled(!projectViewController.addChartButtonEnabled)
+                    IconButton(imageSystemName: "plus.circle", action: { /* TODO: Implement adding a group */ }, rotation: 0, iconColor: Color(.white), backgroundColor: viewModel.addChartButtonEnabled ? Color("calliope-turqoise") : Color(.gray)).disabled(!viewModel.addChartButtonEnabled)
                 }
             }
         }.frame(maxHeight: .infinity, alignment: .top)
@@ -74,6 +74,6 @@ struct IconButton: View {
 
 struct ProjectView_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectView(projectViewController: ProjectViewModel(coder: NSCoder())!)
+        ProjectView(viewModel: ProjectViewModel(coder: NSCoder())!)
     }
 }

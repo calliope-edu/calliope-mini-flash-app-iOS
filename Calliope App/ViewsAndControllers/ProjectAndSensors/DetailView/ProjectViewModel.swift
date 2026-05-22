@@ -28,6 +28,10 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
         groups.forEach{ groupViewModels.append(GroupViewModel(group: $0, openFileNameDialog: openFileNameDialog))}
     }
     
+    
+    
+    
+    
     private var calliopeConnectedSubcription: NSObjectProtocol!
     private var calliopeDisconnectedSubscription: NSObjectProtocol!
     
@@ -46,7 +50,7 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
             return nil
         }
         loadGroups()
-        return UIHostingController(coder: coder, rootView: ProjectView(projectViewController: self))
+        return UIHostingController(coder: coder, rootView: ProjectView(viewModel: self))
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -84,33 +88,6 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
         addChartButtonEnabled = true
     }
    
-    // TODO: Reimplement
-    func addNewSensor() {
-        /*guard project != nil else {
-            LogNotify.log("Project was not set. This is not supposed to happen.", level: LogNotify.LEVEL.ERROR)
-            return
-        }
-        guard let chart = Chart.insertChart(sensorType: nil, groupsId: project!.id) else {
-            return
-        }
-        withAnimation(nil) { // disables an unideal animation of the add button
-            charts.append(chart)
-            chartViewModels.append(ChartViewModel(chart: chart, openFileNameDialog: openFileNameDialog))
-        }*/
-    }
-   
-    // TODO: Reimplement
-    func deleteChart(chart: Chart) {
-        /*guard project != nil else {
-            LogNotify.log("Project was not set. This is not supposed to happen.", level: LogNotify.LEVEL.ERROR)
-            return
-        }
-        Chart.deleteChart(id: chart.id)
-        charts = Chart.fetchChartsBy(groupsId: project!.id) // Update charts list after deleting chart
-        chartViewModels.removeAll()
-        charts.forEach{ chartViewModels.append(ChartViewModel(chart: $0, openFileNameDialog: openFileNameDialog))}*/
-    }
-    
     func renameProject() {
         let alertController = UIAlertController(title: NSLocalizedString("Change project name", comment: ""), message: NSLocalizedString("Enter the new project name", comment: ""), preferredStyle: .alert)
         alertController.addTextField { textField in

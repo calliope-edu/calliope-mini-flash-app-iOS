@@ -12,13 +12,12 @@ import MapKit
 import SwiftUI
 
 struct GroupView: View {
-    let onRemoveTapped: () -> Void
     @ObservedObject var viewModel: GroupViewModel
 
     var body: some View {
         VStack {
-            ForEach(viewModel.chartViewModel) { chartViewModel in
-                ChartView(viewModel: chartViewModel, onRemoveTapped: onRemoveTapped)
+            ForEach(viewModel.chartViewModels) { chartViewModel in
+                ChartView(viewModel: chartViewModel, onRemoveTapped: {viewModel.deleteChart(chart: chartViewModel.chart)})
             }
             
             MapView(viewModel: viewModel)

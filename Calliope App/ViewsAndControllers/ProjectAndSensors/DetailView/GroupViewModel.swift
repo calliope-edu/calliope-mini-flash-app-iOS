@@ -8,11 +8,12 @@
 
 import Foundation
 import MapKit
+import SwiftUI
 
 class GroupViewModel: ObservableObject, Identifiable {
     var group: Group
     var openFileNameDialog: (@escaping (_ filename: String) -> Void) -> Void
-    @Published var chartViewModel: [ChartViewModel] = []
+    @Published var chartViewModels: [ChartViewModel] = []
     
     @Published var uniqueLocations: Set<IdentifiableLocation> = Set<
         IdentifiableLocation
@@ -27,17 +28,22 @@ class GroupViewModel: ObservableObject, Identifiable {
         self.group = group
         self.openFileNameDialog = openFileNameDialog
 
+        loadCharts()
+        
+        loadLocationsFromDatabase()
+    }
+    
+    func loadCharts() {
+        chartViewModels = []
         let charts = Chart.fetchChartsBy(groupsId: group.id)
         charts.forEach { chart in
-            chartViewModel.append(
+            chartViewModels.append(
                 ChartViewModel(
                     chart: chart,
                     openFileNameDialog: openFileNameDialog
                 )
             )
         }
-        
-        loadLocationsFromDatabase()
     }
     
     func calculateCenterRegion() {
@@ -104,6 +110,20 @@ class GroupViewModel: ObservableObject, Identifiable {
                     )
                 }
             }
+        }
+    }
+    
+    func deleteChart(chart: Chart) {
+        Chart.deleteChart(id: chart.id)
+        loadCharts()
+    }
+    
+    func addNewSensor() {
+        guard let chart = Chart.insertChart(sensorType: nil, groupsId: group.id) else {
+            return
+        }
+        withAnimation(nil) { // disables an unideal animation of the add button
+            chartViewModels.append(ChartViewModel(chart: chart, openFileNameDialog: openFileNameDialog))
         }
     }
 }
