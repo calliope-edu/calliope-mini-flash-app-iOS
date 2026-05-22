@@ -72,6 +72,8 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
                 cal.peripheral.setNotifyValue(false, for: ch)
             }
         }
+        connectPollTimer?.cancel()
+        connectPollTimer = nil
     }
 
     // MARK: - WKScriptMessageHandler
@@ -116,6 +118,20 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
 
     // MARK: - Connect / disconnect
 
+    /// Connect-poll state. iOS doesn't expose a "connect to last paired
+    /// device" API the way Android's stored MAC does — the matrix-pairing
+    /// UI owns the connection lifecycle. So when the proxy's auto-connect
+    /// fires before the user has paired, we don't fail immediately:
+    /// nudge the connection icon and poll `activeCalliope()` for a window.
+    private var connectPollTimer: DispatchSourceTimer?
+    private var pendingConnectReplyId: String?
+    /// How many seconds to keep polling for `usageReadyCalliope` before
+    /// giving up. Long enough for the user to back out of the editor
+    /// (since the matrix connection view isn't visible inside the editor),
+    /// pair via the connection icon, and return.
+    private static let connectPollSeconds = 60
+    private static let connectPollIntervalMs = 1000
+
     private func handleConnect(id: String, args: [String: Any]) {
         let transport = (args["transport"] as? String) ?? "ble"
         guard transport == "ble" else {
@@ -123,23 +139,86 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
             return
         }
         emitState(status: "connecting")
-        guard let cal = activeCalliope() else {
-            replyError(id: id, message: "No Calliope mini connected — please pair one in the app first.")
-            emitState(status: "error", errorMessage: "Kein Calliope mini gekoppelt")
+        // Cancel any prior connect-poll — a single in-flight attempt is enough.
+        cancelConnectPoll()
+
+        if let cal = activeCalliope() {
+            // Happy path: device already paired via the legacy connection UI.
+            let name = cal.peripheral.name ?? ""
+            emitState(
+                status: "connected",
+                deviceName: name,
+                bleCanFlash: true,
+                bleCanCommunicate: true,
+                bleHasPermission: true
+            )
+            replyOk(id: id)
             return
         }
-        let name = cal.peripheral.name ?? ""
-        emitState(
-            status: "connected",
-            deviceName: name,
-            bleCanFlash: true,
-            bleCanCommunicate: true,
-            bleHasPermission: true
-        )
-        replyOk(id: id)
+
+        // No paired calliope yet. Bounce the connection icon so the user
+        // sees where to pair, then poll for the next minute. We DON'T
+        // reply immediately — the widget will keep its "connecting"
+        // state visible and the reconnect daemon won't fight us. If
+        // the user pairs in the window, we emit `connected` and resolve
+        // the reply normally. If they don't, we time out with a helpful
+        // error.
+        pendingConnectReplyId = id
+        DispatchQueue.main.async {
+            MatrixConnectionViewController.instance?.animateBounce()
+        }
+        sendEvent(kind: "log", data: [
+            "direction": "info",
+            "text": "Bitte oben im Calliope-Symbol einen Calliope mini auswählen und verbinden.",
+        ])
+        scheduleConnectPoll(remaining: Self.connectPollSeconds)
+    }
+
+    private func scheduleConnectPoll(remaining: Int) {
+        guard remaining > 0 else {
+            let id = pendingConnectReplyId
+            pendingConnectReplyId = nil
+            emitState(status: "error", errorMessage: "Kein Calliope mini gekoppelt")
+            if let id = id {
+                replyError(id: id, message: "No Calliope mini paired — please pair one via the connection icon at the top of the app and try again.")
+            }
+            return
+        }
+        let timer = DispatchSource.makeTimerSource(queue: .main)
+        connectPollTimer = timer
+        timer.schedule(deadline: .now() + .milliseconds(Self.connectPollIntervalMs))
+        timer.setEventHandler { [weak self] in
+            guard let self = self else { return }
+            self.connectPollTimer = nil
+            if let cal = self.activeCalliope() {
+                let id = self.pendingConnectReplyId
+                self.pendingConnectReplyId = nil
+                let name = cal.peripheral.name ?? ""
+                self.emitState(
+                    status: "connected",
+                    deviceName: name,
+                    bleCanFlash: true,
+                    bleCanCommunicate: true,
+                    bleHasPermission: true
+                )
+                if let id = id { self.replyOk(id: id) }
+                return
+            }
+            self.scheduleConnectPoll(remaining: remaining - 1)
+        }
+        timer.resume()
+    }
+
+    private func cancelConnectPoll() {
+        connectPollTimer?.cancel()
+        connectPollTimer = nil
+        pendingConnectReplyId = nil
     }
 
     private func handleDisconnect(id: String, args: [String: Any]) {
+        // Drop any pending connect-poll so it doesn't fire a stale
+        // "connected" later.
+        cancelConnectPoll()
         // The native proxy doesn't own the BLE connection — the host app
         // does. Forwarding a disconnect into the host would also kill any
         // other UI relying on the connection. Just clear our local
