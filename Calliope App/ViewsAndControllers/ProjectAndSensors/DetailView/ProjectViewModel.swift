@@ -24,7 +24,7 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
             LogNotify.log("Project was not set. This is not supposed to happen.", level: LogNotify.LEVEL.ERROR)
             return
         }
-        charts = Chart.fetchChartsBy(projectsId: project!.id)
+        charts = Chart.fetchChartsBy(groupsId: project!.id)
         charts.forEach{ chartViewModels.append(ChartCellViewModel(chart: $0, openFileNameDialog: openFileNameDialog))}
     }
     
@@ -89,7 +89,7 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
             LogNotify.log("Project was not set. This is not supposed to happen.", level: LogNotify.LEVEL.ERROR)
             return
         }
-        guard let chart = Chart.insertChart(sensorType: nil, projectsId: project!.id) else {
+        guard let chart = Chart.insertChart(sensorType: nil, groupsId: project!.id) else {
             return
         }
         withAnimation(nil) { // disables an unideal animation of the add button
@@ -104,7 +104,7 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
             return
         }
         Chart.deleteChart(id: chart.id)
-        charts = Chart.fetchChartsBy(projectsId: project!.id) // Update charts list after deleting chart
+        charts = Chart.fetchChartsBy(groupsId: project!.id) // Update charts list after deleting chart
         chartViewModels.removeAll()
         charts.forEach{ chartViewModels.append(ChartCellViewModel(chart: $0, openFileNameDialog: openFileNameDialog))}
     }

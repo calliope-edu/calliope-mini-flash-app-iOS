@@ -44,7 +44,7 @@ class CSVHandler {
     
     static func fetchDataFor(project: Int64) -> [(Double, Double, String, CalliopeService, Double?, Double?)]{
         var dataValues: [(Double, Double, String, CalliopeService, Double?, Double?)] = []
-        for chart in Chart.fetchChartsBy(projectsId: project) {
+        for chart in Chart.fetchChartsBy(groupsId: project) {
             for value in Value.fetchValuesBy(chartId: chart.id) {
                 for entry in DataParser.decode(data: value.value, service: chart.sensorType ?? .empty) {
                     dataValues.append((value.time, entry.value, entry.key, chart.sensorType ?? .empty, value.lat, value.long))

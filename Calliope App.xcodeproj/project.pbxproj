@@ -127,6 +127,7 @@
 		60BBDB862B6B90C2003AD3CE /* DiscoveredDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BBDB852B6B90C2003AD3CE /* DiscoveredDevice.swift */; };
 		60BBDB882B6BA16F003AD3CE /* DiscoveredUSBDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BBDB872B6BA16F003AD3CE /* DiscoveredUSBDevice.swift */; };
 		60C627FA2FAE4BF100D23A43 /* ChartCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C627F92FAE4BF100D23A43 /* ChartCellView.swift */; };
+		60C628702FC0957600D23A43 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C6286F2FC0957600D23A43 /* Group.swift */; };
 		60C90AFE2F1A75DD006279B2 /* LofiAppDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C90AFD2F1A75DD006279B2 /* LofiAppDetailViewController.swift */; };
 		60C90B2D2F237F3E006279B2 /* Jsonifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C90B172F237F3E006279B2 /* Jsonifiable.swift */; };
 		60C90B3A2F237F3E006279B2 /* WBBluetoothUUID.js in Resources */ = {isa = PBXBuildFile; fileRef = 60C90B0E2F237F3E006279B2 /* WBBluetoothUUID.js */; };
@@ -308,6 +309,7 @@
 		60BBDB872B6BA16F003AD3CE /* DiscoveredUSBDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredUSBDevice.swift; sourceTree = "<group>"; };
 		60C345D32DA5757400430DA8 /* Calliope AppRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Calliope AppRelease.entitlements"; sourceTree = "<group>"; };
 		60C627F92FAE4BF100D23A43 /* ChartCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartCellView.swift; sourceTree = "<group>"; };
+		60C6286F2FC0957600D23A43 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		60C90AFD2F1A75DD006279B2 /* LofiAppDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LofiAppDetailViewController.swift; sourceTree = "<group>"; };
 		60C90B0A2F237F3E006279B2 /* stringview.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = stringview.js; sourceTree = "<group>"; };
 		60C90B0B2F237F3E006279B2 /* WBBluetoothRemoteGATTCharacteristic.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = WBBluetoothRemoteGATTCharacteristic.js; sourceTree = "<group>"; };
@@ -772,6 +774,7 @@
 			isa = PBXGroup;
 			children = (
 				60D02D802BFC95E000D3C34A /* Project.swift */,
+				60C6286F2FC0957600D23A43 /* Group.swift */,
 				60CF0EAC2BFCD25300CB2A38 /* Value.swift */,
 				60B58BCD2C132ABA00050FE3 /* Chart.swift */,
 			);
@@ -1136,6 +1139,7 @@
 				60030BA02DC9E77C00397E69 /* Coordinates+Extension.swift in Sources */,
 				2F61459422BF761F001C2734 /* EditorViewController.swift in Sources */,
 				2F61458B22BF761F001C2734 /* MatrixView.swift in Sources */,
+				60C628702FC0957600D23A43 /* Group.swift in Sources */,
 				2F2B80A025A1100800A7CCF7 /* PlaygroundCodeSnippetViewController.swift in Sources */,
 				2F1BD99A2674E378006A47F2 /* ProgramsCollectionViewFlowLayout.swift in Sources */,
 				2F08A0E1234AC7400088A8D6 /* EditorAndProgramsContainerViewController.swift in Sources */,

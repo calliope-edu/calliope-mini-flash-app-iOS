@@ -15,7 +15,7 @@ struct Chart: Codable, FetchableRecord, PersistableRecord, DiffAware, Identifiab
 
     var id: Int64?
     var sensorType: CalliopeService?
-    var projectsId: Int64?
+    var groupsId: Int64?
 
     typealias DiffId = String
     var diffId: DiffId {
@@ -26,11 +26,11 @@ struct Chart: Codable, FetchableRecord, PersistableRecord, DiffAware, Identifiab
         a.sensorType == b.sensorType && a.id == b.id
     }
 
-    static func insertChart(sensorType: CalliopeService?, projectsId: Int64?) -> Chart? {
+    static func insertChart(sensorType: CalliopeService?, groupsId: Int64?) -> Chart? {
         var tmpChart: Chart? = nil
         do {
             try DatabaseManager.shared.databaseQueue?.write { db in
-                let chart = Chart(sensorType: sensorType, projectsId: projectsId)
+                let chart = Chart(sensorType: sensorType, groupsId: groupsId)
                 tmpChart = try chart.inserted(db)
                 tmpChart?.id = db.lastInsertedRowID
             }
@@ -55,13 +55,13 @@ struct Chart: Codable, FetchableRecord, PersistableRecord, DiffAware, Identifiab
         }
     }
 
-    static func fetchChartsBy(projectsId: Int64?) -> [Chart] {
+    static func fetchChartsBy(groupsId: Int64?) -> [Chart] {
         var retrievedCharts: [Chart] = []
         do {
             try DatabaseManager.shared.databaseQueue?.read { db in
                 retrievedCharts = try Chart.fetchAll(db)
                 retrievedCharts = retrievedCharts.filter({ chart in
-                    return chart.projectsId == projectsId
+                    return chart.groupsId == groupsId
                 })
             }
         } catch {
@@ -89,8 +89,8 @@ extension Chart {
         try db.create(table: databaseTableName) { t in
             t.autoIncrementedPrimaryKey("id")
             t.column("sensorType", .any)
-            t.column("projectsId", .double).notNull()
-            t.foreignKey(["projectsId"], references: "projects", onDelete: .cascade)
+            t.column("groupsId", .double).notNull()
+            t.foreignKey(["groupsId"], references: "groups", onDelete: .cascade)
         }
         LogNotify.log("project table created")
     }
