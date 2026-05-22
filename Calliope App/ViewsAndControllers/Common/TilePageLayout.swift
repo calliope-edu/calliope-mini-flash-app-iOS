@@ -50,7 +50,7 @@ struct TilePageLayout<ItemType: HasTileItem>: View {
     }
 
     func getStackContent(orientation: Orientation, tileSize: CGSize) -> some View {
-        Group {
+        SwiftUI.Group {
             Tile(tileItem: leftItem.tileItem, size: tileSize).onTapGesture {
                 leftItemOnTap(leftItem)
             }
@@ -124,7 +124,7 @@ struct TileGridView<ItemType: HasTileItem>: View {
             }
         } else {
             ScrollView(orientation == .landscape ? .vertical : .horizontal) {
-                Group {
+                SwiftUI.Group {
                     if orientation == .portrait {
                         LazyHGrid(rows: columns, spacing: 8) {
                             gridContent

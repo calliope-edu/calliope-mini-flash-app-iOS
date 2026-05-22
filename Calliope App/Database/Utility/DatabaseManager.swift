@@ -133,6 +133,29 @@ class DatabaseManager {
             try db.drop(table: "value")
             try db.rename(table: "value_migration", to: "value")
         }
+        
+        migrator.registerMigration("Add groups to schema", migrate: { db in
+            let groupTableExists = try db.tableExists(Group.databaseTableName)
+            if !groupTableExists {
+                return
+            }
+            
+            try db.create(table: "chart_migration") { t in
+                t.autoIncrementedPrimaryKey("id")
+                t.column("sensorType", .any)
+                t.column("groupsId", .integer).notNull()
+                t.foreignKey(["groupsId"], references: "groups", onDelete: .cascade)
+            }
+            
+            let chartRows = try Row.fetchCursor(db, sql: "SELECT * FROM charts")
+            while let row = try chartRows.next() {
+                try db.execute(sql: "INSERT INTO groups (projects_id) VALUES (?)", arguments: [row["projectsId"]])
+                try db.execute(sql: "INSERT INTO chart_migration (id, sensorType, groupsId) VALUES (?, ?, ?)", arguments: [row["id"], row["sensorType"], db.lastInsertedRowID])
+            }
+            
+            try db.drop(table: "charts")
+            try db.rename(table: "chart_migration", to: "charts")
+        })
 
 
         try migrator.migrate(databaseQueue)
@@ -140,10 +163,10 @@ class DatabaseManager {
 
     func createTables(_ dbQueue: DatabaseQueue) throws {
         let tableExist = try dbQueue.read { db in
-            (project: try db.tableExists(Project.databaseTableName), chart: try db.tableExists(Chart.databaseTableName), value: try db.tableExists(Value.databaseTableName))
+            (project: try db.tableExists(Project.databaseTableName), group: try db.tableExists(Group.databaseTableName), chart: try db.tableExists(Chart.databaseTableName), value: try db.tableExists(Value.databaseTableName))
         }
 
-        if tableExist.project && tableExist.chart && tableExist.value {
+        if tableExist.project && tableExist.group && tableExist.chart && tableExist.value {
             return
         }
 
@@ -152,6 +175,10 @@ class DatabaseManager {
             // Create a table for users as an example
             if !tableExist.project {
                 try Project.createTable(in: db)
+            }
+            
+            if !tableExist.group {
+                try Group.createTable(in: db)
             }
 
             if !tableExist.chart {

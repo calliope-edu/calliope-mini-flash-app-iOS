@@ -6,10 +6,12 @@
 //  Copyright © 2024 calliope. All rights reserved.
 //
 
-import GRDB
 import DeepDiff
+import GRDB
 
-struct Chart: Codable, FetchableRecord, PersistableRecord, DiffAware, Identifiable {
+struct Chart: Codable, FetchableRecord, PersistableRecord, DiffAware,
+    Identifiable
+{
 
     static let databaseTableName = "charts"
 
@@ -26,7 +28,9 @@ struct Chart: Codable, FetchableRecord, PersistableRecord, DiffAware, Identifiab
         a.sensorType == b.sensorType && a.id == b.id
     }
 
-    static func insertChart(sensorType: CalliopeService?, groupsId: Int64?) -> Chart? {
+    static func insertChart(sensorType: CalliopeService?, groupsId: Int64?)
+        -> Chart?
+    {
         var tmpChart: Chart? = nil
         do {
             try DatabaseManager.shared.databaseQueue?.write { db in
@@ -40,10 +44,13 @@ struct Chart: Codable, FetchableRecord, PersistableRecord, DiffAware, Identifiab
         DatabaseManager.notifyChange()
         return tmpChart
     }
-    
+
     static func setSensorType(chart: Chart) {
         guard chart.sensorType != nil else {
-            LogNotify.log("Tried to set sensor type, but no sensor type given.", level: LogNotify.LEVEL.ERROR)
+            LogNotify.log(
+                "Tried to set sensor type, but no sensor type given.",
+                level: LogNotify.LEVEL.ERROR
+            )
             return
         }
         do {
@@ -95,4 +102,3 @@ extension Chart {
         LogNotify.log("project table created")
     }
 }
-
