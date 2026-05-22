@@ -59,7 +59,9 @@ public struct Settings {
     static var defaultCalliopeBlocksUrl = "https://calliope.cc/downloads/blocks.hex"
     static var defaultBlocksMiniEditorUrl = "https://blocks.calliope.cc"
     static var defaultMicroPythonUrl = "https://python.calliope.cc?mobile=true"
-    static var defaultCampusUrl = "https://campus.calliope.cc"
+    // Cloudflare Pages preview of the feature/native-proxy branch. Switch
+    // to https://campus.calliope.cc once the proxy ships.
+    static var defaultCampusUrl = "https://feature-native-proxy.calliope-campus.pages.dev"
 
     static var defaultLocalEditorEnabled = false
     static var defaultMakeCodeEnabled = true
@@ -68,7 +70,10 @@ public struct Settings {
     static var defaultArcadeEnabled = true
     static var defaultPlaygroundsEnabled = UIDevice.current.userInterfaceIdiom != .phone
     static var defaultMicroPythonEnabled = UIDevice.current.userInterfaceIdiom != .phone
-    static var defaultCampusEnabled = UIDevice.current.userInterfaceIdiom != .phone
+    // Campus uses the native-proxy bridge for BLE/flash, so it works on
+    // iPhone too — the legacy iPad-only gate that other editors keep
+    // doesn't apply here.
+    static var defaultCampusEnabled = true
     
     
     static var defaultRestoreLastMatrixEnabled = true

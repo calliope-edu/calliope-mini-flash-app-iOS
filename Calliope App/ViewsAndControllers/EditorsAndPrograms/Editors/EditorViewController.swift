@@ -324,8 +324,13 @@ final class EditorViewController: UIViewController {
 
     var webview: WKWebView!  //webviews are buggy and cannot be placed via interface builder
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
-    
+
     var editor: Editor?
+    /// Native-proxy bridge for the Calliope Campus editor. Non-nil only
+    /// when `editor is CampusEditor` — keeps the legacy editors on the
+    /// download-capture path and routes Campus's BLE/flash/GATT through
+    /// the WKScriptMessageHandler.
+    private var proxyMessageHandler: CalliopeProxyMessageHandler?
     private var latestDownloadedTargetFile: URL?
     var documentsPath: URL {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -386,6 +391,16 @@ final class EditorViewController: UIViewController {
         webview = WKWebView(frame: self.view.bounds, configuration: configuration)
         webview.translatesAutoresizingMaskIntoConstraints = false
 
+        // For the Calliope Campus editor, register the native-proxy
+        // bridge as the `calliope` script-message handler BEFORE the page
+        // loads. The widget's detection probe (`window.webkit?.messageHandlers
+        // ?.calliope`) needs this present at script start.
+        if editor is CampusEditor {
+            let handler = CalliopeProxyMessageHandler(webView: webview)
+            self.proxyMessageHandler = handler
+            controller.add(handler, name: CalliopeProxyMessageHandler.handlerName)
+        }
+
         webview.navigationDelegate = self
         webview.uiDelegate = self
         webview.backgroundColor = Styles.colorWhite
@@ -436,6 +451,17 @@ final class EditorViewController: UIViewController {
         self.tabBarController?.tabBar.isHidden = false
 
         MatrixConnectionViewController.instance.restartFromBLEConnectionDrop()
+
+        // Tear down the proxy bridge — WKUserContentController retains
+        // script-message handlers strongly, so without an explicit remove
+        // the handler (and its captured BLE notify subscriptions) would
+        // outlive the editor.
+        if proxyMessageHandler != nil {
+            webview?.configuration.userContentController.removeScriptMessageHandler(
+                forName: CalliopeProxyMessageHandler.handlerName
+            )
+            proxyMessageHandler = nil
+        }
 
         // Re-enable navigation gestures
         enableNavigationGestures()
