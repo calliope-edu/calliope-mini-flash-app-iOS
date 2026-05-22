@@ -103,6 +103,21 @@ struct MapView: View {
 
 struct ChartView: View {
     @ObservedObject var viewModel: ChartCellViewModel
+    @State private var currentScale: CGFloat = 1.0
+    @GestureState private var gestureScale: CGFloat = 1.0
+    var displayedRange: ClosedRange<Double> {
+        let minimumX = viewModel.minimumX ?? 0
+        let maximumX = viewModel.maximumX ?? 1
+
+        let totalRangeWidth = maximumX - minimumX
+        var displayedRangeWidth =
+            totalRangeWidth / (gestureScale * currentScale)
+
+        let rangeWidthDifference = totalRangeWidth - displayedRangeWidth
+        let displayedMinimumX = minimumX + rangeWidthDifference / 2
+        let displayedMaximumX = maximumX - rangeWidthDifference / 2
+        return displayedMinimumX...displayedMaximumX
+    }
 
     var body: some View {
         VStack {
@@ -151,6 +166,18 @@ struct ChartView: View {
                         }
                     }
                 }
+                .chartXScale(
+                    domain: displayedRange
+                )
+                .gesture(
+                    MagnificationGesture()
+                        .updating($gestureScale) { value, state, _ in
+                            state = value
+                        }
+                        .onEnded { value in
+                                currentScale *= value
+                        }
+                )
                 .frame(minHeight: 250)
                 .background(Color.white)
 

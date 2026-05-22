@@ -105,6 +105,26 @@ class ChartCellViewModel: ObservableObject, Identifiable {
         if selectedAxis == nil || selectedAxis!.name == "all" { return nil }  // only calculate if the displayed data has only one axis
         return displayedYs.last
     }
+    
+    var minimumX: Double? {
+        displayedChartData.map{ $0.x }.min()
+    }
+    
+    var maximumX: Double? {
+        displayedChartData.map{ $0.x }.max()
+    }
+    
+    var minimumXDistance: Double? {
+        let sortedXs = displayedChartData.map{ $0.x }.sorted()
+        var minimumDistance = Double.infinity
+        for i in 0...(sortedXs.count-2) {
+            let distance = sortedXs[i+1] - sortedXs[i]
+            if(distance < minimumDistance){
+                minimumDistance = distance
+            }
+        }
+        return minimumDistance
+    }
 
     private var calliopeConnectedSubcription: NSObjectProtocol!
     private var calliopeDisconnectedSubscription: NSObjectProtocol!
