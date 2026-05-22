@@ -38,20 +38,23 @@ struct IdentifiableLocation: Identifiable, Hashable {
     }
 }
 
+// TODO: ChartCellViewControlStructure
+
 class ChartCellViewModel: ObservableObject, Identifiable {
     var chart: Chart
-    @Published var sensorOptions: [DropDownOption<Sensor>] = []
-    @Published var selectedSensor: DropDownOption<Sensor>?
     let dataController: DataController
-    var baseTime: Double?
-    @Published var isRecording: Bool = false
-    @Published var axisOptions: [DropDownOption<Bool?>] = []
-    @Published var selectedAxis: DropDownOption<Bool?>?
     @Published var data: [String: [DataPoint]] = [:]
     @Published var uniqueLocations: Set<IdentifiableLocation> = Set<
         IdentifiableLocation
     >()
     @Published var region: MKCoordinateRegion = getDefaultRegion()
+    @Published var sensorOptions: [DropDownOption<Sensor>] = []
+    @Published var selectedSensor: DropDownOption<Sensor>?
+    @Published var isRecording: Bool = false
+    @Published var axisOptions: [DropDownOption<Bool?>] = []
+    @Published var selectedAxis: DropDownOption<Bool?>?
+    var baseTime: Double?
+
 
     var flatChartData: [ChartDataPoint] {
         return data.flatMap {

@@ -104,83 +104,131 @@ struct MapView: View {
 struct ChartView: View {
     @ObservedObject var viewModel: ChartCellViewModel
     @State private var currentScale: CGFloat = 1.0
+    @State private var currentOffset: CGSize = .zero
     @GestureState private var gestureScale: CGFloat = 1.0
-    var displayedRange: ClosedRange<Double> {
-        let minimumX = viewModel.minimumX ?? 0
-        let maximumX = viewModel.maximumX ?? 1
+    @GestureState private var gestureOffset: CGSize = .zero
+    @State var displayedRange: ClosedRange<Double>?
 
-        let totalRangeWidth = maximumX - minimumX
-        var displayedRangeWidth =
-            totalRangeWidth / (gestureScale * currentScale)
-
-        let rangeWidthDifference = totalRangeWidth - displayedRangeWidth
-        let displayedMinimumX = minimumX + rangeWidthDifference / 2
-        let displayedMaximumX = maximumX - rangeWidthDifference / 2
-        return displayedMinimumX...displayedMaximumX
+    var zoom: CGFloat {
+        return currentScale * gestureScale
     }
 
+    var offset: Double {
+        return currentOffset.width + gestureOffset.width
+    }
+    
+    var minimumX: Double {
+        return viewModel.minimumX ?? 0
+    }
+    
+    var maximumX: Double {
+        return viewModel.maximumX ?? 1
+    }
+    
+    var totalRangeWidth: Double {
+        return maximumX - minimumX
+    }
+
+    func calculateDisplayedRange(graphWidth: Double) {
+        let displayedMinimumX = offset - totalRangeWidth * zoom / 2
+        let displayedMaximumX = offset + totalRangeWidth * zoom / 2
+        displayedRange = displayedMinimumX...displayedMaximumX
+    }
+    
     var body: some View {
         VStack {
-            Charts.Chart {
-                ForEach(viewModel.displayedChartData) { dataPoint in
-                    let xValue: PlottableValue = .value("Time", dataPoint.x)
-                    let yValue: PlottableValue = .value(
-                        dataPoint.series,
-                        dataPoint.y
-                    )
-                    let seriesValue: PlottableValue = .value(
-                        "Axis",
-                        dataPoint.series
-                    )
+            GeometryReader { geo in
+                Charts.Chart {
+                    ForEach(viewModel.displayedChartData) { dataPoint in
+                        let xValue: PlottableValue = .value("Time", dataPoint.x)
+                        let yValue: PlottableValue = .value(
+                            dataPoint.series,
+                            dataPoint.y
+                        )
+                        let seriesValue: PlottableValue = .value(
+                            "Axis",
+                            dataPoint.series
+                        )
 
-                    LineMark(
-                        x: xValue,
-                        y: yValue,
-                        series: seriesValue
+                        LineMark(
+                            x: xValue,
+                            y: yValue,
+                            series: seriesValue
+                        )
+                        .foregroundStyle(
+                            viewModel.getColorForAxis(axis: dataPoint.series)
+                        )
+                    }
+                }.chartLegend(.hidden)
+                    .chartYAxis {
+                        AxisMarks(position: .leading)  // puts the y axis on the left side of the view
+                    }
+                    .chartYScale(
+                        domain: (viewModel.absoluteMinimum ?? 0)...(viewModel
+                            .absoluteMaximum ?? 1)
                     )
-                    .foregroundStyle(
-                        viewModel.getColorForAxis(axis: dataPoint.series)
-                    )
-                }
-            }.chartLegend(.hidden)
-                .chartYAxis {
-                    AxisMarks(position: .leading)  // puts the y axis on the left side of the view
-                }
-                .chartYScale(
-                    domain: (viewModel.absoluteMinimum ?? 0)...(viewModel
-                        .absoluteMaximum ?? 1)
-                )
-                .chartXAxis {
-                    AxisMarks { value in
-                        AxisGridLine()
-                        AxisValueLabel {
-                            if let timestamp = value.as(Double.self) {
-                                Text(
-                                    TimeAxisValueFormatter.stringForValue(
-                                        baseTime: viewModel.baseTime
-                                            ?? 0,
-                                        timestamp
+                    .chartXAxis {
+                        AxisMarks { value in
+                            AxisGridLine()
+                            AxisValueLabel {
+                                if let timestamp = value.as(Double.self) {
+                                    Text(
+                                        TimeAxisValueFormatter.stringForValue(
+                                            baseTime: viewModel.baseTime
+                                                ?? 0,
+                                            timestamp
+                                        )
                                     )
-                                )
+                                }
                             }
                         }
                     }
-                }
-                .chartXScale(
-                    domain: displayedRange
-                )
-                .gesture(
-                    MagnificationGesture()
-                        .updating($gestureScale) { value, state, _ in
-                            state = value
-                        }
-                        .onEnded { value in
-                                currentScale *= value
-                        }
-                )
-                .frame(minHeight: 250)
-                .background(Color.white)
+                    .chartXScale(
+                        domain: displayedRange ?? (viewModel.minimumX ?? 0)...(viewModel.maximumX ?? 1)
+                    )
+                    .gesture(
+                        SimultaneousGesture(
+                            MagnificationGesture()
+                                .updating($gestureScale) { value, state, _ in
+                                    state = 1 / value
+                                    calculateDisplayedRange(
+                                        graphWidth: geo.size.width
+                                    )
+                                }
+                                .onEnded { value in
+                                    currentScale /= value
+                                    currentScale = max(0.001, min(1.5, currentScale))
+                                    calculateDisplayedRange(
+                                        graphWidth: geo.size.width
+                                    )
+                                },
+                            DragGesture()
+                                .updating($gestureOffset) { value, state, _ in
+                                    state.width = -value.translation.width * zoom * (totalRangeWidth / geo.size.width)
+                                    calculateDisplayedRange(
+                                        graphWidth: geo.size.width
+                                    )
+                                }
 
+                                .onEnded { value in
+                                    currentOffset.width -=
+                                        value.translation.width * zoom * (totalRangeWidth / geo.size.width)
+                                    currentOffset.width = max(minimumX, min(maximumX, currentOffset.width))
+                                    calculateDisplayedRange(
+                                        graphWidth: geo.size.width
+                                    )
+                                }
+
+                        )
+                    )
+                    .onAppear {
+                        currentOffset.width = totalRangeWidth / 2 // ensures that it zooms around the center in the beginning
+                    }
+                    .frame(minHeight: 250)
+                    .background(Color.white)
+
+            }
+            .frame(minHeight: 250)
         }
         .padding()  // space between chart and container edge
         .background(Color.white)
