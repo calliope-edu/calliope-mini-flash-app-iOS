@@ -73,7 +73,7 @@ class ChartCellViewModel: ObservableObject, Identifiable {
                 || selectedAxis!.name == $0.series
         }
     }
-    
+
     var displayedYs: [Double] {
         return displayedChartData.map { $0.y }
     }
@@ -81,31 +81,31 @@ class ChartCellViewModel: ObservableObject, Identifiable {
     var dataYs: [Double] {
         return flatChartData.map { $0.y }
     }
-    
+
     var dislpayedMinimum: Double? {
         return displayedYs.min()
     }
     var absoluteMinimum: Double? {
         return dataYs.min()
     }
-    
+
     var dislpayedMaximum: Double? {
         return displayedYs.max()
     }
     var absoluteMaximum: Double? {
         return dataYs.max()
     }
-    
+
     var displayedAverage: Double? {
-        if selectedAxis == nil || selectedAxis!.name == "all" { return nil } // only calculate if the displayed data has only one axis
+        if selectedAxis == nil || selectedAxis!.name == "all" { return nil }  // only calculate if the displayed data has only one axis
         return calculateAverageMetric(values: displayedYs)
     }
-    
+
     var displayedCurrent: Double? {
-        if selectedAxis == nil || selectedAxis!.name == "all" { return nil } // only calculate if the displayed data has only one axis
+        if selectedAxis == nil || selectedAxis!.name == "all" { return nil }  // only calculate if the displayed data has only one axis
         return displayedYs.last
     }
-    
+
     private var calliopeConnectedSubcription: NSObjectProtocol!
     private var calliopeDisconnectedSubscription: NSObjectProtocol!
 
@@ -121,7 +121,6 @@ class ChartCellViewModel: ObservableObject, Identifiable {
         self.openFileNameDialog = openFileNameDialog
         dataController = DataController()
         loadDatabaseDataIntoChart(chart)
-        updateAvailableSensors()
         updateAvailableAxis()
         calculateCenterRegion()
         addNotificationSubscriptions()
@@ -336,9 +335,37 @@ class ChartCellViewModel: ObservableObject, Identifiable {
                 }
             }
         }
-        if data.isEmpty { // allow to choose a new sensor,if no data has been recorded yet
+        if data.isEmpty {  // allow to choose a new sensor,if no data has been recorded yet
             updateAvailableSensors()
+        } else {
+            if chart.sensorType == nil {
+                setUnkownSensor()
+            }
+            let sensor = SensorUtility.serviceSensorMap[chart.sensorType!]
+            if sensor == nil {
+                setUnkownSensor()
+            }
+            let dropdownOption = DropDownOption<Sensor>(
+                name: sensor!.name,
+                object: sensor!
+            )
+            sensorOptions = [dropdownOption]
+            selectedSensor = dropdownOption
         }
+    }
+
+    func setUnkownSensor() {
+        let sensor = Sensor(
+            calliopeService: CalliopeService.empty,
+            name: "Unkown Sensor",
+            numOfAxis: 0
+        )
+        let dropDownOption = DropDownOption<Sensor>(
+            name: sensor.name,
+            object: sensor
+        )
+        sensorOptions = [dropDownOption]
+        selectedSensor = dropDownOption
     }
 
     fileprivate func addNotificationSubscriptions() {
