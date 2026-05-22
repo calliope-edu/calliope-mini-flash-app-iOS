@@ -11,36 +11,17 @@ import Foundation
 import MapKit
 import SwiftUI
 
-struct ChartCellView: View {
+struct GroupView: View {
     let onRemoveTapped: () -> Void
-    @ObservedObject var chartViewModel: ChartCellViewModel
+    @ObservedObject var viewModel: GroupViewModel
 
     var body: some View {
         VStack {
-            ChartHeaderView(
-                viewModel: chartViewModel,
-                onRemoveTapped: onRemoveTapped
-            )
-
-            MetricsRowView(viewModel: chartViewModel)
-
-            ChartView(viewModel: chartViewModel)
-
-            HStack {
-                Spacer()
-                IconButton(
-                    imageSystemName: chartViewModel.isRecording
-                        ? "pause.circle" : "play.circle",
-                    action: chartViewModel.toggleRecording,
-                    rotation: 0,
-                    iconColor: chartViewModel.selectedSensor == nil
-                        ? Color(.gray) : Color(.white),
-                    backgroundColor: Color(.white).opacity(0)
-                ).disabled(chartViewModel.selectedSensor == nil)
-                Spacer()
+            ForEach(viewModel.chartViewModel) { chartViewModel in
+                ChartView(viewModel: chartViewModel, onRemoveTapped: onRemoveTapped)
             }
-
-            MapView(viewModel: chartViewModel)
+            
+            MapView(viewModel: viewModel)
         }.padding()
             .background(
                 RoundedRectangle(cornerRadius: 16)
@@ -51,8 +32,40 @@ struct ChartCellView: View {
     }
 }
 
+struct ChartView: View {
+    @ObservedObject var viewModel: ChartViewModel
+    let onRemoveTapped: () -> Void
+    
+    var body: some View {
+        VStack {
+            ChartHeaderView(
+                viewModel: viewModel,
+                onRemoveTapped: onRemoveTapped
+            )
+
+            MetricsRowView(viewModel: viewModel)
+
+            LineChart(viewModel: viewModel)
+
+            HStack {
+                Spacer()
+                IconButton(
+                    imageSystemName: viewModel.isRecording
+                        ? "pause.circle" : "play.circle",
+                    action: viewModel.toggleRecording,
+                    rotation: 0,
+                    iconColor: viewModel.selectedSensor == nil
+                        ? Color(.gray) : Color(.white),
+                    backgroundColor: Color(.white).opacity(0)
+                ).disabled(viewModel.selectedSensor == nil)
+                Spacer()
+            }
+        }
+    }
+}
+
 struct MapView: View {
-    @ObservedObject var viewModel: ChartCellViewModel
+    @ObservedObject var viewModel: GroupViewModel
 
     private var region: Binding<MKCoordinateRegion> {
         Binding {
@@ -73,6 +86,9 @@ struct MapView: View {
                 MapAnnotation(coordinate: place.location) {
                     Circle().frame(width: 20, height: 20)
                 }
+            }
+            .onAppear{
+                viewModel.calculateCenterRegion()
             }
             .frame(height: 300)
             .cornerRadius(12)
@@ -101,8 +117,8 @@ struct MapView: View {
     }
 }
 
-struct ChartView: View {
-    @ObservedObject var viewModel: ChartCellViewModel
+struct LineChart: View {
+    @ObservedObject var viewModel: ChartViewModel
     @State private var currentScale: CGFloat = 1.0
     @State private var currentOffset: CGSize = .zero
     @GestureState private var gestureScale: CGFloat = 1.0
@@ -266,7 +282,7 @@ struct ChartView: View {
 }
 
 struct MetricsRowView: View {
-    @ObservedObject var viewModel: ChartCellViewModel
+    @ObservedObject var viewModel: ChartViewModel
 
     var body: some View {
         HStack {
@@ -303,7 +319,7 @@ struct ChartDataPoint: Identifiable {
 }
 
 struct ChartHeaderView: View {
-    @ObservedObject var viewModel: ChartCellViewModel
+    @ObservedObject var viewModel: ChartViewModel
     var onRemoveTapped: () -> Void
     @State var showMenu = false
 

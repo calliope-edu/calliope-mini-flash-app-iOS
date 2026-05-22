@@ -42,23 +42,12 @@ struct Group: Codable, FetchableRecord, PersistableRecord, DiffAware {
         return tempGroup
     }
 
-    static func fetchGroups() -> [Group] {
+    static func fetchGroupsBy(projectId: Int64) -> [Group] {
         var retrievedGroups: [Group] = []
         do {
             try DatabaseManager.shared.databaseQueue?.read { db in
                 retrievedGroups = try Group.fetchAll(db)
-            }
-        } catch {
-            LogNotify.log("Error fetching groups from database: \(error)")
-        }
-        return retrievedGroups
-    }
-
-    static func fetchGroup(projectId: Int) -> Group? {
-        var retrievedGroups: Group?
-        do {
-            try DatabaseManager.shared.databaseQueue?.read { db in
-                retrievedGroups = try Group.fetchOne(db, key: projectId)
+                retrievedGroups = retrievedGroups.filter{ $0.projectsId != nil && $0.projectsId! == projectId}
             }
         } catch {
             LogNotify.log("Error fetching group from database: \(error)")

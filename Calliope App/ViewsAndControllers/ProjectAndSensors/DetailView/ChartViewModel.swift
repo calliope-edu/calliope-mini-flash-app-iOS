@@ -40,7 +40,7 @@ struct IdentifiableLocation: Identifiable, Hashable {
 
 // TODO: ChartCellViewControlStructure
 
-class ChartCellViewModel: ObservableObject, Identifiable {
+class ChartViewModel: ObservableObject, Identifiable {
     var chart: Chart
     let dataController: DataController
     @Published var data: [String: [DataPoint]] = [:]
@@ -132,7 +132,6 @@ class ChartCellViewModel: ObservableObject, Identifiable {
     private var calliopeConnectedSubcription: NSObjectProtocol!
     private var calliopeDisconnectedSubscription: NSObjectProtocol!
 
-    @Published var fileShareLink: URL?
     var openFileNameDialog: (@escaping (_ filename: String) -> Void) -> Void
 
     init(
@@ -155,7 +154,7 @@ class ChartCellViewModel: ObservableObject, Identifiable {
 
     func calculateCenterRegion() {
         if uniqueLocations.isEmpty {
-            region = ChartCellViewModel.getDefaultRegion()
+            region = ChartViewModel.getDefaultRegion()
             return
         }
 
@@ -309,7 +308,6 @@ class ChartCellViewModel: ObservableObject, Identifiable {
         isRecording = false
     }
 
-    //TODO: Add button to execute this
     func exportAsCSV() {
         openFileNameDialog({ filename in
             let string = CSVHandler.convertToCSVString(

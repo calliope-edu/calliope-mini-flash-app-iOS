@@ -42,8 +42,8 @@ struct ProjectView: View {
             
             ScrollView {
                 VStack {
-                    ForEach(projectViewController.chartViewModels) { chartViewModel in
-                        ChartCellView(onRemoveTapped: {projectViewController.deleteChart(chart: chartViewModel.chart)}, chartViewModel: chartViewModel)
+                    ForEach(projectViewController.groupViewModels) { groupViewModel in
+                        GroupView(onRemoveTapped: {/* TODO: Reimplement */}, viewModel: groupViewModel)
                     }
                     IconButton(imageSystemName: "plus.circle", action: {projectViewController.addNewSensor()}, rotation: 0, iconColor: Color(.white), backgroundColor: projectViewController.addChartButtonEnabled ? Color("calliope-turqoise") : Color(.gray)).disabled(!projectViewController.addChartButtonEnabled)
                 }

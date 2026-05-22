@@ -16,16 +16,16 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
     
     @Published var project: Project?
     @Published var addChartButtonEnabled = false
-    @Published var charts: [Chart] = []
-    var chartViewModels: [ChartCellViewModel] = []
+    @Published var groups: [Group] = []
+    var groupViewModels: [GroupViewModel] = []
     
-    func loadCharts() {
+    func loadGroups() {
         guard project != nil else {
             LogNotify.log("Project was not set. This is not supposed to happen.", level: LogNotify.LEVEL.ERROR)
             return
         }
-        charts = Chart.fetchChartsBy(groupsId: project!.id)
-        charts.forEach{ chartViewModels.append(ChartCellViewModel(chart: $0, openFileNameDialog: openFileNameDialog))}
+        groups = Group.fetchGroupsBy(projectId: project!.id!)
+        groups.forEach{ groupViewModels.append(GroupViewModel(group: $0, openFileNameDialog: openFileNameDialog))}
     }
     
     private var calliopeConnectedSubcription: NSObjectProtocol!
@@ -45,7 +45,7 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
             LogNotify.log("Project was not set. This is not supposed to happen.", level: LogNotify.LEVEL.ERROR)
             return nil
         }
-        loadCharts()
+        loadGroups()
         return UIHostingController(coder: coder, rootView: ProjectView(projectViewController: self))
     }
     
@@ -83,9 +83,10 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
         
         addChartButtonEnabled = true
     }
-    
+   
+    // TODO: Reimplement
     func addNewSensor() {
-        guard project != nil else {
+        /*guard project != nil else {
             LogNotify.log("Project was not set. This is not supposed to happen.", level: LogNotify.LEVEL.ERROR)
             return
         }
@@ -94,19 +95,20 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
         }
         withAnimation(nil) { // disables an unideal animation of the add button
             charts.append(chart)
-            chartViewModels.append(ChartCellViewModel(chart: chart, openFileNameDialog: openFileNameDialog))
-        }
+            chartViewModels.append(ChartViewModel(chart: chart, openFileNameDialog: openFileNameDialog))
+        }*/
     }
-    
+   
+    // TODO: Reimplement
     func deleteChart(chart: Chart) {
-        guard project != nil else {
+        /*guard project != nil else {
             LogNotify.log("Project was not set. This is not supposed to happen.", level: LogNotify.LEVEL.ERROR)
             return
         }
         Chart.deleteChart(id: chart.id)
         charts = Chart.fetchChartsBy(groupsId: project!.id) // Update charts list after deleting chart
         chartViewModels.removeAll()
-        charts.forEach{ chartViewModels.append(ChartCellViewModel(chart: $0, openFileNameDialog: openFileNameDialog))}
+        charts.forEach{ chartViewModels.append(ChartViewModel(chart: $0, openFileNameDialog: openFileNameDialog))}*/
     }
     
     func renameProject() {
@@ -168,7 +170,8 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        chartViewModels.forEach{ $0.stopRecording() }
+        // TODO: Use this in an appropriate place
+        // chartViewModels.forEach{ $0.stopRecording() }
     }
     
 }
