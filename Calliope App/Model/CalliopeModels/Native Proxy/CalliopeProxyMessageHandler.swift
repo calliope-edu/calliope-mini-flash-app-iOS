@@ -37,9 +37,27 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
     /// progress/state delegate methods below.
     private var pendingFlashReplyId: String?
 
+    /// Tracks whether the current flash is going through the partial-flash
+    /// path or full Nordic DFU. Starts as "partial" (matches the legacy
+    /// upload() default of trying partial first) and flips to "dfu" the
+    /// moment we either explicitly request full DFU (blocks-runtime
+    /// detected) or NordicDFU's state machine reports a DFU-only phase.
+    /// Forwarded to the widget as `partial: true/false` on flashProgress
+    /// events so the UI labels "Schnelles Flashen" vs "Vollständiges
+    /// Flashen" correctly.
+    private var currentFlashMode: String = "partial"
+
     /// Holds onto self while a flash is in flight. NordicDFU's delegates
     /// are weak; without this, ARC would tear us down mid-flash.
     private static var inFlightFlasher: CalliopeProxyMessageHandler?
+
+    /// MbitMore service — pxt-blocks-runtime exposes this; pxt-calliope
+    /// doesn't (the newer CODAL stub may register the service shell but
+    /// leaves STATE all zeros).
+    private static let mbitMoreServiceUUID = CBUUID(string: "0b50f3e4-607f-4151-9091-7d008d6ffc5c")
+    /// MbitMore STATE characteristic — non-zero data confirms blocks-runtime
+    /// is actively running (it fills the buffer with sensor data).
+    private static let mbitMoreStateUUID = CBUUID(string: "0b500101-607f-4151-9091-7d008d6ffc5c")
 
     init(webView: WKWebView) {
         self.webView = webView
@@ -295,15 +313,23 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
             with: "-",
             options: .regularExpression
         )
+        let argForceFullDfu = (args["forceFullDfu"] as? Bool) ?? false
 
         // Persist hex to a temp file so we can hand it to the existing
         // upload pipeline as a Hex (HexFile expects a URL).
+        //
+        // Intel HEX is pure ASCII (0-9, A-F, ':', \r, \n). UTF-8 is byte-
+        // identical for that range, but doesn't throw if a stray BOM or
+        // non-ASCII char slips in — the partial-flash service searches
+        // for PXT_MAGIC as a text substring, so silent corruption would
+        // skip the partial-flash path entirely. UTF-8 matches the Android
+        // bridge's encoding choice for the same reason.
         let tmpDir = FileManager.default.temporaryDirectory
             .appendingPathComponent("bridge-flash", isDirectory: true)
         try? FileManager.default.createDirectory(at: tmpDir, withIntermediateDirectories: true)
         let tmpURL = tmpDir.appendingPathComponent("\(safeName).hex")
         do {
-            try hex.write(to: tmpURL, atomically: true, encoding: .ascii)
+            try hex.write(to: tmpURL, atomically: true, encoding: .utf8)
         } catch {
             replyError(id: id, message: "could not write hex: \(error.localizedDescription)")
             return
@@ -325,8 +351,41 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
         let hexFile = HexFile(url: tmpURL, name: safeName, date: Date())
         pendingFlashReplyId = id
         Self.inFlightFlasher = self
-        emitFlashProgress(phase: "prepare", progress: 0)
 
+        // Probe MbitMore STATE before flashing. If the device is running
+        // pxt-blocks-runtime, the DAL hash matches pxt-calliope (both share
+        // the underlying CODAL DAL) but the PXT runtime in the gap between
+        // DAL region and MakeCode region differs — partial flash would
+        // only update the user-program area and leave the runtime intact,
+        // producing a broken hybrid. Same protocol blind spot as Android.
+        // Detect via STATE content (non-zero = real blocks-runtime, not
+        // just the CODAL stub) and force full DFU on hit.
+        probeBlocksRuntime(on: cal) { [weak self] isBlocksRuntime in
+            guard let self = self else { return }
+            let forceFullDfu = argForceFullDfu || isBlocksRuntime
+            if isBlocksRuntime && !argForceFullDfu {
+                self.sendEvent(kind: "log", data: [
+                    "direction": "info",
+                    "text": "Blocks-Runtime erkannt — vollständiger DFU statt partial-flash",
+                ])
+            }
+            self.currentFlashMode = forceFullDfu ? "dfu" : "partial"
+            self.emitFlashProgress(phase: "prepare", progress: 0)
+            self.beginFlash(
+                id: id,
+                cal: cal,
+                hexFile: hexFile,
+                forceFullDfu: forceFullDfu
+            )
+        }
+    }
+
+    /// Continues handleFlash after the blocks-runtime probe returns.
+    /// Wires the partial-flash disconnect callback, sets the override
+    /// flag on the connected calliope (consumed by upload), and calls
+    /// upload. Split from handleFlash so the async probe completion can
+    /// inject `forceFullDfu` before we touch the BLE stack.
+    private func beginFlash(id: String, cal: BLECalliope, hexFile: HexFile, forceFullDfu: Bool) {
         // Mirror the legacy FirmwareUpload.upload setup so partial-flash
         // works identically here: enable DFU-mode on the connection view,
         // and forward the partial-flash mid-flow disconnect request to
@@ -337,6 +396,7 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
             flashable.requestDisconnectCallback = {
                 MatrixConnectionViewController.instance?.connector.disconnectForReboot()
             }
+            flashable.forceFullDfuForNextUpload = forceFullDfu
         }
 
         do {
@@ -346,6 +406,45 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
             Self.inFlightFlasher = nil
             MatrixConnectionViewController.instance?.enableDfuMode(mode: false)
             replyError(id: id, message: "upload failed: \(error.localizedDescription)")
+        }
+    }
+
+    /// Probe MbitMore STATE on the connected calliope and call `onResult`
+    /// with `true` if the device is running pxt-blocks-runtime (STATE
+    /// returns non-zero bytes), `false` otherwise (zeros, characteristic
+    /// missing, read failed, or 1.5 s timeout). Mirrors the widget's
+    /// `program-type.ts probeBle` heuristic.
+    private func probeBlocksRuntime(on cal: BLECalliope, onResult: @escaping (Bool) -> Void) {
+        guard let ch = findCharacteristic(
+            on: cal.peripheral,
+            service: Self.mbitMoreServiceUUID,
+            characteristic: Self.mbitMoreStateUUID
+        ) else {
+            onResult(false)
+            return
+        }
+        // Latch the result so neither the read callback nor the timeout
+        // can fire it twice (e.g. a slow read that returns just after
+        // the timer fired).
+        var settled = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            if !settled {
+                settled = true
+                onResult(false)
+            }
+        }
+        cal.read(characteristic: ch) { result in
+            DispatchQueue.main.async {
+                if settled { return }
+                settled = true
+                switch result {
+                case .success(let data):
+                    let anyNonZero = data.contains { $0 != 0 }
+                    onResult(anyNonZero)
+                case .failure:
+                    onResult(false)
+                }
+            }
         }
     }
 
@@ -416,6 +515,7 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
             "transport": "ble",
             "phase": phase,
             "progress": progress,
+            "partial": currentFlashMode == "partial",
         ])
     }
 
@@ -471,6 +571,12 @@ extension CalliopeProxyMessageHandler: DFUProgressDelegate {
 
 extension CalliopeProxyMessageHandler: DFUServiceDelegate {
     func dfuStateDidChange(to state: DFUState) {
+        // Any NordicDFU state callback means we're on the full-DFU path —
+        // partial flash never goes through NordicDFU. Flip the mode flag
+        // so subsequent flashProgress events advertise `partial: false`.
+        // (For partial flash, progress comes from FlashableBLECalliope's
+        // own partial-flash machinery, not from DFUServiceDelegate.)
+        currentFlashMode = "dfu"
         switch state {
         case .connecting, .starting:
             emitFlashProgress(phase: "prepare", progress: 0)

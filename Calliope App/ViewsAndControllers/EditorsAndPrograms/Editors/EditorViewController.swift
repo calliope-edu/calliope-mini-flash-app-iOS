@@ -395,10 +395,27 @@ final class EditorViewController: UIViewController {
         // bridge as the `calliope` script-message handler BEFORE the page
         // loads. The widget's detection probe (`window.webkit?.messageHandlers
         // ?.calliope`) needs this present at script start.
+        //
+        // Important: use `webview.configuration.userContentController` —
+        // the LIVE controller — not the local `controller` variable.
+        // WKWebView makes its own copy of WKWebViewConfiguration when
+        // created (Apple docs), so modifying the original-config's
+        // controller after WKWebView init has NO EFFECT on the actual
+        // running webview. The local-controller path was the bug behind
+        // the widget showing "Browser nicht unterstützt": the handler
+        // got attached to an unused controller and the JS never saw
+        // `window.webkit.messageHandlers.calliope`, so isNativeMode()
+        // returned false and the widget fell back to web-mode
+        // (where iOS WKWebView has neither WebUSB nor Web Bluetooth →
+        // status = unsupported). Same pattern used by the working
+        // WBWebView reference impl.
         if editor is CampusEditor {
             let handler = CalliopeProxyMessageHandler(webView: webview)
             self.proxyMessageHandler = handler
-            controller.add(handler, name: CalliopeProxyMessageHandler.handlerName)
+            webview.configuration.userContentController.add(
+                handler,
+                name: CalliopeProxyMessageHandler.handlerName
+            )
         }
 
         webview.navigationDelegate = self
