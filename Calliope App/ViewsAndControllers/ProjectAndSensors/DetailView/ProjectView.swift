@@ -21,27 +21,8 @@ struct ProjectView: View {
                 Text(viewModel.project!.name)
                     .foregroundColor(.white)
                     .font(.title)
-
                 Spacer()
-
-                IconButton(
-                    imageSystemName: "ellipsis.circle",
-                    action: { showMenu = true },
-                    rotation: 90,
-                    iconColor: Color(.white),
-                    backgroundColor: Color(.white).opacity(0)
-                )
-                .confirmationDialog(
-                    "",
-                    isPresented: $showMenu,
-                    titleVisibility: .visible
-                ) {
-                    Button("Delete", role: .destructive) {
-                        viewModel.deleteProject()
-                    }
-                    Button("Export (CSV)") { viewModel.exportToCSVFile() }
-                    Button("Rename") { viewModel.renameProject() }
-                }
+                projectSettingsButton
             }
             .padding()
             .background(
@@ -55,18 +36,44 @@ struct ProjectView: View {
                     ForEach(viewModel.groupViewModels) { groupViewModel in
                         GroupView(viewModel: groupViewModel)
                     }
-                    IconButton(
-                        imageSystemName: "plus.circle",
-                        action: { /* TODO: Implement adding a group */  },
-                        rotation: 0,
-                        iconColor: Color(.white),
-                        backgroundColor: viewModel.addGroupButton
-                            ? Color("calliope-turqoise") : Color(.gray)
-                    ).disabled(!viewModel.addGroupButton)
+                    addGroupButton
                 }
             }
         }.frame(maxHeight: .infinity, alignment: .top)
             .padding(.top, 20)
+    }
+
+    var addGroupButton: some View {
+        IconButton(
+            imageSystemName: "plus.circle",
+            action: viewModel.addGroup,
+            rotation: 0,
+            iconColor: Color(.white),
+            backgroundColor: viewModel.addGroupButton
+                ? Color("calliope-turqoise") : Color(.gray)
+        ).disabled(!viewModel.addGroupButton)
+
+    }
+
+    var projectSettingsButton: some View {
+        IconButton(
+            imageSystemName: "ellipsis.circle",
+            action: { showMenu = true },
+            rotation: 90,
+            iconColor: Color(.white),
+            backgroundColor: Color(.white).opacity(0)
+        )
+        .confirmationDialog(
+            "",
+            isPresented: $showMenu,
+            titleVisibility: .visible
+        ) {
+            Button("Delete", role: .destructive) {
+                viewModel.deleteProject()
+            }
+            Button("Export (CSV)") { viewModel.exportToCSVFile() }
+            Button("Rename") { viewModel.renameProject() }
+        }
     }
 }
 
