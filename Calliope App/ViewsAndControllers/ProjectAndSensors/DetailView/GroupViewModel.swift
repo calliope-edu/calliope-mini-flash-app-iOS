@@ -13,8 +13,9 @@ import SwiftUI
 class GroupViewModel: ObservableObject, Identifiable {
     var group: Group
     var openFileNameDialog: (@escaping (_ filename: String) -> Void) -> Void
+    var deleteGroup: (_ groupId: Int64) -> Void
     @Published var chartViewModels: [ChartViewModel] = []
-    
+
     @Published var uniqueLocations: Set<IdentifiableLocation> = Set<
         IdentifiableLocation
     >()
@@ -23,16 +24,18 @@ class GroupViewModel: ObservableObject, Identifiable {
     init(
         group: Group,
         openFileNameDialog:
-            @escaping (@escaping (_ filename: String) -> Void) -> Void
+            @escaping (@escaping (_ filename: String) -> Void) -> Void,
+        deleteGroup: @escaping (_ groupId: Int64) -> Void
     ) {
         self.group = group
         self.openFileNameDialog = openFileNameDialog
+        self.deleteGroup = deleteGroup
 
         loadCharts()
-        
+
         loadLocationsFromDatabase()
     }
-    
+
     func loadCharts() {
         chartViewModels = []
         let charts = Chart.fetchChartsBy(groupsId: group.id)
@@ -45,7 +48,7 @@ class GroupViewModel: ObservableObject, Identifiable {
             )
         }
     }
-    
+
     func calculateCenterRegion() {
         if uniqueLocations.isEmpty {
             region = GroupViewModel.getDefaultRegion()
@@ -98,7 +101,7 @@ class GroupViewModel: ObservableObject, Identifiable {
             )
         )
     }
-    
+
     func loadLocationsFromDatabase() {
         let charts = Chart.fetchChartsBy(groupsId: group.id)
         for chart in charts {
@@ -112,18 +115,31 @@ class GroupViewModel: ObservableObject, Identifiable {
             }
         }
     }
-    
+
     func deleteChart(chart: Chart) {
         Chart.deleteChart(id: chart.id)
         loadCharts()
+        if chartViewModels.isEmpty {
+            guard let groupId = group.id else {
+                LogNotify.log("Group id is nil. This should not happen.")
+                return
+            }
+            deleteGroup(groupId)
+        }
     }
-    
+
     func addNewSensor() {
-        guard let chart = Chart.insertChart(sensorType: nil, groupsId: group.id) else {
+        guard let chart = Chart.insertChart(sensorType: nil, groupsId: group.id)
+        else {
             return
         }
-        withAnimation(nil) { // disables an unideal animation of the add button
-            chartViewModels.append(ChartViewModel(chart: chart, openFileNameDialog: openFileNameDialog))
+        withAnimation(nil) {  // disables an unideal animation of the add button
+            chartViewModels.append(
+                ChartViewModel(
+                    chart: chart,
+                    openFileNameDialog: openFileNameDialog
+                )
+            )
         }
     }
 }

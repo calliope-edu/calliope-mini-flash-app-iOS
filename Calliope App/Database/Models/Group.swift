@@ -10,21 +10,21 @@ import GRDB
 import DeepDiff
 
 struct Group: Codable, FetchableRecord, PersistableRecord, DiffAware {
-
+    
     static let databaseTableName = "groups"
-
+    
     var id: Int64?
     var projectsId: Int64?
-
+    
     typealias DiffId = String
     var diffId: DiffId {
         return ""
     }
-
+    
     static func compareContent(_ a: Group, _ b: Group) -> Bool {
         a.id == b.id && a.projectsId == b.projectsId
     }
-
+    
     static func insertGroup(projectsId: Int64) -> Group? {
         
         var tempGroup: Group? = nil
@@ -41,7 +41,7 @@ struct Group: Codable, FetchableRecord, PersistableRecord, DiffAware {
         DatabaseManager.notifyChange()
         return tempGroup
     }
-
+    
     static func fetchGroupsBy(projectId: Int64) -> [Group] {
         var retrievedGroups: [Group] = []
         do {
@@ -53,6 +53,17 @@ struct Group: Codable, FetchableRecord, PersistableRecord, DiffAware {
             LogNotify.log("Error fetching group from database: \(error)")
         }
         return retrievedGroups
+    }
+    
+    static func deleteGroup(groupId: Int64) {
+        do {
+            try DatabaseManager.shared.databaseQueue?.write { db in
+                try Group.deleteOne(db, key:groupId)
+                LogNotify.log("Deleted group with id \(groupId)")
+            }
+        } catch {
+            LogNotify.log("Error deleting group from database: \(error)")
+        }
     }
 }
 

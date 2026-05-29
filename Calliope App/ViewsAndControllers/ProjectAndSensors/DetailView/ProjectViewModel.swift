@@ -28,11 +28,13 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
             return
         }
         groups = Group.fetchGroupsBy(projectId: project!.id!)
+        groupViewModels = []
         groups.forEach {
             groupViewModels.append(
                 GroupViewModel(
                     group: $0,
-                    openFileNameDialog: openFileNameDialog
+                    openFileNameDialog: openFileNameDialog,
+                    deleteGroup: deleteGroup
                 )
             )
         }
@@ -182,7 +184,7 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
         dismiss(animated: true, completion: nil)
         navigationController?.popViewController(animated: true)
     }
-    
+
     func addGroup() {
         guard let project = project else {
             LogNotify.log("Project is nil. This should not happen.")
@@ -193,7 +195,18 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
         }
         Chart.insertChart(sensorType: nil, groupsId: group.id)
         groups.append(group)
-        groupViewModels.append(GroupViewModel(group: group, openFileNameDialog: openFileNameDialog))
+        groupViewModels.append(
+            GroupViewModel(
+                group: group,
+                openFileNameDialog: openFileNameDialog,
+                deleteGroup: deleteGroup
+            )
+        )
+    }
+
+    func deleteGroup(groupId: Int64) {
+        Group.deleteGroup(groupId: groupId)
+        loadGroups()
     }
 
     func exportToCSVFile() {
