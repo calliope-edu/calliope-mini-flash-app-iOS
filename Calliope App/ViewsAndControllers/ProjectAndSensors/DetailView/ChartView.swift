@@ -13,6 +13,7 @@ import SwiftUI
 struct ChartView: View {
     @ObservedObject var viewModel: ChartViewModel
     let onRemoveTapped: () -> Void
+    @State var showMenu = false
 
     var body: some View {
         VStack {
@@ -24,6 +25,17 @@ struct ChartView: View {
             MetricsRowView(viewModel: viewModel)
 
             LineChart(viewModel: viewModel)
+        }
+        .onLongPressGesture(minimumDuration: 1) {
+            showMenu = true
+        }
+        .confirmationDialog(
+            "",
+            isPresented: $showMenu,
+            titleVisibility: .visible
+        ) {
+            Button("Delete", role: .destructive) { onRemoveTapped() }
+            Button("Export (CSV)") { viewModel.exportAsCSV() }
         }
     }
 }
@@ -284,24 +296,6 @@ struct ChartHeaderView: View {
             placeholder: viewModel.axisOptions.count == 0
                 ? "-" : "Select Axis"
         ).disabled(viewModel.axisOptions.count == 0)
-    }
-
-    private var settingsButton: some View {
-        IconButton(
-            imageSystemName: "ellipsis.circle",
-            action: { showMenu = true },
-            rotation: 90,
-            iconColor: Color(.white),
-            backgroundColor: Color(.white).opacity(0)
-        )
-        .confirmationDialog(
-            "",
-            isPresented: $showMenu,
-            titleVisibility: .visible
-        ) {
-            Button("Delete", role: .destructive) { onRemoveTapped() }
-            Button("Export (CSV)") { viewModel.exportAsCSV() }
-        }
     }
 
     private var recordButton: some View {
