@@ -67,41 +67,50 @@ struct MapView: View {
 
     var body: some View {
         ZStack {
-            Map(
-                coordinateRegion: region,
-                annotationItems: Array(viewModel.uniqueLocations)
-            ) { place in
-                MapAnnotation(coordinate: place.location) {
-                    Circle().frame(width: 20, height: 20)
-                }
-            }
-            .onAppear {
-                viewModel.calculateCenterRegion()
-            }
-            .frame(height: 300)
-            .cornerRadius(12)
-
-            Text("\(viewModel.uniqueLocations.count) unique locations")
-                .padding()
-                .frame(
-                    maxWidth: .infinity,
-                    maxHeight: .infinity,
-                    alignment: .topTrailing
-                )
-
-            IconButton(
-                imageSystemName: "scope",
-                action: viewModel.calculateCenterRegion,
-                rotation: 0,
-                iconColor: Color(.black),
-                backgroundColor: Color(.white)
-            ).padding()
-                .frame(
-                    maxWidth: .infinity,
-                    maxHeight: .infinity,
-                    alignment: .bottomTrailing
-                )
+            map
+            locationCountLabel
+            centerMapButton
         }
     }
-}
 
+    var map: some View {
+        Map(
+            coordinateRegion: region,
+            annotationItems: Array(viewModel.uniqueLocations)
+        ) { place in
+            MapAnnotation(coordinate: place.location) {
+                Circle().frame(width: 20, height: 20)
+            }
+        }
+        .onAppear {
+            viewModel.calculateCenterRegion()
+        }
+        .frame(height: 300)
+        .cornerRadius(12)
+    }
+
+    var locationCountLabel: some View {
+        Text("\(viewModel.uniqueLocations.count) unique locations")
+            .padding()
+            .frame(
+                maxWidth: .infinity,
+                maxHeight: .infinity,
+                alignment: .topTrailing
+            )
+    }
+
+    var centerMapButton: some View {
+        IconButton(
+            imageSystemName: "scope",
+            action: viewModel.calculateCenterRegion,
+            rotation: 0,
+            iconColor: Color(.black),
+            backgroundColor: Color(.white)
+        ).padding()
+            .frame(
+                maxWidth: .infinity,
+                maxHeight: .infinity,
+                alignment: .bottomTrailing
+            )
+    }
+}
