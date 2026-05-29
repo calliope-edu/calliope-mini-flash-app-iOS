@@ -107,7 +107,7 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
             self.present(alert, animated: true, completion: nil)
         }
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         calliopeConnectedSubcription = addSubscription(
             name: DiscoveredBLEDevice.usageReadyNotificationName,
