@@ -6,32 +6,42 @@
 //  Copyright © 2026 calliope. All rights reserved.
 //
 
-import Foundation
-import SwiftUI
 import Charts
+import Foundation
 import MapKit
+import SwiftUI
 
 struct ProjectView: View {
     @ObservedObject var viewModel: ProjectViewModel
     @State var showMenu = false
-    
+
     var body: some View {
         VStack {
             HStack {
                 Text(viewModel.project!.name)
                     .foregroundColor(.white)
                     .font(.title)
-                
+
                 Spacer()
-                
-                IconButton(imageSystemName: "ellipsis.circle", action: {showMenu = true}, rotation: 90, iconColor: Color(.white), backgroundColor: Color(.white).opacity(0))
-                    .confirmationDialog("",
-                                        isPresented: $showMenu,
-                                        titleVisibility: .visible) {
-                        Button("Delete", role: .destructive) { viewModel.deleteProject() }
-                        Button("Export (CSV)") { viewModel.exportToCSVFile() }
-                        Button("Rename") { viewModel.renameProject() }
+
+                IconButton(
+                    imageSystemName: "ellipsis.circle",
+                    action: { showMenu = true },
+                    rotation: 90,
+                    iconColor: Color(.white),
+                    backgroundColor: Color(.white).opacity(0)
+                )
+                .confirmationDialog(
+                    "",
+                    isPresented: $showMenu,
+                    titleVisibility: .visible
+                ) {
+                    Button("Delete", role: .destructive) {
+                        viewModel.deleteProject()
                     }
+                    Button("Export (CSV)") { viewModel.exportToCSVFile() }
+                    Button("Rename") { viewModel.renameProject() }
+                }
             }
             .padding()
             .background(
@@ -39,13 +49,20 @@ struct ProjectView: View {
                     .fill(Color("calliope-turqoise"))
             )
             .padding(.horizontal)
-            
+
             ScrollView {
                 VStack {
                     ForEach(viewModel.groupViewModels) { groupViewModel in
                         GroupView(viewModel: groupViewModel)
                     }
-                    IconButton(imageSystemName: "plus.circle", action: { /* TODO: Implement adding a group */ }, rotation: 0, iconColor: Color(.white), backgroundColor: viewModel.addChartButtonEnabled ? Color("calliope-turqoise") : Color(.gray)).disabled(!viewModel.addChartButtonEnabled)
+                    IconButton(
+                        imageSystemName: "plus.circle",
+                        action: { /* TODO: Implement adding a group */  },
+                        rotation: 0,
+                        iconColor: Color(.white),
+                        backgroundColor: viewModel.addChartButtonEnabled
+                            ? Color("calliope-turqoise") : Color(.gray)
+                    ).disabled(!viewModel.addChartButtonEnabled)
                 }
             }
         }.frame(maxHeight: .infinity, alignment: .top)
@@ -59,7 +76,7 @@ struct IconButton: View {
     var rotation: Double
     var iconColor: Color
     var backgroundColor: Color
-    
+
     var body: some View {
         Button(action: action) {
             Image(systemName: imageSystemName)
@@ -67,7 +84,9 @@ struct IconButton: View {
                 .foregroundStyle(iconColor)
                 .frame(width: 44, height: 44)
                 .rotationEffect(.degrees(rotation))
-                .background(Circle().fill(backgroundColor).frame(width: 44, height: 44))
+                .background(
+                    Circle().fill(backgroundColor).frame(width: 44, height: 44)
+                )
         }
     }
 }
