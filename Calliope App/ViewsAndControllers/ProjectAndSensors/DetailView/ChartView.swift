@@ -154,28 +154,8 @@ struct LineChart: View {
     var body: some View {
         VStack {
             GeometryReader { geo in
-                Charts.Chart {
-                    ForEach(viewModel.displayedChartData) { dataPoint in
-                        let xValue: PlottableValue = .value("Time", dataPoint.x)
-                        let yValue: PlottableValue = .value(
-                            dataPoint.series,
-                            dataPoint.y
-                        )
-                        let seriesValue: PlottableValue = .value(
-                            "Axis",
-                            dataPoint.series
-                        )
-
-                        LineMark(
-                            x: xValue,
-                            y: yValue,
-                            series: seriesValue
-                        )
-                        .foregroundStyle(
-                            viewModel.getColorForAxis(axis: dataPoint.series)
-                        )
-                    }
-                }.chartLegend(.hidden)
+                chart
+                    .chartLegend(.hidden)
                     .chartYAxis {
                         AxisMarks(position: .leading)  // puts the y axis on the left side of the view
                     }
@@ -220,6 +200,45 @@ struct LineChart: View {
         .padding()  // space between chart and container edge
         .background(Color.white)
         .cornerRadius(12)
+    }
+
+    var chart: some View {
+        Charts.Chart {
+            ForEach(viewModel.displayedChartData) { dataPoint in
+                lineMarker(dataPoint: dataPoint)
+            }
+            locationMarker
+        }
+    }
+
+    func lineMarker(dataPoint: ChartDataPoint) -> some ChartContent {
+        let xValue: PlottableValue = .value("Time", dataPoint.x)
+        let yValue: PlottableValue = .value(
+            dataPoint.series,
+            dataPoint.y
+        )
+        let seriesValue: PlottableValue = .value(
+            "Axis",
+            dataPoint.series
+        )
+
+        return LineMark(
+            x: xValue,
+            y: yValue,
+            series: seriesValue
+        )
+        .foregroundStyle(
+            viewModel.getColorForAxis(axis: dataPoint.series)
+        )
+    }
+
+    @ChartContentBuilder
+    var locationMarker: some ChartContent {
+        if viewModel.markerPosition != nil {
+            RuleMark(
+                x: .value("Time", viewModel.markerPosition!)
+            )
+        }
     }
 }
 

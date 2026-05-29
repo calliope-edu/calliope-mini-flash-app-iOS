@@ -116,7 +116,7 @@ class GroupViewModel: ObservableObject, Identifiable {
             }
         }
     }
-    
+
     func onNewLocation(location: IdentifiableLocation) {
         self.uniqueLocations.insert(location)
         self.calculateCenterRegion()
@@ -148,5 +148,9 @@ class GroupViewModel: ObservableObject, Identifiable {
                 )
             )
         }
+    }
+
+    func onMapAnnotationTapped(location: IdentifiableLocation) {
+        chartViewModels.forEach { $0.markValueForLocation(location: location) }
     }
 }

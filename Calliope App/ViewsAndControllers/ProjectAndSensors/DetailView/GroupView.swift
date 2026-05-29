@@ -79,7 +79,7 @@ struct MapView: View {
             annotationItems: Array(viewModel.uniqueLocations)
         ) { place in
             MapAnnotation(coordinate: place.location) {
-                Circle().frame(width: 20, height: 20)
+                mapAnnotation(location: place)
             }
         }
         .onAppear {
@@ -112,5 +112,14 @@ struct MapView: View {
                 maxHeight: .infinity,
                 alignment: .bottomTrailing
             )
+    }
+
+    func mapAnnotation(location: IdentifiableLocation) -> some View {
+        Button {
+            viewModel.onMapAnnotationTapped(location: location)
+        } label: {
+            Circle().frame(width: 30, height: 30)
+        }
+        .buttonStyle(.plain)
     }
 }

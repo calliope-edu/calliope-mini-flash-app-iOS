@@ -13,7 +13,7 @@ import SwiftUI
 struct DataPoint {
     let x: Double
     let y: Double
-    let location: CLLocationCoordinate2D?
+    let location: IdentifiableLocation?
 }
 
 struct IdentifiableLocation: Identifiable, Hashable {
@@ -51,6 +51,7 @@ class ChartViewModel: ObservableObject, Identifiable {
     @Published var axisOptions: [DropDownOption<Bool?>] = []
     @Published var selectedAxis: DropDownOption<Bool?>?
     var baseTime: Double?
+    @Published var markerPosition: Double?
 
     var flatChartData: [ChartDataPoint] {
         return data.flatMap {
@@ -150,6 +151,11 @@ class ChartViewModel: ObservableObject, Identifiable {
         })
     }
 
+    func markValueForLocation(location: IdentifiableLocation) {
+        let flatData = data.flatMap { $0.value.map { $0 } }
+        markerPosition = flatData.first(where: { $0.location == location })?.x
+    }
+
     let colors = [
         Color.red, Color.green, Color.blue, Color.orange, Color.purple,
     ]
@@ -217,22 +223,22 @@ class ChartViewModel: ObservableObject, Identifiable {
         if self.data[axis] == nil {
             self.data[axis] = []
         }
+        var location: IdentifiableLocation? = nil
+        if coordinates != nil {
+            location = IdentifiableLocation(
+                lat: coordinates!.latitude,
+                long: coordinates!.longitude
+            )
+            onNewLocation(location!)
+        }
         self.data[axis]?.append(
             DataPoint(
                 x: time - (self.baseTime ?? 0),
                 y: value,
-                location: coordinates
+                location: location
             )
         )
         self.updateAvailableAxis()
-        if coordinates != nil {
-            onNewLocation(
-                IdentifiableLocation(
-                    lat: coordinates!.latitude,
-                    long: coordinates!.longitude
-                )
-            )
-        }
     }
 
     func startRecording() {
@@ -280,10 +286,14 @@ class ChartViewModel: ObservableObject, Identifiable {
             else {
                 return
             }
+            var location: IdentifiableLocation? = nil
+            if(value.lat != nil && value.long != nil) {
+                location = IdentifiableLocation(lat: value.lat!, long: value.long!)
+            }
             let newDataPoint: DataPoint = DataPoint(
                 x: Double(value.time) - baseTime,
                 y: datapoint,
-                location: nil
+                location: location
             )
             if data[key] != nil {
                 data[key]!.append(newDataPoint)
