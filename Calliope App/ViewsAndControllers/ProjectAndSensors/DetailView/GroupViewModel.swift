@@ -104,6 +104,7 @@ class GroupViewModel: ObservableObject, Identifiable {
     }
 
     func loadLocationsFromDatabase() {
+        uniqueLocations.removeAll()
         let charts = Chart.fetchChartsBy(groupsId: group.id)
         for chart in charts {
             let values = Value.fetchValuesBy(chartId: chart.id)
@@ -125,6 +126,7 @@ class GroupViewModel: ObservableObject, Identifiable {
     func deleteChart(chart: Chart) {
         Chart.deleteChart(id: chart.id)
         loadCharts()
+        loadLocationsFromDatabase()
         if chartViewModels.isEmpty {
             guard let groupId = group.id else {
                 LogNotify.log("Group id is nil. This should not happen.")
