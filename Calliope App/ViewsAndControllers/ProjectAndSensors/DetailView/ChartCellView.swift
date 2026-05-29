@@ -308,42 +308,51 @@ struct ChartHeaderView: View {
     @State var showMenu = false
 
     var body: some View {
-        ZStack {
-            DropDownMenu(
-                options: viewModel.axisOptions,
-                selectedOption: $viewModel.selectedAxis,
-                onSelectionChanged: viewModel.selectAxis,
-                placeholder: viewModel.axisOptions.count == 0
-                    ? "-" : "Select Axis"
-            ).disabled(viewModel.axisOptions.count == 0)
-            HStack {
-                DropDownMenu(
-                    options: viewModel.sensorOptions,
-                    selectedOption: $viewModel.selectedSensor,
-                    onSelectionChanged: viewModel.selectSensor,
-                    placeholder: viewModel.sensorOptions.count > 0
-                        ? "Select Sensor" : "No Sensor Available"
-                ).disabled(
-                    viewModel.sensorOptions.count == 0
-                        || viewModel.data.count != 0
-                )
-                Spacer()
-                IconButton(
-                    imageSystemName: "ellipsis.circle",
-                    action: { showMenu = true },
-                    rotation: 90,
-                    iconColor: Color(.white),
-                    backgroundColor: Color(.white).opacity(0)
-                )
-                .confirmationDialog(
-                    "",
-                    isPresented: $showMenu,
-                    titleVisibility: .visible
-                ) {
-                    Button("Delete", role: .destructive) { onRemoveTapped() }
-                    Button("Export (CSV)") { viewModel.exportAsCSV() }
-                }
-            }
+        HStack {
+            sensorDropdown.frame(maxWidth: .infinity, alignment: .leading)
+            axisDropdown.frame(maxWidth: .infinity, alignment: .center)
+            settingsButton.frame(maxWidth: .infinity, alignment: .trailing)
+        }
+    }
+
+    private var sensorDropdown: some View {
+        DropDownMenu(
+            options: viewModel.sensorOptions,
+            selectedOption: $viewModel.selectedSensor,
+            onSelectionChanged: viewModel.selectSensor,
+            placeholder: viewModel.sensorOptions.count > 0
+                ? "Select Sensor" : "No Sensor Available"
+        ).disabled(
+            viewModel.sensorOptions.count == 0
+                || viewModel.data.count != 0
+        )
+    }
+
+    private var axisDropdown: some View {
+        DropDownMenu(
+            options: viewModel.axisOptions,
+            selectedOption: $viewModel.selectedAxis,
+            onSelectionChanged: viewModel.selectAxis,
+            placeholder: viewModel.axisOptions.count == 0
+                ? "-" : "Select Axis"
+        ).disabled(viewModel.axisOptions.count == 0)
+    }
+
+    private var settingsButton: some View {
+        IconButton(
+            imageSystemName: "ellipsis.circle",
+            action: { showMenu = true },
+            rotation: 90,
+            iconColor: Color(.white),
+            backgroundColor: Color(.white).opacity(0)
+        )
+        .confirmationDialog(
+            "",
+            isPresented: $showMenu,
+            titleVisibility: .visible
+        ) {
+            Button("Delete", role: .destructive) { onRemoveTapped() }
+            Button("Export (CSV)") { viewModel.exportAsCSV() }
         }
     }
 }
