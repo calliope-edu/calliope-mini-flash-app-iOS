@@ -105,6 +105,7 @@
 		601040AC2B592B7300526735 /* HexFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601040AB2B592B7300526735 /* HexFileManager.swift */; };
 		60107F912F48830E00A15101 /* LofiAppsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60107F902F48830E00A15101 /* LofiAppsViewController.swift */; };
 		60107F9A2F4888B800A15101 /* LofiApps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60107F992F4888B800A15101 /* LofiApps.storyboard */; };
+		60127E892FC9BD19000A1995 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60127E882FC9BD19000A1995 /* ChartView.swift */; };
 		60316BF82B01FEC300130C0D /* BLECalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60316BF72B01FEC300130C0D /* BLECalliope.swift */; };
 		60316BFA2B0210CC00130C0D /* CalliopeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60316BF92B0210CC00130C0D /* CalliopeFactory.swift */; };
 		6042149F2F646DD30060064F /* TilePageLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6042149E2F646DD30060064F /* TilePageLayout.swift */; };
@@ -280,6 +281,7 @@
 		601040AB2B592B7300526735 /* HexFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexFileManager.swift; sourceTree = "<group>"; };
 		60107F902F48830E00A15101 /* LofiAppsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LofiAppsViewController.swift; sourceTree = "<group>"; };
 		60107F962F4888B800A15101 /* HomeScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = HomeScreen.storyboard; path = Base.lproj/LofiApps.storyboard; sourceTree = "<group>"; };
+		60127E882FC9BD19000A1995 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		601A19142B30658200E98E69 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
 		60316BF72B01FEC300130C0D /* BLECalliope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLECalliope.swift; sourceTree = "<group>"; };
 		60316BF92B0210CC00130C0D /* CalliopeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeFactory.swift; sourceTree = "<group>"; };
@@ -672,6 +674,7 @@
 				60AA95542F925D3400308FE3 /* ProjectView.swift */,
 				60EBC64B2F9BAD5A00A6DD84 /* ChartViewModel.swift */,
 				60C627F92FAE4BF100D23A43 /* GroupView.swift */,
+				60127E882FC9BD19000A1995 /* ChartView.swift */,
 				60C628B12FC0A37D00D23A43 /* GroupViewModel.swift */,
 			);
 			path = DetailView;
@@ -1145,6 +1148,7 @@
 				2F61458B22BF761F001C2734 /* MatrixView.swift in Sources */,
 				60C628702FC0957600D23A43 /* Group.swift in Sources */,
 				2F2B80A025A1100800A7CCF7 /* PlaygroundCodeSnippetViewController.swift in Sources */,
+				60127E892FC9BD19000A1995 /* ChartView.swift in Sources */,
 				2F1BD99A2674E378006A47F2 /* ProgramsCollectionViewFlowLayout.swift in Sources */,
 				2F08A0E1234AC7400088A8D6 /* EditorAndProgramsContainerViewController.swift in Sources */,
 				60C915932B1F442F00E4039D /* Network.swift in Sources */,
