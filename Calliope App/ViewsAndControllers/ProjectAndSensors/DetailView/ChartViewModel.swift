@@ -55,7 +55,6 @@ class ChartViewModel: ObservableObject, Identifiable {
     @Published var selectedAxis: DropDownOption<Bool?>?
     var baseTime: Double?
 
-
     var flatChartData: [ChartDataPoint] {
         return data.flatMap {
             series,
@@ -108,21 +107,21 @@ class ChartViewModel: ObservableObject, Identifiable {
         if selectedAxis == nil || selectedAxis!.name == "all" { return nil }  // only calculate if the displayed data has only one axis
         return displayedYs.last
     }
-    
+
     var minimumX: Double? {
-        displayedChartData.map{ $0.x }.min()
+        displayedChartData.map { $0.x }.min()
     }
-    
+
     var maximumX: Double? {
-        displayedChartData.map{ $0.x }.max()
+        displayedChartData.map { $0.x }.max()
     }
-    
+
     var minimumXDistance: Double? {
-        let sortedXs = displayedChartData.map{ $0.x }.sorted()
+        let sortedXs = displayedChartData.map { $0.x }.sorted()
         var minimumDistance = Double.infinity
-        for i in 0...(sortedXs.count-2) {
-            let distance = sortedXs[i+1] - sortedXs[i]
-            if(distance < minimumDistance){
+        for i in 0...(sortedXs.count - 2) {
+            let distance = sortedXs[i + 1] - sortedXs[i]
+            if distance < minimumDistance {
                 minimumDistance = distance
             }
         }
@@ -152,12 +151,7 @@ class ChartViewModel: ObservableObject, Identifiable {
         })
     }
 
-    func calculateCenterRegion() {
-        if uniqueLocations.isEmpty {
-            region = ChartViewModel.getDefaultRegion()
-            return
-        }
-
+    fileprivate func calculateCenter() -> CLLocationCoordinate2D {
         var center = CLLocationCoordinate2D(latitude: 0, longitude: 0)
         if uniqueLocations.count > 0 {
             for place in uniqueLocations {
@@ -167,23 +161,31 @@ class ChartViewModel: ObservableObject, Identifiable {
             center.latitude /= Double(uniqueLocations.count)
             center.longitude /= Double(uniqueLocations.count)
         }
+        return center
+    }
 
+    fileprivate func calculateMaximumDistanceTo(_ center: CLLocationCoordinate2D) -> Double {
         var maxDistanceFromCenter = 0.002
-        let centerCL = CLLocation(
-            latitude: center.latitude,
-            longitude: center.longitude
-        )
+        let centerCL = CLLocation(latitude: center.latitude, longitude: center.longitude)
         for place in uniqueLocations {
             let distance = centerCL.distance(
-                from: CLLocation(
-                    latitude: place.location.latitude,
-                    longitude: place.location.longitude
-                )
+                from: CLLocation(latitude: place.location.latitude, longitude: place.location.longitude)
             )
             if distance > maxDistanceFromCenter {
                 maxDistanceFromCenter = distance
             }
         }
+        return maxDistanceFromCenter
+    }
+
+    func calculateCenterRegion() {
+        if uniqueLocations.isEmpty {
+            region = ChartViewModel.getDefaultRegion()
+            return
+        }
+
+        let center = calculateCenter()
+        let maxDistanceFromCenter = calculateMaximumDistanceTo(center)
 
         region = MKCoordinateRegion(
             center: center,
@@ -268,6 +270,29 @@ class ChartViewModel: ObservableObject, Identifiable {
         }
     }
 
+    fileprivate func saveDataPoint(_ axis: String, _ time: Double, _ value: Double, _ coordinates: CLLocationCoordinate2D?) {
+        if self.data[axis] == nil {
+            self.data[axis] = []
+        }
+        self.data[axis]?.append(
+            DataPoint(
+                x: time - (self.baseTime ?? 0),
+                y: value,
+                location: coordinates
+            )
+        )
+        self.updateAvailableAxis()
+        if coordinates != nil {
+            self.uniqueLocations.insert(
+                IdentifiableLocation(
+                    lat: coordinates!.latitude,
+                    long: coordinates!.longitude
+                )
+            )
+            self.calculateCenterRegion()
+        }
+    }
+
     func startRecording() {
         if baseTime == nil {
             baseTime = (Date().timeIntervalSinceReferenceDate * 100).rounded(
@@ -277,26 +302,7 @@ class ChartViewModel: ObservableObject, Identifiable {
         dataController.sensorStartRecordingFor(chart: chart) {
             (axis, time, value, coordinates) in
             if self.isRecording {
-                if self.data[axis] == nil {
-                    self.data[axis] = []
-                }
-                self.data[axis]?.append(
-                    DataPoint(
-                        x: time - (self.baseTime ?? 0),
-                        y: value,
-                        location: coordinates
-                    )
-                )
-                self.updateAvailableAxis()
-                if coordinates != nil {
-                    self.uniqueLocations.insert(
-                        IdentifiableLocation(
-                            lat: coordinates!.latitude,
-                            long: coordinates!.longitude
-                        )
-                    )
-                    self.calculateCenterRegion()
-                }
+                self.saveDataPoint(axis, time, value, coordinates)
             }
         }
         Chart.setSensorType(chart: chart)
@@ -318,6 +324,38 @@ class ChartViewModel: ObservableObject, Identifiable {
         })
     }
 
+    fileprivate func loadValue(_ value: Value, _ chart: Chart) {
+        let decodedValue = DataParser.decode(
+            data: value.value,
+            service: chart.sensorType ?? .empty
+        )
+        for key in decodedValue.keys {
+            if key == "" {
+                break
+            }
+            guard let datapoint = decodedValue[key],
+                let baseTime = baseTime
+            else {
+                return
+            }
+            let newDataPoint: DataPoint = DataPoint(
+                x: Double(value.time) - baseTime,
+                y: datapoint,
+                location: nil
+            )
+            if data[key] != nil {
+                data[key]!.append(newDataPoint)
+            } else {
+                data.updateValue([newDataPoint], forKey: key)
+            }
+        }
+        if value.lat != nil && value.long != nil {
+            uniqueLocations.insert(
+                IdentifiableLocation(lat: value.lat!, long: value.long!)
+            )
+        }
+    }
+
     fileprivate func loadDatabaseDataIntoChart(_ chart: Chart) {
         let rawValues = Value.fetchValuesBy(chartId: chart.id)
         if !rawValues.isEmpty {
@@ -325,38 +363,10 @@ class ChartViewModel: ObservableObject, Identifiable {
                 baseTime = rawValues.first?.time
             }
             for value in rawValues {
-                let decodedValue = DataParser.decode(
-                    data: value.value,
-                    service: chart.sensorType ?? .empty
-                )
-                for key in decodedValue.keys {
-                    if key == "" {
-                        break
-                    }
-                    guard let datapoint = decodedValue[key],
-                        let baseTime = baseTime
-                    else {
-                        return
-                    }
-                    let newDataPoint: DataPoint = DataPoint(
-                        x: Double(value.time) - baseTime,
-                        y: datapoint,
-                        location: nil
-                    )
-                    if data[key] != nil {
-                        data[key]!.append(newDataPoint)
-                    } else {
-                        data.updateValue([newDataPoint], forKey: key)
-                    }
-                }
-                if value.lat != nil && value.long != nil {
-                    uniqueLocations.insert(
-                        IdentifiableLocation(lat: value.lat!, long: value.long!)
-                    )
-                }
+                loadValue(value, chart)
             }
         }
-        if data.isEmpty {  // allow to choose a new sensor,if no data has been recorded yet
+        if data.isEmpty {  // allow to choose a new sensor, if no data has been recorded yet
             updateAvailableSensors()
         } else {
             if chart.sensorType == nil {
