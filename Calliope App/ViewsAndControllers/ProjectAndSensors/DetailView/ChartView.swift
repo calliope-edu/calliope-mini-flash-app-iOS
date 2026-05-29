@@ -66,6 +66,17 @@ struct LineChart: View {
         displayedRange = displayedMinimumX...displayedMaximumX
     }
 
+    func ensureOffset(graphWidth: Double) {
+        if displayedRange!.lowerBound < minimumX {
+            let shift = minimumX - displayedRange!.lowerBound
+            currentOffset.width = currentOffset.width + shift
+        } else if displayedRange!.upperBound > maximumX {
+            let shift = displayedRange!.upperBound - maximumX
+            currentOffset.width = currentOffset.width - shift
+        }
+        calculateDisplayedRange(graphWidth: graphWidth)
+    }
+
     fileprivate func zoomGesture(_ geo: GeometryProxy) -> _EndedGesture<
         GestureStateGesture<MagnificationGesture, CGFloat>
     > {
@@ -82,6 +93,7 @@ struct LineChart: View {
                 calculateDisplayedRange(
                     graphWidth: geo.size.width
                 )
+                ensureOffset(graphWidth: geo.size.width)
             }
             .onEnded { value in
                 currentScale /= value
@@ -89,6 +101,7 @@ struct LineChart: View {
                 calculateDisplayedRange(
                     graphWidth: geo.size.width
                 )
+                ensureOffset(graphWidth: geo.size.width)
             }
     }
 
