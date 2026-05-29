@@ -15,7 +15,7 @@ import UIKit
 class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
 
     @Published var project: Project?
-    @Published var addChartButtonEnabled = false
+    @Published var addGroupButton = false
     @Published var groups: [Group] = []
     var groupViewModels: [GroupViewModel] = []
 
@@ -65,61 +65,72 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
         )
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        calliopeConnectedSubcription = NotificationCenter.default.addObserver(
-            forName: DiscoveredBLEDevice.usageReadyNotificationName,
+    fileprivate func addSubscription(
+        name: NSNotification.Name,
+        onActivated: @escaping @Sendable (Notification) -> Void
+    ) -> NSObjectProtocol {
+        return NotificationCenter.default.addObserver(
+            forName: name,
             object: nil,
             queue: nil,
-            using: { [weak self] (_) in
-                DispatchQueue.main.async {
-                    UIView.animate(withDuration: 0.5) {
-                        self?.addChartButtonEnabled = true
-                    }
-                }
+            using: onActivated
+        )
+    }
+
+    fileprivate func setAddGroupButton(value: Bool) {
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.5) {
+                self.addGroupButton = value
+            }
+        }
+    }
+
+    fileprivate func showConnectCalliopeAlert() {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(
+                title: NSLocalizedString(
+                    "Calliope mini verbinden!",
+                    comment: ""
+                ),
+                message: NSLocalizedString(
+                    "Verbindung notwendig, um Daten anzeigen zu lassen.",
+                    comment: ""
+                ),
+                preferredStyle: .alert
+            )
+            let okAction = UIAlertAction(
+                title: "OK",
+                style: .default,
+                handler: nil
+            )
+            alert.addAction(okAction)
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        calliopeConnectedSubcription = addSubscription(
+            name: DiscoveredBLEDevice.usageReadyNotificationName,
+            onActivated: { [weak self] (_) in
+                self?.setAddGroupButton(value: true)
             }
         )
 
-        calliopeDisconnectedSubscription = NotificationCenter.default
-            .addObserver(
-                forName: DiscoveredBLEDevice.disconnectedNotificationName,
-                object: nil,
-                queue: nil,
-                using: { [weak self] (_) in
-                    DispatchQueue.main.async {
-                        UIView.animate(withDuration: 0.5) {
-                            self?.addChartButtonEnabled = false
-                        }
-                    }
-                }
-            )
+        calliopeDisconnectedSubscription = addSubscription(
+            name: DiscoveredBLEDevice.disconnectedNotificationName,
+            onActivated: { [weak self] (_) in
+                self?.setAddGroupButton(value: false)
+            }
+        )
 
         guard MatrixConnectionViewController.instance.usageReadyCalliope != nil
         else {
-            addChartButtonEnabled = false
-            DispatchQueue.main.async {
-                let alert = UIAlertController(
-                    title: NSLocalizedString(
-                        "Calliope mini verbinden!",
-                        comment: ""
-                    ),
-                    message: NSLocalizedString(
-                        "Verbindung notwendig, um Daten anzeigen zu lassen.",
-                        comment: ""
-                    ),
-                    preferredStyle: .alert
-                )
-                let okAction = UIAlertAction(
-                    title: "OK",
-                    style: .default,
-                    handler: nil
-                )
-                alert.addAction(okAction)
-                self.present(alert, animated: true, completion: nil)
-            }
+            addGroupButton = false
+            showConnectCalliopeAlert()
             return
         }
 
-        addChartButtonEnabled = true
+        addGroupButton = true
     }
 
     func renameProject() {

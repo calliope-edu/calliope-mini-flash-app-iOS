@@ -60,9 +60,9 @@ struct ProjectView: View {
                         action: { /* TODO: Implement adding a group */  },
                         rotation: 0,
                         iconColor: Color(.white),
-                        backgroundColor: viewModel.addChartButtonEnabled
+                        backgroundColor: viewModel.addGroupButton
                             ? Color("calliope-turqoise") : Color(.gray)
-                    ).disabled(!viewModel.addChartButtonEnabled)
+                    ).disabled(!viewModel.addGroupButton)
                 }
             }
         }.frame(maxHeight: .infinity, alignment: .top)
