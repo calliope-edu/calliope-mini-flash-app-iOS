@@ -15,7 +15,7 @@ struct GroupView: View {
     @ObservedObject var viewModel: GroupViewModel
 
     var body: some View {
-        VStack {
+        VStack(spacing: 30) {
             ForEach(viewModel.chartViewModels) { chartViewModel in
                 ChartView(
                     viewModel: chartViewModel,
