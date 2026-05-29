@@ -116,19 +116,19 @@ struct ChartView: View {
     var offset: Double {
         return currentOffset.width + gestureOffset.width
     }
-    
+
     var minimumX: Double {
         return viewModel.minimumX ?? 0
     }
-    
+
     var maximumX: Double {
         return viewModel.maximumX ?? 1
     }
-    
+
     var totalRangeWidth: Double {
         return maximumX - minimumX
     }
-    
+
     var maxRange: ClosedRange<Double> {
         return (viewModel.minimumX ?? 0)...(viewModel.maximumX ?? 1)
     }
@@ -138,12 +138,17 @@ struct ChartView: View {
         let displayedMaximumX = offset + totalRangeWidth * zoom / 2
         displayedRange = displayedMinimumX...displayedMaximumX
     }
-    
-    fileprivate func zoomGesture(_ geo: GeometryProxy) -> _EndedGesture<GestureStateGesture<MagnificationGesture, CGFloat>> {
+
+    fileprivate func zoomGesture(_ geo: GeometryProxy) -> _EndedGesture<
+        GestureStateGesture<MagnificationGesture, CGFloat>
+    > {
         return MagnificationGesture()
             .updating($gestureScale) { value, state, _ in
                 state = 1 / value
-                state = max(0.001 / currentScale, min(1.5 / currentScale, state))
+                state = max(
+                    0.001 / currentScale,
+                    min(1.5 / currentScale, state)
+                )
                 calculateDisplayedRange(
                     graphWidth: geo.size.width
                 )
@@ -156,27 +161,38 @@ struct ChartView: View {
                 )
             }
     }
-    
-    fileprivate func dragGesture(_ geo: GeometryProxy) -> _EndedGesture<GestureStateGesture<DragGesture, CGSize>> {
+
+    fileprivate func dragGesture(_ geo: GeometryProxy) -> _EndedGesture<
+        GestureStateGesture<DragGesture, CGSize>
+    > {
         return DragGesture()
             .updating($gestureOffset) { value, state, _ in
-                state.width = -value.translation.width * zoom * (totalRangeWidth / geo.size.width)
-                state.width = max(minimumX - currentOffset.width, min(maximumX - currentOffset.width, state.width))
+                state.width =
+                    -value.translation.width * zoom
+                    * (totalRangeWidth / geo.size.width)
+                state.width = max(
+                    minimumX - currentOffset.width,
+                    min(maximumX - currentOffset.width, state.width)
+                )
                 calculateDisplayedRange(
                     graphWidth: geo.size.width
                 )
             }
-        
+
             .onEnded { value in
                 currentOffset.width -=
-                value.translation.width * zoom * (totalRangeWidth / geo.size.width)
-                currentOffset.width = max(minimumX, min(maximumX, currentOffset.width))
+                    value.translation.width * zoom
+                    * (totalRangeWidth / geo.size.width)
+                currentOffset.width = max(
+                    minimumX,
+                    min(maximumX, currentOffset.width)
+                )
                 calculateDisplayedRange(
                     graphWidth: geo.size.width
                 )
             }
     }
-    
+
     var body: some View {
         VStack {
             GeometryReader { geo in
@@ -235,7 +251,7 @@ struct ChartView: View {
                         )
                     )
                     .onAppear {
-                        currentOffset.width = totalRangeWidth / 2 // ensures that it zooms around the center in the beginning
+                        currentOffset.width = totalRangeWidth / 2  // ensures that it zooms around the center in the beginning
                     }
                     .frame(minHeight: 250)
                     .background(Color.white)
