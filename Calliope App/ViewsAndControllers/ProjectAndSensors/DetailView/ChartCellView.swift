@@ -128,6 +128,10 @@ struct ChartView: View {
     var totalRangeWidth: Double {
         return maximumX - minimumX
     }
+    
+    var maxRange: ClosedRange<Double> {
+        return (viewModel.minimumX ?? 0)...(viewModel.maximumX ?? 1)
+    }
 
     func calculateDisplayedRange(graphWidth: Double) {
         let displayedMinimumX = offset - totalRangeWidth * zoom / 2
@@ -222,7 +226,7 @@ struct ChartView: View {
                         }
                     }
                     .chartXScale(
-                        domain: displayedRange ?? (viewModel.minimumX ?? 0)...(viewModel.maximumX ?? 1)
+                        domain: displayedRange ?? maxRange
                     )
                     .gesture(
                         SimultaneousGesture(
