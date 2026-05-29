@@ -6,8 +6,8 @@
 //  Copyright © 2026 calliope. All rights reserved.
 //
 
-import Foundation
 import Charts
+import Foundation
 import SwiftUI
 
 struct ChartView: View {
@@ -83,12 +83,15 @@ struct LineChart: View {
     fileprivate func zoomGesture(_ geo: GeometryProxy) -> _EndedGesture<
         GestureStateGesture<MagnificationGesture, CGFloat>
     > {
+        let minScale = 0.001
+        let maxScale = 1.0
+
         return MagnificationGesture()
             .updating($gestureScale) { value, state, _ in
                 state = 1 / value
                 state = max(
-                    0.001 / currentScale,
-                    min(1.5 / currentScale, state)
+                    minScale / currentScale,
+                    min(maxScale / currentScale, state)
                 )
                 calculateDisplayedRange(
                     graphWidth: geo.size.width
@@ -96,7 +99,7 @@ struct LineChart: View {
             }
             .onEnded { value in
                 currentScale /= value
-                currentScale = max(0.001, min(1.5, currentScale))
+                currentScale = max(minScale, min(maxScale, currentScale))
                 calculateDisplayedRange(
                     graphWidth: geo.size.width
                 )
@@ -106,14 +109,17 @@ struct LineChart: View {
     fileprivate func dragGesture(_ geo: GeometryProxy) -> _EndedGesture<
         GestureStateGesture<DragGesture, CGSize>
     > {
+        let displayedRangeWidth = totalRangeWidth * zoom
+        let minimumOffset = minimumX + (displayedRangeWidth / 2)
+        let maximumOffset = maximumX - (displayedRangeWidth / 2)
         return DragGesture()
             .updating($gestureOffset) { value, state, _ in
                 state.width =
                     -value.translation.width * zoom
                     * (totalRangeWidth / geo.size.width)
                 state.width = max(
-                    minimumX - currentOffset.width,
-                    min(maximumX - currentOffset.width, state.width)
+                    minimumOffset - currentOffset.width,
+                    min(maximumOffset - currentOffset.width, state.width)
                 )
                 calculateDisplayedRange(
                     graphWidth: geo.size.width
@@ -125,8 +131,8 @@ struct LineChart: View {
                     value.translation.width * zoom
                     * (totalRangeWidth / geo.size.width)
                 currentOffset.width = max(
-                    minimumX,
-                    min(maximumX, currentOffset.width)
+                    minimumOffset,
+                    min(maximumOffset, currentOffset.width)
                 )
                 calculateDisplayedRange(
                     graphWidth: geo.size.width
