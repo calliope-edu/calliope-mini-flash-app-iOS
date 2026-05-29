@@ -17,9 +17,20 @@ struct GroupView: View {
     var body: some View {
         VStack {
             ForEach(viewModel.chartViewModels) { chartViewModel in
-                ChartView(viewModel: chartViewModel, onRemoveTapped: {viewModel.deleteChart(chart: chartViewModel.chart)})
+                ChartView(
+                    viewModel: chartViewModel,
+                    onRemoveTapped: {
+                        viewModel.deleteChart(chart: chartViewModel.chart)
+                    }
+                )
             }
-            
+
+            HStack {
+                Spacer()
+                addSensorButton
+                Spacer()
+            }
+
             MapView(viewModel: viewModel)
         }.padding()
             .background(
@@ -29,12 +40,22 @@ struct GroupView: View {
             .padding(.horizontal)
 
     }
+
+    var addSensorButton: some View {
+        IconButton(
+            imageSystemName: "plus.circle",
+            action: viewModel.addNewSensor,
+            rotation: 0,
+            iconColor: Color(.white),
+            backgroundColor: Color(.white).opacity(0)
+        )
+    }
 }
 
 struct ChartView: View {
     @ObservedObject var viewModel: ChartViewModel
     let onRemoveTapped: () -> Void
-    
+
     var body: some View {
         VStack {
             ChartHeaderView(
@@ -86,7 +107,7 @@ struct MapView: View {
                     Circle().frame(width: 20, height: 20)
                 }
             }
-            .onAppear{
+            .onAppear {
                 viewModel.calculateCenterRegion()
             }
             .frame(height: 300)
