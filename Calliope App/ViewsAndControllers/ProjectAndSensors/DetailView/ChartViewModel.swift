@@ -42,12 +42,9 @@ struct IdentifiableLocation: Identifiable, Hashable {
 
 class ChartViewModel: ObservableObject, Identifiable {
     var chart: Chart
+    let onNewLocation: (_ location: IdentifiableLocation) -> Void
     let dataController: DataController
     @Published var data: [String: [DataPoint]] = [:]
-    @Published var uniqueLocations: Set<IdentifiableLocation> = Set<
-        IdentifiableLocation
-    >()
-    @Published var region: MKCoordinateRegion = getDefaultRegion()
     @Published var sensorOptions: [DropDownOption<Sensor>] = []
     @Published var selectedSensor: DropDownOption<Sensor>?
     @Published var isRecording: Bool = false
@@ -136,75 +133,21 @@ class ChartViewModel: ObservableObject, Identifiable {
     init(
         chart: Chart,
         openFileNameDialog:
-            @escaping (@escaping (_ filename: String) -> Void) -> Void
+            @escaping (@escaping (_ filename: String) -> Void) -> Void,
+        onNewLocation: @escaping (_ location: IdentifiableLocation) -> Void
     ) {
         self.chart = chart
         self.openFileNameDialog = openFileNameDialog
+        self.onNewLocation = onNewLocation
+
         dataController = DataController()
         loadDatabaseDataIntoChart(chart)
         updateAvailableAxis()
-        calculateCenterRegion()
         addNotificationSubscriptions()
         self.selectedSensor = sensorOptions.first(where: { sensorOption in
             sensorOption.object.calliopeService.uuid
                 == self.chart.sensorType?.uuid
         })
-    }
-
-    fileprivate func calculateCenter() -> CLLocationCoordinate2D {
-        var center = CLLocationCoordinate2D(latitude: 0, longitude: 0)
-        if uniqueLocations.count > 0 {
-            for place in uniqueLocations {
-                center.latitude += place.location.latitude
-                center.longitude += place.location.longitude
-            }
-            center.latitude /= Double(uniqueLocations.count)
-            center.longitude /= Double(uniqueLocations.count)
-        }
-        return center
-    }
-
-    fileprivate func calculateMaximumDistanceTo(_ center: CLLocationCoordinate2D) -> Double {
-        var maxDistanceFromCenter = 0.002
-        let centerCL = CLLocation(latitude: center.latitude, longitude: center.longitude)
-        for place in uniqueLocations {
-            let distance = centerCL.distance(
-                from: CLLocation(latitude: place.location.latitude, longitude: place.location.longitude)
-            )
-            if distance > maxDistanceFromCenter {
-                maxDistanceFromCenter = distance
-            }
-        }
-        return maxDistanceFromCenter
-    }
-
-    func calculateCenterRegion() {
-        if uniqueLocations.isEmpty {
-            region = ChartViewModel.getDefaultRegion()
-            return
-        }
-
-        let center = calculateCenter()
-        let maxDistanceFromCenter = calculateMaximumDistanceTo(center)
-
-        region = MKCoordinateRegion(
-            center: center,
-            span: MKCoordinateSpan(
-                latitudeDelta: maxDistanceFromCenter,
-                longitudeDelta: maxDistanceFromCenter
-            )
-        )
-    }
-
-    static private func getDefaultRegion() -> MKCoordinateRegion {
-        // shows Berlin by default
-        return MKCoordinateRegion(
-            center: CLLocationCoordinate2D(latitude: 52.52, longitude: 13.4050),
-            span: MKCoordinateSpan(
-                latitudeDelta: 0.1,
-                longitudeDelta: 0.1
-            )
-        )
     }
 
     let colors = [
@@ -283,13 +226,12 @@ class ChartViewModel: ObservableObject, Identifiable {
         )
         self.updateAvailableAxis()
         if coordinates != nil {
-            self.uniqueLocations.insert(
+            onNewLocation(
                 IdentifiableLocation(
                     lat: coordinates!.latitude,
                     long: coordinates!.longitude
                 )
             )
-            self.calculateCenterRegion()
         }
     }
 
@@ -348,11 +290,6 @@ class ChartViewModel: ObservableObject, Identifiable {
             } else {
                 data.updateValue([newDataPoint], forKey: key)
             }
-        }
-        if value.lat != nil && value.long != nil {
-            uniqueLocations.insert(
-                IdentifiableLocation(lat: value.lat!, long: value.long!)
-            )
         }
     }
 

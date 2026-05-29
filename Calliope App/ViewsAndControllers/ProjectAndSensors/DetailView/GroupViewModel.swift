@@ -43,7 +43,8 @@ class GroupViewModel: ObservableObject, Identifiable {
             chartViewModels.append(
                 ChartViewModel(
                     chart: chart,
-                    openFileNameDialog: openFileNameDialog
+                    openFileNameDialog: openFileNameDialog,
+                    onNewLocation: onNewLocation
                 )
             )
         }
@@ -115,6 +116,11 @@ class GroupViewModel: ObservableObject, Identifiable {
             }
         }
     }
+    
+    func onNewLocation(location: IdentifiableLocation) {
+        self.uniqueLocations.insert(location)
+        self.calculateCenterRegion()
+    }
 
     func deleteChart(chart: Chart) {
         Chart.deleteChart(id: chart.id)
@@ -137,7 +143,8 @@ class GroupViewModel: ObservableObject, Identifiable {
             chartViewModels.append(
                 ChartViewModel(
                     chart: chart,
-                    openFileNameDialog: openFileNameDialog
+                    openFileNameDialog: openFileNameDialog,
+                    onNewLocation: onNewLocation
                 )
             )
         }
