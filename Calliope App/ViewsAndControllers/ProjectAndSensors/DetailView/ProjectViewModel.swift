@@ -182,6 +182,19 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
         dismiss(animated: true, completion: nil)
         navigationController?.popViewController(animated: true)
     }
+    
+    func addGroup() {
+        guard let project = project else {
+            LogNotify.log("Project is nil. This should not happen.")
+            return
+        }
+        guard let group = Group.insertGroup(projectsId: project.id!) else {
+            return
+        }
+        Chart.insertChart(sensorType: nil, groupsId: group.id)
+        groups.append(group)
+        groupViewModels.append(GroupViewModel(group: group, openFileNameDialog: openFileNameDialog))
+    }
 
     func exportToCSVFile() {
         openFileNameDialog(onOk: { filename in
