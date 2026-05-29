@@ -17,19 +17,7 @@ struct ProjectView: View {
 
     var body: some View {
         VStack {
-            HStack {
-                Text(viewModel.project!.name)
-                    .foregroundColor(.white)
-                    .font(.title)
-                Spacer()
-                projectSettingsButton
-            }
-            .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(Color("calliope-turqoise"))
-            )
-            .padding(.horizontal)
+            projectHeader
 
             ScrollView {
                 VStack {
@@ -43,14 +31,29 @@ struct ProjectView: View {
             .padding(.top, 20)
     }
 
+    var projectHeader: some View {
+        HStack {
+            Text(viewModel.project!.name)
+                .foregroundColor(.white)
+                .font(.title)
+            Spacer()
+            projectSettingsButton
+        }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color("calliope-turqoise"))
+        )
+        .padding(.horizontal)
+    }
+
     var addGroupButton: some View {
         IconButton(
             imageSystemName: "plus.circle",
             action: viewModel.addGroup,
             rotation: 0,
             iconColor: Color(.white),
-            backgroundColor: viewModel.addGroupButtonEnabled
-                ? Color("calliope-turqoise") : Color(.gray)
+            backgroundColor: viewModel.addGroupButtonEnabled ? Color("calliope-turqoise") : Color(.gray)
         ).disabled(!viewModel.addGroupButtonEnabled)
 
     }
@@ -68,9 +71,7 @@ struct ProjectView: View {
             isPresented: $showMenu,
             titleVisibility: .visible
         ) {
-            Button("Delete", role: .destructive) {
-                viewModel.deleteProject()
-            }
+            Button("Delete", role: .destructive) { viewModel.deleteProject() }
             Button("Export (CSV)") { viewModel.exportToCSVFile() }
             Button("Rename") { viewModel.renameProject() }
         }
@@ -91,9 +92,7 @@ struct IconButton: View {
                 .foregroundStyle(iconColor)
                 .frame(width: 44, height: 44)
                 .rotationEffect(.degrees(rotation))
-                .background(
-                    Circle().fill(backgroundColor).frame(width: 44, height: 44)
-                )
+                .background(Circle().fill(backgroundColor).frame(width: 44, height: 44))
         }
     }
 }
