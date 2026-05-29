@@ -49,9 +49,9 @@ struct ProjectView: View {
             action: viewModel.addGroup,
             rotation: 0,
             iconColor: Color(.white),
-            backgroundColor: viewModel.addGroupButton
+            backgroundColor: viewModel.addGroupButtonEnabled
                 ? Color("calliope-turqoise") : Color(.gray)
-        ).disabled(!viewModel.addGroupButton)
+        ).disabled(!viewModel.addGroupButtonEnabled)
 
     }
 

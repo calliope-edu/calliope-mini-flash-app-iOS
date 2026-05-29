@@ -15,33 +15,26 @@ import UIKit
 class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
 
     @Published var project: Project?
-    @Published var addGroupButton = false
-    @Published var groups: [Group] = []
-    var groupViewModels: [GroupViewModel] = []
-
-    func loadGroups() {
-        guard project != nil else {
-            LogNotify.log(
-                "Project was not set. This is not supposed to happen.",
-                level: LogNotify.LEVEL.ERROR
-            )
-            return
-        }
-        groups = Group.fetchGroupsBy(projectId: project!.id!)
-        groupViewModels = []
-        groups.forEach {
-            groupViewModels.append(
-                GroupViewModel(
-                    group: $0,
-                    openFileNameDialog: openFileNameDialog,
-                    deleteGroup: deleteGroup
-                )
-            )
-        }
-    }
+    @Published var addGroupButtonEnabled = false
+    @Published var groupViewModels: [GroupViewModel] = []
 
     private var calliopeConnectedSubcription: NSObjectProtocol!
     private var calliopeDisconnectedSubscription: NSObjectProtocol!
+
+    func loadGroups() {
+        guard project != nil else {
+            LogNotify.error("Project was not set. This is not supposed to happen.")
+            return
+        }
+        let groups = Group.fetchGroupsBy(projectId: project!.id!)
+        groupViewModels = groups.map {
+            GroupViewModel(
+                group: $0,
+                openFileNameDialog: openFileNameDialog,
+                deleteGroup: deleteGroup
+            )
+        }
+    }
 
     init?(coder: NSCoder, project: Project) {
         self.project = project
@@ -53,13 +46,6 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
     }
 
     @IBSegueAction func addSwiftUI(_ coder: NSCoder) -> UIViewController? {
-        guard project != nil else {
-            LogNotify.log(
-                "Project was not set. This is not supposed to happen.",
-                level: LogNotify.LEVEL.ERROR
-            )
-            return nil
-        }
         loadGroups()
         return UIHostingController(
             coder: coder,
@@ -67,10 +53,7 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
         )
     }
 
-    fileprivate func addSubscription(
-        name: NSNotification.Name,
-        onActivated: @escaping @Sendable (Notification) -> Void
-    ) -> NSObjectProtocol {
+    fileprivate func addSubscription(name: NSNotification.Name, onActivated: @escaping @Sendable (Notification) -> Void) -> NSObjectProtocol {
         return NotificationCenter.default.addObserver(
             forName: name,
             object: nil,
@@ -82,7 +65,7 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
     fileprivate func setAddGroupButton(value: Bool) {
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.5) {
-                self.addGroupButton = value
+                self.addGroupButtonEnabled = value
             }
         }
     }
@@ -90,14 +73,8 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
     fileprivate func showConnectCalliopeAlert() {
         DispatchQueue.main.async {
             let alert = UIAlertController(
-                title: NSLocalizedString(
-                    "Calliope mini verbinden!",
-                    comment: ""
-                ),
-                message: NSLocalizedString(
-                    "Verbindung notwendig, um Daten anzeigen zu lassen.",
-                    comment: ""
-                ),
+                title: NSLocalizedString("Calliope mini verbinden!", comment: ""),
+                message: NSLocalizedString("Verbindung notwendig, um Daten anzeigen zu lassen.", comment: ""),
                 preferredStyle: .alert
             )
             let okAction = UIAlertAction(
@@ -127,12 +104,12 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
 
         guard MatrixConnectionViewController.instance.usageReadyCalliope != nil
         else {
-            addGroupButton = false
+            addGroupButtonEnabled = false
             showConnectCalliopeAlert()
             return
         }
 
-        addGroupButton = true
+        addGroupButtonEnabled = true
     }
 
     func renameProject() {
@@ -187,14 +164,13 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
 
     func addGroup() {
         guard let project = project else {
-            LogNotify.log("Project is nil. This should not happen.")
+            LogNotify.error("Project is nil. This should not happen.")
             return
         }
         guard let group = Group.insertGroup(projectsId: project.id!) else {
             return
         }
         Chart.insertChart(sensorType: nil, groupsId: group.id)
-        groups.append(group)
         groupViewModels.append(
             GroupViewModel(
                 group: group,
@@ -234,13 +210,8 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
             handler: nil
         )
         let okAction = UIAlertAction(title: "OK", style: .default) { _ in
-            if let textField = alertController.textFields?.first,
-                let inputText = textField.text
-            {
-                onOk(
-                    (inputText == "" ? textField.placeholder : inputText)
-                        ?? "placeholder"
-                )
+            if let textField = alertController.textFields?.first, let inputText = textField.text {
+                onOk((inputText == "" ? textField.placeholder : inputText) ?? "placeholder")
             }
         }
         alertController.addAction(cancelAction)
@@ -251,14 +222,11 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
 
     deinit {
         NotificationCenter.default.removeObserver(calliopeConnectedSubcription!)
-        NotificationCenter.default.removeObserver(
-            calliopeDisconnectedSubscription!
-        )
+        NotificationCenter.default.removeObserver(calliopeDisconnectedSubscription!)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
-        // TODO: Use this in an appropriate place
-        // chartViewModels.forEach{ $0.stopRecording() }
+        groupViewModels.forEach { $0.chartViewModels.forEach { $0.stopRecording() } }
     }
 
 }
