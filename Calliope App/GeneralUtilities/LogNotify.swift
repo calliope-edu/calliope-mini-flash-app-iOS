@@ -17,5 +17,16 @@ class LogNotify {
         NSLog(extendedMessage)
         #endif
     }
-
+    
+    public class func info(_ msg: String, fileName: String = #file, lineNumber: Int = #line) {
+        LogNotify.log(msg, level: LogNotify.LEVEL.INFO, fileName: fileName, lineNumber: lineNumber)
+    }
+    
+    public class func debug(_ msg: String, fileName: String = #file, lineNumber: Int = #line) {
+        LogNotify.log(msg, level: LogNotify.LEVEL.DEBUG, fileName: fileName, lineNumber: lineNumber)
+    }
+    
+    public class func error(_ msg: String, fileName: String = #file, lineNumber: Int = #line) {
+        LogNotify.log(msg, level: LogNotify.LEVEL.ERROR, fileName: fileName, lineNumber: lineNumber)
+    }
 }
