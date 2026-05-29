@@ -144,7 +144,7 @@ struct ChartView: View {
     > {
         let minScale = 0.001
         let maxScale = 1.0
-        
+
         return MagnificationGesture()
             .updating($gestureScale) { value, state, _ in
                 state = 1 / value
@@ -168,9 +168,9 @@ struct ChartView: View {
     fileprivate func dragGesture(_ geo: GeometryProxy) -> _EndedGesture<
         GestureStateGesture<DragGesture, CGSize>
     > {
-        let displayedRangeWidth = totalRangeWidth*zoom
-        let minimumOffset = minimumX + (displayedRangeWidth/2)
-        let maximumOffset = maximumX - (displayedRangeWidth/2)
+        let displayedRangeWidth = totalRangeWidth * zoom
+        let minimumOffset = minimumX + (displayedRangeWidth / 2)
+        let maximumOffset = maximumX - (displayedRangeWidth / 2)
         return DragGesture()
             .updating($gestureOffset) { value, state, _ in
                 state.width =
