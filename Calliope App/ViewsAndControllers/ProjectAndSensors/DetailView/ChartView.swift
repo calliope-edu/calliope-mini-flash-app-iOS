@@ -24,20 +24,6 @@ struct ChartView: View {
             MetricsRowView(viewModel: viewModel)
 
             LineChart(viewModel: viewModel)
-
-            HStack {
-                Spacer()
-                IconButton(
-                    imageSystemName: viewModel.isRecording
-                        ? "pause.circle" : "play.circle",
-                    action: viewModel.toggleRecording,
-                    rotation: 0,
-                    iconColor: viewModel.selectedSensor == nil
-                        ? Color(.gray) : Color(.white),
-                    backgroundColor: Color(.white).opacity(0)
-                ).disabled(viewModel.selectedSensor == nil)
-                Spacer()
-            }
         }
     }
 }
@@ -260,7 +246,7 @@ struct ChartHeaderView: View {
                 .frame(minWidth: 150)
             axisDropdown.frame(maxWidth: .infinity, alignment: .center)
                 .frame(minWidth: 150)
-            settingsButton.frame(maxWidth: .infinity, alignment: .trailing)
+            recordButton.frame(maxWidth: .infinity, alignment: .trailing)
         }
     }
 
@@ -303,6 +289,18 @@ struct ChartHeaderView: View {
             Button("Delete", role: .destructive) { onRemoveTapped() }
             Button("Export (CSV)") { viewModel.exportAsCSV() }
         }
+    }
+
+    private var recordButton: some View {
+        IconButton(
+            imageSystemName: viewModel.isRecording
+                ? "pause.circle" : "play.circle",
+            action: viewModel.toggleRecording,
+            rotation: 0,
+            iconColor: viewModel.selectedSensor == nil
+                ? Color(.gray) : Color(.white),
+            backgroundColor: Color(.white).opacity(0)
+        ).disabled(viewModel.selectedSensor == nil)
     }
 }
 
