@@ -310,7 +310,9 @@ struct ChartHeaderView: View {
     var body: some View {
         HStack {
             sensorDropdown.frame(maxWidth: .infinity, alignment: .leading)
+                .frame(minWidth: 150)
             axisDropdown.frame(maxWidth: .infinity, alignment: .center)
+                .frame(minWidth: 150)
             settingsButton.frame(maxWidth: .infinity, alignment: .trailing)
         }
     }
