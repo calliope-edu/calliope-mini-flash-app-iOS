@@ -145,13 +145,18 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
         if let cal = activeCalliope() {
             // Happy path: device already paired via the legacy connection UI.
             let name = cal.peripheral.name ?? ""
+            let (bv, cv) = versionFields(cal)
             emitState(
                 status: "connected",
                 deviceName: name,
+                friendlyName: friendlyName(from: name),
+                boardVersion: bv,
+                calliopeVersion: cv,
                 bleCanFlash: true,
                 bleCanCommunicate: true,
                 bleHasPermission: true
             )
+            enableSerialNotify(cal)
             replyOk(id: id)
             return
         }
@@ -194,13 +199,18 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
                 let id = self.pendingConnectReplyId
                 self.pendingConnectReplyId = nil
                 let name = cal.peripheral.name ?? ""
+                let (bv, cv) = self.versionFields(cal)
                 self.emitState(
                     status: "connected",
                     deviceName: name,
+                    friendlyName: self.friendlyName(from: name),
+                    boardVersion: bv,
+                    calliopeVersion: cv,
                     bleCanFlash: true,
                     bleCanCommunicate: true,
                     bleHasPermission: true
                 )
+                self.enableSerialNotify(cal)
                 if let id = id { self.replyOk(id: id) }
                 return
             }
@@ -360,6 +370,22 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
 
     private static let uartServiceUUID = CBUUID(string: "6E400001-B5A3-F393-E0A9-E50E24DCCA9E")
     private static let uartRxUUID = CBUUID(string: "6E400003-B5A3-F393-E0A9-E50E24DCCA9E")
+    private static let uartTxUUID = CBUUID(string: "6E400002-B5A3-F393-E0A9-E50E24DCCA9E")
+
+    /// Auto-subscribe Nordic UART TX and forward each notification as a
+    /// `serialData` event the widget's serial layer consumes — the inbound half
+    /// of proxy serial. Best-effort: no-op when the program exposes no UART
+    /// (e.g. MicroPython). Mirrors the gattSubscribe install order (raw handler
+    /// before setNotify) so the first packet isn't dropped.
+    private func enableSerialNotify(_ cal: BLECalliope) {
+        guard let ch = findCharacteristic(on: cal.peripheral,
+                                          service: Self.uartServiceUUID,
+                                          characteristic: Self.uartTxUUID) else { return }
+        cal.rawNotificationHandlers[ch.uuid] = { [weak self] data in
+            self?.sendEvent(kind: "serialData", data: ["data": data.base64EncodedString()])
+        }
+        cal.setNotify(characteristic: ch, true) { _ in }
+    }
 
     private func handleSerialWrite(id: String, args: [String: Any]) {
         guard let cal = activeCalliope() else {
@@ -576,6 +602,9 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
         status: String,
         deviceName: String? = nil,
         errorMessage: String? = nil,
+        friendlyName: String? = nil,
+        boardVersion: String? = nil,
+        calliopeVersion: String? = nil,
         bleCanFlash: Bool? = nil,
         bleCanCommunicate: Bool? = nil,
         bleHasPermission: Bool? = nil
@@ -583,10 +612,33 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
         var d: [String: Any] = ["transport": "ble", "status": status]
         if let deviceName = deviceName { d["deviceName"] = deviceName }
         if let errorMessage = errorMessage { d["errorMessage"] = errorMessage }
+        if let friendlyName = friendlyName { d["friendlyName"] = friendlyName }
+        if let boardVersion = boardVersion { d["boardVersion"] = boardVersion }
+        if let calliopeVersion = calliopeVersion { d["calliopeVersion"] = calliopeVersion }
         if let bleCanFlash = bleCanFlash { d["bleCanFlash"] = bleCanFlash }
         if let bleCanCommunicate = bleCanCommunicate { d["bleCanCommunicate"] = bleCanCommunicate }
         if let bleHasPermission = bleHasPermission { d["bleHasPermission"] = bleHasPermission }
         sendEvent(kind: "state", data: d)
+    }
+
+    /// Map the connected calliope's concrete type to the widget's version
+    /// strings (boardVersion, calliopeVersion), so the web layer doesn't guess.
+    /// CalliopeV3 = V2-class silicon (Mini 3 == micro:bit v2); CalliopeV1AndV2 =
+    /// V1-class (Mini 1 & 2). `Any?` so we don't depend on the base type name.
+    private func versionFields(_ cal: Any?) -> (String?, String?) {
+        if cal is CalliopeV3 { return ("V2", "V3") }
+        if cal is CalliopeV1AndV2 { return ("V1", "V1") }
+        return (nil, nil)
+    }
+
+    /// Pull the 5-letter CVCVC friendly name out of an advertised name like
+    /// "Calliope mini [zuvav]". Nil if absent.
+    private func friendlyName(from name: String?) -> String? {
+        guard let name = name,
+              let r = name.range(of: "[zvgpt][uoiea][zvgpt][uoiea][zvgpt]",
+                                 options: [.regularExpression, .caseInsensitive])
+        else { return nil }
+        return String(name[r]).lowercased()
     }
 
     private func emitFlashProgress(phase: String, progress: Int) {
