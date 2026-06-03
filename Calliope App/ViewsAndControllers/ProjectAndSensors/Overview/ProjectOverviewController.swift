@@ -26,8 +26,6 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
 
     @objc var projectCollectionViewController: ProjectCollectionViewController?
 
-    @objc var dataLoggerWebViewController: DataLoggerWebViewController?
-
     var projectHeightConstraint: NSLayoutConstraint?
     var projectKvo: Any?
 

@@ -159,7 +159,6 @@
 		60EE6AC82F51EF730081CE15 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EE6AC72F51EF730081CE15 /* InfoViewController.swift */; };
 		7E25C1EF8B03BE2835268F12 /* UtilityJobState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E25C80C2A4E87716138A0E0 /* UtilityJobState.swift */; };
 		7E25C2F16E2316D7C6EF236F /* UtilityJobProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E25CF0763552A9F4EBCE00E /* UtilityJobProtocol.swift */; };
-		7E25C52A365F804B8AF1752B /* DataLoggerWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E25C0A505857D5F2CC1019C /* DataLoggerWebViewController.swift */; };
 		7E25CB63E012B25A80606449 /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E25C5F2B4FF55234B28A749 /* UIDevice+Extensions.swift */; };
 		7E25CE114DDEDC718EAB742D /* UtilityLogJob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E25C8370320F1AE86E741A5 /* UtilityLogJob.swift */; };
 		806801512EF5A2D00010448D /* ConnectedCalliopeV3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806801502EF5A2D00010448D /* ConnectedCalliopeV3.swift */; };
@@ -346,7 +345,6 @@
 		60EE6AC72F51EF730081CE15 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		60F889132B50225000B6C1F5 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
 		60FF510C2BB55324002B24A2 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = "Calliope App/PrivacyInfo.xcprivacy"; sourceTree = SOURCE_ROOT; };
-		7E25C0A505857D5F2CC1019C /* DataLoggerWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataLoggerWebViewController.swift; sourceTree = "<group>"; };
 		7E25C5F2B4FF55234B28A749 /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
 		7E25C80C2A4E87716138A0E0 /* UtilityJobState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityJobState.swift; sourceTree = "<group>"; };
 		7E25C8370320F1AE86E741A5 /* UtilityLogJob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityLogJob.swift; sourceTree = "<group>"; };
@@ -743,7 +741,6 @@
 		60C345D02D9BC6F500430DA8 /* DataLogger */ = {
 			isa = PBXGroup;
 			children = (
-				7E25C0A505857D5F2CC1019C /* DataLoggerWebViewController.swift */,
 				60127F6C2FD005DF000A1995 /* DataLoggerView.swift */,
 				60127F6E2FD0061F000A1995 /* DataLoggerViewModel.swift */,
 			);
@@ -1232,7 +1229,6 @@
 				7E25C1EF8B03BE2835268F12 /* UtilityJobState.swift in Sources */,
 				608CE91C2F89544D004EACA7 /* NewsCollectionViewController.swift in Sources */,
 				7E25CE114DDEDC718EAB742D /* UtilityLogJob.swift in Sources */,
-				7E25C52A365F804B8AF1752B /* DataLoggerWebViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
