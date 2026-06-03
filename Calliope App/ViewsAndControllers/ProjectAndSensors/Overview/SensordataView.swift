@@ -14,15 +14,13 @@ struct SensordataView: View {
 
     var body: some View {
         ScrollView {
-            HStack(alignment: .top) {
-                VStack {
-                    sendDataTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true)
-                    dataLoggerTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true)
-                }.frame(maxWidth: .infinity)
-                projectsTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true)
-                    .frame(maxWidth: .infinity)
-            }.padding()
-        }
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 500))]) {
+                sendDataTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true)
+                dataLoggerTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true)
+            }.frame(maxWidth: .infinity)
+            projectsTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true)
+                .frame(maxWidth: .infinity)
+        }.padding()
     }
 
     var sendDataTile: some View {
@@ -99,6 +97,7 @@ struct SensordataView: View {
 extension View {
     func tiled(color: Color, cornerRadius: CGFloat = 12, takeRemainingSpace: Bool = false) -> some View {
         self.frame(maxWidth: takeRemainingSpace ? .infinity : nil)
+            .frame(maxHeight: .infinity)
             .padding()
             .background(color)
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
