@@ -324,7 +324,7 @@
                         <outlet property="stackView" destination="XPz-7S-14H" id="iK2-j9-mH4"/>
                         <segue destination="xWF-af-2iy" kind="show" identifier="showNewlyCreatedProject" destinationCreationSelector="segue:" id="iAp-cX-5QA"/>
                         <segue destination="ghf-jY-ggY" kind="show" identifier="showEditor" destinationCreationSelector="initializeEditorView:" id="ohT-63-Vbv"/>
-                        <segue destination="eqp-p1-CyF" kind="show" identifier="showDataLoggerHTML" id="knV-6T-hdG"/>
+                        <segue destination="eqp-p1-CyF" kind="show" identifier="showDataLoggerHTML" destinationCreationSelector="initializeDataLoggerViewModel:" id="knV-6T-hdG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GtY-mM-QMm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -744,6 +744,7 @@
                     <view key="view" contentMode="scaleToFill" id="Xpe-Z2-Ebp">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="RDz-Mo-JQy"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                 </viewController>

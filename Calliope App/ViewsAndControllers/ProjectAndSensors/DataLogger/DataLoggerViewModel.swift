@@ -11,7 +11,21 @@ import SwiftUI
 
 class DataLoggerViewModel: UIViewController {
     
+    private var html: String?
+    var htmlData: Data {
+        get {
+            html?.data(using: .utf8) ?? Data()
+        }
+        set {
+            html = String(decoding: newValue, as: UTF8.self)
+        }
+    }
+    
     @IBSegueAction func addSwiftUI(_ coder: NSCoder) -> UIViewController? {
-        return UIHostingController(coder: coder, rootView: DataLoggerView())
+        guard html != nil else {
+            LogNotify.error("html is nil. This should not happen.")
+            return nil
+        }
+        return UIHostingController(coder: coder, rootView: DataLoggerView(html: html!))
     }
 }

@@ -10,7 +10,9 @@ import Foundation
 import SwiftUI
 
 struct DataLoggerView: View {
+    let html: String
+
     var body: some View {
-        WebView(url: URL(string: "https://google.com")!)
+        WebView(html: html)
     }
 }

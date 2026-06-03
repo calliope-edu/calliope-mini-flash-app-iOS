@@ -38,7 +38,6 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
     private var isUsbMode: Bool = false
     private var targetUrl: URL?
 
-
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(
@@ -47,7 +46,8 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
             },
             completion: { _ in
                 self.projectCollectionViewController?.collectionView.reloadData()
-            })
+            }
+        )
     }
 
     private func configureLayout(_ size: CGSize) {
@@ -65,7 +65,7 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
         projectHeightConstraint?.isActive = true
 
         configureLayout(UIApplication.shared.keyWindow!.frame.size)
-        
+
         addNotificationSubscriptions()
     }
 
@@ -82,7 +82,8 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
 
         self.connectedCalliope = MatrixConnectionViewController.instance.usageReadyCalliope
         self.isUsbMode = MatrixConnectionViewController.instance.isInUsbMode
-        self.loadDataLoggerDataButton.isEnabled = (self.connectedCalliope as? BLECalliope)?.discoveredOptionalServices.contains(.microbitUtilityService) ?? false || self.isUsbMode
+        self.loadDataLoggerDataButton.isEnabled =
+            (self.connectedCalliope as? BLECalliope)?.discoveredOptionalServices.contains(.microbitUtilityService) ?? false || self.isUsbMode
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -90,22 +91,21 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
         projectKvo = nil
     }
 
+    @IBSegueAction func initializeDataLoggerViewModel(_ coder: NSCoder) -> DataLoggerViewModel? {
+        LogNotify.debug("Setting up DataLogger ViewModel")
+        let dataLoggerViewModel = DataLoggerViewModel(coder: coder)
 
-    @IBSegueAction func initializeDataLoggerWebView(_ coder: NSCoder) -> DataLoggerWebViewController? {
-        LogNotify.log("Setting up DataLogger ViewController")
-        self.dataLoggerWebViewController = DataLoggerWebViewController(coder: coder)
-
-        if !isUsbMode, let result = (connectedCalliope as? CalliopeAPI)?.currentJob?.result {
-            self.dataLoggerWebViewController?.htmlData = result
-            return dataLoggerWebViewController
+        if !isUsbMode, let result = (connectedCalliope as? CalliopeAPI)?.currentJob?.result, dataLoggerViewModel != nil {
+            dataLoggerViewModel!.htmlData = result
+            return dataLoggerViewModel
         }
 
-        if isUsbMode, let url = targetUrl {
-            self.dataLoggerWebViewController?.htmlData = try! url.asData()
-            return dataLoggerWebViewController
+        if isUsbMode, let url = targetUrl, dataLoggerViewModel != nil {
+            dataLoggerViewModel!.htmlData = try! url.asData()
+            return dataLoggerViewModel
         }
 
-        LogNotify.log("No data")
+        LogNotify.error("No data")
         return nil
     }
 
@@ -114,7 +114,7 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
         editor.url = targetUrl
         return EditorViewController(coder: coder, editor: editor)
     }
-    
+
     @IBSegueAction func initializeProjects(_ coder: NSCoder) -> ProjectCollectionViewController? {
         LogNotify.log("setting project collection view controller")
         projectCollectionViewController = ProjectCollectionViewController(coder: coder)
@@ -134,7 +134,11 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
 
     @IBAction func createNewProject(_ coder: NSCoder) {
         LogNotify.log("Starting to create a new Project")
-        let alertController = UIAlertController(title: NSLocalizedString("Enter an Projectname for the new Project", comment: ""), message: nil, preferredStyle: .alert)
+        let alertController = UIAlertController(
+            title: NSLocalizedString("Enter an Projectname for the new Project", comment: ""),
+            message: nil,
+            preferredStyle: .alert
+        )
         alertController.addTextField { (textField) in
             textField.placeholder = "Calliope Project"
         }
@@ -191,7 +195,6 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
         }
     }
 
-
     func documentPicker(
         _ controller: UIDocumentPickerViewController,
         didPickDocumentAt url: URL
@@ -228,13 +231,19 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
 
                 let alert = UIAlertController(
                     title: NSLocalizedString("Datalogger Download Failed!", comment: ""),
-                    message: String(format: NSLocalizedString("There was an issue downloading the datalogger data from your Calliope mini. Please ensure you are connected to the Calliope and try again.", comment: "")),
+                    message: String(
+                        format: NSLocalizedString(
+                            "There was an issue downloading the datalogger data from your Calliope mini. Please ensure you are connected to the Calliope and try again.",
+                            comment: ""
+                        )
+                    ),
                     preferredStyle: .alert
                 )
                 alert.addAction(
                     UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel) { _ in
                         self.dismiss(animated: true)
-                    })
+                    }
+                )
                 self.present(alert, animated: true)
             }
         )
@@ -242,34 +251,45 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
 
     fileprivate func addNotificationSubscriptions() {
         calliopeConnectedSubcription = NotificationCenter.default.addObserver(
-            forName: DiscoveredBLEDevice.usageReadyNotificationName, object: nil, queue: nil,
+            forName: DiscoveredBLEDevice.usageReadyNotificationName,
+            object: nil,
+            queue: nil,
             using: { [weak self] (_) in
                 DispatchQueue.main.async {
                     LogNotify.log("Received usage ready Notification")
                     self?.connectedCalliope = MatrixConnectionViewController.instance.usageReadyCalliope
                     self?.isUsbMode = MatrixConnectionViewController.instance.isInUsbMode
-                    self?.loadDataLoggerDataButton.isEnabled = (self?.connectedCalliope as? BLECalliope)?.discoveredOptionalServices.contains(.microbitUtilityService) ?? false || self?.isUsbMode ?? false
+                    self?.loadDataLoggerDataButton.isEnabled =
+                        (self?.connectedCalliope as? BLECalliope)?.discoveredOptionalServices.contains(.microbitUtilityService) ?? false
+                        || self?.isUsbMode ?? false
                 }
-            })
+            }
+        )
 
         calliopeDisconnectedSubscription = NotificationCenter.default.addObserver(
-            forName: DiscoveredBLEDevice.disconnectedNotificationName, object: nil, queue: nil,
+            forName: DiscoveredBLEDevice.disconnectedNotificationName,
+            object: nil,
+            queue: nil,
             using: { [weak self] (_) in
                 DispatchQueue.main.async {
                     self?.connectedCalliope = nil
                     self?.isUsbMode = false
                     self?.loadDataLoggerDataButton.isEnabled = false
                 }
-            })
+            }
+        )
     }
 
     // UI Components for displaying Datalogger Loading
     private lazy var alertView: UIAlertController = {
-        let uploadController = UIAlertController(title: NSLocalizedString("Transfering Datalogger Data", comment: ""), message: "", preferredStyle: .alert)
+        let uploadController = UIAlertController(
+            title: NSLocalizedString("Transfering Datalogger Data", comment: ""),
+            message: "",
+            preferredStyle: .alert
+        )
 
         let progressView: UIView
         let logHeight = 0
-
 
         progressView = progressRing
         progressView.translatesAutoresizingMaskIntoConstraints = false
@@ -277,14 +297,23 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
         uploadController.view.addSubview(progressView)
         uploadController.view.addSubview(logTextView)
         uploadController.view.addConstraints(
-            NSLayoutConstraint.constraints(withVisualFormat: "V:|-(80)-[progressView(120)]-(8)-[logTextView(logHeight)]-(80)-|", options: [], metrics: ["logHeight": logHeight], views: ["progressView": progressView, "logTextView": logTextView]))
+            NSLayoutConstraint.constraints(
+                withVisualFormat: "V:|-(80)-[progressView(120)]-(8)-[logTextView(logHeight)]-(80)-|",
+                options: [],
+                metrics: ["logHeight": logHeight],
+                views: ["progressView": progressView, "logTextView": logTextView]
+            )
+        )
         progressView.widthAnchor.constraint(equalToConstant: 120).isActive = true
         progressView.centerXAnchor.constraint(equalTo: uploadController.view.centerXAnchor).isActive = true
 
         uploadController.view.addConstraints(
             NSLayoutConstraint.constraints(
                 withVisualFormat: "H:|-(8@900)-[logTextView(264)]-(8@900)-|",
-                options: [], metrics: nil, views: ["logTextView": logTextView])
+                options: [],
+                metrics: nil,
+                views: ["logTextView": logTextView]
+            )
         )
 
         uploadController.addAction(cancelUploadAction)
