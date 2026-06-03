@@ -9,7 +9,7 @@
 import GRDB
 import DeepDiff
 
-struct Project: Codable, FetchableRecord, PersistableRecord, DiffAware {
+struct Project: Codable, FetchableRecord, PersistableRecord, DiffAware, Identifiable {
 
     static let databaseTableName = "projects"
 
