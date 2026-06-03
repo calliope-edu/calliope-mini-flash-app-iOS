@@ -1,0 +1,16 @@
+//
+//  DataLoggerView.swift
+//  Calliope App
+//
+//  Created by Calliope on 03.06.26.
+//  Copyright © 2026 calliope. All rights reserved.
+//
+
+import Foundation
+import SwiftUI
+
+struct DataLoggerView: View {
+    var body: some View {
+        WebView(url: URL(string: "https://google.com")!)
+    }
+}

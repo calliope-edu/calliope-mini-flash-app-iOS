@@ -323,13 +323,13 @@
                         <outlet property="projectContainerView" destination="vV5-4y-x1s" id="hiZ-aD-JWK"/>
                         <outlet property="stackView" destination="XPz-7S-14H" id="iK2-j9-mH4"/>
                         <segue destination="xWF-af-2iy" kind="show" identifier="showNewlyCreatedProject" destinationCreationSelector="segue:" id="iAp-cX-5QA"/>
-                        <segue destination="eqp-p1-CyF" kind="show" identifier="showDataLoggerHTML" destinationCreationSelector="initializeDataLoggerWebView:" id="hpb-CZ-FVD"/>
                         <segue destination="ghf-jY-ggY" kind="show" identifier="showEditor" destinationCreationSelector="initializeEditorView:" id="ohT-63-Vbv"/>
+                        <segue destination="eqp-p1-CyF" kind="show" identifier="showDataLoggerHTML" id="knV-6T-hdG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GtY-mM-QMm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1089.55078125" y="422.9868228404099"/>
+            <point key="canvasLocation" x="1107" y="365"/>
         </scene>
         <!--Project Collection View Controller-->
         <scene sceneID="xhp-1j-Ru9">
@@ -672,24 +672,18 @@
             </objects>
             <point key="canvasLocation" x="2755.6640625" y="514.78770131771591"/>
         </scene>
-        <!--Data Logger Web View Controller-->
+        <!--Data Logger View Model-->
         <scene sceneID="rNu-rB-anU">
             <objects>
-                <viewController id="eqp-p1-CyF" customClass="DataLoggerWebViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <wkWebView key="view" contentMode="scaleToFill" id="2IM-N6-PfH">
+                <viewController id="eqp-p1-CyF" customClass="DataLoggerViewModel" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <containerView key="view" opaque="NO" contentMode="scaleToFill" id="OHY-7d-rr2">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <wkWebViewConfiguration key="configuration">
-                            <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
-                            <wkPreferences key="preferences"/>
-                        </wkWebViewConfiguration>
-                    </wkWebView>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <connections>
+                            <segue destination="smk-1R-6T2" kind="embed" destinationCreationSelector="addSwiftUI:" id="VQU-CN-cGa"/>
+                        </connections>
+                    </containerView>
                     <navigationItem key="navigationItem" id="39S-2J-juY"/>
-                    <connections>
-                        <outlet property="view" destination="2IM-N6-PfH" id="UZD-7c-38d"/>
-                        <outlet property="webview" destination="2IM-N6-PfH" id="RQS-3C-BTP"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mEm-Ag-Jke" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -734,6 +728,28 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gh6-xm-EVp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1829" y="1289"/>
+        </scene>
+        <!--Hosting Controller-->
+        <scene sceneID="iBR-cM-ShH">
+            <objects>
+                <hostingController id="smk-1R-6T2" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EhD-8K-9KG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3647" y="-180"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="YtQ-Xe-ged">
+            <objects>
+                <viewController id="Eaz-wi-0Fx" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Xpe-Z2-Ebp">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ac2-JS-OCQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="403" y="601"/>
         </scene>
     </scenes>
     <resources>

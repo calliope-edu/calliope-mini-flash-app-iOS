@@ -106,6 +106,9 @@
 		60107F912F48830E00A15101 /* LofiAppsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60107F902F48830E00A15101 /* LofiAppsViewController.swift */; };
 		60107F9A2F4888B800A15101 /* LofiApps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60107F992F4888B800A15101 /* LofiApps.storyboard */; };
 		60127E892FC9BD19000A1995 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60127E882FC9BD19000A1995 /* ChartView.swift */; };
+		60127F6D2FD005DF000A1995 /* DataLoggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60127F6C2FD005DF000A1995 /* DataLoggerView.swift */; };
+		60127F6F2FD0061F000A1995 /* DataLoggerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60127F6E2FD0061F000A1995 /* DataLoggerViewModel.swift */; };
+		60127F712FD00999000A1995 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60127F702FD00999000A1995 /* WebView.swift */; };
 		60316BF82B01FEC300130C0D /* BLECalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60316BF72B01FEC300130C0D /* BLECalliope.swift */; };
 		60316BFA2B0210CC00130C0D /* CalliopeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60316BF92B0210CC00130C0D /* CalliopeFactory.swift */; };
 		6042149F2F646DD30060064F /* TilePageLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6042149E2F646DD30060064F /* TilePageLayout.swift */; };
@@ -282,6 +285,9 @@
 		60107F902F48830E00A15101 /* LofiAppsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LofiAppsViewController.swift; sourceTree = "<group>"; };
 		60107F962F4888B800A15101 /* HomeScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = HomeScreen.storyboard; path = Base.lproj/LofiApps.storyboard; sourceTree = "<group>"; };
 		60127E882FC9BD19000A1995 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
+		60127F6C2FD005DF000A1995 /* DataLoggerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoggerView.swift; sourceTree = "<group>"; };
+		60127F6E2FD0061F000A1995 /* DataLoggerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoggerViewModel.swift; sourceTree = "<group>"; };
+		60127F702FD00999000A1995 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		601A19142B30658200E98E69 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
 		60316BF72B01FEC300130C0D /* BLECalliope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLECalliope.swift; sourceTree = "<group>"; };
 		60316BF92B0210CC00130C0D /* CalliopeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeFactory.swift; sourceTree = "<group>"; };
@@ -387,6 +393,7 @@
 				2F1BD9942674D48C006A47F2 /* AutoHeightCollectionViewFlowLayout.swift */,
 				2F1BD9962674D804006A47F2 /* AutoHeightCollectionViewCell.swift */,
 				6042149E2F646DD30060064F /* TilePageLayout.swift */,
+				60127F702FD00999000A1995 /* WebView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -737,6 +744,8 @@
 			isa = PBXGroup;
 			children = (
 				7E25C0A505857D5F2CC1019C /* DataLoggerWebViewController.swift */,
+				60127F6C2FD005DF000A1995 /* DataLoggerView.swift */,
+				60127F6E2FD0061F000A1995 /* DataLoggerViewModel.swift */,
 			);
 			path = DataLogger;
 			sourceTree = "<group>";
@@ -1147,6 +1156,7 @@
 				2F61459422BF761F001C2734 /* EditorViewController.swift in Sources */,
 				2F61458B22BF761F001C2734 /* MatrixView.swift in Sources */,
 				60C628702FC0957600D23A43 /* Group.swift in Sources */,
+				60127F6F2FD0061F000A1995 /* DataLoggerViewModel.swift in Sources */,
 				2F2B80A025A1100800A7CCF7 /* PlaygroundCodeSnippetViewController.swift in Sources */,
 				60127E892FC9BD19000A1995 /* ChartView.swift in Sources */,
 				2F1BD99A2674E378006A47F2 /* ProgramsCollectionViewFlowLayout.swift in Sources */,
@@ -1184,10 +1194,12 @@
 				60CF0EA92BFCBE1E00CB2A38 /* ProjectViewModel.swift in Sources */,
 				2F61458A22BF761F001C2734 /* CollapseButtonProtocol.swift in Sources */,
 				609D9BD42B67A15500F2ECAE /* USBCalliope.swift in Sources */,
+				60127F712FD00999000A1995 /* WebView.swift in Sources */,
 				60C627FA2FAE4BF100D23A43 /* GroupView.swift in Sources */,
 				2F5E8F0426C9787400CE03CB /* ArcadeStartViewController.swift in Sources */,
 				60030B9C2DC8B2E200397E69 /* Date.swift in Sources */,
 				60CF0EB02BFCD59D00CB2A38 /* DataController.swift in Sources */,
+				60127F6D2FD005DF000A1995 /* DataLoggerView.swift in Sources */,
 				60CF0EAD2BFCD25300CB2A38 /* Value.swift in Sources */,
 				2FC2A12B22C962D100675C2F /* NewsDetailWebViewController.swift in Sources */,
 				2F61459522BF761F001C2734 /* ProgramCollectionViewCell.swift in Sources */,
