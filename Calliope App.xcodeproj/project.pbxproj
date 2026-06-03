@@ -98,6 +98,7 @@
 		2FC2A12B22C962D100675C2F /* NewsDetailWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC2A12A22C962D100675C2F /* NewsDetailWebViewController.swift */; };
 		60025C602FD032840065AA36 /* SensordataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60025C5F2FD032840065AA36 /* SensordataView.swift */; };
 		60025C622FD041E40065AA36 /* SensordataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60025C612FD041E40065AA36 /* SensordataViewModel.swift */; };
+		60025C662FD071740065AA36 /* SensordataPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60025C652FD071740065AA36 /* SensordataPageController.swift */; };
 		60030B9C2DC8B2E200397E69 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60030B9B2DC8B2DE00397E69 /* Date.swift */; };
 		60030B9E2DC9E6CC00397E69 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60030B9D2DC9E6C600397E69 /* Double+Extension.swift */; };
 		60030BA02DC9E77C00397E69 /* Coordinates+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60030B9F2DC9E77600397E69 /* Coordinates+Extension.swift */; };
@@ -277,6 +278,7 @@
 		3849EA7340C0FAB5DB1A4000 /* Pods-Calliope App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.debug.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.debug.xcconfig"; sourceTree = "<group>"; };
 		60025C5F2FD032840065AA36 /* SensordataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensordataView.swift; sourceTree = "<group>"; };
 		60025C612FD041E40065AA36 /* SensordataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensordataViewModel.swift; sourceTree = "<group>"; };
+		60025C652FD071740065AA36 /* SensordataPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensordataPageController.swift; sourceTree = "<group>"; };
 		60030B9B2DC8B2DE00397E69 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		60030B9D2DC9E6C600397E69 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		60030B9F2DC9E77600397E69 /* Coordinates+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Coordinates+Extension.swift"; sourceTree = "<group>"; };
@@ -674,6 +676,7 @@
 				60D02D842BFCA41400D3C34A /* ProjectCollectionViewCell.swift */,
 				60025C5F2FD032840065AA36 /* SensordataView.swift */,
 				60025C612FD041E40065AA36 /* SensordataViewModel.swift */,
+				60025C652FD071740065AA36 /* SensordataPageController.swift */,
 			);
 			path = Overview;
 			sourceTree = "<group>";
@@ -1126,6 +1129,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60025C662FD071740065AA36 /* SensordataPageController.swift in Sources */,
 				2F61457B22BF761F001C2734 /* ValueLocalizer.swift in Sources */,
 				2FC2A12922C8FA6F00675C2F /* News.swift in Sources */,
 				600E632E2C33D7BB0027AE61 /* DataParser.swift in Sources */,

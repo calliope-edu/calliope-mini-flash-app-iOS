@@ -28,7 +28,7 @@ struct SensordataView: View {
             Text("Send sensor data directly from Calliope mini to the app").fontWeight(.bold)
             Text("1. Open MakeCode Editor")
             Text("2. Add the Bluetooth extension to your project")
-            imageButton(imageName: "calliope_bluetooth_extension 1", action: {})
+            imageButton(imageName: "calliope_bluetooth_extension 1", action: { viewModel.openBluetoothExtensionPage() })
             Text("3. Select the disired services for your program to view or record")
             Text("4. Start the program on your Calliope mini")
             Text("Detailed instructions can be found on the website:").fontWeight(.bold)
@@ -114,7 +114,11 @@ struct ProjectItem: View {
                 .lineLimit(1)
                 .frame(width: 150, alignment: .leading)
             Button("", systemImage: "trash", action: {}).foregroundColor(Color(.white))
-        }.tiled(color: Color.calliopeDarkgray)
+        }
+        .tiled(color: Color.calliopeDarkgray)
+        .onTapGesture {
+
+        }
     }
 }
 

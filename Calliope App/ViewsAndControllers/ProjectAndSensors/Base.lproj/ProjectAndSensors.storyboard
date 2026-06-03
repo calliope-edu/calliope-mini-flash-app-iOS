@@ -16,312 +16,17 @@
         <!--Sensordaten-->
         <scene sceneID="oLf-7a-6TA">
             <objects>
-                <viewController title="Sensordaten" modalPresentationStyle="fullScreen" id="nJx-VD-M8y" customClass="ProjectOverviewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="56f-nK-gjJ">
+                <viewController title="Sensordaten" modalPresentationStyle="fullScreen" id="nJx-VD-M8y" customClass="SensordataPageController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <containerView key="view" opaque="NO" contentMode="scaleToFill" id="9CU-yj-1qj">
                         <rect key="frame" x="0.0" y="0.0" width="699" height="1000"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentInsetAdjustmentBehavior="always" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="pRb-PT-Vod" customClass="TPKeyboardAvoidingScrollView">
-                                <rect key="frame" x="0.0" y="0.0" width="699" height="1000"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RfU-ox-jjf" userLabel="Background View Bottomn Left">
-                                        <rect key="frame" x="11" y="617.5" width="328.5" height="803.5"/>
-                                        <color key="backgroundColor" name="calliope-lightgray"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="8"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XBd-OB-Nlq" userLabel="Background View Top Left">
-                                        <rect key="frame" x="11" y="10" width="328.5" height="587.5"/>
-                                        <color key="backgroundColor" name="calliope-lightgray"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="8"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cQP-lI-hPT" userLabel="Background View">
-                                        <rect key="frame" x="359.5" y="10" width="328.5" height="726.5"/>
-                                        <color key="backgroundColor" name="calliope-lightgray"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="8"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </view>
-                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="XPz-7S-14H">
-                                        <rect key="frame" x="31" y="30" width="637" height="1371"/>
-                                        <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="Xvk-5m-938">
-                                                <rect key="frame" x="0.0" y="0.0" width="288.5" height="1371"/>
-                                                <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="VBO-5D-PIe">
-                                                        <rect key="frame" x="0.0" y="0.0" width="288.5" height="547.5"/>
-                                                        <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Send sensor data directly from Calliope mini to the app" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ov1-de-29k">
-                                                                <rect key="frame" x="0.0" y="0.0" width="288.5" height="42.5"/>
-                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N71-qD-IZn">
-                                                                <rect key="frame" x="0.0" y="47.5" width="288.5" height="86.5"/>
-                                                                <string key="text">1. Open MakeCode Editor
-                                                                    2. Add the Bluetooth extension to your project</string>
-                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zk1-RV-1GC">
-                                                                <rect key="frame" x="0.0" y="139" width="288.5" height="192.5"/>
-                                                                <subviews>
-                                                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cVa-L4-F9x">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="288.5" height="192.5"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" secondItem="cVa-L4-F9x" secondAttribute="height" multiplier="1.5:1" id="kxg-EM-GpL"/>
-                                                                        </constraints>
-                                                                        <state key="normal" image="calliope_bluetooth_extension 1"/>
-                                                                        <connections>
-                                                                            <action selector="initializeBluetoothSensorInfoWebView" destination="nJx-VD-M8y" eventType="touchUpInside" id="Fsd-St-JlR"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                </subviews>
-                                                                <constraints>
-                                                                    <constraint firstItem="cVa-L4-F9x" firstAttribute="top" secondItem="zk1-RV-1GC" secondAttribute="top" id="9U4-Dj-ut0"/>
-                                                                    <constraint firstAttribute="bottom" secondItem="cVa-L4-F9x" secondAttribute="bottom" id="CPl-IG-5sX"/>
-                                                                    <constraint firstItem="cVa-L4-F9x" firstAttribute="leading" secondItem="zk1-RV-1GC" secondAttribute="leading" id="pb9-On-lft"/>
-                                                                    <constraint firstAttribute="trailing" secondItem="cVa-L4-F9x" secondAttribute="trailing" id="pb9-On-rgt"/>
-                                                                </constraints>
-                                                            </view>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OaB-k3-pOM">
-                                                                <rect key="frame" x="0.0" y="336.5" width="288.5" height="108.5"/>
-                                                                <string key="text">3. Select the desired services for your program to view or record.
-                                                                    4. Start the program on your Calliope mini.</string>
-                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Detailed instructions can be found on the website:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cMt-qa-gH9">
-                                                                <rect key="frame" x="0.0" y="450" width="288.5" height="42.5"/>
-                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="we8-oa-Shn">
-                                                                <rect key="frame" x="0.0" y="497.5" width="288.5" height="50"/>
-                                                                <subviews>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j6E-jo-Y6K">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="288.5" height="50"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="height" constant="50" id="LDy-xm-xdj"/>
-                                                                        </constraints>
-                                                                        <state key="normal" title="Button"/>
-                                                                        <buttonConfiguration key="configuration" style="filled" title="calliope.cc">
-                                                                            <color key="baseBackgroundColor" name="calliope-pink"/>
-                                                                        </buttonConfiguration>
-                                                                        <connections>
-                                                                            <action selector="openLinkToCalliopeInformation" destination="nJx-VD-M8y" eventType="touchUpInside" id="CtZ-FF-hlN"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                </subviews>
-                                                                <constraints>
-                                                                    <constraint firstItem="j6E-jo-Y6K" firstAttribute="top" secondItem="we8-oa-Shn" secondAttribute="top" id="xiz-WH-xRZ"/>
-                                                                    <constraint firstItem="j6E-jo-Y6K" firstAttribute="leading" secondItem="we8-oa-Shn" secondAttribute="leading" id="ySL-zY-lft"/>
-                                                                    <constraint firstAttribute="trailing" secondItem="j6E-jo-Y6K" secondAttribute="trailing" id="ySL-zY-rgt"/>
-                                                                    <constraint firstAttribute="bottom" secondItem="j6E-jo-Y6K" secondAttribute="bottom" id="zaL-WW-owf"/>
-                                                                </constraints>
-                                                            </view>
-                                                        </subviews>
-                                                    </stackView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="V6B-Fg-aeb" userLabel="Datalogger Stack View">
-                                                        <rect key="frame" x="0.0" y="607.5" width="288.5" height="763.5"/>
-                                                        <subviews>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="CkY-Zy-1Sh">
-                                                                <rect key="frame" x="0.0" y="0.0" width="288.5" height="708.5"/>
-                                                                <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="80R-el-hVU">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="288.5" height="108.5"/>
-                                                                        <string key="text">Data can be recorded on the Calliope mini 3. With the datalogger extension data can be saved in a table and also displayed as a graph.
-                                                                        </string>
-                                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                                        <nil key="textColor"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6lB-5y-zkN">
-                                                                        <rect key="frame" x="0.0" y="113.5" width="288.5" height="64.5"/>
-                                                                        <string key="text">1. This template can be used with the extension:
-                                                                        </string>
-                                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                                        <nil key="textColor"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
-                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K4D-AD-fyT">
-                                                                        <rect key="frame" x="0.0" y="183" width="288.5" height="192"/>
-                                                                        <subviews>
-                                                                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C5B-tz-Y5P" userLabel="Data Logger Data Information Button">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="288.5" height="192"/>
-                                                                                <constraints>
-                                                                                    <constraint firstAttribute="width" secondItem="C5B-tz-Y5P" secondAttribute="height" multiplier="1.5:1" id="pNL-ZF-lf5"/>
-                                                                                </constraints>
-                                                                                <state key="normal" image="calliope_datalogger_extension"/>
-                                                                                <connections>
-                                                                                    <action selector="initializeDataLoggerInfoWebView" destination="nJx-VD-M8y" eventType="touchUpInside" id="beY-zw-M2e"/>
-                                                                                </connections>
-                                                                            </button>
-                                                                        </subviews>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="bottom" secondItem="C5B-tz-Y5P" secondAttribute="bottom" id="Nq8-fX-0DF"/>
-                                                                            <constraint firstItem="C5B-tz-Y5P" firstAttribute="leading" secondItem="K4D-AD-fyT" secondAttribute="leading" id="TYi-Gc-lft"/>
-                                                                            <constraint firstAttribute="trailing" secondItem="C5B-tz-Y5P" secondAttribute="trailing" id="TYi-Gc-rgt"/>
-                                                                            <constraint firstItem="C5B-tz-Y5P" firstAttribute="top" secondItem="K4D-AD-fyT" secondAttribute="top" id="suI-cG-Thi"/>
-                                                                        </constraints>
-                                                                    </view>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M5s-gg-ZTZ">
-                                                                        <rect key="frame" x="0.0" y="380" width="288.5" height="328.5"/>
-                                                                        <string key="text">
-                                                                            2. Create the program with the respective data and define the required columns and set the corresponding (sensor) data as values.
-
-                                                                            3. Transfer the program to your Calliope mini. 
-
-                                                                            4. Open the data logger view.
-                                                                        </string>
-                                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                                        <nil key="textColor"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
-                                                                </subviews>
-                                                            </stackView>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aeO-yK-dZb">
-                                                                <rect key="frame" x="0.0" y="713.5" width="288.5" height="50"/>
-                                                                <subviews>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kac-2O-C6o">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="288.5" height="50"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="height" constant="50" id="fay-wr-loN"/>
-                                                                        </constraints>
-                                                                        <state key="normal" title="Button"/>
-                                                                        <buttonConfiguration key="configuration" style="filled" title="Datalogger View" titleAlignment="center">
-                                                                            <color key="baseBackgroundColor" name="calliope-turqoise"/>
-                                                                        </buttonConfiguration>
-                                                                        <connections>
-                                                                            <action selector="getDataloggerHtml" destination="nJx-VD-M8y" eventType="touchUpInside" id="B3n-T9-cKo"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                </subviews>
-                                                                <constraints>
-                                                                    <constraint firstItem="kac-2O-C6o" firstAttribute="top" secondItem="aeO-yK-dZb" secondAttribute="top" id="b5r-bC-Wyp"/>
-                                                                    <constraint firstItem="kac-2O-C6o" firstAttribute="leading" secondItem="aeO-yK-dZb" secondAttribute="leading" id="dCT-5J-lft"/>
-                                                                    <constraint firstAttribute="trailing" secondItem="kac-2O-C6o" secondAttribute="trailing" id="dCT-5J-rgt"/>
-                                                                    <constraint firstAttribute="bottom" secondItem="kac-2O-C6o" secondAttribute="bottom" id="meO-hd-kse"/>
-                                                                </constraints>
-                                                            </view>
-                                                        </subviews>
-                                                    </stackView>
-                                                </subviews>
-                                                <constraints>
-                                                    <constraint firstItem="V6B-Fg-aeb" firstAttribute="width" secondItem="VBO-5D-PIe" secondAttribute="width" id="lIk-CS-dbO"/>
-                                                </constraints>
-                                            </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="JG8-rD-2e0">
-                                                <rect key="frame" x="348.5" y="0.0" width="288.5" height="686.5"/>
-                                                <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="sjo-QK-BNp">
-                                                        <rect key="frame" x="0.0" y="0.0" width="288.5" height="686.5"/>
-                                                        <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Here you will find your projects. You can view, process, and share the recorded data, as well as download it as a table." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gYD-YY-Lxx">
-                                                                <rect key="frame" x="0.0" y="0.0" width="288.5" height="86.5"/>
-                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vV5-4y-x1s">
-                                                                <rect key="frame" x="0.0" y="96.5" width="288.5" height="500"/>
-                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="height" priority="999" constant="500" placeholder="YES" id="NIW-6U-dmp"/>
-                                                                </constraints>
-                                                                <connections>
-                                                                    <segue destination="kIi-gt-RsJ" kind="embed" destinationCreationSelector="initializeProjects:" id="wqa-iK-VPN"/>
-                                                                </connections>
-                                                            </containerView>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7oc-Pm-ENc">
-                                                                <rect key="frame" x="0.0" y="606.5" width="288.5" height="80"/>
-                                                                <subviews>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ta-ld-GFK">
-                                                                        <rect key="frame" x="124.5" y="20" width="40" height="40"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="height" constant="40" id="6X4-YV-cZ6"/>
-                                                                            <constraint firstAttribute="width" constant="40" id="Qa2-Or-Qf2"/>
-                                                                        </constraints>
-                                                                        <state key="normal" title="Button"/>
-                                                                        <buttonConfiguration key="configuration" style="filled" image="plus" catalog="system" cornerStyle="capsule">
-                                                                            <color key="baseBackgroundColor" name="calliope-green"/>
-                                                                        </buttonConfiguration>
-                                                                        <userDefinedRuntimeAttributes>
-                                                                            <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="20"/>
-                                                                        </userDefinedRuntimeAttributes>
-                                                                        <connections>
-                                                                            <action selector="createNewProject:" destination="nJx-VD-M8y" eventType="touchUpInside" id="vSf-mZ-hIJ"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                </subviews>
-                                                                <constraints>
-                                                                    <constraint firstItem="1Ta-ld-GFK" firstAttribute="top" secondItem="7oc-Pm-ENc" secondAttribute="top" constant="20" id="alK-MK-deD"/>
-                                                                    <constraint firstItem="1Ta-ld-GFK" firstAttribute="centerX" secondItem="7oc-Pm-ENc" secondAttribute="centerX" id="ja4-7Q-HBr"/>
-                                                                    <constraint firstAttribute="bottom" secondItem="1Ta-ld-GFK" secondAttribute="bottom" constant="20" id="ze1-dS-k12"/>
-                                                                </constraints>
-                                                            </view>
-                                                        </subviews>
-                                                    </stackView>
-                                                </subviews>
-                                            </stackView>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="RfU-ox-jjf" firstAttribute="trailing" secondItem="V6B-Fg-aeb" secondAttribute="trailing" constant="20" id="0K2-d0-zyR"/>
-                                    <constraint firstItem="XPz-7S-14H" firstAttribute="bottom" secondItem="p22-QX-9YX" secondAttribute="bottom" constant="-30" id="22U-sw-Cq5"/>
-                                    <constraint firstItem="XPz-7S-14H" firstAttribute="top" secondItem="p22-QX-9YX" secondAttribute="top" constant="30" id="2Wi-Df-oIq"/>
-                                    <constraint firstItem="XBd-OB-Nlq" firstAttribute="top" secondItem="VBO-5D-PIe" secondAttribute="top" constant="-20" id="3iT-nx-48h"/>
-                                    <constraint firstItem="RfU-ox-jjf" firstAttribute="bottom" secondItem="V6B-Fg-aeb" secondAttribute="bottom" constant="20" id="Bgs-SH-z5O"/>
-                                    <constraint firstItem="XBd-OB-Nlq" firstAttribute="leading" secondItem="VBO-5D-PIe" secondAttribute="leading" constant="-20" id="Dcy-8L-3qH"/>
-                                    <constraint firstItem="cQP-lI-hPT" firstAttribute="leading" secondItem="sjo-QK-BNp" secondAttribute="leading" constant="-20" id="FXi-23-t4H"/>
-                                    <constraint firstItem="XPz-7S-14H" firstAttribute="trailing" secondItem="p22-QX-9YX" secondAttribute="trailing" constant="-31" id="K9X-Y0-15l"/>
-                                    <constraint firstItem="XBd-OB-Nlq" firstAttribute="bottom" secondItem="VBO-5D-PIe" secondAttribute="bottom" constant="20" id="NJp-fi-fTB"/>
-                                    <constraint firstItem="RfU-ox-jjf" firstAttribute="top" secondItem="V6B-Fg-aeb" secondAttribute="top" constant="-20" id="QAe-oa-FnL"/>
-                                    <constraint firstItem="cQP-lI-hPT" firstAttribute="top" secondItem="sjo-QK-BNp" secondAttribute="top" constant="-20" id="Sck-vA-ffi"/>
-                                    <constraint firstItem="cQP-lI-hPT" firstAttribute="bottom" secondItem="sjo-QK-BNp" secondAttribute="bottom" constant="20" id="Zb3-kV-fh0"/>
-                                    <constraint firstItem="XBd-OB-Nlq" firstAttribute="trailing" secondItem="VBO-5D-PIe" secondAttribute="trailing" constant="20" id="ayz-Dw-ULs"/>
-                                    <constraint firstItem="XPz-7S-14H" firstAttribute="leading" secondItem="WTz-1y-3KJ" secondAttribute="leading" constant="31" id="bFa-KN-9aZ"/>
-                                    <constraint firstItem="WTz-1y-3KJ" firstAttribute="trailing" secondItem="XPz-7S-14H" secondAttribute="trailing" constant="31" id="n5c-dl-TQG"/>
-                                    <constraint firstItem="cQP-lI-hPT" firstAttribute="trailing" secondItem="sjo-QK-BNp" secondAttribute="trailing" constant="20" id="oyl-RO-gPL"/>
-                                    <constraint firstItem="RfU-ox-jjf" firstAttribute="leading" secondItem="V6B-Fg-aeb" secondAttribute="leading" constant="-20" id="rkH-SB-dlW"/>
-                                    <constraint firstItem="XPz-7S-14H" firstAttribute="leading" secondItem="p22-QX-9YX" secondAttribute="leading" constant="31" id="v5C-76-jtP"/>
-                                </constraints>
-                                <viewLayoutGuide key="contentLayoutGuide" id="p22-QX-9YX"/>
-                                <viewLayoutGuide key="frameLayoutGuide" id="WTz-1y-3KJ"/>
-                            </scrollView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="ERj-7s-fsV"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstAttribute="bottom" secondItem="pRb-PT-Vod" secondAttribute="bottom" id="Rur-13-lBK"/>
-                            <constraint firstItem="pRb-PT-Vod" firstAttribute="leading" secondItem="56f-nK-gjJ" secondAttribute="leading" id="UER-hJ-sab"/>
-                            <constraint firstItem="XPz-7S-14H" firstAttribute="centerX" secondItem="ERj-7s-fsV" secondAttribute="centerX" id="XTD-ij-g0c"/>
-                            <constraint firstAttribute="trailing" secondItem="pRb-PT-Vod" secondAttribute="trailing" id="r0t-KL-kSl"/>
-                            <constraint firstItem="pRb-PT-Vod" firstAttribute="top" secondItem="56f-nK-gjJ" secondAttribute="top" id="zqA-BY-M7x"/>
-                        </constraints>
-                    </view>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <connections>
+                            <segue destination="MKF-AB-hq3" kind="embed" destinationCreationSelector="addSwiftUI2:" id="3cW-zw-X34"/>
+                        </connections>
+                    </containerView>
                     <navigationItem key="navigationItem" title="Sensordaten" largeTitleDisplayMode="never" id="DTy-e7-oGc"/>
                     <size key="freeformSize" width="699" height="1000"/>
                     <connections>
-                        <outlet property="addProjectButton" destination="1Ta-ld-GFK" id="fCh-WR-gcx"/>
-                        <outlet property="bluetoothSensorDataInformationButton" destination="cVa-L4-F9x" id="t8n-cX-5HD"/>
-                        <outlet property="loadDataLoggerDataButton" destination="kac-2O-C6o" id="P6k-3U-EKb"/>
-                        <outlet property="projectContainerView" destination="vV5-4y-x1s" id="hiZ-aD-JWK"/>
-                        <outlet property="stackView" destination="XPz-7S-14H" id="iK2-j9-mH4"/>
                         <segue destination="xWF-af-2iy" kind="show" identifier="showNewlyCreatedProject" destinationCreationSelector="segue:" id="iAp-cX-5QA"/>
                         <segue destination="ghf-jY-ggY" kind="show" identifier="showEditor" destinationCreationSelector="initializeEditorView:" id="ohT-63-Vbv"/>
                         <segue destination="eqp-p1-CyF" kind="show" identifier="showDataLoggerHTML" destinationCreationSelector="initializeDataLoggerViewModel:" id="knV-6T-hdG"/>
@@ -752,12 +457,31 @@
             </objects>
             <point key="canvasLocation" x="403" y="601"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="joi-OI-Egc">
+            <objects>
+                <viewController id="3PB-gX-m3S" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Uqv-9E-BBh">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7ho-Wd-8Rn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="143" y="1442"/>
+        </scene>
+        <!--Hosting Controller-->
+        <scene sceneID="NbD-gm-4ak">
+            <objects>
+                <hostingController id="MKF-AB-hq3" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XE7-qD-PcO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1058" y="1289"/>
+        </scene>
     </scenes>
     <resources>
-        <image name="calliope_bluetooth_extension 1" width="486" height="307"/>
-        <image name="calliope_datalogger_extension" width="486" height="307"/>
         <image name="menubar.rectangle" catalog="system" width="128" height="93"/>
-        <image name="plus" catalog="system" width="128" height="113"/>
         <image name="record.circle" catalog="system" width="128" height="123"/>
         <image name="trash" catalog="system" width="117" height="128"/>
         <namedColor name="calliope-brightturquoise">
@@ -766,20 +490,8 @@
         <namedColor name="calliope-gray">
             <color red="0.28999999165534973" green="0.32199999690055847" blue="0.36899998784065247" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="calliope-green">
-            <color red="0.27500000596046448" green="0.875" blue="0.4309999942779541" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="calliope-lightgray">
-            <color red="0.92900002002716064" green="0.93300002813339233" blue="0.93699997663497925" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="calliope-orange">
             <color red="1" green="0.3059999942779541" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="calliope-pink">
-            <color red="0.90200001001358032" green="0.0" blue="0.49000000953674316" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="calliope-turqoise">
-            <color red="0.25900000333786011" green="0.78799998760223389" blue="0.78799998760223389" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
