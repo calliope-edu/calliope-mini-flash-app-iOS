@@ -52,6 +52,7 @@ class ChartViewModel: ObservableObject, Identifiable {
     @Published var selectedAxis: DropDownOption<Bool?>?
     var baseTime: Double?
     @Published var markerPosition: Double?
+    @Published var sliderPosition: Double = 0.0
 
     var flatChartData: [ChartDataPoint] {
         return data.flatMap {
@@ -103,6 +104,7 @@ class ChartViewModel: ObservableObject, Identifiable {
 
     var displayedCurrent: Double? {
         if selectedAxis == nil || selectedAxis!.name == "all" { return nil }  // only calculate if the displayed data has only one axis
+        
         return displayedYs.last
     }
 
@@ -125,7 +127,7 @@ class ChartViewModel: ObservableObject, Identifiable {
         }
         return minimumDistance
     }
-
+    
     private var calliopeConnectedSubcription: NSObjectProtocol!
     private var calliopeDisconnectedSubscription: NSObjectProtocol!
 

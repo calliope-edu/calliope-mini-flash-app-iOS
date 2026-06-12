@@ -25,6 +25,8 @@ struct ChartView: View {
             MetricsRowView(viewModel: viewModel)
 
             LineChart(viewModel: viewModel)
+
+            Slider(value: $viewModel.sliderPosition, in: 0.0...1.0)
         }
         .onLongPressGesture(minimumDuration: 1) {
             showMenu = true
@@ -164,20 +166,7 @@ struct LineChart: View {
                             .absoluteMaximum ?? 1)
                     )
                     .chartXAxis {
-                        AxisMarks { value in
-                            AxisGridLine()
-                            AxisValueLabel {
-                                if let timestamp = value.as(Double.self) {
-                                    Text(
-                                        TimeAxisValueFormatter.stringForValue(
-                                            baseTime: viewModel.baseTime
-                                                ?? 0,
-                                            timestamp
-                                        )
-                                    )
-                                }
-                            }
-                        }
+                        axisMarks
                     }
                     .chartXScale(
                         domain: displayedRange ?? maxRange
@@ -190,16 +179,33 @@ struct LineChart: View {
                     )
                     .onAppear {
                         currentOffset.width = totalRangeWidth / 2  // ensures that it zooms around the center in the beginning
+                        calculateDisplayedRange(graphWidth: geo.size.width)
                     }
                     .frame(minHeight: 250)
                     .background(Color.white)
-
             }
             .frame(minHeight: 250)
         }
         .padding()  // space between chart and container edge
         .background(Color.white)
         .cornerRadius(12)
+    }
+    
+    var axisMarks: AxisMarks<some AxisMark> {
+        AxisMarks { value in
+            AxisGridLine()
+            AxisValueLabel {
+                if let timestamp = value.as(Double.self) {
+                    Text(
+                        TimeAxisValueFormatter.stringForValue(
+                            baseTime: viewModel.baseTime
+                                ?? 0,
+                            timestamp
+                        )
+                    )
+                }
+            }
+        }
     }
 
     var chart: some View {
@@ -208,6 +214,7 @@ struct LineChart: View {
                 lineMarker(dataPoint: dataPoint)
             }
             locationMarker
+            sliderMarker
         }
     }
 
@@ -238,6 +245,17 @@ struct LineChart: View {
             RuleMark(
                 x: .value("Time", viewModel.markerPosition!)
             )
+        }
+    }
+
+    @ChartContentBuilder
+    var sliderMarker: some ChartContent {
+        if displayedRange != nil {
+            let displayedRangeWidth = displayedRange!.upperBound - displayedRange!.lowerBound
+            RuleMark(
+                x: .value("Time", viewModel.sliderPosition * displayedRangeWidth + displayedRange!.lowerBound)
+            )
+
         }
     }
 }
