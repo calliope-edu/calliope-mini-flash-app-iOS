@@ -44,18 +44,16 @@ struct ChartView: View {
 
 struct LineChart: View {
     @ObservedObject var viewModel: ChartViewModel
-    @State private var currentScale: CGFloat = 1.0
-    @State private var currentOffset: CGSize = .zero
-    @GestureState private var gestureScale: CGFloat = 1.0
-    @GestureState private var gestureOffset: CGSize = .zero
-    @State private var displayedRange: ClosedRange<Double>?
+    @GestureState var gestureScale: CGFloat = 1.0
+    @GestureState var gestureOffset: CGSize = .zero
+
 
     var zoom: CGFloat {
-        return currentScale * gestureScale
+        return viewModel.currentScale * gestureScale
     }
 
     var offset: Double {
-        return currentOffset.width + gestureOffset.width
+        return viewModel.currentOffset.width + gestureOffset.width
     }
 
     var minimumX: Double {
@@ -77,16 +75,16 @@ struct LineChart: View {
     func calculateDisplayedRange(graphWidth: Double) {
         let displayedMinimumX = offset - totalRangeWidth * zoom / 2
         let displayedMaximumX = offset + totalRangeWidth * zoom / 2
-        displayedRange = displayedMinimumX...displayedMaximumX
+        viewModel.displayedRange = displayedMinimumX...displayedMaximumX
     }
 
     func ensureOffset(graphWidth: Double) {
-        if displayedRange!.lowerBound < minimumX {
-            let shift = minimumX - displayedRange!.lowerBound
-            currentOffset.width = currentOffset.width + shift
-        } else if displayedRange!.upperBound > maximumX {
-            let shift = displayedRange!.upperBound - maximumX
-            currentOffset.width = currentOffset.width - shift
+        if viewModel.displayedRange!.lowerBound < minimumX {
+            let shift = minimumX - viewModel.displayedRange!.lowerBound
+            viewModel.currentOffset.width = viewModel.currentOffset.width + shift
+        } else if viewModel.displayedRange!.upperBound > maximumX {
+            let shift =  viewModel.displayedRange!.upperBound - maximumX
+            viewModel.currentOffset.width = viewModel.currentOffset.width - shift
         }
         calculateDisplayedRange(graphWidth: graphWidth)
     }
@@ -101,8 +99,8 @@ struct LineChart: View {
             .updating($gestureScale) { value, state, _ in
                 state = 1 / value
                 state = max(
-                    minScale / currentScale,
-                    min(maxScale / currentScale, state)
+                    minScale / viewModel.currentScale,
+                    min(maxScale / viewModel.currentScale, state)
                 )
                 calculateDisplayedRange(
                     graphWidth: geo.size.width
@@ -110,8 +108,8 @@ struct LineChart: View {
                 ensureOffset(graphWidth: geo.size.width)
             }
             .onEnded { value in
-                currentScale /= value
-                currentScale = max(minScale, min(maxScale, currentScale))
+                viewModel.currentScale /= value
+                viewModel.currentScale = max(minScale, min(maxScale, viewModel.currentScale))
                 calculateDisplayedRange(
                     graphWidth: geo.size.width
                 )
@@ -131,8 +129,8 @@ struct LineChart: View {
                     -value.translation.width * zoom
                     * (totalRangeWidth / geo.size.width)
                 state.width = max(
-                    minimumOffset - currentOffset.width,
-                    min(maximumOffset - currentOffset.width, state.width)
+                    minimumOffset - viewModel.currentOffset.width,
+                    min(maximumOffset - viewModel.currentOffset.width, state.width)
                 )
                 calculateDisplayedRange(
                     graphWidth: geo.size.width
@@ -140,12 +138,12 @@ struct LineChart: View {
             }
 
             .onEnded { value in
-                currentOffset.width -=
+                viewModel.currentOffset.width -=
                     value.translation.width * zoom
                     * (totalRangeWidth / geo.size.width)
-                currentOffset.width = max(
+                viewModel.currentOffset.width = max(
                     minimumOffset,
-                    min(maximumOffset, currentOffset.width)
+                    min(maximumOffset, viewModel.currentOffset.width)
                 )
                 calculateDisplayedRange(
                     graphWidth: geo.size.width
@@ -169,7 +167,7 @@ struct LineChart: View {
                         axisMarks
                     }
                     .chartXScale(
-                        domain: displayedRange ?? maxRange
+                        domain: viewModel.displayedRange ?? maxRange
                     )
                     .gesture(
                         SimultaneousGesture(
@@ -178,7 +176,7 @@ struct LineChart: View {
                         )
                     )
                     .onAppear {
-                        currentOffset.width = totalRangeWidth / 2  // ensures that it zooms around the center in the beginning
+                        viewModel.currentOffset.width = totalRangeWidth / 2  // ensures that it zooms around the center in the beginning
                         calculateDisplayedRange(graphWidth: geo.size.width)
                     }
                     .frame(minHeight: 250)
@@ -250,10 +248,10 @@ struct LineChart: View {
 
     @ChartContentBuilder
     var sliderMarker: some ChartContent {
-        if displayedRange != nil {
-            let displayedRangeWidth = displayedRange!.upperBound - displayedRange!.lowerBound
+        if viewModel.displayedRange != nil {
+            let displayedRangeWidth = viewModel.displayedRange!.upperBound - viewModel.displayedRange!.lowerBound
             RuleMark(
-                x: .value("Time", viewModel.sliderPosition * displayedRangeWidth + displayedRange!.lowerBound)
+                x: .value("Time", viewModel.sliderPosition * displayedRangeWidth + viewModel.displayedRange!.lowerBound)
             )
 
         }
@@ -295,6 +293,7 @@ struct ChartDataPoint: Identifiable {
     let x: Double
     let y: Double
     let series: String
+    let location: IdentifiableLocation?
 }
 
 struct ChartHeaderView: View {

@@ -53,7 +53,12 @@ class ChartViewModel: ObservableObject, Identifiable {
     var baseTime: Double?
     @Published var markerPosition: Double?
     @Published var sliderPosition: Double = 0.0
+    
+    @Published var currentScale: CGFloat = 1.0
+    @Published var currentOffset: CGSize = .zero
+    @Published var displayedRange: ClosedRange<Double>?
 
+    
     var flatChartData: [ChartDataPoint] {
         return data.flatMap {
             series,
@@ -62,7 +67,8 @@ class ChartViewModel: ObservableObject, Identifiable {
                 ChartDataPoint(
                     x: $0.x,
                     y: $0.y,
-                    series: series
+                    series: series,
+                    location: $0.location
                 )
             }
         }
