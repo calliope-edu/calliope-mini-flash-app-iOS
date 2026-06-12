@@ -168,8 +168,8 @@ class SensordataViewModel: ObservableObject {
 }
 
 class PreviewSensordataViewModel: SensordataViewModel {
-    override init() {
+    init(projects: [Project]) {
         super.init()
-        projects = [Project(id: 1, name: "Test 1"), Project(id: 2, name: "Test 2"), Project(id: 3, name: "This is a long test name")]
+        self.projects = projects
     }
 }

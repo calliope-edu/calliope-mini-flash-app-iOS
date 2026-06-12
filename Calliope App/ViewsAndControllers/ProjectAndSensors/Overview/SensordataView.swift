@@ -124,8 +124,17 @@ struct ProjectItem: View {
 
 struct SensordataView_Previews: PreviewProvider {
     static var previews: some View {
-        let sensorDataViewModel = PreviewSensordataViewModel()
-        SensordataView(viewModel: sensorDataViewModel).previewInterfaceOrientation(.portrait)
-        SensordataView(viewModel: sensorDataViewModel).previewInterfaceOrientation(.landscapeLeft)
+        let viewModel3Projects = PreviewSensordataViewModel(projects: [
+            Project(id: 1, name: "Test 1"), Project(id: 2, name: "Test 2"), Project(id: 3, name: "This is a long test name"),
+        ])
+        SensordataView(viewModel: viewModel3Projects).previewInterfaceOrientation(.portrait)
+        SensordataView(viewModel: viewModel3Projects).previewInterfaceOrientation(.landscapeLeft)
+        let viewModelManyProjects = PreviewSensordataViewModel(projects: [
+            Project(id: 1, name: "Test 1"), Project(id: 2, name: "Test 2"), Project(id: 1, name: "Test 3"), Project(id: 2, name: "Test 4"),
+            Project(id: 1, name: "Test 5"), Project(id: 2, name: "Test 6"), Project(id: 1, name: "Test 7"), Project(id: 2, name: "Test 8"),
+        ])
+        SensordataView(viewModel: viewModelManyProjects).previewInterfaceOrientation(.portrait)
+        SensordataView(viewModel: viewModelManyProjects).previewInterfaceOrientation(.landscapeLeft)
+
     }
 }
