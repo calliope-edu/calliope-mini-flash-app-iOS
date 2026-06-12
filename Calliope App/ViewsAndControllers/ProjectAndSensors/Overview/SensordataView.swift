@@ -82,7 +82,7 @@ struct SensordataView: View {
                 "Here you will find your projects. You can view, process and share the recorded data, as well as download it as a table."
             ).fontWeight(.bold)
 
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 200))]) {
+            FlowLayout(spacing: 12) {
                 ForEach(viewModel.projects) { project in
                     ProjectItem(project: project)
                 }

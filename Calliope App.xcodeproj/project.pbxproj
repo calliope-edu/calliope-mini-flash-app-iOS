@@ -126,6 +126,7 @@
 		6094AC582E20F2410066D07A /* WebLogHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6094AC572E20F2380066D07A /* WebLogHandler.swift */; };
 		6094C3912C045FA9006F4CB4 /* ApiCalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6094C3902C045FA9006F4CB4 /* ApiCalliope.swift */; };
 		6094C3992C048201006F4CB4 /* DGCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6094C3972C048201006F4CB4 /* DGCharts.framework */; };
+		609833C02FDC01EA00CF6243 /* FlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609833BF2FDC01EA00CF6243 /* FlowLayout.swift */; };
 		609D9BD42B67A15500F2ECAE /* USBCalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609D9BD32B67A15500F2ECAE /* USBCalliope.swift */; };
 		609D9BD62B67AD2200F2ECAE /* Calliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609D9BD52B67AD2200F2ECAE /* Calliope.swift */; };
 		609F74C92BC587A600FE35E2 /* CalliopeBlocks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 609F74C82BC587A600FE35E2 /* CalliopeBlocks.storyboard */; };
@@ -312,6 +313,7 @@
 		6094C3902C045FA9006F4CB4 /* ApiCalliope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiCalliope.swift; sourceTree = "<group>"; };
 		6094C3972C048201006F4CB4 /* DGCharts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DGCharts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6094C3982C048201006F4CB4 /* DGCharts.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = DGCharts.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		609833BF2FDC01EA00CF6243 /* FlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLayout.swift; sourceTree = "<group>"; };
 		609D9BD32B67A15500F2ECAE /* USBCalliope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USBCalliope.swift; sourceTree = "<group>"; };
 		609D9BD52B67AD2200F2ECAE /* Calliope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calliope.swift; sourceTree = "<group>"; };
 		609F74C72BC587A600FE35E2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/CalliopeBlocks.storyboard; sourceTree = "<group>"; };
@@ -671,6 +673,7 @@
 		600E63282C328D700027AE61 /* Overview */ = {
 			isa = PBXGroup;
 			children = (
+				609833BF2FDC01EA00CF6243 /* FlowLayout.swift */,
 				60D02D7A2BFC864900D3C34A /* ProjectOverviewController.swift */,
 				60D02D822BFCA0C400D3C34A /* ProjectCollectionViewController.swift */,
 				60D02D842BFCA41400D3C34A /* ProjectCollectionViewCell.swift */,
@@ -1153,6 +1156,7 @@
 				2F375ABB237F28BC004ED8D7 /* DefaultProgram.swift in Sources */,
 				60107F912F48830E00A15101 /* LofiAppsViewController.swift in Sources */,
 				60025C602FD032840065AA36 /* SensordataView.swift in Sources */,
+				609833C02FDC01EA00CF6243 /* FlowLayout.swift in Sources */,
 				60BBDB882B6BA16F003AD3CE /* DiscoveredUSBDevice.swift in Sources */,
 				2F61458222BF761F001C2734 /* Checksum.swift in Sources */,
 				60EE6AC82F51EF730081CE15 /* InfoViewController.swift in Sources */,
