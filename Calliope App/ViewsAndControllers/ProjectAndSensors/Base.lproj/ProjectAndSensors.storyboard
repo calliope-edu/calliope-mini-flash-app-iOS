@@ -442,35 +442,6 @@
             </objects>
             <point key="canvasLocation" x="3647" y="-180"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="YtQ-Xe-ged">
-            <objects>
-                <viewController id="Eaz-wi-0Fx" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Xpe-Z2-Ebp">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="RDz-Mo-JQy"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ac2-JS-OCQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="403" y="601"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="joi-OI-Egc">
-            <objects>
-                <viewController id="3PB-gX-m3S" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Uqv-9E-BBh">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7ho-Wd-8Rn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="143" y="1442"/>
-        </scene>
         <!--Hosting Controller-->
         <scene sceneID="NbD-gm-4ak">
             <objects>
