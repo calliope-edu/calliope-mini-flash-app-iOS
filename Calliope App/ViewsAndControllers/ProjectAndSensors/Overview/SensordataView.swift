@@ -11,6 +11,7 @@ import SwiftUI
 
 struct SensordataView: View {
     @ObservedObject var viewModel: SensordataViewModel
+    @Environment(\.openURL) var openURL
 
     var body: some View {
         ScrollView {
@@ -28,11 +29,11 @@ struct SensordataView: View {
             Text("Send sensor data directly from Calliope mini to the app").fontWeight(.bold)
             Text("1. Open MakeCode Editor")
             Text("2. Add the Bluetooth extension to your project")
-            imageButton(imageName: "calliope_bluetooth_extension 1", action: { viewModel.openBluetoothExtensionPage() })
+            imageButton(imageName: "calliope_bluetooth_extension 1", action: { viewModel.openBluetoothSensorInfoWebView() })
             Text("3. Select the disired services for your program to view or record")
             Text("4. Start the program on your Calliope mini")
             Text("Detailed instructions can be found on the website:").fontWeight(.bold)
-            boxButton(label: "calliope.cc", action: {})
+            boxButton(label: "calliope.cc", action: {viewModel.openBluetoothExtensionPage(openURL: openURL)}, enabled: true)
         }
     }
 
@@ -42,11 +43,11 @@ struct SensordataView: View {
                 "Data can be recorded on the Calliope mini 3. With the datalogger extension data can be saved in a table and also displayed as a graph."
             ).fontWeight(.bold)
             Text("1. This template can be used with the extension:")
-            imageButton(imageName: "calliope_datalogger_extension", action: {})
-            Text("2. Create the program with the respective dat aand define the required columns and se tthe corresponding (sensor) data as values.")
+            imageButton(imageName: "calliope_datalogger_extension", action: {viewModel.openDataLoggerInfoWebView()})
+            Text("2. Create the program with the respective data and define the required columns and se tthe corresponding (sensor) data as values.")
             Text("3. Transfer the program to your Calliope mini")
             Text("4. Open the datalogger view")
-            boxButton(label: "DataLogger View", action: {})
+            boxButton(label: "DataLogger View", action: { viewModel.openDataLogger() }, enabled: viewModel.dataLoggerButtonEnabled)
         }
     }
 
@@ -63,17 +64,17 @@ struct SensordataView: View {
         }
     }
 
-    func boxButton(label: String, action: @escaping () -> Void) -> some View {
+    func boxButton(label: String, action: @escaping () -> Void, enabled: Bool) -> some View {
         return Button {
             action()
         } label: {
             Text(label)
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(Color.calliopePink)
+                .background(enabled ? Color.calliopePink : Color.calliopeGray)
                 .foregroundColor(.white)
                 .cornerRadius(12)
-        }
+        }.disabled(!enabled)
     }
 
     var projectsTile: some View {
@@ -84,11 +85,11 @@ struct SensordataView: View {
 
             FlowLayout(spacing: 12) {
                 ForEach(viewModel.projects) { project in
-                    ProjectItem(project: project)
+                    ProjectItem(project: project, viewModel: viewModel)
                 }
             }
 
-            IconButton(imageSystemName: "plus", action: {}, rotation: 0, iconColor: Color(.white), backgroundColor: Color.calliopeGreen)
+            IconButton(imageSystemName: "plus", action: {viewModel.createNewProject()}, rotation: 0, iconColor: Color(.white), backgroundColor: Color.calliopeGreen)
 
         }
     }
@@ -106,6 +107,7 @@ extension View {
 
 struct ProjectItem: View {
     let project: Project
+    let viewModel: SensordataViewModel
 
     var body: some View {
         HStack {
@@ -113,11 +115,11 @@ struct ProjectItem: View {
                 .foregroundColor(Color(.white))
                 .lineLimit(1)
                 .frame(width: 150, alignment: .leading)
-            Button("", systemImage: "trash", action: {}).foregroundColor(Color(.white))
+            Button("", systemImage: "trash", action: { viewModel.deleteProject(id: project.id! )}).foregroundColor(Color(.white))
         }
         .tiled(color: Color.calliopeDarkgray)
         .onTapGesture {
-
+            viewModel.openProject(project: project)
         }
     }
 }

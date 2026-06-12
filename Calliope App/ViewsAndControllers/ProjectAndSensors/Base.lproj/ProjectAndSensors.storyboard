@@ -12,12 +12,12 @@
         <!--Sensordaten-->
         <scene sceneID="oLf-7a-6TA">
             <objects>
-                <viewController title="Sensordaten" modalPresentationStyle="fullScreen" id="nJx-VD-M8y" customClass="SensordataPageController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Sensordaten" modalPresentationStyle="fullScreen" id="nJx-VD-M8y" customClass="SensordataViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <containerView key="view" opaque="NO" contentMode="scaleToFill" id="9CU-yj-1qj">
                         <rect key="frame" x="0.0" y="0.0" width="699" height="1000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <connections>
-                            <segue destination="MKF-AB-hq3" kind="embed" destinationCreationSelector="addSwiftUI2:" id="3cW-zw-X34"/>
+                            <segue destination="MKF-AB-hq3" kind="embed" destinationCreationSelector="addSwiftUI:" id="3cW-zw-X34"/>
                         </connections>
                     </containerView>
                     <navigationItem key="navigationItem" title="Sensordaten" largeTitleDisplayMode="never" id="DTy-e7-oGc"/>
@@ -47,7 +47,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UuD-ux-mgZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1864" y="584"/>
-        </scene>
+        </scene>/
         <!--Sensordaten-->
         <scene sceneID="uHp-mq-DKm">
             <objects>

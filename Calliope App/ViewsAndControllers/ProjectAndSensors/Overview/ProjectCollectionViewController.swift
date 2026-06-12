@@ -23,13 +23,13 @@ class ProjectCollectionViewController: UICollectionViewController, UIDocumentPic
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        programSubscription = NotificationCenter.default.addObserver(
-            forName: NotificationConstants.projectsChanged, object: nil, queue: nil,
-            using: { [weak self] (_) in
-                DispatchQueue.main.async {
-                    self?.animateFileChange()
-                }
-            })
+    programSubscription = NotificationCenter.default.addObserver(
+        forName: NotificationConstants.projectsChanged, object: nil, queue: nil,
+        using: { [weak self] (_) in
+            DispatchQueue.main.async {
+                self?.animateFileChange()
+            }
+        })
     }
 
     override func viewWillAppear(_ animated: Bool) {

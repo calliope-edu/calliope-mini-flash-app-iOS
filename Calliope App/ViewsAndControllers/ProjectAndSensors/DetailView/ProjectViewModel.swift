@@ -44,7 +44,7 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-
+    
     @IBSegueAction func addSwiftUI(_ coder: NSCoder) -> UIViewController? {
         loadGroups()
         return UIHostingController(

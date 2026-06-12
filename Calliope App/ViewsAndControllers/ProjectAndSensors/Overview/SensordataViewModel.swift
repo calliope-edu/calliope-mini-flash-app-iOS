@@ -12,164 +12,125 @@ import SwiftUI
 class SensordataViewModel: ObservableObject {
     @Published var projects: [Project] = []
     private var targetUrl: URL?
-    @Environment(\.openURL) var openURL
+    var connectedCalliope: Calliope?
+    var isUsbMode: Bool
+    @Published var dataLoggerButtonEnabled: Bool
+
+    private var calliopeConnectedSubcription: NSObjectProtocol!
+    private var calliopeDisconnectedSubscription: NSObjectProtocol!
+    private var programSubscription: NSObjectProtocol!
+
+    let viewController: SensordataViewController
 
     func loadProjects() {
         projects = Project.fetchProjects()
     }
 
-    init() {
+    init(viewController: SensordataViewController) {
+        self.viewController = viewController
         projects = Project.fetchProjects()
+
+        MatrixConnectionViewController.instance?.connectionDescriptionText = NSLocalizedString("Calliope mini verbinden!", comment: "")
+        MatrixConnectionViewController.instance?.calliopeClass = DiscoveredBLEDevice.self
+
+        self.connectedCalliope = MatrixConnectionViewController.instance.usageReadyCalliope
+        self.isUsbMode = MatrixConnectionViewController.instance.isInUsbMode
+        self.dataLoggerButtonEnabled =
+            (self.connectedCalliope as? BLECalliope)?.discoveredOptionalServices.contains(.microbitUtilityService) ?? false || self.isUsbMode
+
+        addNotificationSubscriptions()
+
     }
 
     func deleteProject(id: Int64) {
         Project.deleteProject(id: id)
-        // TODO: Delete Groups and Charts
         loadProjects()
     }
 
-    func initializeDataLoggerViewModel(_ coder: NSCoder) -> DataLoggerViewModel? {
-        LogNotify.debug("Setting up DataLogger ViewModel")
-        let dataLoggerViewModel = DataLoggerViewModel(coder: coder)
+    fileprivate func addNotificationSubscriptions() {
+        calliopeConnectedSubcription = NotificationCenter.default.addObserver(
+            forName: DiscoveredBLEDevice.usageReadyNotificationName,
+            object: nil,
+            queue: nil,
+            using: { [weak self] (_) in
+                DispatchQueue.main.async {
+                    LogNotify.log("Received usage ready Notification")
+                    self?.connectedCalliope = MatrixConnectionViewController.instance.usageReadyCalliope
+                    self?.isUsbMode = MatrixConnectionViewController.instance.isInUsbMode
+                    self?.dataLoggerButtonEnabled =
+                        (self?.connectedCalliope as? BLECalliope)?.discoveredOptionalServices.contains(.microbitUtilityService) ?? false
+                        || self?.isUsbMode ?? false
+                }
+            }
+        )
 
-        if !MatrixConnectionViewController.instance.isInUsbMode,
-            let result = (MatrixConnectionViewController.instance.usageReadyCalliope as? CalliopeAPI)?.currentJob?.result, dataLoggerViewModel != nil
-        {
-            dataLoggerViewModel!.htmlData = result
-            return dataLoggerViewModel
-        }
+        calliopeDisconnectedSubscription = NotificationCenter.default.addObserver(
+            forName: DiscoveredBLEDevice.disconnectedNotificationName,
+            object: nil,
+            queue: nil,
+            using: { [weak self] (_) in
+                DispatchQueue.main.async {
+                    self?.connectedCalliope = nil
+                    self?.isUsbMode = false
+                    self?.dataLoggerButtonEnabled = false
+                }
+            }
+        )
 
-        if MatrixConnectionViewController.instance.isInUsbMode, let url = targetUrl, dataLoggerViewModel != nil {
-            dataLoggerViewModel!.htmlData = try! url.asData()
-            return dataLoggerViewModel
-        }
-
-        LogNotify.error("No data")
-        return nil
+        programSubscription = NotificationCenter.default.addObserver(
+            forName: NotificationConstants.projectsChanged,
+            object: nil,
+            queue: nil,
+            using: { [weak self] (_) in
+                DispatchQueue.main.async {
+                    self?.loadProjects()
+                }
+            }
+        )
     }
 
-    func openBluetoothExtensionPage() {
+    func openBluetoothExtensionPage(openURL: OpenURLAction) {
         if let url = URL(string: "https://calliope.cc/programmieren/mobil/ipad#sensordaten") {
             openURL(url)
         }
     }
 
-    func initializeEditorView(_ coder: NSCoder) -> EditorViewController? {
-        var editor = MakeCode()
-        editor.url = targetUrl
-        return EditorViewController(coder: coder, editor: editor)
+    func openBluetoothSensorInfoWebView() {
+        viewController.openBluetoothSensorInfoWebView()
     }
 
-    func initializeBluetoothSensorInfoWebView() {
-        self.targetUrl = URL.init(string: "https://makecode.calliope.cc/#pub:_30A13o6dM9L2")
-        // self.performSegue(withIdentifier: "showEditor", sender: self)
+    func openDataLoggerInfoWebView() {
+        viewController.openDataLoggerInfoWebView()
     }
 
-    func initializeDataLoggerInfoWebView() {
-        self.targetUrl = URL.init(string: "https://makecode.calliope.cc/#pub:_Dv9J1xCp6HRy")
-        // self.performSegue(withIdentifier: "showEditor", sender: self)
-    }
-
-    func createNewProject(_ coder: NSCoder) {
+    func createNewProject() {
         LogNotify.log("Starting to create a new Project")
-        /*let alertController = UIAlertController(
-            title: NSLocalizedString("Enter an Projectname for the new Project", comment: ""),
-            message: nil,
-            preferredStyle: .alert
-        )
-        alertController.addTextField { (textField) in
-            textField.placeholder = "Calliope Project"
-        }
-
-        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
-            if let textField = alertController.textFields?.first, let name = textField.text {
-                let normalizedName = name.isEmpty ? "Calliope Project" : name
-                let project = Project.insertProject(name: normalizedName)
-                self.performSegue(withIdentifier: "showNewlyCreatedProject", sender: project?.id)
-            }
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-
-        alertController.addAction(okAction)
-        alertController.addAction(cancelAction)
-        self.present(alertController, animated: true, completion: nil)*/
+        viewController.createNewProject()
     }
 
-    func openLinkToCalliopeInformation() {
-        if let url = URL(string: NSLocalizedString("https://calliope.cc/programmieren/mobil/ipad#sensordaten", comment: "")) {
-            // UIApplication.shared.open(url)
-        }
+    func openProject(project: Project) {
+        viewController.openProject(project: project)
     }
 
-    func getDataloggerHtml() {
-        /*guard let connectedCalliope = self.connectedCalliope else {
-            LogNotify.log("Datalogger Data button pressed, while no connected Calliope. This should not happen.")
+    func openDataLogger() {
+        if connectedCalliope == nil {
+            LogNotify.error("connectedCalliope is nil. This should not happen.")
             return
         }
-
-        if isUsbMode {
-            getDataLoggerHTMLFrom(usbCalliope: connectedCalliope)
-            return
-        }
-        getDataLoggerHTMLFrom(bleCalliope: connectedCalliope)*/
-
+        viewController.getDataloggerHtml(connectedCalliope: connectedCalliope!, isUsbMode: isUsbMode)
     }
-
-    func getDataLoggerHTMLFrom(usbCalliope calliope: Calliope) {
-        DispatchQueue.main.async {
-            /*let documentPickerController = UIDocumentPickerViewController(forOpeningContentTypes: [UTType(filenameExtension: "htm")!])
-            documentPickerController.delegate = self
-            self.present(documentPickerController, animated: true, completion: nil)*/
-        }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(calliopeConnectedSubcription!)
+        NotificationCenter.default.removeObserver(calliopeDisconnectedSubscription!)
+        NotificationCenter.default.removeObserver(programSubscription!)
     }
-
-    private func getDataLoggerHTMLFrom(bleCalliope calliope: Calliope) {
-        guard let calliope = (calliope as? CalliopeAPI) else {
-            return
-        }
-
-        /*progressRing.resetProgress()
-        self.present(alertView, animated: true)
-        calliope.startUtilityJob(
-            for: .LOG_HTML,
-            onProgress: { [self] (a) in progressRing.startProgress(to: CGFloat(a), duration: 0.2) },
-            onCompletion: {
-                self.dismiss(animated: true)
-                self.performSegue(withIdentifier: "showDataLoggerHTML", sender: self)
-            },
-            onFailure: {
-                self.dismiss(animated: true)
-
-                let failureReason = calliope.currentJob?.jobState
-                if failureReason == .Canceled {
-                    return
-                }
-
-                let alert = UIAlertController(
-                    title: NSLocalizedString("Datalogger Download Failed!", comment: ""),
-                    message: String(
-                        format: NSLocalizedString(
-                            "There was an issue downloading the datalogger data from your Calliope mini. Please ensure you are connected to the Calliope and try again.",
-                            comment: ""
-                        )
-                    ),
-                    preferredStyle: .alert
-                )
-                alert.addAction(
-                    UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel) { _ in
-                        self.dismiss(animated: true)
-                    }
-                )
-                self.present(alert, animated: true)
-            }
-        )*/
-    }
-
 }
 
 class PreviewSensordataViewModel: SensordataViewModel {
     init(projects: [Project]) {
-        super.init()
+        let viewController = SensordataViewController()
+        super.init(viewController: viewController)
         self.projects = projects
     }
 }
