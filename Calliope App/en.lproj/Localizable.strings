@@ -353,3 +353,15 @@
 
 /* USB transfer duration message */
 "Duration: about 10 seconds" = "Takes  about 10 seconds";
+
+/* No comment provided by engineer. */
+"Please select and connect a Calliope mini using the Calliope icon at the top." = "Please select and connect a Calliope mini using the Calliope icon at the top.";
+
+/* No comment provided by engineer. */
+"No Calliope mini paired" = "No Calliope mini paired";
+
+/* No comment provided by engineer. */
+"No Calliope mini paired — please pair one via the connection icon at the top of the app and try again." = "No Calliope mini paired — please pair one via the connection icon at the top of the app and try again.";
+
+/* No comment provided by engineer. */
+"Blocks runtime detected — using full flash instead of partial flash" = "Blocks runtime detected — using full flash instead of partial flash";

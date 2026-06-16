@@ -191,7 +191,7 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
         }
         sendEvent(kind: "log", data: [
             "direction": "info",
-            "text": "Bitte oben im Calliope-Symbol einen Calliope mini auswählen und verbinden.",
+            "text": NSLocalizedString("Please select and connect a Calliope mini using the Calliope icon at the top.", comment: "Proxy bridge: connect requested but no device paired yet"),
         ])
         scheduleConnectPoll(remaining: Self.connectPollSeconds)
     }
@@ -200,9 +200,9 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
         guard remaining > 0 else {
             let id = pendingConnectReplyId
             pendingConnectReplyId = nil
-            emitState(status: "error", errorMessage: "Kein Calliope mini gekoppelt")
+            emitState(status: "error", errorMessage: NSLocalizedString("No Calliope mini paired", comment: "Proxy bridge: connect timed out, no device paired"))
             if let id = id {
-                replyError(id: id, message: "No Calliope mini paired — please pair one via the connection icon at the top of the app and try again.")
+                replyError(id: id, message: NSLocalizedString("No Calliope mini paired — please pair one via the connection icon at the top of the app and try again.", comment: "Proxy bridge: connect timed out, no device paired"))
             }
             return
         }
@@ -488,7 +488,7 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
             if isBlocksRuntime && !argForceFullDfu {
                 self.sendEvent(kind: "log", data: [
                     "direction": "info",
-                    "text": "Blocks-Runtime erkannt — vollständiger DFU statt partial-flash",
+                    "text": NSLocalizedString("Blocks runtime detected — using full flash instead of partial flash", comment: "Proxy bridge: blocks runtime forces full DFU"),
                 ])
             }
             self.currentFlashMode = forceFullDfu ? "dfu" : "partial"

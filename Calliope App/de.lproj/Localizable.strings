@@ -394,3 +394,15 @@
 
 /* USB transfer duration message */
 "Duration: about 10 seconds" = "Dauer 10 Sek.";
+
+/* No comment provided by engineer. */
+"Please select and connect a Calliope mini using the Calliope icon at the top." = "Bitte oben im Calliope-Symbol einen Calliope mini auswählen und verbinden.";
+
+/* No comment provided by engineer. */
+"No Calliope mini paired" = "Kein Calliope mini gekoppelt";
+
+/* No comment provided by engineer. */
+"No Calliope mini paired — please pair one via the connection icon at the top of the app and try again." = "Kein Calliope mini gekoppelt — bitte oben über das Verbindungssymbol einen Calliope mini koppeln und erneut versuchen.";
+
+/* No comment provided by engineer. */
+"Blocks runtime detected — using full flash instead of partial flash" = "Blocks-Runtime erkannt — vollständiger DFU statt partial-flash";
