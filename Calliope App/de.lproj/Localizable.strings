@@ -406,3 +406,12 @@
 
 /* No comment provided by engineer. */
 "Blocks runtime detected — using full flash instead of partial flash" = "Blocks-Runtime erkannt — vollständiger DFU statt partial-flash";
+
+/* Proxy bridge: reopening a stale connection before a flash */
+"Reconnecting to your Calliope mini before flashing …" = "Verbinde erneut mit deinem Calliope mini, bevor geflasht wird …";
+
+/* Proxy bridge: ask user to enter BLE mode before flashing */
+"Your Calliope mini isn't in Bluetooth mode. Hold A+B and press reset on the mini — it will then flash automatically." = "Dein Calliope mini ist nicht im Bluetooth-Modus. Halte A+B gedrückt und drücke Reset – dann wird automatisch geflasht.";
+
+/* Proxy bridge: reconnect-before-flash timed out */
+"Couldn't reach your Calliope mini. Hold A+B and press reset on the mini to turn Bluetooth back on, then try flashing again." = "Dein Calliope mini ist nicht erreichbar. Halte A+B gedrückt und drücke Reset, um Bluetooth wieder einzuschalten, und flashe dann erneut.";

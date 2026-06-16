@@ -51,6 +51,60 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
     /// are weak; without this, ARC would tear us down mid-flash.
     private static var inFlightFlasher: CalliopeProxyMessageHandler?
 
+    // MARK: Host connection mirroring state
+
+    /// NotificationCenter observer tokens for the host app's BLE connection
+    /// lifecycle (`usageReadyNotificationName` / `disconnectedNotificationName`,
+    /// posted by `DiscoveredDevice`). The proxy owns no BLE state — it mirrors
+    /// the app's connection into the widget so the campus reflects "connected" /
+    /// "disconnected" the instant the app does. See `installConnectionObservers`.
+    private var connectionObservers: [NSObjectProtocol] = []
+
+    /// What we last told the widget: `true` after we emit a `connected` state,
+    /// `false` after `disconnected`. Guards redundant emits and drives mirroring.
+    private var bridgeConnected = false
+
+    /// Debounce timer for emitting `disconnected`. A brief drop (post-flash
+    /// reboot, transient out-of-range the app auto-recovers from) must not
+    /// flicker the campus red→green — we wait out a window and only emit
+    /// `disconnected` if the app still has no usage-ready calliope when it fires.
+    private var disconnectDebounceTimer: DispatchSourceTimer?
+
+    /// While set in the future, disconnect emission is held off longer than the
+    /// normal debounce: a flash reboots the mini, and reconnect + service
+    /// discovery can take several seconds. Set on flash completion.
+    private var flashSettleDeadline: Date?
+
+    /// Normal debounce before reflecting a disconnect (coalesces a quick
+    /// reboot/reconnect). The flash-settle window extends this after a flash.
+    private static let disconnectDebounceSeconds = 4.0
+    private static let flashSettleSeconds = 15.0
+
+    // MARK: Reconnect-before-flash state
+
+    /// Friendly name (CVCVC) of the mini we last reported `connected`. Used to
+    /// re-target it during a reconnect-before-flash when the previous program
+    /// turned BLE off and the link went stale.
+    private var lastFriendlyName: String?
+
+    /// Poll timer driving a reconnect-before-flash attempt. A flash request that
+    /// arrives with no live connection (typical after flashing a no-BLE program:
+    /// MicroPython, or MakeCode with the radio extension) re-opens the link —
+    /// scanning, connecting to the known mini, prompting for A+B+Reset if it
+    /// isn't advertising — then flashes once usage-ready.
+    private var flashReconnectTimer: DispatchSourceTimer?
+
+    /// How long to optimistically try to reconnect before surfacing the
+    /// "put your mini in Bluetooth mode (A+B+Reset)" prompt to the user.
+    private static let flashReconnectOptimisticSeconds = 8.0
+    /// Absolute cap on the reconnect-before-flash wait. Kept under the widget's
+    /// 180 s `flash` bridge timeout so we reply with a clean error first.
+    private static let flashReconnectMaxSeconds = 150.0
+    /// `startCalliopeDiscovery` self-stops after ~20 s; re-arm the scan on this
+    /// cadence while we wait for the mini to (re)appear.
+    private static let flashReconnectScanRearmSeconds = 15.0
+    private static let flashReconnectPollMs = 500
+
     /// MbitMore service — pxt-blocks-runtime exposes this; pxt-calliope
     /// doesn't (the newer CODAL stub may register the service shell but
     /// leaves STATE all zeros).
@@ -61,9 +115,20 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
 
     init(webView: WKWebView) {
         self.webView = webView
+        super.init()
+        installConnectionObservers()
     }
 
     deinit {
+        // Stop mirroring the host connection once the editor closes.
+        for token in connectionObservers {
+            NotificationCenter.default.removeObserver(token)
+        }
+        connectionObservers.removeAll()
+        disconnectDebounceTimer?.cancel()
+        disconnectDebounceTimer = nil
+        flashReconnectTimer?.cancel()
+        flashReconnectTimer = nil
         // Clean up any active subscriptions on the live peripheral. Avoids
         // leaving the radio in notify-on state after the editor closes.
         if let cal = activeCalliope() {
@@ -155,28 +220,20 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
             replyError(id: id, message: "transport=\(transport) not supported in proxy mode (BLE only)")
             return
         }
-        emitState(status: "connecting")
         // Cancel any prior connect-poll — a single in-flight attempt is enough.
         cancelConnectPoll()
 
         if let cal = activeCalliope() {
             // Happy path: device already paired via the legacy connection UI.
-            let name = cal.peripheral.name ?? ""
-            let (bv, cv) = versionFields(cal)
-            emitState(
-                status: "connected",
-                deviceName: name,
-                friendlyName: friendlyName(from: name),
-                boardVersion: bv,
-                calliopeVersion: cv,
-                bleCanFlash: true,
-                bleCanCommunicate: true,
-                bleHasPermission: true
-            )
+            // Skip the "connecting" blip — we're already there.
+            cancelDisconnectDebounce()
+            emitConnected(cal)
             enableSerialNotify(cal)
             replyOk(id: id)
             return
         }
+
+        emitState(status: "connecting")
 
         // No paired calliope yet. Bounce the connection icon so the user
         // sees where to pair, then poll for the next minute. We DON'T
@@ -215,18 +272,8 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
             if let cal = self.activeCalliope() {
                 let id = self.pendingConnectReplyId
                 self.pendingConnectReplyId = nil
-                let name = cal.peripheral.name ?? ""
-                let (bv, cv) = self.versionFields(cal)
-                self.emitState(
-                    status: "connected",
-                    deviceName: name,
-                    friendlyName: self.friendlyName(from: name),
-                    boardVersion: bv,
-                    calliopeVersion: cv,
-                    bleCanFlash: true,
-                    bleCanCommunicate: true,
-                    bleHasPermission: true
-                )
+                self.cancelDisconnectDebounce()
+                self.emitConnected(cal)
                 self.enableSerialNotify(cal)
                 if let id = id { self.replyOk(id: id) }
                 return
@@ -244,8 +291,12 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
 
     private func handleDisconnect(id: String, args: [String: Any]) {
         // Drop any pending connect-poll so it doesn't fire a stale
-        // "connected" later.
+        // "connected" later, and any pending disconnect-debounce so the
+        // observer doesn't double-emit.
         cancelConnectPoll()
+        cancelDisconnectDebounce()
+        cancelFlashReconnect()
+        bridgeConnected = false
         // The native proxy doesn't own the BLE connection — the host app
         // does. Forwarding a disconnect into the host would also kill any
         // other UI relying on the connection. Just clear our local
@@ -260,6 +311,104 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
         subscribedCharacteristics.removeAll()
         emitState(status: "disconnected", deviceName: "")
         replyOk(id: id)
+    }
+
+    // MARK: - Host connection mirroring
+
+    /// Observe the host app's BLE connection lifecycle and mirror it into the
+    /// widget. The app — not the proxy — owns the radio, so the campus must
+    /// reflect whatever the app reports: green the moment a calliope is usage-
+    /// ready, red when the app gives up. Brief reboot/retry churn (notably the
+    /// post-flash reboot) is suppressed by a debounce so the dot doesn't flicker.
+    private func installConnectionObservers() {
+        let center = NotificationCenter.default
+        connectionObservers.append(
+            center.addObserver(forName: DiscoveredBLEDevice.usageReadyNotificationName,
+                               object: nil, queue: .main) { [weak self] _ in
+                self?.handleHostUsageReady()
+            }
+        )
+        connectionObservers.append(
+            center.addObserver(forName: DiscoveredBLEDevice.disconnectedNotificationName,
+                               object: nil, queue: .main) { [weak self] _ in
+                self?.handleHostDisconnected()
+            }
+        )
+    }
+
+    /// The app reached a usage-ready calliope — reflect `connected` and (re)arm
+    /// serial on the (possibly fresh) peripheral. Cancels any pending disconnect.
+    private func handleHostUsageReady() {
+        cancelDisconnectDebounce()
+        flashSettleDeadline = nil
+        guard let cal = activeCalliope() else { return }
+        // Re-arm serial even if we already consider ourselves connected: after a
+        // reboot the peripheral object is new and the old notify handler is dead.
+        enableSerialNotify(cal)
+        if !bridgeConnected {
+            emitConnected(cal)
+        }
+    }
+
+    /// The app lost a usage-ready calliope. Don't reflect it immediately — a
+    /// reboot (especially right after a flash) or a transient drop that the app
+    /// auto-recovers shouldn't flicker the campus. Wait out a window; only emit
+    /// `disconnected` if the app still has no usage-ready calliope by then.
+    private func handleHostDisconnected() {
+        guard bridgeConnected else { return }
+        // While a flash is in flight the mini reboots as part of DFU — never
+        // reflect that as a connection loss; flash completion drives state.
+        if pendingFlashReplyId != nil { return }
+        scheduleDisconnectDebounce()
+    }
+
+    private func scheduleDisconnectDebounce() {
+        cancelDisconnectDebounce()
+        var delay = Self.disconnectDebounceSeconds
+        if let deadline = flashSettleDeadline {
+            delay = max(delay, deadline.timeIntervalSinceNow)
+        }
+        let timer = DispatchSource.makeTimerSource(queue: .main)
+        disconnectDebounceTimer = timer
+        timer.schedule(deadline: .now() + delay)
+        timer.setEventHandler { [weak self] in
+            guard let self = self else { return }
+            self.disconnectDebounceTimer = nil
+            // Recovered in the meantime — nothing to reflect.
+            if self.activeCalliope() != nil { return }
+            guard self.bridgeConnected else { return }
+            self.bridgeConnected = false
+            self.subscribedCharacteristics.removeAll()
+            self.emitState(status: "disconnected", deviceName: "")
+        }
+        timer.resume()
+    }
+
+    private func cancelDisconnectDebounce() {
+        disconnectDebounceTimer?.cancel()
+        disconnectDebounceTimer = nil
+    }
+
+    /// Emit the full `connected` state (device + version fields) and mark the
+    /// bridge connected. Shared by `connect`, the connect-poll, and the
+    /// usage-ready observer so they stay identical.
+    private func emitConnected(_ cal: BLECalliope) {
+        let name = cal.peripheral.name ?? ""
+        let fname = friendlyName(from: name)
+        let (bv, cv) = versionFields(cal)
+        // Remember the mini so a later reconnect-before-flash can re-target it.
+        if let fname = fname { lastFriendlyName = fname }
+        emitState(
+            status: "connected",
+            deviceName: name,
+            friendlyName: fname,
+            boardVersion: bv,
+            calliopeVersion: cv,
+            bleCanFlash: true,
+            bleCanCommunicate: true,
+            bleHasPermission: true
+        )
+        bridgeConnected = true
     }
 
     // MARK: - GATT
@@ -436,6 +585,12 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
             options: .regularExpression
         )
         let argForceFullDfu = (args["forceFullDfu"] as? Bool) ?? false
+        // Optional editor hint: does the program being flashed leave BLE on?
+        // Omitted ⇒ unknown (optimistically try to reconnect first). `false` ⇒
+        // the editor already knows BLE will be off (MicroPython / MakeCode with
+        // the radio extension), so prompt for A+B+Reset sooner. Never blocks the
+        // flash — recovery is reactive regardless of this hint.
+        let programHasBle = args["programHasBle"] as? Bool
 
         // Persist hex to a temp file so we can hand it to the existing
         // upload pipeline as a Hex (HexFile expects a URL).
@@ -457,20 +612,44 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
             return
         }
 
-        guard let cal = activeCalliope() else {
-            replyError(id: id, message: "not connected")
+        let hexFile = HexFile(url: tmpURL, name: safeName, date: Date())
+
+        // A flash request supersedes any pending "disconnected" reflection.
+        cancelDisconnectDebounce()
+
+        if let cal = activeCalliope() {
+            // Live connection — flash straight away.
+            proceedWithFlash(id: id, cal: cal, hexFile: hexFile, argForceFullDfu: argForceFullDfu)
             return
         }
 
-        // Drop our notify subscriptions so partial-flash / DFU isn't fighting
-        // for the radio.
+        // No live connection. This is the common state after flashing a program
+        // that turns BLE off (MicroPython, or MakeCode with the radio extension):
+        // the mini reboots into a non-advertising program and the link goes
+        // stale. Try to (re)open the connection before flashing, and prompt the
+        // user to put the mini into Bluetooth mode (A+B+Reset) if it isn't
+        // advertising.
+        beginFlashReconnect(
+            id: id,
+            hexFile: hexFile,
+            argForceFullDfu: argForceFullDfu,
+            programHasBle: programHasBle
+        )
+    }
+
+    /// Flash a live, usage-ready calliope. Drops our notify subscriptions so the
+    /// partial-flash / DFU machinery doesn't fight for the radio, then runs the
+    /// blocks-runtime probe and hands off to `beginFlash`. The pending-flash
+    /// bookkeeping (`pendingFlashReplyId`, `inFlightFlasher`) is set HERE — never
+    /// during a reconnect attempt — so `handleHostDisconnected` doesn't mistake
+    /// pre-flash reconnect churn for a flash reboot.
+    private func proceedWithFlash(id: String, cal: BLECalliope, hexFile: HexFile, argForceFullDfu: Bool) {
         for (_, ch) in subscribedCharacteristics {
             cal.rawNotificationHandlers.removeValue(forKey: ch.uuid)
             cal.peripheral.setNotifyValue(false, for: ch)
         }
         subscribedCharacteristics.removeAll()
 
-        let hexFile = HexFile(url: tmpURL, name: safeName, date: Date())
         pendingFlashReplyId = id
         Self.inFlightFlasher = self
 
@@ -500,6 +679,117 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
                 forceFullDfu: forceFullDfu
             )
         }
+    }
+
+    // MARK: Reconnect-before-flash
+
+    /// Begin a reconnect-before-flash attempt: announce "connecting", then poll
+    /// (scanning + connecting to the known mini, prompting for A+B+Reset) until
+    /// a usage-ready calliope appears or we time out.
+    private func beginFlashReconnect(id: String, hexFile: HexFile, argForceFullDfu: Bool, programHasBle: Bool?) {
+        cancelFlashReconnect()
+        emitState(status: "connecting")
+        sendEvent(kind: "log", data: [
+            "direction": "info",
+            "text": NSLocalizedString("Reconnecting to your Calliope mini before flashing …", comment: "Proxy bridge: reopening a stale connection before a flash"),
+        ])
+        flashReconnectTick(
+            id: id,
+            hexFile: hexFile,
+            argForceFullDfu: argForceFullDfu,
+            programHasBle: programHasBle,
+            elapsedMs: 0,
+            promptShown: false,
+            lastScanRearmMs: 0
+        )
+    }
+
+    /// One step of the reconnect-before-flash loop. Runs immediately, then
+    /// reschedules itself every `flashReconnectPollMs` until it flashes, times
+    /// out, or is cancelled.
+    private func flashReconnectTick(id: String, hexFile: HexFile, argForceFullDfu: Bool, programHasBle: Bool?, elapsedMs: Int, promptShown: Bool, lastScanRearmMs: Int) {
+        // Success: a usage-ready calliope is available — flash it.
+        if let cal = activeCalliope() {
+            cancelFlashReconnect()
+            // Reflect the recovered connection before we tear it down to flash.
+            cancelDisconnectDebounce()
+            emitConnected(cal)
+            proceedWithFlash(id: id, cal: cal, hexFile: hexFile, argForceFullDfu: argForceFullDfu)
+            return
+        }
+
+        // Gave up: the mini never (re)appeared in Bluetooth mode.
+        if elapsedMs >= Int(Self.flashReconnectMaxSeconds * 1000) {
+            cancelFlashReconnect()
+            emitState(status: "disconnected", deviceName: "")
+            replyError(id: id, message: NSLocalizedString("Couldn't reach your Calliope mini. Hold A+B and press reset on the mini to turn Bluetooth back on, then try flashing again.", comment: "Proxy bridge: reconnect-before-flash timed out"))
+            return
+        }
+
+        // (Re)arm discovery — `startCalliopeDiscovery` self-stops after ~20 s.
+        var scanRearm = lastScanRearmMs
+        if elapsedMs == 0 || elapsedMs - lastScanRearmMs >= Int(Self.flashReconnectScanRearmSeconds * 1000) {
+            MatrixConnectionViewController.instance?.moveToForeground()
+            scanRearm = elapsedMs
+        }
+
+        // If the target mini is visible and idle, connect to it. The connect is
+        // async; a later tick sees `activeCalliope()` once it reaches usageReady.
+        if let connector = MatrixConnectionViewController.instance?.connector,
+           connector.state != .connecting,
+           let target = flashReconnectTarget(in: connector),
+           target.state == .discovered {
+            connector.connectToCalliope(target)
+        }
+
+        // Surface the A+B+Reset prompt once the optimistic window passes (or
+        // immediately when the editor told us the program has no BLE).
+        var shown = promptShown
+        let promptAtMs = (programHasBle == false) ? 0 : Int(Self.flashReconnectOptimisticSeconds * 1000)
+        if !shown && elapsedMs >= promptAtMs {
+            shown = true
+            // New event kind: widgets that understand it open the BLE-offline
+            // (A+B+Reset) modal; older widgets ignore it and fall back to the
+            // log line below.
+            sendEvent(kind: "bleModeRequest", data: ["reason": "no-mini-visible"])
+            sendEvent(kind: "log", data: [
+                "direction": "info",
+                "text": NSLocalizedString("Your Calliope mini isn't in Bluetooth mode. Hold A+B and press reset on the mini — it will then flash automatically.", comment: "Proxy bridge: ask user to enter BLE mode before flashing"),
+            ])
+        }
+
+        let timer = DispatchSource.makeTimerSource(queue: .main)
+        flashReconnectTimer = timer
+        timer.schedule(deadline: .now() + .milliseconds(Self.flashReconnectPollMs))
+        timer.setEventHandler { [weak self] in
+            guard let self = self else { return }
+            self.flashReconnectTimer = nil
+            self.flashReconnectTick(
+                id: id,
+                hexFile: hexFile,
+                argForceFullDfu: argForceFullDfu,
+                programHasBle: programHasBle,
+                elapsedMs: elapsedMs + Self.flashReconnectPollMs,
+                promptShown: shown,
+                lastScanRearmMs: scanRearm
+            )
+        }
+        timer.resume()
+    }
+
+    /// The mini to reconnect to before flashing: the one we last connected to
+    /// (by friendly name), else the single visible BLE mini if unambiguous.
+    private func flashReconnectTarget(in connector: CalliopeDiscovery) -> DiscoveredDevice? {
+        if let key = lastFriendlyName, let dev = connector.discoveredCalliopes[key] {
+            return dev
+        }
+        let bleDevices = connector.discoveredCalliopes.values.filter { $0 is DiscoveredBLEDevice }
+        return bleDevices.count == 1 ? bleDevices.first : nil
+    }
+
+    private func cancelFlashReconnect() {
+        flashReconnectTimer?.cancel()
+        flashReconnectTimer = nil
     }
 
     /// Continues handleFlash after the blocks-runtime probe returns.
@@ -692,6 +982,12 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
         let id = pendingFlashReplyId
         pendingFlashReplyId = nil
         Self.inFlightFlasher = nil
+        // The mini reboots into the freshly-flashed program now; reconnect +
+        // service discovery takes a few seconds. Hold off reflecting a
+        // disconnect for the settle window so a healthy reboot doesn't flicker
+        // the campus — but if the new program has no BLE and never comes back,
+        // the debounce still fires and we go red after the window.
+        flashSettleDeadline = Date(timeIntervalSinceNow: Self.flashSettleSeconds)
         MatrixConnectionViewController.instance?.enableDfuMode(mode: false)
         if success {
             emitFlashProgress(phase: "finalising", progress: 100)
