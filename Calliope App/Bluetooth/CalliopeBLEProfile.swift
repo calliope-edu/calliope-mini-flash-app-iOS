@@ -87,6 +87,17 @@ enum CalliopeService: String, CaseIterable, Codable {
     // MicroBit Utility Service for reading log data (e.g. MY_DATA.htm)
     case microbitUtilityService = "E95D0001-251D-470A-A062-FA1922DFA9A8"
 
+    //MARK: MakeCode / Blocks (MbitMore) extension service — used by Calliope Campus
+    /// Scratch/MakeCode "MbitMore" extension service. Exposes the Blocks
+    /// COMMAND (`0b500100…`) / STATE (`0b500101…`) characteristics the campus
+    /// connection widget uses to detect the running program type and Blocks
+    /// runtime version. We discover the service (but deliberately don't map its
+    /// characteristics, see `serviceCharacteristicMap`) so CoreBluetooth runs
+    /// `discoverCharacteristics(nil, …)` and pulls them all — letting the
+    /// native-proxy bridge reach them via raw GATT (see
+    /// `BLECalliope.rawNotificationHandlers` and `CalliopeProxyMessageHandler`).
+    case mbitMore = "0b50f3e4-607f-4151-9091-7d008d6ffc5c"
+
     case empty = "1111"
 }
 
