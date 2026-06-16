@@ -772,7 +772,7 @@ extension CalliopeProxyMessageHandler: LoggerDelegate {
 ///   - campus.calliope.cc          and any *.campus.calliope.cc
 ///   - calliope-campus.pages.dev   and any *.calliope-campus.pages.dev
 ///     (covers the Cloudflare Pages preview, e.g.
-///      feature-native-proxy.calliope-campus.pages.dev)
+///      rc11.calliope-campus.pages.dev)
 ///
 /// Suffix matching is anchored on a leading dot, so "evilcampus.calliope.cc"
 /// and "campus.calliope.cc.attacker.com" do NOT match.

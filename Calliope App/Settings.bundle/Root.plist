@@ -140,7 +140,7 @@
 			<key>Key</key>
 			<string>campusOnUrlPreference</string>
 			<key>DefaultValue</key>
-			<string>https://feature-native-proxy.calliope-campus.pages.dev</string>
+			<string>https://rc11.calliope-campus.pages.dev</string>
 			<key>KeyboardType</key>
 			<string>URL</string>
 			<key>AutocapitalizationType</key>

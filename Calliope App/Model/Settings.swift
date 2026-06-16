@@ -61,7 +61,7 @@ public struct Settings {
     static var defaultMicroPythonUrl = "https://python.calliope.cc?mobile=true"
     // Cloudflare Pages preview of the feature/native-proxy branch. Switch
     // to https://campus.calliope.cc once the proxy ships.
-    static var defaultCampusUrl = "https://feature-native-proxy.calliope-campus.pages.dev"
+    static var defaultCampusUrl = "https://rc11.calliope-campus.pages.dev"
 
     static var defaultLocalEditorEnabled = false
     static var defaultMakeCodeEnabled = true
