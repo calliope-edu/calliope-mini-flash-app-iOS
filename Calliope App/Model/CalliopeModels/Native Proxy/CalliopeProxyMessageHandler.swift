@@ -96,6 +96,23 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
             LogNotify.log("[ProxyBridge] malformed envelope")
             return
         }
+
+        // Origin gate. The bridge grants firmware-flashing + raw GATT, and the
+        // "calliope" script handler is attached to the whole web view — so any
+        // frame the campus page navigates or embeds could otherwise reach it.
+        // Gate on the SENDER frame's security origin (scheme + host): this is
+        // stricter than Android's top-document-URL check (it also rejects a
+        // hostile sub-frame on a campus page) and immune to navigation races.
+        // Mirror Android's refusal — log and reject this request id rather than
+        // drop silently, so the widget's promise rejects with a clear reason.
+        let origin = message.frameInfo.securityOrigin
+        let scheme = origin.`protocol`
+        guard CampusUrls.isAllowed(scheme: scheme, host: origin.host) else {
+            LogNotify.log("[ProxyBridge] dispatch refused — origin not in campus allowlist: \(scheme)://\(origin.host)")
+            replyError(id: id, message: "bridge unavailable for this origin")
+            return
+        }
+
         let args = env["args"] as? [String: Any] ?? [:]
         dispatch(id: id, op: op, args: args)
     }
@@ -739,5 +756,44 @@ extension CalliopeProxyMessageHandler: LoggerDelegate {
         // doesn't flood its panel with low-level DFU chatter.
         guard level == .error else { return }
         sendEvent(kind: "log", data: ["direction": "error", "text": message])
+    }
+}
+
+// MARK: - Origin allowlist
+
+/// Swift port of the Android `CampusUrls` allowlist — the single source of
+/// truth for which web origins may drive the native-proxy bridge. The bridge
+/// is only attached to `CampusEditor` web views, but that is a registration-
+/// time gate; this is the per-message runtime gate that keeps the firmware-
+/// flash / raw-GATT capability from leaking to any other origin the campus
+/// page might navigate or link out to.
+///
+/// Matched hosts (https only):
+///   - campus.calliope.cc          and any *.campus.calliope.cc
+///   - calliope-campus.pages.dev   and any *.calliope-campus.pages.dev
+///     (covers the Cloudflare Pages preview, e.g.
+///      feature-native-proxy.calliope-campus.pages.dev)
+///
+/// Suffix matching is anchored on a leading dot, so "evilcampus.calliope.cc"
+/// and "campus.calliope.cc.attacker.com" do NOT match.
+private enum CampusUrls {
+
+    static let allowedHosts = [
+        "campus.calliope.cc",
+        "calliope-campus.pages.dev",
+    ]
+
+    /// Mirrors Android `CampusUrls.isCampusUrl`, but split so it can gate a
+    /// `WKSecurityOrigin` (scheme + host) directly without rebuilding a URL.
+    static func isAllowed(scheme: String?, host: String?) -> Bool {
+        guard let scheme = scheme, scheme.lowercased() == "https" else { return false }
+        guard let host = host?.lowercased(), !host.isEmpty else { return false }
+        return allowedHosts.contains { host == $0 || host.hasSuffix(".\($0)") }
+    }
+
+    /// Convenience for gating a full URL (e.g. the configured campus URL).
+    static func isCampusUrl(_ url: URL?) -> Bool {
+        guard let url = url else { return false }
+        return isAllowed(scheme: url.scheme, host: url.host)
     }
 }
