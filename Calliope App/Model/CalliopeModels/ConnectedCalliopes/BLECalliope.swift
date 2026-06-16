@@ -40,6 +40,12 @@ class BLECalliope: Calliope {
     let name: String
     let servicesChangedCallback: () -> ()?
     var wbNotifications: [CalliopeCharacteristic: (String, String, String) -> Void] // This allows the WBMessageHandler to subscribe to notifications via the extension of this class
+    /// Raw-UUID notification handlers keyed by CBUUID. Lets the native-proxy
+    /// message handler subscribe to characteristics that aren't part of the
+    /// `CalliopeCharacteristic` enum (notably the MbitMore Blocks service
+    /// `0b50f3e4-…` used by Calliope Campus). Populated by
+    /// `CalliopeProxyMessageHandler` via `setRawNotificationHandler`.
+    var rawNotificationHandlers: [CBUUID: (Data) -> Void] = [:]
     
     required init?(peripheral: CBPeripheral, name: String, discoveredServices: Set<CalliopeService>, discoveredCharacteristicUUIDsForServiceUUID: [CBUUID: Set<CBUUID>], servicesChangedCallback: @escaping () -> ()?) {
         self.peripheral = peripheral
@@ -130,7 +136,16 @@ class BLECalliope: Calliope {
             LogNotify.log(bleError?.localizedDescription ?? "characteristic \(characteristic.uuid) does not have a value")
             return
         }
-        
+
+        // Native-proxy path: characteristics not declared in the
+        // `CalliopeCharacteristic` enum (e.g. MbitMore Blocks) reach us via
+        // the raw-UUID dict. Multiple handlers per UUID are not supported —
+        // the proxy ensures one-per-key.
+        if let rawHandler = rawNotificationHandlers[characteristic.uuid] {
+            rawHandler(value)
+            return
+        }
+
         guard let calliopeCharacteristic = CalliopeBLEProfile.uuidCharacteristicMap[characteristic.uuid]
         else {
             LogNotify.log("received value from unknown characteristic: \(characteristic.uuid)")

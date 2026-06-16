@@ -30,6 +30,18 @@ class FlashableBLECalliope: CalliopeAPI {
     
     // Callback to request disconnect from CalliopeDiscovery
     var requestDisconnectCallback: (() -> Void)?
+
+    /// One-shot override consumed by the next `upload(...)` call. When true,
+    /// upload skips the partial-flash try entirely and goes straight to full
+    /// Nordic DFU regardless of whether the partial-flashing service is
+    /// available and the hex carries the MakeCode magic marker. Set by the
+    /// native-proxy bridge (CalliopeProxyMessageHandler) when it detects a
+    /// blocks-runtime device — the DAL hashes match across pxt-blocks-runtime
+    /// and pxt-calliope so the partial-flash protocol can't tell them apart,
+    /// and a partial flash leaves the device in a broken hybrid state. The
+    /// flag is reset to false at the end of `upload(...)` so it stays a
+    /// per-call opt-in rather than a sticky preference.
+    var forceFullDfuForNextUpload: Bool = false
     
     // Flow control for BLE buffer management
     private var isWaitingForBufferReady = false
@@ -141,38 +153,46 @@ class FlashableBLECalliope: CalliopeAPI {
         dfuCompletedAwaitingReconnect = false
         rebootingForPartialFlashing = false
 
+        // Consume the one-shot override now so any early return below doesn't
+        // leak it into the next upload call.
+        let shouldForceFullDfu = forceFullDfuForNextUpload
+        forceFullDfuForNextUpload = false
+
         // Attempt partial flashing first if available
         LogNotify.log("Partial flashing service available: \(discoveredOptionalServices.contains(.partialFlashing))")
 
         // Check if partial flashing is available and hex has magic markers
         // The actual decision (partial vs full) is made after connecting and comparing DAL hashes and addresses
-        if discoveredOptionalServices.contains(.partialFlashing),
+        if !shouldForceFullDfu,
+           discoveredOptionalServices.contains(.partialFlashing),
            PartialFlashManager.isPartialFlashingEnabled,
            let partialInfo = file.partialFlashingInfo {
             let lineCount = partialInfo.partialFlashData.lineCount
             LogNotify.log("Partial flashing: hex has \(lineCount) lines after magic marker")
             LogNotify.log("Starting partial flash process (will verify DAL hash and addresses with device)")
-            
+
             // Cache the parsed info so startPartialFlashing() doesn't re-scan the whole file
             pendingPartialFlashingInfo = partialInfo
-            
+
             // Set flag BEFORE calling startPartialFlashing to catch any early notifications
             // (CalliopeV3 may have already enabled notifications in usageReady handler)
             partialFlashingStateLock.lock()
             isPartialFlashingActive = true
             partialFlashingStateLock.unlock()
-            
+
             startPartialFlashing()
         } else {
             // Log reason for not using partial flash
-            if !discoveredOptionalServices.contains(.partialFlashing) {
+            if shouldForceFullDfu {
+                LogNotify.log("Using full DFU: forceFullDfu requested by proxy (likely blocks-runtime on device)")
+            } else if !discoveredOptionalServices.contains(.partialFlashing) {
                 LogNotify.log("Using full DFU: partial flashing service not available on device")
             } else if !PartialFlashManager.isPartialFlashingEnabled {
                 LogNotify.log("Using full DFU: partial flashing disabled in settings")
             } else {
                 LogNotify.log("Using full DFU: hex file does not support partial flashing (no magic marker)")
             }
-            
+
             shouldRebootOnDisconnect = true
             try startFullFlashing()
         }
