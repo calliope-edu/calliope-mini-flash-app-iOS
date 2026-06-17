@@ -298,6 +298,9 @@
 /* No comment provided by engineer. */
 "Upload failed!" = "Übertragung fehlgeschlagen";
 
+/* Body text shown in the upload alert when a USB transfer fails. */
+"USB transfer failed retry instructions" = "Die Datei konnte nicht übertragen werden, probiere es noch einmal oder erstelle eine neue Verbindung zu deinem Calliope mini (das Icon oben rechts drücken) und versuche es danach erneut!";
+
 /* No comment provided by engineer. */
 "Upload the start program to your Calliope" = "Übertrag das Startprogramm auf den Calliope mini";
 
@@ -391,3 +394,24 @@
 
 /* USB transfer duration message */
 "Duration: about 10 seconds" = "Dauer 10 Sek.";
+
+/* No comment provided by engineer. */
+"Please select and connect a Calliope mini using the Calliope icon at the top." = "Bitte oben im Calliope-Symbol einen Calliope mini auswählen und verbinden.";
+
+/* No comment provided by engineer. */
+"No Calliope mini paired" = "Kein Calliope mini gekoppelt";
+
+/* No comment provided by engineer. */
+"No Calliope mini paired — please pair one via the connection icon at the top of the app and try again." = "Kein Calliope mini gekoppelt — bitte oben über das Verbindungssymbol einen Calliope mini koppeln und erneut versuchen.";
+
+/* No comment provided by engineer. */
+"Blocks runtime detected — using full flash instead of partial flash" = "Blocks-Runtime erkannt — vollständiger DFU statt partial-flash";
+
+/* Proxy bridge: reopening a stale connection before a flash */
+"Reconnecting to your Calliope mini before flashing …" = "Verbinde erneut mit deinem Calliope mini, bevor geflasht wird …";
+
+/* Proxy bridge: ask user to enter BLE mode before flashing */
+"Your Calliope mini isn't in Bluetooth mode. Hold A+B and press reset on the mini — it will then flash automatically." = "Dein Calliope mini ist nicht im Bluetooth-Modus. Halte A+B gedrückt und drücke Reset – dann wird automatisch geflasht.";
+
+/* Proxy bridge: reconnect-before-flash timed out */
+"Couldn't reach your Calliope mini. Hold A+B and press reset on the mini to turn Bluetooth back on, then try flashing again." = "Dein Calliope mini ist nicht erreichbar. Halte A+B gedrückt und drücke Reset, um Bluetooth wieder einzuschalten, und flashe dann erneut.";

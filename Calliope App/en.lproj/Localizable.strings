@@ -220,6 +220,9 @@
 /* No comment provided by engineer. */
 "Upload failed!" = "Upload failed!";
 
+/* Body text shown in the upload alert when a USB transfer fails. */
+"USB transfer failed retry instructions" = "The file could not be transferred. Please select your Calliope mini again (tap the icon at the top right) and try again!";
+
 /* No comment provided by engineer. */
 "Upload the start program to your Calliope" = "Upload the Start program to your Calliope mini";
 
@@ -293,7 +296,7 @@
 "Datalogger Download fehlgeschlagen!" = "Datalogger Download Failed!";
 
 /* (No Comment) */
-"Es gab ein Problem beim Herunterladen der Datalogger-Daten von Ihrem Calliope mini. Bitte stellen Sie sicher, dass Sie mit dem Calliope verbunden sind, und versuchen Sie es erneut." = "There was an issue downloading the datalogger data from your Calliope mini. Please ensure you are connected to the Calliope mini and try again.";
+"Es gab ein Problem beim Herunterladen der Datalogger-Daten von deinem Calliope mini. Bitte stelle sicher, dass du mit deinem Calliope mini verbunden bist, und versuche es erneut." = "There was an issue downloading the datalogger data from your Calliope mini. Please ensure you are connected to the Calliope mini and try again.";
 
 /* (No Comment) */
 "Übertragung der Datalogger-Daten" = "Transfering Datalogger Data";
@@ -303,7 +306,7 @@
 
 "Fehler beim Herunterladen der Datalogger CSV!" = "Failed to download Datalogger CSV!";
 
-"Du findest die CSV-Datei mit den Datalogger-Daten im Calliope-Verzeichnis  auf deinem Gerät, unter den namen MY_DATA.csv" = "You can find the CSV file containing your datalogger data, named MY_DATA.csv, in the Calliope directory on your device.";
+"Du findest die CSV-Datei mit den Datalogger-Daten im Calliope-Verzeichnis auf deinem Gerät unter den namen MY_DATA.csv" = "You can find the CSV file containing your datalogger data, named MY_DATA.csv, in the Calliope directory on your device.";
 
 "Der Download der CSV-Datei mit deinen Datalogger-Daten war nicht erfolgreich." = "The download of the CSV file containing your datalogger data was unsuccessful.";
 
@@ -350,3 +353,24 @@
 
 /* USB transfer duration message */
 "Duration: about 10 seconds" = "Takes  about 10 seconds";
+
+/* No comment provided by engineer. */
+"Please select and connect a Calliope mini using the Calliope icon at the top." = "Please select and connect a Calliope mini using the Calliope icon at the top.";
+
+/* No comment provided by engineer. */
+"No Calliope mini paired" = "No Calliope mini paired";
+
+/* No comment provided by engineer. */
+"No Calliope mini paired — please pair one via the connection icon at the top of the app and try again." = "No Calliope mini paired — please pair one via the connection icon at the top of the app and try again.";
+
+/* No comment provided by engineer. */
+"Blocks runtime detected — using full flash instead of partial flash" = "Blocks runtime detected — using full flash instead of partial flash";
+
+/* Proxy bridge: reopening a stale connection before a flash */
+"Reconnecting to your Calliope mini before flashing …" = "Reconnecting to your Calliope mini before flashing …";
+
+/* Proxy bridge: ask user to enter BLE mode before flashing */
+"Your Calliope mini isn't in Bluetooth mode. Hold A+B and press reset on the mini — it will then flash automatically." = "Your Calliope mini isn't in Bluetooth mode. Hold A+B and press reset on the mini — it will then flash automatically.";
+
+/* Proxy bridge: reconnect-before-flash timed out */
+"Couldn't reach your Calliope mini. Hold A+B and press reset on the mini to turn Bluetooth back on, then try flashing again." = "Couldn't reach your Calliope mini. Hold A+B and press reset on the mini to turn Bluetooth back on, then try flashing again.";
