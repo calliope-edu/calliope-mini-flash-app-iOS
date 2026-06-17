@@ -107,8 +107,9 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
 
     /// MbitMore service — pxt-blocks-runtime exposes this; pxt-calliope
     /// doesn't (the newer CODAL stub may register the service shell but
-    /// leaves STATE all zeros).
-    private static let mbitMoreServiceUUID = CBUUID(string: "0b50f3e4-607f-4151-9091-7d008d6ffc5c")
+    /// leaves STATE all zeros). Single source of truth is the
+    /// `CalliopeService.mbitMore` profile case (also drives service discovery).
+    private static let mbitMoreServiceUUID = CalliopeService.mbitMore.uuid
     /// MbitMore STATE characteristic — non-zero data confirms blocks-runtime
     /// is actively running (it fills the buffer with sensor data).
     private static let mbitMoreStateUUID = CBUUID(string: "0b500101-607f-4151-9091-7d008d6ffc5c")
