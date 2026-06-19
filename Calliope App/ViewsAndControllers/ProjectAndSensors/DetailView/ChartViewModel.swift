@@ -51,7 +51,6 @@ class ChartViewModel: ObservableObject, Identifiable {
     @Published var axisOptions: [DropDownOption<Bool?>] = []
     @Published var selectedAxis: DropDownOption<Bool?>?
     var baseTime: Double?
-    @Published var markerPosition: Double?
     @Published var sliderPosition: Double = 0.0
     
     @Published var currentScale: CGFloat = 1.0
@@ -185,7 +184,7 @@ class ChartViewModel: ObservableObject, Identifiable {
 
     func markValueForLocation(location: IdentifiableLocation) {
         let flatData = data.flatMap { $0.value.map { $0 } }
-        markerPosition = flatData.first(where: { $0.location == location })?.x
+        sliderPosition = flatData.first(where: { $0.location == location })?.x ?? sliderPosition
     }
 
     let colors = [

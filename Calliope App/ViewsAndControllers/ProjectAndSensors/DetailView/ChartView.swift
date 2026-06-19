@@ -154,7 +154,6 @@ struct LineChart: View {
             ForEach(viewModel.displayedChartData) { dataPoint in
                 lineMarker(dataPoint: dataPoint)
             }
-            locationMarker
             sliderMarker
         }
     }
@@ -178,15 +177,6 @@ struct LineChart: View {
         .foregroundStyle(
             viewModel.getColorForAxis(axis: dataPoint.series)
         )
-    }
-
-    @ChartContentBuilder
-    var locationMarker: some ChartContent {
-        if viewModel.markerPosition != nil {
-            RuleMark(
-                x: .value("Time", viewModel.markerPosition!)
-            )
-        }
     }
 
     @ChartContentBuilder
