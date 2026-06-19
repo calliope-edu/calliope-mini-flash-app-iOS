@@ -57,6 +57,30 @@ class ChartViewModel: ObservableObject, Identifiable {
     @Published var currentScale: CGFloat = 1.0
     @Published var currentOffset: CGSize = .zero
     @Published var displayedRange: ClosedRange<Double>?
+    
+    let minimumGraphScale = 0.001
+    let maximumGraphScale = 1.0
+    
+    var totalRangeWidth: Double {
+        return (maximumX ?? 1) - (minimumX ?? 0)
+    }
+    
+    func updateDisplayedRange(graphWidth: Double, gestureOffset: CGSize, gestureScale: Double) {
+        let offset = currentOffset.width + gestureOffset.width
+        let displayedMinimumX = offset - totalRangeWidth * currentScale * gestureScale / 2
+        let displayedMaximumX = offset + totalRangeWidth * currentScale * gestureScale / 2
+        displayedRange = displayedMinimumX...displayedMaximumX
+    }
+
+    func ensureOffsetInBounds(graphWidth: Double) {
+        if displayedRange!.lowerBound < (minimumX ?? 0) {
+            let shift = (minimumX ?? 0) - displayedRange!.lowerBound
+            currentOffset.width = currentOffset.width + shift
+        } else if displayedRange!.upperBound > (maximumX ?? 1) {
+            let shift =  displayedRange!.upperBound - (maximumX ?? 1)
+            currentOffset.width = currentOffset.width - shift
+        }
+    }
 
     
     var flatChartData: [ChartDataPoint] {

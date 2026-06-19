@@ -48,106 +48,49 @@ struct LineChart: View {
     @GestureState var gestureOffset: CGSize = .zero
 
 
-    var zoom: CGFloat {
-        return viewModel.currentScale * gestureScale
-    }
-
-    var offset: Double {
-        return viewModel.currentOffset.width + gestureOffset.width
-    }
-
-    var minimumX: Double {
-        return viewModel.minimumX ?? 0
-    }
-
-    var maximumX: Double {
-        return viewModel.maximumX ?? 1
-    }
-
-    var totalRangeWidth: Double {
-        return maximumX - minimumX
-    }
-
     var maxRange: ClosedRange<Double> {
         return (viewModel.minimumX ?? 0)...(viewModel.maximumX ?? 1)
     }
 
-    func calculateDisplayedRange(graphWidth: Double) {
-        let displayedMinimumX = offset - totalRangeWidth * zoom / 2
-        let displayedMaximumX = offset + totalRangeWidth * zoom / 2
-        viewModel.displayedRange = displayedMinimumX...displayedMaximumX
-    }
-
-    func ensureOffset(graphWidth: Double) {
-        if viewModel.displayedRange!.lowerBound < minimumX {
-            let shift = minimumX - viewModel.displayedRange!.lowerBound
-            viewModel.currentOffset.width = viewModel.currentOffset.width + shift
-        } else if viewModel.displayedRange!.upperBound > maximumX {
-            let shift =  viewModel.displayedRange!.upperBound - maximumX
-            viewModel.currentOffset.width = viewModel.currentOffset.width - shift
-        }
-        calculateDisplayedRange(graphWidth: graphWidth)
-    }
+    
 
     fileprivate func zoomGesture(_ geo: GeometryProxy) -> _EndedGesture<
         GestureStateGesture<MagnificationGesture, CGFloat>
     > {
-        let minScale = 0.001
-        let maxScale = 1.0
-
         return MagnificationGesture()
             .updating($gestureScale) { value, state, _ in
                 state = 1 / value
-                state = max(
-                    minScale / viewModel.currentScale,
-                    min(maxScale / viewModel.currentScale, state)
-                )
-                calculateDisplayedRange(
-                    graphWidth: geo.size.width
-                )
-                ensureOffset(graphWidth: geo.size.width)
+                state = min(viewModel.maximumGraphScale / viewModel.currentScale, state)
+                state = max(viewModel.minimumGraphScale / viewModel.currentScale, state)
+                viewModel.ensureOffsetInBounds(graphWidth: geo.size.width)
+                viewModel.updateDisplayedRange(graphWidth: geo.size.width, gestureOffset: gestureOffset, gestureScale: gestureScale)
             }
             .onEnded { value in
                 viewModel.currentScale /= value
-                viewModel.currentScale = max(minScale, min(maxScale, viewModel.currentScale))
-                calculateDisplayedRange(
-                    graphWidth: geo.size.width
-                )
-                ensureOffset(graphWidth: geo.size.width)
+                viewModel.currentScale = max(viewModel.minimumGraphScale, min(viewModel.maximumGraphScale, viewModel.currentScale))
+                viewModel.ensureOffsetInBounds(graphWidth: geo.size.width)
+                viewModel.updateDisplayedRange(graphWidth: geo.size.width, gestureOffset: gestureOffset, gestureScale: gestureScale)
             }
     }
 
     fileprivate func dragGesture(_ geo: GeometryProxy) -> _EndedGesture<
         GestureStateGesture<DragGesture, CGSize>
     > {
-        let displayedRangeWidth = totalRangeWidth * zoom
-        let minimumOffset = minimumX + (displayedRangeWidth / 2)
-        let maximumOffset = maximumX - (displayedRangeWidth / 2)
+        let displayedRangeWidth = viewModel.totalRangeWidth * viewModel.currentScale * gestureScale
+        let minimumOffset = (viewModel.minimumX ?? 0) + (displayedRangeWidth / 2)
+        let maximumOffset = (viewModel.maximumX ?? 1) - (displayedRangeWidth / 2)
         return DragGesture()
             .updating($gestureOffset) { value, state, _ in
-                state.width =
-                    -value.translation.width * zoom
-                    * (totalRangeWidth / geo.size.width)
-                state.width = max(
-                    minimumOffset - viewModel.currentOffset.width,
-                    min(maximumOffset - viewModel.currentOffset.width, state.width)
-                )
-                calculateDisplayedRange(
-                    graphWidth: geo.size.width
-                )
+                state.width = -value.translation.width * viewModel.currentScale * gestureScale * (viewModel.totalRangeWidth / geo.size.width)
+                state.width = min(maximumOffset - viewModel.currentOffset.width, state.width)
+                state.width = max(minimumOffset - viewModel.currentOffset.width, state.width)
+                viewModel.updateDisplayedRange(graphWidth: geo.size.width, gestureOffset: gestureOffset, gestureScale: gestureScale)
             }
 
             .onEnded { value in
-                viewModel.currentOffset.width -=
-                    value.translation.width * zoom
-                    * (totalRangeWidth / geo.size.width)
-                viewModel.currentOffset.width = max(
-                    minimumOffset,
-                    min(maximumOffset, viewModel.currentOffset.width)
-                )
-                calculateDisplayedRange(
-                    graphWidth: geo.size.width
-                )
+                viewModel.currentOffset.width -= value.translation.width * viewModel.currentScale * gestureScale * (viewModel.totalRangeWidth / geo.size.width)
+                viewModel.currentOffset.width = max(minimumOffset, min(maximumOffset, viewModel.currentOffset.width))
+                viewModel.updateDisplayedRange(graphWidth: geo.size.width, gestureOffset: gestureOffset, gestureScale: gestureScale)
             }
     }
 
@@ -176,8 +119,8 @@ struct LineChart: View {
                         )
                     )
                     .onAppear {
-                        viewModel.currentOffset.width = totalRangeWidth / 2  // ensures that it zooms around the center in the beginning
-                        calculateDisplayedRange(graphWidth: geo.size.width)
+                        viewModel.currentOffset.width = viewModel.totalRangeWidth / 2  // ensures that it zooms around the center in the beginning
+                        viewModel.updateDisplayedRange(graphWidth: geo.size.width, gestureOffset: gestureOffset, gestureScale: gestureScale)
                     }
                     .frame(minHeight: 250)
                     .background(Color.white)
