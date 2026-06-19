@@ -182,9 +182,8 @@ struct LineChart: View {
     @ChartContentBuilder
     var sliderMarker: some ChartContent {
         if viewModel.displayedRange != nil {
-            let displayedRangeWidth = viewModel.displayedRange!.upperBound - viewModel.displayedRange!.lowerBound
             RuleMark(
-                x: .value("Time", viewModel.sliderPosition * displayedRangeWidth + viewModel.displayedRange!.lowerBound)
+                x: .value("Time", viewModel.sliderAxisValue)
             )
 
         }

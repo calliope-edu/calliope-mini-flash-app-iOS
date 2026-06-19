@@ -134,7 +134,24 @@ class ChartViewModel: ObservableObject, Identifiable {
     var displayedCurrent: Double? {
         if selectedAxis == nil || selectedAxis!.name == "all" { return nil }  // only calculate if the displayed data has only one axis
         
-        return displayedYs.last
+        return findPointClosestToSlider().y
+    }
+    
+    func findPointClosestToSlider() -> ChartDataPoint {
+        var sortedDataPoints = displayedChartData
+        sortedDataPoints.sort{ $0.x < $1.x }
+        
+        for i in 0...(sortedDataPoints.count - 1) {
+            if sortedDataPoints[i].x > sliderAxisValue {
+                return sortedDataPoints[max(i-1, 0)]
+            }
+        }
+        
+        return sortedDataPoints[sortedDataPoints.count - 1]
+    }
+    
+    var sliderAxisValue: Double {
+        sliderPosition * ((displayedRange?.upperBound ?? 1) - (displayedRange?.lowerBound ?? 0)) + displayedRange!.lowerBound
     }
 
     var minimumX: Double? {
