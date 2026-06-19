@@ -16,10 +16,10 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
     var body: some View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 500))]) {
-                sendDataTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true)
-                dataLoggerTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true)
+                sendDataTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
+                dataLoggerTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
             }.frame(maxWidth: .infinity)
-            projectsTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true)
+            projectsTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
                 .frame(maxWidth: .infinity)
         }.padding()
     }
@@ -34,7 +34,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
             Text("4. Start the program on your Calliope mini")
             Text("Detailed instructions can be found on the website:").fontWeight(.bold)
             boxButton(label: "calliope.cc", action: { viewModel.openBluetoothExtensionPage(openURL: openURL) }, enabled: true)
-        }
+        }.frame(maxHeight: .infinity, alignment: .top)
     }
 
     var dataLoggerTile: some View {
@@ -48,7 +48,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
             Text("3. Transfer the program to your Calliope mini")
             Text("4. Open the datalogger view")
             boxButton(label: "DataLogger View", action: { viewModel.openDataLogger() }, enabled: viewModel.dataLoggerButtonEnabled)
-        }
+        }.frame(maxHeight: .infinity, alignment: .top)
     }
 
     func imageButton(imageName: String, action: @escaping () -> Void) -> some View {
@@ -87,7 +87,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
                 ForEach(viewModel.projects) { project in
                     ProjectItem(project: project, viewModel: viewModel)
                 }
-            }
+            }.padding(.vertical, 12)
 
             IconButton(
                 imageSystemName: "plus",
@@ -102,10 +102,10 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
 }
 
 extension View {
-    func tiled(color: Color, cornerRadius: CGFloat = 12, takeRemainingSpace: Bool = false) -> some View {
+    func tiled(color: Color, cornerRadius: CGFloat = 12, takeRemainingSpace: Bool = false, padding: CGFloat = 20) -> some View {
         self.frame(maxWidth: takeRemainingSpace ? .infinity : nil)
             .frame(maxHeight: .infinity)
-            .padding()
+            .padding(.all, padding)
             .background(color)
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
     }
