@@ -60,8 +60,8 @@ class ChartViewModel: ObservableObject, Identifiable {
 
     func updateMarkedLocation() {
         let dataPoint = findPointClosestToSlider()
-        if dataPoint.location != nil {
-            markLocation(dataPoint.location!)
+        if dataPoint != nil && dataPoint!.location != nil {
+            markLocation(dataPoint!.location!)
         }
     }
 
@@ -145,14 +145,18 @@ class ChartViewModel: ObservableObject, Identifiable {
     var displayedCurrent: Double? {
         if selectedAxis == nil || selectedAxis!.name == "all" { return nil }  // only calculate if the displayed data has only one axis
 
-        return findPointClosestToSlider().y
+        return findPointClosestToSlider()?.y
     }
 
-    func findPointClosestToSlider() -> ChartDataPoint {
+    func findPointClosestToSlider() -> ChartDataPoint? {
+        if displayedChartData.isEmpty {
+            return nil
+        }
+        
         var sortedDataPoints = displayedChartData
         sortedDataPoints.sort { $0.x < $1.x }
 
-        for i in 0...(sortedDataPoints.count - 1) {
+        for i in 0..<sortedDataPoints.count {
             if sortedDataPoints[i].x > sliderAxisValue {
                 return sortedDataPoints[max(i - 1, 0)]
             }
