@@ -121,6 +121,8 @@
 		604938BE2E1BAF6C008BCE40 /* DummyModules in Frameworks */ = {isa = PBXBuildFile; productRef = 604938BD2E1BAF6C008BCE40 /* DummyModules */; };
 		604938C02E1BAF6C008BCE40 /* ScratchLinkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 604938BF2E1BAF6C008BCE40 /* ScratchLinkKit */; };
 		6055CDB62BBEE1E50007F6B0 /* CalliopeBlocksStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6055CDB52BBEE1E50007F6B0 /* CalliopeBlocksStartViewController.swift */; };
+		60818E7D2FE5A4150053893F /* EditorsAndProgramsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818E7C2FE5A4150053893F /* EditorsAndProgramsView.swift */; };
+		60818E7F2FE5A9C90053893F /* EditorsAndProgramsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818E7E2FE5A9C90053893F /* EditorsAndProgramsViewModel.swift */; };
 		608CE91C2F89544D004EACA7 /* NewsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608CE91B2F89544D004EACA7 /* NewsCollectionViewController.swift */; };
 		608CE91E2F8954B8004EACA7 /* NewsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608CE91D2F8954B8004EACA7 /* NewsCollectionViewCell.swift */; };
 		6094AC582E20F2410066D07A /* WebLogHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6094AC572E20F2380066D07A /* WebLogHandler.swift */; };
@@ -307,6 +309,8 @@
 		60676F4E2C41328D00014388 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ProjectAndSensors.strings; sourceTree = "<group>"; };
 		607E71C52B8E30D8008EC146 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ConnectionView.strings; sourceTree = "<group>"; };
 		607E71C72B8E30DA008EC146 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ConnectionView.strings; sourceTree = "<group>"; };
+		60818E7C2FE5A4150053893F /* EditorsAndProgramsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorsAndProgramsView.swift; sourceTree = "<group>"; };
+		60818E7E2FE5A9C90053893F /* EditorsAndProgramsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorsAndProgramsViewModel.swift; sourceTree = "<group>"; };
 		608CE91B2F89544D004EACA7 /* NewsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewController.swift; sourceTree = "<group>"; };
 		608CE91D2F8954B8004EACA7 /* NewsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewCell.swift; sourceTree = "<group>"; };
 		6094AC572E20F2380066D07A /* WebLogHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLogHandler.swift; sourceTree = "<group>"; };
@@ -567,6 +571,7 @@
 				2F61455E22BF761F001C2734 /* EditorViewController.swift */,
 				2F61456022BF761F001C2734 /* LocalEditorViewController.swift */,
 				2F08A0E2234AD4320088A8D6 /* EditorsCollectionViewController.swift */,
+				60818E7C2FE5A4150053893F /* EditorsAndProgramsView.swift */,
 			);
 			path = Editors;
 			sourceTree = "<group>";
@@ -649,6 +654,7 @@
 				2F526C2326E00696004BA8FF /* HexFileStoreDialog.swift */,
 				2F91665C2354062A0065AD81 /* Editors */,
 				2F91665D2354064C0065AD81 /* Programs */,
+				60818E7E2FE5A9C90053893F /* EditorsAndProgramsViewModel.swift */,
 			);
 			path = EditorsAndPrograms;
 			sourceTree = "<group>";
@@ -1134,6 +1140,7 @@
 			files = (
 				60025C662FD071740065AA36 /* SensordataViewController.swift in Sources */,
 				2F61457B22BF761F001C2734 /* ValueLocalizer.swift in Sources */,
+				60818E7D2FE5A4150053893F /* EditorsAndProgramsView.swift in Sources */,
 				2FC2A12922C8FA6F00675C2F /* News.swift in Sources */,
 				600E632E2C33D7BB0027AE61 /* DataParser.swift in Sources */,
 				60D02D832BFCA0C400D3C34A /* ProjectCollectionViewController.swift in Sources */,
@@ -1141,6 +1148,7 @@
 				2F61456E22BF761F001C2734 /* CalliopeBLEProfile.swift in Sources */,
 				2F57C3B42394F78B008B0D69 /* DownloadableHexFile.swift in Sources */,
 				2F08A0E5234B11890088A8D6 /* ProgramsCollectionViewController.swift in Sources */,
+				60818E7F2FE5A9C90053893F /* EditorsAndProgramsViewModel.swift in Sources */,
 				60C628B22FC0A37D00D23A43 /* GroupViewModel.swift in Sources */,
 				2F526C2426E00696004BA8FF /* HexFileStoreDialog.swift in Sources */,
 				60AA95552F925D3400308FE3 /* ProjectView.swift in Sources */,
