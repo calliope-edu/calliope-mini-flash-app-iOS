@@ -67,17 +67,12 @@ class GroupViewModel: ObservableObject, Identifiable {
         }
 
         var maxDistanceFromCenter = 0.002
-        let centerCL = CLLocation(
+        let centerCL = CLLocationCoordinate2D(
             latitude: center.latitude,
             longitude: center.longitude
         )
         for place in uniqueLocations {
-            let distance = centerCL.distance(
-                from: CLLocation(
-                    latitude: place.location.latitude,
-                    longitude: place.location.longitude
-                )
-            )
+            let distance = distance(centerCL, place.location)
             if distance > maxDistanceFromCenter {
                 maxDistanceFromCenter = distance
             }
@@ -86,10 +81,18 @@ class GroupViewModel: ObservableObject, Identifiable {
         region = MKCoordinateRegion(
             center: center,
             span: MKCoordinateSpan(
-                latitudeDelta: maxDistanceFromCenter,
-                longitudeDelta: maxDistanceFromCenter
+                latitudeDelta: maxDistanceFromCenter * 2,
+                longitudeDelta: maxDistanceFromCenter * 2
             )
         )
+    }
+    
+    func distance(_ location1: CLLocationCoordinate2D, _ location2: CLLocationCoordinate2D) -> Double {
+        return sqrt(square(location1.latitude - location2.latitude) + square(location1.longitude - location2.longitude))
+    }
+    
+    func square(_ number: Double) -> Double {
+        return number * number
     }
 
     static private func getDefaultRegion() -> MKCoordinateRegion {
