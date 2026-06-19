@@ -9,23 +9,31 @@
 import Foundation
 import SwiftUI
 
-class SensordataViewModel: ObservableObject {
-    @Published var projects: [Project] = []
-    private var targetUrl: URL?
-    var connectedCalliope: Calliope?
-    var isUsbMode: Bool
-    @Published var dataLoggerButtonEnabled: Bool
+protocol SensorDataViewModelProtocol {
+    var projects: [Project] { get }
+    var dataLoggerButtonEnabled: Bool { get }
+    
+    func deleteProject(id: Int64)
+    func openBluetoothExtensionPage(openURL: OpenURLAction)
+    func openBluetoothSensorInfoWebView()
+    func openDataLoggerInfoWebView()
+    func createNewProject()
+    func openProject(project: Project)
+    func openDataLogger()
+}
 
+class SensordataViewModel: ObservableObject, SensorDataViewModelProtocol {
+    @Published var projects: [Project] = []
+    @Published var dataLoggerButtonEnabled: Bool
+    
+    private var targetUrl: URL?
+    private var connectedCalliope: Calliope?
+    private var isUsbMode: Bool
     private var calliopeConnectedSubcription: NSObjectProtocol!
     private var calliopeDisconnectedSubscription: NSObjectProtocol!
     private var programSubscription: NSObjectProtocol!
-
-    let viewController: SensordataViewController
-
-    func loadProjects() {
-        projects = Project.fetchProjects()
-    }
-
+    private let viewController: SensordataViewController
+    
     init(viewController: SensordataViewController) {
         self.viewController = viewController
         projects = Project.fetchProjects()
@@ -41,10 +49,45 @@ class SensordataViewModel: ObservableObject {
         addNotificationSubscriptions()
 
     }
-
+    
     func deleteProject(id: Int64) {
         Project.deleteProject(id: id)
         loadProjects()
+    }
+
+    func openBluetoothExtensionPage(openURL: OpenURLAction) {
+        if let url = URL(string: "https://calliope.cc/programmieren/mobil/ipad#sensordaten") {
+            openURL(url)
+        }
+    }
+
+    func openBluetoothSensorInfoWebView() {
+        viewController.openBluetoothSensorInfoWebView()
+    }
+
+    func openDataLoggerInfoWebView() {
+        viewController.openDataLoggerInfoWebView()
+    }
+
+    func createNewProject() {
+        LogNotify.log("Starting to create a new Project")
+        viewController.createNewProject()
+    }
+
+    func openProject(project: Project) {
+        viewController.openProject(project: project)
+    }
+
+    func openDataLogger() {
+        if connectedCalliope == nil {
+            LogNotify.error("connectedCalliope is nil. This should not happen.")
+            return
+        }
+        viewController.getDataloggerHtml(connectedCalliope: connectedCalliope!, isUsbMode: isUsbMode)
+    }
+    
+    private func loadProjects() {
+        projects = Project.fetchProjects()
     }
 
     fileprivate func addNotificationSubscriptions() {
@@ -88,37 +131,6 @@ class SensordataViewModel: ObservableObject {
             }
         )
     }
-
-    func openBluetoothExtensionPage(openURL: OpenURLAction) {
-        if let url = URL(string: "https://calliope.cc/programmieren/mobil/ipad#sensordaten") {
-            openURL(url)
-        }
-    }
-
-    func openBluetoothSensorInfoWebView() {
-        viewController.openBluetoothSensorInfoWebView()
-    }
-
-    func openDataLoggerInfoWebView() {
-        viewController.openDataLoggerInfoWebView()
-    }
-
-    func createNewProject() {
-        LogNotify.log("Starting to create a new Project")
-        viewController.createNewProject()
-    }
-
-    func openProject(project: Project) {
-        viewController.openProject(project: project)
-    }
-
-    func openDataLogger() {
-        if connectedCalliope == nil {
-            LogNotify.error("connectedCalliope is nil. This should not happen.")
-            return
-        }
-        viewController.getDataloggerHtml(connectedCalliope: connectedCalliope!, isUsbMode: isUsbMode)
-    }
     
     deinit {
         NotificationCenter.default.removeObserver(calliopeConnectedSubcription!)
@@ -127,10 +139,34 @@ class SensordataViewModel: ObservableObject {
     }
 }
 
-class PreviewSensordataViewModel: SensordataViewModel {
-    init(projects: [Project]) {
-        let viewController = SensordataViewController()
-        super.init(viewController: viewController)
+class PreviewSensordataViewModel: SensorDataViewModelProtocol, ObservableObject {
+    @Published var projects: [Project]
+    @Published var dataLoggerButtonEnabled: Bool
+    
+    init(projects: [Project], dataLoggerButtonEnabled: Bool) {
         self.projects = projects
+        self.dataLoggerButtonEnabled = dataLoggerButtonEnabled
+    }
+    
+    func deleteProject(id: Int64) {
+        
+    }
+    func openBluetoothExtensionPage(openURL: OpenURLAction) {
+        
+    }
+    func openBluetoothSensorInfoWebView() {
+        
+    }
+    func openDataLoggerInfoWebView() {
+        
+    }
+    func createNewProject() {
+        
+    }
+    func openProject(project: Project) {
+        
+    }
+    func openDataLogger() {
+        
     }
 }

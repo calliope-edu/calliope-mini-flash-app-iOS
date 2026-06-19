@@ -9,8 +9,8 @@
 import Foundation
 import SwiftUI
 
-struct SensordataView: View {
-    @ObservedObject var viewModel: SensordataViewModel
+struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObject>: View {
+    @ObservedObject var viewModel: ViewModelType
     @Environment(\.openURL) var openURL
 
     var body: some View {
@@ -33,7 +33,7 @@ struct SensordataView: View {
             Text("3. Select the disired services for your program to view or record")
             Text("4. Start the program on your Calliope mini")
             Text("Detailed instructions can be found on the website:").fontWeight(.bold)
-            boxButton(label: "calliope.cc", action: {viewModel.openBluetoothExtensionPage(openURL: openURL)}, enabled: true)
+            boxButton(label: "calliope.cc", action: { viewModel.openBluetoothExtensionPage(openURL: openURL) }, enabled: true)
         }
     }
 
@@ -43,7 +43,7 @@ struct SensordataView: View {
                 "Data can be recorded on the Calliope mini 3. With the datalogger extension data can be saved in a table and also displayed as a graph."
             ).fontWeight(.bold)
             Text("1. This template can be used with the extension:")
-            imageButton(imageName: "calliope_datalogger_extension", action: {viewModel.openDataLoggerInfoWebView()})
+            imageButton(imageName: "calliope_datalogger_extension", action: { viewModel.openDataLoggerInfoWebView() })
             Text("2. Create the program with the respective data and define the required columns and se tthe corresponding (sensor) data as values.")
             Text("3. Transfer the program to your Calliope mini")
             Text("4. Open the datalogger view")
@@ -89,7 +89,13 @@ struct SensordataView: View {
                 }
             }
 
-            IconButton(imageSystemName: "plus", action: {viewModel.createNewProject()}, rotation: 0, iconColor: Color(.white), backgroundColor: Color.calliopeGreen)
+            IconButton(
+                imageSystemName: "plus",
+                action: { viewModel.createNewProject() },
+                rotation: 0,
+                iconColor: Color(.white),
+                backgroundColor: Color.calliopeGreen
+            )
 
         }
     }
@@ -105,9 +111,9 @@ extension View {
     }
 }
 
-struct ProjectItem: View {
+struct ProjectItem<ViewModelType: SensorDataViewModelProtocol & ObservableObject>: View {
     let project: Project
-    let viewModel: SensordataViewModel
+    let viewModel: ViewModelType
 
     var body: some View {
         HStack {
@@ -115,7 +121,7 @@ struct ProjectItem: View {
                 .foregroundColor(Color(.white))
                 .lineLimit(1)
                 .frame(width: 150, alignment: .leading)
-            Button("", systemImage: "trash", action: { viewModel.deleteProject(id: project.id! )}).foregroundColor(Color(.white))
+            Button("", systemImage: "trash", action: { viewModel.deleteProject(id: project.id!) }).foregroundColor(Color(.white))
         }
         .tiled(color: Color.calliopeDarkgray)
         .onTapGesture {
@@ -126,15 +132,18 @@ struct ProjectItem: View {
 
 struct SensordataView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel3Projects = PreviewSensordataViewModel(projects: [
-            Project(id: 1, name: "Test 1"), Project(id: 2, name: "Test 2"), Project(id: 3, name: "This is a long test name"),
-        ])
+        let viewModel3Projects = PreviewSensordataViewModel(
+            projects: [
+                Project(id: 1, name: "Test 1"), Project(id: 2, name: "Test 2"), Project(id: 3, name: "This is a long test name"),
+            ],
+            dataLoggerButtonEnabled: true
+        )
         SensordataView(viewModel: viewModel3Projects).previewInterfaceOrientation(.portrait)
         SensordataView(viewModel: viewModel3Projects).previewInterfaceOrientation(.landscapeLeft)
         let viewModelManyProjects = PreviewSensordataViewModel(projects: [
             Project(id: 1, name: "Test 1"), Project(id: 2, name: "Test 2"), Project(id: 1, name: "Test 3"), Project(id: 2, name: "Test 4"),
             Project(id: 1, name: "Test 5"), Project(id: 2, name: "Test 6"), Project(id: 1, name: "Test 7"), Project(id: 2, name: "Test 8"),
-        ])
+        ], dataLoggerButtonEnabled: false)
         SensordataView(viewModel: viewModelManyProjects).previewInterfaceOrientation(.portrait)
         SensordataView(viewModel: viewModelManyProjects).previewInterfaceOrientation(.landscapeLeft)
 
