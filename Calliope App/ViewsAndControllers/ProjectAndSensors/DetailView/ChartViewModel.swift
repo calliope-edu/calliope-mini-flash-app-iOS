@@ -43,6 +43,7 @@ struct IdentifiableLocation: Identifiable, Hashable {
 class ChartViewModel: ObservableObject, Identifiable {
     var chart: Chart
     let onNewLocation: (_ location: IdentifiableLocation) -> Void
+    let markLocation: (_ location: IdentifiableLocation) -> Void
     let dataController: DataController
     @Published var data: [String: [DataPoint]] = [:]
     @Published var sensorOptions: [DropDownOption<Sensor>] = []
@@ -51,19 +52,30 @@ class ChartViewModel: ObservableObject, Identifiable {
     @Published var axisOptions: [DropDownOption<Bool?>] = []
     @Published var selectedAxis: DropDownOption<Bool?>?
     var baseTime: Double?
-    @Published var sliderPosition: Double = 0.0
-    
+    @Published var sliderPosition: Double = 0.0 {
+        willSet {
+            updateMarkedLocation()
+        }
+    }
+
+    func updateMarkedLocation() {
+        let dataPoint = findPointClosestToSlider()
+        if dataPoint.location != nil {
+            markLocation(dataPoint.location!)
+        }
+    }
+
     @Published var currentScale: CGFloat = 1.0
     @Published var currentOffset: CGSize = .zero
     @Published var displayedRange: ClosedRange<Double>?
-    
+
     let minimumGraphScale = 0.001
     let maximumGraphScale = 1.0
-    
+
     var totalRangeWidth: Double {
         return (maximumX ?? 1) - (minimumX ?? 0)
     }
-    
+
     func updateDisplayedRange(graphWidth: Double, gestureOffset: CGSize, gestureScale: Double) {
         let offset = currentOffset.width + gestureOffset.width
         let displayedMinimumX = offset - totalRangeWidth * currentScale * gestureScale / 2
@@ -76,12 +88,11 @@ class ChartViewModel: ObservableObject, Identifiable {
             let shift = (minimumX ?? 0) - displayedRange!.lowerBound
             currentOffset.width = currentOffset.width + shift
         } else if displayedRange!.upperBound > (maximumX ?? 1) {
-            let shift =  displayedRange!.upperBound - (maximumX ?? 1)
+            let shift = displayedRange!.upperBound - (maximumX ?? 1)
             currentOffset.width = currentOffset.width - shift
         }
     }
 
-    
     var flatChartData: [ChartDataPoint] {
         return data.flatMap {
             series,
@@ -133,25 +144,29 @@ class ChartViewModel: ObservableObject, Identifiable {
 
     var displayedCurrent: Double? {
         if selectedAxis == nil || selectedAxis!.name == "all" { return nil }  // only calculate if the displayed data has only one axis
-        
+
         return findPointClosestToSlider().y
     }
-    
+
     func findPointClosestToSlider() -> ChartDataPoint {
         var sortedDataPoints = displayedChartData
-        sortedDataPoints.sort{ $0.x < $1.x }
-        
+        sortedDataPoints.sort { $0.x < $1.x }
+
         for i in 0...(sortedDataPoints.count - 1) {
             if sortedDataPoints[i].x > sliderAxisValue {
-                return sortedDataPoints[max(i-1, 0)]
+                return sortedDataPoints[max(i - 1, 0)]
             }
         }
-        
+
         return sortedDataPoints[sortedDataPoints.count - 1]
     }
-    
+
     var sliderAxisValue: Double {
-        sliderPosition * ((displayedRange?.upperBound ?? 1) - (displayedRange?.lowerBound ?? 0)) + displayedRange!.lowerBound
+        sliderPosition * ((displayedRange?.upperBound ?? 1) - (displayedRange?.lowerBound ?? 0)) + (displayedRange?.lowerBound ?? 0)
+    }
+    
+    func axisValueToSlider(xValue: Double) -> Double {
+        (xValue - (displayedRange?.lowerBound ?? 0)) / ((displayedRange?.upperBound ?? 1) - (displayedRange?.lowerBound ?? 0))
     }
 
     var minimumX: Double? {
@@ -173,7 +188,7 @@ class ChartViewModel: ObservableObject, Identifiable {
         }
         return minimumDistance
     }
-    
+
     private var calliopeConnectedSubcription: NSObjectProtocol!
     private var calliopeDisconnectedSubscription: NSObjectProtocol!
 
@@ -183,11 +198,13 @@ class ChartViewModel: ObservableObject, Identifiable {
         chart: Chart,
         openFileNameDialog:
             @escaping (@escaping (_ filename: String) -> Void) -> Void,
-        onNewLocation: @escaping (_ location: IdentifiableLocation) -> Void
+        onNewLocation: @escaping (_ location: IdentifiableLocation) -> Void,
+        markLocation: @escaping (_ location: IdentifiableLocation) -> Void
     ) {
         self.chart = chart
         self.openFileNameDialog = openFileNameDialog
         self.onNewLocation = onNewLocation
+        self.markLocation = markLocation
 
         dataController = DataController()
         loadDatabaseDataIntoChart(chart)
@@ -200,8 +217,12 @@ class ChartViewModel: ObservableObject, Identifiable {
     }
 
     func markValueForLocation(location: IdentifiableLocation) {
-        let flatData = data.flatMap { $0.value.map { $0 } }
-        sliderPosition = flatData.first(where: { $0.location == location })?.x ?? sliderPosition
+        var flatData = data.flatMap { $0.value.map { $0 } }
+        flatData.sort { $0.x < $1.x }
+        let xValue = flatData.first(where: { $0.location == location })?.x
+        if xValue != nil {
+            sliderPosition = axisValueToSlider(xValue: xValue!)
+        }
     }
 
     let colors = [
@@ -335,7 +356,7 @@ class ChartViewModel: ObservableObject, Identifiable {
                 return
             }
             var location: IdentifiableLocation? = nil
-            if(value.lat != nil && value.long != nil) {
+            if value.lat != nil && value.long != nil {
                 location = IdentifiableLocation(lat: value.lat!, long: value.long!)
             }
             let newDataPoint: DataPoint = DataPoint(

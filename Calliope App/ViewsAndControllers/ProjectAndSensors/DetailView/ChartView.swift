@@ -64,12 +64,14 @@ struct LineChart: View {
                 state = max(viewModel.minimumGraphScale / viewModel.currentScale, state)
                 viewModel.ensureOffsetInBounds(graphWidth: geo.size.width)
                 viewModel.updateDisplayedRange(graphWidth: geo.size.width, gestureOffset: gestureOffset, gestureScale: gestureScale)
+                viewModel.updateMarkedLocation()
             }
             .onEnded { value in
                 viewModel.currentScale /= value
                 viewModel.currentScale = max(viewModel.minimumGraphScale, min(viewModel.maximumGraphScale, viewModel.currentScale))
                 viewModel.ensureOffsetInBounds(graphWidth: geo.size.width)
                 viewModel.updateDisplayedRange(graphWidth: geo.size.width, gestureOffset: gestureOffset, gestureScale: gestureScale)
+                viewModel.updateMarkedLocation()
             }
     }
 
@@ -85,12 +87,14 @@ struct LineChart: View {
                 state.width = min(maximumOffset - viewModel.currentOffset.width, state.width)
                 state.width = max(minimumOffset - viewModel.currentOffset.width, state.width)
                 viewModel.updateDisplayedRange(graphWidth: geo.size.width, gestureOffset: gestureOffset, gestureScale: gestureScale)
+                viewModel.updateMarkedLocation()
             }
 
             .onEnded { value in
                 viewModel.currentOffset.width -= value.translation.width * viewModel.currentScale * gestureScale * (viewModel.totalRangeWidth / geo.size.width)
                 viewModel.currentOffset.width = max(minimumOffset, min(maximumOffset, viewModel.currentOffset.width))
                 viewModel.updateDisplayedRange(graphWidth: geo.size.width, gestureOffset: gestureOffset, gestureScale: gestureScale)
+                viewModel.updateMarkedLocation()
             }
     }
 
@@ -121,6 +125,7 @@ struct LineChart: View {
                     .onAppear {
                         viewModel.currentOffset.width = viewModel.totalRangeWidth / 2  // ensures that it zooms around the center in the beginning
                         viewModel.updateDisplayedRange(graphWidth: geo.size.width, gestureOffset: gestureOffset, gestureScale: gestureScale)
+                        viewModel.updateMarkedLocation()
                     }
                     .frame(minHeight: 250)
                     .background(Color.white)

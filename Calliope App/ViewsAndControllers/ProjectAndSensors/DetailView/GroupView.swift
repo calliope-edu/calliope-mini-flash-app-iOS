@@ -118,7 +118,7 @@ struct MapView: View {
         Button {
             viewModel.onMapAnnotationTapped(location: location)
         } label: {
-            Circle().frame(width: 30, height: 30)
+            Circle().fill(location == viewModel.markedLocation ? Color.red : Color.black).frame(width: 30, height: 30)
         }
         .buttonStyle(.plain)
     }

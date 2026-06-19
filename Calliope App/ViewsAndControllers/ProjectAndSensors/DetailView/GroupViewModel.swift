@@ -15,6 +15,7 @@ class GroupViewModel: ObservableObject, Identifiable {
     var openFileNameDialog: (@escaping (_ filename: String) -> Void) -> Void
     var deleteGroup: (_ groupId: Int64) -> Void
     @Published var chartViewModels: [ChartViewModel] = []
+    @Published var markedLocation: IdentifiableLocation?
 
     @Published var uniqueLocations: Set<IdentifiableLocation> = Set<
         IdentifiableLocation
@@ -44,7 +45,8 @@ class GroupViewModel: ObservableObject, Identifiable {
                 ChartViewModel(
                     chart: chart,
                     openFileNameDialog: openFileNameDialog,
-                    onNewLocation: onNewLocation
+                    onNewLocation: onNewLocation,
+                    markLocation: markLocation
                 )
             )
         }
@@ -149,7 +151,8 @@ class GroupViewModel: ObservableObject, Identifiable {
                 ChartViewModel(
                     chart: chart,
                     openFileNameDialog: openFileNameDialog,
-                    onNewLocation: onNewLocation
+                    onNewLocation: onNewLocation,
+                    markLocation: markLocation
                 )
             )
         }
@@ -157,5 +160,10 @@ class GroupViewModel: ObservableObject, Identifiable {
 
     func onMapAnnotationTapped(location: IdentifiableLocation) {
         chartViewModels.forEach { $0.markValueForLocation(location: location) }
+        markLocation(location: location)
+    }
+    
+    func markLocation(location: IdentifiableLocation) {
+        self.markedLocation = location
     }
 }
