@@ -152,7 +152,7 @@ class ChartViewModel: ObservableObject, Identifiable {
         if displayedChartData.isEmpty {
             return nil
         }
-        
+
         var sortedDataPoints = displayedChartData
         sortedDataPoints.sort { $0.x < $1.x }
 
@@ -168,7 +168,7 @@ class ChartViewModel: ObservableObject, Identifiable {
     var sliderAxisValue: Double {
         sliderPosition * ((displayedRange?.upperBound ?? 1) - (displayedRange?.lowerBound ?? 0)) + (displayedRange?.lowerBound ?? 0)
     }
-    
+
     func axisValueToSlider(xValue: Double) -> Double {
         (xValue - (displayedRange?.lowerBound ?? 0)) / ((displayedRange?.upperBound ?? 1) - (displayedRange?.lowerBound ?? 0))
     }
@@ -312,6 +312,7 @@ class ChartViewModel: ObservableObject, Identifiable {
             )
         )
         self.updateAvailableAxis()
+        displayedRange = (minimumX ?? 0)...(maximumX ?? 1) // show the user the entire plot
     }
 
     func startRecording() {

@@ -47,31 +47,32 @@ struct LineChart: View {
     @GestureState var gestureScale: CGFloat = 1.0
     @GestureState var gestureOffset: CGSize = .zero
 
-
     var maxRange: ClosedRange<Double> {
         return (viewModel.minimumX ?? 0)...(viewModel.maximumX ?? 1)
     }
-
-    
 
     fileprivate func zoomGesture(_ geo: GeometryProxy) -> _EndedGesture<
         GestureStateGesture<MagnificationGesture, CGFloat>
     > {
         return MagnificationGesture()
             .updating($gestureScale) { value, state, _ in
-                state = 1 / value
-                state = min(viewModel.maximumGraphScale / viewModel.currentScale, state)
-                state = max(viewModel.minimumGraphScale / viewModel.currentScale, state)
-                viewModel.ensureOffsetInBounds(graphWidth: geo.size.width)
-                viewModel.updateDisplayedRange(graphWidth: geo.size.width, gestureOffset: gestureOffset, gestureScale: gestureScale)
-                viewModel.updateMarkedLocation()
+                if !viewModel.isRecording {
+                    state = 1 / value
+                    state = min(viewModel.maximumGraphScale / viewModel.currentScale, state)
+                    state = max(viewModel.minimumGraphScale / viewModel.currentScale, state)
+                    viewModel.ensureOffsetInBounds(graphWidth: geo.size.width)
+                    viewModel.updateDisplayedRange(graphWidth: geo.size.width, gestureOffset: gestureOffset, gestureScale: gestureScale)
+                    viewModel.updateMarkedLocation()
+                }
             }
             .onEnded { value in
-                viewModel.currentScale /= value
-                viewModel.currentScale = max(viewModel.minimumGraphScale, min(viewModel.maximumGraphScale, viewModel.currentScale))
-                viewModel.ensureOffsetInBounds(graphWidth: geo.size.width)
-                viewModel.updateDisplayedRange(graphWidth: geo.size.width, gestureOffset: gestureOffset, gestureScale: gestureScale)
-                viewModel.updateMarkedLocation()
+                if !viewModel.isRecording {
+                    viewModel.currentScale /= value
+                    viewModel.currentScale = max(viewModel.minimumGraphScale, min(viewModel.maximumGraphScale, viewModel.currentScale))
+                    viewModel.ensureOffsetInBounds(graphWidth: geo.size.width)
+                    viewModel.updateDisplayedRange(graphWidth: geo.size.width, gestureOffset: gestureOffset, gestureScale: gestureScale)
+                    viewModel.updateMarkedLocation()
+                }
             }
     }
 
@@ -83,18 +84,23 @@ struct LineChart: View {
         let maximumOffset = (viewModel.maximumX ?? 1) - (displayedRangeWidth / 2)
         return DragGesture()
             .updating($gestureOffset) { value, state, _ in
-                state.width = -value.translation.width * viewModel.currentScale * gestureScale * (viewModel.totalRangeWidth / geo.size.width)
-                state.width = min(maximumOffset - viewModel.currentOffset.width, state.width)
-                state.width = max(minimumOffset - viewModel.currentOffset.width, state.width)
-                viewModel.updateDisplayedRange(graphWidth: geo.size.width, gestureOffset: gestureOffset, gestureScale: gestureScale)
-                viewModel.updateMarkedLocation()
+                if !viewModel.isRecording {
+                    state.width = -value.translation.width * viewModel.currentScale * gestureScale * (viewModel.totalRangeWidth / geo.size.width)
+                    state.width = min(maximumOffset - viewModel.currentOffset.width, state.width)
+                    state.width = max(minimumOffset - viewModel.currentOffset.width, state.width)
+                    viewModel.updateDisplayedRange(graphWidth: geo.size.width, gestureOffset: gestureOffset, gestureScale: gestureScale)
+                    viewModel.updateMarkedLocation()
+                }
             }
 
             .onEnded { value in
-                viewModel.currentOffset.width -= value.translation.width * viewModel.currentScale * gestureScale * (viewModel.totalRangeWidth / geo.size.width)
-                viewModel.currentOffset.width = max(minimumOffset, min(maximumOffset, viewModel.currentOffset.width))
-                viewModel.updateDisplayedRange(graphWidth: geo.size.width, gestureOffset: gestureOffset, gestureScale: gestureScale)
-                viewModel.updateMarkedLocation()
+                if !viewModel.isRecording {
+                    viewModel.currentOffset.width -=
+                        value.translation.width * viewModel.currentScale * gestureScale * (viewModel.totalRangeWidth / geo.size.width)
+                    viewModel.currentOffset.width = max(minimumOffset, min(maximumOffset, viewModel.currentOffset.width))
+                    viewModel.updateDisplayedRange(graphWidth: geo.size.width, gestureOffset: gestureOffset, gestureScale: gestureScale)
+                    viewModel.updateMarkedLocation()
+                }
             }
     }
 
@@ -136,7 +142,7 @@ struct LineChart: View {
         .background(Color.white)
         .cornerRadius(12)
     }
-    
+
     var axisMarks: AxisMarks<some AxisMark> {
         AxisMarks { value in
             AxisGridLine()
