@@ -9,8 +9,8 @@
 import Foundation
 import SwiftUI
 
-struct EditorsAndProgramsView: View {
-    @ObservedObject var viewModel: EditorsAndProgramsViewModel
+struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol & ObservableObject>: View {
+    @ObservedObject var viewModel: viewModelType
 
     var body: some View {
 
@@ -45,7 +45,9 @@ struct EditorsAndProgramsView: View {
             Text("You can program your Calliope mini with the help of the editors.").fontWeight(.bold)
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 250))], spacing: 40) {
                 ForEach(0..<viewModel.editors.count) { i in
-                    EditorTile(config: viewModel.editors[i])
+                    EditorTile(config: viewModel.editors[i]).onTapGesture {
+                        viewModel.openEditor(editor: viewModel.editors[i])
+                    }
                 }
             }
         }
@@ -60,7 +62,7 @@ struct EditorsAndProgramsView: View {
                 Image("startprogramm3").resizable().scaledToFit().frame(maxWidth: 300)
                 Spacer()
             }.padding(.vertical, 16)
-            boxButton(label: "Start program", iconName: "button_icon_upload", action: { print("Start Calliop mini 3 program") })
+            boxButton(label: "Start program", iconName: "button_icon_upload", action: { viewModel.uploadDefaultV3Program() })
         }
     }
 
@@ -73,14 +75,14 @@ struct EditorsAndProgramsView: View {
                 Image("startprogramm1+2").resizable().scaledToFit().frame(maxWidth: 300)
                 Spacer()
             }.padding(.vertical, 16)
-            boxButton(label: "Start program", iconName: "button_icon_upload", action: { print("Start Calliop mini 1+2 program") })
+            boxButton(label: "Start program", iconName: "button_icon_upload", action: { viewModel.uploadDefaultV1And2Program() })
         }
     }
 
     var makeCodeQRCodeTile: some View {
         VStack(alignment: .leading) {
             Text("Open a program in MakeCode using a QR code. Simply scan it and off you go!").fontWeight(.bold)
-            boxButton(label: "Scan", iconName: "qr_code_scan_button", action: { print("Scan QR Code") })
+            boxButton(label: "Scan", iconName: "qr_code_scan_button", action: { viewModel.scanQRCode() })
         }
     }
 
@@ -89,7 +91,7 @@ struct EditorsAndProgramsView: View {
             Text("Transfer program from your iPhone or iPad directly to your Calliope mini or save them in your Calliope mini folder.").fontWeight(
                 .bold
             )
-            boxButton(label: "Choose File", iconName: "doc", isSystemImage: true, action: { print("Choose file") })
+            boxButton(label: "Choose File", iconName: "doc", isSystemImage: true, action: { viewModel.openFile() })
         }
     }
 
@@ -99,7 +101,9 @@ struct EditorsAndProgramsView: View {
                 .fontWeight(.bold)
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 250))], spacing: 40) {
                 ForEach(0..<viewModel.programs.count) { i in
-                    ProgramTile(config: viewModel.programs[i]).tiled(color: Color.calliopeGray)
+                    ProgramTile(config: viewModel.programs[i]).tiled(color: Color.calliopeGray).onTapGesture {
+                        viewModel.downloadProgram(program: viewModel.programs[i])
+                    }
                 }
             }
         }
@@ -176,7 +180,7 @@ struct EditorTile: View {
 
 struct EditorAndProgramsView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = EditorsAndProgramsViewModel()
+        let viewModel = PreviewEditorsAndProgramsViewModel()
         EditorsAndProgramsView(viewModel: viewModel).previewInterfaceOrientation(.landscapeLeft)
         EditorsAndProgramsView(viewModel: viewModel).previewInterfaceOrientation(.portrait)
     }

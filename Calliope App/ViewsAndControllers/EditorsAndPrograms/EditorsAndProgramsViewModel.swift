@@ -18,7 +18,21 @@ struct ProgramTileConfig {
     let lastUsed: Date
 }
 
-class EditorsAndProgramsViewModel: ObservableObject {
+protocol EditorsAndProgramsViewModelProtocol {
+    var editors: [EditorTileConfig] { get }
+    var programs: [ProgramTileConfig] { get }
+    
+    func openEditor(editor: EditorTileConfig)
+    func downloadProgram(program: ProgramTileConfig)
+    func uploadDefaultV3Program()
+    func uploadDefaultV1And2Program()
+    func scanQRCode()
+    func openFile()
+}
+
+class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, ObservableObject {
+    let openEditor: () -> Void
+    
     @Published var editors: [EditorTileConfig] = [
         EditorTileConfig(name: "Makecode", iconName: "editors_makecode"),
         EditorTileConfig(name: "Open Roberta Lab", iconName: "editors_nepo"),
@@ -31,4 +45,72 @@ class EditorsAndProgramsViewModel: ObservableObject {
         ProgramTileConfig(name: "Test 1", lastUsed: Date.now),
         ProgramTileConfig(name: "Test 2", lastUsed: Date.now.addingTimeInterval(100)),
     ]
+    
+    init(openEditor: @escaping () -> Void) {
+        self.openEditor = openEditor
+    }
+    
+    func openEditor(editor: EditorTileConfig) {
+        print("Trying to open editor \(editor.name)")
+        openEditor()
+    }
+
+    func downloadProgram(program: ProgramTileConfig)  {
+        print("Trying to open program \(program.name)")
+    }
+    
+    func uploadDefaultV3Program() {
+       print("Trying to upload default v3 program")
+    }
+    
+    func uploadDefaultV1And2Program() {
+       print("Trying to upload default v1 and v2 program")
+    }
+    
+    func scanQRCode() {
+        print("Trying to scan QR code")
+    }
+    
+    func openFile() {
+        print("Trying to open file")
+    }
+}
+
+class PreviewEditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, ObservableObject {
+    @Published var editors: [EditorTileConfig] = [
+        EditorTileConfig(name: "Makecode", iconName: "editors_makecode"),
+        EditorTileConfig(name: "Open Roberta Lab", iconName: "editors_nepo"),
+        EditorTileConfig(name: "Calliope mini Blocks", iconName: "editors_blocks_transparent"),
+        EditorTileConfig(name: "Micropython", iconName: "editors_python"),
+        EditorTileConfig(name: "Arcade (USB only)", iconName: "editors_swift")
+    ]
+    
+    @Published var programs: [ProgramTileConfig] = [
+        ProgramTileConfig(name: "Test 1", lastUsed: Date.now),
+        ProgramTileConfig(name: "Test 2", lastUsed: Date.now.addingTimeInterval(100)),
+    ]
+    
+    func openEditor(editor: EditorTileConfig) {
+        print("Trying to open editor \(editor.name)")
+    }
+
+    func downloadProgram(program: ProgramTileConfig)  {
+        print("Trying to open program \(program.name)")
+    }
+    
+    func uploadDefaultV3Program() {
+       print("Trying to upload default v3 program")
+    }
+    
+    func uploadDefaultV1And2Program() {
+       print("Trying to upload default v1 and v2 program")
+    }
+    
+    func scanQRCode() {
+        print("Trying to scan QR code")
+    }
+    
+    func openFile() {
+        print("Trying to open file")
+    }
 }

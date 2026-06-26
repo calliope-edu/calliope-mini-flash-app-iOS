@@ -26,6 +26,7 @@
                     <size key="freeformSize" width="643" height="1000"/>
                     <connections>
                         <segue destination="eeY-2x-OZY" kind="show" identifier="openHexFile" destinationCreationSelector="openHexFile:" id="COy-xJ-NpQ"/>
+                        <segue destination="eeY-2x-OZY" kind="show" identifier="showMakecode" destinationCreationSelector="initializeMakeCode:" id="1jY-Ev-6Tt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t5x-PS-nsJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -613,7 +614,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="yKh-rV-xrX"/>
+        <segue reference="1jY-Ev-6Tt"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="calliope-lilablau"/>
     <resources>
