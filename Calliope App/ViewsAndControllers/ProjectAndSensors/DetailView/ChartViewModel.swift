@@ -42,7 +42,7 @@ struct IdentifiableLocation: Identifiable, Hashable {
 
 class ChartViewModel: ObservableObject, Identifiable {
     var chart: Chart
-    let onNewLocation: (_ location: IdentifiableLocation) -> Void
+    let onNewLocation: (_ location: IdentifiableLocation, _ chart: Chart) -> Void
     let markLocation: (_ location: IdentifiableLocation, _ chart: Chart) -> Void
     let getMarkerColorForChart: (_ chart: Chart) -> Color
     let dataController: DataController
@@ -203,7 +203,7 @@ class ChartViewModel: ObservableObject, Identifiable {
         chart: Chart,
         openFileNameDialog:
             @escaping (@escaping (_ filename: String) -> Void) -> Void,
-        onNewLocation: @escaping (_ location: IdentifiableLocation) -> Void,
+        onNewLocation: @escaping (_ location: IdentifiableLocation, _ chart: Chart) -> Void,
         markLocation: @escaping (_ location: IdentifiableLocation, _ chart: Chart) -> Void,
         getMarkerColorForChart: @escaping (_ chart: Chart) -> Color
     ) {
@@ -305,7 +305,7 @@ class ChartViewModel: ObservableObject, Identifiable {
                 lat: coordinates!.latitude,
                 long: coordinates!.longitude
             )
-            onNewLocation(location!)
+            onNewLocation(location!, chart)
         }
         self.data[axis]?.append(
             DataPoint(

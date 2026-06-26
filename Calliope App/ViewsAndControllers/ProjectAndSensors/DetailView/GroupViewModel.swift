@@ -19,9 +19,14 @@ class GroupViewModel: ObservableObject, Identifiable {
     var charts: [Chart] = []
     var colors: [Color] = []
 
-    @Published var uniqueLocations: Set<IdentifiableLocation> = Set<
-        IdentifiableLocation
-    >()
+    var uniqueLocations: Set<IdentifiableLocation> {
+        var allLocations = Set<IdentifiableLocation>()
+        for locationsSet in uniqueChartLocations.values {
+            allLocations.formUnion(locationsSet)
+        }
+        return allLocations
+    }
+    @Published var uniqueChartLocations: [Chart: Set<IdentifiableLocation>] = [:]
     @Published var region: MKCoordinateRegion = getDefaultRegion()
 
     init(
@@ -92,11 +97,11 @@ class GroupViewModel: ObservableObject, Identifiable {
             )
         )
     }
-    
+
     func distance(_ location1: CLLocationCoordinate2D, _ location2: CLLocationCoordinate2D) -> Double {
         return sqrt(square(location1.latitude - location2.latitude) + square(location1.longitude - location2.longitude))
     }
-    
+
     func square(_ number: Double) -> Double {
         return number * number
     }
@@ -113,23 +118,29 @@ class GroupViewModel: ObservableObject, Identifiable {
     }
 
     func loadLocationsFromDatabase() {
-        uniqueLocations.removeAll()
+        uniqueChartLocations = [:]
         let charts = Chart.fetchChartsBy(groupsId: group.id)
         for chart in charts {
             let values = Value.fetchValuesBy(chartId: chart.id)
             for value in values {
                 if value.lat != nil && value.long != nil {
-                    uniqueLocations.insert(
-                        IdentifiableLocation(lat: value.lat!, long: value.long!)
-                    )
+                    insertLocation(location: IdentifiableLocation(lat: value.lat!, long: value.long!), chart: chart)
                 }
             }
         }
     }
 
-    func onNewLocation(location: IdentifiableLocation) {
-        self.uniqueLocations.insert(location)
-        self.calculateCenterRegion()
+    func onNewLocation(location: IdentifiableLocation, chart: Chart) {
+        insertLocation(location: location, chart: chart)
+        calculateCenterRegion()
+    }
+
+    func insertLocation(location: IdentifiableLocation, chart: Chart) {
+        if uniqueChartLocations[chart] == nil {
+            uniqueChartLocations[chart] = Set<IdentifiableLocation>()
+        }
+        uniqueChartLocations[chart]!.insert(location)
+
     }
 
     func deleteChart(chart: Chart) {
@@ -168,16 +179,16 @@ class GroupViewModel: ObservableObject, Identifiable {
         chartViewModels.forEach { $0.markValueForLocation(location: location) }
         markLocationOnAllCharts(location: location)
     }
-    
+
     func markLocation(location: IdentifiableLocation, chart: Chart) {
         markedLocations[chart] = location
     }
-    
+
     func markLocationOnAllCharts(location: IdentifiableLocation) {
         for chart in markedLocations.keys {
             markedLocations[chart] = location
         }
-    }    
+    }
     func getChartMarkerColor(chart: Chart) -> Color {
         let index = charts.firstIndex(of: chart) ?? 0
         let hue = Double(index) / Double(charts.count)
