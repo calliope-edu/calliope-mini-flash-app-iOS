@@ -562,7 +562,6 @@
 				2F61455E22BF761F001C2734 /* EditorViewController.swift */,
 				2F61456022BF761F001C2734 /* LocalEditorViewController.swift */,
 				2F08A0E2234AD4320088A8D6 /* EditorsCollectionViewController.swift */,
-				60818E7C2FE5A4150053893F /* EditorsAndProgramsView.swift */,
 			);
 			path = Editors;
 			sourceTree = "<group>";
@@ -646,6 +645,7 @@
 				2F91665C2354062A0065AD81 /* Editors */,
 				2F91665D2354064C0065AD81 /* Programs */,
 				60818E7E2FE5A9C90053893F /* EditorsAndProgramsViewModel.swift */,
+				60818E7C2FE5A4150053893F /* EditorsAndProgramsView.swift */,
 			);
 			path = EditorsAndPrograms;
 			sourceTree = "<group>";
