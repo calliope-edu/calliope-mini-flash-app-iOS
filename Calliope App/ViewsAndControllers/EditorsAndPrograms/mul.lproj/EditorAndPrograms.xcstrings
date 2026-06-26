@@ -3,6 +3,7 @@
   "strings" : {
     "2pa-yb-EU6.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Öffne ein Programm in MakeCode über einen QR-Code. Einfach scannen und los geht's!\"; ObjectID = \"2pa-yb-EU6\";",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -20,6 +21,7 @@
     },
     "5dO-ZD-bhg.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Übertrage Programme vom iPhone oder iPad direkt auf deinen Calliope mini oder speichere sie in dem Calliope mini Ordner.\"; ObjectID = \"5dO-ZD-bhg\";",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -31,6 +33,7 @@
     },
     "49i-Ve-lcm.normalTitle" : {
       "comment" : "Class = \"UIButton\"; normalTitle = \"Scannen\"; ObjectID = \"49i-Ve-lcm\";",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -48,6 +51,7 @@
     },
     "bzf-ki-nbR.normalTitle" : {
       "comment" : "Class = \"UIButton\"; normalTitle = \"Datei auswählen\"; ObjectID = \"bzf-ki-nbR\";",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -131,7 +135,7 @@
     },
     "Hqp-zE-kfc.text" : {
       "comment" : "Class = \"UILabel\"; text = \"You can program your Calliope mini with the help of the editors.\"; ObjectID = \"Hqp-zE-kfc\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -149,7 +153,7 @@
     },
     "HyP-3y-Mpt.normalTitle" : {
       "comment" : "Class = \"UIButton\"; normalTitle = \"Start program\"; ObjectID = \"HyP-3y-Mpt\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -167,7 +171,7 @@
     },
     "jQh-M1-D9T.normalTitle" : {
       "comment" : "Class = \"UIButton\"; normalTitle = \"Start program\"; ObjectID = \"jQh-M1-D9T\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -185,7 +189,7 @@
     },
     "JZf-cF-XX1.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Calliope mini 1+2: Download the original program of the Calliope mini 1 and Calliope min 2. Connect and transfer the program!\"; ObjectID = \"JZf-cF-XX1\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -245,6 +249,7 @@
     },
     "nWb-Ra-8Xg.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Calliope mini 3: Download the original program of the Calliope mini 3. \\n                                                                    Connect and transfer the program!\"; ObjectID = \"nWb-Ra-8Xg\";",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -357,6 +362,7 @@
     },
     "V6G-YI-Xec.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Über langes Drücken gelangst du zu der Möglichkeit, deine im Calliope mini Ordner gespeicherten Programme zu übertragen, zu teilen und zu löschen.\"; ObjectID = \"V6G-YI-Xec\";",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

@@ -16,7 +16,7 @@ struct EditorsAndProgramsView: View {
 
         GeometryReader { geo in
             ScrollView {
-                if geo.size.width > 1200 {
+                if geo.size.width > 1000 {
                     TwoColumnLayout {
                         items
                     }

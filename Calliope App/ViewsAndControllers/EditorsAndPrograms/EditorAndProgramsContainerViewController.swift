@@ -33,6 +33,10 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
     var programsKvo: Any?
     var bottomInsetKvo: Any?
     
+    @IBSegueAction func addSwiftUI(_ coder: NSCoder) -> UIViewController? {
+        return UIHostingController(coder: coder, rootView: EditorsAndProgramsView(viewModel: EditorsAndProgramsViewModel()))
+    }
+    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(
