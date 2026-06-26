@@ -39,6 +39,8 @@ class DataController: NSObject, CLLocationManagerDelegate {
             return SensorUtility.serviceSensorMap[key]
         } ?? []
     }
+    
+    var baseTime: Double?
 
     func sensorStartRecordingFor(chart: Chart, response: @escaping ((String, Double, Double, CLLocationCoordinate2D?)) -> Void) {
         if DataController.activeServices.contains(chart.sensorType ?? .empty) {
@@ -53,11 +55,12 @@ class DataController: NSObject, CLLocationManagerDelegate {
                 return
             }
             askForLocationAuthorization()
+            self.baseTime = (Date().timeIntervalSinceReferenceDate * 100).rounded(toPlaces: 0)
             self.timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
                 let newValue = self.fetchValue(service: chart.sensorType ?? .empty)
                 for (axis, time, value) in newValue {
                     let parsedValue = DataParser.encode(data: [axis: value], service: chart.sensorType ?? .empty)
-                    let coordinates = self.getLastLocation()
+                    let coordinates = self.randomlyAlterLocation(self.getLastLocation())
                     Value.insertValue(value: parsedValue, coordinates: coordinates, chartsId: chart.id!)
                     response((axis, time, value, coordinates))
                 }
@@ -66,6 +69,26 @@ class DataController: NSObject, CLLocationManagerDelegate {
             DataController.activeServices.append(chart.sensorType ?? .empty)
         }
     }
+    
+    func randomlyAlterLocation(_ location: CLLocationCoordinate2D?) -> CLLocationCoordinate2D? {
+        if location == nil {
+            return nil
+        }
+        
+        let latitudeNoise = Double(Int.random(in: 0...100)) / 10000
+        let longitudeNoise = Double(Int.random(in: 0...100)) / 10000
+        return CLLocationCoordinate2D(latitude: location!.latitude + latitudeNoise, longitude: location!.longitude + longitudeNoise)
+    }
+    
+    func linearlyAlterLocation(location: CLLocationCoordinate2D?, time: Double) -> CLLocationCoordinate2D? {
+        if location == nil {
+            return nil
+        }
+        
+        let longitudeShift = (time - self.baseTime!) / 10000
+        return CLLocationCoordinate2D(latitude: location!.latitude, longitude: location!.longitude + longitudeShift)
+    }
+    
 
     func sensorStopRecordingFor(chart: Chart) {
         timer?.invalidate()

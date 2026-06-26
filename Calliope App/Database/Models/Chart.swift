@@ -10,7 +10,7 @@ import DeepDiff
 import GRDB
 
 struct Chart: Codable, FetchableRecord, PersistableRecord, DiffAware,
-    Identifiable
+    Identifiable, Hashable
 {
 
     static let databaseTableName = "charts"
@@ -26,6 +26,12 @@ struct Chart: Codable, FetchableRecord, PersistableRecord, DiffAware,
 
     static func compareContent(_ a: Chart, _ b: Chart) -> Bool {
         a.sensorType == b.sensorType && a.id == b.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+        hasher.combine(sensorType)
+        hasher.combine(groupsId)
     }
 
     static func insertChart(sensorType: CalliopeService?, groupsId: Int64?)

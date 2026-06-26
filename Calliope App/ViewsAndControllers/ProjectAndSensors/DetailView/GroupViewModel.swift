@@ -15,7 +15,9 @@ class GroupViewModel: ObservableObject, Identifiable {
     var openFileNameDialog: (@escaping (_ filename: String) -> Void) -> Void
     var deleteGroup: (_ groupId: Int64) -> Void
     @Published var chartViewModels: [ChartViewModel] = []
-    @Published var markedLocation: IdentifiableLocation?
+    @Published var markedLocations: [Chart: IdentifiableLocation] = [:]
+    var charts: [Chart] = []
+    var colors: [Color] = []
 
     @Published var uniqueLocations: Set<IdentifiableLocation> = Set<
         IdentifiableLocation
@@ -41,12 +43,14 @@ class GroupViewModel: ObservableObject, Identifiable {
         chartViewModels = []
         let charts = Chart.fetchChartsBy(groupsId: group.id)
         charts.forEach { chart in
+            self.charts.append(chart)
             chartViewModels.append(
                 ChartViewModel(
                     chart: chart,
                     openFileNameDialog: openFileNameDialog,
                     onNewLocation: onNewLocation,
-                    markLocation: markLocation
+                    markLocation: markLocation,
+                    getMarkerColorForChart: getChartMarkerColor
                 )
             )
         }
@@ -147,12 +151,14 @@ class GroupViewModel: ObservableObject, Identifiable {
             return
         }
         withAnimation(nil) {  // disables an unideal animation of the add button
+            self.charts.append(chart)
             chartViewModels.append(
                 ChartViewModel(
                     chart: chart,
                     openFileNameDialog: openFileNameDialog,
                     onNewLocation: onNewLocation,
-                    markLocation: markLocation
+                    markLocation: markLocation,
+                    getMarkerColorForChart: getChartMarkerColor
                 )
             )
         }
@@ -160,10 +166,21 @@ class GroupViewModel: ObservableObject, Identifiable {
 
     func onMapAnnotationTapped(location: IdentifiableLocation) {
         chartViewModels.forEach { $0.markValueForLocation(location: location) }
-        markLocation(location: location)
+        markLocationOnAllCharts(location: location)
     }
     
-    func markLocation(location: IdentifiableLocation) {
-        self.markedLocation = location
+    func markLocation(location: IdentifiableLocation, chart: Chart) {
+        markedLocations[chart] = location
+    }
+    
+    func markLocationOnAllCharts(location: IdentifiableLocation) {
+        for chart in markedLocations.keys {
+            markedLocations[chart] = location
+        }
+    }    
+    func getChartMarkerColor(chart: Chart) -> Color {
+        let index = charts.firstIndex(of: chart) ?? 0
+        let hue = Double(index) / Double(charts.count)
+        return Color(hue: hue, saturation: 0.8, brightness: 0.7)
     }
 }

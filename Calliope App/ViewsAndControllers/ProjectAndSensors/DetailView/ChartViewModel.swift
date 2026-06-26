@@ -43,7 +43,8 @@ struct IdentifiableLocation: Identifiable, Hashable {
 class ChartViewModel: ObservableObject, Identifiable {
     var chart: Chart
     let onNewLocation: (_ location: IdentifiableLocation) -> Void
-    let markLocation: (_ location: IdentifiableLocation) -> Void
+    let markLocation: (_ location: IdentifiableLocation, _ chart: Chart) -> Void
+    let getMarkerColorForChart: (_ chart: Chart) -> Color
     let dataController: DataController
     @Published var data: [String: [DataPoint]] = [:]
     @Published var sensorOptions: [DropDownOption<Sensor>] = []
@@ -61,7 +62,7 @@ class ChartViewModel: ObservableObject, Identifiable {
     func updateMarkedLocation() {
         let dataPoint = findPointClosestToSlider()
         if dataPoint != nil && dataPoint!.location != nil {
-            markLocation(dataPoint!.location!)
+            markLocation(dataPoint!.location!, chart)
         }
     }
 
@@ -203,12 +204,14 @@ class ChartViewModel: ObservableObject, Identifiable {
         openFileNameDialog:
             @escaping (@escaping (_ filename: String) -> Void) -> Void,
         onNewLocation: @escaping (_ location: IdentifiableLocation) -> Void,
-        markLocation: @escaping (_ location: IdentifiableLocation) -> Void
+        markLocation: @escaping (_ location: IdentifiableLocation, _ chart: Chart) -> Void,
+        getMarkerColorForChart: @escaping (_ chart: Chart) -> Color
     ) {
         self.chart = chart
         self.openFileNameDialog = openFileNameDialog
         self.onNewLocation = onNewLocation
         self.markLocation = markLocation
+        self.getMarkerColorForChart = getMarkerColorForChart
 
         dataController = DataController()
         loadDatabaseDataIntoChart(chart)
@@ -418,6 +421,10 @@ class ChartViewModel: ObservableObject, Identifiable {
         )
         sensorOptions = [dropDownOption]
         selectedSensor = dropDownOption
+    }
+    
+    func getMarkerColor() -> Color {
+        return self.getMarkerColorForChart(chart)
     }
 
     fileprivate func addNotificationSubscriptions() {

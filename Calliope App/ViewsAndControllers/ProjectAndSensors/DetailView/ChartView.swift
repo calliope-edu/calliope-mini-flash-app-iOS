@@ -195,7 +195,7 @@ struct LineChart: View {
         if viewModel.displayedRange != nil {
             RuleMark(
                 x: .value("Time", viewModel.sliderAxisValue)
-            )
+            ).foregroundStyle(viewModel.getMarkerColor())
 
         }
     }

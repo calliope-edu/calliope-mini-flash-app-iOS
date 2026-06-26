@@ -118,8 +118,18 @@ struct MapView: View {
         Button {
             viewModel.onMapAnnotationTapped(location: location)
         } label: {
-            Circle().fill(location == viewModel.markedLocation ? Color.red : Color.black).frame(width: 30, height: 30)
+            Circle().fill(getMapAnnotationColor(location: location)).frame(width: 30, height: 30)
         }
         .buttonStyle(.plain)
+    }
+    
+    func getMapAnnotationColor(location: IdentifiableLocation) -> Color {
+        for (chart, markedLocation) in viewModel.markedLocations {
+            if location == markedLocation {
+                return viewModel.getChartMarkerColor(chart: chart)
+            }
+            print(pow(location.location.latitude - markedLocation.location.latitude, 2) + pow(location.location.longitude - location.location.longitude, 2))
+        }
+        return Color.black
     }
 }
