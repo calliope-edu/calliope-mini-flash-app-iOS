@@ -31,7 +31,7 @@ protocol EditorsAndProgramsViewModelProtocol {
 }
 
 class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, ObservableObject {
-    let openEditor: () -> Void
+    let openEditor: (_ editor: EditorTileConfig) -> Void
     
     @Published var editors: [EditorTileConfig] = [
         EditorTileConfig(name: "Makecode", iconName: "editors_makecode"),
@@ -46,13 +46,12 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
         ProgramTileConfig(name: "Test 2", lastUsed: Date.now.addingTimeInterval(100)),
     ]
     
-    init(openEditor: @escaping () -> Void) {
+    init(openEditor: @escaping (_ editor: EditorTileConfig) -> Void) {
         self.openEditor = openEditor
     }
     
     func openEditor(editor: EditorTileConfig) {
-        print("Trying to open editor \(editor.name)")
-        openEditor()
+        openEditor(editor)
     }
 
     func downloadProgram(program: ProgramTileConfig)  {

@@ -34,7 +34,7 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
     var bottomInsetKvo: Any?
     
     @IBSegueAction func addSwiftUI(_ coder: NSCoder) -> UIViewController? {
-        return UIHostingController(coder: coder, rootView: EditorsAndProgramsView(viewModel: EditorsAndProgramsViewModel(openEditor: openMakeCode)))
+        return UIHostingController(coder: coder, rootView: EditorsAndProgramsView(viewModel: EditorsAndProgramsViewModel(openEditor: openEditor)))
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -149,6 +149,15 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
             // Dismiss this view
             dismiss(animated: true, completion: nil)
             HexFileStoreDialog.showStoreHexUI(controller: self, hexFile: url, notSaved: { _ in })
+        }
+    }
+    
+    func openEditor(editor: EditorTileConfig) {
+        switch(editor.name) {
+        case "Makecode":
+            performSegue(withIdentifier: "showMakecode", sender: nil)
+        default:
+            LogNotify.error("Tried to open unkown editor \(editor.name).")
         }
     }
     
