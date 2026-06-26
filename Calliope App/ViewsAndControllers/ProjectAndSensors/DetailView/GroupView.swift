@@ -128,7 +128,6 @@ struct MapView: View {
             if location == markedLocation {
                 return viewModel.getChartMarkerColor(chart: chart)
             }
-            print(pow(location.location.latitude - markedLocation.location.latitude, 2) + pow(location.location.longitude - location.location.longitude, 2))
         }
         return Color.black
     }
