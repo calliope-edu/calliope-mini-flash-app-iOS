@@ -8,7 +8,14 @@
 
     },
     "%lld unique locations" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld einzelne Orte"
+          }
+        }
+      }
     },
     "1. Open MakeCode Editor" : {
       "localizations" : {
@@ -157,6 +164,23 @@
     },
     "Arcade-Programme können nur per USB auf den Calliope mini übertragen werden.\n\nBitte verbinde den Calliope mini per USB-Kabel und wähle den MINI-Ordner aus." : {
       "comment" : "Arcade programs can only be transferred via USB"
+    },
+    "Average" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Durchschnitt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Average"
+          }
+        }
+      }
     },
     "Axis" : {
       "localizations" : {
@@ -595,6 +619,23 @@
         }
       }
     },
+    "Current" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktuell"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Current"
+          }
+        }
+      }
+    },
     "Das Herunterladen der Sitzungsdaten ist fehlgeschlagen." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -866,24 +907,6 @@
         }
       }
     },
-    "dqZ-FU-7Ks.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Average\"; ObjectID = \"dqZ-FU-7Ks\";",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Durchschnitt"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Average"
-          }
-        }
-      }
-    },
     "DTy-e7-oGc.title" : {
       "comment" : "Class = \"UINavigationItem\"; title = \"Sensordaten\"; ObjectID = \"DTy-e7-oGc\";",
       "extractionState" : "stale",
@@ -1020,7 +1043,14 @@
 
     },
     "Export (CSV)" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exportieren (CSV)"
+          }
+        }
+      }
     },
     "Export Data" : {
       "comment" : "Export Data alert",
@@ -1410,6 +1440,23 @@
         }
       }
     },
+    "Maximum" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maximum"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maximum"
+          }
+        }
+      }
+    },
     "Microphone" : {
       "localizations" : {
         "de" : {
@@ -1422,6 +1469,23 @@
     },
     "Mini_Blocks_Program" : {
 
+    },
+    "Minimum" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minimum"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minimum"
+          }
+        }
+      }
     },
     "MlM-W4-l4K.title" : {
       "comment" : "Class = \"UICommand\"; title = \"Y\"; ObjectID = \"MlM-W4-l4K\";",
@@ -1630,23 +1694,6 @@
         }
       }
     },
-    "On7-FU-yd0.text" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aktuell"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Current"
-          }
-        }
-      }
-    },
     "Open a program in MakeCode using a QR code. Simply scan it and off you go!" : {
 
     },
@@ -1782,24 +1829,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Display ID pattern on the Calliope mini: Press and hold A+B+Reset, release reset after 1 second. OR: Press Reset 3 Times. More info under \"Help“."
-          }
-        }
-      }
-    },
-    "QgC-6o-TvH.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Maximum\"; ObjectID = \"QgC-6o-TvH\";",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Maximum"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Maximum"
           }
         }
       }
@@ -1940,6 +1969,28 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Auswählen"
+          }
+        }
+      }
+    },
+    "Select Axis" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Achse Auswählen"
+          }
+        }
+      }
+    },
+    "Select Sensor" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensor Auswählen"
           }
         }
       }
@@ -2489,24 +2540,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "One moment please"
-          }
-        }
-      }
-    },
-    "WEn-Va-AIJ.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Minimum\"; ObjectID = \"WEn-Va-AIJ\";",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Minimum"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Minimum"
           }
         }
       }

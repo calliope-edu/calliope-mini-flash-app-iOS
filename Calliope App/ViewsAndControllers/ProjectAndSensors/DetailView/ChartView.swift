@@ -208,22 +208,22 @@ struct MetricsRowView: View {
         HStack {
             Spacer()
             MetricView(
-                metricName: "Minimum",
+                metricName: String(localized: "Minimum"),
                 metricValue: viewModel.dislpayedMinimum
             )
             Spacer()
             MetricView(
-                metricName: "Average",
+                metricName: String(localized: "Average"),
                 metricValue: viewModel.displayedAverage
             )
             Spacer()
             MetricView(
-                metricName: "Maximum",
+                metricName: String(localized: "Maximum"),
                 metricValue: viewModel.dislpayedMaximum
             )
             Spacer()
             MetricView(
-                metricName: "Current",
+                metricName: String(localized: "Current"),
                 metricValue: viewModel.displayedCurrent
             )
             Spacer()
@@ -260,7 +260,7 @@ struct ChartHeaderView: View {
             selectedOption: $viewModel.selectedSensor,
             onSelectionChanged: viewModel.selectSensor,
             placeholder: viewModel.sensorOptions.count > 0
-                ? "Select Sensor" : "No Sensor Available"
+            ? String(localized: "Select Sensor") : String(localized: "No Sensor Available")
         ).disabled(
             viewModel.sensorOptions.count == 0
                 || viewModel.data.count != 0
@@ -273,7 +273,7 @@ struct ChartHeaderView: View {
             selectedOption: $viewModel.selectedAxis,
             onSelectionChanged: viewModel.selectAxis,
             placeholder: viewModel.axisOptions.count == 0
-                ? "-" : "Select Axis"
+                ? "-" : String(localized: "Select Axis")
         ).disabled(viewModel.axisOptions.count == 0)
     }
 
