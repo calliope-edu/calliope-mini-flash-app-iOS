@@ -186,7 +186,9 @@ class GroupViewModel: ObservableObject, Identifiable {
 
     func markLocationOnAllCharts(location: IdentifiableLocation) {
         for chart in markedLocations.keys {
-            markedLocations[chart] = location
+            if uniqueChartLocations[chart] != nil && uniqueChartLocations[chart]!.contains(location) {
+                markedLocations[chart] = location
+            }
         }
     }
     func getChartMarkerColor(chart: Chart) -> Color {
