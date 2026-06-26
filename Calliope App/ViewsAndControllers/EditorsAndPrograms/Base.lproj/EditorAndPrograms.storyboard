@@ -26,7 +26,6 @@
                     <size key="freeformSize" width="643" height="1000"/>
                     <connections>
                         <segue destination="eeY-2x-OZY" kind="show" identifier="openHexFile" destinationCreationSelector="openHexFile:" id="COy-xJ-NpQ"/>
-                        <segue destination="p62-6L-UHs" kind="show" identifier="showLofiAppView" id="Xkz-Af-AVg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t5x-PS-nsJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -343,7 +342,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FrV-jw-8Vf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1049.70703125" y="636.89604685212294"/>
+            <point key="canvasLocation" x="1190" y="849"/>
         </scene>
         <!--Editor-->
         <scene sceneID="pG3-lK-9uC">
@@ -375,7 +374,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CUU-x4-Hb6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2349" y="560"/>
+            <point key="canvasLocation" x="208" y="849"/>
         </scene>
         <!--Programs Collection View Controller-->
         <scene sceneID="5PQ-au-cNb">
@@ -500,7 +499,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SRn-bB-H5q" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2759.5419847328244" y="-23.239436619718312"/>
+            <point key="canvasLocation" x="2960" y="318"/>
         </scene>
         <!--Code View Controller-->
         <scene sceneID="hol-wY-xHE">
@@ -559,7 +558,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Gu-wX-dHR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-526" y="833"/>
+            <point key="canvasLocation" x="-527" y="849"/>
         </scene>
         <!--Editors and Programs-->
         <scene sceneID="UDA-pj-7B3">
@@ -602,48 +601,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dA4-Mx-Bwc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1801" y="833"/>
-        </scene>
-        <!--Lofi App View Controller-->
-        <scene sceneID="Urx-FH-Zy6">
-            <objects>
-                <viewController id="p62-6L-UHs" customClass="LofiAppViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <containerView key="view" opaque="NO" contentMode="scaleToFill" id="tWW-go-SRJ">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                        <connections>
-                            <segue destination="l6t-Dq-qHJ" kind="embed" id="tNe-4F-6ez"/>
-                        </connections>
-                    </containerView>
-                    <navigationItem key="navigationItem" id="7oi-2B-oCX"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dmn-pr-He1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1856" y="-401"/>
-        </scene>
-        <!--WebViewContainerController-->
-        <scene sceneID="2be-n6-rbO">
-            <objects>
-                <viewControllerPlaceholder storyboardName="WBCore" referencedIdentifier="WebViewContainerController" id="l6t-Dq-qHJ" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="3Jw-IT-3Ix"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="6q4-TO-Bff" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2911" y="-570"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="eMJ-PP-1H5">
-            <objects>
-                <viewController id="9Ci-wp-jf4" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="hjW-c8-cad">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="LWD-nZ-jG4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1796" y="-1101"/>
+            <point key="canvasLocation" x="1874" y="865"/>
         </scene>
         <!--Hosting Controller-->
         <scene sceneID="UG6-2J-AGe">
@@ -651,11 +609,11 @@
                 <hostingController id="sdK-0w-f04" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e0c-nf-lqU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2489" y="930"/>
+            <point key="canvasLocation" x="1976" y="-106"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="COy-xJ-NpQ"/>
+        <segue reference="yKh-rV-xrX"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="calliope-lilablau"/>
     <resources>
