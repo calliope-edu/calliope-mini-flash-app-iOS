@@ -44,7 +44,7 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
+
     @IBSegueAction func addSwiftUI(_ coder: NSCoder) -> UIViewController? {
         loadGroups()
         return UIHostingController(
@@ -88,6 +88,12 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
     }
 
     override func viewDidAppear(_ animated: Bool) {
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        // On the new IOS version the gestureRecognizer creates unwanted behaviour, because swipes are not always for navigating back.
+        if #available(iOS 26.0, *), let gestureRecognizer = self.navigationController?.interactiveContentPopGestureRecognizer {
+            gestureRecognizer.isEnabled = false
+        }
+>
         calliopeConnectedSubcription = addSubscription(
             name: DiscoveredBLEDevice.usageReadyNotificationName,
             onActivated: { [weak self] (_) in
