@@ -60,7 +60,7 @@ class DataController: NSObject, CLLocationManagerDelegate {
                 let newValue = self.fetchValue(service: chart.sensorType ?? .empty)
                 for (axis, time, value) in newValue {
                     let parsedValue = DataParser.encode(data: [axis: value], service: chart.sensorType ?? .empty)
-                    let coordinates = self.randomlyAlterLocation(self.getLastLocation())
+                    let coordinates = self.getLastLocation()
                     Value.insertValue(value: parsedValue, coordinates: coordinates, chartsId: chart.id!)
                     response((axis, time, value, coordinates))
                 }
