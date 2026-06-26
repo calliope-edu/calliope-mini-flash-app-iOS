@@ -93,7 +93,7 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
         if #available(iOS 26.0, *), let gestureRecognizer = self.navigationController?.interactiveContentPopGestureRecognizer {
             gestureRecognizer.isEnabled = false
         }
->
+
         calliopeConnectedSubcription = addSubscription(
             name: DiscoveredBLEDevice.usageReadyNotificationName,
             onActivated: { [weak self] (_) in
