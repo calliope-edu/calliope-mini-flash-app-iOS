@@ -1,0 +1,90 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Eye-99-PMC.title" : {
+      "comment" : "Class = \"UITabBarItem\"; title = \"Item\"; ObjectID = \"Eye-99-PMC\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Item"
+          }
+        }
+      }
+    },
+    "JMf-lJ-R5Y.title" : {
+      "comment" : "Class = \"UITabBarItem\"; title = \"Item\"; ObjectID = \"JMf-lJ-R5Y\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Item"
+          }
+        }
+      }
+    },
+    "JRE-fX-fPw.title" : {
+      "comment" : "Class = \"UITabBarItem\"; title = \"Item\"; ObjectID = \"JRE-fX-fPw\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Item"
+          }
+        }
+      }
+    },
+    "mwh-ql-LOg.title" : {
+      "comment" : "Class = \"UITabBarItem\"; title = \"Item\"; ObjectID = \"mwh-ql-LOg\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Item"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Item"
+          }
+        }
+      }
+    },
+    "oPM-D6-CaJ.title" : {
+      "comment" : "Class = \"UITabBarItem\"; title = \"Item\"; ObjectID = \"oPM-D6-CaJ\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Item"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Item"
+          }
+        }
+      }
+    },
+    "UiX-pc-Qln.title" : {
+      "comment" : "Class = \"UITabBarItem\"; title = \"Item\"; ObjectID = \"UiX-pc-Qln\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Item"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.2"
+}

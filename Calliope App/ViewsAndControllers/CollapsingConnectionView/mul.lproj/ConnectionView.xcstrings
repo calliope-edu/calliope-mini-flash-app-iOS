@@ -1,0 +1,105 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "ABo-Y2-qxl.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Beschreibung\"; ObjectID = \"ABo-Y2-qxl\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Beschreibung"
+          }
+        }
+      }
+    },
+    "lTg-DP-YaK.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"1. Programm 5 starten\\n2. Schütteln\\n3. LED-Muster eingeben\"; ObjectID = \"lTg-DP-YaK\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connect a Calliope mini"
+          }
+        }
+      }
+    },
+    "NJ1-SW-3EC.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"USB verwenden\"; ObjectID = \"NJ1-SW-3EC\";",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "USB Verbindung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connect with cable"
+          }
+        }
+      }
+    },
+    "Uly-Zt-Dwr.configuration.title" : {
+      "comment" : "Class = \"UIButton\"; configuration.title = \"Calliope mini auswählen\"; ObjectID = \"Uly-Zt-Dwr\";",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calliope mini auswählen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select Calliope mini"
+          }
+        }
+      }
+    },
+    "Uly-Zt-Dwr.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"Uly-Zt-Dwr\";",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calliope mini auswählen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select Calliope mini"
+          }
+        }
+      }
+    },
+    "WY5-hC-Tgz.title" : {
+      "comment" : "Class = \"UISwitch\"; title = \"USB\"; ObjectID = \"WY5-hC-Tgz\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "USB"
+          }
+        }
+      }
+    },
+    "XYJ-C1-vhJ.title" : {
+      "comment" : "Class = \"UISwitch\"; title = \"Enable USB\"; ObjectID = \"XYJ-C1-vhJ\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Enable USB"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.2"
+}

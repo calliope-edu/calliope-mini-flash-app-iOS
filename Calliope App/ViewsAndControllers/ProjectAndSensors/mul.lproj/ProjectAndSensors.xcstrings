@@ -1,0 +1,612 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "1Ta-ld-GFK.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"1Ta-ld-GFK\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Button"
+          }
+        }
+      }
+    },
+    "5Mf-7E-FUy.configuration.title" : {
+      "comment" : "Class = \"UIButton\"; configuration.title = \" \"; ObjectID = \"5Mf-7E-FUy\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " "
+          }
+        }
+      }
+    },
+    "5Mf-7E-FUy.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"5Mf-7E-FUy\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Button"
+          }
+        }
+      }
+    },
+    "6lB-5y-zkN.text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. Dazu kann dieses Template mit der Erweiterung verwendet werden:\n"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. This template can be used with the extension:\n"
+          }
+        }
+      }
+    },
+    "80R-el-hVU.text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Es können auf dem Calliope mini 3 Daten aufgezeichnet werden. Daten können mit der Erweiterung Datenlogger in einer Tabelle gespeichert und zusätzlich als Grafik dargestellt werden.\n"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data can be recorded on the Calliope mini 3. With the datalogger extension data can be saved in a table and also displayed as a graph.\n"
+          }
+        }
+      }
+    },
+    "bkL-vr-KqE.configuration.title" : {
+      "comment" : "Class = \"UIButton\"; configuration.title = \"Record Sensordata\"; ObjectID = \"bkL-vr-KqE\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensordaten aufzeichnen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Record Sensordata"
+          }
+        }
+      }
+    },
+    "bkL-vr-KqE.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"bkL-vr-KqE\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Button"
+          }
+        }
+      }
+    },
+    "cMt-qa-gH9.text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detaillierte Anweisungen findest du auf der Webseite:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detailed instructions can be found on the website:"
+          }
+        }
+      }
+    },
+    "cnw-wD-B2K.title" : {
+      "comment" : "Class = \"UINavigationController\"; title = \"Sensordaten\"; ObjectID = \"cnw-wD-B2K\";",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensorendaten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensordata"
+          }
+        }
+      }
+    },
+    "Dgf-wX-T07.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Project Name\"; ObjectID = \"Dgf-wX-T07\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Projektname"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Project Name"
+          }
+        }
+      }
+    },
+    "dqZ-FU-7Ks.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Average\"; ObjectID = \"dqZ-FU-7Ks\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Durchschnitt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Average"
+          }
+        }
+      }
+    },
+    "DTy-e7-oGc.title" : {
+      "comment" : "Class = \"UINavigationItem\"; title = \"Sensordaten\"; ObjectID = \"DTy-e7-oGc\";",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensordaten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensordata"
+          }
+        }
+      }
+    },
+    "dYM-tW-0Gf.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Label\"; ObjectID = \"dYM-tW-0Gf\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Label"
+          }
+        }
+      }
+    },
+    "ghf-jY-ggY.title" : {
+      "comment" : "Class = \"UIViewController\"; title = \"Editor\"; ObjectID = \"ghf-jY-ggY\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Editor"
+          }
+        }
+      }
+    },
+    "gYD-YY-Lxx.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\"; ObjectID = \"gYD-YY-Lxx\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hier findest du bereits erstellte Projekte. Die aufgenommenen Daten kannst du dir anschauen, weiterverarbeiten und teilen sowie als Tabelle herunterladen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Here you will find your projects. You can view, process, and share the recorded data, as well as download it as a table."
+          }
+        }
+      }
+    },
+    "hTK-ZH-RqL.title" : {
+      "comment" : "Class = \"UICommand\"; title = \"Item 2\"; ObjectID = \"hTK-ZH-RqL\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Item 2"
+          }
+        }
+      }
+    },
+    "k7z-ya-z6E.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"0.0\"; ObjectID = \"k7z-ya-z6E\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "0.0"
+          }
+        }
+      }
+    },
+    "k32-SG-WvS.configuration.title" : {
+      "comment" : "Class = \"UIButton\"; configuration.title = \"Button\"; ObjectID = \"k32-SG-WvS\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Button"
+          }
+        }
+      }
+    },
+    "k32-SG-WvS.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"k32-SG-WvS\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Button"
+          }
+        }
+      }
+    },
+    "kac-2O-C6o.configuration.title" : {
+      "comment" : "Class = \"UIButton\"; configuration.title = \"Datalogger View\"; ObjectID = \"kac-2O-C6o\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datenlogger Ansicht"
+          }
+        }
+      }
+    },
+    "Kjn-CJ-sdt.title" : {
+      "comment" : "Class = \"UITabBarItem\"; title = \"Sensordaten\"; ObjectID = \"Kjn-CJ-sdt\";",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensordaten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensordata"
+          }
+        }
+      }
+    },
+    "M5s-gg-ZTZ.text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\n2. Erstelle das Programm mit den jeweiligen Daten und definiere benötigte Spalten und setze entsprechende (Sensor-)Daten als Werte.\n\n3. Übertrage das Programm auf deinen Calliope mini.\n\n4. Öffne die Datenlogger Ansicht.\n"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\n2. Create the program with the respective data and define the required columns and set the corresponding (sensor) data as values.\n\n3. Transfer the program to your Calliope mini. \n\n4. Open the data logger view.\n"
+          }
+        }
+      }
+    },
+    "MlM-W4-l4K.title" : {
+      "comment" : "Class = \"UICommand\"; title = \"Y\"; ObjectID = \"MlM-W4-l4K\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Y"
+          }
+        }
+      }
+    },
+    "MwQ-F7-XGJ.title" : {
+      "comment" : "Class = \"UICommand\"; title = \"X\"; ObjectID = \"MwQ-F7-XGJ\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "X"
+          }
+        }
+      }
+    },
+    "N71-qD-IZn.text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. Starte MakeCode. \n2. Lade die Bluetooth-Erweiterung in dein Projekt oder starte das Template:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. Open MakeCode Editor \n2. Add the Bluetooth extension to your project"
+          }
+        }
+      }
+    },
+    "nBn-0t-SZp.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"0.0\"; ObjectID = \"nBn-0t-SZp\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "0.0"
+          }
+        }
+      }
+    },
+    "nJx-VD-M8y.title" : {
+      "comment" : "Class = \"UIViewController\"; title = \"Sensordaten\"; ObjectID = \"nJx-VD-M8y\";",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensoren und Projekte"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensors and Projects"
+          }
+        }
+      }
+    },
+    "OaB-k3-pOM.text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3. Wähle die gewünschten Dienste für dein Programm aus, um diese anzusehen oder aufzunehmen.\n4. Starte das Programm auf deinem Calliope mini."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3. Select the desired services for your program to view or record. \n4. Start the program on your Calliope mini."
+          }
+        }
+      }
+    },
+    "On7-FU-yd0.text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktuell"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Current"
+          }
+        }
+      }
+    },
+    "Ov1-de-29k.text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensordaten vom Calliope mini direkt an die App senden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send sensor data directly from Calliope mini to the app"
+          }
+        }
+      }
+    },
+    "QgC-6o-TvH.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Maximum\"; ObjectID = \"QgC-6o-TvH\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maximum"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maximum"
+          }
+        }
+      }
+    },
+    "rN9-hs-kc2.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"0.0\"; ObjectID = \"rN9-hs-kc2\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "0.0"
+          }
+        }
+      }
+    },
+    "vAZ-zR-LYX.title" : {
+      "comment" : "Class = \"UICommand\"; title = \"Item 2\"; ObjectID = \"vAZ-zR-LYX\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Item 2"
+          }
+        }
+      }
+    },
+    "vNv-X5-tfZ.configuration.title" : {
+      "comment" : "Class = \"UIButton\"; configuration.title = \" \"; ObjectID = \"vNv-X5-tfZ\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " "
+          }
+        }
+      }
+    },
+    "vNv-X5-tfZ.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"vNv-X5-tfZ\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Button"
+          }
+        }
+      }
+    },
+    "WEn-Va-AIJ.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Minimum\"; ObjectID = \"WEn-Va-AIJ\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minimum"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minimum"
+          }
+        }
+      }
+    },
+    "wtX-TM-5dr.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"0.0\"; ObjectID = \"wtX-TM-5dr\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "0.0"
+          }
+        }
+      }
+    },
+    "X8y-xM-amD.title" : {
+      "comment" : "Class = \"UICommand\"; title = \"Item 1\"; ObjectID = \"X8y-xM-amD\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Item 1"
+          }
+        }
+      }
+    },
+    "XBq-b6-ul5.configuration.title" : {
+      "comment" : "Class = \"UIButton\"; configuration.title = \"Button\"; ObjectID = \"XBq-b6-ul5\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Button"
+          }
+        }
+      }
+    },
+    "XBq-b6-ul5.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"XBq-b6-ul5\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Button"
+          }
+        }
+      }
+    },
+    "xWF-af-2iy.title" : {
+      "comment" : "Class = \"UIViewController\"; title = \"Project Overview\"; ObjectID = \"xWF-af-2iy\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Projektübersicht"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Project Overview"
+          }
+        }
+      }
+    },
+    "Y6a-Xn-IV9.title" : {
+      "comment" : "Class = \"UICommand\"; title = \"Item 1\"; ObjectID = \"Y6a-Xn-IV9\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Item 1"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.2"
+}

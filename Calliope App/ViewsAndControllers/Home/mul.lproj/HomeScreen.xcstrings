@@ -1,0 +1,210 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "2Nk-e1-k8S.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Calliope mini V2 / V1\"; ObjectID = \"2Nk-e1-k8S\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Calliope mini V2 / V1"
+          }
+        }
+      }
+    },
+    "9eT-f2-X1q.title" : {
+      "comment" : "Class = \"UIViewController\"; title = \"Home\"; ObjectID = \"9eT-f2-X1q\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Home"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Home"
+          }
+        }
+      }
+    },
+    "CQV-id-NRD.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"- Reset Taste 3 x drücken\\n- ID-Muster erscheint auf dem Calliope mini\"; ObjectID = \"CQV-id-NRD\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "- Reset Taste 3 x drücken\n- ID-Muster erscheint auf dem Calliope mini"
+          }
+        }
+      }
+    },
+    "DaZ-3T-KYa.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Calliope mini V3\"; ObjectID = \"DaZ-3T-KYa\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Calliope mini V3"
+          }
+        }
+      }
+    },
+    "dQR-js-4sn.title" : {
+      "comment" : "Class = \"UIViewController\"; title = \"onboardingOffline\"; ObjectID = \"dQR-js-4sn\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "onboardingOffline"
+          }
+        }
+      }
+    },
+    "EK1-fy-p89.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"- Über das rote Calliope mini Icon im Bereich Editoren und Programme öffnet sich das Verbindungsfenster\\n- Individuelles ID-Muster des Calliope mini auf die Matrix übertragen\\n- Wird der Calliope mini gefunden, erscheint eine grüne Schaltfläche\\n- Verbinden bestätigen über das Drücken der grünen Schaltfläche\"; ObjectID = \"EK1-fy-p89\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "- Über das rote Calliope mini Icon im Bereich Editoren und Programme öffnet sich das Verbindungsfenster\n- Individuelles ID-Muster des Calliope mini auf die Matrix übertragen\n- Wird der Calliope mini gefunden, erscheint eine grüne Schaltfläche\n- Verbinden bestätigen über das Drücken der grünen Schaltfläche"
+          }
+        }
+      }
+    },
+    "fxY-KR-WSy.title" : {
+      "comment" : "Class = \"UITabBarItem\"; title = \"Home\"; ObjectID = \"fxY-KR-WSy\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Home"
+          }
+        }
+      }
+    },
+    "Mc9-nL-hpA.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"GETTING STARTED\"; ObjectID = \"Mc9-nL-hpA\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programmieren mit dem iPad"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programming with the iPad"
+          }
+        }
+      }
+    },
+    "mhl-nW-bgq.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"- Tasten A+B gedrückt halten\\n- Reset Taste für 1 Sekunde zusätzlich drücken\\n- Tasten A+B gedrückt halten bis die Bluetooth-Animation beendet ist\\n- ID-Muster erscheint auf dem Calliope mini\"; ObjectID = \"mhl-nW-bgq\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "- Tasten A+B gedrückt halten\n- Reset Taste für 1 Sekunde zusätzlich drücken\n- Tasten A+B gedrückt halten bis die Bluetooth-Animation beendet ist\n- ID-Muster erscheint auf dem Calliope mini"
+          }
+        }
+      }
+    },
+    "Njr-oY-CFW.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Bluetooth Modus starten\"; ObjectID = \"Njr-oY-CFW\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Bluetooth Modus starten"
+          }
+        }
+      }
+    },
+    "Nrm-mk-1y2.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Verbinden\"; ObjectID = \"Nrm-mk-1y2\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Verbinden"
+          }
+        }
+      }
+    },
+    "Odw-Sd-Jna.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Programm übertragen\"; ObjectID = \"Odw-Sd-Jna\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Programm übertragen"
+          }
+        }
+      }
+    },
+    "Q5n-ot-AaT.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"- Verwende einen Editor, um ein Programm zu erstellen und zu übertragen\\n- Ab jetzt kannst du Programme aus der App über Bluetooth übertragen. \\n- Übertragung des Programms an den Calliope mini mit folgenden Schritten: Programm herunterladen, sichern und übertragen. Die Übertragung kann einige Sekunden dauern. Der Fortschritt wird angezeigt.\\n- Nun erscheint das Programm auf dem Calliope mini!\\n\"; ObjectID = \"Q5n-ot-AaT\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "- Verwende einen Editor, um ein Programm zu erstellen und zu übertragen\n- Ab jetzt kannst du Programme aus der App über Bluetooth übertragen. \n- Übertragung des Programms an den Calliope mini mit folgenden Schritten: Programm herunterladen, sichern und übertragen. Die Übertragung kann einige Sekunden dauern. Der Fortschritt wird angezeigt.\n- Nun erscheint das Programm auf dem Calliope mini!\n"
+          }
+        }
+      }
+    },
+    "Sip-8t-jCD.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Du bist leider offline. Dennoch haben wir ein paar Informationen für dich!\"; ObjectID = \"Sip-8t-jCD\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Du bist leider offline. Dennoch haben wir ein paar Informationen für dich!"
+          }
+        }
+      }
+    },
+    "w16-hI-VJ6.title" : {
+      "comment" : "Class = \"UINavigationItem\"; title = \"Home\"; ObjectID = \"w16-hI-VJ6\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Home"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.2"
+}

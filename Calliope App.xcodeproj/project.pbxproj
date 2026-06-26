@@ -23,7 +23,6 @@
 		2F526C2426E00696004BA8FF /* HexFileStoreDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F526C2326E00696004BA8FF /* HexFileStoreDialog.swift */; };
 		2F526C2926E9688B004BA8FF /* CalliopeApp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F526C2B26E9688B004BA8FF /* CalliopeApp.storyboard */; };
 		2F526C3E26E9694D004BA8FF /* PlaygroundSnippets.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F526C4026E9694D004BA8FF /* PlaygroundSnippets.storyboard */; };
-		2F526C5D26E96FC7004BA8FF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2F526C5F26E96FC7004BA8FF /* Localizable.strings */; };
 		2F57C3B42394F78B008B0D69 /* DownloadableHexFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3B32394F78B008B0D69 /* DownloadableHexFile.swift */; };
 		2F5E8F0226C94F5F00CE03CB /* PlaygroundInstructionsCollectionCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5E8F0126C94F5F00CE03CB /* PlaygroundInstructionsCollectionCollectionViewController.swift */; };
 		2F5E8F0426C9787400CE03CB /* ArcadeStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5E8F0326C9787400CE03CB /* ArcadeStartViewController.swift */; };
@@ -67,7 +66,6 @@
 		2F61459C22BF9D26001C2734 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2F61459B22BF9D26001C2734 /* Settings.bundle */; };
 		2F61459E22BFE607001C2734 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F61459D22BFE607001C2734 /* Assets.xcassets */; };
 		2F6145A622C7D71B001C2734 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6145A522C7D71B001C2734 /* Settings.swift */; };
-		2F684E3026E977FC008A39CD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2F684E3226E977FC008A39CD /* InfoPlist.strings */; };
 		2F6C1B87258FC7C600F4B5AC /* ConnectionView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F6C1B89258FC7C600F4B5AC /* ConnectionView.storyboard */; };
 		2F763FE625A607A400C2029D /* SwiftCodeSnippetHighlighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F763FE525A607A400C2029D /* SwiftCodeSnippetHighlighter.swift */; };
 		2F91665B235405AA0065AD81 /* EditorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F91665A235405A90065AD81 /* EditorCollectionViewCell.swift */; };
@@ -123,6 +121,8 @@
 		6055CDB62BBEE1E50007F6B0 /* CalliopeBlocksStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6055CDB52BBEE1E50007F6B0 /* CalliopeBlocksStartViewController.swift */; };
 		60818E7D2FE5A4150053893F /* EditorsAndProgramsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818E7C2FE5A4150053893F /* EditorsAndProgramsView.swift */; };
 		60818E7F2FE5A9C90053893F /* EditorsAndProgramsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818E7E2FE5A9C90053893F /* EditorsAndProgramsViewModel.swift */; };
+		60818EA62FEEB46C0053893F /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 60818EA52FEEB46C0053893F /* InfoPlist.xcstrings */; };
+		60818EB02FEEB46C0053893F /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 60818EAF2FEEB46C0053893F /* Localizable.xcstrings */; };
 		608CE91C2F89544D004EACA7 /* NewsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608CE91B2F89544D004EACA7 /* NewsCollectionViewController.swift */; };
 		608CE91E2F8954B8004EACA7 /* NewsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608CE91D2F8954B8004EACA7 /* NewsCollectionViewCell.swift */; };
 		6094AC582E20F2410066D07A /* WebLogHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6094AC572E20F2380066D07A /* WebLogHandler.swift */; };
@@ -186,18 +186,9 @@
 		2F375ABA237F28BC004ED8D7 /* DefaultProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultProgram.swift; sourceTree = "<group>"; };
 		2F4B8D8D25978D9D0026B480 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/EditorAndPrograms.storyboard; sourceTree = "<group>"; };
 		2F4B8DA02598D7980026B480 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/HomeScreen.storyboard; sourceTree = "<group>"; };
-		2F4B8DA42598D79D0026B480 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/HomeScreen.strings; sourceTree = "<group>"; };
-		2F4B8DA62598D7CC0026B480 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/HomeScreen.strings; sourceTree = "<group>"; };
 		2F526C2326E00696004BA8FF /* HexFileStoreDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexFileStoreDialog.swift; sourceTree = "<group>"; };
-		2F526C2626E9687C004BA8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		2F526C2826E96885004BA8FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		2F526C2A26E9688B004BA8FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/CalliopeApp.storyboard; sourceTree = "<group>"; };
-		2F526C2D26E96890004BA8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CalliopeApp.strings; sourceTree = "<group>"; };
-		2F526C2F26E96891004BA8FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/CalliopeApp.strings; sourceTree = "<group>"; };
 		2F526C3F26E9694D004BA8FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/PlaygroundSnippets.storyboard; sourceTree = "<group>"; };
-		2F526C4226E9694F004BA8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PlaygroundSnippets.strings; sourceTree = "<group>"; };
-		2F526C4426E9697D004BA8FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/PlaygroundSnippets.strings; sourceTree = "<group>"; };
-		2F526C5E26E96FC7004BA8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2F526C6526E970D4004BA8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Settings.strings; sourceTree = "<group>"; };
 		2F526C6726E970DE004BA8FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Settings.strings; sourceTree = "<group>"; };
 		2F526C6F26E976A2004BA8FF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -245,7 +236,6 @@
 		2F61459B22BF9D26001C2734 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		2F61459D22BFE607001C2734 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2F6145A522C7D71B001C2734 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
-		2F684E3126E977FC008A39CD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2F6C1B88258FC7C600F4B5AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ConnectionView.storyboard; sourceTree = "<group>"; };
 		2F763FE125A1F4A100C2029D /* Calliope App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Calliope App.entitlements"; sourceTree = "<group>"; };
 		2F763FE525A607A400C2029D /* SwiftCodeSnippetHighlighter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftCodeSnippetHighlighter.swift; sourceTree = "<group>"; };
@@ -288,7 +278,6 @@
 		600E63252C2EBF810027AE61 /* CSVHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVHandler.swift; sourceTree = "<group>"; };
 		600E632D2C33D7BB0027AE61 /* DataParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataParser.swift; sourceTree = "<group>"; };
 		600E63332C342DC10027AE61 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ProjectAndSensors.storyboard; sourceTree = "<group>"; };
-		600E63432C343ABB0027AE61 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		601040AB2B592B7300526735 /* HexFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexFileManager.swift; sourceTree = "<group>"; };
 		60107F902F48830E00A15101 /* LofiAppsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LofiAppsViewController.swift; sourceTree = "<group>"; };
 		60107F962F4888B800A15101 /* HomeScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = HomeScreen.storyboard; path = Base.lproj/LofiApps.storyboard; sourceTree = "<group>"; };
@@ -296,7 +285,6 @@
 		60127F6C2FD005DF000A1995 /* DataLoggerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoggerView.swift; sourceTree = "<group>"; };
 		60127F6E2FD0061F000A1995 /* DataLoggerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoggerViewModel.swift; sourceTree = "<group>"; };
 		60127F702FD00999000A1995 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
-		601A19142B30658200E98E69 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
 		60316BF72B01FEC300130C0D /* BLECalliope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLECalliope.swift; sourceTree = "<group>"; };
 		60316BF92B0210CC00130C0D /* CalliopeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeFactory.swift; sourceTree = "<group>"; };
 		6042149E2F646DD30060064F /* TilePageLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TilePageLayout.swift; sourceTree = "<group>"; };
@@ -305,12 +293,19 @@
 		604938842E151BA7008BCE40 /* OperationStatusEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationStatusEnum.swift; sourceTree = "<group>"; };
 		604938B42E1BAF1D008BCE40 /* ScratchLinkKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ScratchLinkKit; sourceTree = "<group>"; };
 		6055CDB52BBEE1E50007F6B0 /* CalliopeBlocksStartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeBlocksStartViewController.swift; sourceTree = "<group>"; };
-		60676F4D2C41328600014388 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ProjectAndSensors.strings; sourceTree = "<group>"; };
-		60676F4E2C41328D00014388 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ProjectAndSensors.strings; sourceTree = "<group>"; };
-		607E71C52B8E30D8008EC146 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ConnectionView.strings; sourceTree = "<group>"; };
-		607E71C72B8E30DA008EC146 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ConnectionView.strings; sourceTree = "<group>"; };
 		60818E7C2FE5A4150053893F /* EditorsAndProgramsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorsAndProgramsView.swift; sourceTree = "<group>"; };
 		60818E7E2FE5A9C90053893F /* EditorsAndProgramsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorsAndProgramsViewModel.swift; sourceTree = "<group>"; };
+		60818EA42FEEB46B0053893F /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/LaunchScreen.xcstrings; sourceTree = "<group>"; };
+		60818EA52FEEB46C0053893F /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		60818EA72FEEB46C0053893F /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/ConnectionView.xcstrings; sourceTree = "<group>"; };
+		60818EA82FEEB46C0053893F /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/LofiApps.xcstrings; sourceTree = "<group>"; };
+		60818EA92FEEB46C0053893F /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/CalliopeApp.xcstrings; sourceTree = "<group>"; };
+		60818EAA2FEEB46C0053893F /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/EditorAndPrograms.xcstrings; sourceTree = "<group>"; };
+		60818EAB2FEEB46C0053893F /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/PlaygroundSnippets.xcstrings; sourceTree = "<group>"; };
+		60818EAC2FEEB46C0053893F /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/CalliopeBlocks.xcstrings; sourceTree = "<group>"; };
+		60818EAD2FEEB46C0053893F /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/HomeScreen.xcstrings; sourceTree = "<group>"; };
+		60818EAE2FEEB46C0053893F /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/ProjectAndSensors.xcstrings; sourceTree = "<group>"; };
+		60818EAF2FEEB46C0053893F /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		608CE91B2F89544D004EACA7 /* NewsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewController.swift; sourceTree = "<group>"; };
 		608CE91D2F8954B8004EACA7 /* NewsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewCell.swift; sourceTree = "<group>"; };
 		6094AC572E20F2380066D07A /* WebLogHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLogHandler.swift; sourceTree = "<group>"; };
@@ -321,8 +316,6 @@
 		609D9BD32B67A15500F2ECAE /* USBCalliope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USBCalliope.swift; sourceTree = "<group>"; };
 		609D9BD52B67AD2200F2ECAE /* Calliope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calliope.swift; sourceTree = "<group>"; };
 		609F74C72BC587A600FE35E2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/CalliopeBlocks.storyboard; sourceTree = "<group>"; };
-		609F74CC2BC5885F00FE35E2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CalliopeBlocks.strings; sourceTree = "<group>"; };
-		609F74CE2BC5886000FE35E2 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/CalliopeBlocks.strings; sourceTree = "<group>"; };
 		60AA95542F925D3400308FE3 /* ProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectView.swift; sourceTree = "<group>"; };
 		60B58BCD2C132ABA00050FE3 /* Chart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chart.swift; sourceTree = "<group>"; };
 		60BBDB852B6B90C2003AD3CE /* DiscoveredDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredDevice.swift; sourceTree = "<group>"; };
@@ -355,7 +348,6 @@
 		60D672512B283D0F00AB974B /* QRCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeViewController.swift; sourceTree = "<group>"; };
 		60EBC64B2F9BAD5A00A6DD84 /* ChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewModel.swift; sourceTree = "<group>"; };
 		60EE6AC72F51EF730081CE15 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
-		60F889132B50225000B6C1F5 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/EditorAndPrograms.strings; sourceTree = "<group>"; };
 		60FF510C2BB55324002B24A2 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = "Calliope App/PrivacyInfo.xcprivacy"; sourceTree = SOURCE_ROOT; };
 		7E25C5F2B4FF55234B28A749 /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
 		7E25C80C2A4E87716138A0E0 /* UtilityJobState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityJobState.swift; sourceTree = "<group>"; };
@@ -460,8 +452,8 @@
 				60FF510C2BB55324002B24A2 /* PrivacyInfo.xcprivacy */,
 				2F526C6626E970D4004BA8FF /* Settings.strings */,
 				2F61459B22BF9D26001C2734 /* Settings.bundle */,
-				2F526C5F26E96FC7004BA8FF /* Localizable.strings */,
-				2F684E3226E977FC008A39CD /* InfoPlist.strings */,
+				60818EAF2FEEB46C0053893F /* Localizable.xcstrings */,
+				60818EA52FEEB46C0053893F /* InfoPlist.xcstrings */,
 			);
 			path = "Calliope App";
 			sourceTree = "<group>";
@@ -1042,13 +1034,11 @@
 				2F9B2A18233F045D009496DD /* RobotoMono-BoldItalic.ttf in Resources */,
 				2F9B29FC233F0456009496DD /* Roboto-Medium.ttf in Resources */,
 				2F9B2A06233F0456009496DD /* Roboto-Bold.ttf in Resources */,
-				2F684E3026E977FC008A39CD /* InfoPlist.strings in Resources */,
 				2F61451C22BF75DF001C2734 /* LaunchScreen.storyboard in Resources */,
 				2F9B29FD233F0456009496DD /* Roboto-Light.ttf in Resources */,
 				2F9B2A1B233F045D009496DD /* RobotoMono-MediumItalic.ttf in Resources */,
 				2F9B2A07233F0456009496DD /* Roboto-Thin.ttf in Resources */,
 				2F61459C22BF9D26001C2734 /* Settings.bundle in Resources */,
-				2F526C5D26E96FC7004BA8FF /* Localizable.strings in Resources */,
 				2F9B2A1E233F045D009496DD /* RobotoMono-Italic.ttf in Resources */,
 				2F9B2A15233F045D009496DD /* RobotoMono-Medium.ttf in Resources */,
 				2F61459E22BFE607001C2734 /* Assets.xcassets in Resources */,
@@ -1060,7 +1050,9 @@
 				60C90B422F237F3E006279B2 /* stringview.js in Resources */,
 				60C90B432F237F3E006279B2 /* WBPolyfill.js in Resources */,
 				60C90B442F237F3E006279B2 /* WBUtils.js in Resources */,
+				60818EA62FEEB46C0053893F /* InfoPlist.xcstrings in Resources */,
 				60C90B452F237F3E006279B2 /* WBEventTarget.js in Resources */,
+				60818EB02FEEB46C0053893F /* Localizable.xcstrings in Resources */,
 				60C90B462F237F3E006279B2 /* WBDevice.js in Resources */,
 				2F9B2A1F233F045D009496DD /* RobotoMono-Thin.ttf in Resources */,
 				2F4B8D8425978D950026B480 /* EditorAndPrograms.storyboard in Resources */,
@@ -1263,8 +1255,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				2F4B8D8D25978D9D0026B480 /* Base */,
-				601A19142B30658200E98E69 /* en */,
-				60F889132B50225000B6C1F5 /* de */,
+				60818EAA2FEEB46C0053893F /* mul */,
 			);
 			name = EditorAndPrograms.storyboard;
 			sourceTree = "<group>";
@@ -1273,8 +1264,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				2F4B8DA02598D7980026B480 /* Base */,
-				2F4B8DA42598D79D0026B480 /* en */,
-				2F4B8DA62598D7CC0026B480 /* de */,
+				60818EAD2FEEB46C0053893F /* mul */,
 			);
 			name = HomeScreen.storyboard;
 			sourceTree = "<group>";
@@ -1283,8 +1273,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				2F526C2A26E9688B004BA8FF /* Base */,
-				2F526C2D26E96890004BA8FF /* en */,
-				2F526C2F26E96891004BA8FF /* de */,
+				60818EA92FEEB46C0053893F /* mul */,
 			);
 			name = CalliopeApp.storyboard;
 			sourceTree = "<group>";
@@ -1293,19 +1282,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				2F526C3F26E9694D004BA8FF /* Base */,
-				2F526C4226E9694F004BA8FF /* en */,
-				2F526C4426E9697D004BA8FF /* de */,
+				60818EAB2FEEB46C0053893F /* mul */,
 			);
 			name = PlaygroundSnippets.storyboard;
-			sourceTree = "<group>";
-		};
-		2F526C5F26E96FC7004BA8FF /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2F526C5E26E96FC7004BA8FF /* en */,
-				600E63432C343ABB0027AE61 /* de */,
-			);
-			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 		2F526C6626E970D4004BA8FF /* Settings.strings */ = {
@@ -1322,26 +1301,16 @@
 			isa = PBXVariantGroup;
 			children = (
 				2F61451B22BF75DF001C2734 /* Base */,
-				2F526C2626E9687C004BA8FF /* en */,
-				2F526C2826E96885004BA8FF /* de */,
+				60818EA42FEEB46B0053893F /* mul */,
 			);
 			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		2F684E3226E977FC008A39CD /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2F684E3126E977FC008A39CD /* en */,
-			);
-			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		2F6C1B89258FC7C600F4B5AC /* ConnectionView.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				2F6C1B88258FC7C600F4B5AC /* Base */,
-				607E71C52B8E30D8008EC146 /* de */,
-				607E71C72B8E30DA008EC146 /* en */,
+				60818EA72FEEB46C0053893F /* mul */,
 			);
 			name = ConnectionView.storyboard;
 			sourceTree = "<group>";
@@ -1350,8 +1319,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				600E63332C342DC10027AE61 /* Base */,
-				60676F4D2C41328600014388 /* en */,
-				60676F4E2C41328D00014388 /* de */,
+				60818EAE2FEEB46C0053893F /* mul */,
 			);
 			name = ProjectAndSensors.storyboard;
 			sourceTree = "<group>";
@@ -1360,6 +1328,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				60107F962F4888B800A15101 /* HomeScreen.storyboard */,
+				60818EA82FEEB46C0053893F /* mul */,
 			);
 			name = LofiApps.storyboard;
 			sourceTree = "<group>";
@@ -1368,8 +1337,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				609F74C72BC587A600FE35E2 /* Base */,
-				609F74CC2BC5885F00FE35E2 /* en */,
-				609F74CE2BC5886000FE35E2 /* de */,
+				60818EAC2FEEB46C0053893F /* mul */,
 			);
 			name = CalliopeBlocks.storyboard;
 			sourceTree = "<group>";
@@ -1431,11 +1399,13 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -1489,10 +1459,12 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};

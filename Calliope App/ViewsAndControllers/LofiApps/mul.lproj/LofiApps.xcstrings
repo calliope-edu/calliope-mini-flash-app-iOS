@@ -1,0 +1,42 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "9eT-f2-X1q.title" : {
+      "comment" : "Class = \"UIViewController\"; title = \"Lofi Apps\"; ObjectID = \"9eT-f2-X1q\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Lofi Apps"
+          }
+        }
+      }
+    },
+    "fxY-KR-WSy.title" : {
+      "comment" : "Class = \"UITabBarItem\"; title = \"Apps\"; ObjectID = \"fxY-KR-WSy\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Apps"
+          }
+        }
+      }
+    },
+    "w16-hI-VJ6.title" : {
+      "comment" : "Class = \"UINavigationItem\"; title = \"Apps\"; ObjectID = \"w16-hI-VJ6\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Apps"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.2"
+}

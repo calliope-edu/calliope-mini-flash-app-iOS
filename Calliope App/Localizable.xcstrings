@@ -1,0 +1,2157 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "" : {
+
+    },
+    "\n" : {
+
+    },
+    "%lld unique locations" : {
+
+    },
+    "1. Open MakeCode Editor" : {
+
+    },
+    "1. Programm 5 starten\n2. Schütteln\n3. LED-Muster eingeben" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. A+B und 1 Sek Reset \n2. A+B gedrückt halten\n3. LED-Muster eingeben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. Press A+B and 1 Sek Reset \n2. Keep A+B pressed\n3. Transfer ID pattern"
+          }
+        }
+      }
+    },
+    "1. This template can be used with the extension:" : {
+
+    },
+    "2. Add the Bluetooth extension to your project" : {
+
+    },
+    "2. Create the program with the respective data and define the required columns and se tthe corresponding (sensor) data as values." : {
+
+    },
+    "3. Select the disired services for your program to view or record" : {
+
+    },
+    "3. Transfer the program to your Calliope mini" : {
+
+    },
+    "4. Open the datalogger view" : {
+
+    },
+    "4. Start the program on your Calliope mini" : {
+
+    },
+    "A long press takes you to the option of transfering, sharing and deleting your programs stored in the Calliope mini folder." : {
+
+    },
+    "Abbrechen" : {
+      "comment" : "Cancel"
+    },
+    "Accelerometer" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beschleunigungsmesser"
+          }
+        }
+      }
+    },
+    "Activate Bluetooth!" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bitte Bluetooth aktivieren!"
+          }
+        }
+      }
+    },
+    "All" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle"
+          }
+        }
+      }
+    },
+    "Arcade (mit USB)" : {
+      "comment" : "Arcade (USB only)"
+    },
+    "Arcade-Datei" : {
+
+    },
+    "Arcade-Dateien können nur per USB übertragen werden." : {
+
+    },
+    "Arcade-Dateien können nur per USB-Kabel übertragen werden. Bitte verbinde deinen Calliope mini per USB oder sichere die Datei für später." : {
+
+    },
+    "Arcade-Programme können nur per USB auf den Calliope mini übertragen werden.\n\nBitte verbinde den Calliope mini per USB-Kabel und wähle den MINI-Ordner aus." : {
+      "comment" : "Arcade programs can only be transferred via USB"
+    },
+    "Axis" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Achsen"
+          }
+        }
+      }
+    },
+    "Bitte versetze den Calliope mini in den Bluetooth-Modus (A+B+Reset), um ein Programm zu übertragen." : {
+      "comment" : "Manual DFU mode instruction"
+    },
+    "Blinking Heart" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blinking Heart"
+          }
+        }
+      }
+    },
+    "Bluetooth" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bluetooth Swift Playground"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bluetooth Swift Playground"
+          }
+        }
+      }
+    },
+    "Bluetooth deactivated" : {
+      "comment" : "Bluetooth is turned off",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bluetooth deaktiviert"
+          }
+        }
+      }
+    },
+    "Bluetooth must be activated to send data to Calliope mini!" : {
+      "comment" : "Bluetooth required message",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bluetooth muss aktiviert sein, damit Daten an den Calliope mini gesendet werden können!"
+          }
+        }
+      }
+    },
+    "Bluetooth-Verbindung zurücksetzen" : {
+      "comment" : "Reset Bluetooth connection"
+    },
+    "Brightness" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Helligkeit"
+          }
+        }
+      }
+    },
+    "Button" : {
+
+    },
+    "Button A" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Taste A"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Button A"
+          }
+        }
+      }
+    },
+    "Button A and B" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Taste A und B"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Button A und B"
+          }
+        }
+      }
+    },
+    "Button B" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Taste B"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Button B"
+          }
+        }
+      }
+    },
+    "By shaking, you confirm the selection" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bestätige deine Auswahl, indem du den Calliope mini schüttelst"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shake to confirm your selection"
+          }
+        }
+      }
+    },
+    "Calliope mini 1+2: Download the original program of the Calliope mini 1 and Calliope mini 2. Connect and transfer the program!" : {
+
+    },
+    "Calliope mini 3" : {
+
+    },
+    "Calliope mini 3: Download the original program of the Calliope mini 3. Connect and transfer the program!" : {
+
+    },
+    "Calliope mini Discovery State now: (state)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Verbindungsstatus zum Calliope mini ist (state)"
+          }
+        }
+      }
+    },
+    "Calliope mini discovery state: (state)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calliope mini Bluetooth Status: (state)"
+          }
+        }
+      }
+    },
+    "Calliope mini V1 + 2" : {
+
+    },
+    "Calliope mini V3" : {
+
+    },
+    "Calliope mini verbinden!" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connect a Calliope mini!"
+          }
+        }
+      }
+    },
+    "Calliope mini will start the program as soon as the transmission is complete." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Calliope mini startet das Programm, sobald die Übertragung beendet ist."
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abbrechen"
+          }
+        }
+      }
+    },
+    "Cannot upload" : {
+      "comment" : "Übertragung nicht möglich",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Übertragung nicht möglich"
+          }
+        }
+      }
+    },
+    "Change project name" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Projectnamen ändern"
+          }
+        }
+      }
+    },
+    "Check your internet connection or the snippets url in settings.\n\nThe error description is:\n%@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Überprüfe deine Internetverbindung oder die Code-Schnipsel-Url in den Einstellungen.\n\nFehlermedlung:\n%@"
+          }
+        }
+      }
+    },
+    "Connect to a calliope to finish the tutorial" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbinde dich hier mit dem Calliope mini."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connect to a Calliope mini to finish the tutorial"
+          }
+        }
+      }
+    },
+    "Connect to Bluetooth Calliope mini" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbunden mit dem Calliope mini per Bluetooth"
+          }
+        }
+      }
+    },
+    "Connect to enable uploading programs" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connect to Calliope mini to enable uploading programs"
+          }
+        }
+      }
+    },
+    "Connect to USB Calliope mini" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbunden mit dem Calliope mini per USB!"
+          }
+        }
+      }
+    },
+    "Connecting to USB Calliope mini failed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbindung zum Calliope mini per USB ist fehlgeschlagen!"
+          }
+        }
+      }
+    },
+    "Connection to Calliope lost" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbindung zum Calliope verloren"
+          }
+        }
+      }
+    },
+    "Connection to Calliope mini timed out!" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeitüberschreitung bei der Verbindung mit dem Calliope mini!"
+          }
+        }
+      }
+    },
+    "Connection to calliope timed out!" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeitüberschreitung bei der Übertragung"
+          }
+        }
+      }
+    },
+    "Could not find connected calliope in discovered calliopes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Es konnte kein Calliope mini gefunden werden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not find connected Calliope mini"
+          }
+        }
+      }
+    },
+    "Could not find connected Calliope mini in discovered Calliope minis" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbundener Calliope mini konnte nicht gefunden werden!"
+          }
+        }
+      }
+    },
+    "Could not rename %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konnte nicht umbenannt werden %@"
+          }
+        }
+      }
+    },
+    "Could not save file or download is not a proper hex file" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Datei konnte nicht gesichert oder geladen werden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not save or download a hex file"
+          }
+        }
+      }
+    },
+    "Das Herunterladen der Sitzungsdaten ist fehlgeschlagen." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The download of the session data was unsuccessful."
+          }
+        }
+      }
+    },
+    "Data can be recorded on the Calliope mini 3. With the datalogger extension data can be saved in a table and also displayed as a graph." : {
+
+    },
+    "Datalogger CSV erfolgreich heruntergeladen!" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datalogger CSV successfully downloaded!"
+          }
+        }
+      }
+    },
+    "Datalogger CSV successfully downloaded!" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datalogger CSV erfolgreich heruntergeladen!"
+          }
+        }
+      }
+    },
+    "Datalogger Daten Anzeigen" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View Datalogger"
+          }
+        }
+      }
+    },
+    "Datalogger Download Failed!" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datalogger Download fehlgeschlagen!"
+          }
+        }
+      }
+    },
+    "Datalogger Download fehlgeschlagen!" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datalogger Download Failed!"
+          }
+        }
+      }
+    },
+    "Datei geöffnet" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datei geöffnet"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opened file"
+          }
+        }
+      }
+    },
+    "Delete" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Löschen"
+          }
+        }
+      }
+    },
+    "Delete failed" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Löschen fehlgeschlagen"
+          }
+        }
+      }
+    },
+    "Delete?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Löschen?"
+          }
+        }
+      }
+    },
+    "Der Calliope mini startet das Programm, sobald die Übertragung beendet ist." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Calliope mini starts the program as soon as the transmission is finished."
+          }
+        }
+      }
+    },
+    "Der Calliope mini wurde schon einmal gekoppelt. Diese Informationen müssen erneut angelegt werden:\n\n1. Gehe zu Einstellungen → Bluetooth\n2. Tippe auf das (i) neben dem Calliope mini\n3. Wähle \"Dieses Gerät ignorieren\"\n4. Kehre zur Calliope mini App zurück und verbinde erneut" : {
+      "comment" : "Instructions to reset Bluetooth pairing"
+    },
+    "Der Download der CSV-Datei mit deinen Datalogger-Daten war nicht erfolgreich." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The download of the CSV file containing your datalogger data was unsuccessful."
+          }
+        }
+      }
+    },
+    "Detailed instructions can be found on the website:" : {
+
+    },
+    "DFU process aborted" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DFU-Prozess abgebrochen!"
+          }
+        }
+      }
+    },
+    "Do you want to delete %@?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datei entgültig löschen %@?"
+          }
+        }
+      }
+    },
+    "Do you want to upload %@ to your Calliope mini?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Möchtest du %@ auf deinen Calliope mini laden?"
+          }
+        }
+      }
+    },
+    "Don´t save" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nicht sichern"
+          }
+        }
+      }
+    },
+    "Download erfolgreich!" : {
+      "comment" : "Campus Editor",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Session data successfully downloaded!"
+          }
+        }
+      }
+    },
+    "Download fehlgeschlagen!" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to download session data!"
+          }
+        }
+      }
+    },
+    "Download finished" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Download abgeschlossen"
+          }
+        }
+      }
+    },
+    "Download is not a proper hex file" : {
+
+    },
+    "Download the Swift Playgrounds App" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lade die Swift Playgrounds App"
+          }
+        }
+      }
+    },
+    "Du findest die CSV-Datei mit den Datalogger-Daten im Calliope-Verzeichnis  auf deinem Gerät, unter den namen MY_DATA.csv" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can find the CSV file containing your datalogger data, named MY_DATA.csv, in the Calliope directory on your device."
+          }
+        }
+      }
+    },
+    "Duration: about 10 seconds" : {
+      "comment" : "USB transfer duration message",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dauer 10 Sek."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Takes  about 10 seconds"
+          }
+        }
+      }
+    },
+    "Edit" : {
+
+    },
+    "Einstellungen öffnen" : {
+      "comment" : "Open Settings"
+    },
+    "Encountered an error discovering or connecting calliope:" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Es ist ein Fehler beim Erkennen oder Verbinden aufgetreten:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Encountered an error discovering or connecting calliope:"
+          }
+        }
+      }
+    },
+    "Enter an Projectname for the new Project" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Projektnamen eingeben"
+          }
+        }
+      }
+    },
+    "Enter the CSV file name" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gib den CSV-Dateinamen ein"
+          }
+        }
+      }
+    },
+    "Enter the new project name" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gebe den neuen Projektnamen ein"
+          }
+        }
+      }
+    },
+    "Error" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fehler"
+          }
+        }
+      }
+    },
+    "Es gab ein Problem beim Herunterladen der Datalogger-Daten von Ihrem Calliope mini. Bitte stellen Sie sicher, dass Sie mit dem Calliope verbunden sind, und versuchen Sie es erneut." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There was an issue downloading the datalogger data from your Calliope mini. Please ensure you are connected to the Calliope mini and try again."
+          }
+        }
+      }
+    },
+    "Event" : {
+
+    },
+    "Export (CSV)" : {
+
+    },
+    "Export Data" : {
+      "comment" : "Export Data alert",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daten exportieren"
+          }
+        }
+      }
+    },
+    "Failed to download Datalogger CSV!" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fehler beim Herunterladen der Datalogger CSV!"
+          }
+        }
+      }
+    },
+    "Failed to download session data!" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Download fehlgeschlagen!"
+          }
+        }
+      }
+    },
+    "Failed to load snippets" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Laden der Programm-Schnipsel fehlgeschlagen"
+          }
+        }
+      }
+    },
+    "Fehler beim Herunterladen der Datalogger CSV!" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to download Datalogger CSV!"
+          }
+        }
+      }
+    },
+    "File already exists" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datei existiert bereits"
+          }
+        }
+      }
+    },
+    "Finished" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abgeschlossen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        }
+      }
+    },
+    "Flip through the programs by pressing the keys A or B" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gehe durch die Programme, indem du die Tasten A und B drückst"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flip through the programs by pressing the keys A or B"
+          }
+        }
+      }
+    },
+    "Further Information" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weitere Informationen"
+          }
+        }
+      }
+    },
+    "Gesture" : {
+
+    },
+    "Greetings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Begrüßung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome"
+          }
+        }
+      }
+    },
+    "Here you will find your projects. You can view, process and share the recorded data, as well as download it as a table." : {
+
+    },
+    "https://calliope.cc" : {
+      "comment" : "URL in Help screen",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://calliope.cc"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://calliope.cc/en"
+          }
+        }
+      }
+    },
+    "https://calliope.cc/calliope-mini/uebersicht" : {
+      "comment" : "URL in Help screen",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://calliope.cc/calliope-mini/uebersicht"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://calliope.cc/en/calliope-mini/features"
+          }
+        }
+      }
+    },
+    "https://calliope.cc/forumassets/news.json" : {
+      "comment" : "The url for the news json",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://calliope.cc/forumassets/news.json"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://calliope.cc/forumassets/news_EN.json"
+          }
+        }
+      }
+    },
+    "https://calliope.cc/forumassets/snippets.json" : {
+      "comment" : "The url for the snippets json",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://calliope.cc/forumassets/snippets.json"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://calliope.cc/forumassets/snippets.json"
+          }
+        }
+      }
+    },
+    "https://calliope.cc/programmieren/editoren" : {
+      "comment" : "URL in Help screen",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://calliope.cc/programmieren/editoren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://calliope.cc/en/coding/editors"
+          }
+        }
+      }
+    },
+    "https://calliope.cc/programmieren/mobil" : {
+      "comment" : "URL in Help screen",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://calliope.cc/programmieren/mobil"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://calliope.cc/en/coding/mobile"
+          }
+        }
+      }
+    },
+    "https://calliope.cc/programmieren/mobil/hilfe" : {
+      "comment" : "URL in Help screen",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://calliope.cc/programmieren/mobil/hilfe"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://calliope.cc/en/coding/mobile/help"
+          }
+        }
+      }
+    },
+    "https://calliope.cc/programmieren/mobil/ipad#sensordaten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://calliope.cc/en/coding/mobile/ipad#sensordata"
+          }
+        }
+      }
+    },
+    "https://calliope.cc/programmieren/playground" : {
+      "comment" : "URL in Help screen",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://calliope.cc/programmieren/editoren/playground"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://calliope.cc/en/coding/editors/playground"
+          }
+        }
+      }
+    },
+    "https://calliope.cc/start/tipps" : {
+      "comment" : "URL in Help screen",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://calliope.cc/start/tipps"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://calliope.cc/en/start/tips"
+          }
+        }
+      }
+    },
+    "IO Pin" : {
+
+    },
+    "Los geht's!" : {
+      "comment" : "Let's go!"
+    },
+    "Magnetometer" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Magnetfeldsensor"
+          }
+        }
+      }
+    },
+    "Microphone" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mikrofon"
+          }
+        }
+      }
+    },
+    "Mini_Blocks_Program" : {
+
+    },
+    "Möchtest du die Arcade-Datei auf deinen Calliope mini übertragen oder sichern?" : {
+
+    },
+    "Möchtest du die Datei in MakeCode öffnen oder direkt auf deinen Calliope mini übertragen?" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Would you like to open the file in MakeCode or transfer it directly to your Calliope mini?"
+          }
+        }
+      }
+    },
+    "Möchtest du die Datei sichern oder auf deinen Calliope mini übertragen?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Möchtest du die Datei sichern oder auf deinen Calliope mini übertragen?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Do you want to save the file or transfer it to your Calliope mini"
+          }
+        }
+      }
+    },
+    "Multiplication tables" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1x1 Rechner"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1x1 Multiplication"
+          }
+        }
+      }
+    },
+    "New project" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neues Projekt"
+          }
+        }
+      }
+    },
+    "No" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nein"
+          }
+        }
+      }
+    },
+    "No changes to upload" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Änderungen zu übertragen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No changes to upload"
+          }
+        }
+      }
+    },
+    "No description available" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Beschreibung verfügbar"
+          }
+        }
+      }
+    },
+    "No root view controller for presenting File Save UI found" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kein Root-View-Controller für die Darstellung der File Save UI gefunden"
+          }
+        }
+      }
+    },
+    "No Sensor Available" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kein Sensor verfügbar"
+          }
+        }
+      }
+    },
+    "Noise-o-meter" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lärm-o-meter"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noise-o-meter"
+          }
+        }
+      }
+    },
+    "Öffnen" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open"
+          }
+        }
+      }
+    },
+    "OK" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
+    },
+    "Open a program in MakeCode using a QR code. Simply scan it and off you go!" : {
+
+    },
+    "Open Settings" : {
+      "comment" : "Open Settings button",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen öffnen"
+          }
+        }
+      }
+    },
+    "Oracle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Orakel"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oracle"
+          }
+        }
+      }
+    },
+    "Paper, Rock, Scissor" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schere, Stein, Papier"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paper, Rock, Scissor"
+          }
+        }
+      }
+    },
+    "Partial flash failed. Please try again or use a different program." : {
+
+    },
+    "Please choose a name" : {
+      "comment" : "In dialog to choose name for new program",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wähle einen Namen"
+          }
+        }
+      }
+    },
+    "Press both A and B to return to the menu" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drücke die Tasten A und B, um zum Menü zu gelangen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Press both A and B to return to the menu"
+          }
+        }
+      }
+    },
+    "Program download failed" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programmübertragung fehlgeschlagen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Download failed"
+          }
+        }
+      }
+    },
+    "Program exported" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Program exportiert"
+          }
+        }
+      }
+    },
+    "Program exported message" : {
+      "comment" : "actual message in translation file",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Program wurde im Calliope mini Ordner auf dem Gerät gespeichert."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The program was saved in the Calliope mini folder on your device."
+          }
+        }
+      }
+    },
+    "Push the button and follow the instructions for connecting to your Calliope" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muster auf dem Calliope mini anzeigen: \nV3: Reset Button 3-Mal drücken\nV2: A+B+Reset gedrückt halten, nach 1 Sekunde Reset loslassen.\nWeitere Infos unter „Hilfe”."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Display ID pattern on the Calliope mini: Press and hold A+B+Reset, release reset after 1 second. OR: Press Reset 3 Times. More info under \"Help“."
+          }
+        }
+      }
+    },
+    "Ready!" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fertig!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done!"
+          }
+        }
+      }
+    },
+    "Remove paired device" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trennen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove paired device"
+          }
+        }
+      }
+    },
+    "Rename" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Umbenennen"
+          }
+        }
+      }
+    },
+    "RGB Led" : {
+
+    },
+    "Save and fast upload" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speichern und schnelles Übertragen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save and fast upload"
+          }
+        }
+      }
+    },
+    "Save and thorough upload" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speichern und gründliches Übertragen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save and thorough upload"
+          }
+        }
+      }
+    },
+    "Save Program" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programm sichern"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save pogram"
+          }
+        }
+      }
+    },
+    "Schließen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close"
+          }
+        }
+      }
+    },
+    "seconds" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sekunden"
+          }
+        }
+      }
+    },
+    "Select" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auswählen"
+          }
+        }
+      }
+    },
+    "Send sensor data directly from Calliope mini to the app" : {
+
+    },
+    "Sensors" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensoren"
+          }
+        }
+      }
+    },
+    "Service discovery on calliope has timed out!" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeitüberschreitung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Timeout"
+          }
+        }
+      }
+    },
+    "Session data successfully downloaded!" : {
+      "comment" : "Campus Editor",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Download erfolgreich!"
+          }
+        }
+      }
+    },
+    "Shake" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schütteln"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shake"
+          }
+        }
+      }
+    },
+    "Share" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teilen"
+          }
+        }
+      }
+    },
+    "Sichern" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sichern"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        }
+      }
+    },
+    "Sie können die Sitzungsdaten im Calliope-Verzeichnis auf Ihrem Gerät finden." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can find the session data, in the Calliope directory on your device."
+          }
+        }
+      }
+    },
+    "Speaker" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lautsprecher"
+          }
+        }
+      }
+    },
+    "Start Program" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Startprogramm"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start program"
+          }
+        }
+      }
+    },
+    "Subscribe to the Calliope Playgrounds" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abonniere den Calliope mini Swift Playground"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Subscribe to the Calliope mini Swift Playground"
+          }
+        }
+      }
+    },
+    "Temperature" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Temperatur"
+          }
+        }
+      }
+    },
+    "The download of the CSV file containing your datalogger data was unsuccessful." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Download der CSV-Datei mit deinen Datalogger-Daten war nicht erfolgreich."
+          }
+        }
+      }
+    },
+    "The download of the session data was unsuccessful." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Herunterladen der Sitzungsdaten ist fehlgeschlagen."
+          }
+        }
+      }
+    },
+    "The name %@ could not be given to %@. The name for a program must be unique and not empty." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Name %@ konnte nicht an %@ vergeben werden. Der Name für ein Programm muss eindeutig sein und darf nicht leer sein."
+          }
+        }
+      }
+    },
+    "the program" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "das Programm"
+          }
+        }
+      }
+    },
+    "The program does not seem to match the version of your Calliope mini. Please check the hardware selection in your editor again." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Programm scheint nicht zu der Version des Calliope mini zu passen. Bitte überprüfe die Hardware Auswahl in deinem Editor nochmal."
+          }
+        }
+      }
+    },
+    "The program is being downloaded. Please wait a little." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Programm wird geladen. Einen Augenblick Geduld."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Downloading… Please wait a little."
+          }
+        }
+      }
+    },
+    "The program is downloaded. Do you want to upload it now?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Programm wurde geladen. Möchtest du es übertragen?"
+          }
+        }
+      }
+    },
+    "The program is not ready. The reason is:\n%@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Programm ist nicht fertig. Der Grund ist:\n%@."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The program is not ready. The reason is:\n%@."
+          }
+        }
+      }
+    },
+    "There is no connected calliope in DFU mode" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Es konnte kein Calliope mini gefunden werden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There is no connected calliope mini"
+          }
+        }
+      }
+    },
+    "There is no connected Calliope mini in DFU mode" : {
+      "comment" : "Es konnte kein Calliope mini gefunden werden",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Es ist kein Calliope mini im DFU-Modus verbunden"
+          }
+        }
+      }
+    },
+    "There was an issue downloading the datalogger data from your Calliope mini. Please ensure you are connected to the Calliope and try again." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Es gab ein Problem beim Herunterladen der Datalogger-Daten von Ihrem Calliope mini. Bitte stelle sicher, dass du mit dem Calliope mini verbunden bist, und versuche es erneut."
+          }
+        }
+      }
+    },
+    "This Calliope can not be connected until you go to the bluetooth settings of your device and \"ignore\" it." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieser Calliope mini kann erst verbunden werden, wenn du in den Bluetooth-Einstellungen deines Geräts die Option \"ignorieren\" wählst."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This Calliope mini can not be connected until you go to the bluetooth settings of your device and \"ignore\" it."
+          }
+        }
+      }
+    },
+    "Time" : {
+
+    },
+    "Touch Pin" : {
+
+    },
+    "Transfer" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Übertragen"
+          }
+        }
+      }
+    },
+    "Transfer program from your iPhone or iPad directly to your Calliope mini or save them in your Calliope mini folder." : {
+
+    },
+    "Transfering Datalogger Data" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Übertragung der Datalogger-Daten"
+          }
+        }
+      }
+    },
+    "Transmission running" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Übertragung läuft"
+          }
+        }
+      }
+    },
+    "Übertragen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transfer"
+          }
+        }
+      }
+    },
+    "Übertragen (USB)" : {
+
+    },
+    "Übertragung abgeschlossen" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transmission completed"
+          }
+        }
+      }
+    },
+    "Übertragung der Datalogger-Daten" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transfering Datalogger Data"
+          }
+        }
+      }
+    },
+    "Übertragung läuft" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transmission running"
+          }
+        }
+      }
+    },
+    "Upload" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Übertragen"
+          }
+        }
+      }
+    },
+    "Upload failed" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Übertragen fehlgeschlagen"
+          }
+        }
+      }
+    },
+    "Upload failed!" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Übertragung fehlgeschlagen"
+          }
+        }
+      }
+    },
+    "Upload the start program to your Calliope" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Übertrag das Startprogramm auf den Calliope mini"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upload the Start program to your Calliope mini"
+          }
+        }
+      }
+    },
+    "Upload?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Übertragen?"
+          }
+        }
+      }
+    },
+    "Uploading" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Übertragung läuft…"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uploading…"
+          }
+        }
+      }
+    },
+    "USB-Modus öffnen" : {
+      "comment" : "Open USB mode"
+    },
+    "USB-Verbindung erforderlich" : {
+      "comment" : "USB connection required"
+    },
+    "User defined (UART)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Benutzerdefiniert (UART)"
+          }
+        }
+      }
+    },
+    "Verbindung notwendig, um Daten anzeigen zu lassen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connection required for data collection."
+          }
+        }
+      }
+    },
+    "Vor der nächsten Verbindung muss die Verbindung wieder hergestellt werden und der Calliope mini ausgewählt werden." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Before the next connection, the connection must be re-established and the Calliope mini selected."
+          }
+        }
+      }
+    },
+    "Wait a little" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einen Moment bitte"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "One moment please"
+          }
+        }
+      }
+    },
+    "Wrong storage location" : {
+      "comment" : "Storage location alert",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Falscher Speicherort"
+          }
+        }
+      }
+    },
+    "Yes" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ja"
+          }
+        }
+      }
+    },
+    "You are connected to your Calliope, well done!" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yeah, du bist verbunden - super gemacht! Weiter geht's!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yeah, you are connected to your Calliope mini, well done! Let's continue!"
+          }
+        }
+      }
+    },
+    "You can find the CSV file containing your datalogger data, named MY_DATA.csv, in the Calliope directory on your device." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du findest die CSV-Datei mit den Datalogger-Daten im Calliope-Verzeichnis auf deinem Gerät, unter den namen MY_DATA.csv"
+          }
+        }
+      }
+    },
+    "You can find the session data, in the Calliope directory on your device." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du kannst die Sitzungsdaten im Calliope-Verzeichnis auf deinem Gerät finden."
+          }
+        }
+      }
+    },
+    "You can program your Calliope mini with the help of the editors." : {
+
+    },
+    "You have not selected a Calliope folder as storage location" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du hast keinen Calliope-Ordner als Speicherort gewählt"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.2"
+}

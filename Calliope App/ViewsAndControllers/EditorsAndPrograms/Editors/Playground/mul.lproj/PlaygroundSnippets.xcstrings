@@ -1,0 +1,251 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "7rw-qs-gzO.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Copied snippet!\"; ObjectID = \"7rw-qs-gzO\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programm-Schnipsel kopiert!"
+          }
+        }
+      }
+    },
+    "8Al-Qu-EWO.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Label\"; ObjectID = \"8Al-Qu-EWO\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Label"
+          }
+        }
+      }
+    },
+    "93j-LA-Q6m.title" : {
+      "comment" : "Class = \"UIViewController\"; title = \"Home\"; ObjectID = \"93j-LA-Q6m\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Home"
+          }
+        }
+      }
+    },
+    "AKN-ba-DUa.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"There is veeery long text which could end up in two lines\"; ObjectID = \"AKN-ba-DUa\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There is veeery long text which could end up in two lines"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text is too long"
+          }
+        }
+      }
+    },
+    "cIf-ra-SUA.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Copied snippet!\"; ObjectID = \"cIf-ra-SUA\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programm-Schnipsel kopiert!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copied Snippet"
+          }
+        }
+      }
+    },
+    "dfI-Hn-17L.configuration.title" : {
+      "comment" : "Class = \"UIButton\"; configuration.title = \"Los geht's!\"; ObjectID = \"dfI-Hn-17L\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Los geht's!"
+          }
+        }
+      }
+    },
+    "dfI-Hn-17L.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"dfI-Hn-17L\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Button"
+          }
+        }
+      }
+    },
+    "IAA-SO-Qac.title" : {
+      "comment" : "Class = \"UITableViewController\"; title = \"Playground Snippets\"; ObjectID = \"IAA-SO-Qac\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swift Playground Programm-Schnipsel"
+          }
+        }
+      }
+    },
+    "jZR-Hi-92E.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Label\"; ObjectID = \"jZR-Hi-92E\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Label"
+          }
+        }
+      }
+    },
+    "ke0-Pl-3Bl.title" : {
+      "comment" : "Class = \"UINavigationItem\"; title = \"Playground Snippets\"; ObjectID = \"ke0-Pl-3Bl\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swift Playground Programm-Schnipsel"
+          }
+        }
+      }
+    },
+    "mVL-Pc-a55.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Label\"; ObjectID = \"mVL-Pc-a55\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Label"
+          }
+        }
+      }
+    },
+    "oCk-WD-9Kc.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Label\"; ObjectID = \"oCk-WD-9Kc\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Label"
+          }
+        }
+      }
+    },
+    "sDg-74-hMi.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Mit MakeCode Arcade kannst du Spiele für deinen Calliope mini erstellen und diese auf einem Display oder sogar einer Spielekonsole spielen. Die Übertragung funktioniert nur per USB-Kabel.\"; ObjectID = \"sDg-74-hMi\";",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mit MakeCode Arcade kannst du Spiele für deinen Calliope mini erstellen und diese auf einem Display anzeigen lassen oder sogar einer Spielekonsole spielen.\nDie Übertragung der Datei funktioniert nur per USB-Kabel."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "With MakeCode Arcade, you can create games for your Calliope mini and play them with an additional display or even a game console.\nThe files can only be transferred via USB cable."
+          }
+        }
+      }
+    },
+    "SgB-Yb-sTD.title" : {
+      "comment" : "Class = \"UITableViewController\"; title = \"Playground Snippets\"; ObjectID = \"SgB-Yb-sTD\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swift Playground Programm-Schnipsel"
+          }
+        }
+      }
+    },
+    "wz7-bF-qTT.title" : {
+      "comment" : "Class = \"UINavigationItem\"; title = \"Home\"; ObjectID = \"wz7-bF-qTT\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Home"
+          }
+        }
+      }
+    },
+    "yeh-9e-tUu.title" : {
+      "comment" : "Class = \"UINavigationItem\"; title = \"Playground Snippets\"; ObjectID = \"yeh-9e-tUu\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Playground Programm-Schnipsel"
+          }
+        }
+      }
+    },
+    "YGA-Ni-z9x.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Label\"; ObjectID = \"YGA-Ni-z9x\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Label"
+          }
+        }
+      }
+    },
+    "zqc-Md-ScS.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Snippets Library\"; ObjectID = \"zqc-Md-ScS\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bibliothek"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.2"
+}
