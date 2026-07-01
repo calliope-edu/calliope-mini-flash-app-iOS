@@ -16,6 +16,7 @@ struct EditorTileConfig {
 struct ProgramTileConfig {
     let name: String
     let lastUsed: Date
+    let hexFile: HexFile
 }
 
 protocol EditorsAndProgramsViewModelProtocol {
@@ -44,10 +45,18 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
         EditorTileConfig(name: "Arcade (USB only)", iconName: "editors_swift"),
     ]
 
-    @Published var programs: [ProgramTileConfig] = [
-        ProgramTileConfig(name: "Test 1", lastUsed: Date.now),
-        ProgramTileConfig(name: "Test 2", lastUsed: Date.now.addingTimeInterval(100)),
-    ]
+    @Published var programs: [ProgramTileConfig] = []
+
+    var programSubscription: NSObjectProtocol!
+
+    func loadPrograms() {
+        programs = []
+        do {
+            programs = try HexFileManager.stored().map { ProgramTileConfig(name: $0.name, lastUsed: $0.date, hexFile: $0) }
+        } catch {
+            LogNotify.error("Could not load programs \(error)")
+        }
+    }
 
     init(
         openEditor: @escaping (_ editor: EditorTileConfig) -> Void,
@@ -59,6 +68,19 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
         self.uploadDownloadableProgram = uploadDownloadableProgram
         self.openQRCodeView = openQRCodeView
         self.openFileDialog = openFileDialog
+
+        loadPrograms()
+        programSubscription = NotificationCenter.default.addObserver(
+            forName: NotificationConstants.hexFileChanged,
+            object: nil,
+            queue: nil,
+            using: { [weak self] (_) in
+                DispatchQueue.main.async {
+                    self!.loadPrograms()
+                }
+            }
+        )
+
     }
 
     func openEditor(editor: EditorTileConfig) {
@@ -92,6 +114,10 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
     func openFile() {
         openFileDialog()
     }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(programSubscription!)
+    }
 }
 
 class PreviewEditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, ObservableObject {
@@ -104,8 +130,12 @@ class PreviewEditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, O
     ]
 
     @Published var programs: [ProgramTileConfig] = [
-        ProgramTileConfig(name: "Test 1", lastUsed: Date.now),
-        ProgramTileConfig(name: "Test 2", lastUsed: Date.now.addingTimeInterval(100)),
+        ProgramTileConfig(name: "Test 1", lastUsed: Date.now, hexFile: HexFile(url: URL(fileURLWithPath: ""), name: "", date: Date.now)),
+        ProgramTileConfig(
+            name: "Test 2",
+            lastUsed: Date.now.addingTimeInterval(100),
+            hexFile: HexFile(url: URL(fileURLWithPath: ""), name: "", date: Date.now.addingTimeInterval(100))
+        ),
     ]
 
     func openEditor(editor: EditorTileConfig) {
