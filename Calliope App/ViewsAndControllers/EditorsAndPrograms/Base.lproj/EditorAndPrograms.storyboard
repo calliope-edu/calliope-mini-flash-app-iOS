@@ -159,17 +159,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZKl-Ra-iSL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1883" y="697"/>
-        </scene>
-        <!--CalliopeBlocks-->
-        <scene sceneID="INQ-FF-Bpi">
-            <objects>
-                <viewControllerPlaceholder storyboardName="CalliopeBlocks" id="ZoJ-h7-jog" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="9cv-5v-wW3"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dA4-Mx-Bwc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1315" y="698"/>
+            <point key="canvasLocation" x="2140" y="660"/>
         </scene>
         <!--Hosting Controller-->
         <scene sceneID="UG6-2J-AGe">
@@ -185,7 +175,7 @@
                 <hostingController id="bXG-WP-mTw" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1bX-IC-ECZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3057" y="1181"/>
+            <point key="canvasLocation" x="1474" y="1704"/>
         </scene>
         <!--Calliope Mini Blocks View Controller-->
         <scene sceneID="LwN-NU-WaU">
@@ -202,7 +192,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AbA-yJ-owb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1698" y="1181"/>
+            <point key="canvasLocation" x="1473" y="918"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
