@@ -151,16 +151,6 @@
             </objects>
             <point key="canvasLocation" x="-526" y="29"/>
         </scene>
-        <!--PlaygroundSnippets-->
-        <scene sceneID="VD3-Sv-dPU">
-            <objects>
-                <viewControllerPlaceholder storyboardName="PlaygroundSnippets" id="Egz-LL-7qS" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="eHy-bt-L7X"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ZKl-Ra-iSL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2469" y="385"/>
-        </scene>
         <!--Hosting Controller-->
         <scene sceneID="UG6-2J-AGe">
             <objects>
@@ -221,7 +211,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="1jY-Ev-6Tt"/>
+        <segue reference="7ZG-zz-cOm"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="calliope-lilablau"/>
     <resources>
