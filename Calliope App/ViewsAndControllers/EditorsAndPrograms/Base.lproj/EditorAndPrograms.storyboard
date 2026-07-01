@@ -27,6 +27,10 @@
                     <connections>
                         <segue destination="eeY-2x-OZY" kind="show" identifier="openHexFile" destinationCreationSelector="openHexFile:" id="COy-xJ-NpQ"/>
                         <segue destination="eeY-2x-OZY" kind="show" identifier="showMakecode" destinationCreationSelector="initializeMakeCode:" id="1jY-Ev-6Tt"/>
+                        <segue destination="eeY-2x-OZY" kind="show" identifier="openMicropython" destinationCreationSelector="initializeMicropython:" id="Ot9-iS-HSE"/>
+                        <segue destination="eeY-2x-OZY" kind="show" identifier="openOpenRobertaLab" destinationCreationSelector="initializeOpenRobertaLab:" id="GBr-zl-PmQ"/>
+                        <segue destination="ZoJ-h7-jog" kind="show" identifier="openCalliopeMiniBlocks" id="d3x-lF-w8m"/>
+                        <segue destination="Egz-LL-7qS" kind="show" identifier="openArcade" id="ql7-Or-S9N"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t5x-PS-nsJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -602,7 +606,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dA4-Mx-Bwc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1874" y="865"/>
+            <point key="canvasLocation" x="1839" y="728"/>
         </scene>
         <!--Hosting Controller-->
         <scene sceneID="UG6-2J-AGe">
@@ -614,7 +618,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="1jY-Ev-6Tt"/>
+        <segue reference="d3x-lF-w8m"/>
+        <segue reference="ql7-Or-S9N"/>
+        <segue reference="Ot9-iS-HSE"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="calliope-lilablau"/>
     <resources>

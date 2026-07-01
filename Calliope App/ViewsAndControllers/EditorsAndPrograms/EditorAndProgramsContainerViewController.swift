@@ -156,16 +156,29 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
         switch(editor.name) {
         case "Makecode":
             performSegue(withIdentifier: "showMakecode", sender: nil)
+        case "Open Roberta Lab":
+            performSegue(withIdentifier: "openOpenRobertaLab", sender: nil)
+        case "Calliope mini Blocks":
+            performSegue(withIdentifier: "openCalliopeMiniBlocks", sender: nil)
+        case "Micropython":
+            performSegue(withIdentifier: "openMicropython", sender: nil)
+        case "Arcade (USB only)":
+            performSegue(withIdentifier: "openArcade", sender: nil)
         default:
             LogNotify.error("Tried to open unkown editor \(editor.name).")
         }
     }
     
-    func openMakeCode() {
-        performSegue(withIdentifier: "showMakecode", sender: nil)
-    }
-    
     @IBSegueAction func initializeMakeCode(_ coder: NSCoder) -> EditorViewController? {
         EditorViewController(coder: coder, editor: MakeCode())
+    }
+    
+    @IBSegueAction func initializeOpenRobertaLab(_ coder: NSCoder) -> EditorViewController? {
+        EditorViewController(coder: coder, editor: RobertaEditor())
+
+    }
+    
+    @IBSegueAction func initializeMicropython(_ coder: NSCoder) -> EditorViewController? {
+        EditorViewController(coder: coder, editor: MicroPython())
     }
 }
