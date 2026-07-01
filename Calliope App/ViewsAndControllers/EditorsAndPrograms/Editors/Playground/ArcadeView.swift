@@ -23,7 +23,7 @@ struct ArcadeView<viewModelType: ArcadeViewModelProtocol & ObservableObject>: Vi
             VStack {
                 Image("editors_swift")
                 SizedBox(height: 8)
-                boxButton(label: "Let's go!", iconName: nil, action: {viewModel.openArcadeButtonTapped()}, backgroundColor: Color.calliopePink)
+                boxButton(label: "Let's get started!", iconName: nil, action: {viewModel.openArcadeButtonTapped()}, backgroundColor: Color.calliopePink)
             }
         }
     }
