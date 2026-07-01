@@ -34,6 +34,7 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
     let openEditor: (_ editor: EditorTileConfig) -> Void
     let uploadDownloadableProgram: (_ program: DownloadableHexFile) -> Void
     let openQRCodeView: () -> Void
+    let openFileDialog: () -> Void
 
     @Published var editors: [EditorTileConfig] = [
         EditorTileConfig(name: "Makecode", iconName: "editors_makecode"),
@@ -51,11 +52,13 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
     init(
         openEditor: @escaping (_ editor: EditorTileConfig) -> Void,
         uploadDownloadableProgram: @escaping (_ program: DownloadableHexFile) -> Void,
-        openQRCodeView: @escaping () -> Void
+        openQRCodeView: @escaping () -> Void,
+        openFileDialog: @escaping () -> Void
     ) {
         self.openEditor = openEditor
         self.uploadDownloadableProgram = uploadDownloadableProgram
         self.openQRCodeView = openQRCodeView
+        self.openFileDialog = openFileDialog
     }
 
     func openEditor(editor: EditorTileConfig) {
@@ -87,7 +90,7 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
     }
 
     func openFile() {
-        print("Trying to open file")
+        openFileDialog()
     }
 }
 

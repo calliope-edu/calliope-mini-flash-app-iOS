@@ -40,7 +40,8 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
                 viewModel: EditorsAndProgramsViewModel(
                     openEditor: openEditor,
                     uploadDownloadableProgram: uploadDownloadableProgram,
-                    openQRCodeView: openQRCodeView
+                    openQRCodeView: openQRCodeView,
+                    openFileDialog: navigateToImportFile
                 )
             )
         )
@@ -139,7 +140,7 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
         FirmwareUpload.showUIForDownloadableProgram(controller: self, program: program)
     }
 
-    @IBAction func navigateToImportFile() {
+    func navigateToImportFile() {
         let types: [UTType] = getFileTypesFor(fileEnding: "hex")
 
         DispatchQueue.main.async {
