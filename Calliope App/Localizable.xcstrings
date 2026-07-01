@@ -987,9 +987,6 @@
         }
       }
     },
-    "Edit" : {
-
-    },
     "Einstellungen öffnen" : {
       "comment" : "Open Settings"
     },
@@ -1140,6 +1137,7 @@
       }
     },
     "Finished" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

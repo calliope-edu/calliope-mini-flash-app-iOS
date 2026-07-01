@@ -7,7 +7,6 @@
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
-        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -37,318 +36,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t5x-PS-nsJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="664.8854961832061" y="-105.63380281690141"/>
-        </scene>
-        <!--Editors Collection View Controller-->
-        <scene sceneID="nxH-4H-qrq">
-            <objects>
-                <collectionViewController automaticallyAdjustsScrollViewInsets="NO" id="ZH5-UW-Mjo" customClass="EditorsCollectionViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" bouncesZoom="NO" dataMode="prototypes" id="5hm-Wh-YfH">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Rsi-yi-Udp">
-                            <size key="itemSize" width="50" height="50"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="makecodeEditorCell" id="LQt-dC-ueL" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="160" height="185.66666666666666"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="WBP-SR-R2U">
-                                    <rect key="frame" x="0.0" y="0.0" width="160" height="185.66666666666666"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Makecode" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KGR-ef-bqG">
-                                            <rect key="frame" x="0.0" y="165" width="160" height="20.666666666666657"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="editors_makecode" translatesAutoresizingMaskIntoConstraints="NO" id="iI5-8F-WS6">
-                                            <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" priority="999" constant="160" id="F7V-aY-ONJ"/>
-                                                <constraint firstAttribute="width" secondItem="iI5-8F-WS6" secondAttribute="height" multiplier="1:1" priority="999" id="PTq-t9-ILZ"/>
-                                            </constraints>
-                                        </imageView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="iI5-8F-WS6" firstAttribute="leading" secondItem="WBP-SR-R2U" secondAttribute="leading" id="06R-CF-Fuj"/>
-                                        <constraint firstAttribute="trailing" secondItem="iI5-8F-WS6" secondAttribute="trailing" id="Cil-L1-NuV"/>
-                                        <constraint firstAttribute="bottom" secondItem="KGR-ef-bqG" secondAttribute="bottom" id="NYX-zl-ruC"/>
-                                        <constraint firstItem="KGR-ef-bqG" firstAttribute="leading" secondItem="WBP-SR-R2U" secondAttribute="leading" id="Qnh-zM-4cL"/>
-                                        <constraint firstAttribute="trailing" secondItem="KGR-ef-bqG" secondAttribute="trailing" id="UdY-1w-smX"/>
-                                        <constraint firstItem="iI5-8F-WS6" firstAttribute="top" secondItem="WBP-SR-R2U" secondAttribute="top" id="q0A-5y-xnH"/>
-                                        <constraint firstItem="KGR-ef-bqG" firstAttribute="top" secondItem="iI5-8F-WS6" secondAttribute="bottom" constant="5" id="q3Y-uk-CW4"/>
-                                    </constraints>
-                                </collectionViewCellContentView>
-                                <connections>
-                                    <outlet property="logo" destination="iI5-8F-WS6" id="okw-Mu-yCX"/>
-                                    <outlet property="name" destination="KGR-ef-bqG" id="eQd-cQ-PaQ"/>
-                                    <segue destination="eeY-2x-OZY" kind="show" identifier="openMakecode" destinationCreationSelector="createMakecodeEditorWithCoder:sender:" id="pQc-nr-8N0"/>
-                                </connections>
-                            </collectionViewCell>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="microPythonEditorCell" id="mB4-E0-TYI" userLabel="microPythonCell" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="233" y="0.0" width="160" height="185.66666666666666"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="G7Q-7N-i5h">
-                                    <rect key="frame" x="0.0" y="0.0" width="160" height="185.66666666666666"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MicroPython" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Muf-Qh-DgW">
-                                            <rect key="frame" x="0.0" y="165" width="160" height="20.666666666666657"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="editors_python" translatesAutoresizingMaskIntoConstraints="NO" id="5Jj-Sw-6OC">
-                                            <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" secondItem="5Jj-Sw-6OC" secondAttribute="height" multiplier="1:1" priority="999" id="o35-aN-Lif"/>
-                                                <constraint firstAttribute="width" priority="999" constant="160" id="sVK-IM-FOA"/>
-                                            </constraints>
-                                        </imageView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="5Jj-Sw-6OC" firstAttribute="top" secondItem="G7Q-7N-i5h" secondAttribute="top" id="9OT-J5-N1P"/>
-                                        <constraint firstAttribute="bottom" secondItem="Muf-Qh-DgW" secondAttribute="bottom" id="NS0-1w-32V"/>
-                                        <constraint firstItem="Muf-Qh-DgW" firstAttribute="leading" secondItem="G7Q-7N-i5h" secondAttribute="leading" id="eoC-pR-qhF"/>
-                                        <constraint firstItem="5Jj-Sw-6OC" firstAttribute="leading" secondItem="G7Q-7N-i5h" secondAttribute="leading" id="jMj-am-8C7"/>
-                                        <constraint firstAttribute="trailing" secondItem="Muf-Qh-DgW" secondAttribute="trailing" id="sJd-eC-pKF"/>
-                                        <constraint firstAttribute="trailing" secondItem="5Jj-Sw-6OC" secondAttribute="trailing" id="vg2-9M-K1V"/>
-                                        <constraint firstItem="Muf-Qh-DgW" firstAttribute="top" secondItem="5Jj-Sw-6OC" secondAttribute="bottom" constant="5" id="xD4-ML-zQC"/>
-                                    </constraints>
-                                </collectionViewCellContentView>
-                                <connections>
-                                    <outlet property="logo" destination="5Jj-Sw-6OC" id="4rO-g0-Nbu"/>
-                                    <outlet property="name" destination="Muf-Qh-DgW" id="XJ1-rh-jVE"/>
-                                    <segue destination="eeY-2x-OZY" kind="show" identifier="openMicroPython" destinationCreationSelector="createMicroPythonEditorWithCoder:sender:" id="eyZ-c1-qkE"/>
-                                </connections>
-                            </collectionViewCell>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="nepoEditorCell" id="ucV-gN-En2" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="195.66666666666666" width="160" height="185.33333333333337"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bVT-UD-yV5">
-                                    <rect key="frame" x="0.0" y="0.0" width="160" height="185.33333333333337"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="editors_nepo" translatesAutoresizingMaskIntoConstraints="NO" id="1Ks-qN-EOY">
-                                            <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" secondItem="1Ks-qN-EOY" secondAttribute="height" multiplier="1:1" priority="999" id="FeR-MT-KMs"/>
-                                                <constraint firstAttribute="width" priority="999" constant="160" id="dFF-6e-HA9"/>
-                                            </constraints>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Open Roberta Lab" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pm2-Za-VcF">
-                                            <rect key="frame" x="0.0" y="165" width="160" height="20.333333333333343"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="pm2-Za-VcF" firstAttribute="leading" secondItem="bVT-UD-yV5" secondAttribute="leading" id="4KR-tw-fRh"/>
-                                        <constraint firstAttribute="trailing" secondItem="1Ks-qN-EOY" secondAttribute="trailing" id="D8o-o5-HeI"/>
-                                        <constraint firstItem="1Ks-qN-EOY" firstAttribute="top" secondItem="bVT-UD-yV5" secondAttribute="top" id="OOY-Eh-xKh"/>
-                                        <constraint firstItem="1Ks-qN-EOY" firstAttribute="leading" secondItem="bVT-UD-yV5" secondAttribute="leading" id="SqB-Pl-lnW"/>
-                                        <constraint firstAttribute="bottom" secondItem="pm2-Za-VcF" secondAttribute="bottom" id="c1o-9L-USe"/>
-                                        <constraint firstAttribute="trailing" secondItem="pm2-Za-VcF" secondAttribute="trailing" id="gdb-fw-Ww5"/>
-                                        <constraint firstItem="pm2-Za-VcF" firstAttribute="top" secondItem="1Ks-qN-EOY" secondAttribute="bottom" constant="5" id="ybg-tB-sq1"/>
-                                    </constraints>
-                                </collectionViewCellContentView>
-                                <connections>
-                                    <outlet property="logo" destination="1Ks-qN-EOY" id="kXE-HC-nk0"/>
-                                    <outlet property="name" destination="pm2-Za-VcF" id="1Db-4L-thF"/>
-                                    <segue destination="eeY-2x-OZY" kind="show" identifier="openNepo" destinationCreationSelector="createNepoEditorWithCoder:sender:" id="yKh-rV-xrX"/>
-                                </connections>
-                            </collectionViewCell>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="arcadeCell" id="X1H-Rl-bCL" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="233" y="195.66666666666666" width="160" height="185.33333333333337"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="PXU-mA-kNy">
-                                    <rect key="frame" x="0.0" y="0.0" width="160" height="185.33333333333337"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Arcade (nur über USB)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NWk-nx-U7c">
-                                            <rect key="frame" x="0.0" y="165" width="160" height="20.333333333333343"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="editors_swift" translatesAutoresizingMaskIntoConstraints="NO" id="qAp-AG-KqZ">
-                                            <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" secondItem="qAp-AG-KqZ" secondAttribute="height" multiplier="1:1" priority="999" id="suM-0W-SJI"/>
-                                                <constraint firstAttribute="width" priority="999" constant="160" id="zNn-Fs-DNP"/>
-                                            </constraints>
-                                        </imageView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="qAp-AG-KqZ" firstAttribute="top" secondItem="PXU-mA-kNy" secondAttribute="top" id="4M9-jX-Qb2"/>
-                                        <constraint firstAttribute="trailing" secondItem="NWk-nx-U7c" secondAttribute="trailing" id="A7F-HX-Apl"/>
-                                        <constraint firstItem="qAp-AG-KqZ" firstAttribute="leading" secondItem="PXU-mA-kNy" secondAttribute="leading" id="Ccb-ze-2mI"/>
-                                        <constraint firstItem="NWk-nx-U7c" firstAttribute="leading" secondItem="PXU-mA-kNy" secondAttribute="leading" id="dn7-ZU-X7C"/>
-                                        <constraint firstAttribute="trailing" secondItem="qAp-AG-KqZ" secondAttribute="trailing" id="ebF-U0-vGQ"/>
-                                        <constraint firstAttribute="trailing" secondItem="qAp-AG-KqZ" secondAttribute="trailing" id="j3R-e4-7hZ"/>
-                                        <constraint firstItem="qAp-AG-KqZ" firstAttribute="leading" secondItem="PXU-mA-kNy" secondAttribute="leading" id="ljD-DG-SKe"/>
-                                        <constraint firstItem="NWk-nx-U7c" firstAttribute="top" secondItem="qAp-AG-KqZ" secondAttribute="bottom" constant="5" id="nje-yG-i90"/>
-                                        <constraint firstItem="qAp-AG-KqZ" firstAttribute="top" secondItem="PXU-mA-kNy" secondAttribute="top" id="rpJ-1y-my4"/>
-                                        <constraint firstAttribute="bottom" secondItem="NWk-nx-U7c" secondAttribute="bottom" id="rsm-VI-002"/>
-                                    </constraints>
-                                </collectionViewCellContentView>
-                                <connections>
-                                    <outlet property="logo" destination="qAp-AG-KqZ" id="wye-c5-hpU"/>
-                                    <outlet property="name" destination="NWk-nx-U7c" id="H6A-lf-Isr"/>
-                                    <segue destination="Egz-LL-7qS" kind="show" id="dfL-Ux-NRI"/>
-                                </connections>
-                            </collectionViewCell>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="calliopeBlocksCell" id="Uov-es-KDS" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="391" width="160" height="160"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Nwx-rx-8wA">
-                                    <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calliope mini Blocks" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nWc-AL-4YR">
-                                            <rect key="frame" x="0.0" y="160" width="160" height="0.0"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="editors_blocks_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="4Rc-L6-bEy">
-                                            <rect key="frame" x="0.0" y="0.0" width="160" height="155"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" secondItem="4Rc-L6-bEy" secondAttribute="height" multiplier="1:1" priority="999" id="LN0-mb-RzT"/>
-                                                <constraint firstAttribute="width" priority="999" constant="160" id="YLc-8n-Tsi"/>
-                                            </constraints>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                    <integer key="value" value="15"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
-                                        </imageView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="4Rc-L6-bEy" firstAttribute="top" secondItem="Nwx-rx-8wA" secondAttribute="top" id="2B5-YZ-U2f"/>
-                                        <constraint firstItem="nWc-AL-4YR" firstAttribute="leading" secondItem="Nwx-rx-8wA" secondAttribute="leading" id="4pb-MF-Mf1"/>
-                                        <constraint firstAttribute="trailing" secondItem="nWc-AL-4YR" secondAttribute="trailing" id="Bmf-vM-HJ0"/>
-                                        <constraint firstAttribute="trailing" secondItem="4Rc-L6-bEy" secondAttribute="trailing" id="Dnr-cM-l6a"/>
-                                        <constraint firstItem="4Rc-L6-bEy" firstAttribute="top" secondItem="Nwx-rx-8wA" secondAttribute="top" id="KOI-ZZ-cZq"/>
-                                        <constraint firstItem="4Rc-L6-bEy" firstAttribute="leading" secondItem="Nwx-rx-8wA" secondAttribute="leading" id="P0H-DH-QWx"/>
-                                        <constraint firstAttribute="trailing" secondItem="4Rc-L6-bEy" secondAttribute="trailing" id="S0N-gF-GZn"/>
-                                        <constraint firstItem="nWc-AL-4YR" firstAttribute="top" secondItem="4Rc-L6-bEy" secondAttribute="bottom" constant="5" id="UP3-H2-IUX"/>
-                                        <constraint firstAttribute="bottom" secondItem="nWc-AL-4YR" secondAttribute="bottom" id="WgK-ep-oNB"/>
-                                        <constraint firstItem="4Rc-L6-bEy" firstAttribute="leading" secondItem="Nwx-rx-8wA" secondAttribute="leading" id="bMc-V6-8gR"/>
-                                    </constraints>
-                                </collectionViewCellContentView>
-                                <size key="customSize" width="160" height="160"/>
-                                <connections>
-                                    <outlet property="logo" destination="4Rc-L6-bEy" id="P7C-ol-gSr"/>
-                                    <outlet property="name" destination="nWc-AL-4YR" id="Shy-eU-490"/>
-                                    <segue destination="ZoJ-h7-jog" kind="show" id="QMm-vh-UzX"/>
-                                </connections>
-                            </collectionViewCell>
-                            <collectionViewCell hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" reuseIdentifier="calliopeBlocksEditorCell" id="B39-nd-MiD" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="233" y="391" width="160" height="160"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="MRt-a5-on6">
-                                    <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calliope mini Blocks Editor" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WpF-ql-A9P">
-                                            <rect key="frame" x="0.0" y="160" width="160" height="0.0"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="editors_blocks_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="Hv5-aD-NWE">
-                                            <rect key="frame" x="0.0" y="0.0" width="160" height="155"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" priority="999" constant="160" id="2N8-fT-I6q"/>
-                                                <constraint firstAttribute="width" secondItem="Hv5-aD-NWE" secondAttribute="height" multiplier="1:1" priority="999" id="IZx-C2-C69"/>
-                                            </constraints>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                    <integer key="value" value="15"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
-                                        </imageView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="Hv5-aD-NWE" firstAttribute="top" secondItem="MRt-a5-on6" secondAttribute="top" id="4YS-0b-cGz"/>
-                                        <constraint firstAttribute="trailing" secondItem="Hv5-aD-NWE" secondAttribute="trailing" id="IPz-9u-tcM"/>
-                                        <constraint firstItem="Hv5-aD-NWE" firstAttribute="leading" secondItem="MRt-a5-on6" secondAttribute="leading" id="IRT-ps-hkc"/>
-                                        <constraint firstItem="Hv5-aD-NWE" firstAttribute="leading" secondItem="MRt-a5-on6" secondAttribute="leading" id="KvO-3z-GZY"/>
-                                        <constraint firstItem="WpF-ql-A9P" firstAttribute="top" secondItem="Hv5-aD-NWE" secondAttribute="bottom" constant="5" id="X6S-2j-R61"/>
-                                        <constraint firstItem="WpF-ql-A9P" firstAttribute="leading" secondItem="MRt-a5-on6" secondAttribute="leading" id="ffs-Yl-qMn"/>
-                                        <constraint firstAttribute="bottom" secondItem="WpF-ql-A9P" secondAttribute="bottom" id="iKN-vZ-48A"/>
-                                        <constraint firstAttribute="trailing" secondItem="WpF-ql-A9P" secondAttribute="trailing" id="n39-pB-fJw"/>
-                                        <constraint firstItem="Hv5-aD-NWE" firstAttribute="top" secondItem="MRt-a5-on6" secondAttribute="top" id="ugH-Zo-k90"/>
-                                        <constraint firstAttribute="trailing" secondItem="Hv5-aD-NWE" secondAttribute="trailing" id="xYx-Rn-7iu"/>
-                                    </constraints>
-                                </collectionViewCellContentView>
-                                <size key="customSize" width="160" height="160"/>
-                                <connections>
-                                    <outlet property="logo" destination="Hv5-aD-NWE" id="oCq-pj-HR5"/>
-                                    <outlet property="name" destination="WpF-ql-A9P" id="eAr-mX-hrp"/>
-                                    <segue destination="eeY-2x-OZY" kind="show" identifier="openBlocksEditor" destinationCreationSelector="createBlocksEditor:sender:" id="3vj-03-YP1"/>
-                                </connections>
-                            </collectionViewCell>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="campusEditorCell" id="gO2-tE-KHc" userLabel="campusEditorCell" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="561" width="160" height="185.33333333333337"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="hPk-9I-qCC">
-                                    <rect key="frame" x="0.0" y="0.0" width="160" height="185.33333333333337"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calliope Campus" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rp9-Jl-mwf">
-                                            <rect key="frame" x="0.0" y="165" width="160" height="20.333333333333343"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="editors_campus" translatesAutoresizingMaskIntoConstraints="NO" id="IzN-Fl-a4C">
-                                            <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" priority="999" constant="160" id="T4X-Li-pU4"/>
-                                                <constraint firstAttribute="width" secondItem="IzN-Fl-a4C" secondAttribute="height" multiplier="1:1" priority="999" id="XVu-aE-DLd"/>
-                                            </constraints>
-                                        </imageView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="Rp9-Jl-mwf" firstAttribute="leading" secondItem="hPk-9I-qCC" secondAttribute="leading" id="2UN-L4-Xx0"/>
-                                        <constraint firstItem="IzN-Fl-a4C" firstAttribute="top" secondItem="hPk-9I-qCC" secondAttribute="top" id="4CA-Ex-h5n"/>
-                                        <constraint firstAttribute="bottom" secondItem="Rp9-Jl-mwf" secondAttribute="bottom" id="IIL-Ky-PNI"/>
-                                        <constraint firstItem="Rp9-Jl-mwf" firstAttribute="top" secondItem="IzN-Fl-a4C" secondAttribute="bottom" constant="5" id="Qcw-dw-PwN"/>
-                                        <constraint firstItem="IzN-Fl-a4C" firstAttribute="leading" secondItem="hPk-9I-qCC" secondAttribute="leading" id="Wpl-XT-E6e"/>
-                                        <constraint firstAttribute="trailing" secondItem="IzN-Fl-a4C" secondAttribute="trailing" id="kOs-Sv-teV"/>
-                                        <constraint firstAttribute="trailing" secondItem="Rp9-Jl-mwf" secondAttribute="trailing" id="oSf-1B-NOK"/>
-                                    </constraints>
-                                </collectionViewCellContentView>
-                                <connections>
-                                    <outlet property="logo" destination="IzN-Fl-a4C" id="aAe-HO-X42"/>
-                                    <outlet property="name" destination="Rp9-Jl-mwf" id="SUm-gJ-cvM"/>
-                                    <segue destination="eeY-2x-OZY" kind="show" identifier="openCampus" destinationCreationSelector="createCampusEditor:sender:" id="UIB-6u-Lgi"/>
-                                </connections>
-                            </collectionViewCell>
-                        </cells>
-                        <connections>
-                            <outlet property="dataSource" destination="ZH5-UW-Mjo" id="4OO-Bs-Q8Q"/>
-                            <outlet property="delegate" destination="ZH5-UW-Mjo" id="3fh-vU-RhG"/>
-                        </connections>
-                    </collectionView>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="FrV-jw-8Vf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1190" y="849"/>
         </scene>
         <!--Editor-->
         <scene sceneID="pG3-lK-9uC">
@@ -380,132 +67,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CUU-x4-Hb6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="208" y="849"/>
-        </scene>
-        <!--Programs Collection View Controller-->
-        <scene sceneID="5PQ-au-cNb">
-            <objects>
-                <collectionViewController automaticallyAdjustsScrollViewInsets="NO" id="8hf-lH-tNj" customClass="ProgramsCollectionViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" bouncesZoom="NO" dataMode="prototypes" id="Bth-Zg-uBw">
-                        <rect key="frame" x="0.0" y="0.0" width="437" height="290"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="N89-6L-6xR">
-                            <size key="itemSize" width="263" height="83"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="uploadProgramCell" id="2S9-7Q-qui" customClass="ProgramCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="87" y="0.0" width="263" height="83"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="lqR-6Y-g8H">
-                                    <rect key="frame" x="0.0" y="0.0" width="263" height="83"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S9O-yD-dPi">
-                                            <rect key="frame" x="0.0" y="0.0" width="263" height="83"/>
-                                            <subviews>
-                                                <view contentMode="scaleToFill" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="iMS-hH-QU0" userLabel="programLabelContainer">
-                                                    <rect key="frame" x="8" y="8" width="206" height="34"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="200" verticalHuggingPriority="251" horizontalCompressionResistancePriority="740" text="Label" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DpH-x4-88I">
-                                                            <rect key="frame" x="8" y="7.0000000000000018" width="41.666666666666664" height="20.666666666666671"/>
-                                                            <accessibility key="accessibilityConfiguration" identifier="programLabel"/>
-                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <textField hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="240" verticalHuggingPriority="260" horizontalCompressionResistancePriority="700" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="eex-Tk-Fko">
-                                                            <rect key="frame" x="0.0" y="0.0" width="206" height="34"/>
-                                                            <accessibility key="accessibilityConfiguration" identifier="programNameEditField"/>
-                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                            <textInputTraits key="textInputTraits"/>
-                                                            <connections>
-                                                                <action selector="editButtonClicked:" destination="2S9-7Q-qui" eventType="editingDidEnd" id="8s6-VZ-1ep"/>
-                                                                <action selector="shareButtonClicked:" destination="2S9-7Q-qui" eventType="editingDidEndOnExit" id="obP-VA-aWp"/>
-                                                            </connections>
-                                                        </textField>
-                                                    </subviews>
-                                                    <accessibility key="accessibilityConfiguration" identifier="programLabelContainer"/>
-                                                    <constraints>
-                                                        <constraint firstItem="eex-Tk-Fko" firstAttribute="top" secondItem="iMS-hH-QU0" secondAttribute="top" id="3QE-2p-mJV"/>
-                                                        <constraint firstItem="eex-Tk-Fko" firstAttribute="leading" secondItem="iMS-hH-QU0" secondAttribute="leading" id="OH9-3z-SVD"/>
-                                                        <constraint firstAttribute="bottom" secondItem="eex-Tk-Fko" secondAttribute="bottom" id="TZi-N1-J5L"/>
-                                                        <constraint firstAttribute="trailing" secondItem="eex-Tk-Fko" secondAttribute="trailing" id="Tem-vn-EN8"/>
-                                                        <constraint firstItem="eex-Tk-Fko" firstAttribute="firstBaseline" secondItem="DpH-x4-88I" secondAttribute="firstBaseline" id="c98-E7-TLb"/>
-                                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="DpH-x4-88I" secondAttribute="trailing" constant="8" id="dKg-Ec-RZ7"/>
-                                                        <constraint firstItem="DpH-x4-88I" firstAttribute="leading" secondItem="iMS-hH-QU0" secondAttribute="leading" constant="8" id="iho-77-q4z"/>
-                                                    </constraints>
-                                                </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g6h-Vu-QEH">
-                                                    <rect key="frame" x="15.999999999999996" y="39" width="41.666666666666657" height="30"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="upload_button" translatesAutoresizingMaskIntoConstraints="NO" id="Qo4-4d-Nqj">
-                                                    <rect key="frame" x="222" y="8" width="25" height="67"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="25" id="rar-Qr-XAv"/>
-                                                    </constraints>
-                                                </imageView>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="g6h-Vu-QEH" secondAttribute="bottom" constant="14" id="0ZS-65-NWA"/>
-                                                <constraint firstItem="Qo4-4d-Nqj" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="g6h-Vu-QEH" secondAttribute="trailing" constant="16" id="6eo-uZ-31y"/>
-                                                <constraint firstItem="iMS-hH-QU0" firstAttribute="top" secondItem="S9O-yD-dPi" secondAttribute="top" constant="8" id="DKL-Sq-Uqq"/>
-                                                <constraint firstAttribute="bottom" secondItem="Qo4-4d-Nqj" secondAttribute="bottom" constant="8" id="GBx-xh-dbZ"/>
-                                                <constraint firstAttribute="width" constant="300" placeholder="YES" id="JLy-9b-lhl"/>
-                                                <constraint firstAttribute="trailing" secondItem="Qo4-4d-Nqj" secondAttribute="trailing" constant="16" id="NEQ-g5-8ES"/>
-                                                <constraint firstItem="g6h-Vu-QEH" firstAttribute="leading" secondItem="DpH-x4-88I" secondAttribute="leading" id="PEg-0g-zqm"/>
-                                                <constraint firstItem="Qo4-4d-Nqj" firstAttribute="leading" secondItem="iMS-hH-QU0" secondAttribute="trailing" constant="8" id="gkO-oX-6Y6"/>
-                                                <constraint firstItem="Qo4-4d-Nqj" firstAttribute="top" secondItem="S9O-yD-dPi" secondAttribute="top" constant="8" id="iib-ZZ-19q"/>
-                                                <constraint firstItem="iMS-hH-QU0" firstAttribute="leading" secondItem="S9O-yD-dPi" secondAttribute="leading" constant="8" id="npk-a7-xeb"/>
-                                                <constraint firstAttribute="height" constant="70" placeholder="YES" id="vJc-Oo-gs0"/>
-                                                <constraint firstItem="g6h-Vu-QEH" firstAttribute="top" secondItem="iMS-hH-QU0" secondAttribute="bottom" constant="-3" id="xJa-Iz-icA"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="S9O-yD-dPi" secondAttribute="trailing" id="0HN-Ca-Xke"/>
-                                        <constraint firstItem="S9O-yD-dPi" firstAttribute="top" secondItem="lqR-6Y-g8H" secondAttribute="top" id="0Yh-ff-3Pv"/>
-                                        <constraint firstItem="S9O-yD-dPi" firstAttribute="leading" secondItem="lqR-6Y-g8H" secondAttribute="leading" id="49T-cX-BI1"/>
-                                        <constraint firstAttribute="bottom" secondItem="S9O-yD-dPi" secondAttribute="bottom" id="XbJ-8y-Vhn"/>
-                                    </constraints>
-                                </collectionViewCellContentView>
-                                <color key="backgroundColor" name="calliope-gray"/>
-                                <size key="customSize" width="263" height="83"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <outlet property="containerView" destination="S9O-yD-dPi" id="Vbe-ho-uTy"/>
-                                    <outlet property="dateLabel" destination="g6h-Vu-QEH" id="3hO-Yt-Y4s"/>
-                                    <outlet property="name" destination="DpH-x4-88I" id="Iih-LF-2je"/>
-                                    <outlet property="nameEditField" destination="eex-Tk-Fko" id="Ujn-ZE-FRd"/>
-                                </connections>
-                            </collectionViewCell>
-                        </cells>
-                        <connections>
-                            <outlet property="dataSource" destination="8hf-lH-tNj" id="d0B-PH-EWX"/>
-                            <outlet property="delegate" destination="8hf-lH-tNj" id="Lbv-sd-15j"/>
-                        </connections>
-                    </collectionView>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="6VK-Mj-bGc"/>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="437" height="290"/>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="SRn-bB-H5q" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2960" y="318"/>
+            <point key="canvasLocation" x="665" y="918"/>
         </scene>
         <!--Code View Controller-->
         <scene sceneID="hol-wY-xHE">
@@ -564,7 +126,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Gu-wX-dHR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-527" y="849"/>
+            <point key="canvasLocation" x="-167" y="918"/>
         </scene>
         <!--Editors and Programs-->
         <scene sceneID="UDA-pj-7B3">
@@ -597,7 +159,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZKl-Ra-iSL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2349" y="749"/>
+            <point key="canvasLocation" x="1883" y="697"/>
         </scene>
         <!--CalliopeBlocks-->
         <scene sceneID="INQ-FF-Bpi">
@@ -607,7 +169,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dA4-Mx-Bwc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1839" y="728"/>
+            <point key="canvasLocation" x="1315" y="698"/>
         </scene>
         <!--Hosting Controller-->
         <scene sceneID="UG6-2J-AGe">
@@ -619,23 +181,11 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="d3x-lF-w8m"/>
-        <segue reference="ql7-Or-S9N"/>
-        <segue reference="Ot9-iS-HSE"/>
+        <segue reference="7ZG-zz-cOm"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="calliope-lilablau"/>
     <resources>
         <image name="IconCode" width="36" height="33"/>
-        <image name="editors_blocks_transparent" width="1024" height="1024"/>
-        <image name="editors_campus" width="320" height="320"/>
-        <image name="editors_makecode" width="320" height="320"/>
-        <image name="editors_nepo" width="320" height="320"/>
-        <image name="editors_python" width="320" height="320"/>
-        <image name="editors_swift" width="320" height="320"/>
-        <image name="upload_button" width="25" height="33"/>
-        <namedColor name="calliope-gray">
-            <color red="0.28999999165534973" green="0.32199999690055847" blue="0.36899998784065247" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="calliope-green">
             <color red="0.27500000596046448" green="0.875" blue="0.4309999942779541" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

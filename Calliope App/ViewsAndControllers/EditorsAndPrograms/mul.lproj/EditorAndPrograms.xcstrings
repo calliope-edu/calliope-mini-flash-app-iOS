@@ -63,7 +63,7 @@
     },
     "DpH-x4-88I.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Label\"; ObjectID = \"DpH-x4-88I\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -117,7 +117,7 @@
     },
     "g6h-Vu-QEH.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Label\"; ObjectID = \"g6h-Vu-QEH\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -219,7 +219,7 @@
     },
     "KGR-ef-bqG.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Makecode\"; ObjectID = \"KGR-ef-bqG\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -231,18 +231,6 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Makecode"
-          }
-        }
-      }
-    },
-    "Muf-Qh-DgW.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"MicroPython\"; ObjectID = \"Muf-Qh-DgW\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "MicroPython"
           }
         }
       }
@@ -265,20 +253,9 @@
         }
       }
     },
-    "nWc-AL-4YR.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Calliope mini Blocks\"; ObjectID = \"nWc-AL-4YR\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Calliope mini Blocks"
-          }
-        }
-      }
-    },
     "NWk-nx-U7c.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Arcade (nur über USB)\"; ObjectID = \"NWk-nx-U7c\";",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -296,7 +273,7 @@
     },
     "pm2-Za-VcF.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Open Roberta Lab\"; ObjectID = \"pm2-Za-VcF\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -326,18 +303,6 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Programs and Editors"
-          }
-        }
-      }
-    },
-    "Rp9-Jl-mwf.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Calliope Campus\"; ObjectID = \"Rp9-Jl-mwf\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Calliope Campus"
           }
         }
       }
@@ -386,18 +351,6 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Open program"
-          }
-        }
-      }
-    },
-    "WpF-ql-A9P.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Calliope mini Blocks Editor\"; ObjectID = \"WpF-ql-A9P\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Calliope mini Blocks Editor"
           }
         }
       }

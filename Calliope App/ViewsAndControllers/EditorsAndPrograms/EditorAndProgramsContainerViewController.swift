@@ -21,12 +21,10 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
 
     @IBOutlet weak var scanButton: UIButton?
 
-    @objc var editorsCollectionViewController: EditorsCollectionViewController?
     @IBOutlet var editorTopToSafeArea: NSLayoutConstraint?
     @IBOutlet var editorBottomToSafeArea: NSLayoutConstraint?
     var editorsHeightConstraint: NSLayoutConstraint?
 
-    @objc var programsCollectionViewController: ProgramsCollectionViewController?
     var programsHeightConstraint: NSLayoutConstraint?
 
     var editorsKvo: Any?
@@ -52,15 +50,6 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        coordinator.animate(
-            alongsideTransition: { (_) in
-                self.configureLayout(size)
-            },
-            completion: { _ in
-                self.programsCollectionViewController?.collectionView.reloadData()
-                self.editorsCollectionViewController?.collectionView.reloadData()
-            }
-        )
     }
 
     private func configureLayout(_ size: CGSize) {
@@ -89,28 +78,8 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
         scanButton?.tintColor = UIColor.white
     }
 
-    @IBSegueAction func initializeEditor(_ coder: NSCoder) -> EditorsCollectionViewController? {
-        editorsCollectionViewController = EditorsCollectionViewController(coder: coder)
-        return editorsCollectionViewController
-    }
-
-    @IBSegueAction func initializePrograms(_ coder: NSCoder) -> ProgramsCollectionViewController? {
-        programsCollectionViewController = ProgramsCollectionViewController(coder: coder)
-        return programsCollectionViewController
-    }
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-        editorsKvo = observe(\.editorsCollectionViewController?.collectionView.contentSize) { (containerVC, _) in
-            containerVC.editorsHeightConstraint!.constant = containerVC.editorsCollectionViewController!.collectionView.contentSize.height
-            containerVC.editorsCollectionViewController?.collectionView.layoutIfNeeded()
-        }
-
-        programsKvo = observe(\.programsCollectionViewController?.collectionView.contentSize) { (containerVC, _) in
-            containerVC.programsHeightConstraint!.constant = containerVC.programsCollectionViewController!.collectionView.contentSize.height
-            containerVC.programsCollectionViewController?.collectionView.layoutIfNeeded()
-        }
 
         MatrixConnectionViewController.instance?.connectionDescriptionText = NSLocalizedString("Calliope mini verbinden!", comment: "")
         MatrixConnectionViewController.instance?.calliopeClass = DiscoveredBLEDevice.self
