@@ -113,9 +113,6 @@
         }
       }
     },
-    "A long press takes you to the option of transfering, sharing and deleting your programs stored in the Calliope mini folder." : {
-
-    },
     "Abbrechen" : {
       "comment" : "Cancel"
     },
@@ -1007,6 +1004,9 @@
           }
         }
       }
+    },
+    "Enter the new program title" : {
+
     },
     "Enter the new project name" : {
       "localizations" : {
@@ -1972,6 +1972,9 @@
           }
         }
       }
+    },
+    "Select a program to transfer, share, rename or delete it." : {
+
     },
     "Select Axis" : {
       "extractionState" : "manual",

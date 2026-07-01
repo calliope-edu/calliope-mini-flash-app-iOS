@@ -13,7 +13,8 @@ struct EditorTileConfig {
     let iconName: String
 }
 
-struct ProgramTileConfig {
+struct ProgramTileConfig: Identifiable{
+    let id = UUID()
     let name: String
     let lastUsed: Date
     let hexFile: HexFile
@@ -25,6 +26,8 @@ protocol EditorsAndProgramsViewModelProtocol {
 
     func openEditor(editor: EditorTileConfig)
     func downloadProgram(program: ProgramTileConfig)
+    func renameProgram(program: ProgramTileConfig)
+    func deleteProgram(program: ProgramTileConfig)
     func uploadDefaultV3Program()
     func uploadDefaultV1And2Program()
     func scanQRCode()
@@ -36,6 +39,9 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
     let uploadDownloadableProgram: (_ program: DownloadableHexFile) -> Void
     let openQRCodeView: () -> Void
     let openFileDialog: () -> Void
+    let uploadHexFile: (_ program: HexFile) -> Void
+    let renameHexFile: (_ program: HexFile) -> Void
+    let deleteHexFile: (_ program: HexFile) -> Void
 
     @Published var editors: [EditorTileConfig] = [
         EditorTileConfig(name: "Makecode", iconName: "editors_makecode"),
@@ -62,12 +68,18 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
         openEditor: @escaping (_ editor: EditorTileConfig) -> Void,
         uploadDownloadableProgram: @escaping (_ program: DownloadableHexFile) -> Void,
         openQRCodeView: @escaping () -> Void,
-        openFileDialog: @escaping () -> Void
+        openFileDialog: @escaping () -> Void,
+        uploadHexFile: @escaping (_ program: HexFile) -> Void,
+        renameHexFile: @escaping (_ program: HexFile) -> Void,
+        deleteHexFile: @escaping (_ program: HexFile) -> Void
     ) {
         self.openEditor = openEditor
         self.uploadDownloadableProgram = uploadDownloadableProgram
         self.openQRCodeView = openQRCodeView
         self.openFileDialog = openFileDialog
+        self.uploadHexFile = uploadHexFile
+        self.renameHexFile = renameHexFile
+        self.deleteHexFile = deleteHexFile
 
         loadPrograms()
         programSubscription = NotificationCenter.default.addObserver(
@@ -77,6 +89,7 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
             using: { [weak self] (_) in
                 DispatchQueue.main.async {
                     self!.loadPrograms()
+                    print(self!.programs.count)
                 }
             }
         )
@@ -88,7 +101,15 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
     }
 
     func downloadProgram(program: ProgramTileConfig) {
-        print("Trying to open program \(program.name)")
+        uploadHexFile(program.hexFile)
+    }
+    
+    func renameProgram(program: ProgramTileConfig) {
+        renameHexFile(program.hexFile)
+    }
+    
+    func deleteProgram(program: ProgramTileConfig) {
+        deleteHexFile(program.hexFile)
     }
 
     func uploadDefaultV3Program() {
@@ -144,6 +165,14 @@ class PreviewEditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, O
 
     func downloadProgram(program: ProgramTileConfig) {
         print("Trying to open program \(program.name)")
+    }
+    
+    func renameProgram(program: ProgramTileConfig) {
+        print("Trying to rename program \(program.name)")
+    }
+    
+    func deleteProgram(program: ProgramTileConfig) {
+        print("Trying to delete program \(program.name)")
     }
 
     func uploadDefaultV3Program() {

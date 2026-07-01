@@ -97,13 +97,12 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
 
     var programsTile: some View {
         VStack(alignment: .leading) {
-            Text("A long press takes you to the option of transfering, sharing and deleting your programs stored in the Calliope mini folder.")
+            Text("Select a program to transfer, share, rename or delete it.")
                 .fontWeight(.bold)
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 250))], spacing: 40) {
-                ForEach(0..<viewModel.programs.count) { i in
-                    ProgramTile(config: viewModel.programs[i]).tiled(color: Color.calliopeGray).onTapGesture {
-                        viewModel.downloadProgram(program: viewModel.programs[i])
-                    }
+                ForEach(viewModel.programs) { config in
+                    ProgramTile(config: config, editorsAndProgramsViewModel: viewModel)
+                        .tiled(color: Color.calliopeGray)
                 }
             }
         }
@@ -149,18 +148,32 @@ struct TwoColumnLayout<Content: View>: View {
     }
 }
 
-struct ProgramTile: View {
+struct ProgramTile<viewModelType: EditorsAndProgramsViewModelProtocol & ObservableObject>: View {
     let config: ProgramTileConfig
+    let editorsAndProgramsViewModel: viewModelType
+    @State var showMenu = false
 
     var body: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                Text(config.name).foregroundStyle(Color.white)
-                Text(config.lastUsed.formatted()).foregroundStyle(Color.white)
-            }
-            Spacer()
-            Image("button_icon_upload").resizable().scaledToFit().frame(maxWidth: 30)
-        }.frame(maxWidth: 250)
+        Button(action: { showMenu = true }) {
+            HStack {
+                VStack(alignment: .leading) {
+                    Text(config.name).foregroundStyle(Color.white)
+                    Text(config.lastUsed.formatted()).foregroundStyle(Color.white)
+                }
+                Spacer()
+                Image("button_icon_upload").resizable().scaledToFit().frame(maxWidth: 30)
+            }.frame(maxWidth: 250)
+        }
+        .confirmationDialog(
+            "",
+            isPresented: $showMenu,
+            titleVisibility: .visible
+        ) {
+            Button("Transfer", systemImage: "arrow.left.arrow.right") { editorsAndProgramsViewModel.downloadProgram(program: config) }
+            ShareLink("Share", item: config.hexFile.url)
+            Button("Rename", systemImage: "rectangle.and.pencil.and.ellipsis") { editorsAndProgramsViewModel.renameProgram(program: config) }
+            Button("Delete", systemImage: "trash", role: .destructive) { editorsAndProgramsViewModel.deleteProgram(program: config) }
+        }
     }
 }
 
