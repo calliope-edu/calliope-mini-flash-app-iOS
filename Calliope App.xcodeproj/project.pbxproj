@@ -119,6 +119,8 @@
 		60818EA62FEEB46C0053893F /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 60818EA52FEEB46C0053893F /* InfoPlist.xcstrings */; };
 		60818EB02FEEB46C0053893F /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 60818EAF2FEEB46C0053893F /* Localizable.xcstrings */; };
 		60818EB22FEEDA120053893F /* MasonryLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818EB12FEEDA120053893F /* MasonryLayout.swift */; };
+		60818EB42FF5388A0053893F /* CalliopeMiniBlocksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818EB32FF5388A0053893F /* CalliopeMiniBlocksView.swift */; };
+		60818EB62FF540600053893F /* AdaptiveColumnLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818EB52FF5405E0053893F /* AdaptiveColumnLayout.swift */; };
 		608CE91C2F89544D004EACA7 /* NewsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608CE91B2F89544D004EACA7 /* NewsCollectionViewController.swift */; };
 		608CE91E2F8954B8004EACA7 /* NewsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608CE91D2F8954B8004EACA7 /* NewsCollectionViewCell.swift */; };
 		6094AC582E20F2410066D07A /* WebLogHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6094AC572E20F2380066D07A /* WebLogHandler.swift */; };
@@ -297,6 +299,8 @@
 		60818EAD2FEEB46C0053893F /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/HomeScreen.xcstrings; sourceTree = "<group>"; };
 		60818EAF2FEEB46C0053893F /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		60818EB12FEEDA120053893F /* MasonryLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasonryLayout.swift; sourceTree = "<group>"; };
+		60818EB32FF5388A0053893F /* CalliopeMiniBlocksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeMiniBlocksView.swift; sourceTree = "<group>"; };
+		60818EB52FF5405E0053893F /* AdaptiveColumnLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveColumnLayout.swift; sourceTree = "<group>"; };
 		608CE91B2F89544D004EACA7 /* NewsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewController.swift; sourceTree = "<group>"; };
 		608CE91D2F8954B8004EACA7 /* NewsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewCell.swift; sourceTree = "<group>"; };
 		6094AC572E20F2380066D07A /* WebLogHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLogHandler.swift; sourceTree = "<group>"; };
@@ -383,6 +387,7 @@
 		2F1BD9982674D910006A47F2 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				60818EB52FF5405E0053893F /* AdaptiveColumnLayout.swift */,
 				2F1BD9942674D48C006A47F2 /* AutoHeightCollectionViewFlowLayout.swift */,
 				2F1BD9962674D804006A47F2 /* AutoHeightCollectionViewCell.swift */,
 				6042149E2F646DD30060064F /* TilePageLayout.swift */,
@@ -712,6 +717,7 @@
 			children = (
 				609F74C82BC587A600FE35E2 /* CalliopeBlocks.storyboard */,
 				6055CDB52BBEE1E50007F6B0 /* CalliopeBlocksStartViewController.swift */,
+				60818EB32FF5388A0053893F /* CalliopeMiniBlocksView.swift */,
 			);
 			path = CalliopeBlocks;
 			sourceTree = "<group>";
@@ -1127,6 +1133,7 @@
 				2F61458F22BF761F001C2734 /* MatrixConnectionViewController.swift in Sources */,
 				2F61459822BF761F001C2734 /* StreamReader.swift in Sources */,
 				2F61457722BF761F001C2734 /* Styles.swift in Sources */,
+				60818EB42FF5388A0053893F /* CalliopeMiniBlocksView.swift in Sources */,
 				60316BF82B01FEC300130C0D /* BLECalliope.swift in Sources */,
 				2F61458722BF761F001C2734 /* Extension_Data.swift in Sources */,
 				2F61459022BF761F001C2734 /* MainContainerViewController.swift in Sources */,
@@ -1185,6 +1192,7 @@
 				2F61458A22BF761F001C2734 /* CollapseButtonProtocol.swift in Sources */,
 				609D9BD42B67A15500F2ECAE /* USBCalliope.swift in Sources */,
 				60127F712FD00999000A1995 /* WebView.swift in Sources */,
+				60818EB62FF540600053893F /* AdaptiveColumnLayout.swift in Sources */,
 				60C627FA2FAE4BF100D23A43 /* GroupView.swift in Sources */,
 				2F5E8F0426C9787400CE03CB /* ArcadeStartViewController.swift in Sources */,
 				60030B9C2DC8B2E200397E69 /* Date.swift in Sources */,

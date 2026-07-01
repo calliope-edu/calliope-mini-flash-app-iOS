@@ -17,11 +17,11 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
         GeometryReader { geo in
             ScrollView {
                 if geo.size.width > 1000 {
-                    TwoColumnLayout {
+                    MasonryLayout(columns: 2) {
                         items
                     }
                 } else {
-                    OneColumnLayout {
+                    MasonryLayout(columns: 1) {
                         items
                     }
                 }
@@ -113,7 +113,7 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
             action()
         } label: {
             HStack {
-                Text(LocalizedStringKey(label)) // need the LocalizedStringKey, so it is translated to German
+                Text(LocalizedStringKey(label))  // need the LocalizedStringKey, so it is translated to German
                 Spacer()
                 (isSystemImage ? Image(systemName: iconName) : Image(iconName))
                     .resizable().scaledToFit().frame(width: 30, height: 30)
@@ -124,26 +124,6 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
             .foregroundColor(.white)
             .cornerRadius(12)
 
-        }
-    }
-}
-
-struct OneColumnLayout<Content: View>: View {
-    @ViewBuilder let content: Content
-
-    var body: some View {
-        MasonryLayout(columns: 1) {
-            content
-        }
-    }
-}
-
-struct TwoColumnLayout<Content: View>: View {
-    @ViewBuilder let content: Content
-
-    var body: some View {
-        MasonryLayout(columns: 2) {
-            content
         }
     }
 }
