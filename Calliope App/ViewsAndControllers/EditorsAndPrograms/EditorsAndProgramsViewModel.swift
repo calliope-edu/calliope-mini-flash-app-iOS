@@ -33,6 +33,7 @@ protocol EditorsAndProgramsViewModelProtocol {
 class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, ObservableObject {
     let openEditor: (_ editor: EditorTileConfig) -> Void
     let uploadDownloadableProgram: (_ program: DownloadableHexFile) -> Void
+    let openQRCodeView: () -> Void
 
     @Published var editors: [EditorTileConfig] = [
         EditorTileConfig(name: "Makecode", iconName: "editors_makecode"),
@@ -47,9 +48,14 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
         ProgramTileConfig(name: "Test 2", lastUsed: Date.now.addingTimeInterval(100)),
     ]
 
-    init(openEditor: @escaping (_ editor: EditorTileConfig) -> Void, uploadDownloadableProgram: @escaping (_ program: DownloadableHexFile) -> Void) {
+    init(
+        openEditor: @escaping (_ editor: EditorTileConfig) -> Void,
+        uploadDownloadableProgram: @escaping (_ program: DownloadableHexFile) -> Void,
+        openQRCodeView: @escaping () -> Void
+    ) {
         self.openEditor = openEditor
         self.uploadDownloadableProgram = uploadDownloadableProgram
+        self.openQRCodeView = openQRCodeView
     }
 
     func openEditor(editor: EditorTileConfig) {
@@ -61,17 +67,23 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
     }
 
     func uploadDefaultV3Program() {
-        let program = DefaultProgram(programName: NSLocalizedString("Calliope mini V3", comment: ""), url: UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV3Url.rawValue)!)
+        let program = DefaultProgram(
+            programName: NSLocalizedString("Calliope mini V3", comment: ""),
+            url: UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV3Url.rawValue)!
+        )
         uploadDownloadableProgram(program)
     }
 
     func uploadDefaultV1And2Program() {
-        let program = DefaultProgram(programName: NSLocalizedString("Calliope mini V1 + 2", comment: ""), url: UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV1AndV2Url.rawValue)!)
+        let program = DefaultProgram(
+            programName: NSLocalizedString("Calliope mini V1 + 2", comment: ""),
+            url: UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV1AndV2Url.rawValue)!
+        )
         uploadDownloadableProgram(program)
     }
 
     func scanQRCode() {
-        print("Trying to scan QR code")
+        openQRCodeView()
     }
 
     func openFile() {

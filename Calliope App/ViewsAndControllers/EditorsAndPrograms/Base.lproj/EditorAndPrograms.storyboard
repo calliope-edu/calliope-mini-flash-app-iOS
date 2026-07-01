@@ -31,6 +31,7 @@
                         <segue destination="eeY-2x-OZY" kind="show" identifier="openOpenRobertaLab" destinationCreationSelector="initializeOpenRobertaLab:" id="GBr-zl-PmQ"/>
                         <segue destination="ZoJ-h7-jog" kind="show" identifier="openCalliopeMiniBlocks" id="d3x-lF-w8m"/>
                         <segue destination="Egz-LL-7qS" kind="show" identifier="openArcade" id="ql7-Or-S9N"/>
+                        <segue destination="Lev-CK-3Lf" kind="show" identifier="openQRCodeView" id="ebr-Tq-eVd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t5x-PS-nsJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -515,7 +516,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lzo-3g-ITh" customClass="PreviewView" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="118" width="393" height="666"/>
+                                <rect key="frame" x="0.0" y="172" width="393" height="563"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hvq-7y-WCW">
@@ -524,7 +525,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="vrY-jH-Gu4">
-                                <rect key="frame" x="71.666666666666686" y="704" width="250" height="60"/>
+                                <rect key="frame" x="71.666666666666686" y="655" width="250" height="60"/>
                                 <color key="backgroundColor" name="calliope-green"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="DtF-0g-hz0"/>
