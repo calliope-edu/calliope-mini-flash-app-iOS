@@ -148,10 +148,14 @@
       }
     },
     "An introduction to Scratch programming with the Calliope mini Blocks app, instructions and project ideas can be found on the website." : {
-
-    },
-    "Arcade (mit USB)" : {
-      "comment" : "Arcade (USB only)"
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eine Einführung in die Scratch Programmierung mit der Calliope mini Blocks App, Anleitungen und Projektideen findest du auf der Webseite."
+          }
+        }
+      }
     },
     "Arcade-Datei" : {
 
@@ -551,7 +555,14 @@
       }
     },
     "Connect your calliope mini with the iPad." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbinde deinen Calliope mini mit dem iPad."
+          }
+        }
+      }
     },
     "Connecting to USB Calliope mini failed" : {
       "extractionState" : "manual",
@@ -1160,7 +1171,14 @@
       }
     },
     "First transfer the Scratch program to your Calliope mini to run the Scratch programs directly." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Übertrage zuerst das Scratch Startprogramm auf deinen Calliope mini, um die Scratch Programme direkt auszuführen."
+          }
+        }
+      }
     },
     "Flip through the programs by pressing the keys A or B" : {
       "extractionState" : "manual",
@@ -1459,11 +1477,32 @@
         }
       }
     },
-    "Load the Calliope mini Blocks app from the app store and get started!" : {
-
+    "Let's get started!" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los geht’s!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Let's get started!"
+          }
+        }
+      }
     },
-    "Los geht's!" : {
-      "comment" : "Let's go!"
+    "Load the Calliope mini Blocks app from the app store and get started!" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lade die Calliope mini Blocks App aus dem App Store und lege direkt lost!"
+          }
+        }
+      }
     },
     "Magnetometer" : {
       "localizations" : {
@@ -1859,7 +1898,14 @@
       }
     },
     "Program your Calliope mini with Scratch!" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programmiere deinen Calliope mini mit Scratch!"
+          }
+        }
+      }
     },
     "Push the button and follow the instructions for connecting to your Calliope" : {
       "extractionState" : "manual",
@@ -2009,7 +2055,14 @@
       }
     },
     "Scratch is a project of the Scratch Foundation, in collaboration with the Lifelong Kidergarden Group at the MIT Media Lab. It is available for free at https://scratch.mit.edu." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scratch ist ein Projek der Scratch Foundation in Zusammenarbeit mit der Lifelong Kindergarden Group des MIT Media Lab. Es ist kostenlos verfügbar unter https://scratch.mit.edu."
+          }
+        }
+      }
     },
     "seconds" : {
       "localizations" : {
