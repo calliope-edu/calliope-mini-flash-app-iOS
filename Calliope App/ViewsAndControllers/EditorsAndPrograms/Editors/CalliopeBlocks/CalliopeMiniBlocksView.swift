@@ -9,7 +9,9 @@
 import Foundation
 import SwiftUI
 
-struct CalliopeMiniBlocksView: View {
+struct CalliopeMiniBlocksView<viewModelType: CalliopeMiniBlocksViewModelProtocol & ObservableObject>: View {
+    let viewModel: viewModelType
+    
     var body: some View {
         AdaptiveColumnLayout {
             VStack {
@@ -26,9 +28,9 @@ struct CalliopeMiniBlocksView: View {
                     Text("First transfer the Scratch program to your Calliope mini to run the Scratch programs directly.")
                 }
                 HStack {
-                    boxButton(label: "BlocksV2.hex", iconName: "button_icon_upload", action: {})
+                    boxButton(label: "BlocksV2.hex", iconName: "button_icon_upload", action: {viewModel.uploadBlocksV2Program()})
 
-                    boxButton(label: "BlocksV3.hex", iconName: "button_icon_upload", action: {})
+                    boxButton(label: "BlocksV3.hex", iconName: "button_icon_upload", action: {viewModel.uploadBlocksV3Program()})
                 }
                 SizedBox(height: 16)
                 
@@ -36,8 +38,12 @@ struct CalliopeMiniBlocksView: View {
                     Image("num_03_red").resizable().scaledToFit().frame(maxHeight: 35)
                     Text("Load the Calliope mini Blocks app from the app store and get started!")
                 }
-                Image("editors_blocks_rounded").resizable().scaledToFit().frame(maxHeight: 150)
-                Image("app_store_badge").resizable().scaledToFit().frame(maxHeight: 75)
+                Image("editors_blocks_rounded").resizable().scaledToFit().frame(maxHeight: 150).onTapGesture {
+                    viewModel.openLinkToAppStorePage()
+                }
+                Image("app_store_badge").resizable().scaledToFit().frame(maxHeight: 75).onTapGesture {
+                    viewModel.openLinkToAppStorePage()
+                }
             }
         } right: {
             VStack {
@@ -45,7 +51,7 @@ struct CalliopeMiniBlocksView: View {
                 Text(
                     "An introduction to Scratch programming with the Calliope mini Blocks app, instructions and project ideas can be found on the website."
                 ).multilineTextAlignment(.center)
-                boxButton(label: "Let's get started!", iconName: nil, action: {}, backgroundColor: Color.calliopePink)
+                boxButton(label: "Let's get started!", iconName: nil, action: { viewModel.openLinkToCalliopeBlocksGetStatedPage() }, backgroundColor: Color.calliopePink)
                 SizedBox(height: 16)
                 Text(
                     "Scratch is a project of the Scratch Foundation, in collaboration with the Lifelong Kidergarden Group at the MIT Media Lab. It is available for free at https://scratch.mit.edu."
@@ -92,7 +98,7 @@ struct SizedBox: View {
 
 struct CalliopeMiniBlocksView_Previews: PreviewProvider {
     static var previews: some View {
-        CalliopeMiniBlocksView().previewInterfaceOrientation(.landscapeLeft)
-        CalliopeMiniBlocksView().previewInterfaceOrientation(.portrait)
+        CalliopeMiniBlocksView(viewModel: PreviewCalliopeMiniBlocksViewModel()).previewInterfaceOrientation(.landscapeLeft)
+        CalliopeMiniBlocksView(viewModel: PreviewCalliopeMiniBlocksViewModel()).previewInterfaceOrientation(.portrait)
     }
 }

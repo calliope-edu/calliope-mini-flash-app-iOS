@@ -28,9 +28,9 @@
                         <segue destination="eeY-2x-OZY" kind="show" identifier="showMakecode" destinationCreationSelector="initializeMakeCode:" id="1jY-Ev-6Tt"/>
                         <segue destination="eeY-2x-OZY" kind="show" identifier="openMicropython" destinationCreationSelector="initializeMicropython:" id="Ot9-iS-HSE"/>
                         <segue destination="eeY-2x-OZY" kind="show" identifier="openOpenRobertaLab" destinationCreationSelector="initializeOpenRobertaLab:" id="GBr-zl-PmQ"/>
-                        <segue destination="ZoJ-h7-jog" kind="show" identifier="openCalliopeMiniBlocks" id="d3x-lF-w8m"/>
                         <segue destination="Egz-LL-7qS" kind="show" identifier="openArcade" id="ql7-Or-S9N"/>
                         <segue destination="Lev-CK-3Lf" kind="show" identifier="openQRCodeView" id="ebr-Tq-eVd"/>
+                        <segue destination="TAx-Kl-J64" kind="show" identifier="openCalliopeMiniBlocks" id="N2v-sC-0F1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t5x-PS-nsJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -179,9 +179,34 @@
             </objects>
             <point key="canvasLocation" x="1976" y="-106"/>
         </scene>
+        <!--Hosting Controller-->
+        <scene sceneID="7Ly-vF-sP9">
+            <objects>
+                <hostingController id="bXG-WP-mTw" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1bX-IC-ECZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3057" y="1181"/>
+        </scene>
+        <!--Calliope Mini Blocks View Controller-->
+        <scene sceneID="LwN-NU-WaU">
+            <objects>
+                <viewController id="TAx-Kl-J64" customClass="CalliopeMiniBlocksViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <containerView key="view" opaque="NO" contentMode="scaleToFill" id="jlo-6t-c4r">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <connections>
+                            <segue destination="bXG-WP-mTw" kind="embed" destinationCreationSelector="addSwiftUI:" id="yxb-SG-KzY"/>
+                        </connections>
+                    </containerView>
+                    <navigationItem key="navigationItem" id="zhU-O3-B4z"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AbA-yJ-owb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1698" y="1181"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="7ZG-zz-cOm"/>
+        <segue reference="1jY-Ev-6Tt"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="calliope-lilablau"/>
     <resources>

@@ -147,6 +147,9 @@
         }
       }
     },
+    "An introduction to Scratch programming with the Calliope mini Blocks app, instructions and project ideas can be found on the website." : {
+
+    },
     "Arcade (mit USB)" : {
       "comment" : "Arcade (USB only)"
     },
@@ -546,6 +549,9 @@
           }
         }
       }
+    },
+    "Connect your calliope mini with the iPad." : {
+
     },
     "Connecting to USB Calliope mini failed" : {
       "extractionState" : "manual",
@@ -1153,6 +1159,9 @@
         }
       }
     },
+    "First transfer the Scratch program to your Calliope mini to run the Scratch programs directly." : {
+
+    },
     "Flip through the programs by pressing the keys A or B" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1449,6 +1458,9 @@
           }
         }
       }
+    },
+    "Load the Calliope mini Blocks app from the app store and get started!" : {
+
     },
     "Los geht's!" : {
       "comment" : "Let's go!"
@@ -1846,6 +1858,9 @@
         }
       }
     },
+    "Program your Calliope mini with Scratch!" : {
+
+    },
     "Push the button and follow the instructions for connecting to your Calliope" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1992,6 +2007,9 @@
           }
         }
       }
+    },
+    "Scratch is a project of the Scratch Foundation, in collaboration with the Lifelong Kidergarden Group at the MIT Media Lab. It is available for free at https://scratch.mit.edu." : {
+
     },
     "seconds" : {
       "localizations" : {
