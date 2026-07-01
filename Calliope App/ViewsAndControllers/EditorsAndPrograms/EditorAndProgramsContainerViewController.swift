@@ -34,7 +34,7 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
     var bottomInsetKvo: Any?
     
     @IBSegueAction func addSwiftUI(_ coder: NSCoder) -> UIViewController? {
-        return UIHostingController(coder: coder, rootView: EditorsAndProgramsView(viewModel: EditorsAndProgramsViewModel(openEditor: openEditor)))
+        return UIHostingController(coder: coder, rootView: EditorsAndProgramsView(viewModel: EditorsAndProgramsViewModel(openEditor: openEditor, uploadDownloadableProgram: uploadDownloadableProgram)))
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -114,12 +114,12 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
         return CGSize(width: parentSize.width - 62, height: parentSize.height)
     }
     
-    @IBAction func uploadDefaultV3Program(_ sender: Any) {
+    func uploadDefaultV3Program(_ sender: Any) {
         let program = DefaultProgram(programName: NSLocalizedString("Calliope mini V3", comment: ""), url: UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV3Url.rawValue)!)
         FirmwareUpload.showUIForDownloadableProgram(controller: self, program: program)
     }
     
-    @IBAction func uploadDefaultV2And1Program(_sender: Any) {
+    func uploadDefaultV2And1Program(_sender: Any) {
         let program = DefaultProgram(programName: NSLocalizedString("Calliope mini V1 + 2", comment: ""), url: UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV1AndV2Url.rawValue)!)
         FirmwareUpload.showUIForDownloadableProgram(controller: self, program: program)
     }
@@ -167,6 +167,10 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
         default:
             LogNotify.error("Tried to open unkown editor \(editor.name).")
         }
+    }
+    
+    func uploadDownloadableProgram(_ program: DownloadableHexFile) {
+        FirmwareUpload.showUIForDownloadableProgram(controller: self, program: program)
     }
     
     @IBSegueAction func initializeMakeCode(_ coder: NSCoder) -> EditorViewController? {
