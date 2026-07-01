@@ -2620,6 +2620,9 @@
         }
       }
     },
+    "With MakeCode Arcade, you can create games for your Calliope mini and play them with an additional display or even a game console. The files can only be transferred via USB cable." : {
+
+    },
     "Wrong storage location" : {
       "comment" : "Storage location alert",
       "localizations" : {

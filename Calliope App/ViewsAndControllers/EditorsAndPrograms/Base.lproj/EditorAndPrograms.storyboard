@@ -28,9 +28,9 @@
                         <segue destination="eeY-2x-OZY" kind="show" identifier="showMakecode" destinationCreationSelector="initializeMakeCode:" id="1jY-Ev-6Tt"/>
                         <segue destination="eeY-2x-OZY" kind="show" identifier="openMicropython" destinationCreationSelector="initializeMicropython:" id="Ot9-iS-HSE"/>
                         <segue destination="eeY-2x-OZY" kind="show" identifier="openOpenRobertaLab" destinationCreationSelector="initializeOpenRobertaLab:" id="GBr-zl-PmQ"/>
-                        <segue destination="Egz-LL-7qS" kind="show" identifier="openArcade" id="ql7-Or-S9N"/>
                         <segue destination="Lev-CK-3Lf" kind="show" identifier="openQRCodeView" id="ebr-Tq-eVd"/>
                         <segue destination="TAx-Kl-J64" kind="show" identifier="openCalliopeMiniBlocks" id="N2v-sC-0F1"/>
+                        <segue destination="nQQ-Cy-fZq" kind="show" identifier="openArcade" id="Jxv-5b-b1B"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t5x-PS-nsJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -159,7 +159,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZKl-Ra-iSL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2140" y="660"/>
+            <point key="canvasLocation" x="2469" y="385"/>
         </scene>
         <!--Hosting Controller-->
         <scene sceneID="UG6-2J-AGe">
@@ -193,6 +193,31 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AbA-yJ-owb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1473" y="918"/>
+        </scene>
+        <!--Hosting Controller-->
+        <scene sceneID="sge-DG-lYc">
+            <objects>
+                <hostingController id="sOB-9x-6ZW" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bBI-NW-pwJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2321" y="1704"/>
+        </scene>
+        <!--Arcade View Controller-->
+        <scene sceneID="GCE-xr-rVU">
+            <objects>
+                <viewController id="nQQ-Cy-fZq" customClass="ArcadeViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <containerView key="view" opaque="NO" contentMode="scaleToFill" id="dnl-84-yYQ">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <connections>
+                            <segue destination="sOB-9x-6ZW" kind="embed" destinationCreationSelector="addSwiftUI:" id="Bjc-v7-XCn"/>
+                        </connections>
+                    </containerView>
+                    <navigationItem key="navigationItem" id="I6C-2S-IYZ"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="685-67-qdB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2318" y="918"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
