@@ -68,7 +68,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
         return Button {
             action()
         } label: {
-            Text(label)
+            Text(LocalizedStringKey(label))
                 .frame(maxWidth: .infinity)
                 .padding()
                 .background(enabled ? Color.calliopePink : Color.calliopeGray)
