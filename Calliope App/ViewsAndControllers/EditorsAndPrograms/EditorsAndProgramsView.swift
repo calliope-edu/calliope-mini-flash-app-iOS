@@ -75,7 +75,7 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
                 Image("startprogramm1+2").resizable().scaledToFit().frame(maxWidth: 300)
                 Spacer()
             }.padding(.vertical, 16)
-            boxButton(label: "Start program", iconName: "button_icon_upload", action: { viewModel.uploadDefaultV1And2Program() })
+            boxButton(label: "Start Program", iconName: "button_icon_upload", action: { viewModel.uploadDefaultV1And2Program() })
         }
     }
 
@@ -113,7 +113,7 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
             action()
         } label: {
             HStack {
-                Text(label)
+                Text(LocalizedStringKey(label)) // need the LocalizedStringKey, so it is translated to German
                 Spacer()
                 (isSystemImage ? Image(systemName: iconName) : Image(iconName))
                     .resizable().scaledToFit().frame(width: 30, height: 30)

@@ -357,13 +357,27 @@
       }
     },
     "Calliope mini 1+2: Download the original program of the Calliope mini 1 and Calliope mini 2. Connect and transfer the program!" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calliope mini 1+2: Lade hier das Startprogramm für den Calliope mini 1 und Calliope mini 2. Einfach verbinden und Programm übertragen!"
+          }
+        }
+      }
     },
     "Calliope mini 3" : {
 
     },
     "Calliope mini 3: Download the original program of the Calliope mini 3. Connect and transfer the program!" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calliope mini 3: Lade hier das Startprogramm für den Calliope mini 3. Einfach verbinden und Programm übertragen!"
+          }
+        }
+      }
     },
     "Calliope mini Discovery State now: (state)" : {
       "extractionState" : "manual",
@@ -450,6 +464,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Überprüfe deine Internetverbindung oder die Code-Schnipsel-Url in den Einstellungen.\n\nFehlermedlung:\n%@"
+          }
+        }
+      }
+    },
+    "Choose File" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datei auswählen"
           }
         }
       }
@@ -1695,7 +1720,14 @@
       }
     },
     "Open a program in MakeCode using a QR code. Simply scan it and off you go!" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Öffne ein Programm in MakeCode über einen QR-Code. Einfach scannen und los geht’s!"
+          }
+        }
+      }
     },
     "Open Settings" : {
       "comment" : "Open Settings button",
@@ -1942,6 +1974,17 @@
         }
       }
     },
+    "Scan" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scannen"
+          }
+        }
+      }
+    },
     "Schließen" : {
       "localizations" : {
         "en" : {
@@ -1974,7 +2017,14 @@
       }
     },
     "Select a program to transfer, share, rename or delete it." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wähle ein Program aus, um es zu übertragen, teilen, umbenennen oder zu löschen."
+          }
+        }
+      }
     },
     "Select Axis" : {
       "extractionState" : "manual",
@@ -2317,7 +2367,14 @@
       }
     },
     "Transfer program from your iPhone or iPad directly to your Calliope mini or save them in your Calliope mini folder." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Übertrage Programme vom iPhone oder iPad direkt auf deinen Calliope mini oder speichere sie in dem Calliope mini Ordner."
+          }
+        }
+      }
     },
     "Transfering Datalogger Data" : {
       "localizations" : {
@@ -2684,7 +2741,14 @@
       }
     },
     "You can program your Calliope mini with the help of the editors." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mit Hilfe der Editoren kannst du deinen Calliope mini programmieren."
+          }
+        }
+      }
     },
     "You have not selected a Calliope folder as storage location" : {
       "localizations" : {
