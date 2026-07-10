@@ -36,6 +36,8 @@ protocol MatrixConnectionViewModelProtocol: ObservableObject {
     var connectionMenuButtonState: ConnectionMenuButtonState { get }
     var menuExpanded: Bool { get set }
     var connectButtonState: ConnectButtonState { get }
+    var connectionMenuButtonBounceTrigger: Int { get }
+    var connectButtonBounceTrigger: Int { get }
     
     func connect()
     func startUsbConnect()
@@ -61,6 +63,9 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol {
     @Published var connectionMenuButtonState: ConnectionMenuButtonState = .disconnected
     @Published var menuExpanded: Bool = false
     @Published var connectButtonState: ConnectButtonState = .initialized
+    @Published var connectionMenuButtonBounceTrigger: Int = 0
+    @Published var connectButtonBounceTrigger: Int = 0
+
     
     var viewController: UIViewController? // Temporary for the SwiftUI migration
     
@@ -541,6 +546,8 @@ class PreviewMatrixConnectionViewModel: MatrixConnectionViewModelProtocol {
     @Published var connectionMenuButtonState: ConnectionMenuButtonState
     @Published var menuExpanded: Bool = false
     @Published var connectButtonState: ConnectButtonState
+    @Published var connectionMenuButtonBounceTrigger: Int = 0
+    @Published var connectButtonBounceTrigger: Int = 0
     
     init(connectionMenuButtonState: ConnectionMenuButtonState = .disconnected, connectButtonState: ConnectButtonState = .readyToConnect) {
         self.connectionMenuButtonState = connectionMenuButtonState
@@ -549,6 +556,8 @@ class PreviewMatrixConnectionViewModel: MatrixConnectionViewModelProtocol {
     
     func connect() {
         LogNotify.log("Pressed connect")
+        connectionMenuButtonBounceTrigger += 1
+        connectButtonBounceTrigger += 1
     }
     
     func startUsbConnect() {

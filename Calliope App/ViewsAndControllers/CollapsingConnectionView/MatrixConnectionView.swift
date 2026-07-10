@@ -58,15 +58,17 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
         HStack {
             Spacer()
 
-            Button {
-                viewModel.connect()
-            } label: {
-                ZStack {
-                    if connectButtonBackgroundColor != nil {
-                        RoundedRectangle(cornerRadius: 20).fill(connectButtonBackgroundColor!).frame(width: 200, height: 75)
-                    }
-                    connectButtonForegroundImage
-                }.frame(width: 150, height: 100)
+            BouncableView(trigger:  viewModel.connectButtonBounceTrigger) {
+                Button {
+                    viewModel.connect()
+                } label: {
+                    ZStack {
+                        if connectButtonBackgroundColor != nil {
+                            RoundedRectangle(cornerRadius: 20).fill(connectButtonBackgroundColor!).frame(width: 200, height: 75)
+                        }
+                        connectButtonForegroundImage
+                    }.frame(width: 150, height: 100)
+                }
             }
 
             Spacer()
@@ -80,13 +82,38 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
         case .waitingForBluetooth:
             return AnyView(Image("liveviewconnect/bluetooth_disabled").resizable().scaledToFit().frame(height: 65))
         case .searching:
-            return AnyView(animationView(images: ["AnimProgress/0001", "AnimProgress/0002", "AnimProgress/0003", "AnimProgress/0004", "AnimProgress/0005", "AnimProgress/0006", "AnimProgress/0007", "AnimProgress/0008", "AnimProgress/0009", "AnimProgress/0010", "AnimProgress/0011", "AnimProgress/0012", "AnimProgress/0013", "AnimProgress/0014", "AnimProgress/0015", "AnimProgress/0016", "AnimProgress/0017", "AnimProgress/0018", "AnimProgress/0019", "AnimProgress/0020"], frameRate: 5, height: 60))
+            return AnyView(
+                animationView(
+                    images: [
+                        "AnimProgress/0001", "AnimProgress/0002", "AnimProgress/0003", "AnimProgress/0004", "AnimProgress/0005", "AnimProgress/0006",
+                        "AnimProgress/0007", "AnimProgress/0008", "AnimProgress/0009", "AnimProgress/0010", "AnimProgress/0011", "AnimProgress/0012",
+                        "AnimProgress/0013", "AnimProgress/0014", "AnimProgress/0015", "AnimProgress/0016", "AnimProgress/0017", "AnimProgress/0018",
+                        "AnimProgress/0019", "AnimProgress/0020",
+                    ],
+                    frameRate: 5,
+                    height: 60
+                )
+            )
         case .notFoundRetry:
             return AnyView(Image("liveviewconnect/connect_refresh").resizable().scaledToFit().frame(height: 100))
         case .readyToConnect:
             return AnyView(Image("liveviewconnect/connect_0001").resizable().scaledToFit().frame(height: 100))
         case .connecting:
-            return AnyView(animationView(images: ["liveviewconnect/connect_0001", "liveviewconnect/connect_0002", "liveviewconnect/connect_0003", "liveviewconnect/connect_0004", "liveviewconnect/connect_0005", "liveviewconnect/connect_0006", "liveviewconnect/connect_0007", "liveviewconnect/connect_0008", "liveviewconnect/connect_0009", "liveviewconnect/connect_0010", "liveviewconnect/connect_0009", "liveviewconnect/connect_0008", "liveviewconnect/connect_0007", "liveviewconnect/connect_0006", "liveviewconnect/connect_0005", "liveviewconnect/connect_0004", "liveviewconnect/connect_0003", "liveviewconnect/connect_0002", "liveviewconnect/connect_0001"], frameRate: 20, height: 100))
+            return AnyView(
+                animationView(
+                    images: [
+                        "liveviewconnect/connect_0001", "liveviewconnect/connect_0002", "liveviewconnect/connect_0003",
+                        "liveviewconnect/connect_0004", "liveviewconnect/connect_0005", "liveviewconnect/connect_0006",
+                        "liveviewconnect/connect_0007", "liveviewconnect/connect_0008", "liveviewconnect/connect_0009",
+                        "liveviewconnect/connect_0010", "liveviewconnect/connect_0009", "liveviewconnect/connect_0008",
+                        "liveviewconnect/connect_0007", "liveviewconnect/connect_0006", "liveviewconnect/connect_0005",
+                        "liveviewconnect/connect_0004", "liveviewconnect/connect_0003", "liveviewconnect/connect_0002",
+                        "liveviewconnect/connect_0001",
+                    ],
+                    frameRate: 20,
+                    height: 100
+                )
+            )
         case .readyToPlay:
             return AnyView(Image("liveviewconnect/mini_figur").resizable().scaledToFit().frame(height: 100))
         case .wrongProgram:
@@ -126,6 +153,49 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
     }
 }
 
+struct BouncableView<Content: View>: View {
+    let trigger: Int
+    let scale: CGFloat
+    let duration: Double
+    @ViewBuilder let content: () -> Content
+
+    @State private var bouncing = false
+
+    init(
+        trigger: Int,
+        scale: CGFloat = 1.2,
+        duration: Double = 0.3,
+        @ViewBuilder content: @escaping () -> Content
+    ) {
+        self.trigger = trigger
+        self.scale = scale
+        self.duration = duration
+        self.content = content
+    }
+
+    var body: some View {
+        content()
+            .scaleEffect(bouncing ? scale : 1.0)
+            .animation(
+                .easeInOut(duration: duration)
+                    .repeatCount(2, autoreverses: true),
+                value: bouncing
+            )
+            .onChange(of: trigger) { _ in
+                bounce()
+            }
+    }
+
+    private func bounce() {
+        bouncing = false
+
+        // Ensure SwiftUI sees a state transition
+        DispatchQueue.main.async {
+            bouncing = true
+        }
+    }
+}
+
 struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelProtocol>: View {
     @ObservedObject var viewModel: ViewModelType
 
@@ -160,22 +230,25 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
                 )
             }
 
-            Button {
-                withAnimation(.spring()) {
-                    viewModel.menuExpanded.toggle()
+            BouncableView(trigger: viewModel.connectionMenuButtonBounceTrigger) {
+                Button {
+                    withAnimation(.spring()) {
+                        viewModel.menuExpanded.toggle()
+                    }
+                } label: {
+                    if viewModel.menuExpanded {
+                        Image(systemName: "xmark").resizable().scaledToFit().frame(width: 20, height: 20)
+                    } else {
+                        menuButtonImage
+                    }
                 }
-            } label: {
-                if viewModel.menuExpanded {
-                    Image(systemName: "xmark").resizable().scaledToFit().frame(width: 20, height: 20)
-                } else {
-                    menuButtonImage
-                }
+                .padding()
+                .foregroundColor(.white)
+                .frame(width: 60, height: 60)
+                .background(menuButtonColor)
+                .clipShape(Circle())
             }
-            .padding()
-            .foregroundColor(.white)
-            .frame(width: 60, height: 60)
-            .background(menuButtonColor)
-            .clipShape(Circle())
+
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
         .padding()
