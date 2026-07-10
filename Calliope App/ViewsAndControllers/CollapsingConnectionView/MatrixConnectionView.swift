@@ -11,6 +11,7 @@ import SwiftUI
 
 struct MatrixConnectionView: View {
     @State var usbEnabled = false
+    @State private var matrix = Array(repeating: Array(repeating: false, count: 5), count: 5)
 
     var body: some View {
         ExpandablePanel {
@@ -38,7 +39,7 @@ struct MatrixConnectionView: View {
                             .cornerRadius(12)
                     }
                 } else {
-                    MatrixSwiftUIView().frame(maxWidth: 300, maxHeight: 300)
+                    MatrixSwiftUIView(matrix: $matrix).frame(maxWidth: 300, maxHeight: 300)
 
                     HStack {
                         Spacer()
@@ -104,12 +105,17 @@ struct ExpandablePanel<Content: View>: View {
     }
 }
 
+struct MatrixPosition: Hashable {
+    let row: Int
+    let column: Int
+}
+
 // TODO: Rename after the old Views are deleted
 struct MatrixSwiftUIView: View {
-    @State private var buttonStates = Array(repeating: false, count: 25)
+    @Binding var matrix: [[Bool]]
 
     @State private var dragValue: Bool?
-    @State private var visitedCells: Set<Int> = []
+    @State private var visitedCells: Set<MatrixPosition> = []
 
     private let columns = Array(repeating: GridItem(.flexible(), spacing: 8), count: 5)
 
@@ -123,11 +129,9 @@ struct MatrixSwiftUIView: View {
             Grid(horizontalSpacing: spacing, verticalSpacing: spacing) {
                 ForEach(0..<5) { row in
                     GridRow {
-                        ForEach(0..<5) { col in
-                            let index = row * 5 + col
-
+                        ForEach(0..<5) { column in
                             Rectangle()
-                                .fill(buttonStates[index] ? Color.calliopePink : .white)
+                                .fill(matrix[row][column] ? Color.calliopePink : .white)
                                 .aspectRatio(1, contentMode: .fit)
                         }
                     }
@@ -140,7 +144,7 @@ struct MatrixSwiftUIView: View {
             .background(Color.calliopeYellow.brightness(0.05))
     }
 
-    func cellIndex(at point: CGPoint, cellSize: CGFloat) -> Int? {
+    func cellMatrixPosition(at point: CGPoint, cellSize: CGFloat) -> MatrixPosition? {
         let column = Int(point.x / (cellSize + spacing))
         let row = Int(point.y / (cellSize + spacing))
 
@@ -150,14 +154,14 @@ struct MatrixSwiftUIView: View {
             return nil
         }
 
-        return row * 5 + column
+        return MatrixPosition(row: row, column: column)
     }
 
     func dragGesture(cellSize: Double) -> some Gesture {
         return DragGesture(minimumDistance: 0)
             .onChanged { value in
                 guard
-                    let index = cellIndex(
+                    let matrixPosition = cellMatrixPosition(
                         at: value.location,
                         cellSize: cellSize
                     )
@@ -165,13 +169,13 @@ struct MatrixSwiftUIView: View {
 
                 if dragValue == nil {
                     // First touched cell
-                    buttonStates[index].toggle()
-                    dragValue = buttonStates[index]
-                    visitedCells.insert(index)
-                } else if !visitedCells.contains(index) {
+                    matrix[matrixPosition.row][matrixPosition.column].toggle()
+                    dragValue = matrix[matrixPosition.row][matrixPosition.column]
+                    visitedCells.insert(matrixPosition)
+                } else if !visitedCells.contains(matrixPosition) {
                     // New cell while dragging
-                    buttonStates[index] = dragValue!
-                    visitedCells.insert(index)
+                    matrix[matrixPosition.row][matrixPosition.column] = dragValue!
+                    visitedCells.insert(matrixPosition)
                 }
             }
             .onEnded { _ in
