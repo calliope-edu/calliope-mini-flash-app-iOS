@@ -80,17 +80,27 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
         case .waitingForBluetooth:
             return AnyView(Image("liveviewconnect/bluetooth_disabled").resizable().scaledToFit().frame(height: 65))
         case .searching:
-            return AnyView(Image("AnimProgress/0001").resizable().scaledToFit().frame(height: 60))
+            return AnyView(animationView(images: ["AnimProgress/0001", "AnimProgress/0002", "AnimProgress/0003", "AnimProgress/0004", "AnimProgress/0005", "AnimProgress/0006", "AnimProgress/0007", "AnimProgress/0008", "AnimProgress/0009", "AnimProgress/0010", "AnimProgress/0011", "AnimProgress/0012", "AnimProgress/0013", "AnimProgress/0014", "AnimProgress/0015", "AnimProgress/0016", "AnimProgress/0017", "AnimProgress/0018", "AnimProgress/0019", "AnimProgress/0020"], frameRate: 5, height: 60))
         case .notFoundRetry:
             return AnyView(Image("liveviewconnect/connect_refresh").resizable().scaledToFit().frame(height: 100))
         case .readyToConnect:
             return AnyView(Image("liveviewconnect/connect_0001").resizable().scaledToFit().frame(height: 100))
         case .connecting:
-            return AnyView(Image("liveviewconnect/connect_0001").resizable().scaledToFit().frame(height: 100))
+            return AnyView(animationView(images: ["liveviewconnect/connect_0001", "liveviewconnect/connect_0002", "liveviewconnect/connect_0003", "liveviewconnect/connect_0004", "liveviewconnect/connect_0005", "liveviewconnect/connect_0006", "liveviewconnect/connect_0007", "liveviewconnect/connect_0008", "liveviewconnect/connect_0009", "liveviewconnect/connect_0010", "liveviewconnect/connect_0009", "liveviewconnect/connect_0008", "liveviewconnect/connect_0007", "liveviewconnect/connect_0006", "liveviewconnect/connect_0005", "liveviewconnect/connect_0004", "liveviewconnect/connect_0003", "liveviewconnect/connect_0002", "liveviewconnect/connect_0001"], frameRate: 20, height: 100))
         case .readyToPlay:
             return AnyView(Image("liveviewconnect/mini_figur").resizable().scaledToFit().frame(height: 100))
         case .wrongProgram:
             return AnyView(Image("liveviewconnect/connect_failed").resizable().scaledToFit().frame(height: 100))
+        }
+    }
+
+    func animationView(images: [String], frameRate: Double, height: Double) -> some View {
+        TimelineView(.animation) { timeline in
+            let index =
+                Int(timeline.date.timeIntervalSince1970 * frameRate)
+                % images.count
+
+            Image(images[index]).resizable().scaledToFit().frame(height: height)
         }
     }
 
