@@ -48,7 +48,7 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
 
     var bluetoothMenu: some View {
         VStack {
-            MatrixSwiftUIView(viewModel: viewModel).frame(maxWidth: 300, maxHeight: 300)
+            MatrixView(viewModel: viewModel).frame(maxWidth: 300, maxHeight: 300)
 
             connectButton
         }
@@ -221,7 +221,7 @@ struct MatrixPosition: Hashable {
 }
 
 // TODO: Rename after the old Views are deleted
-struct MatrixSwiftUIView<ViewModelType: MatrixConnectionViewModelProtocol>: View {
+struct MatrixView<ViewModelType: MatrixConnectionViewModelProtocol>: View {
     @ObservedObject var viewModel: ViewModelType
 
     @State private var dragValue: Bool?
