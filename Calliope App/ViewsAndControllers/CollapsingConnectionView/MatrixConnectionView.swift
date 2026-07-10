@@ -54,14 +54,63 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
                 Spacer()
 
                 Button {
-                    // ...
+                    viewModel.connect()
                 } label: {
-                    Image("liveviewconnect/connect_refresh")
+                    ZStack (alignment: .top){
+                        if connectButtonBackgroundImage  != nil {
+                            Image(connectButtonBackgroundImage!).resizable().scaledToFit().frame(maxWidth: 300)
+                        }
+                        if connectButtonForegroundImage != nil {
+                            Image(connectButtonForegroundImage!).resizable().scaledToFit().frame(maxWidth: 300)
+                        }
+                    }.frame(maxWidth: 150)
                 }
 
                 Spacer()
             }.frame(maxWidth: 300)
 
+        }
+    }
+    
+    var connectButtonForegroundImage: String? {
+        switch viewModel.connectButtonState {
+        case .initialized:
+           return "liveviewconnect/mini_refresh"
+        case .waitingForBluetooth:
+           return "lifeviewconnect/bluetooth_disabled"
+        case .searching:
+          return "AnimProgress/0001"
+        case .notFoundRetry:
+            return "liveviewconnect/connect_refresh"
+        case .readyToConnect:
+           return "liveviewconnect/connect_0001"
+        case .connecting:
+           return "liveviewconnect/connect_0001"
+        case .readyToPlay:
+           return "liveviewconnect/mini_figur"
+        case .wrongProgram:
+           return "liveviewconnect/connect_failed"
+        }
+    }
+    
+    var connectButtonBackgroundImage: String? {
+        switch viewModel.connectButtonState {
+        case .initialized:
+            return nil
+        case .waitingForBluetooth:
+            return nil
+        case .searching:
+           return nil
+        case .notFoundRetry:
+           return "liveviewconnect/mini_button_red"
+        case .readyToConnect:
+           return "liveviewconnect/mini_button_green"
+        case .connecting:
+           return nil
+        case .readyToPlay:
+           return nil
+        case .wrongProgram:
+           return nil
         }
     }
 }
@@ -99,7 +148,7 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
                         .combined(with: .opacity)
                 )
             }
-
+            
             Button {
                 withAnimation(.spring()) {
                     viewModel.menuExpanded.toggle()
@@ -108,17 +157,50 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
                 if viewModel.menuExpanded {
                     Image(systemName: "xmark").resizable().scaledToFit().frame(width: 20, height: 20)
                 } else {
-                    Image("liveviewconnect/mini_mini")
+                    Image(menuButtonImage)
                 }
             }
             .padding()
             .foregroundColor(.white)
             .frame(width: 60, height: 60)
-            .background(viewModel.menuExpanded ? Color.calliopeYellow : Color.red)
+            .background(menuButtonColor)
             .clipShape(Circle())
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
         .padding()
+    }
+    
+    var menuButtonColor: Color {
+        if viewModel.menuExpanded {
+            return Color.calliopeYellow
+        }
+        switch viewModel.connectionMenuButtonState {
+        case .disabled:
+            return Color.calliopeRed
+        case .disconnected:
+            return Color.calliopeRed
+        case .connecting:
+            return Color.calliopeRed
+        case .connected:
+            return Color.calliopeGreen
+        case .transmitting:
+            return Color.calliopeGreen
+        }
+    }
+    
+    var menuButtonImage: String {
+        switch viewModel.connectionMenuButtonState {
+        case .disabled:
+            return "liveviewconnect/bluetooth_disabled"
+        case .disconnected:
+            return "liveviewconnect/mini_mini"
+        case .connecting:
+            return "liveviewconnect/connect"
+        case .connected:
+            return "liveviewconnect/mini_mini"
+        case .transmitting:
+            return "liveviewconnect/connect" // TODO: Update as soon as we have the corresponding assets
+        }
     }
 }
 
@@ -158,7 +240,7 @@ struct MatrixSwiftUIView: View {
                 dragGesture(cellSize: cellSize)
             )
         }.padding()
-            .background(Color.calliopeYellow.brightness(0.05))
+            .background(Color.calliopeYellow.brightness(0.05)).frame(width: 300, height: 300)
     }
 
     func cellMatrixPosition(at point: CGPoint, cellSize: CGFloat) -> MatrixPosition? {

@@ -25,7 +25,6 @@ public enum ConnectButtonState {
     case notFoundRetry
     case readyToConnect
     case connecting
-    case testingMode
     case readyToPlay
     case wrongProgram
 }
@@ -37,6 +36,8 @@ protocol MatrixConnectionViewModelProtocol: ObservableObject {
     var connectionMenuButtonState: ConnectionMenuButtonState { get }
     var menuExpanded: Bool { get set }
     var connectButtonState: ConnectButtonState { get }
+    
+    func connect()
 }
 
 class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol {
@@ -369,15 +370,15 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol {
         switch calliope.state {
         case .discovered:
             matrixInteractionEnabled = !reconnecting
-            connectButtonState = reconnecting ? .testingMode : .readyToConnect
+            connectButtonState = reconnecting ? .connecting : .readyToConnect // The first was previously testingMode
         case .connected:
             reconnecting = false
             attemptReconnect = false
             matrixInteractionEnabled = false
-            connectButtonState = .testingMode
+            connectButtonState = .connecting // Previously testingMode
         case .evaluateMode:
             matrixInteractionEnabled = false
-            connectButtonState = .testingMode
+            connectButtonState = .connecting // Previously testingMode
         case .usageReady:
             // Verbindung erfolgreich - merken für Fehlerbehandlung
             hasEverConnected = true
@@ -539,4 +540,8 @@ class PreviewMatrixConnectionViewModel: MatrixConnectionViewModelProtocol {
     @Published var connectionMenuButtonState: ConnectionMenuButtonState = .disconnected
     @Published var menuExpanded: Bool = false
     @Published var connectButtonState: ConnectButtonState = .readyToConnect
+    
+    func connect() {
+        LogNotify.log("Pressed connect")
+    }
 }
