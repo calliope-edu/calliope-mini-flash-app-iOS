@@ -11,7 +11,7 @@ import SwiftUI
 
 struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: View {
     @ObservedObject var viewModel: ViewModelType
-    
+
     var body: some View {
         ExpandablePanel(viewModel: viewModel) {
             VStack(alignment: .leading) {
@@ -50,67 +50,68 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
         VStack {
             MatrixSwiftUIView(matrix: $viewModel.matrix).frame(maxWidth: 300, maxHeight: 300)
 
-            HStack {
-                Spacer()
-
-                Button {
-                    viewModel.connect()
-                } label: {
-                    ZStack (alignment: .top){
-                        if connectButtonBackgroundImage  != nil {
-                            Image(connectButtonBackgroundImage!).resizable().scaledToFit().frame(maxWidth: 300)
-                        }
-                        if connectButtonForegroundImage != nil {
-                            Image(connectButtonForegroundImage!).resizable().scaledToFit().frame(maxWidth: 300)
-                        }
-                    }.frame(maxWidth: 150)
-                }
-
-                Spacer()
-            }.frame(maxWidth: 300)
-
+            connectButton
         }
     }
-    
-    var connectButtonForegroundImage: String? {
+
+    var connectButton: some View {
+        HStack {
+            Spacer()
+
+            Button {
+                viewModel.connect()
+            } label: {
+                ZStack {
+                    if connectButtonBackgroundColor != nil {
+                        RoundedRectangle(cornerRadius: 20).fill(connectButtonBackgroundColor!).frame(width: 200, height: 75)
+                    }
+                    connectButtonForegroundImage
+                }.frame(width: 150, height: 100)
+            }
+
+            Spacer()
+        }.frame(maxWidth: 300)
+    }
+
+    var connectButtonForegroundImage: some View {
         switch viewModel.connectButtonState {
         case .initialized:
-           return "liveviewconnect/mini_refresh"
+            return AnyView(Image("liveviewconnect/mini_refresh").resizable().scaledToFit().frame(height: 100))
         case .waitingForBluetooth:
-           return "lifeviewconnect/bluetooth_disabled"
+            return AnyView(Image("liveviewconnect/bluetooth_disabled").resizable().scaledToFit().frame(height: 65))
         case .searching:
-          return "AnimProgress/0001"
+            return AnyView(Image("AnimProgress/0001").resizable().scaledToFit().frame(height: 60))
         case .notFoundRetry:
-            return "liveviewconnect/connect_refresh"
+            return AnyView(Image("liveviewconnect/connect_refresh").resizable().scaledToFit().frame(height: 100))
         case .readyToConnect:
-           return "liveviewconnect/connect_0001"
+            return AnyView(Image("liveviewconnect/connect_0001").resizable().scaledToFit().frame(height: 100))
         case .connecting:
-           return "liveviewconnect/connect_0001"
+            return AnyView(Image("liveviewconnect/connect_0001").resizable().scaledToFit().frame(height: 100))
         case .readyToPlay:
-           return "liveviewconnect/mini_figur"
+            return AnyView(Image("liveviewconnect/mini_figur").resizable().scaledToFit().frame(height: 100))
         case .wrongProgram:
-           return "liveviewconnect/connect_failed"
+            return AnyView(Image("liveviewconnect/connect_failed").resizable().scaledToFit().frame(height: 100))
         }
     }
-    
-    var connectButtonBackgroundImage: String? {
+
+    var connectButtonBackgroundColor: Color? {
         switch viewModel.connectButtonState {
         case .initialized:
             return nil
         case .waitingForBluetooth:
             return nil
         case .searching:
-           return nil
+            return nil
         case .notFoundRetry:
-           return "liveviewconnect/mini_button_red"
+            return Color.calliopeRed
         case .readyToConnect:
-           return "liveviewconnect/mini_button_green"
+            return Color.calliopeGreen
         case .connecting:
-           return nil
+            return nil
         case .readyToPlay:
-           return nil
+            return nil
         case .wrongProgram:
-           return nil
+            return nil
         }
     }
 }
@@ -148,7 +149,7 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
                         .combined(with: .opacity)
                 )
             }
-            
+
             Button {
                 withAnimation(.spring()) {
                     viewModel.menuExpanded.toggle()
@@ -157,7 +158,7 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
                 if viewModel.menuExpanded {
                     Image(systemName: "xmark").resizable().scaledToFit().frame(width: 20, height: 20)
                 } else {
-                    Image(menuButtonImage)
+                    menuButtonImage
                 }
             }
             .padding()
@@ -169,7 +170,7 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
         .padding()
     }
-    
+
     var menuButtonColor: Color {
         if viewModel.menuExpanded {
             return Color.calliopeYellow
@@ -187,19 +188,19 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
             return Color.calliopeGreen
         }
     }
-    
-    var menuButtonImage: String {
+
+    var menuButtonImage: some View {
         switch viewModel.connectionMenuButtonState {
         case .disabled:
-            return "liveviewconnect/bluetooth_disabled"
+            return AnyView(Image("liveviewconnect/bluetooth_disabled").resizable().scaledToFit().frame(width: 50, height: 50))
         case .disconnected:
-            return "liveviewconnect/mini_mini"
+            return AnyView(Image("liveviewconnect/mini_mini"))
         case .connecting:
-            return "liveviewconnect/connect"
+            return AnyView(Image("liveviewconnect/connect"))
         case .connected:
-            return "liveviewconnect/mini_mini"
+            return AnyView(Image("liveviewconnect/mini_mini"))
         case .transmitting:
-            return "liveviewconnect/connect" // TODO: Update as soon as we have the corresponding assets
+            return AnyView(Image("liveviewconnect/connect"))  // TODO: Update as soon as we have the corresponding assets
         }
     }
 }
@@ -284,10 +285,32 @@ struct MatrixSwiftUIView: View {
     }
 }
 
-struct MatrixConnectionView_Preview: PreviewProvider {
-    static var previews: some View {
-        let viewModel = PreviewMatrixConnectionViewModel()
-        MatrixConnectionView(viewModel: viewModel).previewInterfaceOrientation(.landscapeLeft)
-        MatrixConnectionView(viewModel: viewModel).previewInterfaceOrientation(.portrait)
+#Preview("Whole Page") {
+    MatrixConnectionView(viewModel: PreviewMatrixConnectionViewModel())
+}
+
+#Preview("Menu Button Variants") {
+    ForEach(
+        [
+            ConnectionMenuButtonState.disabled, ConnectionMenuButtonState.disconnected, ConnectionMenuButtonState.connecting,
+            ConnectionMenuButtonState.connected, ConnectionMenuButtonState.transmitting,
+        ],
+        id: \.self
+    ) { connectionMenuButtonState in
+        MatrixConnectionView(viewModel: PreviewMatrixConnectionViewModel(connectionMenuButtonState: connectionMenuButtonState))
+    }
+}
+
+#Preview("Connect Button Variants") {
+    ForEach(
+        [
+            ConnectButtonState.initialized, ConnectButtonState.waitingForBluetooth, ConnectButtonState.searching, ConnectButtonState.notFoundRetry,
+            ConnectButtonState.readyToConnect, ConnectButtonState.connecting, ConnectButtonState.readyToPlay, ConnectButtonState.wrongProgram,
+        ],
+        id: \.self
+    ) { connectButtonState in
+        MatrixConnectionView(viewModel: PreviewMatrixConnectionViewModel(connectButtonState: connectButtonState)).connectButton.background(
+            Color.calliopeYellow
+        )
     }
 }

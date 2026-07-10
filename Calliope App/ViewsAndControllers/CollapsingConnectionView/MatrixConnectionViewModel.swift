@@ -537,9 +537,14 @@ class PreviewMatrixConnectionViewModel: MatrixConnectionViewModelProtocol {
     @Published var matrix = Array(repeating: Array(repeating: false, count: 5), count: 5)
     @Published var isInUsbMode = false
     @Published var matrixInteractionEnabled = true
-    @Published var connectionMenuButtonState: ConnectionMenuButtonState = .disconnected
+    @Published var connectionMenuButtonState: ConnectionMenuButtonState
     @Published var menuExpanded: Bool = false
-    @Published var connectButtonState: ConnectButtonState = .readyToConnect
+    @Published var connectButtonState: ConnectButtonState
+    
+    init(connectionMenuButtonState: ConnectionMenuButtonState = .disconnected, connectButtonState: ConnectButtonState = .readyToConnect) {
+        self.connectionMenuButtonState = connectionMenuButtonState
+        self.connectButtonState = connectButtonState
+    }
     
     func connect() {
         LogNotify.log("Pressed connect")
