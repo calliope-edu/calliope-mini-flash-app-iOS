@@ -9,9 +9,8 @@
 import Foundation
 import SwiftUI
 
-struct MatrixConnectionView: View {
-    @State var usbEnabled = false
-    @State private var matrix = Array(repeating: Array(repeating: false, count: 5), count: 5)
+struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: View {
+    @ObservedObject var viewModel: ViewModelType
 
     var body: some View {
         ExpandablePanel {
@@ -19,42 +18,50 @@ struct MatrixConnectionView: View {
                 HStack {
                     Text("Connect a Calliope mini!")
                         .font(.title)
-
                     Spacer()
-
-                    Rectangle().opacity(0).frame(width: 40, height: 40)
+                    Rectangle().opacity(0).frame(width: 40, height: 40)  // To keep the closing button free
                 }.frame(maxWidth: 300)
 
-                Toggle("Connect with cable", isOn: $usbEnabled).frame(maxWidth: 300).padding(.bottom, 8)
+                Toggle("Connect with cable", isOn: $viewModel.isInUSBMode).frame(maxWidth: 300).padding(.bottom, 8)
 
-                if usbEnabled {
-                    Button {
-
-                    } label: {
-                        Text("Select Calliope mini")  // need the LocalizedStringKey, so it is translated to German
-                            .frame(width: 268)
-                            .padding(16)
-                            .background(Color.calliopeGreen)
-                            .foregroundColor(.white)
-                            .cornerRadius(12)
-                    }
+                if viewModel.isInUSBMode {
+                    selectUSBCalliopeButton
                 } else {
-                    MatrixSwiftUIView(matrix: $matrix).frame(maxWidth: 300, maxHeight: 300)
-
-                    HStack {
-                        Spacer()
-
-                        Button {
-                            // ...
-                        } label: {
-                            Image("liveviewconnect/connect_refresh")
-                        }
-
-                        Spacer()
-                    }.frame(maxWidth: 300)
-
+                    bluetoothMenu
                 }
             }
+        }
+    }
+
+    var selectUSBCalliopeButton: some View {
+        Button {
+
+        } label: {
+            Text("Select Calliope mini")  // need the LocalizedStringKey, so it is translated to German
+                .frame(width: 268)
+                .padding(16)
+                .background(Color.calliopeGreen)
+                .foregroundColor(.white)
+                .cornerRadius(12)
+        }
+    }
+
+    var bluetoothMenu: some View {
+        VStack {
+            MatrixSwiftUIView(matrix: $viewModel.matrix).frame(maxWidth: 300, maxHeight: 300)
+
+            HStack {
+                Spacer()
+
+                Button {
+                    // ...
+                } label: {
+                    Image("liveviewconnect/connect_refresh")
+                }
+
+                Spacer()
+            }.frame(maxWidth: 300)
+
         }
     }
 }
@@ -187,7 +194,8 @@ struct MatrixSwiftUIView: View {
 
 struct MatrixConnectionView_Preview: PreviewProvider {
     static var previews: some View {
-        MatrixConnectionView().previewInterfaceOrientation(.landscapeLeft)
-        MatrixConnectionView().previewInterfaceOrientation(.portrait)
+        let viewModel = PreviewMatrixConnectionViewModel()
+        MatrixConnectionView(viewModel: viewModel).previewInterfaceOrientation(.landscapeLeft)
+        MatrixConnectionView(viewModel: viewModel).previewInterfaceOrientation(.portrait)
     }
 }

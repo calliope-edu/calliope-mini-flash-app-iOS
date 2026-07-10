@@ -136,6 +136,7 @@
 		60BBDB862B6B90C2003AD3CE /* DiscoveredDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BBDB852B6B90C2003AD3CE /* DiscoveredDevice.swift */; };
 		60BBDB882B6BA16F003AD3CE /* DiscoveredUSBDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BBDB872B6BA16F003AD3CE /* DiscoveredUSBDevice.swift */; };
 		60C051DC3000D98800DFA868 /* MatrixConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C051DB3000D98800DFA868 /* MatrixConnectionView.swift */; };
+		60C051DE3000F1A900DFA868 /* MatrixConnectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C051DD3000F1A900DFA868 /* MatrixConnectionViewModel.swift */; };
 		60C627FA2FAE4BF100D23A43 /* GroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C627F92FAE4BF100D23A43 /* GroupView.swift */; };
 		60C628702FC0957600D23A43 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C6286F2FC0957600D23A43 /* Group.swift */; };
 		60C628B22FC0A37D00D23A43 /* GroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C628B12FC0A37D00D23A43 /* GroupViewModel.swift */; };
@@ -317,6 +318,7 @@
 		60BBDB852B6B90C2003AD3CE /* DiscoveredDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredDevice.swift; sourceTree = "<group>"; };
 		60BBDB872B6BA16F003AD3CE /* DiscoveredUSBDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredUSBDevice.swift; sourceTree = "<group>"; };
 		60C051DB3000D98800DFA868 /* MatrixConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixConnectionView.swift; sourceTree = "<group>"; };
+		60C051DD3000F1A900DFA868 /* MatrixConnectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixConnectionViewModel.swift; sourceTree = "<group>"; };
 		60C345D32DA5757400430DA8 /* Calliope AppRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Calliope AppRelease.entitlements"; sourceTree = "<group>"; };
 		60C627F92FAE4BF100D23A43 /* GroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupView.swift; sourceTree = "<group>"; };
 		60C6286F2FC0957600D23A43 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
@@ -524,6 +526,7 @@
 				2F61455322BF761F001C2734 /* CollapseButtonProtocol.swift */,
 				2F61455422BF761F001C2734 /* ConnectionView */,
 				60C051DB3000D98800DFA868 /* MatrixConnectionView.swift */,
+				60C051DD3000F1A900DFA868 /* MatrixConnectionViewModel.swift */,
 			);
 			path = CollapsingConnectionView;
 			sourceTree = "<group>";
@@ -1190,6 +1193,7 @@
 				2F61457A22BF761F001C2734 /* ExtURL.swift in Sources */,
 				60316BFA2B0210CC00130C0D /* CalliopeFactory.swift in Sources */,
 				60D02D7B2BFC864900D3C34A /* ProjectOverviewController.swift in Sources */,
+				60C051DE3000F1A900DFA868 /* MatrixConnectionViewModel.swift in Sources */,
 				2F61458C22BF761F001C2734 /* ConnectionButton.swift in Sources */,
 				2F61457522BF761F001C2734 /* DiscoveredBLEDevice.swift in Sources */,
 				2F61458922BF761F001C2734 /* CollapsingViewControllerProtocol.swift in Sources */,
