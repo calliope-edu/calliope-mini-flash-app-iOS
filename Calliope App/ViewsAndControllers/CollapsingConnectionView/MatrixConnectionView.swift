@@ -48,7 +48,7 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
 
     var bluetoothMenu: some View {
         VStack {
-            MatrixSwiftUIView(matrix: $viewModel.matrix).frame(maxWidth: 300, maxHeight: 300)
+            MatrixSwiftUIView(viewModel: viewModel).frame(maxWidth: 300, maxHeight: 300)
 
             connectButton
         }
@@ -211,8 +211,8 @@ struct MatrixPosition: Hashable {
 }
 
 // TODO: Rename after the old Views are deleted
-struct MatrixSwiftUIView: View {
-    @Binding var matrix: [[Bool]]
+struct MatrixSwiftUIView<ViewModelType: MatrixConnectionViewModelProtocol>: View {
+    @ObservedObject var viewModel: ViewModelType
 
     @State private var dragValue: Bool?
     @State private var visitedCells: Set<MatrixPosition> = []
@@ -231,7 +231,7 @@ struct MatrixSwiftUIView: View {
                     GridRow {
                         ForEach(0..<5) { column in
                             Rectangle()
-                                .fill(matrix[row][column] ? Color.calliopePink : .white)
+                                .fill(viewModel.matrix[row][column] ? Color.calliopePink : .white)
                                 .aspectRatio(1, contentMode: .fit)
                         }
                     }
@@ -260,6 +260,7 @@ struct MatrixSwiftUIView: View {
     func dragGesture(cellSize: Double) -> some Gesture {
         return DragGesture(minimumDistance: 0)
             .onChanged { value in
+                guard viewModel.matrixInteractionEnabled else { return }
                 guard
                     let matrixPosition = cellMatrixPosition(
                         at: value.location,
@@ -269,12 +270,12 @@ struct MatrixSwiftUIView: View {
 
                 if dragValue == nil {
                     // First touched cell
-                    matrix[matrixPosition.row][matrixPosition.column].toggle()
-                    dragValue = matrix[matrixPosition.row][matrixPosition.column]
+                    viewModel.matrix[matrixPosition.row][matrixPosition.column].toggle()
+                    dragValue = viewModel.matrix[matrixPosition.row][matrixPosition.column]
                     visitedCells.insert(matrixPosition)
                 } else if !visitedCells.contains(matrixPosition) {
                     // New cell while dragging
-                    matrix[matrixPosition.row][matrixPosition.column] = dragValue!
+                    viewModel.matrix[matrixPosition.row][matrixPosition.column] = dragValue!
                     visitedCells.insert(matrixPosition)
                 }
             }
