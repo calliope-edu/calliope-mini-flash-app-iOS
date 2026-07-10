@@ -35,7 +35,7 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
 
     var selectUSBCalliopeButton: some View {
         Button {
-
+            viewModel.startUsbConnect()
         } label: {
             Text("Select Calliope mini")  // need the LocalizedStringKey, so it is translated to German
                 .frame(width: 268)

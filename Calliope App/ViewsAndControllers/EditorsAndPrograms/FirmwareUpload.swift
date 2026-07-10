@@ -143,7 +143,7 @@ class FirmwareUpload {
 
                 // Open the file picker after a short delay to allow the UI to update
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    MatrixConnectionViewModel.instance.startUSBconnect()
+                    MatrixConnectionViewModel.instance.startUsbConnect()
                 }
             completion?()
         })

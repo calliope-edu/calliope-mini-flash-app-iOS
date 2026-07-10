@@ -38,6 +38,7 @@ protocol MatrixConnectionViewModelProtocol: ObservableObject {
     var connectButtonState: ConnectButtonState { get }
     
     func connect()
+    func startUsbConnect()
 }
 
 class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol {
@@ -196,7 +197,7 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol {
         }
     }
     
-    func startUSBconnect() {
+    func startUsbConnect() {
         LogNotify.log("Start connection to USB Device")
         if viewController != nil {
             self.connector.initializeConnectionToUsbCalliope(view: viewController!)
@@ -548,5 +549,9 @@ class PreviewMatrixConnectionViewModel: MatrixConnectionViewModelProtocol {
     
     func connect() {
         LogNotify.log("Pressed connect")
+    }
+    
+    func startUsbConnect() {
+        LogNotify.log("Pressed startUsbConnect")
     }
 }
