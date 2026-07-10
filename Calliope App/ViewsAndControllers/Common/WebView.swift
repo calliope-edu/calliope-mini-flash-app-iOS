@@ -19,6 +19,12 @@ struct WebView: UIViewRepresentable {
     }
 
     func updateUIView(_ webView: WKWebView, context: Context) {
+        #if DEBUG
+        if #available(iOS 16.4, *) {
+            webView.isInspectable = true
+            LogNotify.log("Inspection of the webview is enabled in debug mode", level: LogNotify.LEVEL.DEBUG)
+        }
+        #endif
         if url != nil {
             let request = URLRequest(url: url!)
             webView.load(request)

@@ -86,23 +86,26 @@
         <scene sceneID="2sH-gE-h8D">
             <objects>
                 <viewController id="HQI-pA-Fhu" customClass="InfoViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <wkWebView key="view" contentMode="scaleToFill" id="CaC-70-RLe">
+                    <containerView key="view" opaque="NO" contentMode="scaleToFill" id="0P8-bJ-3G6">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <wkWebViewConfiguration key="configuration">
-                            <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
-                            <wkPreferences key="preferences"/>
-                        </wkWebViewConfiguration>
-                    </wkWebView>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <connections>
+                            <segue destination="9lp-Px-EfO" kind="embed" destinationCreationSelector="addSwiftUI:" id="go7-Vw-U3q"/>
+                        </connections>
+                    </containerView>
                     <navigationItem key="navigationItem" id="gBk-wT-Yld"/>
-                    <connections>
-                        <outlet property="webView" destination="CaC-70-RLe" id="DGP-4T-Ydq"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RWc-1g-UJZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1979" y="605"/>
+        </scene>
+        <!--Hosting Controller-->
+        <scene sceneID="zUl-BZ-ual">
+            <objects>
+                <hostingController id="9lp-Px-EfO" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8TJ-YX-1Id" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2738" y="605"/>
         </scene>
     </scenes>
     <color key="tintColor" name="calliope-lilablau"/>

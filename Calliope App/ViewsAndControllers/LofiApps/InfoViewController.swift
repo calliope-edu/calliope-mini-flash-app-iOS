@@ -7,15 +7,16 @@
 //
 
 import Foundation
-import WebKit
+import SwiftUI
 
 class InfoViewController: UIViewController {
-    @IBOutlet var webView: WKWebView!
     public var url: URL!
     
+    @IBSegueAction func addSwiftUI(_ coder: NSCoder) -> UIViewController? {
+        return UIHostingController(coder: coder, rootView: WebView(url: url))
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Apps Info"
-        self.webView.load(URLRequest(url: url))        
     }
 }
