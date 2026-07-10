@@ -47,16 +47,6 @@
             </objects>
             <point key="canvasLocation" x="1214.0625" y="-251.95312499999997"/>
         </scene>
-        <!--WebViewContainerController-->
-        <scene sceneID="iBY-k2-LKC">
-            <objects>
-                <viewControllerPlaceholder storyboardName="WBCore" referencedIdentifier="WebViewContainerController" id="C2p-19-M8z" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="V14-cE-kBI"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="AUi-kr-Q1T" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3262" y="-252"/>
-        </scene>
         <!--Hosting Controller-->
         <scene sceneID="EW4-n1-PNG">
             <objects>
@@ -73,7 +63,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <connections>
-                            <segue destination="C2p-19-M8z" kind="embed" id="YhF-7c-pRF"/>
+                            <segue destination="eP5-T3-tl5" kind="embed" destinationCreationSelector="addSwiftUI:" id="oh7-sD-HqH"/>
                         </connections>
                     </containerView>
                     <navigationItem key="navigationItem" id="l6X-dT-OCp"/>
@@ -106,6 +96,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8TJ-YX-1Id" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2738" y="605"/>
+        </scene>
+        <!--Hosting Controller-->
+        <scene sceneID="aIZ-I2-m0v">
+            <objects>
+                <hostingController id="eP5-T3-tl5" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NRv-aT-ZKe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3455" y="-252"/>
         </scene>
     </scenes>
     <color key="tintColor" name="calliope-lilablau"/>

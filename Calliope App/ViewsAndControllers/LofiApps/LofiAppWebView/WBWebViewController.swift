@@ -47,6 +47,13 @@ class WBWebViewController: UIViewController, WKNavigationDelegate {
         self.webView.configuration.userContentController.add(
             self.wbLogger, name: "logger"
         )
+        
+        #if DEBUG
+        if #available(iOS 16.4, *) {
+            webView.isInspectable = true
+            LogNotify.log("Inspection of the webview is enabled in debug mode", level: LogNotify.LEVEL.DEBUG)
+        }
+        #endif
     }
     
     override func viewWillDisappear(_ animated: Bool) {

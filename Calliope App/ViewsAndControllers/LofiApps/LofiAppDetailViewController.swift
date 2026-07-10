@@ -7,37 +7,20 @@
 //
 
 import Foundation
-
-
 import UIKit
-@preconcurrency import WebKit
+import SwiftUI
 
-class LofiAppDetailViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
+class LofiAppDetailViewController: UIViewController {
     
     public var url: URL!
     public var appTitle: String!
     
-    var WBWebViewContainerController: WBWebViewContainerController {
-        get {
-            return self.children.first(where: {$0 as? WBWebViewContainerController != nil}) as! WBWebViewContainerController
-        }
+    @IBSegueAction func addSwiftUI(_ coder: NSCoder) -> UIViewController? {
+        return UIHostingController(coder: coder, rootView: RepresentableWBWebView(url: url))
     }
-    var webView: WBWebView {
-        get {
-            return self.WBWebViewContainerController.webView
-        }
-    }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = appTitle
-        self.webView.load(URLRequest(url: url))
-        #if DEBUG
-        if #available(iOS 16.4, *) {
-            webView.isInspectable = true
-            LogNotify.log("Inspection of the webview is enabled in debug mode", level: LogNotify.LEVEL.DEBUG)
-        }
-        #endif
-        
     }
 }
