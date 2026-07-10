@@ -417,6 +417,12 @@
     },
     "Calliope mini verbinden!" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calliope mini verbinden!"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -506,7 +512,14 @@
       }
     },
     "Connect a Calliope mini!" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calliope mini verbinden!"
+          }
+        }
+      }
     },
     "Connect to a calliope to finish the tutorial" : {
       "extractionState" : "manual",
@@ -559,7 +572,14 @@
       }
     },
     "Connect with cable" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "USB Verbindung"
+          }
+        }
+      }
     },
     "Connect your calliope mini with the iPad." : {
       "localizations" : {
