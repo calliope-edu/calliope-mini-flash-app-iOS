@@ -73,6 +73,16 @@ struct ExpandablePanel<Content: View>: View {
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
+            if isExpanded {
+                Color.clear
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        withAnimation(.spring()) {
+                            isExpanded = false
+                        }
+                    }
+                    .ignoresSafeArea()
+            }
 
             if isExpanded {
                 VStack {
