@@ -108,23 +108,76 @@ struct ExpandablePanel<Content: View>: View {
 struct MatrixSwiftUIView: View {
     @State private var buttonStates = Array(repeating: false, count: 25)
 
+    @State private var dragValue: Bool?
+    @State private var visitedCells: Set<Int> = []
+
     private let columns = Array(repeating: GridItem(.flexible(), spacing: 8), count: 5)
 
+    let spacing: CGFloat = 8
+
     var body: some View {
-        LazyVGrid(columns: columns, spacing: 8) {
-            ForEach(buttonStates.indices, id: \.self) { index in
-                Button {
-                    buttonStates[index].toggle()
-                } label: {
-                    Rectangle()
-                        .fill(buttonStates[index] ? Color.calliopePink : Color.white)
-                        .aspectRatio(1, contentMode: .fit)  // Makes each button square
+        GeometryReader { geometry in
+            let totalSpacing = spacing * 4
+            let cellSize = (geometry.size.width - totalSpacing) / 5
+
+            Grid(horizontalSpacing: spacing, verticalSpacing: spacing) {
+                ForEach(0..<5) { row in
+                    GridRow {
+                        ForEach(0..<5) { col in
+                            let index = row * 5 + col
+
+                            Rectangle()
+                                .fill(buttonStates[index] ? Color.calliopePink : .white)
+                                .aspectRatio(1, contentMode: .fit)
+                        }
+                    }
                 }
-                .buttonStyle(.plain)
             }
+            .gesture(
+                dragGesture(cellSize: cellSize)
+            )
+        }.padding()
+            .background(Color.calliopeYellow.brightness(0.05))
+    }
+
+    func cellIndex(at point: CGPoint, cellSize: CGFloat) -> Int? {
+        let column = Int(point.x / (cellSize + spacing))
+        let row = Int(point.y / (cellSize + spacing))
+
+        guard row >= 0, row < 5,
+            column >= 0, column < 5
+        else {
+            return nil
         }
-        .padding()
-        .background(Color.calliopeYellow.brightness(0.05))
+
+        return row * 5 + column
+    }
+
+    func dragGesture(cellSize: Double) -> some Gesture {
+        return DragGesture(minimumDistance: 0)
+            .onChanged { value in
+                guard
+                    let index = cellIndex(
+                        at: value.location,
+                        cellSize: cellSize
+                    )
+                else { return }
+
+                if dragValue == nil {
+                    // First touched cell
+                    buttonStates[index].toggle()
+                    dragValue = buttonStates[index]
+                    visitedCells.insert(index)
+                } else if !visitedCells.contains(index) {
+                    // New cell while dragging
+                    buttonStates[index] = dragValue!
+                    visitedCells.insert(index)
+                }
+            }
+            .onEnded { _ in
+                dragValue = nil
+                visitedCells.removeAll()
+            }
     }
 }
 
