@@ -23,7 +23,7 @@ class DataController: NSObject, CLLocationManagerDelegate {
     let locationManager = CLLocationManager()
 
     override init() {
-        guard let connectedCalliope = MatrixConnectionViewController.instance.usageReadyCalliope else {
+        guard let connectedCalliope = MatrixConnectionViewModel.instance.usageReadyCalliope else {
             return
         }
         self.apiCalliope = connectedCalliope as? CalliopeAPI
@@ -34,7 +34,7 @@ class DataController: NSObject, CLLocationManagerDelegate {
     }
 
     func getAvailableSensors() -> [Sensor] {
-        apiCalliope = MatrixConnectionViewController.instance.usageReadyCalliope as? CalliopeAPI
+        apiCalliope = MatrixConnectionViewModel.instance.usageReadyCalliope as? CalliopeAPI
         return apiCalliope?.discoveredOptionalServices.compactMap { key in
             return SensorUtility.serviceSensorMap[key]
         } ?? []

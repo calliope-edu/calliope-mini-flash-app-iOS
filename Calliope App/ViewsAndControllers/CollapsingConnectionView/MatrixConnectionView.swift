@@ -11,9 +11,9 @@ import SwiftUI
 
 struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: View {
     @ObservedObject var viewModel: ViewModelType
-
+    
     var body: some View {
-        ExpandablePanel {
+        ExpandablePanel(viewModel: viewModel) {
             VStack(alignment: .leading) {
                 HStack {
                     Text("Connect a Calliope mini!")
@@ -22,9 +22,9 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
                     Rectangle().opacity(0).frame(width: 40, height: 40)  // To keep the closing button free
                 }.frame(maxWidth: 300)
 
-                Toggle("Connect with cable", isOn: $viewModel.isInUSBMode).frame(maxWidth: 300).padding(.bottom, 8)
+                Toggle("Connect with cable", isOn: $viewModel.isInUsbMode).frame(maxWidth: 300).padding(.bottom, 8)
 
-                if viewModel.isInUSBMode {
+                if viewModel.isInUsbMode {
                     selectUSBCalliopeButton
                 } else {
                     bluetoothMenu
@@ -66,25 +66,25 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
     }
 }
 
-struct ExpandablePanel<Content: View>: View {
-    @State private var isExpanded = false
+struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelProtocol>: View {
+    @ObservedObject var viewModel: ViewModelType
 
     @ViewBuilder var content: () -> Content
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            if isExpanded {
+            if viewModel.menuExpanded {
                 Color.clear
                     .contentShape(Rectangle())
                     .onTapGesture {
                         withAnimation(.spring()) {
-                            isExpanded = false
+                            viewModel.menuExpanded = false
                         }
                     }
                     .ignoresSafeArea()
             }
 
-            if isExpanded {
+            if viewModel.menuExpanded {
                 VStack {
                     content()
                 }
@@ -102,10 +102,10 @@ struct ExpandablePanel<Content: View>: View {
 
             Button {
                 withAnimation(.spring()) {
-                    isExpanded.toggle()
+                    viewModel.menuExpanded.toggle()
                 }
             } label: {
-                if isExpanded {
+                if viewModel.menuExpanded {
                     Image(systemName: "xmark").resizable().scaledToFit().frame(width: 20, height: 20)
                 } else {
                     Image("liveviewconnect/mini_mini")
@@ -114,7 +114,7 @@ struct ExpandablePanel<Content: View>: View {
             .padding()
             .foregroundColor(.white)
             .frame(width: 60, height: 60)
-            .background(isExpanded ? Color.calliopeYellow : Color.red)
+            .background(viewModel.menuExpanded ? Color.calliopeYellow : Color.red)
             .clipShape(Circle())
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)

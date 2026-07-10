@@ -18,11 +18,11 @@ protocol CalliopeMiniBlocksViewModelProtocol {
 
 class CalliopeMiniBlocksViewModel: CalliopeMiniBlocksViewModelProtocol, ObservableObject {
     let uploadDownloadableProgram: (_ program: DownloadableHexFile) -> Void
-    
+
     init(uploadDownloadableProgram: @escaping (_ program: DownloadableHexFile) -> Void) {
         self.uploadDownloadableProgram = uploadDownloadableProgram
     }
-    
+
     func openLinkToAppStorePage() {
         if let url = URL(string: "https://apps.apple.com/de/app/calliope-mini-blocks/id6480199471") {
             UIApplication.shared.open(url)
@@ -37,10 +37,7 @@ class CalliopeMiniBlocksViewModel: CalliopeMiniBlocksViewModelProtocol, Observab
         // 1. Reset the saved bluetooth pattern so the connection button starts blank
         let blankMatrix = String(repeating: "0", count: 25)
         UserDefaults.standard.set("", forKey: SettingsKey.lastMatrix.rawValue)
-        if let connectionVC = MatrixConnectionViewController.instance {
-            connectionVC.matrixView.setMatrixString(pattern: blankMatrix)
-            connectionVC.matrixView.updateBlock()
-        }
+        MatrixConnectionViewModel.instance.setMatrixString(pattern: blankMatrix)
 
         // 2. Open the Calliope mini Blocks app; fall back to the App Store if not installed
         if let appURL = URL(string: calliopeBlocksAppURLScheme),

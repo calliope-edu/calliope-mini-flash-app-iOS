@@ -12,8 +12,6 @@ class MainContainerViewController: UIViewController {
 
     @IBOutlet weak var matrixConnectionView: UIView!
 
-    weak var connectionViewController: MatrixConnectionViewController!
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
@@ -22,37 +20,13 @@ class MainContainerViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.addConnectionViewController()
+        MatrixConnectionViewModel.instance.viewController = self // TODO: Remove after SwiftUI migration
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
         updateTraitOverrides()
-    }
-
-    func addConnectionViewController() {
-        guard connectionViewController == nil else {
-            return
-        }
-
-        let window = (UIApplication.shared.delegate!.window!)!
-
-        DispatchQueue.main.async {
-            let connectionVC = UIStoryboard(name: "ConnectionView", bundle: nil).instantiateInitialViewController() as! MatrixConnectionViewController
-            connectionVC.view.translatesAutoresizingMaskIntoConstraints = false
-            window.addSubview(connectionVC.view)
-            self.addChild(connectionVC)
-            NSLayoutConstraint.activate([
-                                            connectionVC.view.rightAnchor.constraint(equalTo: window.safeAreaLayoutGuide.rightAnchor, constant: -8.0),
-                                            connectionVC.view.topAnchor.constraint(equalTo: window.safeAreaLayoutGuide.topAnchor, constant: 8.0),
-                                            connectionVC.view.leftAnchor.constraint(greaterThanOrEqualTo: window.safeAreaLayoutGuide.leftAnchor, constant: 0.0),
-                                            connectionVC.view.bottomAnchor.constraint(lessThanOrEqualTo: window.safeAreaLayoutGuide.bottomAnchor, constant: 0.0)
-                                        ])
-
-            connectionVC.didMove(toParent: self)
-            self.connectionViewController = connectionVC
-        }
     }
 
     private func updateTraitOverrides() {

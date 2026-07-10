@@ -81,8 +81,7 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        MatrixConnectionViewController.instance?.connectionDescriptionText = NSLocalizedString("Calliope mini verbinden!", comment: "")
-        MatrixConnectionViewController.instance?.calliopeClass = DiscoveredBLEDevice.self
+        MatrixConnectionViewModel.instance.calliopeClass = DiscoveredBLEDevice.self
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -167,7 +166,7 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
 
     func uploadHexFile(program: HexFile) {
         FirmwareUpload.showUploadUI(controller: self, program: program, name: program.name) {
-            MatrixConnectionViewController.instance.connect()
+            MatrixConnectionViewModel.instance.connect()
         }
     }
 

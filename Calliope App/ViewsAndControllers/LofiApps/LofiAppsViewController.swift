@@ -28,8 +28,7 @@ final class LofiAppsViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool)  {
-        MatrixConnectionViewController.instance?.connectionDescriptionText = NSLocalizedString("Calliope mini verbinden!", comment: "")
-        MatrixConnectionViewController.instance?.calliopeClass = DiscoveredBLEDevice.self
+        MatrixConnectionViewModel.instance.calliopeClass = DiscoveredBLEDevice.self
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

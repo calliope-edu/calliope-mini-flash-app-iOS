@@ -14,14 +14,18 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
     @Environment(\.openURL) var openURL
 
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 500))]) {
-                sendDataTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
-                dataLoggerTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
-            }.frame(maxWidth: .infinity)
-            projectsTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
-                .frame(maxWidth: .infinity)
-        }.padding()
+        ZStack {
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 500))]) {
+                    sendDataTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
+                    dataLoggerTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
+                }.frame(maxWidth: .infinity)
+                projectsTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
+                    .frame(maxWidth: .infinity)
+            }.padding()
+
+            MatrixConnectionView(viewModel: MatrixConnectionViewModel.instance)
+        }
     }
 
     var sendDataTile: some View {
@@ -140,10 +144,13 @@ struct SensordataView_Previews: PreviewProvider {
         )
         SensordataView(viewModel: viewModel3Projects).previewInterfaceOrientation(.portrait)
         SensordataView(viewModel: viewModel3Projects).previewInterfaceOrientation(.landscapeLeft)
-        let viewModelManyProjects = PreviewSensordataViewModel(projects: [
-            Project(id: 1, name: "Test 1"), Project(id: 2, name: "Test 2"), Project(id: 1, name: "Test 3"), Project(id: 2, name: "Test 4"),
-            Project(id: 1, name: "Test 5"), Project(id: 2, name: "Test 6"), Project(id: 1, name: "Test 7"), Project(id: 2, name: "Test 8"),
-        ], dataLoggerButtonEnabled: false)
+        let viewModelManyProjects = PreviewSensordataViewModel(
+            projects: [
+                Project(id: 1, name: "Test 1"), Project(id: 2, name: "Test 2"), Project(id: 1, name: "Test 3"), Project(id: 2, name: "Test 4"),
+                Project(id: 1, name: "Test 5"), Project(id: 2, name: "Test 6"), Project(id: 1, name: "Test 7"), Project(id: 2, name: "Test 8"),
+            ],
+            dataLoggerButtonEnabled: false
+        )
         SensordataView(viewModel: viewModelManyProjects).previewInterfaceOrientation(.portrait)
         SensordataView(viewModel: viewModelManyProjects).previewInterfaceOrientation(.landscapeLeft)
 

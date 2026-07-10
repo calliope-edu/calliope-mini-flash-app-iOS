@@ -33,14 +33,14 @@ class SensordataViewController: UIViewController, UIDocumentPickerDelegate {
         LogNotify.debug("Setting up DataLogger ViewModel")
         let dataLoggerViewModel = DataLoggerViewModel(coder: coder)
 
-        if !MatrixConnectionViewController.instance.isInUsbMode,
-            let result = (MatrixConnectionViewController.instance.usageReadyCalliope as? CalliopeAPI)?.currentJob?.result, dataLoggerViewModel != nil
+        if !MatrixConnectionViewModel.instance.isInUsbMode,
+            let result = (MatrixConnectionViewModel.instance.usageReadyCalliope as? CalliopeAPI)?.currentJob?.result, dataLoggerViewModel != nil
         {
             dataLoggerViewModel!.htmlData = result
             return dataLoggerViewModel
         }
 
-        if MatrixConnectionViewController.instance.isInUsbMode, let url = targetUrl, dataLoggerViewModel != nil {
+        if MatrixConnectionViewModel.instance.isInUsbMode, let url = targetUrl, dataLoggerViewModel != nil {
             dataLoggerViewModel!.htmlData = try! url.asData()
             return dataLoggerViewModel
         }
@@ -197,7 +197,7 @@ class SensordataViewController: UIViewController, UIDocumentPickerDelegate {
 
     private lazy var cancelUploadAction: UIAlertAction = {
         UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .destructive) { [weak self] _ in
-            guard let connectedCalliope = (MatrixConnectionViewController.instance.usageReadyCalliope as? CalliopeAPI) else {
+            guard let connectedCalliope = (MatrixConnectionViewModel.instance.usageReadyCalliope as? CalliopeAPI) else {
                 return
             }
             connectedCalliope.cancelUtilityJob()

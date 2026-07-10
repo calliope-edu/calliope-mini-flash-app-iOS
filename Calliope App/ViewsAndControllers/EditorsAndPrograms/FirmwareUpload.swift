@@ -16,7 +16,7 @@ class FirmwareUpload {
             DispatchQueue.main.async {
                 FirmwareUpload.showUploadUI(controller: controller, program: program) {
                     completion?(true)
-                    MatrixConnectionViewController.instance.connect()
+                    MatrixConnectionViewModel.instance.connect()
                 }
             }
         } else {
@@ -76,8 +76,7 @@ class FirmwareUpload {
         if hexTypes.contains(.arcade) {
             // Arcade-Dateien können nur per USB übertragen werden
             // Prüfe zuerst ob bereits eine USB-Verbindung besteht
-            if let matrixVC = MatrixConnectionViewController.instance,
-               matrixVC.isUSBConnected() {
+            if MatrixConnectionViewModel.instance.isUSBConnected() {
                 // USB ist bereits verbunden, fahre mit Upload fort
                 // (Der Code fällt durch zu uploadAlert unten)
             } else {
@@ -90,7 +89,7 @@ class FirmwareUpload {
         let informationLink: String = "https://calliope.cc/programmieren/mobil/ipad#hardware"
 
         let uploader = FirmwareUpload(file: program, controller: controller)
-        let tempCalliope = MatrixConnectionViewController.instance.usageReadyCalliope
+        let tempCalliope = MatrixConnectionViewModel.instance.usageReadyCalliope
 
         controller.present(uploader.alertView, animated: true) {
             do {
@@ -136,21 +135,16 @@ class FirmwareUpload {
             style: .default
         ) { _ in
             // Wechsle in USB-Modus
-            if let matrixVC = MatrixConnectionViewController.instance {
                 // Expand the matrix connection view if it's collapsed
-                if matrixVC.collapseButton.expansionState != .open {
-                    matrixVC.animate(expand: true)
-                }
+                MatrixConnectionViewModel.instance.menuExpanded = true
 
                 // Switch to USB mode (this triggers switchChanged which updates the UI)
-                matrixVC.usbSwitch.isOn = true
-                matrixVC.switchChanged(usbSwitch: matrixVC.usbSwitch)
+                MatrixConnectionViewModel.instance.isInUsbMode = true
 
                 // Open the file picker after a short delay to allow the UI to update
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    matrixVC.startUSBconnect(matrixVC.connectButton as Any)
+                    MatrixConnectionViewModel.instance.startUSBconnect()
                 }
-            }
             completion?()
         })
         
@@ -183,7 +177,7 @@ class FirmwareUpload {
         guard let calliope = calliope else {
             let alertController = UIAlertController(title: NSLocalizedString("Cannot upload", comment: "Übertragung nicht möglich"), message: NSLocalizedString("There is no connected Calliope mini in DFU mode", comment: "Es konnte kein Calliope mini gefunden werden"), preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: nil))
-            MatrixConnectionViewController.instance.animateBounce()
+            MatrixConnectionViewModel.instance.animateBounce()
             return alertController
         }
 
@@ -295,11 +289,11 @@ class FirmwareUpload {
     private var failed: () -> Void = {
     }
 
-    private var calliope = MatrixConnectionViewController.instance.usageReadyCalliope
+    private var calliope = MatrixConnectionViewModel.instance.usageReadyCalliope
 
     func upload(finishedCallback: @escaping () -> Void) throws {
         // Timer deaktiviert - USB-Kopieren blockiert Main-Thread, daher zeigen wir statisch "~15 Sekunden"
-        // if MatrixConnectionViewController.instance.usageReadyCalliope is USBCalliope {
+        // if MatrixConnectionViewModel.instance.usageReadyCalliope is USBCalliope {
         //     startUSBTimer()
         // }
 
@@ -341,23 +335,23 @@ class FirmwareUpload {
         self.failed = {
             downloadCompletion()
             // self.stopUSBTimer() // Timer deaktiviert
-            MatrixConnectionViewController.instance.enableDfuMode(mode: false)
+            MatrixConnectionViewModel.instance.enableDfuMode(mode: false)
         }
         self.finished = {
             downloadCompletion()
             // self.stopUSBTimer() // Timer deaktiviert
             finishedCallback()
-            MatrixConnectionViewController.instance.enableDfuMode(mode: false)
+            MatrixConnectionViewModel.instance.enableDfuMode(mode: false)
         }
 
         do {
-            MatrixConnectionViewController.instance.enableDfuMode(mode: true)
+            MatrixConnectionViewModel.instance.enableDfuMode(mode: true)
             
             // Set up disconnect callback for partial flashing optimization
             if let flashableCalliope = calliope as? FlashableBLECalliope {
                 flashableCalliope.requestDisconnectCallback = { [weak self] in
                     LogNotify.log("[PartialFlash] Disconnect requested - triggering immediate disconnect")
-                    MatrixConnectionViewController.instance.connector.disconnectForReboot()
+                    MatrixConnectionViewModel.instance.connector.disconnectForReboot()
                 }
             }
             

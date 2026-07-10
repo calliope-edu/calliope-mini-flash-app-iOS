@@ -28,6 +28,7 @@
       }
     },
     "1. Programm 5 starten\n2. Schütteln\n3. LED-Muster eingeben" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -504,6 +505,9 @@
         }
       }
     },
+    "Connect a Calliope mini!" : {
+
+    },
     "Connect to a calliope to finish the tutorial" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -553,6 +557,9 @@
           }
         }
       }
+    },
+    "Connect with cable" : {
+
     },
     "Connect your calliope mini with the iPad." : {
       "localizations" : {
@@ -2105,6 +2112,9 @@
           }
         }
       }
+    },
+    "Select Calliope mini" : {
+
     },
     "Select Sensor" : {
       "extractionState" : "manual",

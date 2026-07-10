@@ -75,11 +75,10 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
             containerVC.projectCollectionViewController?.collectionView.layoutIfNeeded()
         }
 
-        MatrixConnectionViewController.instance?.connectionDescriptionText = NSLocalizedString("Calliope mini verbinden!", comment: "")
-        MatrixConnectionViewController.instance?.calliopeClass = DiscoveredBLEDevice.self
+        MatrixConnectionViewModel.instance.calliopeClass = DiscoveredBLEDevice.self
 
-        self.connectedCalliope = MatrixConnectionViewController.instance.usageReadyCalliope
-        self.isUsbMode = MatrixConnectionViewController.instance.isInUsbMode
+        self.connectedCalliope = MatrixConnectionViewModel.instance.usageReadyCalliope
+        self.isUsbMode = MatrixConnectionViewModel.instance.isInUsbMode
         self.loadDataLoggerDataButton.isEnabled =
             (self.connectedCalliope as? BLECalliope)?.discoveredOptionalServices.contains(.microbitUtilityService) ?? false || self.isUsbMode
     }
@@ -255,8 +254,8 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
             using: { [weak self] (_) in
                 DispatchQueue.main.async {
                     LogNotify.log("Received usage ready Notification")
-                    self?.connectedCalliope = MatrixConnectionViewController.instance.usageReadyCalliope
-                    self?.isUsbMode = MatrixConnectionViewController.instance.isInUsbMode
+                    self?.connectedCalliope = MatrixConnectionViewModel.instance.usageReadyCalliope
+                    self?.isUsbMode = MatrixConnectionViewModel.instance.isInUsbMode
                     self?.loadDataLoggerDataButton.isEnabled =
                         (self?.connectedCalliope as? BLECalliope)?.discoveredOptionalServices.contains(.microbitUtilityService) ?? false
                         || self?.isUsbMode ?? false

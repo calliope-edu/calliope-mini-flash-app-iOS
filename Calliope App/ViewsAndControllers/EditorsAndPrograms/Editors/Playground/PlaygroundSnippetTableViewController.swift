@@ -63,7 +63,7 @@ class PlaygroundSnippetTableViewController: UITableViewController, UITableViewDr
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        MatrixConnectionViewController.instance?.calliopeClass = nil
+        MatrixConnectionViewModel.instance.calliopeClass = nil
     }
 
     // MARK: - Table view data source

@@ -109,7 +109,7 @@ final class EditorViewController: UIViewController {
         // Show the tab bar again when leaving the editor
         self.tabBarController?.tabBar.isHidden = false
 
-        MatrixConnectionViewController.instance.restartFromBLEConnectionDrop()
+        MatrixConnectionViewModel.instance.restartFromBLEConnectionDrop()
 
         // Re-enable navigation gestures
         enableNavigationGestures()
@@ -372,7 +372,7 @@ extension EditorViewController: WKDownloadDelegate {
         
         let file = HexFile(url: location, name: location.lastPathComponent, date: Date())
         FirmwareUpload.uploadWithoutConfirmation(controller: self, program: file) {
-            MatrixConnectionViewController.instance.connect()
+            MatrixConnectionViewModel.instance.connect()
             self.clearTemporaryStorage()
         }
     }
@@ -460,7 +460,7 @@ extension EditorViewController {
     private func switchEditorImperatives(_ isScratchEditor: Bool) {
         if (isScratchEditor) {
             LogNotify.log("Switching editor imperatives to handle scratch based editor")
-            MatrixConnectionViewController.instance.dropBLEConnection()
+            MatrixConnectionViewModel.instance.dropBLEConnection()
             self.webview.customUserAgent = nil
             self.webview.configuration.applicationNameForUserAgent = "Scrub"
             return
@@ -469,7 +469,7 @@ extension EditorViewController {
         LogNotify.log("Switching editor imperatives to handle non-scratch based editor")
         self.webview.configuration.applicationNameForUserAgent = nil
         self.webview.customUserAgent = traitCollection.userInterfaceIdiom == .pad ? "Mozilla/5.0 (iPad; CPU OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.1 Mobile/15E148 Safari/604.1" : nil
-        MatrixConnectionViewController.instance.restartFromBLEConnectionDrop()
+        MatrixConnectionViewModel.instance.restartFromBLEConnectionDrop()
     }
 }
 
@@ -486,7 +486,7 @@ extension EditorViewController {
                     return
                 }
                 FirmwareUpload.uploadWithoutConfirmation(controller: self, program: file) {
-                    MatrixConnectionViewController.instance.connect()
+                    MatrixConnectionViewModel.instance.connect()
                 }
             } catch {
                 LogNotify.log(error.localizedDescription)

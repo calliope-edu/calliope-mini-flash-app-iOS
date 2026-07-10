@@ -108,7 +108,7 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
             }
         )
 
-        guard MatrixConnectionViewController.instance.usageReadyCalliope != nil
+        guard MatrixConnectionViewModel.instance.usageReadyCalliope != nil
         else {
             addGroupButtonEnabled = false
             showConnectCalliopeAlert()

@@ -15,12 +15,12 @@ open class WBMessageHandler: NSObject, WKScriptMessageHandler
     init(webView: WBWebView) {
         self.webView = webView
         super.init()
-        disconnectNotificationId = MatrixConnectionViewController.instance.connector.registerDisconnectNotification(onDeviceDisconnect)
+        disconnectNotificationId = MatrixConnectionViewModel.instance.connector.registerDisconnectNotification(onDeviceDisconnect)
     }
     
     func unregisterDisconnectNotification() {
         if let id = disconnectNotificationId {
-            MatrixConnectionViewController.instance.connector.unregisterDisconnectNotification(id: id)
+            MatrixConnectionViewModel.instance.connector.unregisterDisconnectNotification(id: id)
         }
     }
     
@@ -69,10 +69,10 @@ open class WBMessageHandler: NSObject, WKScriptMessageHandler
             triageDeviceRequests(transaction: transaction)
         case .getAvailability:
             // TODO: Find a better measure of wether bluetooth is enabled
-            let bluetoothEnabled = MatrixConnectionViewController.instance.connector.state != .initialized
+            let bluetoothEnabled = MatrixConnectionViewModel.instance.connector.state != .initialized
             transaction.resolveAsSuccess(withObject: bluetoothEnabled)
         case .requestDevice:
-            let connectedCalliope = MatrixConnectionViewController.instance.usageReadyCalliope
+            let connectedCalliope = MatrixConnectionViewModel.instance.usageReadyCalliope
             if(connectedCalliope != nil && connectedCalliope is BLECalliope) {
                 transaction.resolveAsSuccess(withObject: connectedCalliope! as! BLECalliope)
             }
@@ -92,7 +92,7 @@ open class WBMessageHandler: NSObject, WKScriptMessageHandler
             return
         }
         
-        guard let calliope = MatrixConnectionViewController.instance.usageReadyCalliope as? BLECalliope else {
+        guard let calliope = MatrixConnectionViewModel.instance.usageReadyCalliope as? BLECalliope else {
             transaction.resolveAsFailure(withMessage: "There is no bluetooth device connected!")
             LogNotify.log("WB Bluetooth device call although no device was connected", level: LogNotify.LEVEL.ERROR)
             return

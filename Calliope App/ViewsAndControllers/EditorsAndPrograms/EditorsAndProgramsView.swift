@@ -13,20 +13,23 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
     @ObservedObject var viewModel: viewModelType
 
     var body: some View {
-
-        GeometryReader { geo in
-            ScrollView {
-                if geo.size.width > 1000 {
-                    MasonryLayout(columns: 2) {
-                        items
-                    }
-                } else {
-                    MasonryLayout(columns: 1) {
-                        items
+        ZStack {
+            GeometryReader { geo in
+                ScrollView {
+                    if geo.size.width > 1000 {
+                        MasonryLayout(columns: 2) {
+                            items
+                        }
+                    } else {
+                        MasonryLayout(columns: 1) {
+                            items
+                        }
                     }
                 }
+                .padding()
             }
-            .padding()
+            
+            MatrixConnectionView(viewModel: MatrixConnectionViewModel.instance)
         }
     }
 

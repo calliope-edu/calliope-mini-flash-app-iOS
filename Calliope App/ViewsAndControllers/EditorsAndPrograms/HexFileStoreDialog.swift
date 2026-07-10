@@ -81,7 +81,7 @@ enum HexFileStoreDialog {
             let program = DefaultProgram(programName: hexFile.deletingPathExtension().lastPathComponent, url: hexFile.standardizedFileURL.relativeString)
             program.downloadFile = false
             FirmwareUpload.showUploadUI(controller: controller, program: program) {
-                MatrixConnectionViewController.instance.connect()
+                MatrixConnectionViewModel.instance.connect()
             }
         })
         
@@ -110,7 +110,7 @@ enum HexFileStoreDialog {
             let program = DefaultProgram(programName: hexFile.deletingPathExtension().lastPathComponent, url: hexFile.standardizedFileURL.relativeString)
             program.downloadFile = false
             FirmwareUpload.showUploadUI(controller: controller, program: program) {
-                MatrixConnectionViewController.instance.connect()
+                MatrixConnectionViewModel.instance.connect()
             }
         })
         

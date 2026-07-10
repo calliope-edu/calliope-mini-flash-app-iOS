@@ -173,7 +173,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
             state = .usbConnected
         } else if connectingCalliope != nil {
             state = .connecting
-        } else if centralManager.isScanning && MatrixConnectionViewController.instance != nil && !MatrixConnectionViewController.instance.isInUsbMode {
+        } else if centralManager.isScanning && MatrixConnectionViewModel.instance != nil && !MatrixConnectionViewModel.instance.isInUsbMode {
             state = discoveredCalliopes.isEmpty ? .discovering : .discovered
         } else {
             state = discoveredCalliopes.isEmpty ? .initialized : .discoveredAll
@@ -182,7 +182,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
     
     private func attemptReconnect() {
         // Make shure that we want to connect to a calliope right now. Otherwise it connects on the home screen without the ConnectionView even showing.
-        guard MatrixConnectionViewController.instance.calliopeClass != nil else {
+        guard MatrixConnectionViewModel.instance.calliopeClass != nil else {
            return
         }
         LogNotify.log("attempt reconnect")
@@ -223,7 +223,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         //start scan only if central manger already connected to bluetooth system service (=poweredOn)
         //alternatively, this is invoked after the state of the central mananger changed to poweredOn.
         if centralManager.state != .poweredOn {
-            if let instance = MatrixConnectionViewController.instance, !instance.isInUsbMode {
+            if MatrixConnectionViewModel.instance.isInUsbMode {
                 updateQueue.async {
                     self.errorBlock(NSLocalizedString("Activate Bluetooth!", comment: ""))
                 }
@@ -233,7 +233,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
             // When building this line sometimes threw an error that it unexpectedly found a nil value.
             // The reason was that the vc was nil and so it could not unwrap isInUsbMode.
             // This fix assumes that isInUsbMode is false, when the vc is not initialized yet.
-            if let vc = MatrixConnectionViewController.instance, vc.isInUsbMode, let discoveredCalliope = discoveredCalliopes[CalliopeDiscovery.usbCalliopeName] {
+            if MatrixConnectionViewModel.instance.isInUsbMode, let discoveredCalliope = discoveredCalliopes[CalliopeDiscovery.usbCalliopeName] {
                 discoveredCalliopes = [ CalliopeDiscovery.usbCalliopeName : discoveredCalliope ]
             } else {
                 discoveredCalliopes = [:]
@@ -338,7 +338,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         let discoveredCalliope = DiscoveredUSBDevice(url: url!, name: CalliopeDiscovery.usbCalliopeName)
 
         guard let discoveredCalliope = discoveredCalliope else {
-            MatrixConnectionViewController.instance.showFalseLocationAlert()
+            MatrixConnectionViewModel.instance.showFalseLocationAlert()
             state = .initialized
             return
         }
