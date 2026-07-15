@@ -4,8 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -40,29 +38,14 @@
         <scene sceneID="pG3-lK-9uC">
             <objects>
                 <viewController storyboardIdentifier="EditorViewController" title="Editor" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="eeY-2x-OZY" customClass="EditorViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="K81-X6-DtW">
+                    <containerView key="view" opaque="NO" contentMode="scaleToFill" id="hhf-6L-Pjo">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="2LL-HR-2sL">
-                                <rect key="frame" x="176.66666666666666" y="406" width="40" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="6Y8-Pt-Nep"/>
-                                    <constraint firstAttribute="width" constant="40" id="dzr-Np-Ap5"/>
-                                </constraints>
-                            </activityIndicatorView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="GvZ-rq-yxZ"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="2LL-HR-2sL" firstAttribute="centerY" secondItem="K81-X6-DtW" secondAttribute="centerY" id="ipj-mj-fQe"/>
-                            <constraint firstItem="2LL-HR-2sL" firstAttribute="centerX" secondItem="K81-X6-DtW" secondAttribute="centerX" id="oM2-4V-TWs"/>
-                        </constraints>
-                    </view>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <connections>
+                            <segue destination="Go7-ud-LaY" kind="embed" destinationCreationSelector="addSwiftUI:" id="AJI-8D-keb"/>
+                        </connections>
+                    </containerView>
                     <navigationItem key="navigationItem" id="6P8-9a-Aua"/>
-                    <connections>
-                        <outlet property="loadingIndicator" destination="2LL-HR-2sL" id="bkx-83-GY6"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CUU-x4-Hb6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -177,6 +160,14 @@
             </objects>
             <point key="canvasLocation" x="-167" y="1703"/>
         </scene>
+        <!--Hosting Controller-->
+        <scene sceneID="ZzB-yL-4fl">
+            <objects>
+                <hostingController id="Go7-ud-LaY" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rln-DQ-EzM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="665" y="1704"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="oTS-wP-MDo"/>
@@ -187,8 +178,5 @@
         <namedColor name="calliope-lilablau">
             <color red="0.3919999897480011" green="0.46200001239776611" blue="0.99199998378753662" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

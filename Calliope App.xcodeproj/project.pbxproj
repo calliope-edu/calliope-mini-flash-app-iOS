@@ -105,6 +105,7 @@
 		604938BE2E1BAF6C008BCE40 /* DummyModules in Frameworks */ = {isa = PBXBuildFile; productRef = 604938BD2E1BAF6C008BCE40 /* DummyModules */; };
 		604938C02E1BAF6C008BCE40 /* ScratchLinkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 604938BF2E1BAF6C008BCE40 /* ScratchLinkKit */; };
 		6073401E300785C200616062 /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6073401D300785C200616062 /* QRCodeView.swift */; };
+		607340203007C05700616062 /* EditorWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6073401F3007C05700616062 /* EditorWebView.swift */; };
 		60818E7D2FE5A4150053893F /* EditorsAndProgramsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818E7C2FE5A4150053893F /* EditorsAndProgramsView.swift */; };
 		60818E7F2FE5A9C90053893F /* EditorsAndProgramsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818E7E2FE5A9C90053893F /* EditorsAndProgramsViewModel.swift */; };
 		60818EA62FEEB46C0053893F /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 60818EA52FEEB46C0053893F /* InfoPlist.xcstrings */; };
@@ -275,6 +276,7 @@
 		604938842E151BA7008BCE40 /* OperationStatusEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationStatusEnum.swift; sourceTree = "<group>"; };
 		604938B42E1BAF1D008BCE40 /* ScratchLinkKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ScratchLinkKit; sourceTree = "<group>"; };
 		6073401D300785C200616062 /* QRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
+		6073401F3007C05700616062 /* EditorWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorWebView.swift; sourceTree = "<group>"; };
 		60818E7C2FE5A4150053893F /* EditorsAndProgramsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorsAndProgramsView.swift; sourceTree = "<group>"; };
 		60818E7E2FE5A9C90053893F /* EditorsAndProgramsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorsAndProgramsViewModel.swift; sourceTree = "<group>"; };
 		60818EA42FEEB46B0053893F /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/LaunchScreen.xcstrings; sourceTree = "<group>"; };
@@ -614,6 +616,7 @@
 				60818E7E2FE5A9C90053893F /* EditorsAndProgramsViewModel.swift */,
 				60818E7C2FE5A4150053893F /* EditorsAndProgramsView.swift */,
 				6073401D300785C200616062 /* QRCodeView.swift */,
+				6073401F3007C05700616062 /* EditorWebView.swift */,
 			);
 			path = EditorsAndPrograms;
 			sourceTree = "<group>";
@@ -1131,6 +1134,7 @@
 				2F61456F22BF761F001C2734 /* CalliopeDiscovery.swift in Sources */,
 				2F61457822BF761F001C2734 /* ExtString.swift in Sources */,
 				604841D52B1F328A0037A825 /* OnboardingOfflineViewController.swift in Sources */,
+				607340203007C05700616062 /* EditorWebView.swift in Sources */,
 				6073401E300785C200616062 /* QRCodeView.swift in Sources */,
 				60030BA02DC9E77C00397E69 /* Coordinates+Extension.swift in Sources */,
 				2F61459422BF761F001C2734 /* EditorViewController.swift in Sources */,

@@ -1304,6 +1304,7 @@
       }
     },
     "Failed to download session data!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2072,6 +2073,7 @@
       }
     },
     "Program exported" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2083,6 +2085,7 @@
     },
     "Program exported message" : {
       "comment" : "actual message in translation file",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2370,6 +2373,7 @@
     },
     "Session data successfully downloaded!" : {
       "comment" : "Campus Editor",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2507,6 +2511,7 @@
       }
     },
     "The download of the session data was unsuccessful." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3060,6 +3065,7 @@
       }
     },
     "You can find the session data, in the Calliope directory on your device." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

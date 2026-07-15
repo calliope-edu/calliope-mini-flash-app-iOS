@@ -4,8 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -47,7 +45,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UuD-ux-mgZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1864" y="584"/>
-        </scene>/
+        </scene>
         <!--Sensordaten-->
         <scene sceneID="uHp-mq-DKm">
             <objects>
@@ -92,33 +90,26 @@
         <scene sceneID="rlo-SA-83h">
             <objects>
                 <viewController title="Editor" modalPresentationStyle="fullScreen" id="ghf-jY-ggY" customClass="EditorViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Ka7-BE-y4t" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
+                    <containerView key="view" opaque="NO" contentMode="scaleToFill" id="Yos-VM-be7">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="lv9-ll-xf8">
-                                <rect key="frame" x="492" y="663" width="40" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="40" id="8Zc-4H-VUC"/>
-                                    <constraint firstAttribute="height" constant="40" id="LSq-gt-Jva"/>
-                                </constraints>
-                            </activityIndicatorView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="BaU-Ya-lws"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="lv9-ll-xf8" firstAttribute="centerY" secondItem="Ka7-BE-y4t" secondAttribute="centerY" id="4Vt-wQ-Q8e"/>
-                            <constraint firstItem="lv9-ll-xf8" firstAttribute="centerX" secondItem="Ka7-BE-y4t" secondAttribute="centerX" id="ONm-d0-2QR"/>
-                        </constraints>
-                    </view>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <connections>
+                            <segue destination="cG4-04-2zt" kind="embed" destinationCreationSelector="addSwiftUI:" id="Eyq-he-Ra5"/>
+                        </connections>
+                    </containerView>
                     <navigationItem key="navigationItem" id="D0d-6l-9Ju"/>
-                    <connections>
-                        <outlet property="loadingIndicator" destination="lv9-ll-xf8" id="gVG-aR-3kX"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4vR-oi-1ZQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1864" y="-913"/>
+        </scene>
+        <!--Hosting Controller-->
+        <scene sceneID="0EE-Z6-HBs">
+            <objects>
+                <hostingController id="cG4-04-2zt" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zVh-NK-QU0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2674" y="-914"/>
         </scene>
         <!--Hosting Controller-->
         <scene sceneID="ScS-OU-0Gf">
@@ -147,8 +138,5 @@
     </scenes>
     <resources>
         <image name="menubar.rectangle" catalog="system" width="128" height="93"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

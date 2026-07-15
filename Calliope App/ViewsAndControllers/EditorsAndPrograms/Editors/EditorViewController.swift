@@ -1,25 +1,34 @@
 import UIKit
 import WebKit
+import SwiftUI
 
 import ScratchLinkKit
 
 final class EditorViewController: UIViewController {
 
-    var webview: WKWebView!  //webviews are buggy and cannot be placed via interface builder
-    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+//    var webview: WKWebView!  //webviews are buggy and cannot be placed via interface builder
+//    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     var editor: Editor?
-    private var latestDownloadedTargetFile: URL?
-    var documentsPath: URL {
-        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-    }
-    var downloadsPath: URL {
-        FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask)[0]
-    }
+//    private var latestDownloadedTargetFile: URL?
+//    var documentsPath: URL {
+//        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+//    }
+//    var downloadsPath: URL {
+//        FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask)[0]
+//    }
+//    
+//    private let scratchLink = ScratchLink()
+//    
+//    let filenameQuery = "document.querySelector('input#fileNameInput2').value"
     
-    private let scratchLink = ScratchLink()
-    
-    let filenameQuery = "document.querySelector('input#fileNameInput2').value"
+    @IBSegueAction func addSwiftUI(_ coder: NSCoder) -> UIViewController? {
+        guard editor != nil else {
+            LogNotify.error("Editor is nil. This should not happen.")
+            return nil
+        }
+        return UIHostingController(coder: coder, rootView: EditorWebViewRepresentable(editor: editor!))
+    }
     
     init?(coder: NSCoder, editor: Editor) {
         self.editor = editor
@@ -32,7 +41,7 @@ final class EditorViewController: UIViewController {
 
     // MARK: UIViewController
     
-    override func viewDidLoad() {
+    /* override func viewDidLoad() {
         super.viewDidLoad()
 
         guard let editor = editor, let url = editor.url else {
@@ -50,7 +59,7 @@ final class EditorViewController: UIViewController {
         #endif
         
         let configuration = WKWebViewConfiguration()
-        configuration.userContentController = controller
+        configuration.userContentController = controller // TODO: Is this needed?
         configuration.mediaTypesRequiringUserActionForPlayback = .video
 
         // Enable persistent caching for offline support
@@ -97,7 +106,7 @@ final class EditorViewController: UIViewController {
         super.viewWillAppear(animated)
 
         // Hide the tab bar to provide more screen space for the editor
-        self.tabBarController?.tabBar.isHidden = true
+        self.tabBarController?.tabBar.isHidden = true // TODO: Do this in SwiftUI too
 
         // Disable all navigation gestures to prevent interference with web view content
         disableNavigationGestures()
@@ -158,10 +167,10 @@ final class EditorViewController: UIViewController {
                 }
             }
         }
-    }
+    }*/
     
 }
-
+/*
 extension EditorViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -541,3 +550,4 @@ extension EditorViewController {
     }
 
 }
+*/
