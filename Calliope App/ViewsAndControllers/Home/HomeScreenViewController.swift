@@ -11,47 +11,11 @@ import Network
 import SwiftUI
 
 class HomeScreenViewController: UIViewController {
-
-    @IBOutlet weak var homeStackView: UIStackView!
-    
     var network: Network = Network()
-    
-    private let gettingStartedItem = NewsItem(tileItem: TileItem(title: "GETTING STARTED", imageSource: ImageSource.local("teaser_onboarding"), color: Color("calliope-pink"), textColor: .white), url: "https://calliope.cc/programmieren/mobil/ipad")
-    private var newsItems: [NewsItem] = []
-    private var loadedOnlineContent = false
-    private var appsPage: TilePageLayout<NewsItem>? = nil
-    private var tileData: TileData<NewsItem> = TileData(rightItems: [])
     private var selectedTile: NewsItem?
-    
-    func loadNews() {
-        NewsManager.getNews { [weak self] result in
-            switch result {
-            case .success(let news):
-                self?.newsItems = news
-                self?.loadedOnlineContent = true
-            case .failure(_):
-                self?.newsItems = NewsManager.getDefaultNews()
-                self?.loadedOnlineContent = false
-            }
-            DispatchQueue.main.async {
-                self!.tileData.rightItems = self!.newsItems
-            }
-        }
-    }
-    
+
     @IBSegueAction func addSwiftUIView(_ coder: NSCoder) -> UIViewController? {
-        if !loadedOnlineContent {
-            loadNews()
-        }
-        appsPage = TilePageLayout(leftItem: gettingStartedItem, data:tileData, leftItemOnTap: onTileSelected, rightItemsOnTap: onTileSelected)
-        return UIHostingController(coder: coder, rootView: appsPage)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        if !loadedOnlineContent {
-            loadNews()
-        }
-        super.viewDidAppear(animated)
+        return UIHostingController(coder: coder, rootView: HomeScreenView(onTileSelected: onTileSelected, viewModel: HomeScreenViewModel()))
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -85,8 +49,3 @@ class HomeScreenViewController: UIViewController {
     }
 }
 
-struct NewsItem: HasTileItem {
-    let tileItem: TileItem
-    let url: String
-    
-}
