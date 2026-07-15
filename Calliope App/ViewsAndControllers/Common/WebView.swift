@@ -13,6 +13,7 @@ import WebKit
 struct WebView: UIViewRepresentable {
     @State var url: URL?
     @State var html: String?
+    @State var navigationDelegate: WKNavigationDelegate?
 
     func makeUIView(context: Context) -> WKWebView {
         return WKWebView()
@@ -30,6 +31,9 @@ struct WebView: UIViewRepresentable {
             webView.load(request)
         } else if html != nil {
             webView.loadHTMLString(html!, baseURL: nil)
+        }
+        if navigationDelegate != nil {
+            webView.navigationDelegate = navigationDelegate
         }
     }
 }

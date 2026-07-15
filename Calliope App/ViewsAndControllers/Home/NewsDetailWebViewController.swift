@@ -8,55 +8,14 @@
 
 import UIKit
 import WebKit
+import SwiftUI
 
-class NewsDetailWebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
-
-    @IBOutlet weak var webView: WKWebView!
-    var activityIndicator: UIActivityIndicatorView!
+class NewsDetailWebViewController: UIViewController, WKNavigationDelegate {
 
     public var url: URL!
 
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        webView.navigationDelegate = self
-        webView.uiDelegate = self
-
-        webView.load(URLRequest(url: url))
-
-        // add activity indicator
-        activityIndicator = UIActivityIndicatorView()
-        activityIndicator.center = self.view.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.style = UIActivityIndicatorView.Style.medium
-
-        view.addSubview(activityIndicator)
-        showActivityIndicator(show: true)
-    }
-
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        if navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url {
-            UIApplication.shared.open(url)
-            decisionHandler(.cancel)
-        } else {
-            decisionHandler(.allow)
-        }
-    }
-
-    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
-        if let url = navigationAction.request.url {
-            UIApplication.shared.open(url)
-        }
-        return nil
-    }
-
-    func showActivityIndicator(show: Bool) {
-        if show {
-            activityIndicator.startAnimating()
-        } else {
-            activityIndicator.stopAnimating()
-        }
+    @IBSegueAction func addSwiftUI(_ coder: NSCoder) -> UIViewController? {
+        return UIHostingController(coder: coder, rootView: WebView(url: url, navigationDelegate: self))
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
@@ -70,13 +29,5 @@ class NewsDetailWebViewController: UIViewController, WKNavigationDelegate, WKUID
 
             navigationController.setViewControllers(stack, animated: true)
         }
-    }
-
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        showActivityIndicator(show: false)
-    }
-
-    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        showActivityIndicator(show: false)
     }
 }

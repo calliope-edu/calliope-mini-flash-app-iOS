@@ -59,19 +59,15 @@
         <scene sceneID="x7l-4V-qSN">
             <objects>
                 <viewController id="oYP-xn-CRG" customClass="NewsDetailWebViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <wkWebView key="view" contentMode="scaleToFill" id="y9Q-I4-3da">
+                    <containerView key="view" opaque="NO" contentMode="scaleToFill" id="O96-GS-k2I">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <wkWebViewConfiguration key="configuration">
-                            <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
-                            <wkPreferences key="preferences"/>
-                        </wkWebViewConfiguration>
-                    </wkWebView>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <connections>
+                            <segue destination="uBC-3b-3JP" kind="embed" destinationCreationSelector="addSwiftUI:" id="zkP-jN-NBe"/>
+                        </connections>
+                    </containerView>
                     <navigationItem key="navigationItem" id="GBs-s3-xeH"/>
                     <connections>
-                        <outlet property="view" destination="y9Q-I4-3da" id="Cdz-FM-6Sy"/>
-                        <outlet property="webView" destination="y9Q-I4-3da" id="EHU-l8-9yb"/>
                         <segue destination="dQR-js-4sn" kind="show" identifier="showOfflineOnboardingFallback" id="inb-TQ-qkc"/>
                     </connections>
                 </viewController>
@@ -104,9 +100,17 @@
             </objects>
             <point key="canvasLocation" x="2825" y="1463"/>
         </scene>
+        <!--Hosting Controller-->
+        <scene sceneID="Uzn-2O-BzY">
+            <objects>
+                <hostingController id="uBC-3b-3JP" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eDx-b6-BgI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2038" y="1463"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Jz9-oL-Bk6"/>
+        <segue reference="inb-TQ-qkc"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="calliope-lilablau"/>
     <resources>
