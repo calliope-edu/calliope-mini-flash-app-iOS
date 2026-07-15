@@ -7,58 +7,114 @@
 //
 
 import Foundation
+import ScratchLinkKit
 import SwiftUI
 import WebKit
-import ScratchLinkKit
 
 struct EditorWebViewRepresentable: UIViewRepresentable {
     let editor: Editor
-    
+    let present: (_ alert: UIViewController, _ animated: Bool) -> Void
+    let uploadFirmware: (_ program: HexFile) -> Void
+
     func makeUIView(context: Context) -> EditorWebView {
-       return EditorWebView()
+        return EditorWebView(frame: .zero, present: present, uploadFirmware: uploadFirmware)
     }
+
     func updateUIView(_ editorWebView: EditorWebView, context: Context) {
-        guard editor.url != nil else {
-            LogNotify.error("Url of editor is nil. This should not happen.")
-            return
-        }
-        editorWebView.load(url: editor.url!)
+        editorWebView.load(editor: editor)
     }
 }
 
 final class EditorWebView: UIView {
-    let webView = WKWebView(frame: .zero)
+    var webView: WKWebView?
     private let loadingIndicator = UIActivityIndicatorView(style: .large)
+    
+    var editor: Editor?
+    
+    let present: (_ alert: UIViewController, _ animated: Bool) -> Void
+    let uploadFirmware: (_ program: HexFile) -> Void
 
-    override init(frame: CGRect) {
+    private var latestDownloadedTargetFile: URL?
+    var documentsPath: URL {
+        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    }
+    var downloadsPath: URL {
+        FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask)[0]
+    }
+
+    private let scratchLink = ScratchLink()
+
+    let filenameQuery = "document.querySelector('input#fileNameInput2').value"
+
+    init(frame: CGRect, present: @escaping (_ alert: UIViewController, _ animated: Bool) -> Void, uploadFirmware: @escaping (_ program: HexFile) -> Void) {
+        self.present = present
+        self.uploadFirmware = uploadFirmware
         super.init(frame: frame)
-        setupViews()
+        setupLoadingIndicator()
+        webView = setupWebView()
+        scratchLink.setup(webView: webView!)
+        scratchLink.delegate = self
     }
 
     required init?(coder: NSCoder) {
+        self.present = {alert, animated in }
+        self.uploadFirmware = {program in}
         super.init(coder: coder)
-        setupViews()
+        setupLoadingIndicator()
+        webView = setupWebView()
+        scratchLink.setup(webView: webView!)
+        scratchLink.delegate = self
     }
 
-    private func setupViews() {
-        backgroundColor = .systemBackground
-
-        webView.translatesAutoresizingMaskIntoConstraints = false
+    private func setupLoadingIndicator() {
         loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
         loadingIndicator.hidesWhenStopped = true
 
-        addSubview(webView)
         addSubview(loadingIndicator)
 
+        NSLayoutConstraint.activate([
+            loadingIndicator.centerXAnchor.constraint(equalTo: centerXAnchor),
+            loadingIndicator.centerYAnchor.constraint(equalTo: centerYAnchor),
+        ])
+    }
+
+    private func setupWebView() -> WKWebView {
+        backgroundColor = Styles.colorWhite
+
+        let configuration = WKWebViewConfiguration()
+        configuration.mediaTypesRequiringUserActionForPlayback = .video
+        // Enable persistent caching for offline support
+        configuration.websiteDataStore = WKWebsiteDataStore.default()
+
+        let webView = WKWebView(frame: .zero, configuration: configuration)
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        webView.backgroundColor = Styles.colorWhite
+
+        webView.navigationDelegate = self
+        webView.uiDelegate = self
+
+        // Configure scroll view to better handle touches in web content
+        // This helps with selecting items in MakeCode project lists
+        webView.scrollView.delaysContentTouches = false
+        webView.scrollView.canCancelContentTouches = true
+        webView.scrollView.contentInsetAdjustmentBehavior = .never
+
+        #if DEBUG
+            if #available(iOS 16.4, *) {
+                webView.isInspectable = true
+                LogNotify.log("Inspection of the webView is enabled in debug mode", level: LogNotify.LEVEL.DEBUG)
+            }
+        #endif
+
+        insertSubview(webView, at: 0)
         NSLayoutConstraint.activate([
             webView.topAnchor.constraint(equalTo: topAnchor),
             webView.leadingAnchor.constraint(equalTo: leadingAnchor),
             webView.trailingAnchor.constraint(equalTo: trailingAnchor),
             webView.bottomAnchor.constraint(equalTo: bottomAnchor),
-
-            loadingIndicator.centerXAnchor.constraint(equalTo: centerXAnchor),
-            loadingIndicator.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
+
+        return webView
     }
 
     func showLoading() {
@@ -68,74 +124,38 @@ final class EditorWebView: UIView {
     func hideLoading() {
         loadingIndicator.stopAnimating()
     }
-    
-    func load(url: URL) {
-       showLoading()
-       var request = URLRequest(url: url)
-        request.cachePolicy = .useProtocolCachePolicy
-        webView.load(request)
-    }
-}
 
-
-/*struct Testing: UIViewRepresentable {
-    let editor: Editor
-    
-    private let scratchLink = ScratchLink()
-
-    func makeUIView(context: Context) -> WKWebView {
-        let configuration = WKWebViewConfiguration()
-        configuration.mediaTypesRequiringUserActionForPlayback = .video
-
-        // Enable persistent caching for offline support
-        configuration.websiteDataStore = WKWebsiteDataStore.default()
-        
-        let webView = WKWebView(frame: .zero, configuration: configuration)
-        
-        #if DEBUG
-        if #available(iOS 16.4, *) {
-            webView.isInspectable = true
-            LogNotify.log("Inspection of the webview is enabled in debug mode", level: LogNotify.LEVEL.DEBUG)
-        }
-        #endif
-        
-         webView.navigationDelegate = self
-         webView.uiDelegate = self
-        
-        // Configure scroll view to better handle touches in web content
-        // This helps with selecting items in MakeCode project lists
-        webView.scrollView.delaysContentTouches = false
-        webView.scrollView.canCancelContentTouches = true
-        webView.scrollView.contentInsetAdjustmentBehavior = .never
-        
-        scratchLink.setup(webView: webView)
-        scratchLink.delegate = self
-        
-        webView.configuration.applicationNameForUserAgent = editor is BlocksMiniEditor ? "Scrub" : nil
-        webView.customUserAgent = traitCollection.userInterfaceIdiom == .pad && !(editor is BlocksMiniEditor) ? "Mozilla/5.0 (iPad; CPU OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.1 Mobile/15E148 Safari/604.1" : nil
-        
-        return webView
-    }
-
-    func updateUIView(_ webView: WKWebView, context: Context) {
+    func load(editor: Editor) {
         guard editor.url != nil else {
-            LogNotify.error("Empty url of editor -- return")
+            LogNotify.error("Url of editor is nil. This should not happen.")
             return
         }
-        
-        // Use protocol cache policy: respects HTTP cache headers when online,
-        // falls back to cache when offline
+        self.editor = editor
+        guard webView != nil else {
+            LogNotify.error("WebView is nil. This should not happen.")
+            return
+        }
+        showLoading()
+
+        webView!.configuration.applicationNameForUserAgent = editor is BlocksMiniEditor ? "Scrub" : nil
+        webView!.customUserAgent =
+            traitCollection.userInterfaceIdiom == .pad && !(editor is BlocksMiniEditor)
+            ? "Mozilla/5.0 (iPad; CPU OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.1 Mobile/15E148 Safari/604.1"
+            : nil
+
         var request = URLRequest(url: editor.url!)
         request.cachePolicy = .useProtocolCachePolicy
-        webView.load(request)
-
-        
-        
+        webView!.load(request)
     }
 }
 
 extension EditorWebView: WKNavigationDelegate {
+    
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        guard let editor = editor else {
+            return
+        }
+
         LogNotify.log("policy for action \(navigationAction.request.url?.absoluteString.truncate(length: 100) ?? "")")
         
         let request = navigationAction.request
@@ -151,15 +171,20 @@ extension EditorWebView: WKNavigationDelegate {
             }
         } else if editor.isBackNavigation(request) {
             decisionHandler(.cancel)
-            self.navigationController?.popViewController(animated: true)
+//            self.navigationController?.popViewController(animated: true) TODO: Close Editor
         } else if editor.allowNavigation(request) {
             decisionHandler(.allow)
         } else {
             decisionHandler(.cancel)
         }
     }
-    
+
+
     func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        guard let editor = editor else {
+            return nil
+        }
+
         switch editor.getNavigationTargetViewForRequest(navigationAction.request) {
         case .internalWebView:
             return handleInternalWebView(navigationAction, webView)
@@ -169,10 +194,12 @@ extension EditorWebView: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation) {
+        hideLoading()
         handlePossibleEditorChanges()
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        loadingIndicator.stopAnimating()
         LogNotify.log("\(error)")
     }
 
@@ -197,10 +224,11 @@ extension EditorWebView: WKNavigationDelegate {
         }
         return nil
     }
+ 
 }
 
 extension EditorWebView: WKUIDelegate {
-    func webView(
+     func webView(
         _ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo,
         completionHandler: @escaping () -> Void
     ) {
@@ -213,7 +241,7 @@ extension EditorWebView: WKUIDelegate {
                     completionHandler()
                 }))
 
-        present(alertController, animated: true, completion: nil)
+        present(alertController, true)
     }
 
 
@@ -238,9 +266,10 @@ extension EditorWebView: WKUIDelegate {
                     completionHandler(false)
                 }))
 
-        present(alertController, animated: true, completion: nil)
+        present(alertController, true)
     }
-    
+
+
     func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
 
         let alertController = UIAlertController(title: nil, message: prompt, preferredStyle: .alert)
@@ -267,17 +296,18 @@ extension EditorWebView: WKUIDelegate {
                     completionHandler(nil)
                 }))
 
-        present(alertController, animated: true, completion: nil)
+        present(alertController, true)
     }   
 }
 
 extension EditorWebView: WKDownloadDelegate {
+    
     func webView(_ webView: WKWebView, navigationAction: WKNavigationAction, didBecome download: WKDownload) {
         download.delegate = self
     }
     
     func download(_ download: WKDownload, decideDestinationUsing response: URLResponse, suggestedFilename: String, completionHandler: @escaping (URL?) -> Void) {
-        guard editor is MicroPython || editor is CampusEditor else {
+        guard let editor = editor, editor is MicroPython || editor is CampusEditor else {
             return
         }
         
@@ -328,10 +358,8 @@ extension EditorWebView: WKDownloadDelegate {
         }
         
         let file = HexFile(url: location, name: location.lastPathComponent, date: Date())
-        FirmwareUpload.uploadWithoutConfirmation(controller: self, program: file) {
-            MatrixConnectionViewModel.instance.connect()
-            self.clearTemporaryStorage()
-        }
+        uploadFirmware(file)
+        self.clearTemporaryStorage()
     }
     
     private func storeSessionData(for location: URL) {
@@ -371,14 +399,17 @@ extension EditorWebView: WKDownloadDelegate {
         )
         alert.addAction(
             UIAlertAction(title: "OK", style: .cancel) { _ in
-                self.dismiss(animated: true)
+//                self.dismiss(animated: true)
             }
         )
-        self.present(alert, animated: true)
+        present(alert, true)
     }
+
+
 }
 
 extension EditorWebView: ScratchLinkDelegate {
+    
     func canStartSession(type: ScratchLinkKit.SessionType) -> Bool {
         LogNotify.log("Call to 'canStartSession'")
         return true
@@ -391,5 +422,117 @@ extension EditorWebView: ScratchLinkDelegate {
     func didFailStartingSession(type: ScratchLinkKit.SessionType, error: ScratchLinkKit.SessionError) {
         LogNotify.log("Call to 'didFailStartingSession'")
     }
+     
 }
-*/
+
+extension EditorWebView {
+    // MARK: Handle possible editor change (i.e. Scratch Based with own BLE connection)
+    
+    private func handlePossibleEditorChanges() {
+        determineIfScratchBasedEditor() { self.switchEditorImperatives($0)}
+    }
+    
+    
+    private func determineIfScratchBasedEditor(completion: @escaping (Bool) -> Void) {
+        guard webView != nil else {
+            LogNotify.error("WebView is nil. This should not happen.")
+            return
+        }
+        let condition = "document.getElementById('scratch-link-extension-script') != null"
+        
+        webView!.evaluateJavaScript(condition) { (result, error) in
+            let isScratchEditor = result as? Bool ?? false
+            completion(isScratchEditor)
+        }
+    }
+    
+    private func switchEditorImperatives(_ isScratchEditor: Bool) {
+        guard webView != nil else {
+            LogNotify.error("WebView is nil. This should not happen.")
+            return
+        }
+        if (isScratchEditor) {
+            LogNotify.log("Switching editor imperatives to handle scratch based editor")
+            MatrixConnectionViewModel.instance.dropBLEConnection()
+            self.webView!.customUserAgent = nil
+            self.webView!.configuration.applicationNameForUserAgent = "Scrub"
+            return
+        }
+        
+        LogNotify.log("Switching editor imperatives to handle non-scratch based editor")
+        self.webView!.configuration.applicationNameForUserAgent = nil
+        self.webView!.customUserAgent = traitCollection.userInterfaceIdiom == .pad ? "Mozilla/5.0 (iPad; CPU OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.1 Mobile/15E148 Safari/604.1" : nil
+        MatrixConnectionViewModel.instance.restartFromBLEConnectionDrop()
+    }
+}
+
+
+extension EditorWebView {
+    
+    //MARK: uploading
+    
+    private func upload(result download: EditorDownload) {
+        guard webView != nil else {
+            LogNotify.error("WebView is nil. This should not happen.")
+            return
+        }
+        self.webView!.evaluateJavaScript(filenameQuery) { (result, error) in
+            let filename = "\(result ?? "no-project-name")"
+            do {
+                guard let file = try HexFileManager.store(name: filename, data: download.url.asData(), isHexFile: download.isHex) else {
+                    return
+                }
+                self.uploadFirmware(file)
+            } catch {
+                LogNotify.log(error.localizedDescription)
+            }
+        }
+    }
+
+    private func saveFile(filename: String, data: Data, path: URL? = nil) -> (Bool, Error?) {
+        let pathToUse = (path ?? downloadsPath)
+        let fm = FileManager.default
+        do {
+            if !fm.fileExists(atPath: pathToUse.path) {
+                do {
+                    try fm.createDirectory(at: pathToUse, withIntermediateDirectories: true)
+                } catch {
+                    // don't recurse into fallback mode
+                    if pathToUse != documentsPath {
+                        return saveFile(filename: filename, data: data, path: documentsPath)
+                    }
+                }
+            }
+            try data.write(to: pathToUse.appendingPathComponent(filename))
+        } catch {
+            LogNotify.log("saveFile error: \(error.localizedDescription)")
+            return (false, error)
+        }
+
+        return (true, nil)
+    }
+
+    private func export(download: EditorDownload) {
+        do {
+            let xml = try download.url.asData()
+            let (success, error) = saveFile(filename: "\(download.name).xml", data: xml)
+            if success {
+                let alert = UIAlertController(
+                    title: NSLocalizedString("Program exported", comment: ""),
+                    message: NSLocalizedString("Program exported message", comment: "actual message in translation file"),
+                    preferredStyle: .alert)
+
+                alert.addAction(
+                    UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .destructive) { _ in
+                    })
+
+                present(alert, true)
+            } else {
+                throw error!
+            }
+        } catch {
+            LogNotify.log(error.localizedDescription)
+        }
+    }
+
+}
