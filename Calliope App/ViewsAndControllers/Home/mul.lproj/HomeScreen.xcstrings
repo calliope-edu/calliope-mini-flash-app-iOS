@@ -19,18 +19,6 @@
         }
       }
     },
-    "dQR-js-4sn.title" : {
-      "comment" : "Class = \"UIViewController\"; title = \"onboardingOffline\"; ObjectID = \"dQR-js-4sn\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "onboardingOffline"
-          }
-        }
-      }
-    },
     "fxY-KR-WSy.title" : {
       "comment" : "Class = \"UITabBarItem\"; title = \"Home\"; ObjectID = \"fxY-KR-WSy\";",
       "extractionState" : "extracted_with_value",

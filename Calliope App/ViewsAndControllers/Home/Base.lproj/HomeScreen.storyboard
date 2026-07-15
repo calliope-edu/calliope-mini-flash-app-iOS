@@ -19,10 +19,6 @@
                         </connections>
                     </containerView>
                     <navigationItem key="navigationItem" title="Home" id="w16-hI-VJ6"/>
-                    <connections>
-                        <segue destination="oYP-xn-CRG" kind="show" identifier="showDetails" id="DOr-tS-zAg"/>
-                        <segue destination="dQR-js-4sn" kind="show" identifier="showOnboardingOffline" id="Jz9-oL-Bk6"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xQY-Z1-230" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -55,63 +51,7 @@
             </objects>
             <point key="canvasLocation" x="2774" y="-210"/>
         </scene>
-        <!--News Detail Web View Controller-->
-        <scene sceneID="x7l-4V-qSN">
-            <objects>
-                <viewController id="oYP-xn-CRG" customClass="NewsDetailWebViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <containerView key="view" opaque="NO" contentMode="scaleToFill" id="O96-GS-k2I">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                        <connections>
-                            <segue destination="uBC-3b-3JP" kind="embed" destinationCreationSelector="addSwiftUI:" id="zkP-jN-NBe"/>
-                        </connections>
-                    </containerView>
-                    <navigationItem key="navigationItem" id="GBs-s3-xeH"/>
-                    <connections>
-                        <segue destination="dQR-js-4sn" kind="show" identifier="showOfflineOnboardingFallback" id="inb-TQ-qkc"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Z5p-ke-VPK" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2038" y="663"/>
-        </scene>
-        <!--onboardingOffline-->
-        <scene sceneID="2cS-Hb-6f4">
-            <objects>
-                <viewController restorationIdentifier="onboardingOffline" storyboardIdentifier="onboardingOffline" title="onboardingOffline" id="dQR-js-4sn" customClass="OnboardingOfflineViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <containerView key="view" opaque="NO" contentMode="scaleToFill" id="GCM-hv-gMM">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                        <connections>
-                            <segue destination="iBC-i2-K0K" kind="embed" destinationCreationSelector="addSwiftUI:" id="1Gb-dL-oDA"/>
-                        </connections>
-                    </containerView>
-                    <navigationItem key="navigationItem" id="CUr-PC-LRd"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2lL-cg-Vqy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2825" y="680"/>
-        </scene>
-        <!--Hosting Controller-->
-        <scene sceneID="5N6-8v-2vT">
-            <objects>
-                <hostingController id="iBC-i2-K0K" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="NYG-kf-14L" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2825" y="1463"/>
-        </scene>
-        <!--Hosting Controller-->
-        <scene sceneID="Uzn-2O-BzY">
-            <objects>
-                <hostingController id="uBC-3b-3JP" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="eDx-b6-BgI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2038" y="1463"/>
-        </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="Jz9-oL-Bk6"/>
-    </inferredMetricsTieBreakers>
     <color key="tintColor" name="calliope-lilablau"/>
     <resources>
         <image name="IconDevice" width="36" height="33"/>

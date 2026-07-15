@@ -9,17 +9,47 @@
 import Foundation
 import SwiftUI
 
+enum HomeScreenRoute: Hashable {
+    case offlineOnboardingView
+    case newsDetailView(url: URL)
+}
+
 struct HomeScreenView: View {
-    let onTileSelected: (_ tile: NewsItem) -> Void
     @ObservedObject var viewModel: HomeScreenViewModel
+    var network: Network = Network()
+    @StateObject private var router = Router<HomeScreenRoute>()
 
     var body: some View {
-        TilePageLayout(
-            leftItem: viewModel.gettingStartedItem,
-            data: viewModel.tileData,
-            leftItemOnTap: onTileSelected,
-            rightItemsOnTap: onTileSelected
-        ).onAppear { viewModel.loadNews() }
+        NavigationStack(path: $router.path) {
+            TilePageLayout(
+                leftItem: viewModel.gettingStartedItem,
+                data: viewModel.tileData,
+                leftItemOnTap: onTileSelected,
+                rightItemsOnTap: onTileSelected
+            ).onAppear { viewModel.loadNews() }
+                .navigationDestination(for: HomeScreenRoute.self) { route in
+                    switch route {
+                    case .newsDetailView(let url):
+                        NewsDetailWebView(url: url) {
+                            router.pop()
+                            router.push(.offlineOnboardingView)
+                        }
+                    case .offlineOnboardingView:
+                        OfflineOnboardingView()
+                    }
+                }
+        }
+    }
+    
+    func onTileSelected(tile: NewsItem) {
+        if network.isNetworkAvailable() {
+            let url = URL(string: tile.url)
+            if url != nil {
+                router.push(.newsDetailView(url: url!))
+            }
+        } else {
+            router.push(.offlineOnboardingView)
+        }
     }
 }
 
@@ -64,5 +94,5 @@ class HomeScreenViewModel: ObservableObject {
 struct NewsItem: HasTileItem {
     let tileItem: TileItem
     let url: String
-    
+
 }

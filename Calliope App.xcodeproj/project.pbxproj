@@ -79,7 +79,7 @@
 		2F9B2A1F233F045D009496DD /* RobotoMono-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F9B2A14233F045D009496DD /* RobotoMono-Thin.ttf */; };
 		2F9E404A259DFB00002FFE0B /* PlaygroundSnippetTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9E4049259DFB00002FFE0B /* PlaygroundSnippetTableViewController.swift */; };
 		2FC2A12922C8FA6F00675C2F /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC2A12822C8FA6F00675C2F /* News.swift */; };
-		2FC2A12B22C962D100675C2F /* NewsDetailWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC2A12A22C962D100675C2F /* NewsDetailWebViewController.swift */; };
+		2FC2A12B22C962D100675C2F /* NewsDetailWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC2A12A22C962D100675C2F /* NewsDetailWebView.swift */; };
 		60025C602FD032840065AA36 /* SensordataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60025C5F2FD032840065AA36 /* SensordataView.swift */; };
 		60025C622FD041E40065AA36 /* SensordataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60025C612FD041E40065AA36 /* SensordataViewModel.swift */; };
 		60025C662FD071740065AA36 /* SensordataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60025C652FD071740065AA36 /* SensordataViewController.swift */; };
@@ -99,7 +99,6 @@
 		60316BF82B01FEC300130C0D /* BLECalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60316BF72B01FEC300130C0D /* BLECalliope.swift */; };
 		60316BFA2B0210CC00130C0D /* CalliopeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60316BF92B0210CC00130C0D /* CalliopeFactory.swift */; };
 		6042149F2F646DD30060064F /* TilePageLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6042149E2F646DD30060064F /* TilePageLayout.swift */; };
-		604841D52B1F328A0037A825 /* OnboardingOfflineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604841D42B1F328A0037A825 /* OnboardingOfflineViewController.swift */; };
 		604938832E151282008BCE40 /* FileExtensionsEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604938822E15127E008BCE40 /* FileExtensionsEnum.swift */; };
 		604938852E151BB1008BCE40 /* OperationStatusEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604938842E151BA7008BCE40 /* OperationStatusEnum.swift */; };
 		604938BE2E1BAF6C008BCE40 /* DummyModules in Frameworks */ = {isa = PBXBuildFile; productRef = 604938BD2E1BAF6C008BCE40 /* DummyModules */; };
@@ -108,6 +107,7 @@
 		607340203007C05700616062 /* EditorWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6073401F3007C05700616062 /* EditorWebView.swift */; };
 		6073406A3007DFDA00616062 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607340693007DFDA00616062 /* Router.swift */; };
 		6073406C3007E04D00616062 /* HomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6073406B3007E04D00616062 /* HomeScreenView.swift */; };
+		607340803007E8B000616062 /* NewsDetailWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6073407F3007E8B000616062 /* NewsDetailWebViewController.swift */; };
 		60818E7D2FE5A4150053893F /* EditorsAndProgramsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818E7C2FE5A4150053893F /* EditorsAndProgramsView.swift */; };
 		60818E7F2FE5A9C90053893F /* EditorsAndProgramsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818E7E2FE5A9C90053893F /* EditorsAndProgramsViewModel.swift */; };
 		60818EA62FEEB46C0053893F /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 60818EA52FEEB46C0053893F /* InfoPlist.xcstrings */; };
@@ -251,7 +251,7 @@
 		2F9B2A14233F045D009496DD /* RobotoMono-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoMono-Thin.ttf"; sourceTree = "<group>"; };
 		2F9E4049259DFB00002FFE0B /* PlaygroundSnippetTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundSnippetTableViewController.swift; sourceTree = "<group>"; };
 		2FC2A12822C8FA6F00675C2F /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
-		2FC2A12A22C962D100675C2F /* NewsDetailWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDetailWebViewController.swift; sourceTree = "<group>"; };
+		2FC2A12A22C962D100675C2F /* NewsDetailWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDetailWebView.swift; sourceTree = "<group>"; };
 		36B15F9E6DE42C49A76EC47B /* Pods_Calliope_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Calliope_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3849EA7340C0FAB5DB1A4000 /* Pods-Calliope App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.debug.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.debug.xcconfig"; sourceTree = "<group>"; };
 		60025C5F2FD032840065AA36 /* SensordataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensordataView.swift; sourceTree = "<group>"; };
@@ -273,7 +273,6 @@
 		60316BF72B01FEC300130C0D /* BLECalliope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLECalliope.swift; sourceTree = "<group>"; };
 		60316BF92B0210CC00130C0D /* CalliopeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeFactory.swift; sourceTree = "<group>"; };
 		6042149E2F646DD30060064F /* TilePageLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TilePageLayout.swift; sourceTree = "<group>"; };
-		604841D42B1F328A0037A825 /* OnboardingOfflineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingOfflineViewController.swift; sourceTree = "<group>"; };
 		604938822E15127E008BCE40 /* FileExtensionsEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileExtensionsEnum.swift; sourceTree = "<group>"; };
 		604938842E151BA7008BCE40 /* OperationStatusEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationStatusEnum.swift; sourceTree = "<group>"; };
 		604938B42E1BAF1D008BCE40 /* ScratchLinkKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ScratchLinkKit; sourceTree = "<group>"; };
@@ -281,6 +280,7 @@
 		6073401F3007C05700616062 /* EditorWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorWebView.swift; sourceTree = "<group>"; };
 		607340693007DFDA00616062 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		6073406B3007E04D00616062 /* HomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenView.swift; sourceTree = "<group>"; };
+		6073407F3007E8B000616062 /* NewsDetailWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDetailWebViewController.swift; sourceTree = "<group>"; };
 		60818E7C2FE5A4150053893F /* EditorsAndProgramsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorsAndProgramsView.swift; sourceTree = "<group>"; };
 		60818E7E2FE5A9C90053893F /* EditorsAndProgramsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorsAndProgramsViewModel.swift; sourceTree = "<group>"; };
 		60818EA42FEEB46B0053893F /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/LaunchScreen.xcstrings; sourceTree = "<group>"; };
@@ -410,6 +410,7 @@
 				60818EBB2FF561FB0053893F /* ArcadeView.swift */,
 				60818EBD2FF563D80053893F /* ArcadeViewModel.swift */,
 				60818EBF2FF564E30053893F /* ArcadeViewController.swift */,
+				6073407F3007E8B000616062 /* NewsDetailWebViewController.swift */,
 			);
 			path = Playground;
 			sourceTree = "<group>";
@@ -602,8 +603,7 @@
 			children = (
 				2F00EAB722DA195A000B5FDE /* HomeScreenViewController.swift */,
 				2F4B8DA12598D7980026B480 /* HomeScreen.storyboard */,
-				2FC2A12A22C962D100675C2F /* NewsDetailWebViewController.swift */,
-				604841D42B1F328A0037A825 /* OnboardingOfflineViewController.swift */,
+				2FC2A12A22C962D100675C2F /* NewsDetailWebView.swift */,
 				60863393300171B50042ECCD /* OfflineOnboardingView.swift */,
 				6073406B3007E04D00616062 /* HomeScreenView.swift */,
 			);
@@ -1139,7 +1139,6 @@
 				2F61459A22BF761F001C2734 /* HexParser.swift in Sources */,
 				2F61456F22BF761F001C2734 /* CalliopeDiscovery.swift in Sources */,
 				2F61457822BF761F001C2734 /* ExtString.swift in Sources */,
-				604841D52B1F328A0037A825 /* OnboardingOfflineViewController.swift in Sources */,
 				607340203007C05700616062 /* EditorWebView.swift in Sources */,
 				6073401E300785C200616062 /* QRCodeView.swift in Sources */,
 				60030BA02DC9E77C00397E69 /* Coordinates+Extension.swift in Sources */,
@@ -1152,6 +1151,7 @@
 				2F08A0E1234AC7400088A8D6 /* EditorAndProgramsContainerViewController.swift in Sources */,
 				60C915932B1F442F00E4039D /* Network.swift in Sources */,
 				604938832E151282008BCE40 /* FileExtensionsEnum.swift in Sources */,
+				607340803007E8B000616062 /* NewsDetailWebViewController.swift in Sources */,
 				60818EBE2FF563D80053893F /* ArcadeViewModel.swift in Sources */,
 				6094C3912C045FA9006F4CB4 /* ApiCalliope.swift in Sources */,
 				2F2B809D25A0F25700A7CCF7 /* PlaygroundSnippetTableViewCell.swift in Sources */,
@@ -1192,7 +1192,7 @@
 				60CF0EB02BFCD59D00CB2A38 /* DataController.swift in Sources */,
 				60127F6D2FD005DF000A1995 /* DataLoggerView.swift in Sources */,
 				60CF0EAD2BFCD25300CB2A38 /* Value.swift in Sources */,
-				2FC2A12B22C962D100675C2F /* NewsDetailWebViewController.swift in Sources */,
+				2FC2A12B22C962D100675C2F /* NewsDetailWebView.swift in Sources */,
 				60030B9E2DC9E6CC00397E69 /* Double+Extension.swift in Sources */,
 				2F00EAB822DA195A000B5FDE /* HomeScreenViewController.swift in Sources */,
 				2F61459622BF761F001C2734 /* LocalEditorViewController.swift in Sources */,
