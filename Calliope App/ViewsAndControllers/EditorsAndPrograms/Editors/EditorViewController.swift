@@ -28,9 +28,7 @@ final class EditorViewController: UIViewController {
         present(view, animated: animated)
     }
     
-    func uploadFirmware(_ program: HexFile) {
-        FirmwareUpload.uploadWithoutConfirmation(controller: self, program: program) {
-            MatrixConnectionViewModel.instance.connect()
-        }
+    func uploadFirmware(_ program: HexFile, _ completion: (() -> Void)?) {
+        FirmwareUpload.uploadWithoutConfirmation(controller: self, program: program, completion: completion)
     }
 }

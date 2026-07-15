@@ -14,7 +14,7 @@ import WebKit
 struct EditorWebViewRepresentable: UIViewRepresentable {
     let editor: Editor
     let present: (_ alert: UIViewController, _ animated: Bool) -> Void
-    let uploadFirmware: (_ program: HexFile) -> Void
+    let uploadFirmware: (_ program: HexFile, _ completion: (() -> Void)?) -> Void
 
     func makeUIView(context: Context) -> EditorWebView {
         return EditorWebView(frame: .zero, present: present, uploadFirmware: uploadFirmware)
@@ -28,11 +28,11 @@ struct EditorWebViewRepresentable: UIViewRepresentable {
 final class EditorWebView: UIView {
     var webView: WKWebView?
     private let loadingIndicator = UIActivityIndicatorView(style: .large)
-    
+
     var editor: Editor?
-    
+
     let present: (_ alert: UIViewController, _ animated: Bool) -> Void
-    let uploadFirmware: (_ program: HexFile) -> Void
+    let uploadFirmware: (_ program: HexFile, _ completion: (() -> Void)?) -> Void
 
     private var latestDownloadedTargetFile: URL?
     var documentsPath: URL {
@@ -46,7 +46,11 @@ final class EditorWebView: UIView {
 
     let filenameQuery = "document.querySelector('input#fileNameInput2').value"
 
-    init(frame: CGRect, present: @escaping (_ alert: UIViewController, _ animated: Bool) -> Void, uploadFirmware: @escaping (_ program: HexFile) -> Void) {
+    init(
+        frame: CGRect,
+        present: @escaping (_ alert: UIViewController, _ animated: Bool) -> Void,
+        uploadFirmware: @escaping (_ program: HexFile, _ completion: (() -> Void)?) -> Void
+    ) {
         self.present = present
         self.uploadFirmware = uploadFirmware
         super.init(frame: frame)
@@ -57,8 +61,8 @@ final class EditorWebView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        self.present = {alert, animated in }
-        self.uploadFirmware = {program in}
+        self.present = { alert, animated in }
+        self.uploadFirmware = { program, completion in }
         super.init(coder: coder)
         setupLoadingIndicator()
         webView = setupWebView()
@@ -150,17 +154,21 @@ final class EditorWebView: UIView {
 }
 
 extension EditorWebView: WKNavigationDelegate {
-    
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+
+    func webView(
+        _ webView: WKWebView,
+        decidePolicyFor navigationAction: WKNavigationAction,
+        decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
+    ) {
         guard let editor = editor else {
             return
         }
 
         LogNotify.log("policy for action \(navigationAction.request.url?.absoluteString.truncate(length: 100) ?? "")")
-        
+
         let request = navigationAction.request
-        
-        if navigationAction.shouldPerformDownload && (editor is MicroPython || editor is CampusEditor){
+
+        if navigationAction.shouldPerformDownload && (editor is MicroPython || editor is CampusEditor) {
             decisionHandler(.download)
         } else if let download = editor.download(request) {
             decisionHandler(.cancel)
@@ -171,7 +179,7 @@ extension EditorWebView: WKNavigationDelegate {
             }
         } else if editor.isBackNavigation(request) {
             decisionHandler(.cancel)
-//            self.navigationController?.popViewController(animated: true) TODO: Close Editor
+            //            self.navigationController?.popViewController(animated: true) TODO: Close Editor
         } else if editor.allowNavigation(request) {
             decisionHandler(.allow)
         } else {
@@ -179,8 +187,12 @@ extension EditorWebView: WKNavigationDelegate {
         }
     }
 
-
-    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+    func webView(
+        _ webView: WKWebView,
+        createWebViewWith configuration: WKWebViewConfiguration,
+        for navigationAction: WKNavigationAction,
+        windowFeatures: WKWindowFeatures
+    ) -> WKWebView? {
         guard let editor = editor else {
             return nil
         }
@@ -192,12 +204,12 @@ extension EditorWebView: WKNavigationDelegate {
             return handleExternalWebView(navigationAction)
         }
     }
-    
+
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation) {
         hideLoading()
         handlePossibleEditorChanges()
     }
-    
+
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         loadingIndicator.stopAnimating()
         LogNotify.log("\(error)")
@@ -206,9 +218,9 @@ extension EditorWebView: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         LogNotify.log("\(error)")
     }
-    
+
     // helper
-    
+
     fileprivate func handleInternalWebView(_ navigationAction: WKNavigationAction, _ webView: WKWebView) -> WKWebView? {
         guard navigationAction.targetFrame != nil else {
             return nil
@@ -217,36 +229,41 @@ extension EditorWebView: WKNavigationDelegate {
         return nil
     }
 
-
     fileprivate func handleExternalWebView(_ navigationAction: WKNavigationAction) -> WKWebView? {
         if let url = navigationAction.request.url {
             UIApplication.shared.open(url)
         }
         return nil
     }
- 
+
 }
 
 extension EditorWebView: WKUIDelegate {
-     func webView(
-        _ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo,
+    func webView(
+        _ webView: WKWebView,
+        runJavaScriptAlertPanelWithMessage message: String,
+        initiatedByFrame frame: WKFrameInfo,
         completionHandler: @escaping () -> Void
     ) {
 
         let alertController = UIAlertController(title: nil, message: message, preferredStyle: .actionSheet)
         alertController.addAction(
             UIAlertAction(
-                title: NSLocalizedString("OK", comment: ""), style: .default,
+                title: NSLocalizedString("OK", comment: ""),
+                style: .default,
                 handler: { (action) in
                     completionHandler()
-                }))
+                }
+            )
+        )
 
         present(alertController, true)
     }
 
-
     func webView(
-        _ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo,
+        _ webView: WKWebView,
+        runJavaScriptConfirmPanelWithMessage message: String,
+        initiatedByFrame frame: WKFrameInfo,
         completionHandler: @escaping (Bool) -> Void
     ) {
 
@@ -254,23 +271,34 @@ extension EditorWebView: WKUIDelegate {
 
         alertController.addAction(
             UIAlertAction(
-                title: NSLocalizedString("OK", comment: ""), style: .default,
+                title: NSLocalizedString("OK", comment: ""),
+                style: .default,
                 handler: { (action) in
                     completionHandler(true)
-                }))
+                }
+            )
+        )
 
         alertController.addAction(
             UIAlertAction(
-                title: NSLocalizedString("Cancel", comment: ""), style: .default,
+                title: NSLocalizedString("Cancel", comment: ""),
+                style: .default,
                 handler: { (action) in
                     completionHandler(false)
-                }))
+                }
+            )
+        )
 
         present(alertController, true)
     }
 
-
-    func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
+    func webView(
+        _ webView: WKWebView,
+        runJavaScriptTextInputPanelWithPrompt prompt: String,
+        defaultText: String?,
+        initiatedByFrame frame: WKFrameInfo,
+        completionHandler: @escaping (String?) -> Void
+    ) {
 
         let alertController = UIAlertController(title: nil, message: prompt, preferredStyle: .alert)
 
@@ -280,96 +308,112 @@ extension EditorWebView: WKUIDelegate {
 
         alertController.addAction(
             UIAlertAction(
-                title: NSLocalizedString("OK", comment: ""), style: .default,
+                title: NSLocalizedString("OK", comment: ""),
+                style: .default,
                 handler: { (action) in
                     if let text = alertController.textFields?.first?.text {
                         completionHandler(text)
                     } else {
                         completionHandler(defaultText)
                     }
-                }))
+                }
+            )
+        )
 
         alertController.addAction(
             UIAlertAction(
-                title: NSLocalizedString("Cancel", comment: ""), style: .default,
+                title: NSLocalizedString("Cancel", comment: ""),
+                style: .default,
                 handler: { (action) in
                     completionHandler(nil)
-                }))
+                }
+            )
+        )
 
         present(alertController, true)
-    }   
+    }
 }
 
 extension EditorWebView: WKDownloadDelegate {
-    
+
     func webView(_ webView: WKWebView, navigationAction: WKNavigationAction, didBecome download: WKDownload) {
         download.delegate = self
     }
-    
-    func download(_ download: WKDownload, decideDestinationUsing response: URLResponse, suggestedFilename: String, completionHandler: @escaping (URL?) -> Void) {
+
+    func download(
+        _ download: WKDownload,
+        decideDestinationUsing response: URLResponse,
+        suggestedFilename: String,
+        completionHandler: @escaping (URL?) -> Void
+    ) {
         guard let editor = editor, editor is MicroPython || editor is CampusEditor else {
             return
         }
-        
+
         latestDownloadedTargetFile = prepareTemporaryStorage(for: suggestedFilename)
         try? FileManager.default.removeItem(at: latestDownloadedTargetFile!)
         completionHandler(latestDownloadedTargetFile)
     }
-    
+
     func downloadDidFinish(_ download: WKDownload) {
         guard let url = latestDownloadedTargetFile, let fileextension = FileExtension(rawValue: url.pathExtension.lowercased()) else {
             return
         }
-        
+
         switch fileextension {
         case .hex:
             uploadHex(from: url)
         case .html, .json:
             storeSessionData(for: url)
         }
-        
+
     }
-    
+
     public func download(_ download: WKDownload, didFailWithError error: Error, resumeData: Data?) {
         LogNotify.log("Download failed: \(error)")
         self.clearTemporaryStorage()
     }
-   
+
     // MARK: Helper
-    
+
     private func prepareTemporaryStorage(for name: String) -> URL? {
         return NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(name)
     }
-    
+
     private func clearTemporaryStorage() {
         guard let latestDownloadedTargetFile = latestDownloadedTargetFile else {
             return
         }
-        
+
         try? FileManager.default.removeItem(at: latestDownloadedTargetFile)
         self.latestDownloadedTargetFile = nil
     }
-    
+
     private func uploadHex(from location: URL) {
         LogNotify.log("Treating downloaded file as a Hex-File for the mini: \(location.absoluteString)")
         guard location.isFileURL, FileExtension(rawValue: location.pathExtension.lowercased()) == .hex else {
             LogNotify.log("Location of hex file was not provided or target at locationis not a hex file.")
             return
         }
-        
+
         let file = HexFile(url: location, name: location.lastPathComponent, date: Date())
-        uploadFirmware(file)
-        self.clearTemporaryStorage()
+        uploadFirmware(file) {
+            MatrixConnectionViewModel.instance.connect()
+            self.clearTemporaryStorage()
+        }
     }
-    
+
     private func storeSessionData(for location: URL) {
         LogNotify.log("Treating downloaded file as session relevant data: \(location.absoluteString)")
-        guard location.isFileURL, [FileExtension.html, FileExtension.json].contains(FileExtension(rawValue: location.pathExtension.lowercased())) else {
+        guard location.isFileURL, [FileExtension.html, FileExtension.json].contains(FileExtension(rawValue: location.pathExtension.lowercased()))
+        else {
             LogNotify.log("Location of session data file was not provided, or is neither in json or html format")
             return
         }
-        
-        let destination = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(location.lastPathComponent)
+
+        let destination = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(
+            location.lastPathComponent
+        )
         do {
             try FileManager.default.moveItem(at: location, to: destination)
             showAlertSessionDataDownload(for: .success)
@@ -377,8 +421,7 @@ extension EditorWebView: WKDownloadDelegate {
             showAlertSessionDataDownload(for: .failure)
         }
     }
-    
-     
+
     private func showAlertSessionDataDownload(for status: OperationStatus) {
         let title =
             switch status {
@@ -399,78 +442,78 @@ extension EditorWebView: WKDownloadDelegate {
         )
         alert.addAction(
             UIAlertAction(title: "OK", style: .cancel) { _ in
-//                self.dismiss(animated: true)
+                //                self.dismiss(animated: true) TODO: Fix
             }
         )
         present(alert, true)
     }
 
-
 }
 
 extension EditorWebView: ScratchLinkDelegate {
-    
+
     func canStartSession(type: ScratchLinkKit.SessionType) -> Bool {
         LogNotify.log("Call to 'canStartSession'")
         return true
     }
-    
+
     func didStartSession(type: ScratchLinkKit.SessionType) {
         LogNotify.log("Call to 'didStartSession'")
     }
-    
+
     func didFailStartingSession(type: ScratchLinkKit.SessionType, error: ScratchLinkKit.SessionError) {
         LogNotify.log("Call to 'didFailStartingSession'")
     }
-     
+
 }
 
 extension EditorWebView {
     // MARK: Handle possible editor change (i.e. Scratch Based with own BLE connection)
-    
+
     private func handlePossibleEditorChanges() {
-        determineIfScratchBasedEditor() { self.switchEditorImperatives($0)}
+        determineIfScratchBasedEditor { self.switchEditorImperatives($0) }
     }
-    
-    
+
     private func determineIfScratchBasedEditor(completion: @escaping (Bool) -> Void) {
         guard webView != nil else {
             LogNotify.error("WebView is nil. This should not happen.")
             return
         }
         let condition = "document.getElementById('scratch-link-extension-script') != null"
-        
+
         webView!.evaluateJavaScript(condition) { (result, error) in
             let isScratchEditor = result as? Bool ?? false
             completion(isScratchEditor)
         }
     }
-    
+
     private func switchEditorImperatives(_ isScratchEditor: Bool) {
         guard webView != nil else {
             LogNotify.error("WebView is nil. This should not happen.")
             return
         }
-        if (isScratchEditor) {
+        if isScratchEditor {
             LogNotify.log("Switching editor imperatives to handle scratch based editor")
             MatrixConnectionViewModel.instance.dropBLEConnection()
             self.webView!.customUserAgent = nil
             self.webView!.configuration.applicationNameForUserAgent = "Scrub"
             return
         }
-        
+
         LogNotify.log("Switching editor imperatives to handle non-scratch based editor")
         self.webView!.configuration.applicationNameForUserAgent = nil
-        self.webView!.customUserAgent = traitCollection.userInterfaceIdiom == .pad ? "Mozilla/5.0 (iPad; CPU OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.1 Mobile/15E148 Safari/604.1" : nil
+        self.webView!.customUserAgent =
+            traitCollection.userInterfaceIdiom == .pad
+            ? "Mozilla/5.0 (iPad; CPU OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.1 Mobile/15E148 Safari/604.1"
+            : nil
         MatrixConnectionViewModel.instance.restartFromBLEConnectionDrop()
     }
 }
 
-
 extension EditorWebView {
-    
+
     //MARK: uploading
-    
+
     private func upload(result download: EditorDownload) {
         guard webView != nil else {
             LogNotify.error("WebView is nil. This should not happen.")
@@ -482,7 +525,9 @@ extension EditorWebView {
                 guard let file = try HexFileManager.store(name: filename, data: download.url.asData(), isHexFile: download.isHex) else {
                     return
                 }
-                self.uploadFirmware(file)
+                self.uploadFirmware(file) {
+                    MatrixConnectionViewModel.instance.connect()
+                }
             } catch {
                 LogNotify.log(error.localizedDescription)
             }
@@ -520,11 +565,13 @@ extension EditorWebView {
                 let alert = UIAlertController(
                     title: NSLocalizedString("Program exported", comment: ""),
                     message: NSLocalizedString("Program exported message", comment: "actual message in translation file"),
-                    preferredStyle: .alert)
+                    preferredStyle: .alert
+                )
 
                 alert.addAction(
                     UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .destructive) { _ in
-                    })
+                    }
+                )
 
                 present(alert, true)
             } else {
