@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -15,7 +14,7 @@
             <objects>
                 <viewController title="Programs and Editors" id="rb5-ni-SG8" customClass="EditorAndProgramsContainerViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <containerView key="view" opaque="NO" contentMode="scaleToFill" id="sa4-Oj-L80">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="643" height="1000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <connections>
                             <segue destination="sdK-0w-f04" kind="embed" destinationCreationSelector="addSwiftUI:" id="VvN-jw-tfU"/>
@@ -73,55 +72,16 @@
         <scene sceneID="hol-wY-xHE">
             <objects>
                 <viewController id="Lev-CK-3Lf" customClass="QRCodeViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="lpQ-Il-Dj9">
+                    <containerView key="view" opaque="NO" contentMode="scaleToFill" id="JOn-Q4-aOd">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lzo-3g-ITh" customClass="PreviewView" customModule="Calliope_App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="172" width="393" height="563"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hvq-7y-WCW">
-                                <rect key="frame" x="392" y="619" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
-                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="vrY-jH-Gu4">
-                                <rect key="frame" x="71.666666666666686" y="655" width="250" height="60"/>
-                                <color key="backgroundColor" name="calliope-green"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="DtF-0g-hz0"/>
-                                    <constraint firstAttribute="width" constant="250" id="G5R-hL-b1I"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <state key="normal" title="Open program"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <segue destination="eeY-2x-OZY" kind="show" destinationCreationSelector="createMakecodeEditor:sender:" id="7ZG-zz-cOm"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="ikL-Ji-UIA"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="lzo-3g-ITh" firstAttribute="top" secondItem="ikL-Ji-UIA" secondAttribute="top" id="0cE-uq-5gf"/>
-                            <constraint firstItem="ikL-Ji-UIA" firstAttribute="trailing" secondItem="lzo-3g-ITh" secondAttribute="trailing" id="768-ca-juX"/>
-                            <constraint firstItem="lzo-3g-ITh" firstAttribute="leading" secondItem="ikL-Ji-UIA" secondAttribute="leading" id="8AH-OO-zZW"/>
-                            <constraint firstItem="ikL-Ji-UIA" firstAttribute="bottom" secondItem="lzo-3g-ITh" secondAttribute="bottom" id="Yj0-wB-7jy"/>
-                            <constraint firstItem="ikL-Ji-UIA" firstAttribute="bottom" secondItem="vrY-jH-Gu4" secondAttribute="bottom" constant="20" id="gHx-Rr-P8E"/>
-                            <constraint firstItem="vrY-jH-Gu4" firstAttribute="centerX" secondItem="ikL-Ji-UIA" secondAttribute="centerX" id="i70-dR-w1S"/>
-                        </constraints>
-                    </view>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <connections>
+                            <segue destination="bTa-e4-ebe" kind="embed" destinationCreationSelector="addSwiftUI:" id="xO6-rT-NwA"/>
+                        </connections>
+                    </containerView>
                     <navigationItem key="navigationItem" id="jEy-Lc-b6J"/>
                     <connections>
-                        <outlet property="cameraView" destination="lzo-3g-ITh" id="cVp-qS-gMB"/>
-                        <outlet property="openMakeCodeButton" destination="vrY-jH-Gu4" id="YJi-at-XUZ"/>
-                        <outlet property="qrCodeFrameView" destination="hvq-7y-WCW" id="2Vl-0D-YRE"/>
-                        <outlet property="view" destination="lpQ-Il-Dj9" id="ET3-cE-ee3"/>
+                        <segue destination="eeY-2x-OZY" kind="show" identifier="showMakecode" destinationCreationSelector="createMakecodeEditor:" id="oTS-wP-MDo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Gu-wX-dHR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -136,6 +96,7 @@
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="FFb-Pa-Fjw">
+                        <rect key="frame" x="0.0" y="118" width="393" height="54"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -208,16 +169,21 @@
             </objects>
             <point key="canvasLocation" x="2318" y="918"/>
         </scene>
+        <!--Hosting Controller-->
+        <scene sceneID="JIc-Ue-qs7">
+            <objects>
+                <hostingController id="bTa-e4-ebe" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tBG-LO-Vr9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-167" y="1703"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="7ZG-zz-cOm"/>
+        <segue reference="oTS-wP-MDo"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="calliope-lilablau"/>
     <resources>
         <image name="IconCode" width="36" height="33"/>
-        <namedColor name="calliope-green">
-            <color red="0.27500000596046448" green="0.875" blue="0.4309999942779541" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="calliope-lilablau">
             <color red="0.3919999897480011" green="0.46200001239776611" blue="0.99199998378753662" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

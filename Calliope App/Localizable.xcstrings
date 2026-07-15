@@ -1969,6 +1969,16 @@
         }
       }
     },
+    "Open program" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programm öffnen"
+          }
+        }
+      }
+    },
     "Open Settings" : {
       "comment" : "Open Settings button",
       "localizations" : {
@@ -2251,6 +2261,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Scratch ist ein Projek der Scratch Foundation in Zusammenarbeit mit der Lifelong Kindergarden Group des MIT Media Lab. Es ist kostenlos verfügbar unter https://scratch.mit.edu."
+          }
+        }
+      }
+    },
+    "Searching for QR code" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suche nach QR Code"
           }
         }
       }
