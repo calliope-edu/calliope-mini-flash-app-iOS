@@ -7,6 +7,136 @@
     "\n" : {
 
     },
+    "- Additionally press the Reset button for 1 second" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "- Reset Taste für 1 Sekunde zusätzlich drücken"
+          }
+        }
+      }
+    },
+    "- An ID pattern appears on the Calliope mini" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "- ID-Muster erscheint auf dem Calliope mini"
+          }
+        }
+      }
+    },
+    "- Confirm the connection by pressing the green button" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "- Verbinden bestätigt über das Drücken der grünen Schaltfläche"
+          }
+        }
+      }
+    },
+    "- From now on, you can transfer programs from the app via Bluetooth" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "- Ab jetzt kannst du Programme aus der App über Bluetooth übertragen"
+          }
+        }
+      }
+    },
+    "- Hold down buttons A+B" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "- Taste A+B gedrückt halten"
+          }
+        }
+      }
+    },
+    "- If the Calliope mini is found, a green button appears" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "- Wird der Calliope mini gefunden erscheint eine grüne Schaltfläche"
+          }
+        }
+      }
+    },
+    "- Keep holding buttons A+B until the Bluetooth animation ends" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "- Tasten A+B gedrückt halten bis die Bluetooth Animation beendet ist"
+          }
+        }
+      }
+    },
+    "- Press the Reset button 3 times" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "- Reset Taste 3x drücken"
+          }
+        }
+      }
+    },
+    "- The connection window opens via the red Calliope mini icon in the Editors and Programs section" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "- Über das rote Calliope mini Icon im Bereich Editoren und Programme öffnet sich das Verbindungsfenster"
+          }
+        }
+      }
+    },
+    "- The program now appears on the Calliope mini" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "- Nun erscheint das Programm auf dem Calliope mini"
+          }
+        }
+      }
+    },
+    "- To transfer a program to the Calliope mini: Download, save, and transfer the program. This may take a few seconds. Progress will be displayed." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "- Übertragung des Programms an den Calliope mini mit folgenden Schritten: Programm herunterladen, sichern und übertragen. Die Übertragung kann einige Sekunden dauern. Der Fortschritt wird angezeigt."
+          }
+        }
+      }
+    },
+    "- Transfer the Calliope mini's unique ID pattern to the matrix" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "- Individuelles ID-Muster des Calliope mini auf die Matrix übertragen"
+          }
+        }
+      }
+    },
+    "- Use an editor to create and transfer a program" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "- Verwende einene Editor, um eine Programm zu erstellen und zu übertragen"
+          }
+        }
+      }
+    },
     "%lld unique locations" : {
       "localizations" : {
         "de" : {
@@ -410,10 +540,34 @@
       }
     },
     "Calliope mini V1 + 2" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calliope mini V1 + 2"
+          }
+        }
+      }
+    },
+    "Calliope mini V2/V1" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calliope mini V2/V1"
+          }
+        }
+      }
     },
     "Calliope mini V3" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calliope mini V3"
+          }
+        }
+      }
     },
     "Calliope mini verbinden!" : {
       "localizations" : {
@@ -507,6 +661,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sensordata"
+          }
+        }
+      }
+    },
+    "Connect" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbinden"
           }
         }
       }
@@ -2259,6 +2423,16 @@
         }
       }
     },
+    "Start Bluetooth Mode" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bluetooth Modus starten"
+          }
+        }
+      }
+    },
     "Start Program" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2461,6 +2635,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Übertragen"
+          }
+        }
+      }
+    },
+    "Transfer Program" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programm übertragen"
           }
         }
       }
@@ -2831,6 +3015,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yeah, you are connected to your Calliope mini, well done! Let's continue!"
+          }
+        }
+      }
+    },
+    "You are offline. However, we have some information for you!" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du bist leider offline. Dennoch haben wir ein paar Informationen für dich!"
           }
         }
       }

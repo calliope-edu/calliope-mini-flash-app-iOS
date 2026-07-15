@@ -116,6 +116,7 @@
 		60818EBC2FF561FB0053893F /* ArcadeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818EBB2FF561FB0053893F /* ArcadeView.swift */; };
 		60818EBE2FF563D80053893F /* ArcadeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818EBD2FF563D80053893F /* ArcadeViewModel.swift */; };
 		60818EC02FF564E30053893F /* ArcadeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818EBF2FF564E30053893F /* ArcadeViewController.swift */; };
+		60863394300171B50042ECCD /* OfflineOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60863393300171B50042ECCD /* OfflineOnboardingView.swift */; };
 		608CE91C2F89544D004EACA7 /* NewsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608CE91B2F89544D004EACA7 /* NewsCollectionViewController.swift */; };
 		608CE91E2F8954B8004EACA7 /* NewsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608CE91D2F8954B8004EACA7 /* NewsCollectionViewCell.swift */; };
 		6094AC582E20F2410066D07A /* WebLogHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6094AC572E20F2380066D07A /* WebLogHandler.swift */; };
@@ -289,6 +290,7 @@
 		60818EBB2FF561FB0053893F /* ArcadeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcadeView.swift; sourceTree = "<group>"; };
 		60818EBD2FF563D80053893F /* ArcadeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcadeViewModel.swift; sourceTree = "<group>"; };
 		60818EBF2FF564E30053893F /* ArcadeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcadeViewController.swift; sourceTree = "<group>"; };
+		60863393300171B50042ECCD /* OfflineOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineOnboardingView.swift; sourceTree = "<group>"; };
 		608CE91B2F89544D004EACA7 /* NewsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewController.swift; sourceTree = "<group>"; };
 		608CE91D2F8954B8004EACA7 /* NewsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewCell.swift; sourceTree = "<group>"; };
 		6094AC572E20F2380066D07A /* WebLogHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLogHandler.swift; sourceTree = "<group>"; };
@@ -593,6 +595,7 @@
 				2F4B8DA12598D7980026B480 /* HomeScreen.storyboard */,
 				2FC2A12A22C962D100675C2F /* NewsDetailWebViewController.swift */,
 				604841D42B1F328A0037A825 /* OnboardingOfflineViewController.swift */,
+				60863393300171B50042ECCD /* OfflineOnboardingView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1160,6 +1163,7 @@
 				2F61457A22BF761F001C2734 /* ExtURL.swift in Sources */,
 				60316BFA2B0210CC00130C0D /* CalliopeFactory.swift in Sources */,
 				60D02D7B2BFC864900D3C34A /* ProjectOverviewController.swift in Sources */,
+				60863394300171B50042ECCD /* OfflineOnboardingView.swift in Sources */,
 				60C051DE3000F1A900DFA868 /* MatrixConnectionViewModel.swift in Sources */,
 				2F61457522BF761F001C2734 /* DiscoveredBLEDevice.swift in Sources */,
 				2F2B809A25A0E01500A7CCF7 /* CodeSnippets.swift in Sources */,

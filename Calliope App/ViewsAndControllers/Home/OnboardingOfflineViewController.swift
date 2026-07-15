@@ -9,9 +9,10 @@
 import Foundation
 import UIKit
 import WebKit
+import SwiftUI
 
 class OnboardingOfflineViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    @IBSegueAction func addSwiftUI(_ coder: NSCoder) -> UIViewController? {
+        return UIHostingController(coder: coder, rootView: OfflineOnboardingView())
     }
 }

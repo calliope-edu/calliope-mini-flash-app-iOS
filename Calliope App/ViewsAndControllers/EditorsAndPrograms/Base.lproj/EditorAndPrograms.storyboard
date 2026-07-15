@@ -15,7 +15,7 @@
             <objects>
                 <viewController title="Programs and Editors" id="rb5-ni-SG8" customClass="EditorAndProgramsContainerViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
                     <containerView key="view" opaque="NO" contentMode="scaleToFill" id="sa4-Oj-L80">
-                        <rect key="frame" x="0.0" y="0.0" width="643" height="1000"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <connections>
                             <segue destination="sdK-0w-f04" kind="embed" destinationCreationSelector="addSwiftUI:" id="VvN-jw-tfU"/>
@@ -136,7 +136,6 @@
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="FFb-Pa-Fjw">
-                        <rect key="frame" x="0.0" y="118" width="393" height="54"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
