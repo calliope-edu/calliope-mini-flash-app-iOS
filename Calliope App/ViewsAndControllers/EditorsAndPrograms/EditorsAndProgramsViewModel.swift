@@ -95,7 +95,9 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
     }
 
     func downloadProgram(program: ProgramTileConfig) {
-        uploadHexFile(program.hexFile)
+        FirmwareUploadSwiftUI.showUploadUI(program: program.hexFile, name: program.name) {
+            MatrixConnectionViewModel.instance.connect()
+        }
     }
     
     func renameProgram(program: ProgramTileConfig) {

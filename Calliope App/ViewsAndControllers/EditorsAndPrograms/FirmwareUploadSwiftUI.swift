@@ -63,23 +63,28 @@ class FirmwareUploadSwiftUI {
     }
 
     public static func showUploadUI(
-        controller: UIViewController,
         program: Hex,
         name: String = NSLocalizedString("the program", comment: ""),
         completion: (() -> Void)? = nil
     ) {
-        /*let alert = UIAlertController(
+        let popup = TwoOptionsAlert(
             title: NSLocalizedString("Upload?", comment: ""),
             message: String(format: NSLocalizedString("Do you want to upload %@ to your Calliope mini?", comment: ""), name),
-            preferredStyle: .alert
+            actions: [
+                AlertAction(
+                    title: "Upload",
+                    action: {
+                        DispatchQueue.main.async {
+                            uploadWithoutConfirmation(program: program, completion: completion)
+                        }
+                    }
+                ),
+                AlertAction(title: "Cancel", action: {}),
+            ]
         )
-        alert.addAction(
-            UIAlertAction(title: NSLocalizedString("Upload", comment: ""), style: .default) { _ in
-                uploadWithoutConfirmation(controller: controller, program: program, completion: completion)
-            }
-        )
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel))
-        controller.present(alert, animated: true)*/
+        DispatchQueue.main.async {
+            PopupManager.instance.show(popup)
+        }
     }
 
     @MainActor public static func uploadWithoutConfirmation(
@@ -124,15 +129,24 @@ class FirmwareUploadSwiftUI {
                         comment: ""
                     )
                 ),
-                actions: [AlertAction(title: "Cancel", action: {
-                    PopupManager.instance.dismiss(id: uploader.alertView.id)
-                }), AlertAction(title: "Futher Information", action: {
-                    let informationLink: String = "https://calliope.cc/programmieren/mobil/ipad#hardware"
-                    if let url = URL(string: informationLink) {
-                        UIApplication.shared.open(url)
-                    }
-                    PopupManager.instance.dismiss(id: uploader.alertView.id)
-                })]
+                actions: [
+                    AlertAction(
+                        title: "Cancel",
+                        action: {
+                            PopupManager.instance.dismiss(id: uploader.alertView.id)
+                        }
+                    ),
+                    AlertAction(
+                        title: "Futher Information",
+                        action: {
+                            let informationLink: String = "https://calliope.cc/programmieren/mobil/ipad#hardware"
+                            if let url = URL(string: informationLink) {
+                                UIApplication.shared.open(url)
+                            }
+                            PopupManager.instance.dismiss(id: uploader.alertView.id)
+                        }
+                    ),
+                ]
             )
             PopupManager.instance.show(popup)
         }
@@ -413,7 +427,7 @@ class FirmwareUploadSwiftUI {
 
         failed()*/
     }
-    
+
     /* Usage above is commented out. Why do we need this?
      func startUSBTimer() {
         LogNotify.log("⏱️ USB Timer starting now")
@@ -477,7 +491,7 @@ extension FirmwareUploadSwiftUI: DFUProgressDelegate, DFUServiceDelegate, Logger
                 return
             }
             self.progressRing.startProgress(to: CGFloat(progress), duration: 0.2)
-            PopupManager.instance.updateProgress(id: alertView.id, progress: Double(progress)/100)
+            PopupManager.instance.updateProgress(id: alertView.id, progress: Double(progress) / 100)
             if progress > 0 && self.cancelUploadAction.isEnabled {
                 self.cancelUploadAction.isEnabled = false
                 let failed = self.failed

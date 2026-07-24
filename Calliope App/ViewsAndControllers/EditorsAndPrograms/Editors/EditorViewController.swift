@@ -12,7 +12,7 @@ final class EditorViewController: UIViewController {
             LogNotify.error("Editor is nil. This should not happen.")
             return nil
         }
-        return UIHostingController(coder: coder, rootView: EditorWebViewRepresentable(editor: editor!, present: presentAlert, uploadFirmware: uploadFirmware))
+        return UIHostingController(coder: coder, rootView: EditorWebViewRepresentable(editor: editor!, showPopup: {_ in }, uploadFirmware: {_, _ in }))
     }
     
     init?(coder: NSCoder, editor: Editor) {
