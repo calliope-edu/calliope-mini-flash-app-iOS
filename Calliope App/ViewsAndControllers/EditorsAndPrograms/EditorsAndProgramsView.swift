@@ -9,28 +9,72 @@
 import Foundation
 import SwiftUI
 
+enum EditorsAndProgramRoute: Hashable {
+    case qrCodeView
+    case makeCode
+    case micropython
+    case openRobertaLab
+    case calliopeMiniBlocks
+    case arcade
+    case openHexFile
+    case qrCodeToMakeCode(url: String)
+}
+
 struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol & ObservableObject>: View {
     @ObservedObject var viewModel: viewModelType
+    @StateObject private var router = Router<EditorsAndProgramRoute>()
 
     var body: some View {
-        ZStack {
-            GeometryReader { geo in
-                ScrollView {
-                    if geo.size.width > 1000 {
-                        MasonryLayout(columns: 2) {
-                            items
-                        }
-                    } else {
-                        MasonryLayout(columns: 1) {
-                            items
+        NavigationStack(path: $router.path)  {
+            ZStack {
+                GeometryReader { geo in
+                    ScrollView {
+                        if geo.size.width > 1000 {
+                            MasonryLayout(columns: 2) {
+                                items
+                            }
+                        } else {
+                            MasonryLayout(columns: 1) {
+                                items
+                            }
                         }
                     }
+                    .padding()
                 }
-                .padding()
-            }
-            
-            MatrixConnectionView(viewModel: MatrixConnectionViewModel.instance)
+                
+                MatrixConnectionView(viewModel: MatrixConnectionViewModel.instance)
+            }.navigationDestination(for: EditorsAndProgramRoute.self, ) { route in
+                switchRoutes(route: route)
+                }
         }
+    }
+    
+    @ViewBuilder
+    func switchRoutes(route: EditorsAndProgramRoute) -> some View {
+        switch route {
+        case .qrCodeView:
+            QRCodeView{url in router.push(.qrCodeToMakeCode(url: url))}
+        case .makeCode:
+            EditorWebViewRepresentable(editor: MakeCode(), present: {_, _ in}, uploadFirmware: {_, _ in}) // TODO:
+        case .micropython:
+            EditorWebViewRepresentable(editor: MicroPython(), present: {_, _ in}, uploadFirmware: {_, _ in}) // TODO:
+        case .openRobertaLab:
+            EditorWebViewRepresentable(editor: RobertaEditor(), present: {_, _ in}, uploadFirmware: {_, _ in}) // TODO:
+        case .calliopeMiniBlocks:
+            CalliopeMiniBlocksView(viewModel: CalliopeMiniBlocksViewModel(uploadDownloadableProgram: {_ in}))
+        case .arcade:
+            ArcadeView(viewModel: ArcadeViewModel(openArcade: {}))
+        case .openHexFile:
+            Text("") // TODO:
+        case .qrCodeToMakeCode(let url):
+            changeMakeCodeURL(url: url)
+        }
+    }
+    
+    func changeMakeCodeURL(url: String) -> EditorWebViewRepresentable {
+        let makeCode = MakeCode()
+        makeCode.url = URL(string: url) ?? makeCode.url
+        return EditorWebViewRepresentable(editor: makeCode, present: {_, _ in}, uploadFirmware: {_, _ in}) // TODO:
     }
 
     @ViewBuilder
@@ -49,7 +93,20 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 250))], spacing: 40) {
                 ForEach(0..<viewModel.editors.count) { i in
                     EditorTile(config: viewModel.editors[i]).onTapGesture {
-                        viewModel.openEditor(editor: viewModel.editors[i])
+                        switch viewModel.editors[i].name {
+                        case "Makecode":
+                            router.push(.makeCode)
+                        case "Open Roberta Lab":
+                            router.push(.openRobertaLab)
+                        case "Calliope mini Blocks":
+                            router.push(.calliopeMiniBlocks)
+                        case "Micropython":
+                            router.push(.micropython)
+                        case "Arcade (USB only)":
+                            router.push(.arcade)
+                        default:
+                            break
+                        }
                     }
                 }
             }
@@ -85,7 +142,7 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
     var makeCodeQRCodeTile: some View {
         VStack(alignment: .leading) {
             Text("Open a program in MakeCode using a QR code. Simply scan it and off you go!").fontWeight(.bold)
-            boxButton(label: "Scan", iconName: "qr_code_scan_button", action: { viewModel.scanQRCode() })
+            boxButton(label: "Scan", iconName: "qr_code_scan_button", action: { router.push(.qrCodeView) })
         }
     }
 

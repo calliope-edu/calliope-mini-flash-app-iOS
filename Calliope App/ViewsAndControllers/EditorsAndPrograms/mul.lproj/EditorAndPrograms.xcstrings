@@ -81,7 +81,7 @@
     },
     "eeY-2x-OZY.title" : {
       "comment" : "Class = \"UIViewController\"; title = \"Editor\"; ObjectID = \"eeY-2x-OZY\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

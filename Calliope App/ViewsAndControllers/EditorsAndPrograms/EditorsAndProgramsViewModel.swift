@@ -24,13 +24,11 @@ protocol EditorsAndProgramsViewModelProtocol {
     var editors: [EditorTileConfig] { get }
     var programs: [ProgramTileConfig] { get }
 
-    func openEditor(editor: EditorTileConfig)
     func downloadProgram(program: ProgramTileConfig)
     func renameProgram(program: ProgramTileConfig)
     func deleteProgram(program: ProgramTileConfig)
     func uploadDefaultV3Program()
     func uploadDefaultV1And2Program()
-    func scanQRCode()
     func openFile()
 }
 
@@ -96,10 +94,6 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
 
     }
 
-    func openEditor(editor: EditorTileConfig) {
-        openEditor(editor)
-    }
-
     func downloadProgram(program: ProgramTileConfig) {
         uploadHexFile(program.hexFile)
     }
@@ -126,10 +120,6 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
             url: UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV1AndV2Url.rawValue)!
         )
         uploadDownloadableProgram(program)
-    }
-
-    func scanQRCode() {
-        openQRCodeView()
     }
 
     func openFile() {
@@ -159,10 +149,6 @@ class PreviewEditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, O
         ),
     ]
 
-    func openEditor(editor: EditorTileConfig) {
-        print("Trying to open editor \(editor.name)")
-    }
-
     func downloadProgram(program: ProgramTileConfig) {
         print("Trying to open program \(program.name)")
     }
@@ -181,10 +167,6 @@ class PreviewEditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, O
 
     func uploadDefaultV1And2Program() {
         print("Trying to upload default v1 and v2 program")
-    }
-
-    func scanQRCode() {
-        print("Trying to scan QR code")
     }
 
     func openFile() {
