@@ -16,7 +16,7 @@ struct PopupEditorWebView: View {
 
     var body: some View {
         PopupRoot {
-            EditorWebViewRepresentable(editor: editor, showPopup: showPopup, uploadFirmware: {_ in })
+            EditorWebViewRepresentable(editor: editor, showPopup: showPopup, uploadFirmware: FirmwareUploadSwiftUI.uploadWithoutConfirmation)
         }
     }
 
