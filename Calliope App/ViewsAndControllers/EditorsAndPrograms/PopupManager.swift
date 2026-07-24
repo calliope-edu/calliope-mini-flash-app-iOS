@@ -11,6 +11,7 @@ import SwiftUI
 
 @MainActor
 final class PopupManager: ObservableObject {
+    static let instance = PopupManager()
     private var popups: [Popup] = []
     @Published var currentProgressPopup: ProgressPopup? = nil
     @Published var currentAlertPopup: SwiftUIAlert? = nil
@@ -83,7 +84,7 @@ final class PopupManager: ObservableObject {
 }
 
 struct PopupRoot<Content: View>: View {
-    @StateObject private var popupManager = PopupManager()
+    @StateObject private var popupManager = PopupManager.instance
     private let content: Content
 
     init(@ViewBuilder content: () -> Content) {
@@ -119,7 +120,6 @@ struct PopupRoot<Content: View>: View {
                     Text(popupManager.currentAlertPopup?.message ?? "")
                 }
         }
-        .environmentObject(popupManager)
     }
 }
 
@@ -208,14 +208,13 @@ struct CustomCircularProgressViewStyle: ProgressViewStyle {
 }
 
 struct PopupDemoView: View {
-    @EnvironmentObject var popupManager: PopupManager
     @State var showingFileImporter = false
     @State var textFieldText = ""
 
     var body: some View {
         VStack {
             Button("Show Alert") {
-                popupManager.show(
+                PopupManager.instance.show(
                     SwiftUIAlert(
                         title: "Test title",
                         message: "Test message",
@@ -226,7 +225,7 @@ struct PopupDemoView: View {
             }
             SizedBox(height: 10)
             Button("Show Progress View") {
-                popupManager.show(ProgressPopup(title: "Tranmitting", progress: 0.6, onCancel: {}))
+                PopupManager.instance.show(ProgressPopup(title: "Tranmitting", progress: 0.6, onCancel: {}))
             }
             SizedBox(height: 10)
             Button("Show File Importer") {
