@@ -166,11 +166,11 @@ struct AlertTextField {
 }
 
 class OkAlert: SwiftUIAlert {
-    init(title: String, message: String? = nil) {
+    init(title: String, message: String? = nil, completion: @escaping () -> Void = {}) {
         super.init(
             title: title,
             message: message,
-            actions: [AlertAction(title: "OK", action: {})],
+            actions: [AlertAction(title: "OK", action: completion)],
             textField: nil
         )
     }

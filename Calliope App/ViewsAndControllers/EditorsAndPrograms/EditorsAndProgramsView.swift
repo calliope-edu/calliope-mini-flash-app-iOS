@@ -55,11 +55,11 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
         case .qrCodeView:
             QRCodeView{url in router.push(.qrCodeToMakeCode(url: url))}
         case .makeCode:
-            EditorWebViewRepresentable(editor: MakeCode(), present: {_, _ in}, uploadFirmware: {_, _ in}) // TODO:
+            PopupEditorWebView(editor: MakeCode())
         case .micropython:
-            EditorWebViewRepresentable(editor: MicroPython(), present: {_, _ in}, uploadFirmware: {_, _ in}) // TODO:
+            PopupEditorWebView(editor: MicroPython())
         case .openRobertaLab:
-            EditorWebViewRepresentable(editor: RobertaEditor(), present: {_, _ in}, uploadFirmware: {_, _ in}) // TODO:
+            PopupEditorWebView(editor: RobertaEditor())
         case .calliopeMiniBlocks:
             CalliopeMiniBlocksView(viewModel: CalliopeMiniBlocksViewModel(uploadDownloadableProgram: {_ in}))
         case .arcade:
@@ -71,10 +71,10 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
         }
     }
     
-    func changeMakeCodeURL(url: String) -> EditorWebViewRepresentable {
+    func changeMakeCodeURL(url: String) -> PopupEditorWebView {
         let makeCode = MakeCode()
         makeCode.url = URL(string: url) ?? makeCode.url
-        return EditorWebViewRepresentable(editor: makeCode, present: {_, _ in}, uploadFirmware: {_, _ in}) // TODO:
+        return PopupEditorWebView(editor: makeCode)
     }
 
     @ViewBuilder

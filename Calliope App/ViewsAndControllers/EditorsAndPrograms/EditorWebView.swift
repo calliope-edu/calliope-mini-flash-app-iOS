@@ -11,13 +11,27 @@ import ScratchLinkKit
 import SwiftUI
 import WebKit
 
+struct PopupEditorWebView: View {
+    let editor: Editor
+
+    var body: some View {
+        PopupRoot {
+            EditorWebViewRepresentable(editor: editor, showPopup: showPopup, uploadFirmware: {_ in })
+        }
+    }
+
+    func showPopup(_ popup: Popup) {
+        PopupManager.instance.show(popup)
+    }
+}
+
 struct EditorWebViewRepresentable: UIViewRepresentable {
     let editor: Editor
-    let present: (_ alert: UIViewController, _ animated: Bool) -> Void
+    let showPopup: (_ popup: Popup) -> Void
     let uploadFirmware: (_ program: HexFile, _ completion: (() -> Void)?) -> Void
 
     func makeUIView(context: Context) -> EditorWebView {
-        return EditorWebView(frame: .zero, present: present, uploadFirmware: uploadFirmware)
+        return EditorWebView(frame: .zero, showPopup: showPopup, uploadFirmware: uploadFirmware)
     }
 
     func updateUIView(_ editorWebView: EditorWebView, context: Context) {
@@ -26,12 +40,13 @@ struct EditorWebViewRepresentable: UIViewRepresentable {
 }
 
 final class EditorWebView: UIView {
+    @State var alertInputText = ""
     var webView: WKWebView?
     private let loadingIndicator = UIActivityIndicatorView(style: .large)
 
     var editor: Editor?
 
-    let present: (_ alert: UIViewController, _ animated: Bool) -> Void
+    let showPopup: (_ popup: Popup) -> Void
     let uploadFirmware: (_ program: HexFile, _ completion: (() -> Void)?) -> Void
 
     private var latestDownloadedTargetFile: URL?
@@ -48,10 +63,10 @@ final class EditorWebView: UIView {
 
     init(
         frame: CGRect,
-        present: @escaping (_ alert: UIViewController, _ animated: Bool) -> Void,
+        showPopup: @escaping (_ popup: Popup) -> Void,
         uploadFirmware: @escaping (_ program: HexFile, _ completion: (() -> Void)?) -> Void
     ) {
-        self.present = present
+        self.showPopup = showPopup
         self.uploadFirmware = uploadFirmware
         super.init(frame: frame)
         setupLoadingIndicator()
@@ -61,7 +76,7 @@ final class EditorWebView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        self.present = { alert, animated in }
+        self.showPopup = { popup in }
         self.uploadFirmware = { program, completion in }
         super.init(coder: coder)
         setupLoadingIndicator()
@@ -246,18 +261,8 @@ extension EditorWebView: WKUIDelegate {
         completionHandler: @escaping () -> Void
     ) {
 
-        let alertController = UIAlertController(title: nil, message: message, preferredStyle: .actionSheet)
-        alertController.addAction(
-            UIAlertAction(
-                title: NSLocalizedString("OK", comment: ""),
-                style: .default,
-                handler: { (action) in
-                    completionHandler()
-                }
-            )
-        )
-
-        present(alertController, true)
+        let popup = OkAlert(title: message, completion: completionHandler)
+        showPopup(popup)
     }
 
     func webView(
@@ -267,29 +272,13 @@ extension EditorWebView: WKUIDelegate {
         completionHandler: @escaping (Bool) -> Void
     ) {
 
-        let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-
-        alertController.addAction(
-            UIAlertAction(
-                title: NSLocalizedString("OK", comment: ""),
-                style: .default,
-                handler: { (action) in
-                    completionHandler(true)
-                }
-            )
+        let popup = TwoOptionsAlert(
+            title: message,
+            actions: [
+                AlertAction(title: "OK", action: { completionHandler(true) }), AlertAction(title: "Cancel", action: { completionHandler(false) }),
+            ]
         )
-
-        alertController.addAction(
-            UIAlertAction(
-                title: NSLocalizedString("Cancel", comment: ""),
-                style: .default,
-                handler: { (action) in
-                    completionHandler(false)
-                }
-            )
-        )
-
-        present(alertController, true)
+        showPopup(popup)
     }
 
     func webView(
@@ -300,37 +289,18 @@ extension EditorWebView: WKUIDelegate {
         completionHandler: @escaping (String?) -> Void
     ) {
 
-        let alertController = UIAlertController(title: nil, message: prompt, preferredStyle: .alert)
-
-        alertController.addTextField { (textField) in
-            textField.text = defaultText
-        }
-
-        alertController.addAction(
-            UIAlertAction(
-                title: NSLocalizedString("OK", comment: ""),
-                style: .default,
-                handler: { (action) in
-                    if let text = alertController.textFields?.first?.text {
-                        completionHandler(text)
-                    } else {
-                        completionHandler(defaultText)
+        let popup = SwiftUIAlert(
+            title: prompt,
+            actions: [
+                AlertAction(
+                    title: "OK",
+                    action: {
+                        completionHandler(self.alertInputText)
                     }
-                }
-            )
+                ), AlertAction(title: "Cancel", action: { completionHandler(nil) }),
+            ],
+            textField: AlertTextField(title: "", text: $alertInputText)
         )
-
-        alertController.addAction(
-            UIAlertAction(
-                title: NSLocalizedString("Cancel", comment: ""),
-                style: .default,
-                handler: { (action) in
-                    completionHandler(nil)
-                }
-            )
-        )
-
-        present(alertController, true)
     }
 }
 
@@ -424,30 +394,21 @@ extension EditorWebView: WKDownloadDelegate {
 
     private func showAlertSessionDataDownload(for status: OperationStatus) {
         let title =
-            switch status {
-            case .success: NSLocalizedString("Session data successfully downloaded!", comment: "")
-            default: NSLocalizedString("Failed to download session data!", comment: "")
-            }
-
+        switch status {
+        case .success: NSLocalizedString("Session data successfully downloaded!", comment: "")
+        default: NSLocalizedString("Failed to download session data!", comment: "")
+        }
+        
         let message =
-            switch status {
-            case .success: NSLocalizedString("You can find the session data, in the Calliope directory on your device.", comment: "")
-            default: NSLocalizedString("The download of the session data was unsuccessful.", comment: "")
-            }
-
-        let alert = UIAlertController(
-            title: title,
-            message: String(format: message),
-            preferredStyle: .alert
-        )
-        alert.addAction(
-            UIAlertAction(title: "OK", style: .cancel) { _ in
-                //                self.dismiss(animated: true) TODO: Fix
-            }
-        )
-        present(alert, true)
+        switch status {
+        case .success: NSLocalizedString("You can find the session data, in the Calliope directory on your device.", comment: "")
+        default: NSLocalizedString("The download of the session data was unsuccessful.", comment: "")
+        }
+        
+        let popup = OkAlert(title: message)
+        showPopup(popup)
+        
     }
-
 }
 
 extension EditorWebView: ScratchLinkDelegate {
@@ -562,18 +523,8 @@ extension EditorWebView {
             let xml = try download.url.asData()
             let (success, error) = saveFile(filename: "\(download.name).xml", data: xml)
             if success {
-                let alert = UIAlertController(
-                    title: NSLocalizedString("Program exported", comment: ""),
-                    message: NSLocalizedString("Program exported message", comment: "actual message in translation file"),
-                    preferredStyle: .alert
-                )
-
-                alert.addAction(
-                    UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .destructive) { _ in
-                    }
-                )
-
-                present(alert, true)
+                let popup = OkAlert(title: NSLocalizedString("Program exported", comment: ""), message: NSLocalizedString("Program exported message", comment: "actual message in translation file"))
+                showPopup(popup)
             } else {
                 throw error!
             }
