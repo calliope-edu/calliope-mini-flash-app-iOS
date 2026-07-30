@@ -76,8 +76,17 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate {
                     let connectingUSBCalliope = connectingCalliope as! DiscoveredUSBDevice
                     do {
                         connectedUSBCalliope = connectingUSBCalliope
-                        connectedUSBCalliope?.usageReadyCalliope = try USBCalliope(calliopeLocation: connectingUSBCalliope.url)
-                        dispatchUSBCalliopePolling()
+                        if connectingUSBCalliope.useExportPicker {
+                            // Shared iPad: no folder URL exists, every flash asks
+                            // for the destination via an export picker.
+                            connectedUSBCalliope?.usageReadyCalliope = USBCalliope(exportPickerMode: true)
+                            // Skip reachability polling — there is no persistent
+                            // volume URL that could be polled.
+                            LogNotify.log("USB Calliope (export-picker mode) ready")
+                        } else if let url = connectingUSBCalliope.url {
+                            connectedUSBCalliope?.usageReadyCalliope = try USBCalliope(calliopeLocation: url)
+                            dispatchUSBCalliopePolling()
+                        }
                         LogNotify.log("Calliope mini Discovery State now: \(state)")
                     } catch {
                         LogNotify.log("Connecting to USB Calliope mini failed")

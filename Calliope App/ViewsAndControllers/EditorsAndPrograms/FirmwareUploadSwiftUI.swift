@@ -54,7 +54,8 @@ class FirmwareUploadSwiftUI {
         name: String = NSLocalizedString("the program", comment: ""),
         completion: (() -> Void)? = nil
     ) {
-        guard MatrixConnectionViewModel.instance.usageReadyCalliope != nil else {
+        let connection = MatrixConnectionViewModel.instance
+        guard connection.usageReadyCalliope != nil || (connection.isInUsbMode && connection.isSharedIpad) else {
             LogNotify.error("No calliope connected. Canceling upload.")
             alertPublisher.setAlert(.cannotUpload())
             MatrixConnectionViewModel.instance.animateBounce()
@@ -164,7 +165,7 @@ class FirmwareUploadSwiftUI {
         // Validating for the correct Version of the Hex File
         let fileHexTypes = file.getHexTypes()
         LogNotify.log("[FirmwareUpload] File hex types: \(fileHexTypes)")
-
+        
         guard let calliope else {
             LogNotify.error("No calliope connected. Canceling upload.")
             alertPublisher.setAlert(.cannotUpload())
@@ -210,6 +211,12 @@ class FirmwareUploadSwiftUI {
             UploadProgressViewModel.instance.finishUpload()
             finishedCallback()
             MatrixConnectionViewModel.instance.enableDfuMode(mode: false)
+            // On Shared iPad the picked USB volume is no longer usable once the
+            // copy is through, so end the connection here and let the user
+            // re-pick the drive for the next flash. No-op everywhere else.
+            if calliope is USBCalliope {
+                MatrixConnectionViewModel.instance.resetUsbConnectionAfterCopy()
+            }
         }
 
         let startUpload = { [weak self] in

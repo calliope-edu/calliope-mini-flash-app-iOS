@@ -24,10 +24,13 @@ extension UIDevice {
     ///    via Managed App Config; we read it from `com.apple.configuration.managed`.
     /// 2. UserDefaults key allows overriding for testing
     ///
-    /// On Shared iPad the Files app picker silently rejects folder selections on
-    /// mounted external USB volumes (e.g. the Calliope MAINTENANCE/MINI drive).
-    /// The app uses this flag to switch the USB flashing flow to a per-flash
-    /// export picker, which works in the Shared iPad sandbox.
+    /// The USB flashing flow itself — switch, folder picker, copy — is identical
+    /// to a personal iPad. This flag only adds the two Shared-iPad specifics:
+    /// a one-time heads-up alert before the first pick
+    /// (`CalliopeDiscovery.initializeConnectionToUsbCalliope`), and dropping the
+    /// connection plus switching USB back off after every copy
+    /// (`MatrixConnectionViewController.resetUsbConnectionAfterCopy`), because
+    /// the picked volume's authorization does not survive a copy here.
     var isSharedIPad: Bool {
         if UserDefaults.standard.object(forKey: "sharedIPadOverride") != nil {
             let override = UserDefaults.standard.bool(forKey: "sharedIPadOverride")
