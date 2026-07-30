@@ -28,10 +28,45 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
 
     private weak var webView: WKWebView?
 
-    /// Per-characteristic subscriptions opened via `gattSubscribe`. Cleared
-    /// on `gattUnsubscribe` and on the handler's deinit so we don't leak
-    /// CBPeripheral notify state when the user leaves the editor.
-    private var subscribedCharacteristics: [CBUUID: CBCharacteristic] = [:]
+    /// One `gattSubscribe` the widget asked for. Keeps the raw `serviceId` /
+    /// `characteristicId` values the web side sent alongside the parsed UUIDs,
+    /// so a re-armed notification echoes back the exact ids the widget keyed
+    /// its listener on (`native-bridge.ts gattKey`).
+    private struct DesiredSubscription {
+        let serviceUuid: CBUUID
+        let characteristicUuid: CBUUID
+        let serviceId: Any
+        let characteristicId: Any
+    }
+
+    /// DURABLE record of the notify subscriptions the widget asked for, keyed
+    /// by characteristic UUID.
+    ///
+    /// It has to outlive both a flash-reboot and a host-side reconnect: the
+    /// Blocks editor subscribes exactly ONCE per editor session (its iframe
+    /// puppet believes it stays connected forever) and the web host only
+    /// re-arms native subscriptions on a `bleStatus` disconnected→connected
+    /// edge — an edge we deliberately suppress across a flash reboot (see
+    /// `handleHostDisconnected` / `flashSettleDeadline`). So nobody upstream
+    /// will ever ask again, and re-arming is OUR job:
+    /// `rearmDesiredSubscriptions` re-applies this map to the live (usually
+    /// brand-new) peripheral whenever the host reports usage-ready.
+    ///
+    /// Without it, every hardware→editor event (button / touch / pin / data,
+    /// all carried on the single SENSOR_EVENT characteristic `0b500110-…`)
+    /// stopped arriving after the first flash, while editor→hardware writes
+    /// kept working — they re-resolve their characteristic on every call.
+    private var desiredSubscriptions: [CBUUID: DesiredSubscription] = [:]
+
+    private enum SubscribeError: LocalizedError {
+        case characteristicUnavailable
+
+        var errorDescription: String? {
+            switch self {
+            case .characteristicUnavailable: return "characteristic not available"
+            }
+        }
+    }
 
     /// Pending flash reply id — populated on `flash`, resolved by the
     /// progress/state delegate methods below.
@@ -123,12 +158,7 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
         flashReconnectTimer = nil
         // Clean up any active subscriptions on the live peripheral. Avoids
         // leaving the radio in notify-on state after the editor closes.
-        if let cal = activeCalliope() {
-            for (_, ch) in subscribedCharacteristics {
-                cal.rawNotificationHandlers.removeValue(forKey: ch.uuid)
-                cal.peripheral.setNotifyValue(false, for: ch)
-            }
-        }
+        disarmSubscriptions(forget: true)
         connectPollTimer?.cancel()
         connectPollTimer = nil
     }
@@ -221,6 +251,7 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
             cancelDisconnectDebounce()
             emitConnected(cal)
             enableSerialNotify(cal)
+            rearmDesiredSubscriptions(cal)
             replyOk(id: id)
             return
         }
@@ -267,6 +298,7 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
                 self.cancelDisconnectDebounce()
                 self.emitConnected(cal)
                 self.enableSerialNotify(cal)
+                self.rearmDesiredSubscriptions(cal)
                 if let id = id { self.replyOk(id: id) }
                 return
             }
@@ -294,13 +326,11 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
         // other UI relying on the connection. Just clear our local
         // subscriptions and report the widget's bleStatus as disconnected
         // for the duration of this editor session.
-        if let cal = activeCalliope() {
-            for (_, ch) in subscribedCharacteristics {
-                cal.rawNotificationHandlers.removeValue(forKey: ch.uuid)
-                cal.peripheral.setNotifyValue(false, for: ch)
-            }
-        }
-        subscribedCharacteristics.removeAll()
+        //
+        // An explicit widget `disconnect` ends the session, so the notify
+        // INTENT goes too — unlike the involuntary drop handled by the
+        // debounce below, which keeps it so a reconnect can re-arm.
+        disarmSubscriptions(forget: true)
         emitState(status: "disconnected", deviceName: "")
         replyOk(id: id)
     }
@@ -337,6 +367,14 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
         // Re-arm serial even if we already consider ourselves connected: after a
         // reboot the peripheral object is new and the old notify handler is dead.
         enableSerialNotify(cal)
+        // Same for the widget's GATT notify subscriptions, and for the same
+        // reason — the reboot reset every CCCD and handed us a fresh
+        // BLECalliope whose `rawNotificationHandlers` is empty. This is the
+        // ONLY place they come back after a flash: we suppress the
+        // disconnected→connected edge the web host would otherwise re-arm on
+        // (see `handleHostDisconnected`), and the Blocks editor subscribes just
+        // once per session, so no re-subscribe is ever coming from above.
+        rearmDesiredSubscriptions(cal)
         if !bridgeConnected {
             emitConnected(cal)
         }
@@ -370,7 +408,11 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
             if self.activeCalliope() != nil { return }
             guard self.bridgeConnected else { return }
             self.bridgeConnected = false
-            self.subscribedCharacteristics.removeAll()
+            // Keep `desiredSubscriptions` — the link died under us, so the
+            // notify state is gone either way, but the widget still WANTS those
+            // notifications and `handleHostUsageReady` re-arms them on the way
+            // back. (Only an explicit `disconnect`/`gattUnsubscribe` drops the
+            // intent.)
             self.emitState(status: "disconnected", deviceName: "")
         }
         timer.resume()
@@ -476,32 +518,22 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
             replyError(id: id, message: "not connected")
             return
         }
-        guard let ch = findCharacteristic(on: cal.peripheral, service: svcUuid, characteristic: chUuid) else {
-            replyError(id: id, message: "characteristic not available")
-            return
-        }
-        let serviceIdAny: Any = args["serviceId"] ?? svcUuid.uuidString
-        let charIdAny: Any = args["characteristicId"] ?? chUuid.uuidString
-        // Install the raw notify handler on BLECalliope BEFORE enabling
-        // notifications, so we don't drop the first packet between
-        // setNotifyValue and the first didUpdateValueFor callback.
-        cal.rawNotificationHandlers[ch.uuid] = { [weak self] data in
-            self?.sendEvent(kind: "gattNotify", data: [
-                "serviceId": serviceIdAny,
-                "characteristicId": charIdAny,
-                "data": data.base64EncodedString(),
-            ])
-        }
-        subscribedCharacteristics[ch.uuid] = ch
-        cal.setNotify(characteristic: ch, true) { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success: self?.replyOk(id: id)
-                case .failure(let err):
-                    cal.rawNotificationHandlers.removeValue(forKey: ch.uuid)
-                    self?.subscribedCharacteristics.removeValue(forKey: ch.uuid)
-                    self?.replyError(id: id, message: "subscribe failed: \(err.localizedDescription)")
-                }
+        // Record the durable intent BEFORE arming, so a subscribe that can't be
+        // armed right now (characteristic not discovered yet on a link that is
+        // still settling) is still re-tried on the next usage-ready edge
+        // instead of being lost with the error reply.
+        let sub = DesiredSubscription(
+            serviceUuid: svcUuid,
+            characteristicUuid: chUuid,
+            serviceId: args["serviceId"] ?? svcUuid.uuidString,
+            characteristicId: args["characteristicId"] ?? chUuid.uuidString
+        )
+        desiredSubscriptions[chUuid] = sub
+        armSubscription(sub, on: cal) { [weak self] result in
+            switch result {
+            case .success: self?.replyOk(id: id)
+            case .failure(let err):
+                self?.replyError(id: id, message: "subscribe failed: \(err.localizedDescription)")
             }
         }
     }
@@ -512,16 +544,92 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
             replyError(id: id, message: "invalid uuid")
             return
         }
+        // Drop the intent first — an unsubscribe must not be undone by a later
+        // re-arm, even if there's no live peripheral to switch the CCCD off on.
+        desiredSubscriptions.removeValue(forKey: chUuid)
         guard let cal = activeCalliope() else {
             replyOk(id: id)
             return
         }
-        if let ch = subscribedCharacteristics.removeValue(forKey: chUuid)
-            ?? findCharacteristic(on: cal.peripheral, service: svcUuid, characteristic: chUuid) {
+        if let ch = findCharacteristic(on: cal.peripheral, service: svcUuid, characteristic: chUuid) {
             cal.rawNotificationHandlers.removeValue(forKey: ch.uuid)
             cal.peripheral.setNotifyValue(false, for: ch)
         }
         replyOk(id: id)
+    }
+
+    /// Install the raw notify handler and enable notifications for one desired
+    /// subscription on `cal`. The characteristic is re-resolved from the live
+    /// peripheral on every call — a `CBCharacteristic` captured before a reboot
+    /// belongs to a dead service object, and toggling notify on it does nothing.
+    /// The handler goes in BEFORE `setNotify` so no packet slips through the gap
+    /// between enabling notifications and the first `didUpdateValueFor`.
+    private func armSubscription(
+        _ sub: DesiredSubscription,
+        on cal: BLECalliope,
+        completion: ((Result<Void, Error>) -> Void)? = nil
+    ) {
+        guard let ch = findCharacteristic(
+            on: cal.peripheral,
+            service: sub.serviceUuid,
+            characteristic: sub.characteristicUuid
+        ) else {
+            completion?(.failure(SubscribeError.characteristicUnavailable))
+            return
+        }
+        cal.rawNotificationHandlers[ch.uuid] = { [weak self] data in
+            self?.sendEvent(kind: "gattNotify", data: [
+                "serviceId": sub.serviceId,
+                "characteristicId": sub.characteristicId,
+                "data": data.base64EncodedString(),
+            ])
+        }
+        cal.setNotify(characteristic: ch, true) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    completion?(.success(()))
+                case .failure(let err):
+                    cal.rawNotificationHandlers.removeValue(forKey: ch.uuid)
+                    completion?(.failure(err))
+                }
+            }
+        }
+    }
+
+    /// Re-apply every desired subscription to the live (usually brand-new)
+    /// peripheral. Idempotent: re-installing a handler overwrites the previous
+    /// closure and `setNotifyValue(true, …)` on an already-notifying
+    /// characteristic is a no-op, so it is safe to call on every usage-ready
+    /// edge — including ones where the widget also re-subscribes by itself.
+    private func rearmDesiredSubscriptions(_ cal: BLECalliope) {
+        guard !desiredSubscriptions.isEmpty else { return }
+        for sub in desiredSubscriptions.values {
+            armSubscription(sub, on: cal) { result in
+                if case .failure(let err) = result {
+                    LogNotify.log("[ProxyBridge] re-arm of \(sub.characteristicUuid) failed: \(err.localizedDescription)")
+                }
+            }
+        }
+    }
+
+    /// Switch notifications off on the live peripheral for every desired
+    /// subscription. `forget: false` keeps the intent so the next usage-ready
+    /// edge restores it (used before a flash, where DFU needs the radio to
+    /// itself); `forget: true` ends the session's subscriptions for good.
+    private func disarmSubscriptions(forget: Bool) {
+        if let cal = activeCalliope() {
+            for sub in desiredSubscriptions.values {
+                guard let ch = findCharacteristic(
+                    on: cal.peripheral,
+                    service: sub.serviceUuid,
+                    characteristic: sub.characteristicUuid
+                ) else { continue }
+                cal.rawNotificationHandlers.removeValue(forKey: ch.uuid)
+                cal.peripheral.setNotifyValue(false, for: ch)
+            }
+        }
+        if forget { desiredSubscriptions.removeAll() }
     }
 
     // MARK: - Serial (UART)
@@ -636,11 +744,12 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
     /// during a reconnect attempt — so `handleHostDisconnected` doesn't mistake
     /// pre-flash reconnect churn for a flash reboot.
     private func proceedWithFlash(id: String, cal: BLECalliope, hexFile: HexFile, argForceFullDfu: Bool) {
-        for (_, ch) in subscribedCharacteristics {
-            cal.rawNotificationHandlers.removeValue(forKey: ch.uuid)
-            cal.peripheral.setNotifyValue(false, for: ch)
-        }
-        subscribedCharacteristics.removeAll()
+        // `forget: false` — switch the notifications off for the flash, but KEEP
+        // the intent. The mini reboots into the new program with every CCCD
+        // reset and a fresh BLECalliope, and the web host won't re-subscribe
+        // (it only re-arms on a connect edge, which the flash-settle window
+        // hides): `handleHostUsageReady` restores them from the kept intent.
+        disarmSubscriptions(forget: false)
 
         pendingFlashReplyId = id
         Self.inFlightFlasher = self
