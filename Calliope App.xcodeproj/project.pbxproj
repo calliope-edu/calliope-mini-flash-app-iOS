@@ -91,6 +91,7 @@
 		604938852E151BB1008BCE40 /* OperationStatusEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604938842E151BA7008BCE40 /* OperationStatusEnum.swift */; };
 		604938BE2E1BAF6C008BCE40 /* DummyModules in Frameworks */ = {isa = PBXBuildFile; productRef = 604938BD2E1BAF6C008BCE40 /* DummyModules */; };
 		604938C02E1BAF6C008BCE40 /* ScratchLinkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 604938BF2E1BAF6C008BCE40 /* ScratchLinkKit */; };
+		604F00E0307928C000866E12 /* CalliopeProxyMessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604F00DF307928C000866E12 /* CalliopeProxyMessageHandler.swift */; };
 		6073401E300785C200616062 /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6073401D300785C200616062 /* QRCodeView.swift */; };
 		607340203007C05700616062 /* EditorWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6073401F3007C05700616062 /* EditorWebView.swift */; };
 		6073406A3007DFDA00616062 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607340693007DFDA00616062 /* Router.swift */; };
@@ -246,6 +247,7 @@
 		604938822E15127E008BCE40 /* FileExtensionsEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileExtensionsEnum.swift; sourceTree = "<group>"; };
 		604938842E151BA7008BCE40 /* OperationStatusEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationStatusEnum.swift; sourceTree = "<group>"; };
 		604938B42E1BAF1D008BCE40 /* ScratchLinkKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ScratchLinkKit; sourceTree = "<group>"; };
+		604F00DF307928C000866E12 /* CalliopeProxyMessageHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeProxyMessageHandler.swift; sourceTree = "<group>"; };
 		6073401D300785C200616062 /* QRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
 		6073401F3007C05700616062 /* EditorWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorWebView.swift; sourceTree = "<group>"; };
 		607340693007DFDA00616062 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
@@ -726,6 +728,7 @@
 		60D1FD692B6BCF3D00BC6202 /* CalliopeModels */ = {
 			isa = PBXGroup;
 			children = (
+				604F00E2307928CA00866E12 /* Native Proxy */,
 				60F6C3E52F2D24A300A6C193 /* Web Bluetooth */,
 				60D1FD6B2B6BCF9800BC6202 /* ConnectedCalliopes */,
 				60D1FD6A2B6BCF8700BC6202 /* DiscoveryCalliopes */,
@@ -733,6 +736,14 @@
 				2F61452F22BF761F001C2734 /* CalliopeDiscovery.swift */,
 			);
 			path = CalliopeModels;
+			sourceTree = "<group>";
+		};
+		604F00E2307928CA00866E12 /* Native Proxy */ = {
+			isa = PBXGroup;
+			children = (
+				604F00DF307928C000866E12 /* CalliopeProxyMessageHandler.swift */,
+			);
+			path = "Native Proxy";
 			sourceTree = "<group>";
 		};
 		60D1FD6A2B6BCF8700BC6202 /* DiscoveryCalliopes */ = {
@@ -1047,6 +1058,7 @@
 				60818E7D2FE5A4150053893F /* EditorsAndProgramsView.swift in Sources */,
 				2FC2A12922C8FA6F00675C2F /* News.swift in Sources */,
 				600E632E2C33D7BB0027AE61 /* DataParser.swift in Sources */,
+				604F00E0307928C000866E12 /* CalliopeProxyMessageHandler.swift in Sources */,
 				2F61456E22BF761F001C2734 /* CalliopeBLEProfile.swift in Sources */,
 				2F57C3B42394F78B008B0D69 /* DownloadableHexFile.swift in Sources */,
 				60818EBC2FF561FB0053893F /* ArcadeView.swift in Sources */,

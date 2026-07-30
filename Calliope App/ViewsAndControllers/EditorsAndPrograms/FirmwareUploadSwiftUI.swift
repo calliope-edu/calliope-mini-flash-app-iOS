@@ -93,6 +93,7 @@ class FirmwareUploadSwiftUI {
         }
 
         let uploader = FirmwareUploadSwiftUI(file: program, alertPublisher: alertPublisher)
+        let tempCalliope = MatrixConnectionViewModel.instance.usageReadyCalliope
 
         do {
             try uploader.upload(finishedCallback: {
@@ -211,33 +212,36 @@ class FirmwareUploadSwiftUI {
             MatrixConnectionViewModel.instance.enableDfuMode(mode: false)
         }
 
-        do {
-            MatrixConnectionViewModel.instance.enableDfuMode(mode: true)
-
-            // USB flashing works by copying a file to the device, so real progress
-            // cannot be measured. Show an indeterminate progress instead.
-            let isUSB = calliope is USBCalliope
-            UploadProgressViewModel.instance.startUpload(
-                isIndeterminate: isUSB,
-                statusText: isUSB ? NSLocalizedString("Transferring to Calliope", comment: "") : ""
-            )
-            UploadProgressViewModel.instance.cancelAction = { [weak self] in
-                self?.finished()
-            }
-
-            // Set up disconnect callback for partial flashing optimization
-            if let flashableCalliope = calliope as? FlashableBLECalliope {
-                flashableCalliope.requestDisconnectCallback = { [weak self] in
-                    LogNotify.log("[PartialFlash] Disconnect requested - triggering immediate disconnect")
-                    MatrixConnectionViewModel.instance.connector.disconnectForReboot()
+        let startUpload = { [weak self] in
+            guard let self else { return }
+            do {
+                MatrixConnectionViewModel.instance.enableDfuMode(mode: true)
+                
+                // Set up disconnect callback for partial flashing optimization
+                if let flashableCalliope = calliope as? FlashableBLECalliope {
+                    // Captures nothing (no `self` reference), so no retain cycle
+                    // via calliope -> callback -> FirmwareUpload.
+                    flashableCalliope.requestDisconnectCallback = {
+                        LogNotify.log("[PartialFlash] Disconnect requested - triggering immediate disconnect")
+                        MatrixConnectionViewModel.instance.connector.disconnectForReboot()
+                    }
+                }
+                
+                try calliope.upload(file: self.file, progressReceiver: self, statusDelegate: self, logReceiver: self)
+            } catch {
+                DispatchQueue.main.async { [weak self] in
+                    self?.showUploadError(error)
                 }
             }
-
-            try calliope.upload(file: file, progressReceiver: self, statusDelegate: self, logReceiver: self)
-        } catch {
-            DispatchQueue.main.async { [weak self] in
-                self?.showUploadError(error)
-            }
+        }
+        // Decide partial vs full flash BEFORE touching the BLE stack: a device
+        // still running the Blocks/Campus runtime must get a full DFU, and only
+        // a live GATT probe can tell (the partial-flash DAL check can't). USB
+        // uploads skip this - they always write a whole image anyway.
+        if let flashableCalliope = calliope as? FlashableBLECalliope {
+            flashableCalliope.prepareFlashMode { startUpload() }
+        } else {
+            startUpload()
         }
     }
 

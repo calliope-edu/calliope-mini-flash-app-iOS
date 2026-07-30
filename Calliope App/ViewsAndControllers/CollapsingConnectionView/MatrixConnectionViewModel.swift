@@ -38,6 +38,7 @@ protocol MatrixConnectionViewModelProtocol: ObservableObject {
     var connectButtonState: ConnectButtonState { get }
     var connectionMenuButtonBounceTrigger: Int { get }
     var connectButtonBounceTrigger: Int { get }
+    var isSharedIpad: Bool { get }
 
     func connect()
     func startUsbConnect()
@@ -77,6 +78,7 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
             set: { self.alert = $0 }
         )
     }
+    @Published var isSharedIpad: Bool = UIDevice.current.isSharedIPad
 
     let restoreLastMatrixEnabled = UserDefaults.standard.bool(forKey: SettingsKey.restoreLastMatrix.rawValue)
     private let queue = DispatchQueue(label: "bluetooth")
@@ -214,15 +216,7 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
     func startUsbConnect() {
         connector.startUsbConnect()
         
-        // Shared iPad: the system silently rejects folder selection on mounted
-        // USB volumes, so the folder picker is unusable. Skip it and connect a
-        // virtual USB Calliope that asks for the destination per-flash via an
-        // export picker.
-        if UIDevice.current.isSharedIPad {
-            LogNotify.log("Shared iPad detected — skipping folder picker, using export-picker flow")
-            connector.initializeVirtualUSBCalliope()
-            return
-        }
+        
         
         // Personal iPad: use the existing folder-picker flow.
         isFolderPickerPresented = true
@@ -495,6 +489,7 @@ class PreviewMatrixConnectionViewModel: MatrixConnectionViewModelProtocol {
     @Published var connectionMenuButtonBounceTrigger: Int = 0
     @Published var connectButtonBounceTrigger: Int = 0
     @Published var isFolderPickerPresented = false
+    @Published var isSharedIpad: Bool = false
 
     init(connectionMenuButtonState: ConnectionMenuButtonState = .disconnected, connectButtonState: ConnectButtonState = .readyToConnect) {
         self.connectionMenuButtonState = connectionMenuButtonState

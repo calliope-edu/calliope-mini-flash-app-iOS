@@ -29,7 +29,9 @@ extension UIDevice {
     /// The app uses this flag to switch the USB flashing flow to a per-flash
     /// export picker, which works in the Shared iPad sandbox.
     var isSharedIPad: Bool {
-        if let override = UserDefaults.standard.object(forKey: "sharedIPadOverride") as? Bool {
+        if UserDefaults.standard.object(forKey: "sharedIPadOverride") != nil {
+            let override = UserDefaults.standard.bool(forKey: "sharedIPadOverride")
+            LogNotify.debug("Shared iPad override was set as \(override)")
             return override
         }
         if let managed = UserDefaults.standard.dictionary(forKey: "com.apple.configuration.managed"),

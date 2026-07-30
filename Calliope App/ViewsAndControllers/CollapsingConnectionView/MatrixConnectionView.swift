@@ -33,9 +33,21 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
 
                     Toggle("Connect with cable", isOn: $viewModel.isInUsbMode).frame(maxWidth: 300).padding(.bottom, 8)
 
-                    VStack(spacing: 0) {
+                    VStack(alignment: .leading, spacing: 4) {
                         if displayedIsUsb {
-                            selectUSBCalliopeButton
+                            if viewModel.isSharedIpad {
+                                Text("You're on a shared iPad")
+                                    .font(.subheadline.bold())
+
+                                Text("You'll need to select the Calliope mini again before every file transfer. Switching to Bluetooth avoids this.")
+                                    .font(.footnote)
+                                    .foregroundColor(.secondary)
+                                    .multilineTextAlignment(.leading)
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
+                            else{
+                                selectUSBCalliopeButton
+                            }
                         } else {
                             bluetoothMenu
                         }

@@ -344,6 +344,18 @@
         }
       }
     },
+    "Before every file copy you have to select the Calliope mini." : {
+      "comment" : "USB connection alert body on Shared iPad",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vor jeder Kopie einer Datei muss der Calliope mini ausgewählt werden."
+          }
+        }
+      }
+    },
     "Bitte versetze den Calliope mini in den Bluetooth-Modus (A+B+Reset), um ein Programm zu übertragen." : {
       "comment" : "Manual DFU mode instruction"
     },
@@ -384,6 +396,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Blinking Heart"
+          }
+        }
+      }
+    },
+    "Blocks runtime detected — using full flash instead of partial flash" : {
+      "comment" : "Proxy bridge: blocks runtime forces full DFU",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blocks-Runtime erkannt — vollständiger DFU statt partial-flash"
           }
         }
       }
@@ -792,6 +815,18 @@
         }
       }
     },
+    "Continue" : {
+      "comment" : "Continue button",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fortfahren"
+          }
+        }
+      }
+    },
     "Could not delete %@\n" : {
 
     },
@@ -844,6 +879,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Could not save or download a hex file"
+          }
+        }
+      }
+    },
+    "Couldn't reach your Calliope mini. Hold A+B and press reset on the mini to turn Bluetooth back on, then try flashing again." : {
+      "comment" : "Proxy bridge: reconnect-before-flash timed out",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Calliope mini ist nicht erreichbar. Halte A+B gedrückt und drücke Reset, um Bluetooth wieder einzuschalten, und flashe dann erneut."
           }
         }
       }
@@ -1902,6 +1948,28 @@
         }
       }
     },
+    "No Calliope mini paired" : {
+      "comment" : "Proxy bridge: connect timed out, no device paired",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kein Calliope mini gekoppelt"
+          }
+        }
+      }
+    },
+    "No Calliope mini paired — please pair one via the connection icon at the top of the app and try again." : {
+      "comment" : "Proxy bridge: connect timed out, no device paired",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kein Calliope mini gekoppelt — bitte oben über das Verbindungssymbol einen Calliope mini koppeln und erneut versuchen."
+          }
+        }
+      }
+    },
     "No changes to upload" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2072,6 +2140,17 @@
         }
       }
     },
+    "Please select and connect a Calliope mini using the Calliope icon at the top." : {
+      "comment" : "Proxy bridge: connect requested but no device paired yet",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bitte oben im Calliope-Symbol einen Calliope mini auswählen und verbinden."
+          }
+        }
+      }
+    },
     "Press \"Load Data From Calliope\" on the Sensordata page to display the recorded data." : {
 
     },
@@ -2178,6 +2257,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Done!"
+          }
+        }
+      }
+    },
+    "Reconnecting to your Calliope mini before flashing …" : {
+      "comment" : "Proxy bridge: reopening a stale connection before a flash",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbinde erneut mit deinem Calliope mini, bevor geflasht wird …"
           }
         }
       }
@@ -2526,6 +2616,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Subscribe to the Calliope mini Swift Playground"
+          }
+        }
+      }
+    },
+    "Switching to Bluetooth avoids this." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wechsle zu Bluetooth, um das zu vermeiden."
           }
         }
       }
@@ -2892,6 +2993,18 @@
         }
       }
     },
+    "USB connection" : {
+      "comment" : "USB connection alert title on Shared iPad",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "USB Verbindung"
+          }
+        }
+      }
+    },
     "USB-Modus öffnen" : {
       "comment" : "Open USB mode"
     },
@@ -3168,6 +3281,48 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Du hast keinen Calliope-Ordner als Speicherort gewählt"
+          }
+        }
+      }
+    },
+    "You'll need to select the Calliope mini again before every file transfer." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du musst den Calliope mini vor jeder Dateiübertragung erneut auswählen."
+          }
+        }
+      }
+    },
+    "You'll need to select the Calliope mini again before every file transfer. Switching to Bluetooth avoids this." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du musst den Calliope mini vor jeder Dateiübertragung erneut auswählen. Wechsle zu Bluetooth, um das zu vermeiden."
+          }
+        }
+      }
+    },
+    "You're on a shared iPad" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du nutzt ein geteiltes iPad"
+          }
+        }
+      }
+    },
+    "Your Calliope mini isn't in Bluetooth mode. Hold A+B and press reset on the mini — it will then flash automatically." : {
+      "comment" : "Proxy bridge: ask user to enter BLE mode before flashing",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Calliope mini ist nicht im Bluetooth-Modus. Halte A+B gedrückt und drücke Reset – dann wird automatisch geflasht."
           }
         }
       }

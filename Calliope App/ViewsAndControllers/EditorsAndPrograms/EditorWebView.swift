@@ -380,6 +380,8 @@ final class EditorWebView: UIView {
     let alertPublisher: Alertable
     let uploadFirmware: (_ alertPublisher: Alertable, _ program: HexFile, _ completion: (() -> Void)?) -> Void
 
+    private var proxyMessageHandler: CalliopeProxyMessageHandler?
+    
     private var latestDownloadedTargetFile: URL?
     var documentsPath: URL {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -455,8 +457,32 @@ final class EditorWebView: UIView {
         webView.translatesAutoresizingMaskIntoConstraints = false
         webView.backgroundColor = Styles.colorWhite
 
-        webView.navigationDelegate = self
-        webView.uiDelegate = self
+        // For the Calliope Campus editor, register the native-proxy
+        // bridge as the `calliope` script-message handler BEFORE the page
+        // loads. The widget's detection probe (`window.webkit?.messageHandlers
+        // ?.calliope`) needs this present at script start.
+        //
+        // Important: use `webview.configuration.userContentController` —
+        // the LIVE controller — not the local `controller` variable.
+        // WKWebView makes its own copy of WKWebViewConfiguration when
+        // created (Apple docs), so modifying the original-config's
+        // controller after WKWebView init has NO EFFECT on the actual
+        // running webview. The local-controller path was the bug behind
+        // the widget showing "Browser nicht unterstützt": the handler
+        // got attached to an unused controller and the JS never saw
+        // `window.webkit.messageHandlers.calliope`, so isNativeMode()
+        // returned false and the widget fell back to web-mode
+        // (where iOS WKWebView has neither WebUSB nor Web Bluetooth →
+        // status = unsupported). Same pattern used by the working
+        // WBWebView reference impl.
+        if editor is CampusEditor {
+            let handler = CalliopeProxyMessageHandler(webView: webView)
+            self.proxyMessageHandler = handler
+            webView.configuration.userContentController.add(
+                handler,
+                name: CalliopeProxyMessageHandler.handlerName
+            )
+        }
 
         // Configure scroll view to better handle touches in web content
         // This helps with selecting items in MakeCode project lists
@@ -511,6 +537,24 @@ final class EditorWebView: UIView {
         var request = URLRequest(url: editor.url!)
         request.cachePolicy = .useProtocolCachePolicy
         webView!.load(request)
+    }
+
+    override func willMove(toWindow newWindow: UIWindow?) {
+        super.willMove(toWindow: newWindow)
+        guard newWindow == nil else { return }
+
+        MatrixConnectionViewModel.instance.restartFromBLEConnectionDrop()
+
+        // Tear down the proxy bridge — WKUserContentController retains
+        // script-message handlers strongly, so without an explicit remove
+        // the handler (and its captured BLE notify subscriptions) would
+        // outlive the editor.
+        if proxyMessageHandler != nil {
+            webView?.configuration.userContentController.removeScriptMessageHandler(
+                forName: CalliopeProxyMessageHandler.handlerName
+            )
+            proxyMessageHandler = nil
+        }
     }
 }
 
@@ -785,7 +829,19 @@ extension EditorWebView {
     // MARK: Handle possible editor change (i.e. Scratch Based with own BLE connection)
 
     private func handlePossibleEditorChanges() {
-        determineIfScratchBasedEditor { self.switchEditorImperatives($0) }
+        // Campus is Scratch-based (it loads the scratch-link extension script),
+        // but it does NOT drive BLE through ScratchLink — it goes through the
+        // native-proxy bridge, which reads the app's own usageReadyCalliope.
+        // Running the scratch branch here would call dropBLEConnection() and
+        // tear down exactly the connection the bridge needs (plus set
+        // isInBackground, which suppresses the app's auto-reconnect), so the
+        // editor came up disconnected until the user hit the connect icon.
+        // Skipping is safe: the non-scratch branch would only re-apply the
+        // user-agent values viewDidLoad already set for Campus.
+        if editor is CampusEditor {
+            return
+        }
+        determineIfScratchBasedEditor() { self.switchEditorImperatives($0)}
     }
 
     private func determineIfScratchBasedEditor(completion: @escaping (Bool) -> Void) {

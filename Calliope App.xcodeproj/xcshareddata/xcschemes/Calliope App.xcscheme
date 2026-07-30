@@ -61,7 +61,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-sharedIPadOverride NO"
+            argument = "-sharedIPadOverride YES"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
