@@ -1132,7 +1132,7 @@ extension CalliopeProxyMessageHandler: LoggerDelegate {
 
 /// Swift port of the Android `CampusUrls` allowlist — the single source of
 /// truth for which web origins may drive the native-proxy bridge. The bridge
-/// is only attached to `CampusEditor` web views, but that is a registration-
+/// is only attached to `CampusBridgedEditor` web views, but that is a registration-
 /// time gate; this is the per-message runtime gate that keeps the firmware-
 /// flash / raw-GATT capability from leaking to any other origin the campus
 /// page might navigate or link out to.

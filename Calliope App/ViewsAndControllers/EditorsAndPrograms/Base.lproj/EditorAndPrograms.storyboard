@@ -707,6 +707,117 @@
                                     <segue destination="eeY-2x-OZY" kind="show" identifier="openCampus" destinationCreationSelector="createCampusEditor:sender:" id="UIB-6u-Lgi"/>
                                 </connections>
                             </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="campusBlocksEditorCell" id="cB1-cs-101" userLabel="campusBlocksEditorCell" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
+                                <rect key="frame" x="170" y="871.66666666666663" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="cB1-cs-102">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Campus Blocks" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cB1-cs-103">
+                                            <rect key="frame" x="0.0" y="50" width="50" height="0.0"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="editors_blocks_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="cB1-cs-104">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="45"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" priority="999" constant="160" id="cB1-cs-105"/>
+                                                <constraint firstAttribute="width" secondItem="cB1-cs-104" secondAttribute="height" multiplier="1:1" priority="999" id="cB1-cs-106"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="cB1-cs-103" firstAttribute="leading" secondItem="cB1-cs-102" secondAttribute="leading" id="cB1-cs-107"/>
+                                        <constraint firstItem="cB1-cs-104" firstAttribute="top" secondItem="cB1-cs-102" secondAttribute="top" id="cB1-cs-108"/>
+                                        <constraint firstAttribute="bottom" secondItem="cB1-cs-103" secondAttribute="bottom" id="cB1-cs-109"/>
+                                        <constraint firstItem="cB1-cs-103" firstAttribute="top" secondItem="cB1-cs-104" secondAttribute="bottom" constant="5" id="cB1-cs-110"/>
+                                        <constraint firstItem="cB1-cs-104" firstAttribute="leading" secondItem="cB1-cs-102" secondAttribute="leading" id="cB1-cs-111"/>
+                                        <constraint firstAttribute="trailing" secondItem="cB1-cs-104" secondAttribute="trailing" id="cB1-cs-112"/>
+                                        <constraint firstAttribute="trailing" secondItem="cB1-cs-103" secondAttribute="trailing" id="cB1-cs-113"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <connections>
+                                    <outlet property="logo" destination="cB1-cs-104" id="cB1-cs-114"/>
+                                    <outlet property="name" destination="cB1-cs-103" id="cB1-cs-115"/>
+                                    <segue destination="eeY-2x-OZY" kind="show" identifier="openCampusBlocks" destinationCreationSelector="createCampusBlocksEditor:sender:" id="cB1-cs-116"/>
+                                </connections>
+                            </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="campusMakecodeEditorCell" id="cM1-cs-201" userLabel="campusMakecodeEditorCell" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
+                                <rect key="frame" x="170" y="931.66666666666663" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="cM1-cs-202">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Campus MakeCode" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cM1-cs-203">
+                                            <rect key="frame" x="0.0" y="50" width="50" height="0.0"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="editors_makecode" translatesAutoresizingMaskIntoConstraints="NO" id="cM1-cs-204">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="45"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" priority="999" constant="160" id="cM1-cs-205"/>
+                                                <constraint firstAttribute="width" secondItem="cM1-cs-204" secondAttribute="height" multiplier="1:1" priority="999" id="cM1-cs-206"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="cM1-cs-203" firstAttribute="leading" secondItem="cM1-cs-202" secondAttribute="leading" id="cM1-cs-207"/>
+                                        <constraint firstItem="cM1-cs-204" firstAttribute="top" secondItem="cM1-cs-202" secondAttribute="top" id="cM1-cs-208"/>
+                                        <constraint firstAttribute="bottom" secondItem="cM1-cs-203" secondAttribute="bottom" id="cM1-cs-209"/>
+                                        <constraint firstItem="cM1-cs-203" firstAttribute="top" secondItem="cM1-cs-204" secondAttribute="bottom" constant="5" id="cM1-cs-210"/>
+                                        <constraint firstItem="cM1-cs-204" firstAttribute="leading" secondItem="cM1-cs-202" secondAttribute="leading" id="cM1-cs-211"/>
+                                        <constraint firstAttribute="trailing" secondItem="cM1-cs-204" secondAttribute="trailing" id="cM1-cs-212"/>
+                                        <constraint firstAttribute="trailing" secondItem="cM1-cs-203" secondAttribute="trailing" id="cM1-cs-213"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <connections>
+                                    <outlet property="logo" destination="cM1-cs-204" id="cM1-cs-214"/>
+                                    <outlet property="name" destination="cM1-cs-203" id="cM1-cs-215"/>
+                                    <segue destination="eeY-2x-OZY" kind="show" identifier="openCampusMakecode" destinationCreationSelector="createCampusMakeCodeEditor:sender:" id="cM1-cs-216"/>
+                                </connections>
+                            </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="campusPythonEditorCell" id="cP1-cs-301" userLabel="campusPythonEditorCell" customClass="EditorCollectionViewCell" customModule="Calliope_App" customModuleProvider="target">
+                                <rect key="frame" x="170" y="991.66666666666663" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="cP1-cs-302">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Campus Python" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cP1-cs-303">
+                                            <rect key="frame" x="0.0" y="50" width="50" height="0.0"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="editors_python" translatesAutoresizingMaskIntoConstraints="NO" id="cP1-cs-304">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="45"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" priority="999" constant="160" id="cP1-cs-305"/>
+                                                <constraint firstAttribute="width" secondItem="cP1-cs-304" secondAttribute="height" multiplier="1:1" priority="999" id="cP1-cs-306"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="cP1-cs-303" firstAttribute="leading" secondItem="cP1-cs-302" secondAttribute="leading" id="cP1-cs-307"/>
+                                        <constraint firstItem="cP1-cs-304" firstAttribute="top" secondItem="cP1-cs-302" secondAttribute="top" id="cP1-cs-308"/>
+                                        <constraint firstAttribute="bottom" secondItem="cP1-cs-303" secondAttribute="bottom" id="cP1-cs-309"/>
+                                        <constraint firstItem="cP1-cs-303" firstAttribute="top" secondItem="cP1-cs-304" secondAttribute="bottom" constant="5" id="cP1-cs-310"/>
+                                        <constraint firstItem="cP1-cs-304" firstAttribute="leading" secondItem="cP1-cs-302" secondAttribute="leading" id="cP1-cs-311"/>
+                                        <constraint firstAttribute="trailing" secondItem="cP1-cs-304" secondAttribute="trailing" id="cP1-cs-312"/>
+                                        <constraint firstAttribute="trailing" secondItem="cP1-cs-303" secondAttribute="trailing" id="cP1-cs-313"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <connections>
+                                    <outlet property="logo" destination="cP1-cs-304" id="cP1-cs-314"/>
+                                    <outlet property="name" destination="cP1-cs-303" id="cP1-cs-315"/>
+                                    <segue destination="eeY-2x-OZY" kind="show" identifier="openCampusPython" destinationCreationSelector="createCampusPythonEditor:sender:" id="cP1-cs-316"/>
+                                </connections>
+                            </collectionViewCell>
                         </cells>
                         <connections>
                             <outlet property="dataSource" destination="ZH5-UW-Mjo" id="4OO-Bs-Q8Q"/>

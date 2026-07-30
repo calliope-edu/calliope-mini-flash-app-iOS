@@ -327,7 +327,7 @@ final class EditorViewController: UIViewController {
 
     var editor: Editor?
     /// Native-proxy bridge for the Calliope Campus editor. Non-nil only
-    /// when `editor is CampusEditor` — keeps the legacy editors on the
+    /// when `editor is CampusBridgedEditor` — keeps the legacy editors on the
     /// download-capture path and routes Campus's BLE/flash/GATT through
     /// the WKScriptMessageHandler.
     private var proxyMessageHandler: CalliopeProxyMessageHandler?
@@ -391,10 +391,12 @@ final class EditorViewController: UIViewController {
         webview = WKWebView(frame: self.view.bounds, configuration: configuration)
         webview.translatesAutoresizingMaskIntoConstraints = false
 
-        // For the Calliope Campus editor, register the native-proxy
-        // bridge as the `calliope` script-message handler BEFORE the page
-        // loads. The widget's detection probe (`window.webkit?.messageHandlers
-        // ?.calliope`) needs this present at script start.
+        // For every Calliope Campus editor (the campus home and its /blocks,
+        // /makecode and /python flavours — anything conforming to
+        // `CampusBridgedEditor`), register the native-proxy bridge as the
+        // `calliope` script-message handler BEFORE the page loads. The widget's
+        // detection probe (`window.webkit?.messageHandlers?.calliope`) needs
+        // this present at script start.
         //
         // Important: use `webview.configuration.userContentController` —
         // the LIVE controller — not the local `controller` variable.
@@ -409,7 +411,7 @@ final class EditorViewController: UIViewController {
         // (where iOS WKWebView has neither WebUSB nor Web Bluetooth →
         // status = unsupported). Same pattern used by the working
         // WBWebView reference impl.
-        if editor is CampusEditor {
+        if editor is CampusBridgedEditor {
             let handler = CalliopeProxyMessageHandler(webView: webview)
             self.proxyMessageHandler = handler
             webview.configuration.userContentController.add(
@@ -542,7 +544,7 @@ extension EditorViewController: WKNavigationDelegate {
         
         let request = navigationAction.request
         
-        if navigationAction.shouldPerformDownload && (editor is MicroPython || editor is CampusEditor){
+        if navigationAction.shouldPerformDownload && (editor is MicroPython || editor is CampusBridgedEditor){
             decisionHandler(.download)
         } else if let download = editor.download(request) {
             decisionHandler(.cancel)
@@ -689,7 +691,7 @@ extension EditorViewController: WKDownloadDelegate {
     }
     
     func download(_ download: WKDownload, decideDestinationUsing response: URLResponse, suggestedFilename: String, completionHandler: @escaping (URL?) -> Void) {
-        guard let editor = editor, editor is MicroPython || editor is CampusEditor else {
+        guard let editor = editor, editor is MicroPython || editor is CampusBridgedEditor else {
             return
         }
         
@@ -823,7 +825,13 @@ extension EditorViewController {
         // editor came up disconnected until the user hit the connect icon.
         // Skipping is safe: the non-scratch branch would only re-apply the
         // user-agent values viewDidLoad already set for Campus.
-        if editor is CampusEditor {
+        //
+        // This matters most for the campus /blocks flavour: it IS a scratch
+        // editor by the probe's definition (the scratch-link script tag is
+        // present), so without widening this gate to every CampusBridgedEditor
+        // it would take the scratch branch and drop the very BLE connection the
+        // bridge is built on.
+        if editor is CampusBridgedEditor {
             return
         }
         determineIfScratchBasedEditor() { self.switchEditorImperatives($0)}

@@ -45,6 +45,14 @@ public enum SettingsKey: String, CaseIterable {
 
     case campus = "campusOnPreference"
     case campusUrl = "campusOnUrlPreference"
+
+    // Campus-hosted flavours of the classic editors. They live under routes of
+    // the SAME deployment as `campusUrl` (/blocks, /makecode, /python), so they
+    // have no URL preference of their own — see `CampusRoute`. Only an on/off
+    // toggle each, so a release can hide them without a code change.
+    case campusBlocks = "campusBlocksOnPreference"
+    case campusMakeCode = "campusMakecodeOnPreference"
+    case campusPython = "campusPythonOnPreference"
 }
 
 public struct Settings {
@@ -59,9 +67,14 @@ public struct Settings {
     static var defaultCalliopeBlocksUrl = "https://calliope.cc/downloads/blocks.hex"
     static var defaultBlocksMiniEditorUrl = "https://blocks.calliope.cc"
     static var defaultMicroPythonUrl = "https://python.calliope.cc?mobile=true"
-    // Cloudflare Pages preview of the feature/native-proxy branch. Switch
-    // to https://campus.calliope.cc once the proxy ships.
-    static var defaultCampusUrl = "https://v1-1-2.calliope-campus.pages.dev/blocks"
+    // Cloudflare Pages branch alias of campus `rc-v1.1.3`. Switch to
+    // https://campus.calliope.cc once the proxy ships.
+    //
+    // ORIGIN ONLY — no path. Every campus-hosted editor (the campus home plus
+    // the /blocks, /makecode and /python flavours) derives its URL from this
+    // one value via `CampusRoute`, so bumping the deployment is a one-line
+    // change here.
+    static var defaultCampusUrl = "https://rc-v1-1-3.calliope-campus.pages.dev"
 
     static var defaultLocalEditorEnabled = false
     static var defaultMakeCodeEnabled = true
@@ -74,8 +87,13 @@ public struct Settings {
     // iPhone too — the legacy iPad-only gate that other editors keep
     // doesn't apply here.
     static var defaultCampusEnabled = true
-    
-    
+    // The campus-hosted flavours of blocks / MakeCode / python. Same bridge, so
+    // same reasoning as `defaultCampusEnabled` — no iPad-only gate.
+    static var defaultCampusBlocksEnabled = true
+    static var defaultCampusMakeCodeEnabled = true
+    static var defaultCampusPythonEnabled = true
+
+
     static var defaultRestoreLastMatrixEnabled = true
 
     static var defaultAppVersion = "1.0"
@@ -117,6 +135,13 @@ public struct Settings {
             return defaultCampusEnabled
         case .campusUrl:
             return defaultCampusUrl
+
+        case .campusBlocks:
+            return defaultCampusBlocksEnabled
+        case .campusMakeCode:
+            return defaultCampusMakeCodeEnabled
+        case .campusPython:
+            return defaultCampusPythonEnabled
             
             
         case .appVersion:

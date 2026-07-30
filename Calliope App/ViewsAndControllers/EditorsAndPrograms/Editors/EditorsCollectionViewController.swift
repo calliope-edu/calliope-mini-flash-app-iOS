@@ -20,6 +20,9 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
     private let reuseIdentifierMicroPython = "microPythonEditorCell"
     private let reuseIdentifierCampus = "campusEditorCell"
     private let reuseIdentifierBlocksEditor = "calliopeBlocksEditorCell"
+    private let reuseIdentifierCampusBlocks = "campusBlocksEditorCell"
+    private let reuseIdentifierCampusMakeCode = "campusMakecodeEditorCell"
+    private let reuseIdentifierCampusPython = "campusPythonEditorCell"
 
     private lazy var activatedEditors: [SettingsKey] = {
         var keys: [SettingsKey] = []
@@ -31,6 +34,20 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
         // that still go through download-capture.
         if settings.bool(forKey: SettingsKey.campus.rawValue) {
             keys.append(.campus)
+        }
+        // The campus-hosted flavours of the classic editors, right behind the
+        // campus home: same deployment, same native-proxy bridge, just deep
+        // links into /blocks, /makecode and /python. They sit next to their
+        // legacy counterparts further down the list on purpose — the two can be
+        // compared side by side while the campus versions are being rolled out.
+        if settings.bool(forKey: SettingsKey.campusBlocks.rawValue) {
+            keys.append(.campusBlocks)
+        }
+        if settings.bool(forKey: SettingsKey.campusMakeCode.rawValue) {
+            keys.append(.campusMakeCode)
+        }
+        if settings.bool(forKey: SettingsKey.campusPython.rawValue) {
+            keys.append(.campusPython)
         }
         if settings.bool(forKey: SettingsKey.localEditor.rawValue) {
             keys.append(.localEditor)
@@ -104,6 +121,12 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierCalliopeBlocks, for: indexPath) as! EditorCollectionViewCell
         case .campus:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierCampus, for: indexPath) as! EditorCollectionViewCell
+        case .campusBlocks:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierCampusBlocks, for: indexPath) as! EditorCollectionViewCell
+        case .campusMakeCode:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierCampusMakeCode, for: indexPath) as! EditorCollectionViewCell
+        case .campusPython:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierCampusPython, for: indexPath) as! EditorCollectionViewCell
         case .blocksMiniEditor:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierBlocksEditor, for: indexPath) as! EditorCollectionViewCell
 
@@ -169,6 +192,18 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
     
     @IBSegueAction func createCampusEditor(_ coder: NSCoder, sender: Any?) -> EditorViewController? {
         EditorViewController(coder: coder, editor: CampusEditor())
+    }
+
+    @IBSegueAction func createCampusBlocksEditor(_ coder: NSCoder, sender: Any?) -> EditorViewController? {
+        EditorViewController(coder: coder, editor: CampusBlocksEditor())
+    }
+
+    @IBSegueAction func createCampusMakeCodeEditor(_ coder: NSCoder, sender: Any?) -> EditorViewController? {
+        EditorViewController(coder: coder, editor: CampusMakeCodeEditor())
+    }
+
+    @IBSegueAction func createCampusPythonEditor(_ coder: NSCoder, sender: Any?) -> EditorViewController? {
+        EditorViewController(coder: coder, editor: CampusPythonEditor())
     }
     
     @IBSegueAction func createBlocksEditor(_ coder: NSCoder, sender: Any?) -> EditorViewController? {
