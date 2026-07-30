@@ -78,8 +78,17 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
                     let connectingUSBCalliope = connectingCalliope as! DiscoveredUSBDevice
                     do {
                         connectedUSBCalliope = connectingUSBCalliope
-                        connectedUSBCalliope?.usageReadyCalliope = try USBCalliope(calliopeLocation: connectingUSBCalliope.url)
-                        dispatchUSBCalliopePolling()
+                        if connectingUSBCalliope.useExportPicker {
+                            // Shared iPad: no folder URL exists, every flash asks
+                            // for the destination via an export picker.
+                            connectedUSBCalliope?.usageReadyCalliope = USBCalliope(exportPickerMode: true)
+                            // Skip reachability polling — there is no persistent
+                            // volume URL that could be polled.
+                            LogNotify.log("USB Calliope (export-picker mode) ready")
+                        } else if let url = connectingUSBCalliope.url {
+                            connectedUSBCalliope?.usageReadyCalliope = try USBCalliope(calliopeLocation: url)
+                            dispatchUSBCalliopePolling()
+                        }
                         LogNotify.log("Calliope mini Discovery State now: \(state)")
                     } catch {
                         LogNotify.log("Connecting to USB Calliope mini failed")
@@ -333,28 +342,47 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
     func initializeConnectionToUsbCalliope(view: UIViewController) {
         state = .usbConnecting
 
-        // Shared iPad: the FIRST time USB transfer is activated in this session,
-        // show a heads-up alert before the folder picker (on managed devices the
-        // volume selection can be less reliable and the user may need to
-        // re-select the Calliope mini each time). Every subsequent USB
-        // activation goes straight to the picker. The actual flow (folder picker
-        // → app copies the hex) is identical to a normal iPad.
-        if UIDevice.current.isSharedIPad && !hasShownSharedUsbAlert {
-            hasShownSharedUsbAlert = true
-            let alert = UIAlertController(
-                title: NSLocalizedString("USB connection", comment: "USB connection alert title on Shared iPad"),
-                message: NSLocalizedString("Before every file copy you have to select the Calliope mini.", comment: "USB connection alert body on Shared iPad"),
-                preferredStyle: .alert)
-            alert.addAction(UIAlertAction(
-                title: NSLocalizedString("Continue", comment: "Continue button"),
-                style: .default) { [weak self] _ in
-                    self?.presentUsbFolderPicker(view: view)
-                })
-            view.present(alert, animated: true, completion: nil)
+        // Shared iPad: the folder picker is a dead end here — the system silently
+        // refuses to return a folder URL for a mounted USB volume, so tapping
+        // "Öffnen" does nothing at all. Instead connect a virtual USB Calliope
+        // and ask for the destination per flash via an export picker, which the
+        // managed sandbox does allow.
+        //
+        // The FIRST time in a session we show a heads-up alert explaining that
+        // the mini has to be picked for every copy; later activations connect
+        // straight away.
+        if UIDevice.current.isSharedIPad {
+            guard hasShownSharedUsbAlert else {
+                hasShownSharedUsbAlert = true
+                let alert = UIAlertController(
+                    title: NSLocalizedString("USB connection", comment: "USB connection alert title on Shared iPad"),
+                    message: NSLocalizedString("Before every file copy you have to select the Calliope mini.", comment: "USB connection alert body on Shared iPad"),
+                    preferredStyle: .alert)
+                alert.addAction(UIAlertAction(
+                    title: NSLocalizedString("Continue", comment: "Continue button"),
+                    style: .default) { [weak self] _ in
+                        self?.connectExportPickerUsbCalliope()
+                    })
+                view.present(alert, animated: true, completion: nil)
+                return
+            }
+
+            connectExportPickerUsbCalliope()
             return
         }
 
         presentUsbFolderPicker(view: view)
+    }
+
+    /// Shared iPad: connect a USB Calliope that has no folder URL. The
+    /// destination is picked per flash through `USBCalliope`'s export picker.
+    private func connectExportPickerUsbCalliope() {
+        LogNotify.log("Shared iPad detected - skipping folder picker, using export-picker flow")
+        let discovered = DiscoveredUSBDevice(exportPickerName: CalliopeDiscovery.usbCalliopeName)
+        disconnectFromCalliope()
+        discovered.state = .discovered
+        self.discoveredCalliopes.updateValue(discovered, forKey: CalliopeDiscovery.usbCalliopeName)
+        self.connectToCalliope(discovered)
     }
 
     /// Presents the document picker for selecting the Calliope mini's USB

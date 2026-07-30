@@ -228,6 +228,35 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
         return isInUsbMode && connector.discoveredCalliopes["USB_CALLIOPE"] != nil
     }
 
+    /// Tears the USB connection down after a completed file copy: drops the
+    /// connection and flips the USB switch back off, so the connection view
+    /// shows "disconnected" and the user has to switch USB on again — and pick
+    /// the Calliope mini drive again — before the next flash.
+    ///
+    /// Shared iPad only. There the picked volume's authorization does not
+    /// survive a copy: DAPLink unmounts the MSD volume right after writing, and
+    /// the managed sandbox hands it back only after a fresh pick. Keeping a
+    /// stale "connected" state would just let the next flash fail with no
+    /// explanation, so we make the required re-selection visible instead. A
+    /// personal iPad keeps its volume access and stays connected as before.
+    public func resetUsbConnectionAfterCopy() {
+        guard UIDevice.current.isSharedIPad, isInUsbMode else { return }
+
+        // Hop to the next main-queue turn: the finish callback still dismisses
+        // the upload sheet and may run a connect() of its own, and this teardown
+        // has to win over both.
+        DispatchQueue.main.async { [weak self] in
+            guard let self, self.isInUsbMode else { return }
+            LogNotify.log("Shared iPad: USB copy finished - dropping connection and switching USB off")
+            self.usbSwitch.setOn(false, animated: true)
+            // setOn(_:animated:) does not fire .valueChanged, so run the same
+            // teardown the user's own toggle would: disconnect (which also drops
+            // the USB device from discoveredCalliopes, so nothing auto-reconnects
+            // to it) and swap back to the Bluetooth panel.
+            self.switchChanged(usbSwitch: self.usbSwitch)
+        }
+    }
+
     func showFalseLocationAlert() {
         let alert = UIAlertController(title: NSLocalizedString("Wrong storage location", comment: ""), message: NSLocalizedString("You have not selected a Calliope folder as storage location", comment: ""), preferredStyle: .alert)
         alert.addAction(

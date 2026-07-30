@@ -11,9 +11,26 @@ import UIKit
 import NordicDFU
 import UniformTypeIdentifiers
 
-class USBCalliope: Calliope {
+class USBCalliope: Calliope, UIDocumentPickerDelegate {
 
     static var calliopeLocation: URL?
+
+    /// Shared-iPad mode: instead of a persistent folder URL we present a
+    /// `UIDocumentPickerViewController(forExporting:asCopy:)` for every flash.
+    /// On Shared iPad with a Managed Apple ID the system silently rejects the
+    /// folder pick of mounted USB volumes — the "Öffnen" button simply does
+    /// nothing — so no security-scoped folder URL can ever be obtained. The
+    /// export picker is the one flow the managed sandbox does allow.
+    let useExportPicker: Bool
+
+    /// View controller used to present the export picker. Set by FirmwareUpload
+    /// before invoking `upload(...)`. Held weakly so we never retain UI state.
+    weak var presentingController: UIViewController?
+
+    // Retained while the export picker is on screen so its delegate stays alive.
+    private var exportPickerInstance: UIDocumentPickerViewController?
+    private weak var exportProgressReceiver: DFUProgressDelegate?
+    private weak var exportStatusDelegate: DFUServiceDelegate?
 
     override var compatibleHexTypes: Set<HexParser.HexVersion> {
         return [.universal, .v3, .v3Shield, .v2, .arcade]
@@ -22,12 +39,23 @@ class USBCalliope: Calliope {
     var writeInProgress: Bool = false
 
     public init(calliopeLocation: URL) throws {
+        self.useExportPicker = false
         super.init()
         // Verbindungswechsel signalisieren
         Calliope.startConnectionSwitch()
 
         try validateCalliope(url: calliopeLocation)
         USBCalliope.calliopeLocation = calliopeLocation
+    }
+
+    /// Shared-iPad / export-picker initialiser. No folder pick happens; instead
+    /// every flash opens an export picker so the user can pick MINI as the
+    /// destination.
+    public init(exportPickerMode: Bool) {
+        self.useExportPicker = exportPickerMode
+        super.init()
+        Calliope.startConnectionSwitch()
+        USBCalliope.calliopeLocation = nil
     }
 
 
@@ -51,6 +79,11 @@ class USBCalliope: Calliope {
     }
     
     func isConnected() -> Bool {
+        // In export-picker mode there is no persistent volume URL — the picker
+        // is presented per-flash. Treat as always connected so upload proceeds.
+        if useExportPicker {
+            return true
+        }
         guard let calliopeLocation = USBCalliope.calliopeLocation else {
             return false
         }
@@ -59,6 +92,10 @@ class USBCalliope: Calliope {
     }
 
     override func upload(file: Hex, progressReceiver: DFUProgressDelegate? = nil, statusDelegate: DFUServiceDelegate? = nil, logReceiver: LoggerDelegate? = nil) throws {
+        if useExportPicker {
+            uploadViaExportPicker(file: file, progressReceiver: progressReceiver, statusDelegate: statusDelegate)
+            return
+        }
         if isConnected() || writeInProgress {
             writeInProgress = true
             writeToCalliope(file, progressReceiver: progressReceiver) { success in
@@ -72,6 +109,88 @@ class USBCalliope: Calliope {
         } else {
             statusDelegate?.dfuStateDidChange(to: .aborted)
         }
+    }
+
+    // MARK: - Shared iPad: export-picker flashing
+
+    /// Presents a system export picker for the hex file. The user picks the MINI
+    /// volume as destination; iPadOS itself performs the copy with the
+    /// entitlements it grants the picker — no `startAccessingSecurityScopedResource`
+    /// and no folder URL needed, which is exactly why this works on Shared iPad
+    /// while the folder picker does not.
+    private func uploadViaExportPicker(file: Hex,
+                                       progressReceiver: DFUProgressDelegate?,
+                                       statusDelegate: DFUServiceDelegate?) {
+        guard let presenter = resolvePresentingController() else {
+            LogNotify.log("Export picker: no presenting view controller available")
+            statusDelegate?.dfuStateDidChange(to: .aborted)
+            return
+        }
+
+        writeInProgress = true
+        exportProgressReceiver = progressReceiver
+        exportStatusDelegate = statusDelegate
+
+        // Show indeterminate-ish progress so the FirmwareUpload alert reflects
+        // that something is happening while the picker is on screen.
+        progressReceiver?.dfuProgressDidChange(for: 50, outOf: 100, to: 30,
+                                               currentSpeedBytesPerSecond: 0.0,
+                                               avgSpeedBytesPerSecond: 0.0)
+
+        let picker = UIDocumentPickerViewController(forExporting: [file.calliopeUSBUrl], asCopy: true)
+        picker.delegate = self
+        picker.allowsMultipleSelection = false
+        picker.shouldShowFileExtensions = true
+        picker.modalPresentationStyle = .fullScreen
+        exportPickerInstance = picker
+
+        DispatchQueue.main.async {
+            presenter.present(picker, animated: true)
+        }
+    }
+
+    private func resolvePresentingController() -> UIViewController? {
+        if let pc = presentingController { return pc.topMostPresented() }
+        // Fallback: walk the active scene's key window
+        let scenes = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .filter { $0.activationState == .foregroundActive }
+        let keyWindow = scenes.flatMap { $0.windows }.first(where: { $0.isKeyWindow })
+            ?? scenes.flatMap { $0.windows }.first
+        return keyWindow?.rootViewController?.topMostPresented()
+    }
+
+    private func finishExportPicker(success: Bool) {
+        let progress = exportProgressReceiver
+        let status = exportStatusDelegate
+        exportPickerInstance = nil
+        exportProgressReceiver = nil
+        exportStatusDelegate = nil
+        writeInProgress = false
+
+        if success {
+            progress?.dfuProgressDidChange(for: 100, outOf: 100, to: 100,
+                                           currentSpeedBytesPerSecond: 0.0,
+                                           avgSpeedBytesPerSecond: 0.0)
+            status?.dfuStateDidChange(to: .completed)
+        } else {
+            status?.dfuStateDidChange(to: .aborted)
+        }
+    }
+
+    // MARK: UIDocumentPickerDelegate (export-picker only — the folder picker is
+    // handled in CalliopeDiscovery)
+
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        guard controller === exportPickerInstance else { return }
+        LogNotify.log("Export picker: hex copied to \(urls.first?.path ?? "<unknown>")")
+        finishExportPicker(success: true)
+    }
+
+    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        guard controller === exportPickerInstance else { return }
+        LogNotify.log("Export picker: cancelled by user")
+        finishExportPicker(success: false)
     }
 
     /**
@@ -330,4 +449,16 @@ class USBCalliope: Calliope {
         return success
     }
 
+}
+
+private extension UIViewController {
+    /// Walks the chain of `presentedViewController` to find the top-most one,
+    /// which is the only safe target for further `present(_:animated:)` calls.
+    func topMostPresented() -> UIViewController {
+        var top: UIViewController = self
+        while let presented = top.presentedViewController, !presented.isBeingDismissed {
+            top = presented
+        }
+        return top
+    }
 }

@@ -330,6 +330,12 @@ class FirmwareUpload {
             // self.stopUSBTimer() // Timer deaktiviert
             finishedCallback()
             MatrixConnectionViewController.instance.enableDfuMode(mode: false)
+            // On Shared iPad the picked USB volume is no longer usable once the
+            // copy is through, so end the connection here and let the user
+            // re-pick the drive for the next flash. No-op everywhere else.
+            if calliope is USBCalliope {
+                MatrixConnectionViewController.instance.resetUsbConnectionAfterCopy()
+            }
         }
 
         let startUpload = { [weak self] in
@@ -345,6 +351,12 @@ class FirmwareUpload {
                         LogNotify.log("[PartialFlash] Disconnect requested - triggering immediate disconnect")
                         MatrixConnectionViewController.instance.connector.disconnectForReboot()
                     }
+                }
+
+                // Shared-iPad export-picker flow needs a view controller to
+                // present the picker from.
+                if let usbCalliope = calliope as? USBCalliope, usbCalliope.useExportPicker {
+                    usbCalliope.presentingController = self.controller
                 }
 
                 try calliope.upload(file: self.file, progressReceiver: self, statusDelegate: self, logReceiver: self)
