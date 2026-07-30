@@ -363,6 +363,7 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		60F6C3E42F2D243500A6C193 /* LofiAppWebView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LofiAppWebView; sourceTree = "<group>"; };
 		60F6C3E52F2D24A300A6C193 /* Web Bluetooth */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Web Bluetooth"; sourceTree = "<group>"; };
+		60F6C3F02F2D250000A6C193 /* Native Proxy */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Native Proxy"; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -818,6 +819,7 @@
 			isa = PBXGroup;
 			children = (
 				60F6C3E52F2D24A300A6C193 /* Web Bluetooth */,
+				60F6C3F02F2D250000A6C193 /* Native Proxy */,
 				60D1FD6B2B6BCF9800BC6202 /* ConnectedCalliopes */,
 				60D1FD6A2B6BCF8700BC6202 /* DiscoveryCalliopes */,
 				60316BF92B0210CC00130C0D /* CalliopeFactory.swift */,
@@ -880,6 +882,7 @@
 			fileSystemSynchronizedGroups = (
 				60F6C3E42F2D243500A6C193 /* LofiAppWebView */,
 				60F6C3E52F2D24A300A6C193 /* Web Bluetooth */,
+				60F6C3F02F2D250000A6C193 /* Native Proxy */,
 			);
 			name = "Calliope App";
 			productName = "Calliope App";
@@ -1523,7 +1526,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Calliope App/Calliope App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = GKA87N33H4;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "Calliope App/Info.plist";
@@ -1532,7 +1535,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.3.1;
+				MARKETING_VERSION = 3.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "cc.calliope.ios.flash-debug";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1551,7 +1554,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Calliope App/Calliope AppRelease.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = GKA87N33H4;
 				INFOPLIST_FILE = "Calliope App/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -1559,7 +1562,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.3.1;
+				MARKETING_VERSION = 3.4;
 				PRODUCT_BUNDLE_IDENTIFIER = cc.calliope.ios.flash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

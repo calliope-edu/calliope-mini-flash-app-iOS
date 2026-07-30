@@ -324,8 +324,13 @@ final class EditorViewController: UIViewController {
 
     var webview: WKWebView!  //webviews are buggy and cannot be placed via interface builder
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
-    
+
     var editor: Editor?
+    /// Native-proxy bridge for the Calliope Campus editor. Non-nil only
+    /// when `editor is CampusEditor` — keeps the legacy editors on the
+    /// download-capture path and routes Campus's BLE/flash/GATT through
+    /// the WKScriptMessageHandler.
+    private var proxyMessageHandler: CalliopeProxyMessageHandler?
     private var latestDownloadedTargetFile: URL?
     var documentsPath: URL {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -386,6 +391,33 @@ final class EditorViewController: UIViewController {
         webview = WKWebView(frame: self.view.bounds, configuration: configuration)
         webview.translatesAutoresizingMaskIntoConstraints = false
 
+        // For the Calliope Campus editor, register the native-proxy
+        // bridge as the `calliope` script-message handler BEFORE the page
+        // loads. The widget's detection probe (`window.webkit?.messageHandlers
+        // ?.calliope`) needs this present at script start.
+        //
+        // Important: use `webview.configuration.userContentController` —
+        // the LIVE controller — not the local `controller` variable.
+        // WKWebView makes its own copy of WKWebViewConfiguration when
+        // created (Apple docs), so modifying the original-config's
+        // controller after WKWebView init has NO EFFECT on the actual
+        // running webview. The local-controller path was the bug behind
+        // the widget showing "Browser nicht unterstützt": the handler
+        // got attached to an unused controller and the JS never saw
+        // `window.webkit.messageHandlers.calliope`, so isNativeMode()
+        // returned false and the widget fell back to web-mode
+        // (where iOS WKWebView has neither WebUSB nor Web Bluetooth →
+        // status = unsupported). Same pattern used by the working
+        // WBWebView reference impl.
+        if editor is CampusEditor {
+            let handler = CalliopeProxyMessageHandler(webView: webview)
+            self.proxyMessageHandler = handler
+            webview.configuration.userContentController.add(
+                handler,
+                name: CalliopeProxyMessageHandler.handlerName
+            )
+        }
+
         webview.navigationDelegate = self
         webview.uiDelegate = self
         webview.backgroundColor = Styles.colorWhite
@@ -436,6 +468,17 @@ final class EditorViewController: UIViewController {
         self.tabBarController?.tabBar.isHidden = false
 
         MatrixConnectionViewController.instance.restartFromBLEConnectionDrop()
+
+        // Tear down the proxy bridge — WKUserContentController retains
+        // script-message handlers strongly, so without an explicit remove
+        // the handler (and its captured BLE notify subscriptions) would
+        // outlive the editor.
+        if proxyMessageHandler != nil {
+            webview?.configuration.userContentController.removeScriptMessageHandler(
+                forName: CalliopeProxyMessageHandler.handlerName
+            )
+            proxyMessageHandler = nil
+        }
 
         // Re-enable navigation gestures
         enableNavigationGestures()
@@ -771,6 +814,18 @@ extension EditorViewController {
     // MARK: Handle possible editor change (i.e. Scratch Based with own BLE connection)
     
     private func handlePossibleEditorChanges() {
+        // Campus is Scratch-based (it loads the scratch-link extension script),
+        // but it does NOT drive BLE through ScratchLink — it goes through the
+        // native-proxy bridge, which reads the app's own usageReadyCalliope.
+        // Running the scratch branch here would call dropBLEConnection() and
+        // tear down exactly the connection the bridge needs (plus set
+        // isInBackground, which suppresses the app's auto-reconnect), so the
+        // editor came up disconnected until the user hit the connect icon.
+        // Skipping is safe: the non-scratch branch would only re-apply the
+        // user-agent values viewDidLoad already set for Campus.
+        if editor is CampusEditor {
+            return
+        }
         determineIfScratchBasedEditor() { self.switchEditorImperatives($0)}
     }
     

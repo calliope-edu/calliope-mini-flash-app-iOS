@@ -78,15 +78,8 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
                     let connectingUSBCalliope = connectingCalliope as! DiscoveredUSBDevice
                     do {
                         connectedUSBCalliope = connectingUSBCalliope
-                        if connectingUSBCalliope.useExportPicker {
-                            // Shared iPad: no folder URL, every flash uses an export picker.
-                            connectedUSBCalliope?.usageReadyCalliope = USBCalliope(exportPickerMode: true)
-                            // Skip reachability polling — there is no persistent volume URL.
-                            LogNotify.log("USB Calliope (export-picker mode) ready")
-                        } else if let url = connectingUSBCalliope.url {
-                            connectedUSBCalliope?.usageReadyCalliope = try USBCalliope(calliopeLocation: url)
-                            dispatchUSBCalliopePolling()
-                        }
+                        connectedUSBCalliope?.usageReadyCalliope = try USBCalliope(calliopeLocation: connectingUSBCalliope.url)
+                        dispatchUSBCalliopePolling()
                         LogNotify.log("Calliope mini Discovery State now: \(state)")
                     } catch {
                         LogNotify.log("Connecting to USB Calliope mini failed")
@@ -332,24 +325,42 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         }
     }
 
+    /// Whether the one-time Shared-iPad USB heads-up alert has already been
+    /// shown in this app session. Reset on each app launch so a fresh user of
+    /// the shared device sees it once.
+    private var hasShownSharedUsbAlert = false
+
     func initializeConnectionToUsbCalliope(view: UIViewController) {
         state = .usbConnecting
 
-        // Shared iPad: the system silently rejects folder selection on mounted
-        // USB volumes, so the folder picker is unusable. Skip it and connect a
-        // virtual USB Calliope that asks for the destination per-flash via an
-        // export picker.
-        if UIDevice.current.isSharedIPad {
-            LogNotify.log("Shared iPad detected — skipping folder picker, using export-picker flow")
-            let discovered = DiscoveredUSBDevice(exportPickerName: CalliopeDiscovery.usbCalliopeName)
-            disconnectFromCalliope()
-            discovered.state = .discovered
-            self.discoveredCalliopes.updateValue(discovered, forKey: CalliopeDiscovery.usbCalliopeName)
-            self.connectToCalliope(discovered)
+        // Shared iPad: the FIRST time USB transfer is activated in this session,
+        // show a heads-up alert before the folder picker (on managed devices the
+        // volume selection can be less reliable and the user may need to
+        // re-select the Calliope mini each time). Every subsequent USB
+        // activation goes straight to the picker. The actual flow (folder picker
+        // → app copies the hex) is identical to a normal iPad.
+        if UIDevice.current.isSharedIPad && !hasShownSharedUsbAlert {
+            hasShownSharedUsbAlert = true
+            let alert = UIAlertController(
+                title: NSLocalizedString("USB connection", comment: "USB connection alert title on Shared iPad"),
+                message: NSLocalizedString("Before every file copy you have to select the Calliope mini.", comment: "USB connection alert body on Shared iPad"),
+                preferredStyle: .alert)
+            alert.addAction(UIAlertAction(
+                title: NSLocalizedString("Continue", comment: "Continue button"),
+                style: .default) { [weak self] _ in
+                    self?.presentUsbFolderPicker(view: view)
+                })
+            view.present(alert, animated: true, completion: nil)
             return
         }
 
-        // Personal iPad: use the existing folder-picker flow.
+        presentUsbFolderPicker(view: view)
+    }
+
+    /// Presents the document picker for selecting the Calliope mini's USB
+    /// volume. Used by both the normal-iPad flow and (after the heads-up alert)
+    /// the Shared-iPad flow.
+    private func presentUsbFolderPicker(view: UIViewController) {
         // Including .folder, .directory and .volume makes the DAPLink mass-storage
         // volume reliably selectable in the picker.
         let contentTypes: [UTType] = [.folder, .directory, .volume]
@@ -369,7 +380,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         }
         view.present(documentPicker, animated: true, completion: nil)
     }
-    
+
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         let url = urls.first
         let discoveredCalliope = DiscoveredUSBDevice(url: url!, name: CalliopeDiscovery.usbCalliopeName)

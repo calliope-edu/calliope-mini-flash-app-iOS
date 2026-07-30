@@ -30,7 +30,41 @@ class FlashableBLECalliope: CalliopeAPI {
     
     // Callback to request disconnect from CalliopeDiscovery
     var requestDisconnectCallback: (() -> Void)?
-    
+
+    /// One-shot override consumed by the next `upload(...)` call. When true,
+    /// upload skips the partial-flash try entirely and goes straight to full
+    /// Nordic DFU regardless of whether the partial-flashing service is
+    /// available and the hex carries the MakeCode magic marker. Set by the
+    /// native-proxy bridge (CalliopeProxyMessageHandler) when it detects a
+    /// blocks-runtime device — the DAL hashes match across pxt-blocks-runtime
+    /// and pxt-calliope so the partial-flash protocol can't tell them apart,
+    /// and a partial flash leaves the device in a broken hybrid state. The
+    /// flag is reset to false at the end of `upload(...)` so it stays a
+    /// per-call opt-in rather than a sticky preference.
+    var forceFullDfuForNextUpload: Bool = false
+
+    /// Probes for a blocks-runtime device and sets `forceFullDfuForNextUpload`
+    /// accordingly, then calls `completion` (always on the main queue, always
+    /// exactly once).
+    ///
+    /// Call this immediately before `upload(...)` on the legacy
+    /// download-capture path (`FirmwareUpload`). Without it, switching from
+    /// Blocks/Campus to any other editor (MakeCode, Open Roberta, …) would
+    /// partial-flash a blocks-runtime device and leave a broken hybrid — the
+    /// DAL hashes match across pxt-blocks-runtime and pxt-calliope, so partial
+    /// flashing cannot detect the mismatch by itself. The native-proxy bridge
+    /// runs the same probe on its own path because it also reports the
+    /// resulting mode to the widget.
+    func prepareFlashMode(completion: @escaping () -> Void) {
+        probeBlocksRuntime { [weak self] isBlocksRuntime in
+            if isBlocksRuntime {
+                self?.forceFullDfuForNextUpload = true
+                LogNotify.log("[BlocksRuntime] Blocks runtime detected - forcing full DFU instead of partial flash")
+            }
+            completion()
+        }
+    }
+
     // Flow control for BLE buffer management
     private var isWaitingForBufferReady = false
     private var bufferReadyObserver: NSObjectProtocol?
@@ -141,38 +175,57 @@ class FlashableBLECalliope: CalliopeAPI {
         dfuCompletedAwaitingReconnect = false
         rebootingForPartialFlashing = false
 
+        // Consume the one-shot override now so any early return below doesn't
+        // leak it into the next upload call.
+        let forcedByCaller = forceFullDfuForNextUpload
+        forceFullDfuForNextUpload = false
+
+        // A partial flash that failed can leave the program region half-written,
+        // so the next attempt must not be another partial flash. Unlike the
+        // one-shot override above this flag is NOT consumed here: it stays set
+        // until a flash actually succeeds (cleared in the partial-flash success
+        // path and on DFU `.completed`), so a full DFU that itself fails cannot
+        // silently re-enable partial flashing on the following attempt.
+        let forcedByPreviousFailure = FlashableBLECalliope.lastPartialFlashFailed
+        let shouldForceFullDfu = forcedByCaller || forcedByPreviousFailure
+
         // Attempt partial flashing first if available
         LogNotify.log("Partial flashing service available: \(discoveredOptionalServices.contains(.partialFlashing))")
 
         // Check if partial flashing is available and hex has magic markers
         // The actual decision (partial vs full) is made after connecting and comparing DAL hashes and addresses
-        if discoveredOptionalServices.contains(.partialFlashing),
+        if !shouldForceFullDfu,
+           discoveredOptionalServices.contains(.partialFlashing),
            PartialFlashManager.isPartialFlashingEnabled,
            let partialInfo = file.partialFlashingInfo {
             let lineCount = partialInfo.partialFlashData.lineCount
             LogNotify.log("Partial flashing: hex has \(lineCount) lines after magic marker")
             LogNotify.log("Starting partial flash process (will verify DAL hash and addresses with device)")
-            
+
             // Cache the parsed info so startPartialFlashing() doesn't re-scan the whole file
             pendingPartialFlashingInfo = partialInfo
-            
+
             // Set flag BEFORE calling startPartialFlashing to catch any early notifications
             // (CalliopeV3 may have already enabled notifications in usageReady handler)
             partialFlashingStateLock.lock()
             isPartialFlashingActive = true
             partialFlashingStateLock.unlock()
-            
+
             startPartialFlashing()
         } else {
             // Log reason for not using partial flash
-            if !discoveredOptionalServices.contains(.partialFlashing) {
+            if forcedByCaller {
+                LogNotify.log("Using full DFU: forceFullDfu requested by caller (blocks-runtime detected on device)")
+            } else if forcedByPreviousFailure {
+                LogNotify.log("Using full DFU: previous partial flash failed - not attempting partial flash again until a flash succeeds")
+            } else if !discoveredOptionalServices.contains(.partialFlashing) {
                 LogNotify.log("Using full DFU: partial flashing service not available on device")
             } else if !PartialFlashManager.isPartialFlashingEnabled {
                 LogNotify.log("Using full DFU: partial flashing disabled in settings")
             } else {
                 LogNotify.log("Using full DFU: hex file does not support partial flashing (no magic marker)")
             }
-            
+
             shouldRebootOnDisconnect = true
             try startFullFlashing()
         }
@@ -932,6 +985,12 @@ class FlashableBLECalliope: CalliopeAPI {
             dfuCompletedAwaitingReconnect = true
             // WICHTIG: shouldRebootOnDisconnect auf true setzen damit Reconnect funktioniert
             shouldRebootOnDisconnect = true
+            // A full DFU rewrites the whole image, so whatever half-written
+            // state a previously failed partial flash left behind is gone.
+            if FlashableBLECalliope.lastPartialFlashFailed {
+                FlashableBLECalliope.lastPartialFlashFailed = false
+                LogNotify.log("[PartialFlash] Cleared failure flag after successful full DFU")
+            }
             
             
         case .aborted:

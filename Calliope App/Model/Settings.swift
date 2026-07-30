@@ -52,14 +52,16 @@ public struct Settings {
     static var defaultNewsUrl = NSLocalizedString("https://calliope.cc/forumassets/news.json", comment: "The url for the news json");
     static var defaultOpenRobertaUrl = "https://app.calliope.cc/ios/openroberta/"
 
-    static var defaultMakecodeUrl = "https://makecode.calliope.cc/beta"
+    static var defaultMakecodeUrl = "https://makecode.calliope.cc/"
     static var defaultProgramV3 = "https://go.calliope.cc/downloads/Demov3.hex"
     static var defaultProgramV2andV1 = "https://go.calliope.cc/downloads/Demov1.hex"
     static var defaultArcadeUrl = "https://arcade.makecode.com"
     static var defaultCalliopeBlocksUrl = "https://calliope.cc/downloads/blocks.hex"
     static var defaultBlocksMiniEditorUrl = "https://blocks.calliope.cc"
     static var defaultMicroPythonUrl = "https://python.calliope.cc?mobile=true"
-    static var defaultCampusUrl = "https://campus.calliope.cc"
+    // Cloudflare Pages preview of the feature/native-proxy branch. Switch
+    // to https://campus.calliope.cc once the proxy ships.
+    static var defaultCampusUrl = "https://v1-1-2.calliope-campus.pages.dev/blocks"
 
     static var defaultLocalEditorEnabled = false
     static var defaultMakeCodeEnabled = true
@@ -68,7 +70,10 @@ public struct Settings {
     static var defaultArcadeEnabled = true
     static var defaultPlaygroundsEnabled = UIDevice.current.userInterfaceIdiom != .phone
     static var defaultMicroPythonEnabled = UIDevice.current.userInterfaceIdiom != .phone
-    static var defaultCampusEnabled = UIDevice.current.userInterfaceIdiom != .phone
+    // Campus uses the native-proxy bridge for BLE/flash, so it works on
+    // iPhone too — the legacy iPad-only gate that other editors keep
+    // doesn't apply here.
+    static var defaultCampusEnabled = true
     
     
     static var defaultRestoreLastMatrixEnabled = true

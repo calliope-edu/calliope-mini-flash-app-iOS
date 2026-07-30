@@ -25,6 +25,13 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
         var keys: [SettingsKey] = []
         let settings = UserDefaults.standard
         let isPhone = UIDevice.current.userInterfaceIdiom == .phone
+        // Calliope Campus is the new flagship editor — it owns its own
+        // connection via the native-proxy bridge (CalliopeProxyMessageHandler)
+        // so it sits at the top of the list, ahead of the legacy editors
+        // that still go through download-capture.
+        if settings.bool(forKey: SettingsKey.campus.rawValue) {
+            keys.append(.campus)
+        }
         if settings.bool(forKey: SettingsKey.localEditor.rawValue) {
             keys.append(.localEditor)
         }
@@ -43,13 +50,10 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
         if settings.bool(forKey: SettingsKey.microPython.rawValue) {
             keys.append(.microPython)
         }
-//        if settings.bool(forKey: SettingsKey.campus.rawValue) {
-//            keys.append(.campus)
-//        }
         if settings.bool(forKey: SettingsKey.arcade.rawValue) {
             keys.append(.arcade)
         }
-       
+
         return keys
         }()
     

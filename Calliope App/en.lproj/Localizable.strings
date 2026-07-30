@@ -1,6 +1,15 @@
 /* No comment provided by engineer. */
 "1. Programm 5 starten\n2. Schütteln\n3. LED-Muster eingeben" = "1. Press A+B and 1 Sek Reset \n2. Keep A+B pressed\n3. Transfer ID pattern";
 
+/* USB connection alert title on Shared iPad */
+"USB connection" = "USB connection";
+
+/* USB connection alert body on Shared iPad */
+"Before every file copy you have to select the Calliope mini." = "Before every file copy you have to select the Calliope mini.";
+
+/* Continue button */
+"Continue" = "Continue";
+
 /* No comment provided by engineer. */
 "Activate Bluetooth!" = "Activate Bluetooth!";
 
@@ -353,3 +362,24 @@
 
 /* USB transfer duration message */
 "Duration: about 10 seconds" = "Takes  about 10 seconds";
+
+/* No comment provided by engineer. */
+"Please select and connect a Calliope mini using the Calliope icon at the top." = "Please select and connect a Calliope mini using the Calliope icon at the top.";
+
+/* No comment provided by engineer. */
+"No Calliope mini paired" = "No Calliope mini paired";
+
+/* No comment provided by engineer. */
+"No Calliope mini paired — please pair one via the connection icon at the top of the app and try again." = "No Calliope mini paired — please pair one via the connection icon at the top of the app and try again.";
+
+/* No comment provided by engineer. */
+"Blocks runtime detected — using full flash instead of partial flash" = "Blocks runtime detected — using full flash instead of partial flash";
+
+/* Proxy bridge: reopening a stale connection before a flash */
+"Reconnecting to your Calliope mini before flashing …" = "Reconnecting to your Calliope mini before flashing …";
+
+/* Proxy bridge: ask user to enter BLE mode before flashing */
+"Your Calliope mini isn't in Bluetooth mode. Hold A+B and press reset on the mini — it will then flash automatically." = "Your Calliope mini isn't in Bluetooth mode. Hold A+B and press reset on the mini — it will then flash automatically.";
+
+/* Proxy bridge: reconnect-before-flash timed out */
+"Couldn't reach your Calliope mini. Hold A+B and press reset on the mini to turn Bluetooth back on, then try flashing again." = "Couldn't reach your Calliope mini. Hold A+B and press reset on the mini to turn Bluetooth back on, then try flashing again.";

@@ -87,6 +87,14 @@ enum CalliopeService: String, CaseIterable, Codable {
     // MicroBit Utility Service for reading log data (e.g. MY_DATA.htm)
     case microbitUtilityService = "E95D0001-251D-470A-A062-FA1922DFA9A8"
 
+    /// MbitMore (MakeCode/Blocks runtime) extension service. Discovered so the
+    /// native-proxy bridge (Calliope Campus) can reach its COMMAND/STATE
+    /// characteristics via raw GATT to detect the running program type and
+    /// Blocks runtime version. Intentionally NOT added to
+    /// `CalliopeBLEProfile.serviceCharacteristicMap`, so its characteristics are
+    /// discovered wholesale via `discoverCharacteristics(nil, …)`.
+    case mbitMore = "0B50F3E4-607F-4151-9091-7D008D6FFC5C"
+
     case empty = "1111"
 }
 

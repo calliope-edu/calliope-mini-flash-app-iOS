@@ -90,7 +90,6 @@ class FirmwareUpload {
         let informationLink: String = "https://calliope.cc/programmieren/mobil/ipad#hardware"
 
         let uploader = FirmwareUpload(file: program, controller: controller)
-        let tempCalliope = MatrixConnectionViewController.instance.usageReadyCalliope
 
         controller.present(uploader.alertView, animated: true) {
             do {
@@ -333,26 +332,37 @@ class FirmwareUpload {
             MatrixConnectionViewController.instance.enableDfuMode(mode: false)
         }
 
-        do {
-            MatrixConnectionViewController.instance.enableDfuMode(mode: true)
-            
-            // Set up disconnect callback for partial flashing optimization
-            if let flashableCalliope = calliope as? FlashableBLECalliope {
-                flashableCalliope.requestDisconnectCallback = { [weak self] in
-                    LogNotify.log("[PartialFlash] Disconnect requested - triggering immediate disconnect")
-                    MatrixConnectionViewController.instance.connector.disconnectForReboot()
+        let startUpload = { [weak self] in
+            guard let self else { return }
+            do {
+                MatrixConnectionViewController.instance.enableDfuMode(mode: true)
+
+                // Set up disconnect callback for partial flashing optimization
+                if let flashableCalliope = calliope as? FlashableBLECalliope {
+                    // Captures nothing (no `self` reference), so no retain cycle
+                    // via calliope -> callback -> FirmwareUpload.
+                    flashableCalliope.requestDisconnectCallback = {
+                        LogNotify.log("[PartialFlash] Disconnect requested - triggering immediate disconnect")
+                        MatrixConnectionViewController.instance.connector.disconnectForReboot()
+                    }
+                }
+
+                try calliope.upload(file: self.file, progressReceiver: self, statusDelegate: self, logReceiver: self)
+            } catch {
+                DispatchQueue.main.async { [weak self] in
+                    self?.showUploadError(error)
                 }
             }
-            
-            // Shared-iPad export-picker flow needs a view controller to present from.
-            if let usbCalliope = calliope as? USBCalliope, usbCalliope.useExportPicker {
-                usbCalliope.presentingController = self.controller
-            }
-            try calliope.upload(file: file, progressReceiver: self, statusDelegate: self, logReceiver: self)
-        } catch {
-            DispatchQueue.main.async { [weak self] in
-                self?.showUploadError(error)
-            }
+        }
+
+        // Decide partial vs full flash BEFORE touching the BLE stack: a device
+        // still running the Blocks/Campus runtime must get a full DFU, and only
+        // a live GATT probe can tell (the partial-flash DAL check can't). USB
+        // uploads skip this - they always write a whole image anyway.
+        if let flashableCalliope = calliope as? FlashableBLECalliope {
+            flashableCalliope.prepareFlashMode { startUpload() }
+        } else {
+            startUpload()
         }
     }
 
@@ -377,6 +387,7 @@ class FirmwareUpload {
 
         failed()
     }
+
     func startUSBTimer() {
         LogNotify.log("⏱️ USB Timer starting now")
         usbStartTime = Date()
