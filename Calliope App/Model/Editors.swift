@@ -136,27 +136,85 @@ final class MicroPython: Editor {
     
 }
 
-final class CampusEditor: Editor {
-    public let name = "Calliope Campus"
-    public lazy var url: URL? = {
-        return URL(string: UserDefaults.standard.string(forKey: SettingsKey.campusUrl.rawValue)!)
-    }()
-    
-    func download(_ request: URLRequest) -> EditorDownload? {
-        if let download = MakeCode().download(request) {
-            return download
+/// Resolves the routes of the configured Calliope Campus deployment.
+///
+/// The campus home and every campus-hosted editor flavour live on the SAME
+/// deployment, so they all derive from the single `campusUrl` preference —
+/// bumping the deployment is then one edit (`Settings.defaultCampusUrl`)
+/// instead of one per editor, and the set can never end up half-migrated.
+enum CampusRoute {
+
+    /// Absolute URL of `path` ("" = the campus home) on the configured campus.
+    ///
+    /// Only the ORIGIN of the stored preference is used; any path, query or
+    /// fragment it carries is dropped. That is deliberate: installs from before
+    /// the campus gained its editor routes have a stored `campusUrl` ending in
+    /// `/blocks`, and appending to it would yield `/blocks/blocks`. Taking the
+    /// origin also means the deployment bump reaches those installs, which
+    /// `UserDefaults.register(defaults:)` alone would not — a value the user (or
+    /// an older build) has written wins over a registered default forever.
+    static func url(path: String) -> URL? {
+        guard let configured = UserDefaults.standard.string(forKey: SettingsKey.campusUrl.rawValue),
+              var components = URLComponents(string: configured),
+              components.scheme != nil, components.host != nil
+        else {
+            return nil
         }
-        
-        return nil
+        let trimmed = path.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+        components.path = trimmed.isEmpty ? "" : "/" + trimmed
+        components.query = nil
+        components.fragment = nil
+        return components.url
     }
-    
+}
+
+/// An editor served by the Calliope Campus deployment.
+///
+/// These drive BLE, flashing and raw GATT through the native-proxy bridge
+/// (`CalliopeProxyMessageHandler`) rather than the legacy download-capture
+/// path, so `EditorViewController` attaches the bridge to any editor conforming
+/// to this protocol — one gate for the campus home and all of its flavours.
+protocol CampusBridgedEditor: Editor {
+    /// Route under the campus origin. "" is the campus home.
+    var campusPath: String { get }
+}
+
+extension CampusBridgedEditor {
+    var url: URL? {
+        return CampusRoute.url(path: campusPath)
+    }
+
+    /// Campus never hands a file to the app on the flash path — the bridge does
+    /// that. The MakeCode matcher stays wired up because the campus-hosted
+    /// MakeCode flavour can still trigger a classic hex download (e.g. "save to
+    /// computer"), and capturing it is strictly better than dropping it.
+    func download(_ request: URLRequest) -> EditorDownload? {
+        return MakeCode().download(request)
+    }
+
     func isBackNavigation(_ request: URLRequest) -> Bool {
         return false
     }
-    
-    private func isBlob(_ url: URL) -> Bool {
-        return url.absoluteString.matches(regex: "^blob:").count == 1
-    }
+}
+
+final class CampusEditor: CampusBridgedEditor {
+    public let name = "Calliope Campus"
+    public let campusPath = ""
+}
+
+final class CampusBlocksEditor: CampusBridgedEditor {
+    public let name = "Campus Blocks"
+    public let campusPath = "blocks"
+}
+
+final class CampusMakeCodeEditor: CampusBridgedEditor {
+    public let name = "Campus MakeCode"
+    public let campusPath = "makecode"
+}
+
+final class CampusPythonEditor: CampusBridgedEditor {
+    public let name = "Campus Python"
+    public let campusPath = "python"
 }
 
 final class ArcadeEditor: Editor {

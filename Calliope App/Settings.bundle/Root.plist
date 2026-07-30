@@ -140,7 +140,7 @@
 			<key>Key</key>
 			<string>campusOnUrlPreference</string>
 			<key>DefaultValue</key>
-			<string>https://rc11.calliope-campus.pages.dev</string>
+			<string>https://rc-v1-1-3.calliope-campus.pages.dev</string>
 			<key>KeyboardType</key>
 			<string>URL</string>
 			<key>AutocapitalizationType</key>
@@ -155,6 +155,36 @@
 			<string>Enabled</string>
 			<key>Key</key>
 			<string>campusOnPreference</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Blocks (Campus)</string>
+			<key>Key</key>
+			<string>campusBlocksOnPreference</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>MakeCode (Campus)</string>
+			<key>Key</key>
+			<string>campusMakecodeOnPreference</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Python (Campus)</string>
+			<key>Key</key>
+			<string>campusPythonOnPreference</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
