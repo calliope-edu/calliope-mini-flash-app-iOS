@@ -5,7 +5,7 @@
 "USB connection" = "USB Verbindung";
 
 /* USB connection alert body on Shared iPad */
-"Before every file copy you have to select the Calliope mini." = "Vor jeder Kopie einer Datei muss der Calliope mini ausgewählt werden.";
+"On a Shared iPad the Calliope mini has to be selected for every file copy. After each transfer, unplug the Calliope mini from the iPad and plug it in again before you transfer the next program." = "Auf einem geteilten iPad (Shared iPad) muss der Calliope mini vor jeder Kopie einer Datei ausgewählt werden. Trenne den Calliope mini nach jeder Übertragung vom iPad und verbinde ihn erneut, bevor du das nächste Programm überträgst.";
 
 /* Continue button */
 "Continue" = "Fortfahren";

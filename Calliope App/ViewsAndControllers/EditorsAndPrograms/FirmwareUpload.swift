@@ -91,6 +91,23 @@ class FirmwareUpload {
 
         let uploader = FirmwareUpload(file: program, controller: controller)
 
+        // Shared iPad: the system export picker performs the copy itself and is
+        // the only sheet the user should see. Presenting our progress alert here
+        // would stack a sheet in front of the picker and pop up again afterwards
+        // (progress → picker → progress). Start the upload straight away so the
+        // picker is what opens.
+        if uploader.usesExportPicker {
+            do {
+                try uploader.upload(finishedCallback: { completion?() })
+            } catch {
+                FirmwareUpload.uploadingInstance = nil
+                UIApplication.shared.isIdleTimerDisabled = false
+                uploader.presentStandalone(
+                    FirmwareUpload.makeHexMismatchAlert(informationLink: informationLink))
+            }
+            return
+        }
+
         controller.present(uploader.alertView, animated: true) {
             do {
                 try uploader.upload(finishedCallback: {
@@ -120,6 +137,38 @@ class FirmwareUpload {
                 uploader.alertView.present(alert, animated: true)
             }
         }
+    }
+
+    /// True when this upload is handed to the Shared-iPad export picker. There
+    /// the system picker IS the transfer UI (it performs the copy), so the app
+    /// must not put its own progress alert on top of it.
+    private var usesExportPicker: Bool {
+        (calliope as? USBCalliope)?.useExportPicker == true
+    }
+
+    /// Presents an alert without relying on our progress alert being on screen —
+    /// in export-picker mode there is none.
+    private func presentStandalone(_ alert: UIAlertController) {
+        guard let presenter = controller?.topMostPresented() else { return }
+        DispatchQueue.main.async {
+            presenter.present(alert, animated: true)
+        }
+    }
+
+    private static func makeHexMismatchAlert(informationLink: String) -> UIAlertController {
+        let alert = UIAlertController(
+            title: NSLocalizedString("Upload failed", comment: ""),
+            message: String(format: NSLocalizedString("The program does not seem to match the version of your Calliope mini. Please check the hardware selection in your editor again.", comment: "")),
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel))
+        alert.addAction(
+            UIAlertAction(title: NSLocalizedString("Further Information", comment: ""), style: .default) { _ in
+                if let url = URL(string: informationLink) {
+                    UIApplication.shared.open(url)
+                }
+            })
+        return alert
     }
 
     // NEU: Hilfsmethode für Arcade USB Alert
@@ -379,6 +428,19 @@ class FirmwareUpload {
     }
 
     func showUploadError(_ error: Error) {
+        // Export-picker mode has no progress alert to write the error into, so
+        // surface it as its own alert — otherwise the failure would be silent.
+        if usesExportPicker {
+            let alert = UIAlertController(
+                title: NSLocalizedString("Upload failed!", comment: ""),
+                message: NSLocalizedString("USB transfer failed retry instructions", comment: ""),
+                preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default))
+            presentStandalone(alert)
+            failed()
+            return
+        }
+
         alertView.title = NSLocalizedString("Upload failed!", comment: "")
 
         if calliope is USBCalliope {

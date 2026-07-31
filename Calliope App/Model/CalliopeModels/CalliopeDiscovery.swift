@@ -356,7 +356,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
                 hasShownSharedUsbAlert = true
                 let alert = UIAlertController(
                     title: NSLocalizedString("USB connection", comment: "USB connection alert title on Shared iPad"),
-                    message: NSLocalizedString("Before every file copy you have to select the Calliope mini.", comment: "USB connection alert body on Shared iPad"),
+                    message: NSLocalizedString("On a Shared iPad the Calliope mini has to be selected for every file copy. After each transfer, unplug the Calliope mini from the iPad and plug it in again before you transfer the next program.", comment: "USB connection alert body on Shared iPad"),
                     preferredStyle: .alert)
                 alert.addAction(UIAlertAction(
                     title: NSLocalizedString("Continue", comment: "Continue button"),

@@ -451,7 +451,7 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
 
 }
 
-private extension UIViewController {
+extension UIViewController {
     /// Walks the chain of `presentedViewController` to find the top-most one,
     /// which is the only safe target for further `present(_:animated:)` calls.
     func topMostPresented() -> UIViewController {
