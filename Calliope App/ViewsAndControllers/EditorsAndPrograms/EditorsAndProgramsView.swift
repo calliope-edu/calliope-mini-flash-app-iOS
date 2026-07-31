@@ -26,7 +26,8 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
 
     var body: some View {
         NavigationStack(path: $router.path)  {
-            ZStack {
+            PopupRoot {
+             ZStack {
                 GeometryReader { geo in
                     ScrollView {
                         if geo.size.width > 1000 {
@@ -46,6 +47,7 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
             }.navigationDestination(for: EditorsAndProgramRoute.self, ) { route in
                 switchRoutes(route: route)
                 }
+            }
         }
     }
     
