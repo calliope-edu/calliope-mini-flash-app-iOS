@@ -546,6 +546,14 @@ extension FirmwareUpload: DFUProgressDelegate, DFUServiceDelegate, LoggerDelegat
                 LogNotify.log("Connection switching - suppressing abort message")
                 return
             }
+            // The user dismissed the Shared-iPad export picker without saving.
+            // Release the upload resources, but no error alert and no teardown of
+            // the USB connection — the next flash should reopen the picker.
+            if (calliope as? USBCalliope)?.lastExportCancelledByUser == true {
+                LogNotify.log("Export picker cancelled by user - suppressing abort message")
+                failed()
+                return
+            }
             self.dfuError(.deviceDisconnected, didOccurWithMessage: "DFU process aborted")
         }
     }
