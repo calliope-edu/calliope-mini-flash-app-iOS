@@ -83,7 +83,7 @@ class FirmwareUploadSwiftUI {
             ]
         )
         DispatchQueue.main.async {
-            PopupManager.instance.show(popup)
+            PopupManager.instance.show(.alert(popup))
         }
     }
 
@@ -148,7 +148,7 @@ class FirmwareUploadSwiftUI {
                     ),
                 ]
             )
-            PopupManager.instance.show(popup)
+            PopupManager.instance.show(.alert(popup))
         }
     }
 
@@ -209,7 +209,7 @@ class FirmwareUploadSwiftUI {
     }
 
     lazy var alertView: Popup = {
-        ProgressPopup(title: "Transmission running", onCancel: {})
+        .progress(ProgressPopup(title: "Transmission running", onCancel: {}))
         /*guard let calliope = calliope else {
             let alertController = UIAlertController(
                 title: NSLocalizedString("Cannot upload", comment: "Übertragung nicht möglich"),

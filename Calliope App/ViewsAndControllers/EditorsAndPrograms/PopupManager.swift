@@ -13,59 +13,40 @@ import SwiftUI
 final class PopupManager: ObservableObject {
     static let instance = PopupManager()
     private var popups: [Popup] = []
-    @Published var currentProgressPopup: ProgressPopup? = nil
-    @Published var currentAlertPopup: SwiftUIAlert? = nil
+    @Published var currentPopup: Popup? = nil
 
     func show(_ popup: Popup) {
-        if currentAlertPopup == nil && currentProgressPopup == nil {
-            if popup is ProgressPopup {
-                currentProgressPopup = popup as! ProgressPopup
-            } else if popup is SwiftUIAlert {
-                currentAlertPopup = popup as! SwiftUIAlert
-            } else {
-                LogNotify.error("Unkown popup type")
-            }
+        if currentPopup == nil {
+            currentPopup = popup
         } else {
             popups.append(popup)
         }
-
     }
 
     func dismiss(id: UUID) {
         popups.removeAll { $0.id == id }
-        if currentProgressPopup != nil && currentProgressPopup!.id == id {
-            currentProgressPopup = nil
-            setNextPopup()
-        } else if currentAlertPopup != nil && currentAlertPopup!.id == id {
-            currentAlertPopup = nil
-            setNextPopup()
+        if currentPopup != nil && currentPopup!.id == id {
+            dismissCurrent()
         }
     }
 
     func dismissCurrent() {
-        currentProgressPopup = nil
-        currentAlertPopup = nil
-        setNextPopup()
-    }
-
-    func updateProgress(id: UUID, progress: Double) {
-        if currentProgressPopup != nil && currentProgressPopup!.id == id {
-            currentProgressPopup?.progress = progress
-            objectWillChange.send()
+        if popups.isEmpty {
+            currentPopup = nil
         } else {
-            (popups.first { $0.id == id } as? ProgressPopup)?.progress = progress
+            currentPopup = popups.removeFirst()
         }
     }
 
-    private func setNextPopup() {
-        if popups.first != nil {
-            if popups.first is ProgressPopup {
-                currentProgressPopup = popups.removeFirst() as! ProgressPopup
-            } else if popups.first is SwiftUIAlert {
-                currentAlertPopup = popups.removeFirst() as! SwiftUIAlert
-            } else {
-                LogNotify.error("Unkown popup type")
-                popups.removeFirst()
+    func updateProgress(id: UUID, progress: Double) {
+        if currentPopup != nil && currentPopup!.id == id {
+            if let progressPopup = currentPopup?.progress {
+                progressPopup.progress = progress
+                objectWillChange.send()
+            }
+        } else {
+            if let progressPopup = popups.first { $0.id == id }?.progress {
+                progressPopup.progress = progress
             }
         }
     }
@@ -84,14 +65,14 @@ struct PopupRoot<Content: View>: View {
             content
                 .sheet(
                     isPresented: Binding(
-                        get: { popupManager.currentProgressPopup != nil },
+                        get: { popupManager.currentPopup?.progress != nil },
                         set: { if !$0 { popupManager.dismissCurrent() } }
                     )
                 ) {
                     VStack {
-                        Text(popupManager.currentProgressPopup?.title ?? "Transmission running")
+                        Text(popupManager.currentPopup?.progress?.title ?? "Transmission running")
                         ProgressView(
-                            value: popupManager.currentProgressPopup?.progress ?? 0
+                            value: popupManager.currentPopup?.progress?.progress ?? 0
                         )
                         .progressViewStyle(CustomCircularProgressViewStyle())
                         .frame(width: 150, height: 150)
@@ -100,33 +81,52 @@ struct PopupRoot<Content: View>: View {
                     }
                 }
                 .alert(
-                    popupManager.currentAlertPopup?.title ?? "",
+                    popupManager.currentPopup?.alert?.title ?? "",
                     isPresented: Binding(
-                        get: { popupManager.currentAlertPopup != nil },
+                        get: { popupManager.currentPopup?.alert != nil },
                         set: { if !$0 { popupManager.dismissCurrent() } }
                     )
                 ) {
-                    if popupManager.currentAlertPopup != nil && popupManager.currentAlertPopup!.textField != nil {
-                        TextField(popupManager.currentAlertPopup!.textField!.title, text: popupManager.currentAlertPopup!.textField!.text)
+                    if popupManager.currentPopup?.alert != nil && popupManager.currentPopup!.alert!.textField != nil {
+                        TextField(popupManager.currentPopup!.alert!.textField!.title, text: popupManager.currentPopup!.alert!.textField!.text)
                     }
-                    ForEach(popupManager.currentAlertPopup?.actions ?? []) { action in
+                    ForEach(popupManager.currentPopup?.alert?.actions ?? []) { action in
                         Button(action.title, role: action.role) {
                             popupManager.dismissCurrent()
                             action.action()
                         }
                     }
                 } message: {
-                    Text(popupManager.currentAlertPopup?.message ?? "")
+                    Text(popupManager.currentPopup?.alert?.message ?? "")
                 }
         }
     }
 }
 
-class Popup {
-    let id = UUID()
+enum Popup: Identifiable {
+    case progress(ProgressPopup)
+    case alert(SwiftUIAlert)
+
+    var id: UUID {
+        switch self {
+        case .progress(let p): return p.id
+        case .alert(let a): return a.id
+        }
+    }
+
+    var progress: ProgressPopup? {
+        guard case .progress(let popup) = self else { return nil }
+        return popup
+    }
+
+    var alert: SwiftUIAlert? {
+        guard case .alert(let popup) = self else { return nil }
+        return popup
+    }
 }
 
-class ProgressPopup: Popup {
+class ProgressPopup {
+    let id = UUID()
     let title: String
     var progress: Double
     let onCancel: () -> Void
@@ -138,7 +138,8 @@ class ProgressPopup: Popup {
     }
 }
 
-class SwiftUIAlert: Popup {
+class SwiftUIAlert {
+    let id = UUID()
     let title: String
     let message: String?
     let actions: [AlertAction]
@@ -214,17 +215,19 @@ struct PopupDemoView: View {
         VStack {
             Button("Show Alert") {
                 PopupManager.instance.show(
-                    SwiftUIAlert(
-                        title: "Test title",
-                        message: "Test message",
-                        actions: [AlertAction(title: "OK", action: {}), AlertAction(title: "Cancel", action: {})],
-                        textField: AlertTextField(title: "Test", text: $textFieldText)
+                    .alert(
+                        SwiftUIAlert(
+                            title: "Test title",
+                            message: "Test message",
+                            actions: [AlertAction(title: "OK", action: {}), AlertAction(title: "Cancel", action: {})],
+                            textField: AlertTextField(title: "Test", text: $textFieldText)
+                        )
                     )
                 )
             }
             SizedBox(height: 10)
             Button("Show Progress View") {
-                PopupManager.instance.show(ProgressPopup(title: "Tranmitting", progress: 0.6, onCancel: {}))
+                PopupManager.instance.show(.progress(ProgressPopup(title: "Tranmitting", progress: 0.6, onCancel: {})))
             }
             SizedBox(height: 10)
             Button("Show File Importer") {

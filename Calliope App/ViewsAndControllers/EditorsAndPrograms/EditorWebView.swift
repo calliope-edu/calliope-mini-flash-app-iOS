@@ -262,7 +262,7 @@ extension EditorWebView: WKUIDelegate {
     ) {
 
         let popup = OkAlert(title: message, completion: completionHandler)
-        showPopup(popup)
+        showPopup(.alert(popup))
     }
 
     func webView(
@@ -278,7 +278,7 @@ extension EditorWebView: WKUIDelegate {
                 AlertAction(title: "OK", action: { completionHandler(true) }), AlertAction(title: "Cancel", action: { completionHandler(false) }),
             ]
         )
-        showPopup(popup)
+        showPopup(.alert(popup))
     }
 
     func webView(
@@ -406,7 +406,7 @@ extension EditorWebView: WKDownloadDelegate {
         }
         
         let popup = OkAlert(title: message)
-        showPopup(popup)
+        showPopup(.alert(popup))
         
     }
 }
@@ -524,7 +524,7 @@ extension EditorWebView {
             let (success, error) = saveFile(filename: "\(download.name).xml", data: xml)
             if success {
                 let popup = OkAlert(title: NSLocalizedString("Program exported", comment: ""), message: NSLocalizedString("Program exported message", comment: "actual message in translation file"))
-                showPopup(popup)
+                showPopup(.alert(popup))
             } else {
                 throw error!
             }
