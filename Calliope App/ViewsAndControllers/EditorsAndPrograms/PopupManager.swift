@@ -63,42 +63,20 @@ struct PopupRoot<Content: View>: View {
     var body: some View {
         ZStack {
             content
-                .sheet(
-                    isPresented: Binding(
-                        get: { popupManager.currentPopup?.progress != nil },
-                        set: { if !$0 { popupManager.dismissCurrent() } }
-                    )
-                ) {
-                    VStack {
-                        Text(popupManager.currentPopup?.progress?.title ?? "Transmission running")
-                        ProgressView(
-                            value: popupManager.currentPopup?.progress?.progress ?? 0
-                        )
-                        .progressViewStyle(CustomCircularProgressViewStyle())
-                        .frame(width: 150, height: 150)
-                        .padding()
-                        Button("Cancel") { popupManager.dismissCurrent() }
-                    }
+
+            // Custom Alert Overlay
+            if let alertPopup = popupManager.currentPopup?.alert {
+                CustomAlertView(alert: alertPopup) {
+                    popupManager.dismissCurrent()
                 }
-                .alert(
-                    popupManager.currentPopup?.alert?.title ?? "",
-                    isPresented: Binding(
-                        get: { popupManager.currentPopup?.alert != nil },
-                        set: { if !$0 { popupManager.dismissCurrent() } }
-                    )
-                ) {
-                    if popupManager.currentPopup?.alert != nil && popupManager.currentPopup!.alert!.textField != nil {
-                        TextField(popupManager.currentPopup!.alert!.textField!.title, text: popupManager.currentPopup!.alert!.textField!.text)
-                    }
-                    ForEach(popupManager.currentPopup?.alert?.actions ?? []) { action in
-                        Button(action.title, role: action.role) {
-                            popupManager.dismissCurrent()
-                            action.action()
-                        }
-                    }
-                } message: {
-                    Text(popupManager.currentPopup?.alert?.message ?? "")
+            }
+
+            // Custom Progress Overlay
+            if let progressPopup = popupManager.currentPopup?.progress {
+                CustomProgressView(popup: progressPopup) {
+                    popupManager.dismissCurrent()
                 }
+            }
         }
     }
 }
@@ -218,7 +196,7 @@ struct PopupDemoView: View {
                     .alert(
                         SwiftUIAlert(
                             title: "Test title",
-                            message: "Test message",
+                            message: "This is an extra long test message to see how the width of the message field is limited",
                             actions: [AlertAction(title: "OK", action: {}), AlertAction(title: "Cancel", action: {})],
                             textField: AlertTextField(title: "Test", text: $textFieldText)
                         )
@@ -234,6 +212,113 @@ struct PopupDemoView: View {
                 showingFileImporter = true
             }
             .fileImporter(isPresented: $showingFileImporter, allowedContentTypes: [.item]) { _ in
+            }
+        }
+    }
+}
+
+struct CustomPopup<Content: View>: View {
+    private let content: Content
+    private let onDismiss: () -> Void
+
+    init(onDismiss: @escaping () -> Void, @ViewBuilder content: () -> Content) {
+        self.content = content()
+        self.onDismiss = onDismiss
+    }
+
+    var body: some View {
+        ZStack {
+            // Backdrop
+            Color.black.opacity(0.4)
+                .ignoresSafeArea()
+                .onTapGesture { onDismiss() }
+
+            // Alert Card
+            VStack(spacing: 20) {
+                content
+            }
+            .padding(30)
+            .background(Color(.systemBackground))
+            .cornerRadius(16)
+            .shadow(radius: 10)
+        }
+    }
+}
+
+struct CustomAlertView: View {
+    let alert: SwiftUIAlert?
+    let onDismiss: () -> Void
+
+    var body: some View {
+        if let alert = alert {
+            CustomPopup(onDismiss: onDismiss) {
+                Text(alert.title)
+                    .font(.headline)
+
+                if let message = alert.message {
+                    Text(message)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+
+                // Text Field
+                if let textField = alert.textField {
+                    TextField(textField.title, text: textField.text)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding(.horizontal, 10)
+                        .frame(maxWidth: 300)
+                }
+
+                // Actions
+                HStack(spacing: 15) {
+                    ForEach(alert.actions) { action in
+                        Button(action.title) {
+                            action.action()
+                            onDismiss()
+                        }
+                        .buttonStyle(.plain)
+                        .font(.system(size: 16, weight: .semibold))
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 10)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(action.role == .cancel ? Color.gray.opacity(0.2) : Color.blue.opacity(0.2))
+                        )
+                        .foregroundColor(action.role == .cancel ? .primary : .blue)
+                    }
+                }
+            }
+        }
+    }
+}
+
+struct CustomProgressView: View {
+    let popup: ProgressPopup?
+    let onDismiss: () -> Void
+
+    var body: some View {
+        if let popup = popup {
+            CustomPopup(onDismiss: onDismiss) {
+                Text(popup.title)
+                    .font(.headline)
+
+                ProgressView(value: popup.progress)
+                    .progressViewStyle(CustomCircularProgressViewStyle())
+                    .frame(width: 150, height: 150)
+
+                Button("Cancel") {
+                    popup.onCancel()
+                    onDismiss()
+                }
+                .buttonStyle(.plain)
+                .font(.system(size: 16, weight: .semibold))
+                .padding(.horizontal, 20)
+                .padding(.vertical, 10)
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color.gray.opacity(0.2))
+                )
+                .foregroundColor(.primary)
             }
         }
     }
