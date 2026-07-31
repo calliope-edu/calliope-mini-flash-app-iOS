@@ -94,6 +94,27 @@ class FirmwareUploadSwiftUI {
         }
 
         let uploader = FirmwareUploadSwiftUI(file: program, alertPublisher: alertPublisher)
+        
+        // Shared iPad: the system export picker performs the copy itself and is
+        // the only sheet the user should see. Presenting our progress alert here
+        // would stack a sheet in front of the picker and pop up again afterwards
+        // (progress → picker → progress). Start the upload straight away so the
+        // picker is what opens.
+        LogNotify.debug("useExportPicker = \(uploader.usesExportPicker)")
+        if uploader.usesExportPicker {
+            LogNotify.debug("Executing upload using export picker.")
+            do {
+                try uploader.upload(finishedCallback: { completion?() })
+            } catch {
+                FirmwareUploadSwiftUI.uploadingInstance = nil
+                UIApplication.shared.isIdleTimerDisabled = false
+                uploader.presentStandalone(
+                    FirmwareUploadSwiftUI.makeHexMismatchAlert(informationLink: "https://calliope.cc/programmieren/mobil/ipad#hardware"))
+            }
+            return
+        }
+        
+        
         let tempCalliope = MatrixConnectionViewModel.instance.usageReadyCalliope
 
         do {
@@ -137,6 +158,50 @@ class FirmwareUploadSwiftUI {
             }
         )
         alertPublisher.setAlert(alert)
+    }
+    
+    /// True when this upload is handed to the Shared-iPad export picker. There
+    /// the system picker IS the transfer UI (it performs the copy), so the app
+    /// must not put its own progress alert on top of it.
+    private var usesExportPicker: Bool {
+        (calliope as? USBCalliope)?.useExportPicker == true
+    }
+
+    /// Presents an alert without relying on our progress alert being on screen —
+    /// in export-picker mode there is none.
+    private func presentStandalone(_ alert: UIAlertController) {
+        guard let presenter = FirmwareUploadSwiftUI.topMostViewController() else { return }
+        DispatchQueue.main.async {
+            presenter.present(alert, animated: true)
+        }
+    }
+
+    /// Walks the active scene's key window to find the top-most presented
+    /// view controller, since there is no stored UIKit controller reference
+    /// to present from in the SwiftUI-driven flow.
+    private static func topMostViewController() -> UIViewController? {
+        let scenes = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .filter { $0.activationState == .foregroundActive }
+        let keyWindow = scenes.flatMap { $0.windows }.first(where: { $0.isKeyWindow })
+            ?? scenes.flatMap { $0.windows }.first
+        return keyWindow?.rootViewController?.topMostPresented()
+    }
+
+    private static func makeHexMismatchAlert(informationLink: String) -> UIAlertController {
+        let alert = UIAlertController(
+            title: NSLocalizedString("Upload failed", comment: ""),
+            message: String(format: NSLocalizedString("The program does not seem to match the version of your Calliope mini. Please check the hardware selection in your editor again.", comment: "")),
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel))
+        alert.addAction(
+            UIAlertAction(title: NSLocalizedString("Further Information", comment: ""), style: .default) { _ in
+                if let url = URL(string: informationLink) {
+                    UIApplication.shared.open(url)
+                }
+            })
+        return alert
     }
 
     private var file: Hex
