@@ -7,13 +7,14 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct EditorTileConfig {
     let name: String
     let iconName: String
 }
 
-struct ProgramTileConfig: Identifiable{
+struct ProgramTileConfig: Identifiable {
     let id = UUID()
     let name: String
     let lastUsed: Date
@@ -23,16 +24,18 @@ struct ProgramTileConfig: Identifiable{
 protocol EditorsAndProgramsViewModelProtocol {
     var editors: [EditorTileConfig] { get }
     var programs: [ProgramTileConfig] { get }
+    var alert: (any AppAlert)? { get set }
+    var alertBinding: Binding<(any AppAlert)?> { get }
 
     func downloadProgram(program: ProgramTileConfig)
     func renameProgram(program: ProgramTileConfig)
     func deleteProgram(program: ProgramTileConfig)
     func uploadDefaultV3Program()
     func uploadDefaultV1And2Program()
-    func openFile()
+    func openFile(result: Result<URL, Error>)
 }
 
-class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, ObservableObject {
+class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, ObservableObject, Alertable, CanShowProgess {
     let openEditor: (_ editor: EditorTileConfig) -> Void
     let uploadDownloadableProgram: (_ program: DownloadableHexFile) -> Void
     let openQRCodeView: () -> Void
@@ -50,6 +53,16 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
     ]
 
     @Published var programs: [ProgramTileConfig] = []
+
+    @Published var alert: (any AppAlert)? = nil
+    var alertBinding: Binding<(any AppAlert)?> {
+        Binding(
+            get: { self.alert },
+            set: { self.alert = $0 }
+        )
+    }
+    
+    var progress: (any ProgressAlert)?
 
     var programSubscription: NSObjectProtocol!
 
@@ -99,11 +112,11 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
             MatrixConnectionViewModel.instance.connect()
         }
     }
-    
+
     func renameProgram(program: ProgramTileConfig) {
         renameHexFile(program.hexFile)
     }
-    
+
     func deleteProgram(program: ProgramTileConfig) {
         deleteHexFile(program.hexFile)
     }
@@ -124,10 +137,17 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
         FirmwareUploadSwiftUI.showUIForDownloadableProgram(program: program)
     }
 
-    func openFile() {
-        openFileDialog()
+    func openFile(result: Result<URL, Error>) {
+        switch result {
+        case .success(let url):
+            if !(url.lastPathComponent.isEmpty) {
+                HexFileStoreDialogSwiftUI.showStoreHexUI(alertPublisher: self, hexFile: url, notSaved: { _ in})
+            }
+        case .failure(let error):
+            LogNotify.error("Program import failed: \(error)")
+        }
     }
-    
+
     deinit {
         NotificationCenter.default.removeObserver(programSubscription!)
     }
@@ -151,14 +171,22 @@ class PreviewEditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, O
         ),
     ]
 
+    @Published var alert: (any AppAlert)? = nil
+    var alertBinding: Binding<(any AppAlert)?> {
+        Binding(
+            get: { self.alert },
+            set: { self.alert = $0 }
+        )
+    }
+
     func downloadProgram(program: ProgramTileConfig) {
         print("Trying to open program \(program.name)")
     }
-    
+
     func renameProgram(program: ProgramTileConfig) {
         print("Trying to rename program \(program.name)")
     }
-    
+
     func deleteProgram(program: ProgramTileConfig) {
         print("Trying to delete program \(program.name)")
     }
@@ -171,7 +199,7 @@ class PreviewEditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, O
         print("Trying to upload default v1 and v2 program")
     }
 
-    func openFile() {
+    func openFile(result: Result<URL, Error>) {
         print("Trying to open file")
     }
 }
