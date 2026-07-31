@@ -15,17 +15,13 @@ final class PopupManager: ObservableObject {
     private var popups: [Popup] = []
     @Published var currentProgressPopup: ProgressPopup? = nil
     @Published var currentAlertPopup: SwiftUIAlert? = nil
-    @Published var currentPopupIsProgress = false
-    @Published var currentPopupIsAlert = false
 
     func show(_ popup: Popup) {
-        if currentAlertPopup == nil && currentAlertPopup == nil {
+        if currentAlertPopup == nil && currentProgressPopup == nil {
             if popup is ProgressPopup {
                 currentProgressPopup = popup as! ProgressPopup
-                currentPopupChanged()
             } else if popup is SwiftUIAlert {
                 currentAlertPopup = popup as! SwiftUIAlert
-                currentPopupChanged()
             } else {
                 LogNotify.error("Unkown popup type")
             }
@@ -40,11 +36,9 @@ final class PopupManager: ObservableObject {
         if currentProgressPopup != nil && currentProgressPopup!.id == id {
             currentProgressPopup = nil
             setNextPopup()
-            currentPopupChanged()
         } else if currentAlertPopup != nil && currentAlertPopup!.id == id {
             currentAlertPopup = nil
             setNextPopup()
-            currentPopupChanged()
         }
     }
 
@@ -52,7 +46,6 @@ final class PopupManager: ObservableObject {
         currentProgressPopup = nil
         currentAlertPopup = nil
         setNextPopup()
-        currentPopupChanged()
     }
 
     func updateProgress(id: UUID, progress: Double) {
@@ -76,15 +69,10 @@ final class PopupManager: ObservableObject {
             }
         }
     }
-
-    private func currentPopupChanged() {
-        currentPopupIsProgress = currentProgressPopup != nil
-        currentPopupIsAlert = currentAlertPopup != nil
-    }
 }
 
 struct PopupRoot<Content: View>: View {
-    @StateObject private var popupManager = PopupManager.instance
+    @ObservedObject private var popupManager = PopupManager.instance
     private let content: Content
 
     init(@ViewBuilder content: () -> Content) {
@@ -94,7 +82,12 @@ struct PopupRoot<Content: View>: View {
     var body: some View {
         ZStack {
             content
-                .sheet(isPresented: $popupManager.currentPopupIsProgress) {
+                .sheet(
+                    isPresented: Binding(
+                        get: { popupManager.currentProgressPopup != nil },
+                        set: { if !$0 { popupManager.dismissCurrent() } }
+                    )
+                ) {
                     VStack {
                         Text(popupManager.currentProgressPopup?.title ?? "Transmission running")
                         ProgressView(
@@ -106,7 +99,13 @@ struct PopupRoot<Content: View>: View {
                         Button("Cancel") { popupManager.dismissCurrent() }
                     }
                 }
-                .alert(popupManager.currentAlertPopup?.title ?? "", isPresented: $popupManager.currentPopupIsAlert) {
+                .alert(
+                    popupManager.currentAlertPopup?.title ?? "",
+                    isPresented: Binding(
+                        get: { popupManager.currentAlertPopup != nil },
+                        set: { if !$0 { popupManager.dismissCurrent() } }
+                    )
+                ) {
                     if popupManager.currentAlertPopup != nil && popupManager.currentAlertPopup!.textField != nil {
                         TextField(popupManager.currentAlertPopup!.textField!.title, text: popupManager.currentAlertPopup!.textField!.text)
                     }
