@@ -32,6 +32,17 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
     private weak var exportProgressReceiver: DFUProgressDelegate?
     private weak var exportStatusDelegate: DFUServiceDelegate?
 
+    /// Temp copy of the hex carrying a DAPLink-friendly filename, handed to the
+    /// export picker. Deleted once the picker finishes.
+    private var stagedExportFileURL: URL?
+
+    /// Set when the user dismissed the export picker without saving. The upload
+    /// still has to report `.aborted` so `FirmwareUpload` can release the
+    /// background task and idle timer, but a deliberate cancel is not an error —
+    /// `FirmwareUpload` reads this to skip the failure alert and keep the
+    /// connection, so the next flash goes straight back to the picker.
+    private(set) var lastExportCancelledByUser = false
+
     override var compatibleHexTypes: Set<HexParser.HexVersion> {
         return [.universal, .v3, .v3Shield, .v2, .arcade]
     }
@@ -137,7 +148,16 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
                                                currentSpeedBytesPerSecond: 0.0,
                                                avgSpeedBytesPerSecond: 0.0)
 
-        let picker = UIDocumentPickerViewController(forExporting: [file.calliopeUSBUrl], asCopy: true)
+        // Export the hex under a DAPLink-friendly name (short, lowercase, no
+        // spaces) instead of the project name. The picker takes the suggested
+        // filename straight from the URL, and a long name with spaces invites
+        // trouble on the FAT12 volume — plus, if that name already exists at the
+        // destination, iOS silently saves a duplicate ("… 2.hex") rather than
+        // replacing it, which DAPLink does not expect.
+        let exportURL = stagedExportURL(for: file) ?? file.calliopeUSBUrl
+        stagedExportFileURL = (exportURL == file.calliopeUSBUrl) ? nil : exportURL
+
+        let picker = UIDocumentPickerViewController(forExporting: [exportURL], asCopy: true)
         picker.delegate = self
         picker.allowsMultipleSelection = false
         picker.shouldShowFileExtensions = true
@@ -147,6 +167,34 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
         DispatchQueue.main.async {
             presenter.present(picker, animated: true)
         }
+    }
+
+    /// Copies the hex into a temporary folder under a DAPLink-friendly filename
+    /// and returns that URL, or `nil` if staging failed (caller then exports the
+    /// original). The staged file is removed once the picker finishes.
+    private func stagedExportURL(for file: Hex) -> URL? {
+        let source = file.calliopeUSBUrl
+        let name = USBCalliope.sanitizedDAPLinkName(from: source.lastPathComponent)
+        let stagingDir = FileManager.default.temporaryDirectory
+            .appendingPathComponent("usb-export-\(UUID().uuidString)", isDirectory: true)
+        let destination = stagingDir.appendingPathComponent(name)
+        do {
+            try FileManager.default.createDirectory(at: stagingDir, withIntermediateDirectories: true)
+            try FileManager.default.copyItem(at: source, to: destination)
+            LogNotify.log("Export picker: staged \(source.lastPathComponent) as \(name)")
+            return destination
+        } catch {
+            LogNotify.log("Export picker: staging failed (\(error.localizedDescription)) - exporting original name")
+            try? FileManager.default.removeItem(at: stagingDir)
+            return nil
+        }
+    }
+
+    private func clearStagedExportFile() {
+        guard let staged = stagedExportFileURL else { return }
+        // Remove the whole per-export staging folder, not just the file.
+        try? FileManager.default.removeItem(at: staged.deletingLastPathComponent())
+        stagedExportFileURL = nil
     }
 
     private func resolvePresentingController() -> UIViewController? {
@@ -167,6 +215,7 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
         exportProgressReceiver = nil
         exportStatusDelegate = nil
         writeInProgress = false
+        clearStagedExportFile()
 
         if success {
             progress?.dfuProgressDidChange(for: 100, outOf: 100, to: 100,
@@ -184,12 +233,17 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         guard controller === exportPickerInstance else { return }
         LogNotify.log("Export picker: hex copied to \(urls.first?.path ?? "<unknown>")")
+        lastExportCancelledByUser = false
         finishExportPicker(success: true)
     }
 
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
         guard controller === exportPickerInstance else { return }
-        LogNotify.log("Export picker: cancelled by user")
+        LogNotify.log("Export picker: cancelled by user - keeping USB connection")
+        // A cancel is a deliberate user action, not a transfer failure. Flag it
+        // so FirmwareUpload cleans up quietly instead of showing an error and
+        // leaves the (virtual) USB connection in place.
+        lastExportCancelledByUser = true
         finishExportPicker(success: false)
     }
 
