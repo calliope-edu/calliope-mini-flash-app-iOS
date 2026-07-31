@@ -113,7 +113,7 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
             programName: NSLocalizedString("Calliope mini V3", comment: ""),
             url: UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV3Url.rawValue)!
         )
-        uploadDownloadableProgram(program)
+        FirmwareUploadSwiftUI.showUIForDownloadableProgram(program: program)
     }
 
     func uploadDefaultV1And2Program() {
@@ -121,7 +121,7 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
             programName: NSLocalizedString("Calliope mini V1 + 2", comment: ""),
             url: UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV1AndV2Url.rawValue)!
         )
-        uploadDownloadableProgram(program)
+        FirmwareUploadSwiftUI.showUIForDownloadableProgram(program: program)
     }
 
     func openFile() {

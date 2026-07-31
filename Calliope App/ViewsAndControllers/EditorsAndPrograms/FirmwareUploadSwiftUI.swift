@@ -12,54 +12,64 @@ import UIKit
 class FirmwareUploadSwiftUI {
 
     public static func showUIForDownloadableProgram(
-        controller: UIViewController,
         program: DownloadableHexFile,
         name: String = NSLocalizedString("the program", comment: ""),
         completion: ((_ success: Bool) -> Void)? = nil
     ) {
-        /* if program.calliopeV1andV2Bin.count != 0 {
-             DispatchQueue.main.async {
-                 FirmwareUpload.showUploadUI(controller: controller, program: program) {
-                     completion?(true)
-                     MatrixConnectionViewModel.instance.connect()
-                 }
-             }
-         } else {
-             let alertStart = UIAlertController(title: NSLocalizedString("Wait a little", comment: ""), message: NSLocalizedString("The program is being downloaded. Please wait a little.", comment: ""), preferredStyle: .alert)
-             alertStart.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default))
+        if program.calliopeV1andV2Bin.count != 0 {
+            DispatchQueue.main.async {
+                FirmwareUploadSwiftUI.showUploadUI(program: program) {
+                    completion?(true)
+                    MatrixConnectionViewModel.instance.connect()
+                }
+            }
+        } else {
+            let downloadAlert = OkAlert(
+                title: NSLocalizedString("Wait a little", comment: ""),
+                message: NSLocalizedString("The program is being downloaded. Please wait a little.", comment: "")
+            )
+            DispatchQueue.main.async {
+                PopupManager.instance.show(.alert(downloadAlert))
+            }
 
-             controller.present(alertStart, animated: true) {
-                 program.load { error in
-                     DispatchQueue.main.async {
-                         let alert: UIAlertController
+            program.load { error in
+                LogNotify.debug("Finished downloading program")
+                LogNotify.error(error?.localizedDescription ?? "")
+                var alert: Popup
+                if error == nil, program.calliopeV1andV2Bin.count != 0 {
+                    let alertDone = TwoOptionsAlert(
+                        title: NSLocalizedString("Download finished", comment: ""),
+                        message: NSLocalizedString("The program is downloaded. Do you want to upload it now?", comment: ""),
+                        actions: [
+                            AlertAction(
+                                title: NSLocalizedString("Yes", comment: ""),
+                                action: {
+                                    DispatchQueue.main.async {
+                                        FirmwareUploadSwiftUI.uploadWithoutConfirmation(program: program) {
+                                            completion?(true)
+                                        }
+                                    }
+                                }
+                            ), AlertAction(title: NSLocalizedString("No", comment: ""), action: {}),
+                        ],
+                    )
+                    alert = .alert(alertDone)
+                } else {
+                    let reason = error?.localizedDescription ?? "The downloaded program is empty"
+                    let alertError = OkAlert(
+                        title: NSLocalizedString("Program download failed", comment: ""),
+                        message: String(format: NSLocalizedString("The program is not ready. The reason is:\n%@", comment: ""), reason),
+                        completion: { completion?(false) }
+                    )
+                    alert = .alert(alertError)
+                }
 
-                         if error == nil, program.calliopeV1andV2Bin.count != 0 {
-                             let alertDone = UIAlertController(title: NSLocalizedString("Download finished", comment: ""), message: NSLocalizedString("The program is downloaded. Do you want to upload it now?", comment: ""), preferredStyle: .alert)
-                             alertDone.addAction(
-                                 UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default) { _ in
-                                     FirmwareUpload.uploadWithoutConfirmation(controller: controller, program: program) {
-                                         completion?(true)
-                                     }
-                                 })
-                             alertDone.addAction(UIAlertAction(title: NSLocalizedString("No", comment: ""), style: .cancel))
-                             alert = alertDone
-                         } else {
-                             let reason = error?.localizedDescription ?? "The downloaded program is empty"
-                             let alertError = UIAlertController(title: NSLocalizedString("Program download failed", comment: ""), message: String(format: NSLocalizedString("The program is not ready. The reason is:\n%@", comment: ""), reason), preferredStyle: .alert)
-                             alertError.addAction(
-                                 UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
-                                     completion?(false)
-                                 })
-                             alert = alertError
-                         }
-
-                         alertStart.dismiss(animated: true) {
-                             controller.present(alert, animated: true)
-                         }
-                     }
-                 }
-             }
-         }*/
+                DispatchQueue.main.async {
+                    PopupManager.instance.show(alert)
+                    PopupManager.instance.dismiss(id: downloadAlert.id)
+                }
+            }
+        }
     }
 
     public static func showUploadUI(
