@@ -23,12 +23,4 @@ final class EditorViewController: UIViewController {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
-    func presentAlert(_ view: UIViewController, _ animated: Bool) {
-        present(view, animated: animated)
-    }
-    
-    func uploadFirmware(_ program: HexFile, _ completion: (() -> Void)?) {
-        FirmwareUpload.uploadWithoutConfirmation(controller: self, program: program, completion: completion)
-    }
 }
