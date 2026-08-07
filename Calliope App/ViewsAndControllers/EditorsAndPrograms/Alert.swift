@@ -335,7 +335,7 @@ struct GenericTextFieldAlert: TextFieldAppAlert {
     let actions: [StandardAlertAction] = []
     let textFieldHint: String = "Program Name"
     let textFieldDefault: String?
-    
+
     init(title: String, message: String? = nil, actions: [TextFieldAlertAction], defaultName: String) {
         self.title = title
         self.message = message
@@ -343,13 +343,47 @@ struct GenericTextFieldAlert: TextFieldAppAlert {
         textFieldDefault = defaultName
     }
 }
- 
+
+struct RenameProgramAlert: TextFieldAppAlert {
+    let id = UUID()
+    let title: String = NSLocalizedString("Enter the new program title", comment: "")
+    let message: String? = nil
+    let textActions: [TextFieldAlertAction]
+    let actions: [StandardAlertAction] = []
+    let textFieldHint: String = "Program Name"
+    let textFieldDefault: String?
+
+    init(defaultName: String, onRename: @escaping (_ text: String) -> Void) {
+        textActions = [
+            TextFieldAlertAction(NSLocalizedString("OK", comment: ""), handler: onRename),
+            TextFieldAlertAction(NSLocalizedString("Cancel", comment: ""), handler: { _ in }),
+        ]
+        textFieldDefault = defaultName
+    }
+}
+
+struct RenameFailedAlert: AppAlert {
+    let id = UUID()
+    let title: String
+    let message: String?
+    let actions: [StandardAlertAction]
+
+    init(oldName: String, newName: String) {
+        self.title = String(format: NSLocalizedString("Could not rename %@", comment: ""), oldName)
+        self.message = String(
+            format: NSLocalizedString("The name %@ could not be given to %@. The name for a program must be unique and not empty.", comment: ""),
+            newName,
+            oldName
+        )
+        actions = [StandardAlertAction(NSLocalizedString("OK", comment: ""), handler: {})]
+    }
+}
 
 protocol Alertable: AnyObject {
     var alert: (any AppAlert)? { get set }
 }
 
- class TestAlertable: Alertable {
+class TestAlertable: Alertable {
     var alert: (any AppAlert)? {
         didSet {
             LogNotify.error("Tried to show alert, but only the TestAlertable was initialized. This should not happen.")

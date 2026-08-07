@@ -36,7 +36,6 @@ protocol EditorsAndProgramsViewModelProtocol {
 }
 
 class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, ObservableObject, Alertable, CanShowProgess {
-    let renameHexFile: (_ program: HexFile) -> Void
     let deleteHexFile: (_ program: HexFile) -> Void
 
     @Published var editors: [EditorTileConfig] = [
@@ -71,10 +70,8 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
     }
 
     init(
-        renameHexFile: @escaping (_ program: HexFile) -> Void,
         deleteHexFile: @escaping (_ program: HexFile) -> Void
     ) {
-        self.renameHexFile = renameHexFile
         self.deleteHexFile = deleteHexFile
 
         loadPrograms()
@@ -99,7 +96,18 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
     }
 
     func renameProgram(program: ProgramTileConfig) {
-        renameHexFile(program.hexFile)
+        let alert = RenameProgramAlert(defaultName: program.name, onRename: { newName in
+                if newName != "" {
+                    var renamableProgram = program.hexFile
+                    renamableProgram.name = newName
+                    if renamableProgram.name != newName {
+                        //rename was not successful
+                        let failedAlert = RenameFailedAlert(oldName: renamableProgram.name, newName: newName)
+                        self.alert = failedAlert
+                    }
+                }
+        })
+        self.alert = alert
     }
 
     func deleteProgram(program: ProgramTileConfig) {
