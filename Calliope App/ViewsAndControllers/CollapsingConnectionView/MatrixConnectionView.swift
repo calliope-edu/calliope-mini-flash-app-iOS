@@ -420,7 +420,6 @@ struct MatrixView<ViewModelType: MatrixConnectionViewModelProtocol>: View {
     @State private var dragValue: Bool?
     @State private var visitedCells: Set<MatrixPosition> = []
     @State private var bouncingCells: [[Bool]] = Array(repeating: Array(repeating: false, count: 5), count: 5)
-    @State private var transitioning: [[Bool]] = Array(repeating: Array(repeating: false, count: 5), count: 5)
 
     private let columns = Array(repeating: GridItem(.flexible(), spacing: 8), count: 5)
 
@@ -438,8 +437,8 @@ struct MatrixView<ViewModelType: MatrixConnectionViewModelProtocol>: View {
                             RoundedRectangle(cornerRadius: 6)
                                 .fill(cellColor(row: row, column: column))
                                 .aspectRatio(1, contentMode: .fit)
-                                .scaleEffect(bouncingCells[row][column] ? 1.15 : 1.0)
-                                .animation(.spring(response: 0.25, dampingFraction: 0.35), value: bouncingCells[row][column])
+                                .scaleEffect(bouncingCells[row][column] ? 1.05 : 1.0)
+                                .animation(.spring(response: 0.15, dampingFraction: 0.35), value: bouncingCells[row][column])
                         }
                     }
                 }
@@ -452,9 +451,6 @@ struct MatrixView<ViewModelType: MatrixConnectionViewModelProtocol>: View {
     }
 
     private func cellColor(row: Int, column: Int) -> Color {
-        if transitioning[row][column] {
-            return !viewModel.matrix[row][column] ? Color.calliopePink : .white
-        }
         return viewModel.matrix[row][column] ? Color.calliopePink : .white
     }
 
@@ -477,15 +473,13 @@ struct MatrixView<ViewModelType: MatrixConnectionViewModelProtocol>: View {
             // Activate this cell and all below, bouncing each in sequence
             let column = position.column
             for row in position.row..<5 {
-                transitioning[row][column] = true
-                viewModel.matrix[row][column] = true
                 visitedCells.insert(MatrixPosition(row: row, column: column))
                 let delay = Double(row - position.row) * 0.08
                 DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
                     bouncingCells[row][column] = true
+                    viewModel.matrix[row][column] = true
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                         bouncingCells[row][column] = false
-                        transitioning[row][column] = false
                     }
                 }
             }
@@ -493,11 +487,11 @@ struct MatrixView<ViewModelType: MatrixConnectionViewModelProtocol>: View {
             // Deactivate entire column, bouncing outward from the tapped cell
             let column = position.column
             for row in 0..<5 {
-                viewModel.matrix[row][column] = false
                 visitedCells.insert(MatrixPosition(row: row, column: column))
                 let delay = Double(abs(row - position.row)) * 0.08
                 DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
                     bouncingCells[row][column] = true
+                    viewModel.matrix[row][column] = false
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                         bouncingCells[row][column] = false
                     }
