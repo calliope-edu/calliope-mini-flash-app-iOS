@@ -419,6 +419,8 @@ struct MatrixView<ViewModelType: MatrixConnectionViewModelProtocol>: View {
 
     @State private var dragValue: Bool?
     @State private var visitedCells: Set<MatrixPosition> = []
+    @State private var bouncingCells: [[Bool]] = Array(repeating: Array(repeating: false, count: 5), count: 5)
+    @State private var transitioning: [[Bool]] = Array(repeating: Array(repeating: false, count: 5), count: 5)
 
     private let columns = Array(repeating: GridItem(.flexible(), spacing: 8), count: 5)
 
@@ -433,9 +435,11 @@ struct MatrixView<ViewModelType: MatrixConnectionViewModelProtocol>: View {
                 ForEach(0..<5) { row in
                     GridRow {
                         ForEach(0..<5) { column in
-                            Rectangle()
-                                .fill(viewModel.matrix[row][column] ? Color.calliopePink : .white)
+                            RoundedRectangle(cornerRadius: 6)
+                                .fill(cellColor(row: row, column: column))
                                 .aspectRatio(1, contentMode: .fit)
+                                .scaleEffect(bouncingCells[row][column] ? 1.15 : 1.0)
+                                .animation(.spring(response: 0.25, dampingFraction: 0.35), value: bouncingCells[row][column])
                         }
                     }
                 }
@@ -445,6 +449,13 @@ struct MatrixView<ViewModelType: MatrixConnectionViewModelProtocol>: View {
             )
         }.padding()
             .background(Color.calliopeYellow.brightness(0.05)).frame(width: 300, height: 300)
+    }
+
+    private func cellColor(row: Int, column: Int) -> Color {
+        if transitioning[row][column] {
+            return !viewModel.matrix[row][column] ? Color.calliopePink : .white
+        }
+        return viewModel.matrix[row][column] ? Color.calliopePink : .white
     }
 
     func cellMatrixPosition(at point: CGPoint, cellSize: CGFloat) -> MatrixPosition? {
@@ -460,6 +471,41 @@ struct MatrixView<ViewModelType: MatrixConnectionViewModelProtocol>: View {
         return MatrixPosition(row: row, column: column)
     }
 
+    /// Sets a cell and cascades: activation goes downward with a staggered bounce, deactivation clears the whole column.
+    func setCell(at position: MatrixPosition, to value: Bool) {
+        if value {
+            // Activate this cell and all below, bouncing each in sequence
+            let column = position.column
+            for row in position.row..<5 {
+                transitioning[row][column] = true
+                viewModel.matrix[row][column] = true
+                visitedCells.insert(MatrixPosition(row: row, column: column))
+                let delay = Double(row - position.row) * 0.08
+                DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                    bouncingCells[row][column] = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                        bouncingCells[row][column] = false
+                        transitioning[row][column] = false
+                    }
+                }
+            }
+        } else {
+            // Deactivate entire column, bouncing outward from the tapped cell
+            let column = position.column
+            for row in 0..<5 {
+                viewModel.matrix[row][column] = false
+                visitedCells.insert(MatrixPosition(row: row, column: column))
+                let delay = Double(abs(row - position.row)) * 0.08
+                DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                    bouncingCells[row][column] = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                        bouncingCells[row][column] = false
+                    }
+                }
+            }
+        }
+    }
+
     func dragGesture(cellSize: Double) -> some Gesture {
         return DragGesture(minimumDistance: 0)
             .onChanged { value in
@@ -472,14 +518,13 @@ struct MatrixView<ViewModelType: MatrixConnectionViewModelProtocol>: View {
                 else { return }
 
                 if dragValue == nil {
-                    // First touched cell
+                    // First touched cell — toggle and cascade down the column
                     viewModel.matrix[matrixPosition.row][matrixPosition.column].toggle()
                     dragValue = viewModel.matrix[matrixPosition.row][matrixPosition.column]
-                    visitedCells.insert(matrixPosition)
+                    setCell(at: matrixPosition, to: dragValue!)
                 } else if !visitedCells.contains(matrixPosition) {
-                    // New cell while dragging
-                    viewModel.matrix[matrixPosition.row][matrixPosition.column] = dragValue!
-                    visitedCells.insert(matrixPosition)
+                    // New cell while dragging — set and cascade down the column
+                    setCell(at: matrixPosition, to: dragValue!)
                 }
             }
             .onEnded { _ in
