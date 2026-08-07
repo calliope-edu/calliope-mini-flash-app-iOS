@@ -120,7 +120,6 @@
 		60818EB42FF5388A0053893F /* CalliopeMiniBlocksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818EB32FF5388A0053893F /* CalliopeMiniBlocksView.swift */; };
 		60818EB62FF540600053893F /* AdaptiveColumnLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818EB52FF5405E0053893F /* AdaptiveColumnLayout.swift */; };
 		60818EB82FF558AF0053893F /* CalliopeMiniBlocksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818EB72FF558AF0053893F /* CalliopeMiniBlocksViewModel.swift */; };
-		60818EBA2FF55C470053893F /* CalliopeMiniBlocksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818EB92FF55C470053893F /* CalliopeMiniBlocksViewController.swift */; };
 		60818EBC2FF561FB0053893F /* ArcadeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818EBB2FF561FB0053893F /* ArcadeView.swift */; };
 		60818EBE2FF563D80053893F /* ArcadeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818EBD2FF563D80053893F /* ArcadeViewModel.swift */; };
 		60818EC02FF564E30053893F /* ArcadeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818EBF2FF564E30053893F /* ArcadeViewController.swift */; };
@@ -302,7 +301,6 @@
 		60818EB32FF5388A0053893F /* CalliopeMiniBlocksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeMiniBlocksView.swift; sourceTree = "<group>"; };
 		60818EB52FF5405E0053893F /* AdaptiveColumnLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveColumnLayout.swift; sourceTree = "<group>"; };
 		60818EB72FF558AF0053893F /* CalliopeMiniBlocksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeMiniBlocksViewModel.swift; sourceTree = "<group>"; };
-		60818EB92FF55C470053893F /* CalliopeMiniBlocksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeMiniBlocksViewController.swift; sourceTree = "<group>"; };
 		60818EBB2FF561FB0053893F /* ArcadeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcadeView.swift; sourceTree = "<group>"; };
 		60818EBD2FF563D80053893F /* ArcadeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcadeViewModel.swift; sourceTree = "<group>"; };
 		60818EBF2FF564E30053893F /* ArcadeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcadeViewController.swift; sourceTree = "<group>"; };
@@ -721,7 +719,6 @@
 			children = (
 				60818EB32FF5388A0053893F /* CalliopeMiniBlocksView.swift */,
 				60818EB72FF558AF0053893F /* CalliopeMiniBlocksViewModel.swift */,
-				60818EB92FF55C470053893F /* CalliopeMiniBlocksViewController.swift */,
 			);
 			path = CalliopeBlocks;
 			sourceTree = "<group>";
@@ -1160,7 +1157,6 @@
 				60127F6F2FD0061F000A1995 /* DataLoggerViewModel.swift in Sources */,
 				2F2B80A025A1100800A7CCF7 /* PlaygroundCodeSnippetViewController.swift in Sources */,
 				60127E892FC9BD19000A1995 /* ChartView.swift in Sources */,
-				60818EBA2FF55C470053893F /* CalliopeMiniBlocksViewController.swift in Sources */,
 				2F08A0E1234AC7400088A8D6 /* EditorAndProgramsContainerViewController.swift in Sources */,
 				60C915932B1F442F00E4039D /* Network.swift in Sources */,
 				604938832E151282008BCE40 /* FileExtensionsEnum.swift in Sources */,

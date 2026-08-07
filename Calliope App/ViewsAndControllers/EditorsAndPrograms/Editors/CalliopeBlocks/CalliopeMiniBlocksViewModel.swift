@@ -8,19 +8,24 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 
 protocol CalliopeMiniBlocksViewModelProtocol {
+    var alertBinding: Binding<(any AppAlert)?> { get }
+    
     func openLinkToAppStorePage()
     func openLinkToCalliopeBlocksGetStatedPage()
     func uploadBlocksV2Program()
     func uploadBlocksV3Program()
 }
 
-class CalliopeMiniBlocksViewModel: CalliopeMiniBlocksViewModelProtocol, ObservableObject {
-    let uploadDownloadableProgram: (_ program: DownloadableHexFile) -> Void
-
-    init(uploadDownloadableProgram: @escaping (_ program: DownloadableHexFile) -> Void) {
-        self.uploadDownloadableProgram = uploadDownloadableProgram
+class CalliopeMiniBlocksViewModel: CalliopeMiniBlocksViewModelProtocol, ObservableObject, Alertable {
+    @Published var alert: (any AppAlert)? = nil
+    var alertBinding: Binding<(any AppAlert)?> {
+        Binding(
+            get: { self.alert },
+            set: { self.alert = $0 }
+        )
     }
 
     func openLinkToAppStorePage() {
@@ -54,7 +59,7 @@ class CalliopeMiniBlocksViewModel: CalliopeMiniBlocksViewModelProtocol, Observab
             programName: NSLocalizedString("Mini_Blocks_Program", comment: ""),
             url: "https://go.calliope.cc/downloads/BlocksV2.hex"
         )
-        uploadDownloadableProgram(program)
+        FirmwareUploadSwiftUI.showUIForDownloadableProgram(alertPublisher: self, program: program)
     }
 
     func uploadBlocksV3Program() {
@@ -62,12 +67,20 @@ class CalliopeMiniBlocksViewModel: CalliopeMiniBlocksViewModelProtocol, Observab
             programName: NSLocalizedString("Mini_Blocks_Program", comment: ""),
             url: "https://go.calliope.cc/downloads/BlocksV3.hex"
         )
-        uploadDownloadableProgram(program)
+        FirmwareUploadSwiftUI.showUIForDownloadableProgram(alertPublisher: self, program: program)
     }
 
 }
 
 class PreviewCalliopeMiniBlocksViewModel: CalliopeMiniBlocksViewModelProtocol, ObservableObject {
+    @Published var alert: (any AppAlert)? = nil
+    var alertBinding: Binding<(any AppAlert)?> {
+        Binding(
+            get: { self.alert },
+            set: { self.alert = $0 }
+        )
+    }
+    
     func openLinkToAppStorePage() {
         LogNotify.debug("Trying to open link to app store page")
     }

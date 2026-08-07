@@ -68,7 +68,7 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
         case .openRobertaLab:
             PopupEditorWebView(editor: RobertaEditor(), alertPublisher: viewModel)
         case .calliopeMiniBlocks:
-            CalliopeMiniBlocksView(viewModel: CalliopeMiniBlocksViewModel(uploadDownloadableProgram: { _ in }))
+            CalliopeMiniBlocksView(viewModel: CalliopeMiniBlocksViewModel())
         case .arcade:
             ArcadeView(viewModel: ArcadeViewModel(openArcade: {}))
         case .openHexFile:

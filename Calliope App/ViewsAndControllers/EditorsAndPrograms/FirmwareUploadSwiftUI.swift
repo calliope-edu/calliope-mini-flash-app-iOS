@@ -25,23 +25,23 @@ class FirmwareUploadSwiftUI {
                 }
             }
         } else {
-            alertPublisher.alert = WaitForProgramDownloadAlert()
-
             program.load { error in
-                if error == nil, program.calliopeV1andV2Bin.count != 0 {
-                    LogNotify.debug("Successfully finished downloading program")
-                    let successAlert = ProgramDownloadSuccessAlert(upload: {
-                        DispatchQueue.main.async {
-                            FirmwareUploadSwiftUI.uploadWithoutConfirmation(alertPublisher: alertPublisher, program: program) {
-                                completion?(true)
+                DispatchQueue.main.async {
+                    if error == nil, program.calliopeV1andV2Bin.count != 0 {
+                        LogNotify.debug("Successfully finished downloading program")
+                        let successAlert = ProgramDownloadSuccessAlert(upload: {
+                            DispatchQueue.main.async {
+                                FirmwareUploadSwiftUI.uploadWithoutConfirmation(alertPublisher: alertPublisher, program: program) {
+                                    completion?(true)
+                                }
                             }
-                        }
-                    })
-                    alertPublisher.alert = successAlert
-                } else {
-                    LogNotify.error("Encountered error during program download: " + (error?.localizedDescription ?? ""))
-                    let errorAlert = ProgramDownloadFailedAlert(error: error?.localizedDescription, completion: { completion?(false) })
-                    alertPublisher.alert = errorAlert
+                        })
+                        alertPublisher.alert = successAlert
+                    } else {
+                        LogNotify.error("Encountered error during program download: " + (error?.localizedDescription ?? ""))
+                        let errorAlert = ProgramDownloadFailedAlert(error: error?.localizedDescription, completion: { completion?(false) })
+                        alertPublisher.alert = errorAlert
+                    }
                 }
             }
         }
