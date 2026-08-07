@@ -13,24 +13,6 @@ import UniformTypeIdentifiers
 
 class EditorAndProgramsContainerViewController: UIViewController, UINavigationControllerDelegate, UIDocumentPickerDelegate {
 
-    @IBOutlet weak var stackView: UIStackView?
-
-    @IBOutlet weak var editorContainerView: UIView?
-
-    @IBOutlet weak var programContainerView: UIView?
-
-    @IBOutlet weak var scanButton: UIButton?
-
-    @IBOutlet var editorTopToSafeArea: NSLayoutConstraint?
-    @IBOutlet var editorBottomToSafeArea: NSLayoutConstraint?
-    var editorsHeightConstraint: NSLayoutConstraint?
-
-    var programsHeightConstraint: NSLayoutConstraint?
-
-    var editorsKvo: Any?
-    var programsKvo: Any?
-    var bottomInsetKvo: Any?
-
     @IBSegueAction func addSwiftUI(_ coder: NSCoder) -> UIViewController? {
         return UIHostingController(
             coder: coder,
@@ -43,126 +25,10 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
         )
     }
 
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-    }
-
-    private func configureLayout(_ size: CGSize) {
-        let landscape = size.width > size.height
-        stackView?.distribution = landscape ? .fillEqually : .fill
-        stackView?.alignment = landscape ? .top : .fill
-        stackView?.axis = landscape ? .horizontal : .vertical
-        editorTopToSafeArea?.isActive = landscape
-        editorBottomToSafeArea?.isActive = landscape
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        editorContainerView?.translatesAutoresizingMaskIntoConstraints = false
-        editorsHeightConstraint = editorContainerView?.heightAnchor.constraint(equalToConstant: 10)
-        editorsHeightConstraint?.isActive = true
-
-        programContainerView?.translatesAutoresizingMaskIntoConstraints = false
-        programsHeightConstraint = programContainerView?.heightAnchor.constraint(equalToConstant: 10)
-        programsHeightConstraint?.isActive = true
-
-        configureLayout(UIApplication.shared.keyWindow!.frame.size)
-        scanButton?.imageView?.contentMode = UIView.ContentMode.scaleAspectFit
-        scanButton?.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        scanButton?.tintColor = UIColor.white
-    }
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         MatrixConnectionViewModel.instance.calliopeClass = DiscoveredBLEDevice.self
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        editorsKvo = nil
-        programsKvo = nil
-        bottomInsetKvo = nil
-    }
-
-    override func size(forChildContentContainer container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
-        return CGSize(width: parentSize.width - 62, height: parentSize.height)
-    }
-
-    func uploadDefaultV3Program(_ sender: Any) {
-        let program = DefaultProgram(
-            programName: NSLocalizedString("Calliope mini V3", comment: ""),
-            url: UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV3Url.rawValue)!
-        )
-        FirmwareUpload.showUIForDownloadableProgram(controller: self, program: program)
-    }
-
-    func uploadDefaultV2And1Program(_sender: Any) {
-        let program = DefaultProgram(
-            programName: NSLocalizedString("Calliope mini V1 + 2", comment: ""),
-            url: UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV1AndV2Url.rawValue)!
-        )
-        FirmwareUpload.showUIForDownloadableProgram(controller: self, program: program)
-    }
-
-    func navigateToImportFile() {
-        let types: [UTType] = getFileTypesFor(fileEnding: "hex")
-
-        DispatchQueue.main.async {
-            let documentPickerController = UIDocumentPickerViewController(forOpeningContentTypes: types)
-            documentPickerController.delegate = self
-            self.present(documentPickerController, animated: true, completion: nil)
-        }
-    }
-
-    func getFileTypesFor(fileEnding: String) -> [UTType] {
-        if let utType = UTType(filenameExtension: fileEnding) {
-            return [utType]
-        }
-        return []
-    }
-
-    func documentPicker(
-        _ controller: UIDocumentPickerViewController,
-        didPickDocumentAt url: URL
-    ) {
-        if !(url.lastPathComponent.isEmpty) {
-            // Dismiss this view
-            dismiss(animated: true, completion: nil)
-            HexFileStoreDialog.showStoreHexUI(controller: self, hexFile: url, notSaved: { _ in })
-        }
-    }
-
-    func openEditor(editor: EditorTileConfig) {
-        switch editor.name {
-        case "Makecode":
-            performSegue(withIdentifier: "showMakecode", sender: nil)
-        case "Open Roberta Lab":
-            performSegue(withIdentifier: "openOpenRobertaLab", sender: nil)
-        case "Calliope mini Blocks":
-            performSegue(withIdentifier: "openCalliopeMiniBlocks", sender: nil)
-        case "Micropython":
-            performSegue(withIdentifier: "openMicropython", sender: nil)
-        case "Arcade (USB only)":
-            performSegue(withIdentifier: "openArcade", sender: nil)
-        default:
-            LogNotify.error("Tried to open unkown editor \(editor.name).")
-        }
-    }
-
-    func uploadDownloadableProgram(_ program: DownloadableHexFile) {
-        FirmwareUpload.showUIForDownloadableProgram(controller: self, program: program)
-    }
-
-    func openQRCodeView() {
-        performSegue(withIdentifier: "openQRCodeView", sender: nil)
-    }
-
-    func uploadHexFile(program: HexFile) {
-        FirmwareUpload.showUploadUI(controller: self, program: program, name: program.name) {
-            MatrixConnectionViewModel.instance.connect()
-        }
     }
 
     func deleteProgram(program: HexFile) {
@@ -226,18 +92,5 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
         )
 
         self.present(alertViewController, animated: true, completion: nil)
-    }
-
-    @IBSegueAction func initializeMakeCode(_ coder: NSCoder) -> EditorViewController? {
-        EditorViewController(coder: coder, editor: MakeCode())
-    }
-
-    @IBSegueAction func initializeOpenRobertaLab(_ coder: NSCoder) -> EditorViewController? {
-        EditorViewController(coder: coder, editor: RobertaEditor())
-
-    }
-
-    @IBSegueAction func initializeMicropython(_ coder: NSCoder) -> EditorViewController? {
-        EditorViewController(coder: coder, editor: MicroPython())
     }
 }
