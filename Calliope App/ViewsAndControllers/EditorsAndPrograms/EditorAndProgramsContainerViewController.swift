@@ -36,11 +36,6 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
             coder: coder,
             rootView: EditorsAndProgramsView(
                 viewModel: EditorsAndProgramsViewModel(
-                    openEditor: openEditor,
-                    uploadDownloadableProgram: uploadDownloadableProgram,
-                    openQRCodeView: openQRCodeView,
-                    openFileDialog: navigateToImportFile,
-                    uploadHexFile: uploadHexFile,
                     renameHexFile: renameProgramDialog,
                     deleteHexFile: deleteProgram
                 )

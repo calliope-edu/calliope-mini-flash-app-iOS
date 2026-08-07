@@ -36,11 +36,6 @@ protocol EditorsAndProgramsViewModelProtocol {
 }
 
 class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, ObservableObject, Alertable, CanShowProgess {
-    let openEditor: (_ editor: EditorTileConfig) -> Void
-    let uploadDownloadableProgram: (_ program: DownloadableHexFile) -> Void
-    let openQRCodeView: () -> Void
-    let openFileDialog: () -> Void
-    let uploadHexFile: (_ program: HexFile) -> Void
     let renameHexFile: (_ program: HexFile) -> Void
     let deleteHexFile: (_ program: HexFile) -> Void
 
@@ -76,19 +71,9 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
     }
 
     init(
-        openEditor: @escaping (_ editor: EditorTileConfig) -> Void,
-        uploadDownloadableProgram: @escaping (_ program: DownloadableHexFile) -> Void,
-        openQRCodeView: @escaping () -> Void,
-        openFileDialog: @escaping () -> Void,
-        uploadHexFile: @escaping (_ program: HexFile) -> Void,
         renameHexFile: @escaping (_ program: HexFile) -> Void,
         deleteHexFile: @escaping (_ program: HexFile) -> Void
     ) {
-        self.openEditor = openEditor
-        self.uploadDownloadableProgram = uploadDownloadableProgram
-        self.openQRCodeView = openQRCodeView
-        self.openFileDialog = openFileDialog
-        self.uploadHexFile = uploadHexFile
         self.renameHexFile = renameHexFile
         self.deleteHexFile = deleteHexFile
 
