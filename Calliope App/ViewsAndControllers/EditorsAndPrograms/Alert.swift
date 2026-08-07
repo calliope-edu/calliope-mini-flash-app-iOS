@@ -27,7 +27,7 @@ struct AlertModifier: ViewModifier {
             }
         }
     }
-    
+
     @ViewBuilder
     var standardAppAlertContent: some View {
         if !(alert is any TextFieldAppAlert) {
@@ -38,8 +38,7 @@ struct AlertModifier: ViewModifier {
             }
         }
     }
-    
-    
+
     @ViewBuilder
     var textFieldAppAlertContent: some View {
         if alert is any TextFieldAppAlert {
@@ -210,6 +209,98 @@ struct SaveFileWithNameAlert: TextFieldAppAlert {
     }
 }
 
+struct WaitForProgramDownloadAlert: AppAlert {
+    let id = UUID()
+    let title: String = NSLocalizedString("Wait a little", comment: "")
+    let message: String? = NSLocalizedString("The program is being downloaded. Please wait a little.", comment: "")
+    let actions = [StandardAlertAction(NSLocalizedString("OK", comment: ""), handler: {})]
+}
+
+struct ProgramDownloadSuccessAlert: AppAlert {
+    let id = UUID()
+    let title: String = NSLocalizedString("Download finished", comment: "")
+    let message: String? = NSLocalizedString("The program is downloaded. Do you want to upload it now?", comment: "")
+    let actions: [StandardAlertAction]
+
+    init(upload: @escaping () -> Void) {
+        self.actions = [
+            StandardAlertAction(NSLocalizedString("Yes", comment: ""), handler: upload),
+            StandardAlertAction(NSLocalizedString("No", comment: ""), handler: {}),
+        ]
+    }
+
+}
+
+struct ProgramDownloadFailedAlert: AppAlert {
+    let id = UUID()
+    let title: String = NSLocalizedString("Program download failed", comment: "")
+    let message: String?
+    let actions: [StandardAlertAction]
+
+    init(error: String?, completion: @escaping () -> Void) {
+        let reason = error ?? NSLocalizedString("The downloaded program is empty", comment: "")
+        message = String(format: NSLocalizedString("The program is not ready. The reason is:\n%@", comment: ""), reason)
+        actions = [StandardAlertAction(NSLocalizedString("OK", comment: ""), handler: completion)]
+    }
+}
+
+struct UploadConfirmationAlert: AppAlert {
+    let id = UUID()
+    let title: String = NSLocalizedString("Upload?", comment: "")
+    let message: String?
+    let actions: [StandardAlertAction]
+
+    init(name: String?, upload: @escaping () -> Void) {
+        let defaultName = NSLocalizedString("the program", comment: "")
+        message = String(format: NSLocalizedString("Do you want to upload %@ to your Calliope mini?", comment: ""), name ?? defaultName)
+        actions = [
+            StandardAlertAction(NSLocalizedString("Upload", comment: ""), handler: upload),
+            StandardAlertAction(NSLocalizedString("Cancel", comment: ""), handler: {}),
+        ]
+    }
+}
+
+struct UploadFailedAlert: AppAlert {
+    let id = UUID()
+    let title: String = NSLocalizedString("Upload failed", comment: "")
+    let message: String? = NSLocalizedString(
+        "The program does not seem to match the version of your Calliope mini. Please check the hardware selection in your editor again.",
+        comment: ""
+    )
+    let actions: [StandardAlertAction]
+
+    init(goToInformation: @escaping () -> Void) {
+       actions = [
+            StandardAlertAction(NSLocalizedString("Futher Information", comment: ""), handler: goToInformation),
+            StandardAlertAction(NSLocalizedString("Cancel", comment: ""), handler: {}),
+        ]
+    }
+}
+
+struct ArcadeUsbRequiredAlert: AppAlert {
+    let id = UUID()
+    let title: String = NSLocalizedString("USB-Verbindung erforderlich", comment: "USB connection required")
+    let message: String? = NSLocalizedString(
+        "Arcade-Programme können nur per USB auf den Calliope mini übertragen werden.\n\nBitte verbinde den Calliope mini per USB-Kabel und wähle den MINI-Ordner aus.",
+        comment: "Arcade programs can only be transferred via USB"
+    )
+    let actions: [StandardAlertAction]
+
+    init(onOpenUsbMode: @escaping () -> Void, onCancel: @escaping () -> Void) {
+        self.actions = [
+            StandardAlertAction(
+                NSLocalizedString("USB-Modus öffnen", comment: "Open USB mode"),
+                handler: onOpenUsbMode
+            ),
+            StandardAlertAction(
+                NSLocalizedString("Abbrechen", comment: "Cancel"),
+                role: .cancel,
+                handler: onCancel
+            )
+        ]
+    }
+}
+
 protocol Alertable: AnyObject {
     var alert: (any AppAlert)? { get set }
 }
@@ -221,4 +312,3 @@ protocol CanShowProgess: AnyObject {
 protocol ProgressAlert {
 
 }
-
