@@ -218,7 +218,7 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
                     .ignoresSafeArea()
             }
 
-            if viewModel.menuExpanded {
+            if viewModel.menuExpanded && !uploadProgress.isUploading {
                 VStack {
                     content()
                 }
@@ -234,7 +234,7 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
                 )
             }
 
-            if uploadProgress.isUploading && !viewModel.menuExpanded {
+            if uploadProgress.isUploading {
                 uploadProgressView
             } else {
                 connectionMenuButton
@@ -273,7 +273,7 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
 
     var uploadProgressView: some View {
         uploadProgressContent
-            .modifier(GlassContainerModifier(namespace: glassNamespace))
+            //            .modifier(GlassContainerModifier(namespace: glassNamespace))
             .transition(
                 .scale(scale: 0.3, anchor: .topTrailing).combined(with: .opacity)
             )
@@ -302,10 +302,10 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
                                 .font(.system(size: 13, weight: .medium))
                                 .padding(.horizontal, 14)
                                 .padding(.vertical, 8)
-                                .modifier(GlassElementModifier(
-                                    id: "cancel", namespace: glassNamespace,
-                                    shape: .capsule, tintColor: .calliopeRed
-                                ))
+                            //                                .modifier(GlassElementModifier(
+                            //                                    id: "cancel", namespace: glassNamespace,
+                            //                                    shape: .capsule, tintColor: .calliopeRed
+                            //                                ))
                         }
 
                         Button {
@@ -317,14 +317,14 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
                                 .resizable().scaledToFit()
                                 .frame(width: 12, height: 12)
                                 .padding(11)
-                                .modifier(GlassElementModifier(
-                                    id: "close", namespace: glassNamespace,
-                                    shape: .circle
-                                ))
+                            //                                .modifier(GlassElementModifier(
+                            //                                    id: "close", namespace: glassNamespace,
+                            //                                    shape: .circle
+                            //                                ))
                         }
                     }
                 }
-                .transition(.opacity.combined(with: .scale(scale: 0.5, anchor: .topTrailing)))
+                //                .transition(.opacity.combined(with: .scale(scale: 0.5, anchor: .topTrailing)))
             }
 
             // Progress bar - always present, animates size
@@ -335,10 +335,10 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
             } label: {
                 progressBarContent
                     .frame(height: 40)
-                    .modifier(GlassElementModifier(
-                        id: "progressBar", namespace: glassNamespace,
-                        shape: .capsule
-                    ))
+                //                    .modifier(GlassElementModifier(
+                //                        id: "progressBar", namespace: glassNamespace,
+                //                        shape: .capsule
+                //                    ))
             }
             .frame(maxWidth: uploadProgress.isExpanded ? .infinity : 200)
         }
@@ -355,10 +355,15 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
 
     var progressBarContent: some View {
         ZStack(alignment: .leading) {
+            Capsule()
+                .fill(Color.calliopeYellow)
+                .brightness(0.05)
+
             GeometryReader { geometry in
                 Capsule()
                     .fill(Color.calliopeGreen)
                     .frame(width: max(geometry.size.width * uploadProgress.progress, 0))
+                    .clipped()
             }
 
             Text("\(Int(uploadProgress.progress * 100))%")
