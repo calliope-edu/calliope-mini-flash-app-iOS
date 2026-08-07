@@ -88,6 +88,7 @@
 		60030BA02DC9E77C00397E69 /* Coordinates+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60030B9F2DC9E77600397E69 /* Coordinates+Extension.swift */; };
 		6008D1B63013B505001673BD /* FirmwareUploadSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6008D1B53013B505001673BD /* FirmwareUploadSwiftUI.swift */; };
 		6008D1B8301CE036001673BD /* HexFileStoreDialogSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6008D1B7301CE036001673BD /* HexFileStoreDialogSwiftUI.swift */; };
+		6008D1BA3025C7DB001673BD /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6008D1B93025C7DB001673BD /* Alert.swift */; };
 		600E63262C2EBF810027AE61 /* CSVHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600E63252C2EBF810027AE61 /* CSVHandler.swift */; };
 		600E632E2C33D7BB0027AE61 /* DataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600E632D2C33D7BB0027AE61 /* DataParser.swift */; };
 		600E63352C342DC10027AE61 /* ProjectAndSensors.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 600E63342C342DC10027AE61 /* ProjectAndSensors.storyboard */; };
@@ -265,6 +266,7 @@
 		60030B9F2DC9E77600397E69 /* Coordinates+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Coordinates+Extension.swift"; sourceTree = "<group>"; };
 		6008D1B53013B505001673BD /* FirmwareUploadSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirmwareUploadSwiftUI.swift; sourceTree = "<group>"; };
 		6008D1B7301CE036001673BD /* HexFileStoreDialogSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexFileStoreDialogSwiftUI.swift; sourceTree = "<group>"; };
+		6008D1B93025C7DB001673BD /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		600E63252C2EBF810027AE61 /* CSVHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVHandler.swift; sourceTree = "<group>"; };
 		600E632D2C33D7BB0027AE61 /* DataParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataParser.swift; sourceTree = "<group>"; };
 		600E63332C342DC10027AE61 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ProjectAndSensors.storyboard; sourceTree = "<group>"; };
@@ -632,6 +634,7 @@
 				6073401D300785C200616062 /* QRCodeView.swift */,
 				6073401F3007C05700616062 /* EditorWebView.swift */,
 				607340813007F55000616062 /* PopupManager.swift */,
+				6008D1B93025C7DB001673BD /* Alert.swift */,
 			);
 			path = EditorsAndPrograms;
 			sourceTree = "<group>";
@@ -1200,6 +1203,7 @@
 				60C627FA2FAE4BF100D23A43 /* GroupView.swift in Sources */,
 				60030B9C2DC8B2E200397E69 /* Date.swift in Sources */,
 				6073406C3007E04D00616062 /* HomeScreenView.swift in Sources */,
+				6008D1BA3025C7DB001673BD /* Alert.swift in Sources */,
 				60CF0EB02BFCD59D00CB2A38 /* DataController.swift in Sources */,
 				60127F6D2FD005DF000A1995 /* DataLoggerView.swift in Sources */,
 				60CF0EAD2BFCD25300CB2A38 /* Value.swift in Sources */,
