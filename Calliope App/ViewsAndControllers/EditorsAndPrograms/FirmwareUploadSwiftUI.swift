@@ -324,17 +324,24 @@ class FirmwareUploadSwiftUI {
         self.failed = {
             downloadCompletion()
             // self.stopUSBTimer() // Timer deaktiviert
+            UploadProgressViewModel.instance.finishUpload()
             MatrixConnectionViewModel.instance.enableDfuMode(mode: false)
         }
         self.finished = {
             downloadCompletion()
             // self.stopUSBTimer() // Timer deaktiviert
+            UploadProgressViewModel.instance.finishUpload()
             finishedCallback()
             MatrixConnectionViewModel.instance.enableDfuMode(mode: false)
         }
 
         do {
             MatrixConnectionViewModel.instance.enableDfuMode(mode: true)
+
+            UploadProgressViewModel.instance.startUpload()
+            UploadProgressViewModel.instance.cancelAction = { [weak self] in
+                self?.finished()
+            }
 
             // Set up disconnect callback for partial flashing optimization
             if let flashableCalliope = calliope as? FlashableBLECalliope {
@@ -429,7 +436,7 @@ extension FirmwareUploadSwiftUI: DFUProgressDelegate, DFUServiceDelegate, Logger
                 return
             }
             self.progressRing.startProgress(to: CGFloat(progress), duration: 0.2)
-            // PopupManager.instance.updateProgress(id: alertView.id, progress: Double(progress) / 100)
+            UploadProgressViewModel.instance.updateProgress(Double(progress) / 100.0)
             if progress > 0 && self.cancelUploadAction.isEnabled {
                 self.cancelUploadAction.isEnabled = false
                 let failed = self.failed

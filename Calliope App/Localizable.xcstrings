@@ -147,6 +147,9 @@
         }
       }
     },
+    "%lld%%" : {
+
+    },
     "1. Open MakeCode Editor" : {
       "localizations" : {
         "de" : {
@@ -2697,6 +2700,9 @@
           }
         }
       }
+    },
+    "Transferring to Calliope" : {
+
     },
     "Transmission running" : {
       "localizations" : {

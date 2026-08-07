@@ -13,21 +13,23 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
     @ObservedObject var viewModel: ViewModelType
 
     var body: some View {
-        ExpandablePanel(viewModel: viewModel) {
-            VStack(alignment: .leading) {
-                HStack {
-                    Text("Connect a Calliope mini!")
-                        .font(.title)
-                    Spacer()
-                    Rectangle().opacity(0).frame(width: 40, height: 40)  // To keep the closing button free
-                }.frame(maxWidth: 300)
+        ZStack {
+            ExpandablePanel(viewModel: viewModel) {
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text("Connect a Calliope mini!")
+                            .font(.title)
+                        Spacer()
+                        Rectangle().opacity(0).frame(width: 40, height: 40)  // To keep the closing button free
+                    }.frame(maxWidth: 300)
 
-                Toggle("Connect with cable", isOn: $viewModel.isInUsbMode).frame(maxWidth: 300).padding(.bottom, 8)
+                    Toggle("Connect with cable", isOn: $viewModel.isInUsbMode).frame(maxWidth: 300).padding(.bottom, 8)
 
-                if viewModel.isInUsbMode {
-                    selectUSBCalliopeButton
-                } else {
-                    bluetoothMenu
+                    if viewModel.isInUsbMode {
+                        selectUSBCalliopeButton
+                    } else {
+                        bluetoothMenu
+                    }
                 }
             }
         }
@@ -58,7 +60,7 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
         HStack {
             Spacer()
 
-            BouncableView(trigger:  viewModel.connectButtonBounceTrigger) {
+            BouncableView(trigger: viewModel.connectButtonBounceTrigger) {
                 Button {
                     viewModel.connect()
                 } label: {
@@ -198,6 +200,8 @@ struct BouncableView<Content: View>: View {
 
 struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelProtocol>: View {
     @ObservedObject var viewModel: ViewModelType
+    @ObservedObject var uploadProgress = UploadProgressViewModel.instance
+    @Namespace private var glassNamespace
 
     @ViewBuilder var content: () -> Content
 
@@ -230,29 +234,141 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
                 )
             }
 
-            BouncableView(trigger: viewModel.connectionMenuButtonBounceTrigger) {
-                Button {
-                    withAnimation(.spring()) {
-                        viewModel.menuExpanded.toggle()
-                    }
-                } label: {
-                    if viewModel.menuExpanded {
-                        Image(systemName: "xmark").resizable().scaledToFit().frame(width: 20, height: 20)
-                    } else {
-                        menuButtonImage
-                    }
-                }
-                .padding()
-                .foregroundColor(.white)
-                .frame(width: 60, height: 60)
-                .background(menuButtonColor)
-                .clipShape(Circle())
+            if uploadProgress.isUploading && !viewModel.menuExpanded {
+                uploadProgressView
+            } else {
+                connectionMenuButton
             }
-
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
         .padding()
+        .animation(.spring(), value: uploadProgress.isUploading)
+        .animation(.spring(), value: uploadProgress.isExpanded)
     }
+
+    // MARK: - Connection Menu Button (normal state)
+
+    var connectionMenuButton: some View {
+        BouncableView(trigger: viewModel.connectionMenuButtonBounceTrigger) {
+            Button {
+                withAnimation(.spring()) {
+                    viewModel.menuExpanded.toggle()
+                }
+            } label: {
+                if viewModel.menuExpanded {
+                    Image(systemName: "xmark").resizable().scaledToFit().frame(width: 20, height: 20)
+                } else {
+                    menuButtonImage
+                }
+            }
+            .padding()
+            .foregroundColor(.white)
+            .frame(width: 60, height: 60)
+            .background(menuButtonColor)
+            .clipShape(Circle())
+        }
+    }
+
+    // MARK: - Upload Progress View (single view, animates between compact and expanded)
+
+    var uploadProgressView: some View {
+        uploadProgressContent
+            .modifier(GlassContainerModifier(namespace: glassNamespace))
+            .transition(
+                .scale(scale: 0.3, anchor: .topTrailing).combined(with: .opacity)
+            )
+    }
+
+    var uploadProgressContent: some View {
+        VStack(spacing: uploadProgress.isExpanded ? 16 : 0) {
+            // Top row: Title (when expanded) + action buttons at trailing
+            if uploadProgress.isExpanded {
+                HStack(alignment: .top) {
+                    Text(NSLocalizedString("Transferring to Calliope", comment: ""))
+                        .font(.headline)
+                        .foregroundColor(.black)
+                        .padding(.top, 8)
+
+                    Spacer()
+
+                    // Cancel and X grouped together at trailing
+                    HStack(spacing: 8) {
+                        Button {
+                            withAnimation(.spring()) {
+                                uploadProgress.cancel()
+                            }
+                        } label: {
+                            Text(NSLocalizedString("Cancel", comment: ""))
+                                .font(.system(size: 13, weight: .medium))
+                                .padding(.horizontal, 14)
+                                .padding(.vertical, 8)
+                                .modifier(GlassElementModifier(
+                                    id: "cancel", namespace: glassNamespace,
+                                    shape: .capsule, tintColor: .calliopeRed
+                                ))
+                        }
+
+                        Button {
+                            withAnimation(.spring()) {
+                                uploadProgress.isExpanded = false
+                            }
+                        } label: {
+                            Image(systemName: "xmark")
+                                .resizable().scaledToFit()
+                                .frame(width: 12, height: 12)
+                                .padding(11)
+                                .modifier(GlassElementModifier(
+                                    id: "close", namespace: glassNamespace,
+                                    shape: .circle
+                                ))
+                        }
+                    }
+                }
+                .transition(.opacity.combined(with: .scale(scale: 0.5, anchor: .topTrailing)))
+            }
+
+            // Progress bar - always present, animates size
+            Button {
+                withAnimation(.spring()) {
+                    uploadProgress.isExpanded.toggle()
+                }
+            } label: {
+                progressBarContent
+                    .frame(height: 40)
+                    .modifier(GlassElementModifier(
+                        id: "progressBar", namespace: glassNamespace,
+                        shape: .capsule
+                    ))
+            }
+            .frame(maxWidth: uploadProgress.isExpanded ? .infinity : 200)
+        }
+        .padding(uploadProgress.isExpanded ? 20 : 0)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.calliopeYellow)
+                .shadow(radius: 10)
+                .opacity(uploadProgress.isExpanded ? 1 : 0)
+        )
+    }
+
+    // MARK: - Progress Bar Content
+
+    var progressBarContent: some View {
+        ZStack(alignment: .leading) {
+            GeometryReader { geometry in
+                Capsule()
+                    .fill(Color.calliopeGreen)
+                    .frame(width: max(geometry.size.width * uploadProgress.progress, 0))
+            }
+
+            Text("\(Int(uploadProgress.progress * 100))%")
+                .font(.system(size: 14, weight: .bold, design: .rounded))
+                .foregroundColor(.primary)
+                .frame(maxWidth: .infinity)
+        }
+    }
+
+    // MARK: - Menu Button Appearance
 
     var menuButtonColor: Color {
         if viewModel.menuExpanded {
@@ -283,7 +399,7 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
         case .connected:
             return AnyView(Image("liveviewconnect/mini_mini"))
         case .transmitting:
-            return AnyView(Image("liveviewconnect/connect"))  // TODO: Update as soon as we have the corresponding assets
+            return AnyView(Image("liveviewconnect/connect"))  // TODO: Update as soon as we have the corresponding assets
         }
     }
 }
@@ -293,7 +409,6 @@ struct MatrixPosition: Hashable {
     let column: Int
 }
 
-// TODO: Rename after the old Views are deleted
 struct MatrixView<ViewModelType: MatrixConnectionViewModelProtocol>: View {
     @ObservedObject var viewModel: ViewModelType
 
@@ -369,6 +484,64 @@ struct MatrixView<ViewModelType: MatrixConnectionViewModelProtocol>: View {
     }
 }
 
+// MARK: - Liquid Glass Modifiers with iOS 26+ availability
+
+enum GlassShape {
+    case capsule
+    case circle
+}
+
+/// Wraps content in a GlassEffectContainer on iOS 26+
+struct GlassContainerModifier: ViewModifier {
+    var namespace: Namespace.ID
+
+    func body(content: Content) -> some View {
+        if #available(iOS 26.0, *) {
+            GlassEffectContainer(spacing: 12) {
+                content
+            }
+        } else {
+            content
+        }
+    }
+}
+
+/// Applies glassEffect + glassEffectID on iOS 26+, solid fallback on older
+struct GlassElementModifier: ViewModifier {
+    var id: String
+    var namespace: Namespace.ID
+    var shape: GlassShape
+    var tintColor: Color? = nil
+
+    func body(content: Content) -> some View {
+        if #available(iOS 26.0, *) {
+            switch shape {
+            case .capsule:
+                if let tintColor {
+                    content
+                        .glassEffect(.regular.tint(tintColor).interactive(), in: .capsule)
+                        .glassEffectID(id, in: namespace)
+                } else {
+                    content
+                        .glassEffect(.regular.interactive(), in: .capsule)
+                        .glassEffectID(id, in: namespace)
+                }
+            case .circle:
+                content
+                    .glassEffect(.regular.interactive(), in: .circle)
+                    .glassEffectID(id, in: namespace)
+            }
+        } else {
+            switch shape {
+            case .capsule:
+                content.background(Capsule().fill(tintColor ?? Color.gray.opacity(0.3)))
+            case .circle:
+                content.background(Circle().fill(Color.gray.opacity(0.3)))
+            }
+        }
+    }
+}
+
 #Preview("Whole Page") {
     MatrixConnectionView(viewModel: PreviewMatrixConnectionViewModel())
 }
@@ -383,6 +556,62 @@ struct MatrixView<ViewModelType: MatrixConnectionViewModelProtocol>: View {
     ) { connectionMenuButtonState in
         MatrixConnectionView(viewModel: PreviewMatrixConnectionViewModel(connectionMenuButtonState: connectionMenuButtonState))
     }
+}
+
+#Preview("Upload Transition") {
+    struct UploadTransitionPreview: View {
+        @ObservedObject var viewModel = PreviewMatrixConnectionViewModel()
+        @State private var timer: Timer?
+
+        var body: some View {
+            ZStack {
+                Color.gray.opacity(0.2).ignoresSafeArea()
+
+                MatrixConnectionView(viewModel: viewModel)
+
+                VStack {
+                    Spacer()
+
+                    if !UploadProgressViewModel.instance.isUploading {
+                        Button("Start Upload") {
+                            withAnimation(.spring()) {
+                                UploadProgressViewModel.instance.startUpload()
+                            }
+                            // Simulate progress over 5 seconds
+                            timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { t in
+                                if UploadProgressViewModel.instance.progress < 1.0 {
+                                    withAnimation {
+                                        UploadProgressViewModel.instance.updateProgress(UploadProgressViewModel.instance.progress + 0.005)
+                                    }
+                                } else {
+                                    t.invalidate()
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                        withAnimation(.spring()) {
+                                            UploadProgressViewModel.instance.finishUpload()
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        .padding()
+                        .background(Color.calliopeGreen)
+                        .foregroundColor(.white)
+                        .cornerRadius(12)
+                    } else {
+                        Text("Uploading: \(Int(UploadProgressViewModel.instance.progress * 100))%")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
+                .padding(.bottom, 40)
+            }
+            .onDisappear {
+                timer?.invalidate()
+                UploadProgressViewModel.instance.finishUpload()
+            }
+        }
+    }
+    return UploadTransitionPreview()
 }
 
 #Preview("Connect Button Variants") {
