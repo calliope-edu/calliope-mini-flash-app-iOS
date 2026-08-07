@@ -51,6 +51,8 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
             .navigationDestination(for: EditorsAndProgramRoute.self) { route in
                 switchRoutes(route: route)
             }
+        }.onAppear{
+            MatrixConnectionViewModel.instance.calliopeClass = DiscoveredBLEDevice.self
         }
     }
 
