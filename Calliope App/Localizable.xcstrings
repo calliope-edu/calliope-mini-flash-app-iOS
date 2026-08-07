@@ -799,6 +799,9 @@
         }
       }
     },
+    "Could not delete %@\n" : {
+
+    },
     "Could not find connected calliope in discovered calliopes" : {
       "extractionState" : "manual",
       "localizations" : {

@@ -36,7 +36,6 @@ protocol EditorsAndProgramsViewModelProtocol {
 }
 
 class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, ObservableObject, Alertable, CanShowProgess {
-    let deleteHexFile: (_ program: HexFile) -> Void
 
     @Published var editors: [EditorTileConfig] = [
         EditorTileConfig(name: "Makecode", iconName: "editors_makecode"),
@@ -69,11 +68,7 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
         }
     }
 
-    init(
-        deleteHexFile: @escaping (_ program: HexFile) -> Void
-    ) {
-        self.deleteHexFile = deleteHexFile
-
+    init() {
         loadPrograms()
         programSubscription = NotificationCenter.default.addObserver(
             forName: NotificationConstants.hexFileChanged,
@@ -111,7 +106,14 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
     }
 
     func deleteProgram(program: ProgramTileConfig) {
-        deleteHexFile(program.hexFile)
+        let hexFile = program.hexFile
+        self.alert = DeleteProgramAlert(program: hexFile) {
+            do {
+                try HexFileManager.delete(file: hexFile)
+            } catch {
+                self.alert = DeleteProgramFailedAlert(program: hexFile, error: error)
+            }
+        }
     }
 
     func uploadDefaultV3Program() {

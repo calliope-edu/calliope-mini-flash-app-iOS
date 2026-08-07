@@ -17,9 +17,7 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
         return UIHostingController(
             coder: coder,
             rootView: EditorsAndProgramsView(
-                viewModel: EditorsAndProgramsViewModel(
-                    deleteHexFile: deleteProgram
-                )
+                viewModel: EditorsAndProgramsViewModel()
             )
         )
     }
@@ -30,18 +28,4 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
         MatrixConnectionViewModel.instance.calliopeClass = DiscoveredBLEDevice.self
     }
 
-    func deleteProgram(program: HexFile) {
-        let alert = UIAlertController(title: NSLocalizedString("Delete?", comment: ""), message: String(format: NSLocalizedString("Do you want to delete %@?", comment: ""), program.name), preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Delete", comment: ""), style: .destructive) { _ in
-            do {
-                try HexFileManager.delete(file: program)
-            } catch {
-                let alert = UIAlertController(title: NSLocalizedString("Delete failed", comment: ""), message: String(format: "Could not delete %@\n", program.name) + error.localizedDescription, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default))
-                self.present(alert, animated: true)
-            }
-        })
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        self.present(alert, animated: true)
-    }
 }

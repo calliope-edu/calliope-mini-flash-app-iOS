@@ -362,6 +362,33 @@ struct RenameProgramAlert: TextFieldAppAlert {
     }
 }
 
+struct DeleteProgramAlert: AppAlert {
+    let id = UUID()
+    let title: String = NSLocalizedString("Delete?", comment: "")
+    let message: String?
+    let actions: [StandardAlertAction]
+
+    init(program: HexFile, onDelete: @escaping () -> Void) {
+        message = String(format: NSLocalizedString("Do you want to delete %@?", comment: ""), program.name)
+        actions = [
+            StandardAlertAction(NSLocalizedString("Delete", comment: ""), role: .destructive, handler: onDelete),
+            StandardAlertAction(NSLocalizedString("Cancel", comment: ""), role: .cancel, handler: {}),
+        ]
+    }
+}
+
+struct DeleteProgramFailedAlert: AppAlert {
+    let id = UUID()
+    let title: String = NSLocalizedString("Delete failed", comment: "")
+    let message: String?
+    let actions: [StandardAlertAction]
+
+    init(program: HexFile, error: Error) {
+        message = String(format: NSLocalizedString("Could not delete %@\n", comment: ""), program.name) + error.localizedDescription
+        actions = [StandardAlertAction(NSLocalizedString("OK", comment: ""), handler: {})]
+    }
+}
+
 struct RenameFailedAlert: AppAlert {
     let id = UUID()
     let title: String
