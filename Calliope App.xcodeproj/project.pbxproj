@@ -111,7 +111,6 @@
 		6073406A3007DFDA00616062 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607340693007DFDA00616062 /* Router.swift */; };
 		6073406C3007E04D00616062 /* HomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6073406B3007E04D00616062 /* HomeScreenView.swift */; };
 		607340803007E8B000616062 /* NewsDetailWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6073407F3007E8B000616062 /* NewsDetailWebViewController.swift */; };
-		607340823007F55000616062 /* PopupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607340813007F55000616062 /* PopupManager.swift */; };
 		60818E7D2FE5A4150053893F /* EditorsAndProgramsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818E7C2FE5A4150053893F /* EditorsAndProgramsView.swift */; };
 		60818E7F2FE5A9C90053893F /* EditorsAndProgramsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818E7E2FE5A9C90053893F /* EditorsAndProgramsViewModel.swift */; };
 		60818EA62FEEB46C0053893F /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 60818EA52FEEB46C0053893F /* InfoPlist.xcstrings */; };
@@ -288,7 +287,6 @@
 		607340693007DFDA00616062 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		6073406B3007E04D00616062 /* HomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenView.swift; sourceTree = "<group>"; };
 		6073407F3007E8B000616062 /* NewsDetailWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDetailWebViewController.swift; sourceTree = "<group>"; };
-		607340813007F55000616062 /* PopupManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupManager.swift; sourceTree = "<group>"; };
 		60818E7C2FE5A4150053893F /* EditorsAndProgramsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorsAndProgramsView.swift; sourceTree = "<group>"; };
 		60818E7E2FE5A9C90053893F /* EditorsAndProgramsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorsAndProgramsViewModel.swift; sourceTree = "<group>"; };
 		60818EA42FEEB46B0053893F /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/LaunchScreen.xcstrings; sourceTree = "<group>"; };
@@ -633,7 +631,6 @@
 				60818E7C2FE5A4150053893F /* EditorsAndProgramsView.swift */,
 				6073401D300785C200616062 /* QRCodeView.swift */,
 				6073401F3007C05700616062 /* EditorWebView.swift */,
-				607340813007F55000616062 /* PopupManager.swift */,
 				6008D1B93025C7DB001673BD /* Alert.swift */,
 			);
 			path = EditorsAndPrograms;
@@ -1233,7 +1230,6 @@
 				80EB0D422F0ECA3C000C3269 /* PartialFlashing.swift in Sources */,
 				7E25C2F16E2316D7C6EF236F /* UtilityJobProtocol.swift in Sources */,
 				604938852E151BB1008BCE40 /* OperationStatusEnum.swift in Sources */,
-				607340823007F55000616062 /* PopupManager.swift in Sources */,
 				7E25C1EF8B03BE2835268F12 /* UtilityJobState.swift in Sources */,
 				608CE91C2F89544D004EACA7 /* NewsCollectionViewController.swift in Sources */,
 				7E25CE114DDEDC718EAB742D /* UtilityLogJob.swift in Sources */,

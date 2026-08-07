@@ -79,7 +79,7 @@ enum HexFileStoreDialogSwiftUI {
                     url: hexFile.standardizedFileURL.relativeString
                 )
                 program.downloadFile = false
-                FirmwareUploadSwiftUI.showUploadUI(program: program) {
+                FirmwareUploadSwiftUI.showUploadUI(alertPublisher: alertPublisher, program: program) {
                     MatrixConnectionViewModel.instance.connect()
                 }
             },
@@ -106,7 +106,7 @@ enum HexFileStoreDialogSwiftUI {
                     url: hexFile.standardizedFileURL.relativeString
                 )
                 program.downloadFile = false
-                FirmwareUploadSwiftUI.showUploadUI(program: program) {
+                FirmwareUploadSwiftUI.showUploadUI(alertPublisher: alertPublisher, program: program) {
                     MatrixConnectionViewModel.instance.connect()
                 }
             },

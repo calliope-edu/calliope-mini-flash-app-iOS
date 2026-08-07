@@ -12,92 +12,60 @@ import UIKit
 class FirmwareUploadSwiftUI {
 
     public static func showUIForDownloadableProgram(
+        alertPublisher: Alertable,
         program: DownloadableHexFile,
         name: String = NSLocalizedString("the program", comment: ""),
         completion: ((_ success: Bool) -> Void)? = nil
     ) {
         if program.calliopeV1andV2Bin.count != 0 {
             DispatchQueue.main.async {
-                FirmwareUploadSwiftUI.showUploadUI(program: program) {
+                FirmwareUploadSwiftUI.showUploadUI(alertPublisher: alertPublisher, program: program) {
                     completion?(true)
                     MatrixConnectionViewModel.instance.connect()
                 }
             }
         } else {
-            let downloadAlert = OkAlert(
-                title: NSLocalizedString("Wait a little", comment: ""),
-                message: NSLocalizedString("The program is being downloaded. Please wait a little.", comment: "")
-            )
-            DispatchQueue.main.async {
-                PopupManager.instance.show(.alert(downloadAlert))
-            }
+            alertPublisher.alert = WaitForProgramDownloadAlert()
 
             program.load { error in
-                LogNotify.debug("Finished downloading program")
-                LogNotify.error(error?.localizedDescription ?? "")
-                var alert: Popup
                 if error == nil, program.calliopeV1andV2Bin.count != 0 {
-                    let alertDone = TwoOptionsAlert(
-                        title: NSLocalizedString("Download finished", comment: ""),
-                        message: NSLocalizedString("The program is downloaded. Do you want to upload it now?", comment: ""),
-                        actions: [
-                            AlertAction(
-                                title: NSLocalizedString("Yes", comment: ""),
-                                action: {
-                                    DispatchQueue.main.async {
-                                        FirmwareUploadSwiftUI.uploadWithoutConfirmation(program: program) {
-                                            completion?(true)
-                                        }
-                                    }
-                                }
-                            ), AlertAction(title: NSLocalizedString("No", comment: ""), action: {}),
-                        ],
-                    )
-                    alert = .alert(alertDone)
+                    LogNotify.debug("Successfully finished downloading program")
+                    let successAlert = ProgramDownloadSuccessAlert(upload: {
+                        DispatchQueue.main.async {
+                            FirmwareUploadSwiftUI.uploadWithoutConfirmation(alertPublisher: alertPublisher, program: program) {
+                                completion?(true)
+                            }
+                        }
+                    })
+                    alertPublisher.alert = successAlert
                 } else {
-                    let reason = error?.localizedDescription ?? "The downloaded program is empty"
-                    let alertError = OkAlert(
-                        title: NSLocalizedString("Program download failed", comment: ""),
-                        message: String(format: NSLocalizedString("The program is not ready. The reason is:\n%@", comment: ""), reason),
-                        completion: { completion?(false) }
-                    )
-                    alert = .alert(alertError)
-                }
-
-                DispatchQueue.main.async {
-                    PopupManager.instance.show(alert)
-                    PopupManager.instance.dismiss(id: downloadAlert.id)
+                    LogNotify.error("Encountered error during program download: " + (error?.localizedDescription ?? ""))
+                    let errorAlert = ProgramDownloadFailedAlert(error: error?.localizedDescription, completion: { completion?(false) })
+                    alertPublisher.alert = errorAlert
                 }
             }
         }
     }
 
     public static func showUploadUI(
+        alertPublisher: Alertable,
         program: Hex,
         name: String = NSLocalizedString("the program", comment: ""),
         completion: (() -> Void)? = nil
     ) {
-        let popup = TwoOptionsAlert(
-            title: NSLocalizedString("Upload?", comment: ""),
-            message: String(format: NSLocalizedString("Do you want to upload %@ to your Calliope mini?", comment: ""), name),
-            actions: [
-                AlertAction(
-                    title: "Upload",
-                    action: {
-                        DispatchQueue.main.async {
-                            uploadWithoutConfirmation(program: program, completion: completion)
-                        }
-                    }
-                ),
-                AlertAction(title: "Cancel", action: {}),
-            ]
+        let confirmationAlert = UploadConfirmationAlert(
+            name: name,
+            upload: {
+                DispatchQueue.main.async {
+                    uploadWithoutConfirmation(alertPublisher: alertPublisher, program: program, completion: completion)
+                }
+            }
         )
-        DispatchQueue.main.async {
-            PopupManager.instance.show(.alert(popup))
-        }
+        alertPublisher.alert = confirmationAlert
     }
 
     @MainActor public static func uploadWithoutConfirmation(
+        alertPublisher: Alertable,
         program: Hex,
         completion: (() -> Void)? = nil
     ) {
@@ -111,7 +79,7 @@ class FirmwareUploadSwiftUI {
                 // (Der Code fällt durch zu uploadAlert unten)
             } else {
                 // Keine USB-Verbindung, zeige Alert
-                showArcadeUSBAlert(completion: completion)
+                showArcadeUSBAlert(alertPublisher: alertPublisher, completion: completion)
                 return
             }
         }
@@ -119,11 +87,11 @@ class FirmwareUploadSwiftUI {
         let uploader = FirmwareUploadSwiftUI(file: program)
         let tempCalliope = MatrixConnectionViewModel.instance.usageReadyCalliope
 
-        PopupManager.instance.show(uploader.alertView)
+        // PopupManager.instance.show(uploader.alertView)
 
         do {
             try uploader.upload(finishedCallback: {
-                PopupManager.instance.dismiss(id: uploader.alertView.id)
+                // PopupManager.instance.dismiss(id: uploader.alertView.id)
                 completion?()
             })
         } catch {
@@ -131,53 +99,20 @@ class FirmwareUploadSwiftUI {
             FirmwareUploadSwiftUI.uploadingInstance = nil
             UIApplication.shared.isIdleTimerDisabled = false
 
-            let popup = TwoOptionsAlert(
-                title: NSLocalizedString("Upload failed", comment: ""),
-                message: String(
-                    format: NSLocalizedString(
-                        "The program does not seem to match the version of your Calliope mini. Please check the hardware selection in your editor again.",
-                        comment: ""
-                    )
-                ),
-                actions: [
-                    AlertAction(
-                        title: "Cancel",
-                        action: {
-                            PopupManager.instance.dismiss(id: uploader.alertView.id)
-                        }
-                    ),
-                    AlertAction(
-                        title: "Futher Information",
-                        action: {
-                            let informationLink: String = "https://calliope.cc/programmieren/mobil/ipad#hardware"
-                            if let url = URL(string: informationLink) {
-                                UIApplication.shared.open(url)
-                            }
-                            PopupManager.instance.dismiss(id: uploader.alertView.id)
-                        }
-                    ),
-                ]
-            )
-            PopupManager.instance.show(.alert(popup))
+            let failedAlert = UploadFailedAlert(goToInformation: {
+                let informationLink: String = "https://calliope.cc/programmieren/mobil/ipad#hardware"
+                if let url = URL(string: informationLink) {
+                    UIApplication.shared.open(url)
+                }
+            })
+            alertPublisher.alert = failedAlert
         }
     }
 
     // NEU: Hilfsmethode für Arcade USB Alert
-    private static func showArcadeUSBAlert(completion: (() -> Void)?) {
-        /*let alert = UIAlertController(
-            title: NSLocalizedString("USB-Verbindung erforderlich", comment: "USB connection required"),
-            message: NSLocalizedString(
-                "Arcade-Programme können nur per USB auf den Calliope mini übertragen werden.\n\nBitte verbinde den Calliope mini per USB-Kabel und wähle den MINI-Ordner aus.",
-                comment: "Arcade programs can only be transferred via USB"
-            ),
-            preferredStyle: .alert
-        )
-
-        alert.addAction(
-            UIAlertAction(
-                title: NSLocalizedString("USB-Modus öffnen", comment: "Open USB mode"),
-                style: .default
-            ) { _ in
+    private static func showArcadeUSBAlert(alertPublisher: Alertable, completion: (() -> Void)?) {
+        let alert = ArcadeUsbRequiredAlert(
+            onOpenUsbMode: {
                 // Wechsle in USB-Modus
                 // Expand the matrix connection view if it's collapsed
                 MatrixConnectionViewModel.instance.menuExpanded = true
@@ -190,19 +125,12 @@ class FirmwareUploadSwiftUI {
                     MatrixConnectionViewModel.instance.startUsbConnect()
                 }
                 completion?()
-            }
-        )
-
-        alert.addAction(
-            UIAlertAction(
-                title: NSLocalizedString("Abbrechen", comment: "Cancel"),
-                style: .cancel
-            ) { _ in
+            },
+            onCancel: {
                 completion?()
             }
         )
-
-        controller.present(alert, animated: true)*/
+        alertPublisher.alert = alert
     }
 
     private var file: Hex
@@ -218,8 +146,8 @@ class FirmwareUploadSwiftUI {
         }
     }
 
-    lazy var alertView: Popup = {
-        .progress(ProgressPopup(title: "Transmission running", onCancel: {}))
+    lazy var alertView: ProgressAlert? = {
+        return nil
         /*guard let calliope = calliope else {
             let alertController = UIAlertController(
                 title: NSLocalizedString("Cannot upload", comment: "Übertragung nicht möglich"),
@@ -501,7 +429,7 @@ extension FirmwareUploadSwiftUI: DFUProgressDelegate, DFUServiceDelegate, Logger
                 return
             }
             self.progressRing.startProgress(to: CGFloat(progress), duration: 0.2)
-            PopupManager.instance.updateProgress(id: alertView.id, progress: Double(progress) / 100)
+            // PopupManager.instance.updateProgress(id: alertView.id, progress: Double(progress) / 100)
             if progress > 0 && self.cancelUploadAction.isEnabled {
                 self.cancelUploadAction.isEnabled = false
                 let failed = self.failed

@@ -270,7 +270,7 @@ struct UploadFailedAlert: AppAlert {
     let actions: [StandardAlertAction]
 
     init(goToInformation: @escaping () -> Void) {
-       actions = [
+        actions = [
             StandardAlertAction(NSLocalizedString("Futher Information", comment: ""), handler: goToInformation),
             StandardAlertAction(NSLocalizedString("Cancel", comment: ""), handler: {}),
         ]
@@ -296,13 +296,65 @@ struct ArcadeUsbRequiredAlert: AppAlert {
                 NSLocalizedString("Abbrechen", comment: "Cancel"),
                 role: .cancel,
                 handler: onCancel
-            )
+            ),
         ]
     }
 }
 
+struct OkAppAlert: AppAlert {
+    let id = UUID()
+    let title: String
+    let message: String?
+    let actions: [StandardAlertAction]
+
+    init(title: String, message: String? = nil, completion: @escaping () -> Void) {
+        self.title = title
+        self.message = message
+        actions = [StandardAlertAction(NSLocalizedString("OK", comment: ""), handler: completion)]
+    }
+}
+
+struct GenericAlert: AppAlert {
+    let id = UUID()
+    let title: String
+    let message: String?
+    let actions: [StandardAlertAction]
+
+    init(title: String, message: String? = nil, actions: [StandardAlertAction]) {
+        self.title = title
+        self.message = message
+        self.actions = actions
+    }
+}
+
+struct GenericTextFieldAlert: TextFieldAppAlert {
+    let id = UUID()
+    let title: String
+    let message: String?
+    let textActions: [TextFieldAlertAction]
+    let actions: [StandardAlertAction] = []
+    let textFieldHint: String = "Program Name"
+    let textFieldDefault: String?
+    
+    init(title: String, message: String? = nil, actions: [TextFieldAlertAction], defaultName: String) {
+        self.title = title
+        self.message = message
+        textActions = actions
+        textFieldDefault = defaultName
+    }
+}
+ 
+
 protocol Alertable: AnyObject {
     var alert: (any AppAlert)? { get set }
+}
+
+ class TestAlertable: Alertable {
+    var alert: (any AppAlert)? {
+        didSet {
+            LogNotify.error("Tried to show alert, but only the TestAlertable was initialized. This should not happen.")
+        }
+    }
 }
 
 protocol CanShowProgess: AnyObject {

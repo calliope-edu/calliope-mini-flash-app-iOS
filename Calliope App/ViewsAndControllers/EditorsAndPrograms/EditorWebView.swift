@@ -13,25 +13,20 @@ import WebKit
 
 struct PopupEditorWebView: View {
     let editor: Editor
+    let alertPublisher: Alertable
 
     var body: some View {
-        PopupRoot {
-            EditorWebViewRepresentable(editor: editor, showPopup: showPopup, uploadFirmware: FirmwareUploadSwiftUI.uploadWithoutConfirmation)
-        }
-    }
-
-    func showPopup(_ popup: Popup) {
-        PopupManager.instance.show(popup)
+        EditorWebViewRepresentable(editor: editor, alertPublisher: alertPublisher, uploadFirmware: FirmwareUploadSwiftUI.uploadWithoutConfirmation)
     }
 }
 
 struct EditorWebViewRepresentable: UIViewRepresentable {
     let editor: Editor
-    let showPopup: (_ popup: Popup) -> Void
-    let uploadFirmware: (_ program: HexFile, _ completion: (() -> Void)?) -> Void
+    let alertPublisher: Alertable
+    let uploadFirmware: (_ alertPublisher: Alertable, _ program: HexFile, _ completion: (() -> Void)?) -> Void
 
     func makeUIView(context: Context) -> EditorWebView {
-        return EditorWebView(frame: .zero, showPopup: showPopup, uploadFirmware: uploadFirmware)
+        return EditorWebView(frame: .zero, alertPublisher: alertPublisher, uploadFirmware: uploadFirmware)
     }
 
     func updateUIView(_ editorWebView: EditorWebView, context: Context) {
@@ -40,14 +35,12 @@ struct EditorWebViewRepresentable: UIViewRepresentable {
 }
 
 final class EditorWebView: UIView {
-    @State var alertInputText = ""
     var webView: WKWebView?
     private let loadingIndicator = UIActivityIndicatorView(style: .large)
 
     var editor: Editor?
-
-    let showPopup: (_ popup: Popup) -> Void
-    let uploadFirmware: (_ program: HexFile, _ completion: (() -> Void)?) -> Void
+    let alertPublisher: Alertable
+    let uploadFirmware: (_ alertPublisher: Alertable, _ program: HexFile, _ completion: (() -> Void)?) -> Void
 
     private var latestDownloadedTargetFile: URL?
     var documentsPath: URL {
@@ -63,10 +56,10 @@ final class EditorWebView: UIView {
 
     init(
         frame: CGRect,
-        showPopup: @escaping (_ popup: Popup) -> Void,
-        uploadFirmware: @escaping (_ program: HexFile, _ completion: (() -> Void)?) -> Void
+        alertPublisher: Alertable,
+        uploadFirmware: @escaping (_ alertPublisher: Alertable, _ program: HexFile, _ completion: (() -> Void)?) -> Void
     ) {
-        self.showPopup = showPopup
+        self.alertPublisher = alertPublisher
         self.uploadFirmware = uploadFirmware
         super.init(frame: frame)
         setupLoadingIndicator()
@@ -76,8 +69,8 @@ final class EditorWebView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        self.showPopup = { popup in }
-        self.uploadFirmware = { program, completion in }
+        self.alertPublisher = TestAlertable()
+        self.uploadFirmware = { alertPublisher, program, completion in }
         super.init(coder: coder)
         setupLoadingIndicator()
         webView = setupWebView()
@@ -260,9 +253,8 @@ extension EditorWebView: WKUIDelegate {
         initiatedByFrame frame: WKFrameInfo,
         completionHandler: @escaping () -> Void
     ) {
-
-        let popup = OkAlert(title: message, completion: completionHandler)
-        showPopup(.alert(popup))
+        let alert = OkAppAlert(title: message, completion: completionHandler)
+        alertPublisher.alert = alert
     }
 
     func webView(
@@ -271,14 +263,14 @@ extension EditorWebView: WKUIDelegate {
         initiatedByFrame frame: WKFrameInfo,
         completionHandler: @escaping (Bool) -> Void
     ) {
-
-        let popup = TwoOptionsAlert(
+        let alert = GenericAlert(
             title: message,
             actions: [
-                AlertAction(title: "OK", action: { completionHandler(true) }), AlertAction(title: "Cancel", action: { completionHandler(false) }),
+                StandardAlertAction(NSLocalizedString("OK", comment: ""), handler: { completionHandler(true) }),
+                StandardAlertAction(NSLocalizedString("Cancel", comment: ""), handler: { completionHandler(false) }),
             ]
         )
-        showPopup(.alert(popup))
+        alertPublisher.alert = alert
     }
 
     func webView(
@@ -288,19 +280,15 @@ extension EditorWebView: WKUIDelegate {
         initiatedByFrame frame: WKFrameInfo,
         completionHandler: @escaping (String?) -> Void
     ) {
-
-        let popup = SwiftUIAlert(
-            title: prompt,
-            actions: [
-                AlertAction(
-                    title: "OK",
-                    action: {
-                        completionHandler(self.alertInputText)
-                    }
-                ), AlertAction(title: "Cancel", action: { completionHandler(nil) }),
-            ],
-            textField: AlertTextField(title: "", text: $alertInputText)
-        )
+        let alert = GenericTextFieldAlert(title: prompt, actions: [
+            TextFieldAlertAction(NSLocalizedString("OK", comment: ""), handler: { input in
+                completionHandler(input)
+            }),
+            TextFieldAlertAction(NSLocalizedString("Cancel", comment: ""), handler: { input in
+                    completionHandler(nil)
+            })
+        ], defaultName: "")
+        alertPublisher.alert = alert
     }
 }
 
@@ -367,7 +355,7 @@ extension EditorWebView: WKDownloadDelegate {
         }
 
         let file = HexFile(url: location, name: location.lastPathComponent, date: Date())
-        uploadFirmware(file) {
+        uploadFirmware(alertPublisher, file) {
             MatrixConnectionViewModel.instance.connect()
             self.clearTemporaryStorage()
         }
@@ -394,20 +382,20 @@ extension EditorWebView: WKDownloadDelegate {
 
     private func showAlertSessionDataDownload(for status: OperationStatus) {
         let title =
-        switch status {
-        case .success: NSLocalizedString("Session data successfully downloaded!", comment: "")
-        default: NSLocalizedString("Failed to download session data!", comment: "")
-        }
-        
+            switch status {
+            case .success: NSLocalizedString("Session data successfully downloaded!", comment: "")
+            default: NSLocalizedString("Failed to download session data!", comment: "")
+            }
+
         let message =
-        switch status {
-        case .success: NSLocalizedString("You can find the session data, in the Calliope directory on your device.", comment: "")
-        default: NSLocalizedString("The download of the session data was unsuccessful.", comment: "")
-        }
-        
-        let popup = OkAlert(title: message)
-        showPopup(.alert(popup))
-        
+            switch status {
+            case .success: NSLocalizedString("You can find the session data, in the Calliope directory on your device.", comment: "")
+            default: NSLocalizedString("The download of the session data was unsuccessful.", comment: "")
+            }
+
+        let alert = OkAppAlert(title: message, completion: {})
+        alertPublisher.alert = alert
+
     }
 }
 
@@ -486,7 +474,7 @@ extension EditorWebView {
                 guard let file = try HexFileManager.store(name: filename, data: download.url.asData(), isHexFile: download.isHex) else {
                     return
                 }
-                self.uploadFirmware(file) {
+                self.uploadFirmware(self.alertPublisher, file) {
                     MatrixConnectionViewModel.instance.connect()
                 }
             } catch {
@@ -523,8 +511,12 @@ extension EditorWebView {
             let xml = try download.url.asData()
             let (success, error) = saveFile(filename: "\(download.name).xml", data: xml)
             if success {
-                let popup = OkAlert(title: NSLocalizedString("Program exported", comment: ""), message: NSLocalizedString("Program exported message", comment: "actual message in translation file"))
-                showPopup(.alert(popup))
+                let alert = OkAppAlert(
+                    title: NSLocalizedString("Program exported", comment: ""),
+                    message: NSLocalizedString("Program exported message", comment: "actual message in translation file"),
+                    completion: {}
+                )
+                alertPublisher.alert = alert
             } else {
                 throw error!
             }

@@ -21,40 +21,37 @@ enum EditorsAndProgramRoute: Hashable {
     case qrCodeToMakeCode(url: String)
 }
 
-struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol & ObservableObject>: View {
+struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol & ObservableObject & Alertable>: View {
     @ObservedObject var viewModel: viewModelType
     @StateObject private var router = Router<EditorsAndProgramRoute>()
     @State private var presentingFileImporter = false
 
     var body: some View {
         NavigationStack(path: $router.path) {
-            PopupRoot {
-                ZStack {
-                    GeometryReader { geo in
-                        ScrollView {
-                            if geo.size.width > 1000 {
-                                MasonryLayout(columns: 2) {
-                                    items
-                                }
-                            } else {
-                                MasonryLayout(columns: 1) {
-                                    items
-                                }
+            ZStack {
+                GeometryReader { geo in
+                    ScrollView {
+                        if geo.size.width > 1000 {
+                            MasonryLayout(columns: 2) {
+                                items
+                            }
+                        } else {
+                            MasonryLayout(columns: 1) {
+                                items
                             }
                         }
-                        .padding()
                     }
-
-                    MatrixConnectionView(viewModel: MatrixConnectionViewModel.instance)
-                }.modifier(
-                    AlertModifier(alert: viewModel.alertBinding)
-                )
-                .navigationDestination(for: EditorsAndProgramRoute.self) { route in
-                    switchRoutes(route: route)
+                    .padding()
                 }
+
+                MatrixConnectionView(viewModel: MatrixConnectionViewModel.instance)
+            }.modifier(
+                AlertModifier(alert: viewModel.alertBinding)
+            )
+            .navigationDestination(for: EditorsAndProgramRoute.self) { route in
+                switchRoutes(route: route)
             }
         }
-
     }
 
     @ViewBuilder
@@ -63,11 +60,11 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
         case .qrCodeView:
             QRCodeView { url in router.push(.qrCodeToMakeCode(url: url)) }
         case .makeCode:
-            PopupEditorWebView(editor: MakeCode())
+            PopupEditorWebView(editor: MakeCode(), alertPublisher: viewModel)
         case .micropython:
-            PopupEditorWebView(editor: MicroPython())
+            PopupEditorWebView(editor: MicroPython(), alertPublisher: viewModel)
         case .openRobertaLab:
-            PopupEditorWebView(editor: RobertaEditor())
+            PopupEditorWebView(editor: RobertaEditor(), alertPublisher: viewModel)
         case .calliopeMiniBlocks:
             CalliopeMiniBlocksView(viewModel: CalliopeMiniBlocksViewModel(uploadDownloadableProgram: { _ in }))
         case .arcade:
@@ -82,7 +79,7 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
     func changeMakeCodeURL(url: String) -> PopupEditorWebView {
         let makeCode = MakeCode()
         makeCode.url = URL(string: url) ?? makeCode.url
-        return PopupEditorWebView(editor: makeCode)
+        return PopupEditorWebView(editor: makeCode, alertPublisher: viewModel)
     }
 
     @ViewBuilder

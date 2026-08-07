@@ -1401,6 +1401,9 @@
         }
       }
     },
+    "Futher Information" : {
+
+    },
     "Gesture" : {
 
     },
@@ -2409,15 +2412,6 @@
         }
       }
     },
-    "Show Alert" : {
-
-    },
-    "Show File Importer" : {
-
-    },
-    "Show Progress View" : {
-
-    },
     "Sichern" : {
       "localizations" : {
         "de" : {
@@ -2527,6 +2521,9 @@
           }
         }
       }
+    },
+    "The downloaded program is empty" : {
+
     },
     "The name %@ could not be given to %@. The name for a program must be unique and not empty." : {
       "localizations" : {

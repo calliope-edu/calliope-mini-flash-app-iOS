@@ -108,7 +108,7 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
     }
 
     func downloadProgram(program: ProgramTileConfig) {
-        FirmwareUploadSwiftUI.showUploadUI(program: program.hexFile, name: program.name) {
+        FirmwareUploadSwiftUI.showUploadUI(alertPublisher: self, program: program.hexFile, name: program.name) {
             MatrixConnectionViewModel.instance.connect()
         }
     }
@@ -126,7 +126,7 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
             programName: NSLocalizedString("Calliope mini V3", comment: ""),
             url: UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV3Url.rawValue)!
         )
-        FirmwareUploadSwiftUI.showUIForDownloadableProgram(program: program)
+        FirmwareUploadSwiftUI.showUIForDownloadableProgram(alertPublisher: self, program: program)
     }
 
     func uploadDefaultV1And2Program() {
@@ -134,7 +134,7 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
             programName: NSLocalizedString("Calliope mini V1 + 2", comment: ""),
             url: UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV1AndV2Url.rawValue)!
         )
-        FirmwareUploadSwiftUI.showUIForDownloadableProgram(program: program)
+        FirmwareUploadSwiftUI.showUIForDownloadableProgram(alertPublisher: self, program: program)
     }
 
     func openFile(result: Result<URL, Error>) {
@@ -153,7 +153,7 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
     }
 }
 
-class PreviewEditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, ObservableObject {
+class PreviewEditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, ObservableObject, Alertable {
     @Published var editors: [EditorTileConfig] = [
         EditorTileConfig(name: "Makecode", iconName: "editors_makecode"),
         EditorTileConfig(name: "Open Roberta Lab", iconName: "editors_nepo"),
