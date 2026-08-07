@@ -360,10 +360,9 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
                 .brightness(0.05)
 
             GeometryReader { geometry in
-                Capsule()
+                Rectangle()
                     .fill(Color.calliopeGreen)
                     .frame(width: max(geometry.size.width * uploadProgress.progress, 0))
-                    .clipped()
             }
 
             Text("\(Int(uploadProgress.progress * 100))%")
@@ -371,6 +370,7 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
                 .foregroundColor(.primary)
                 .frame(maxWidth: .infinity)
         }
+        .clipShape(Capsule())
     }
 
     // MARK: - Menu Button Appearance
