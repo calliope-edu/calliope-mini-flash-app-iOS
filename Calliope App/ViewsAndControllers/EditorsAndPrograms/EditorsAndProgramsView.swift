@@ -17,7 +17,6 @@ enum EditorsAndProgramRoute: Hashable {
     case openRobertaLab
     case calliopeMiniBlocks
     case arcade
-    case openHexFile
     case qrCodeToMakeCode(url: String)
 }
 
@@ -71,8 +70,6 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
             CalliopeMiniBlocksView(viewModel: CalliopeMiniBlocksViewModel())
         case .arcade:
             ArcadeView(viewModel: ArcadeViewModel(openArcade: {}))
-        case .openHexFile:
-            Text("")  // TODO:
         case .qrCodeToMakeCode(let url):
             changeMakeCodeURL(url: url)
         }
