@@ -97,7 +97,7 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
     var editorsTile: some View {
         VStack(alignment: .leading) {
             Text("You can program your Calliope mini with the help of the editors.").fontWeight(.bold)
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 250))], spacing: 40) {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 40) {
                 ForEach(0..<viewModel.editors.count) { i in
                     EditorTile(config: viewModel.editors[i]).onTapGesture {
                         switch viewModel.editors[i].name {
@@ -239,7 +239,7 @@ struct EditorTile: View {
                 .scaledToFit()
                 .frame(maxWidth: 175)
             Text(config.name)
-        }
+        }.frame(width: 150, height: 150)
     }
 }
 
