@@ -18,6 +18,7 @@ enum EditorsAndProgramRoute: Hashable {
     case calliopeMiniBlocks
     case arcadeLanding
     case arcadeEditor
+    case makeCodeLink(url: String)
     case qrCodeToMakeCode(url: String)
 }
 
@@ -81,6 +82,8 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
             ArcadeView(viewModel: ArcadeViewModel(openArcade: { router.push(.arcadeEditor) }))
         case .arcadeEditor:
             PopupEditorWebView(editor: ArcadeEditor(), alertPublisher: viewModel)
+        case .makeCodeLink(let url):
+            changeMakeCodeURL(url: url)
         case .qrCodeToMakeCode(let url):
             changeMakeCodeURL(url: url)
         }
