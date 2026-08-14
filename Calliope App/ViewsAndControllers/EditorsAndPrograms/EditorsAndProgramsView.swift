@@ -16,7 +16,8 @@ enum EditorsAndProgramRoute: Hashable {
     case micropython
     case openRobertaLab
     case calliopeMiniBlocks
-    case arcade
+    case arcadeLanding
+    case arcadeEditor
     case qrCodeToMakeCode(url: String)
 }
 
@@ -68,8 +69,10 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
             PopupEditorWebView(editor: RobertaEditor(), alertPublisher: viewModel)
         case .calliopeMiniBlocks:
             CalliopeMiniBlocksView(viewModel: CalliopeMiniBlocksViewModel())
-        case .arcade:
-            ArcadeView(viewModel: ArcadeViewModel(openArcade: {}))
+        case .arcadeLanding:
+            ArcadeView(viewModel: ArcadeViewModel(openArcade: {router.push(.arcadeEditor)}))
+        case .arcadeEditor:
+            PopupEditorWebView(editor: ArcadeEditor(), alertPublisher: viewModel)
         case .qrCodeToMakeCode(let url):
             changeMakeCodeURL(url: url)
         }
@@ -107,7 +110,7 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
                         case "Micropython":
                             router.push(.micropython)
                         case "Arcade (USB only)":
-                            router.push(.arcade)
+                            router.push(.arcadeLanding)
                         default:
                             break
                         }
