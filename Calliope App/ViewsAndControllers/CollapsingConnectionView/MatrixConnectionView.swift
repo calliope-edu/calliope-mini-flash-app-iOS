@@ -203,11 +203,19 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
     @ObservedObject var uploadProgress = UploadProgressViewModel.instance
     @Namespace private var glassNamespace
 
+    // Two-stage expansion: stage 1 = background + progress bar (isExpanded),
+    // stage 2 = buttons morph out (buttonsVisible), text fades in (textVisible)
+    @State private var buttonsVisible: Bool = false
+    @State private var textVisible: Bool = false
+
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+
     @ViewBuilder var content: () -> Content
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            if viewModel.menuExpanded {
+
+            if viewModel.menuExpanded && !uploadProgress.isUploading {
                 Color.clear
                     .contentShape(Rectangle())
                     .onTapGesture {
@@ -216,9 +224,6 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
                         }
                     }
                     .ignoresSafeArea()
-            }
-
-            if viewModel.menuExpanded && !uploadProgress.isUploading {
                 VStack {
                     content()
                 }
@@ -243,7 +248,40 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
         .padding()
         .animation(.spring(), value: uploadProgress.isUploading)
-        .animation(.spring(), value: uploadProgress.isExpanded)
+        .animation(.spring(duration: 0.55), value: uploadProgress.isExpanded)
+        // Two-stage expansion: when isExpanded flips true, delay the buttons so the
+        // background and progress bar finish animating first (stage 1), then morph
+        // the buttons out of the progress bar (stage 2) with the text fading in after.
+        .onChange(of: uploadProgress.isExpanded) { newValue in
+            if newValue {
+                // Stage 2 starts once the stage-1 spring (~0.55 s) has settled.
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                    guard uploadProgress.isExpanded else { return }
+                    withAnimation(.spring(duration: 1.1)) {
+                        buttonsVisible = true
+                    }
+                }
+                // Text fades in mid-way through the button morph.
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                    guard uploadProgress.isExpanded else { return }
+                    withAnimation(.easeOut(duration: 0.45)) {
+                        textVisible = true
+                    }
+                }
+            } else {
+                withAnimation(.spring()) {
+                    buttonsVisible = false
+                    textVisible = false
+                }
+            }
+        }
+        .onAppear {
+            // Sync local state if the view appears while already expanded
+            if uploadProgress.isExpanded {
+                buttonsVisible = true
+                textVisible = true
+            }
+        }
     }
 
     // MARK: - Connection Menu Button (normal state)
@@ -273,58 +311,67 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
 
     var uploadProgressView: some View {
         uploadProgressContent
-            //            .modifier(GlassContainerModifier(namespace: glassNamespace))
-            .transition(
-                .scale(scale: 0.3, anchor: .topTrailing).combined(with: .opacity)
-            )
+            .modifier(GlassContainerModifier(namespace: glassNamespace))
+            // On compact width (phone) the panel fills available space;
+            // on regular width (iPad landscape) cap it at a sensible fixed size.
+            .frame(maxWidth: horizontalSizeClass == .regular ? 420 : .infinity, alignment: .trailing)
     }
 
     var uploadProgressContent: some View {
-        VStack(spacing: uploadProgress.isExpanded ? 16 : 0) {
-            // Top row: Title (when expanded) + action buttons at trailing
-            if uploadProgress.isExpanded {
+        VStack(spacing: buttonsVisible ? 16 : 0) {
+            // Stage 2: buttons morph out of the progress bar; text fades in afterwards.
+            // This block is only shown after the background has finished expanding (stage 1).
+            if buttonsVisible {
                 HStack(alignment: .top) {
+                    // Plain text – no liquid-glass background
                     Text(NSLocalizedString("Transferring to Calliope", comment: ""))
                         .font(.headline)
                         .foregroundColor(.black)
-                        .padding(.top, 8)
+                        .opacity(textVisible ? 1 : 0)
+                        .offset(y: textVisible ? 0 : -6)
 
                     Spacer()
 
                     // Cancel and X grouped together at trailing
                     HStack(spacing: 8) {
                         Button {
-                            withAnimation(.spring()) {
-                                uploadProgress.cancel()
-                            }
+                            startCollapse { uploadProgress.cancel() }
                         } label: {
                             Text(NSLocalizedString("Cancel", comment: ""))
                                 .font(.system(size: 13, weight: .medium))
                                 .padding(.horizontal, 14)
                                 .padding(.vertical, 8)
-                            //                                .modifier(GlassElementModifier(
-                            //                                    id: "cancel", namespace: glassNamespace,
-                            //                                    shape: .capsule, tintColor: .calliopeRed
-                            //                                ))
+                                .modifier(
+                                    GlassElementModifier(
+                                        id: "cancel",
+                                        namespace: glassNamespace,
+                                        shape: .capsule,
+                                        tintColor: .calliopeRed
+                                    )
+                                )
                         }
 
                         Button {
-                            withAnimation(.spring()) {
-                                uploadProgress.isExpanded = false
+                            startCollapse {
+                                withAnimation(.spring(duration: 0.55)) {
+                                    uploadProgress.isExpanded = false
+                                }
                             }
                         } label: {
                             Image(systemName: "xmark")
                                 .resizable().scaledToFit()
                                 .frame(width: 12, height: 12)
                                 .padding(11)
-                            //                                .modifier(GlassElementModifier(
-                            //                                    id: "close", namespace: glassNamespace,
-                            //                                    shape: .circle
-                            //                                ))
+                                .modifier(
+                                    GlassElementModifier(
+                                        id: "close",
+                                        namespace: glassNamespace,
+                                        shape: .circle
+                                    )
+                                )
                         }
                     }
                 }
-                //                .transition(.opacity.combined(with: .scale(scale: 0.5, anchor: .topTrailing)))
             }
 
             // Progress bar - always present, animates size
@@ -335,10 +382,13 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
             } label: {
                 progressBarContent
                     .frame(height: 40)
-                //                    .modifier(GlassElementModifier(
-                //                        id: "progressBar", namespace: glassNamespace,
-                //                        shape: .capsule
-                //                    ))
+                    .modifier(
+                        GlassElementModifier(
+                            id: "progressBar",
+                            namespace: glassNamespace,
+                            shape: .capsule
+                        )
+                    )
             }
             .frame(maxWidth: uploadProgress.isExpanded ? .infinity : 200)
         }
@@ -349,6 +399,28 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
                 .shadow(radius: 10)
                 .opacity(uploadProgress.isExpanded ? 1 : 0)
         )
+    }
+
+    // MARK: - Collapse Animation (inverse of two-stage opening)
+
+    // Sequences: text fades out → buttons merge into progress bar → `done()` is called.
+    // For the X button, `done` collapses the background (stage 1 reverse).
+    // For Cancel, `done` calls cancel() which removes the view entirely.
+    private func startCollapse(done: @escaping () -> Void) {
+        // Step 1: fade out the text first (mirror of the text-fade-in at the end of opening).
+        withAnimation(.easeIn(duration: 0.25)) {
+            textVisible = false
+        }
+        // Step 2: merge buttons back into the progress bar (mirror of stage 2).
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+            withAnimation(.spring(duration: 1.1)) {
+                buttonsVisible = false
+            }
+        }
+        // Step 3: execute the caller's action (collapse background or cancel).
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.55) {
+            done()
+        }
     }
 
     // MARK: - Progress Bar Content
@@ -537,15 +609,18 @@ struct GlassElementModifier: ViewModifier {
                     content
                         .glassEffect(.regular.tint(tintColor).interactive(), in: .capsule)
                         .glassEffectID(id, in: namespace)
+                        .glassEffectTransition(.matchedGeometry)
                 } else {
                     content
                         .glassEffect(.regular.interactive(), in: .capsule)
                         .glassEffectID(id, in: namespace)
+                        .glassEffectTransition(.matchedGeometry)
                 }
             case .circle:
                 content
                     .glassEffect(.regular.interactive(), in: .circle)
                     .glassEffectID(id, in: namespace)
+                    .glassEffectTransition(.matchedGeometry)
             }
         } else {
             switch shape {
@@ -590,21 +665,21 @@ struct GlassElementModifier: ViewModifier {
 
                     if !UploadProgressViewModel.instance.isUploading {
                         Button("Start Upload") {
-                            withAnimation(.spring()) {
-                                UploadProgressViewModel.instance.startUpload()
-                            }
+                            //                            withAnimation(.spring()) {
+                            UploadProgressViewModel.instance.startUpload()
+                            //                            }
                             // Simulate progress over 5 seconds
                             timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { t in
                                 if UploadProgressViewModel.instance.progress < 1.0 {
-                                    withAnimation {
-                                        UploadProgressViewModel.instance.updateProgress(UploadProgressViewModel.instance.progress + 0.005)
-                                    }
+                                    //                                    withAnimation {
+                                    UploadProgressViewModel.instance.updateProgress(UploadProgressViewModel.instance.progress + 0.005)
+                                    //                                    }
                                 } else {
                                     t.invalidate()
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                        withAnimation(.spring()) {
-                                            UploadProgressViewModel.instance.finishUpload()
-                                        }
+                                        //                                        withAnimation(.spring()) {
+                                        UploadProgressViewModel.instance.finishUpload()
+                                        //                                        }
                                     }
                                 }
                             }
