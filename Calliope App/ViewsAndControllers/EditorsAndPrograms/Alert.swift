@@ -314,6 +314,18 @@ struct OkAppAlert: AppAlert {
     }
 }
 
+struct WebViewNavigationErrorAlert: AppAlert {
+    let id = UUID()
+    let title: String = NSLocalizedString("Navigation Failed", comment: "")
+    let message: String?
+    let actions: [StandardAlertAction]
+
+    init(error: Error) {
+        message = error.localizedDescription
+        actions = [StandardAlertAction(NSLocalizedString("OK", comment: ""), handler: {})]
+    }
+}
+
 struct GenericAlert: AppAlert {
     let id = UUID()
     let title: String

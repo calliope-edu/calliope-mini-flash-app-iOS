@@ -12,17 +12,20 @@ import WebKit
 
 struct RepresentableWBWebView: UIViewControllerRepresentable {
     @State var url: URL
+    let alertPublisher: Alertable
 
     private var wBWebViewContainerController: WBWebViewContainerController?
 
-    init(url: URL) {
+    init(url: URL, alertPublisher: Alertable) {
         self.url = url
+        self.alertPublisher = alertPublisher
     }
 
     func makeUIViewController(context: Context) -> WBWebViewContainerController {
         let storyboard = UIStoryboard(name: "WBCore", bundle: .main)
 
         let controller = storyboard.instantiateInitialViewController() as! WBWebViewContainerController
+        controller.alertPublisher = alertPublisher
         return controller
     }
 

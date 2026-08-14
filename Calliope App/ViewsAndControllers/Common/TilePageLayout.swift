@@ -161,7 +161,7 @@ extension HasTileItem {
     }
 }
 
-struct TileItem: Identifiable {
+struct TileItem: Identifiable, Hashable {
     let id = UUID()
     let title: String
     let imageSource: ImageSource
@@ -174,7 +174,7 @@ enum Orientation {
     case portrait
 }
 
-enum ImageSource {
+enum ImageSource: Hashable {
     case remote(URL)
     case local(String) // asset name
 }

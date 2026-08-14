@@ -21,6 +21,8 @@ class WBWebViewContainerController: UIViewController, WKNavigationDelegate, WKUI
     @IBOutlet var loadingProgressContainer: UIView!
     @IBOutlet var loadingProgressView: UIView!
     
+    var alertPublisher: Alertable!
+    
     var webViewController: WBWebViewController {
         get {
             return self.children.first(where: {$0 as? WBWebViewController != nil}) as! WBWebViewController
@@ -76,12 +78,7 @@ class WBWebViewContainerController: UIViewController, WKNavigationDelegate, WKUI
     
     // MARK: - WKUIDelegate
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: (@escaping () -> Void)) {
-        let alertController = UIAlertController(
-            title: frame.request.url?.host, message: message,
-            preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(
-            title: "OK", style: .default, handler: {_ in completionHandler()}))
-        self.present(alertController, animated: true, completion: nil)
+        alertPublisher.alert = OkAppAlert(title: message, completion: completionHandler)
     }
     
     // MARK: - Observe protocol
@@ -118,7 +115,7 @@ class WBWebViewContainerController: UIViewController, WKNavigationDelegate, WKUI
         ) {
             return
         }
-        self.performSegue(withIdentifier: "nav-error-segue", sender: error)
+        self.alertPublisher.alert = WebViewNavigationErrorAlert(error: error)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
