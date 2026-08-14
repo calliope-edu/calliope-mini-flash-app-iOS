@@ -6,10 +6,8 @@
 //
 
 import CoreBluetooth
-import UIKit
-import UniformTypeIdentifiers
 
-class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDelegate {
+class CalliopeDiscovery: NSObject, CBCentralManagerDelegate {
     
     enum CalliopeDiscoveryState {
         case initialized  //no discovered calliopes, doing nothing
@@ -325,17 +323,8 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         }
     }
 
-    func initializeConnectionToUsbCalliope(view: UIViewController) {
-        state = .usbConnecting
-        let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.folder])
-        documentPicker.delegate = self
-        documentPicker.allowsMultipleSelection = false
-        view.present(documentPicker, animated: true, completion: nil)
-    }
-    
-    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        let url = urls.first
-        let discoveredCalliope = DiscoveredUSBDevice(url: url!, name: CalliopeDiscovery.usbCalliopeName)
+    func handleUSBFolderPicked(_ url: URL) {
+        let discoveredCalliope = DiscoveredUSBDevice(url: url, name: CalliopeDiscovery.usbCalliopeName)
 
         guard let discoveredCalliope = discoveredCalliope else {
             MatrixConnectionViewModel.instance.showFalseLocationAlert()

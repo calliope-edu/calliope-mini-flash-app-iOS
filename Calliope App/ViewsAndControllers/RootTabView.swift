@@ -35,6 +35,7 @@ struct RootTabView: View {
                 .tag(3)
         }
         .tint(Color("calliope-lilablau"))
+        .modifier(AlertModifier(alert: MatrixConnectionViewModel.instance.alertBinding))
         .onAppear(perform: applyCompactSizeClassOverride)
         .onChange(of: scenePhase) { phase in
             switch phase {

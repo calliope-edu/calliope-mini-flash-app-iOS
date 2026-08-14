@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: View {
     @ObservedObject var viewModel: ViewModelType
@@ -45,6 +46,11 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
                 .background(Color.calliopeGreen)
                 .foregroundColor(.white)
                 .cornerRadius(12)
+        }
+        .fileImporter(isPresented: $viewModel.isFolderPickerPresented, allowedContentTypes: [.folder]) { result in
+            if case .success(let url) = result {
+                viewModel.handleUSBFolderPicked(url)
+            }
         }
     }
 

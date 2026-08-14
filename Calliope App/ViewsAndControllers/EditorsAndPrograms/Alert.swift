@@ -482,6 +482,44 @@ struct ConnectCalliopeRequiredAlert: AppAlert {
     let actions: [StandardAlertAction] = [StandardAlertAction(NSLocalizedString("OK", comment: ""), handler: {})]
 }
 
+struct WrongStorageLocationAlert: AppAlert {
+    let id = UUID()
+    let title: String = NSLocalizedString("Wrong storage location", comment: "")
+    let message: String? = NSLocalizedString("You have not selected a Calliope folder as storage location", comment: "")
+    let actions: [StandardAlertAction] = [StandardAlertAction(NSLocalizedString("OK", comment: ""), handler: {})]
+}
+
+struct BluetoothDeactivatedAlert: AppAlert {
+    let id = UUID()
+    let title: String = NSLocalizedString("Bluetooth deactivated", comment: "Bluetooth is turned off")
+    let message: String? = NSLocalizedString("Bluetooth must be activated to send data to Calliope mini!", comment: "Bluetooth required message")
+    let actions: [StandardAlertAction]
+
+    init(openSettings: @escaping () -> Void, ok: @escaping () -> Void) {
+        actions = [
+            StandardAlertAction(NSLocalizedString("Open Settings", comment: "Open Settings button"), handler: openSettings),
+            StandardAlertAction("OK", role: .cancel, handler: ok),
+        ]
+    }
+}
+
+struct BluetoothResetRequiredAlert: AppAlert {
+    let id = UUID()
+    let title: String = NSLocalizedString("Bluetooth-Verbindung zurücksetzen", comment: "Reset Bluetooth connection")
+    let message: String? = NSLocalizedString(
+        "Der Calliope mini wurde schon einmal gekoppelt. Diese Informationen müssen erneut angelegt werden:\n\n1. Gehe zu Einstellungen → Bluetooth\n2. Tippe auf das (i) neben dem Calliope mini\n3. Wähle \"Dieses Gerät ignorieren\"\n4. Kehre zur Calliope mini App zurück und verbinde erneut",
+        comment: "Instructions to reset Bluetooth pairing"
+    )
+    let actions: [StandardAlertAction]
+
+    init(openSettings: @escaping () -> Void) {
+        actions = [
+            StandardAlertAction(NSLocalizedString("Einstellungen öffnen", comment: "Open Settings"), handler: openSettings),
+            StandardAlertAction("OK", role: .cancel, handler: {}),
+        ]
+    }
+}
+
 struct NewProjectNameAlert: TextFieldAppAlert {
     let id = UUID()
     let title: String = NSLocalizedString("Enter an Projectname for the new Project", comment: "")

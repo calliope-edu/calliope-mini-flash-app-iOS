@@ -41,9 +41,11 @@ protocol MatrixConnectionViewModelProtocol: ObservableObject {
     
     func connect()
     func startUsbConnect()
+    func handleUSBFolderPicked(_ url: URL)
+    var isFolderPickerPresented: Bool { get set }
 }
 
-class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol {
+class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
     static let instance: MatrixConnectionViewModel = MatrixConnectionViewModel()
     
     @Published var matrix = Array(repeating: Array(repeating: false, count: 5), count: 5) {
@@ -65,10 +67,16 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol {
     @Published var connectButtonState: ConnectButtonState = .initialized
     @Published var connectionMenuButtonBounceTrigger: Int = 0
     @Published var connectButtonBounceTrigger: Int = 0
+    @Published var alert: (any AppAlert)? = nil
+    @Published var isFolderPickerPresented = false
 
-    
-    var viewController: UIViewController? // Temporary for the SwiftUI migration
-    
+    var alertBinding: Binding<(any AppAlert)?> {
+        Binding(
+            get: { self.alert },
+            set: { self.alert = $0 }
+        )
+    }
+
     let restoreLastMatrixEnabled = UserDefaults.standard.bool(forKey: SettingsKey.restoreLastMatrix.rawValue)
     private let queue = DispatchQueue(label: "bluetooth")
     
@@ -203,10 +211,12 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol {
     }
     
     func startUsbConnect() {
+        isFolderPickerPresented = true
+    }
+
+    func handleUSBFolderPicked(_ url: URL) {
         LogNotify.log("Start connection to USB Device")
-        if viewController != nil {
-            self.connector.initializeConnectionToUsbCalliope(view: viewController!)
-        }
+        connector.handleUSBFolderPicked(url)
     }
     
     /// Prüft ob eine USB-Verbindung zum Calliope besteht
@@ -215,17 +225,8 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol {
     }
     
     func showFalseLocationAlert() {
-        let alert = UIAlertController(
-            title: NSLocalizedString("Wrong storage location", comment: ""),
-            message: NSLocalizedString("You have not selected a Calliope folder as storage location", comment: ""),
-            preferredStyle: .alert
-        )
-        alert.addAction(
-            UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
-            }
-        )
-        if viewController != nil {
-            viewController!.present(alert, animated: true)
+        DispatchQueue.main.async {
+            self.alert = WrongStorageLocationAlert()
         }
     }
     
@@ -414,40 +415,19 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol {
         if state == .poweredOff && !isShowingBluetoothAlert {
             isShowingBluetoothAlert = true
 
-            let alertController = UIAlertController(
-                title: NSLocalizedString("Bluetooth deactivated", comment: "Bluetooth is turned off"),
-                message: NSLocalizedString("Bluetooth must be activated to send data to Calliope mini!", comment: "Bluetooth required message"),
-                preferredStyle: .alert
-            )
-
-            // Button to open Bluetooth settings
-            alertController.addAction(
-                UIAlertAction(
-                    title: NSLocalizedString("Open Settings", comment: "Open Settings button"),
-                    style: .default,
-                    handler: { [weak self] _ in
+            DispatchQueue.main.async {
+                self.alert = BluetoothDeactivatedAlert(
+                    openSettings: { [weak self] in
                         self?.isShowingBluetoothAlert = false
                         // Open iOS Settings app - Bluetooth section
                         if let url = URL(string: "App-prefs:root=Bluetooth") {
                             UIApplication.shared.open(url, options: [:], completionHandler: nil)
                         }
-                    }
-                )
-            )
-
-            // OK button to dismiss
-            alertController.addAction(
-                UIAlertAction(
-                    title: "OK",
-                    style: .cancel,
-                    handler: { [weak self] _ in
+                    },
+                    ok: { [weak self] in
                         self?.isShowingBluetoothAlert = false
                     }
                 )
-            )
-
-            if viewController != nil {
-                viewController!.show(alertController, sender: nil)
             }
         } else if state == .poweredOn {
             // Reset flag when Bluetooth is turned back on
@@ -461,28 +441,12 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol {
             return
         }
 
-        let alertController: UIAlertController?
-
         if (error as? CBError)?.errorCode == 14 {
             // CBError 14 = Peer removed pairing information
             // Das passiert nach Verwendung einer anderen App (z.B. Blocks mit UART)
-            alertController = UIAlertController(
-                title: NSLocalizedString("Bluetooth-Verbindung zurücksetzen", comment: "Reset Bluetooth connection"),
-                message: NSLocalizedString(
-                    "Der Calliope mini wurde schon einmal gekoppelt. Diese Informationen müssen erneut angelegt werden:\n\n1. Gehe zu Einstellungen → Bluetooth\n2. Tippe auf das (i) neben dem Calliope mini\n3. Wähle \"Dieses Gerät ignorieren\"\n4. Kehre zur Calliope mini App zurück und verbinde erneut",
-                    comment: "Instructions to reset Bluetooth pairing"
-                ),
-                preferredStyle: .alert
-            )
-
-            // Button der zu den System-Einstellungen führt (öffnet generelle iOS Einstellungen)
-            // WICHTIG: iOS erlaubt nur das Öffnen der allgemeinen Einstellungen,
-            // nicht direkt der Bluetooth-Einstellungen
-            alertController?.addAction(
-                UIAlertAction(
-                    title: NSLocalizedString("Einstellungen öffnen", comment: "Open Settings"),
-                    style: .default,
-                    handler: { _ in
+            DispatchQueue.main.async {
+                self.alert = BluetoothResetRequiredAlert(
+                    openSettings: {
                         // Öffnet die iOS Einstellungen (nicht App-Einstellungen!)
                         // Der Benutzer kann dann manuell zu Bluetooth navigieren
                         if let url = URL(string: "App-prefs:root=Bluetooth") {
@@ -490,49 +454,20 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol {
                         }
                     }
                 )
-            )
+            }
         } else if error.localizedDescription == NSLocalizedString("Connection to calliope timed out!", comment: "") {
             // Timeout ignorieren wenn noch nie verbunden war
             if !hasEverConnected {
                 LogNotify.log("Ignoring connection timeout - never connected before")
-                alertController = nil
             } else {
-                alertController = nil  // Auch bei vorheriger Verbindung ignorieren (wie bisher)
+                LogNotify.log("Ignoring connection timeout")  // Auch bei vorheriger Verbindung ignorieren (wie bisher)
             }
         } else if error.localizedDescription.contains("Calliope mini") && !hasEverConnected {
             // Andere Calliope-bezogene Fehler nur anzeigen wenn schon mal verbunden war
             LogNotify.log("Ignoring error - never connected before: \(error.localizedDescription)")
-            alertController = nil
         } else {
             // TEMP: Alert deaktiviert - kann später wieder aktiviert werden
-            // alertController = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Encountered an error discovering or connecting calliope:", comment: "") + "\n\(error.localizedDescription)", preferredStyle: .alert)
             LogNotify.log("Error suppressed (alert commented out): \(error.localizedDescription)")
-            alertController = nil
-        }
-
-        guard let alertController = alertController else {
-            return
-        }
-
-        // Falls es sich um die Standard-Fehlermeldung handelt, die nur einmal gezeigt werden soll,
-        // die Variable setzen
-        if alertController.title == NSLocalizedString("Error", comment: "") {
-            isShowingErrorAlert = true
-            alertController.addAction(
-                UIAlertAction(
-                    title: "OK",
-                    style: .default,
-                    handler: { _ in
-                        self.isShowingErrorAlert = false
-                    }
-                )
-            )
-        } else {
-            alertController.addAction(UIAlertAction(title: "OK", style: .default))
-        }
-
-        if viewController != nil {
-            viewController!.show(alertController, sender: nil)
         }
     }
     
@@ -548,6 +483,7 @@ class PreviewMatrixConnectionViewModel: MatrixConnectionViewModelProtocol {
     @Published var connectButtonState: ConnectButtonState
     @Published var connectionMenuButtonBounceTrigger: Int = 0
     @Published var connectButtonBounceTrigger: Int = 0
+    @Published var isFolderPickerPresented = false
     
     init(connectionMenuButtonState: ConnectionMenuButtonState = .disconnected, connectButtonState: ConnectButtonState = .readyToConnect) {
         self.connectionMenuButtonState = connectionMenuButtonState
@@ -561,6 +497,10 @@ class PreviewMatrixConnectionViewModel: MatrixConnectionViewModelProtocol {
     }
     
     func startUsbConnect() {
+        isFolderPickerPresented = true
+    }
+    
+    func handleUSBFolderPicked(_ url: URL) {
         LogNotify.log("Pressed startUsbConnect")
     }
 }
