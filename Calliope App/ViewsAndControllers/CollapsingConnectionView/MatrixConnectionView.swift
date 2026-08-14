@@ -208,7 +208,6 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
     @State private var buttonsVisible: Bool = false
     @State private var textVisible: Bool = false
 
-    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     @ViewBuilder var content: () -> Content
 
@@ -250,7 +249,7 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
                         connectionMenuButtonGlass
                     }
                 }
-                .frame(maxWidth: horizontalSizeClass == .regular ? 420 : .infinity, alignment: .trailing)
+                .frame(maxWidth: 420, alignment: .trailing)
             } else {
                 if uploadProgress.isUploading {
                     uploadProgressView
@@ -360,9 +359,7 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
     var uploadProgressView: some View {
         uploadProgressContent
             .modifier(GlassContainerModifier(namespace: glassNamespace))
-            // On compact width (phone) the panel fills available space;
-            // on regular width (iPad landscape) cap it at a sensible fixed size.
-            .frame(maxWidth: horizontalSizeClass == .regular ? 420 : .infinity, alignment: .trailing)
+            .frame(maxWidth: 420, alignment: .trailing)
     }
 
     var uploadProgressContent: some View {
@@ -447,6 +444,7 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
                 .shadow(radius: 10)
                 .opacity(uploadProgress.isExpanded ? 1 : 0)
         )
+        .frame(maxWidth: 420, alignment: .trailing)
     }
 
     // MARK: - Collapse Animation (inverse of two-stage opening)
