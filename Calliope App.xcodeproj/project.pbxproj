@@ -8,18 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		2F00EAB822DA195A000B5FDE /* HomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F00EAB722DA195A000B5FDE /* HomeScreenViewController.swift */; };
-		2F08A0E1234AC7400088A8D6 /* EditorAndProgramsContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F08A0E0234AC7400088A8D6 /* EditorAndProgramsContainerViewController.swift */; };
 		2F1BD9952674D48C006A47F2 /* AutoHeightCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1BD9942674D48C006A47F2 /* AutoHeightCollectionViewFlowLayout.swift */; };
 		2F1BD9972674D804006A47F2 /* AutoHeightCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1BD9962674D804006A47F2 /* AutoHeightCollectionViewCell.swift */; };
 		2F2B809A25A0E01500A7CCF7 /* CodeSnippets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2B809925A0E01500A7CCF7 /* CodeSnippets.swift */; };
-		2F2B809D25A0F25700A7CCF7 /* PlaygroundSnippetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2B809C25A0F25700A7CCF7 /* PlaygroundSnippetTableViewCell.swift */; };
-		2F2B80A025A1100800A7CCF7 /* PlaygroundCodeSnippetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2B809F25A1100800A7CCF7 /* PlaygroundCodeSnippetViewController.swift */; };
 		2F375ABB237F28BC004ED8D7 /* DefaultProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F375ABA237F28BC004ED8D7 /* DefaultProgram.swift */; };
-		2F4B8D8425978D950026B480 /* EditorAndPrograms.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F4B8D8225978D950026B480 /* EditorAndPrograms.storyboard */; };
 		2F4B8D9F2598D7980026B480 /* HomeScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F4B8DA12598D7980026B480 /* HomeScreen.storyboard */; };
-		2F526C2426E00696004BA8FF /* HexFileStoreDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F526C2326E00696004BA8FF /* HexFileStoreDialog.swift */; };
 		2F57C3B42394F78B008B0D69 /* DownloadableHexFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57C3B32394F78B008B0D69 /* DownloadableHexFile.swift */; };
-		2F5E8F0226C94F5F00CE03CB /* PlaygroundInstructionsCollectionCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5E8F0126C94F5F00CE03CB /* PlaygroundInstructionsCollectionCollectionViewController.swift */; };
 		2F61451022BF75DE001C2734 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61450F22BF75DE001C2734 /* AppDelegate.swift */; };
 		2F61451C22BF75DF001C2734 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F61451A22BF75DF001C2734 /* LaunchScreen.storyboard */; };
 		2F61456E22BF761F001C2734 /* CalliopeBLEProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61452E22BF761F001C2734 /* CalliopeBLEProfile.swift */; };
@@ -45,8 +39,6 @@
 		60CA11B1000000000000A1A1 /* CalliopeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CA11B3000000000000A1A3 /* CalliopeApp.swift */; };
 		60CA11B2000000000000A1A2 /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CA11B4000000000000A1A4 /* RootTabView.swift */; };
 		2F61459122BF761F001C2734 /* FirmwareUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61455B22BF761F001C2734 /* FirmwareUpload.swift */; };
-		2F61459422BF761F001C2734 /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61455E22BF761F001C2734 /* EditorViewController.swift */; };
-		2F61459622BF761F001C2734 /* LocalEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61456022BF761F001C2734 /* LocalEditorViewController.swift */; };
 		2F61459722BF761F001C2734 /* Editors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61456222BF761F001C2734 /* Editors.swift */; };
 		2F61459822BF761F001C2734 /* StreamReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61456322BF761F001C2734 /* StreamReader.swift */; };
 		2F61459922BF761F001C2734 /* Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61456422BF761F001C2734 /* Hex.swift */; };
@@ -54,7 +46,6 @@
 		2F61459C22BF9D26001C2734 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2F61459B22BF9D26001C2734 /* Settings.bundle */; };
 		2F61459E22BFE607001C2734 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F61459D22BFE607001C2734 /* Assets.xcassets */; };
 		2F6145A622C7D71B001C2734 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6145A522C7D71B001C2734 /* Settings.swift */; };
-		2F763FE625A607A400C2029D /* SwiftCodeSnippetHighlighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F763FE525A607A400C2029D /* SwiftCodeSnippetHighlighter.swift */; };
 		2F9B29FC233F0456009496DD /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F9B29EF233F0456009496DD /* Roboto-Medium.ttf */; };
 		2F9B29FD233F0456009496DD /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F9B29F0233F0456009496DD /* Roboto-Light.ttf */; };
 		2F9B29FE233F0456009496DD /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F9B29F1233F0456009496DD /* Roboto-Regular.ttf */; };
@@ -77,7 +68,6 @@
 		2F9B2A1C233F045D009496DD /* RobotoMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F9B2A11233F045D009496DD /* RobotoMono-Bold.ttf */; };
 		2F9B2A1E233F045D009496DD /* RobotoMono-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F9B2A13233F045D009496DD /* RobotoMono-Italic.ttf */; };
 		2F9B2A1F233F045D009496DD /* RobotoMono-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F9B2A14233F045D009496DD /* RobotoMono-Thin.ttf */; };
-		2F9E404A259DFB00002FFE0B /* PlaygroundSnippetTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9E4049259DFB00002FFE0B /* PlaygroundSnippetTableViewController.swift */; };
 		2FC2A12922C8FA6F00675C2F /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC2A12822C8FA6F00675C2F /* News.swift */; };
 		2FC2A12B22C962D100675C2F /* NewsDetailWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC2A12A22C962D100675C2F /* NewsDetailWebView.swift */; };
 		60025C602FD032840065AA36 /* SensordataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60025C5F2FD032840065AA36 /* SensordataView.swift */; };
@@ -114,7 +104,6 @@
 		6073406A3007DFDA00616062 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607340693007DFDA00616062 /* Router.swift */; };
 		60CA11B5000000000000A1A5 /* RootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CA11B6000000000000A1A6 /* RootCoordinator.swift */; };
 		6073406C3007E04D00616062 /* HomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6073406B3007E04D00616062 /* HomeScreenView.swift */; };
-		607340803007E8B000616062 /* NewsDetailWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6073407F3007E8B000616062 /* NewsDetailWebViewController.swift */; };
 		60818E7D2FE5A4150053893F /* EditorsAndProgramsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818E7C2FE5A4150053893F /* EditorsAndProgramsView.swift */; };
 		60818E7F2FE5A9C90053893F /* EditorsAndProgramsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818E7E2FE5A9C90053893F /* EditorsAndProgramsViewModel.swift */; };
 		60818EA62FEEB46C0053893F /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 60818EA52FEEB46C0053893F /* InfoPlist.xcstrings */; };
@@ -125,10 +114,7 @@
 		60818EB82FF558AF0053893F /* CalliopeMiniBlocksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818EB72FF558AF0053893F /* CalliopeMiniBlocksViewModel.swift */; };
 		60818EBC2FF561FB0053893F /* ArcadeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818EBB2FF561FB0053893F /* ArcadeView.swift */; };
 		60818EBE2FF563D80053893F /* ArcadeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818EBD2FF563D80053893F /* ArcadeViewModel.swift */; };
-		60818EC02FF564E30053893F /* ArcadeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818EBF2FF564E30053893F /* ArcadeViewController.swift */; };
 		60863394300171B50042ECCD /* OfflineOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60863393300171B50042ECCD /* OfflineOnboardingView.swift */; };
-		608CE91C2F89544D004EACA7 /* NewsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608CE91B2F89544D004EACA7 /* NewsCollectionViewController.swift */; };
-		608CE91E2F8954B8004EACA7 /* NewsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608CE91D2F8954B8004EACA7 /* NewsCollectionViewCell.swift */; };
 		6094AC582E20F2410066D07A /* WebLogHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6094AC572E20F2380066D07A /* WebLogHandler.swift */; };
 		6094C3912C045FA9006F4CB4 /* ApiCalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6094C3902C045FA9006F4CB4 /* ApiCalliope.swift */; };
 		6094C3992C048201006F4CB4 /* DGCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6094C3972C048201006F4CB4 /* DGCharts.framework */; };
@@ -161,7 +147,6 @@
 		60CF0EB22BFCD5D400CB2A38 /* Sensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CF0EB12BFCD5D400CB2A38 /* Sensor.swift */; };
 		60D02D7E2BFC8FE400D3C34A /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D02D7D2BFC8FE400D3C34A /* DatabaseManager.swift */; };
 		60D02D812BFC95E000D3C34A /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D02D802BFC95E000D3C34A /* Project.swift */; };
-		60D672522B283D0F00AB974B /* QRCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D672512B283D0F00AB974B /* QRCodeViewController.swift */; };
 		60EBC64C2F9BAD5B00A6DD84 /* ChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EBC64B2F9BAD5A00A6DD84 /* ChartViewModel.swift */; };
 		7E25C1EF8B03BE2835268F12 /* UtilityJobState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E25C80C2A4E87716138A0E0 /* UtilityJobState.swift */; };
 		7E25C2F16E2316D7C6EF236F /* UtilityJobProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E25CF0763552A9F4EBCE00E /* UtilityJobProtocol.swift */; };
@@ -174,21 +159,15 @@
 
 /* Begin PBXFileReference section */
 		2F00EAB722DA195A000B5FDE /* HomeScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenViewController.swift; sourceTree = "<group>"; };
-		2F08A0E0234AC7400088A8D6 /* EditorAndProgramsContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorAndProgramsContainerViewController.swift; sourceTree = "<group>"; };
 		2F1BD9942674D48C006A47F2 /* AutoHeightCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoHeightCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		2F1BD9962674D804006A47F2 /* AutoHeightCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoHeightCollectionViewCell.swift; sourceTree = "<group>"; };
 		2F2B809925A0E01500A7CCF7 /* CodeSnippets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeSnippets.swift; sourceTree = "<group>"; };
-		2F2B809C25A0F25700A7CCF7 /* PlaygroundSnippetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundSnippetTableViewCell.swift; sourceTree = "<group>"; };
-		2F2B809F25A1100800A7CCF7 /* PlaygroundCodeSnippetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundCodeSnippetViewController.swift; sourceTree = "<group>"; };
 		2F375ABA237F28BC004ED8D7 /* DefaultProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultProgram.swift; sourceTree = "<group>"; };
-		2F4B8D8D25978D9D0026B480 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/EditorAndPrograms.storyboard; sourceTree = "<group>"; };
 		2F4B8DA02598D7980026B480 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/HomeScreen.storyboard; sourceTree = "<group>"; };
-		2F526C2326E00696004BA8FF /* HexFileStoreDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexFileStoreDialog.swift; sourceTree = "<group>"; };
 		2F526C6526E970D4004BA8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Settings.strings; sourceTree = "<group>"; };
 		2F526C6726E970DE004BA8FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Settings.strings; sourceTree = "<group>"; };
 		2F526C6F26E976A2004BA8FF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2F57C3B32394F78B008B0D69 /* DownloadableHexFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadableHexFile.swift; sourceTree = "<group>"; };
-		2F5E8F0126C94F5F00CE03CB /* PlaygroundInstructionsCollectionCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundInstructionsCollectionCollectionViewController.swift; sourceTree = "<group>"; };
 		2F61450C22BF75DE001C2734 /* Calliope App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Calliope App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F61450F22BF75DE001C2734 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2F61451B22BF75DF001C2734 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -215,8 +194,6 @@
 		60CA11B3000000000000A1A3 /* CalliopeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeApp.swift; sourceTree = "<group>"; };
 		60CA11B4000000000000A1A4 /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
 		2F61455B22BF761F001C2734 /* FirmwareUpload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirmwareUpload.swift; sourceTree = "<group>"; };
-		2F61455E22BF761F001C2734 /* EditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorViewController.swift; sourceTree = "<group>"; };
-		2F61456022BF761F001C2734 /* LocalEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalEditorViewController.swift; sourceTree = "<group>"; };
 		2F61456222BF761F001C2734 /* Editors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Editors.swift; sourceTree = "<group>"; };
 		2F61456322BF761F001C2734 /* StreamReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamReader.swift; sourceTree = "<group>"; };
 		2F61456422BF761F001C2734 /* Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hex.swift; sourceTree = "<group>"; };
@@ -225,7 +202,6 @@
 		2F61459D22BFE607001C2734 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2F6145A522C7D71B001C2734 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		2F763FE125A1F4A100C2029D /* Calliope App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Calliope App.entitlements"; sourceTree = "<group>"; };
-		2F763FE525A607A400C2029D /* SwiftCodeSnippetHighlighter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftCodeSnippetHighlighter.swift; sourceTree = "<group>"; };
 		2F9B29EF233F0456009496DD /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		2F9B29F0233F0456009496DD /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
 		2F9B29F1233F0456009496DD /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
@@ -250,7 +226,6 @@
 		2F9B2A12233F045D009496DD /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		2F9B2A13233F045D009496DD /* RobotoMono-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoMono-Italic.ttf"; sourceTree = "<group>"; };
 		2F9B2A14233F045D009496DD /* RobotoMono-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoMono-Thin.ttf"; sourceTree = "<group>"; };
-		2F9E4049259DFB00002FFE0B /* PlaygroundSnippetTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundSnippetTableViewController.swift; sourceTree = "<group>"; };
 		2FC2A12822C8FA6F00675C2F /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
 		2FC2A12A22C962D100675C2F /* NewsDetailWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDetailWebView.swift; sourceTree = "<group>"; };
 		36B15F9E6DE42C49A76EC47B /* Pods_Calliope_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Calliope_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -288,13 +263,11 @@
 		607340693007DFDA00616062 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		60CA11B6000000000000A1A6 /* RootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinator.swift; sourceTree = "<group>"; };
 		6073406B3007E04D00616062 /* HomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenView.swift; sourceTree = "<group>"; };
-		6073407F3007E8B000616062 /* NewsDetailWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDetailWebViewController.swift; sourceTree = "<group>"; };
 		60818E7C2FE5A4150053893F /* EditorsAndProgramsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorsAndProgramsView.swift; sourceTree = "<group>"; };
 		60818E7E2FE5A9C90053893F /* EditorsAndProgramsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorsAndProgramsViewModel.swift; sourceTree = "<group>"; };
 		60818EA42FEEB46B0053893F /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/LaunchScreen.xcstrings; sourceTree = "<group>"; };
 		60818EA52FEEB46C0053893F /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		60818EA82FEEB46C0053893F /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/LofiApps.xcstrings; sourceTree = "<group>"; };
-		60818EAA2FEEB46C0053893F /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/EditorAndPrograms.xcstrings; sourceTree = "<group>"; };
 		60818EAD2FEEB46C0053893F /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/HomeScreen.xcstrings; sourceTree = "<group>"; };
 		60818EAF2FEEB46C0053893F /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		60818EB12FEEDA120053893F /* MasonryLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasonryLayout.swift; sourceTree = "<group>"; };
@@ -303,10 +276,7 @@
 		60818EB72FF558AF0053893F /* CalliopeMiniBlocksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeMiniBlocksViewModel.swift; sourceTree = "<group>"; };
 		60818EBB2FF561FB0053893F /* ArcadeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcadeView.swift; sourceTree = "<group>"; };
 		60818EBD2FF563D80053893F /* ArcadeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcadeViewModel.swift; sourceTree = "<group>"; };
-		60818EBF2FF564E30053893F /* ArcadeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcadeViewController.swift; sourceTree = "<group>"; };
 		60863393300171B50042ECCD /* OfflineOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineOnboardingView.swift; sourceTree = "<group>"; };
-		608CE91B2F89544D004EACA7 /* NewsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewController.swift; sourceTree = "<group>"; };
-		608CE91D2F8954B8004EACA7 /* NewsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewCell.swift; sourceTree = "<group>"; };
 		6094AC572E20F2380066D07A /* WebLogHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLogHandler.swift; sourceTree = "<group>"; };
 		6094C3902C045FA9006F4CB4 /* ApiCalliope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiCalliope.swift; sourceTree = "<group>"; };
 		6094C3972C048201006F4CB4 /* DGCharts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DGCharts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -341,7 +311,6 @@
 		60CF0EB12BFCD5D400CB2A38 /* Sensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sensor.swift; sourceTree = "<group>"; };
 		60D02D7D2BFC8FE400D3C34A /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		60D02D802BFC95E000D3C34A /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
-		60D672512B283D0F00AB974B /* QRCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeViewController.swift; sourceTree = "<group>"; };
 		60EBC64B2F9BAD5A00A6DD84 /* ChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewModel.swift; sourceTree = "<group>"; };
 		60FF510C2BB55324002B24A2 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = "Calliope App/PrivacyInfo.xcprivacy"; sourceTree = SOURCE_ROOT; };
 		7E25C5F2B4FF55234B28A749 /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
@@ -402,17 +371,8 @@
 		2F2B80A325A1273300A7CCF7 /* Playground */ = {
 			isa = PBXGroup;
 			children = (
-				2F9E4049259DFB00002FFE0B /* PlaygroundSnippetTableViewController.swift */,
-				2F2B809C25A0F25700A7CCF7 /* PlaygroundSnippetTableViewCell.swift */,
-				2F2B809F25A1100800A7CCF7 /* PlaygroundCodeSnippetViewController.swift */,
-				2F763FE525A607A400C2029D /* SwiftCodeSnippetHighlighter.swift */,
-				2F5E8F0126C94F5F00CE03CB /* PlaygroundInstructionsCollectionCollectionViewController.swift */,
-				608CE91D2F8954B8004EACA7 /* NewsCollectionViewCell.swift */,
-				608CE91B2F89544D004EACA7 /* NewsCollectionViewController.swift */,
 				60818EBB2FF561FB0053893F /* ArcadeView.swift */,
 				60818EBD2FF563D80053893F /* ArcadeViewModel.swift */,
-				60818EBF2FF564E30053893F /* ArcadeViewController.swift */,
-				6073407F3007E8B000616062 /* NewsDetailWebViewController.swift */,
 			);
 			path = Playground;
 			sourceTree = "<group>";
@@ -548,8 +508,6 @@
 			children = (
 				6055CDB02BBED7D90007F6B0 /* CalliopeBlocks */,
 				2F2B80A325A1273300A7CCF7 /* Playground */,
-				2F61455E22BF761F001C2734 /* EditorViewController.swift */,
-				2F61456022BF761F001C2734 /* LocalEditorViewController.swift */,
 			);
 			path = Editors;
 			sourceTree = "<group>";
@@ -616,12 +574,8 @@
 		2FAA2D0922DB3C4D00BC1A5F /* EditorsAndPrograms */ = {
 			isa = PBXGroup;
 			children = (
-				60D672512B283D0F00AB974B /* QRCodeViewController.swift */,
-				2F4B8D8225978D950026B480 /* EditorAndPrograms.storyboard */,
-				2F08A0E0234AC7400088A8D6 /* EditorAndProgramsContainerViewController.swift */,
 				2F61455B22BF761F001C2734 /* FirmwareUpload.swift */,
 				6008D1B53013B505001673BD /* FirmwareUploadSwiftUI.swift */,
-				2F526C2326E00696004BA8FF /* HexFileStoreDialog.swift */,
 				6008D1B7301CE036001673BD /* HexFileStoreDialogSwiftUI.swift */,
 				2F91665C2354062A0065AD81 /* Editors */,
 				60818E7E2FE5A9C90053893F /* EditorsAndProgramsViewModel.swift */,
@@ -1034,7 +988,6 @@
 				60818EB02FEEB46C0053893F /* Localizable.xcstrings in Resources */,
 				60C90B462F237F3E006279B2 /* WBDevice.js in Resources */,
 				2F9B2A1F233F045D009496DD /* RobotoMono-Thin.ttf in Resources */,
-				2F4B8D8425978D950026B480 /* EditorAndPrograms.storyboard in Resources */,
 				2F9B2A19233F045D009496DD /* RobotoMono-ThinItalic.ttf in Resources */,
 				2F9B2A00233F0456009496DD /* Roboto-ThinItalic.ttf in Resources */,
 				2F9B2A1A233F045D009496DD /* RobotoMono-Light.ttf in Resources */,
@@ -1111,13 +1064,11 @@
 				60818E7D2FE5A4150053893F /* EditorsAndProgramsView.swift in Sources */,
 				2FC2A12922C8FA6F00675C2F /* News.swift in Sources */,
 				600E632E2C33D7BB0027AE61 /* DataParser.swift in Sources */,
-				60D672522B283D0F00AB974B /* QRCodeViewController.swift in Sources */,
 				2F61456E22BF761F001C2734 /* CalliopeBLEProfile.swift in Sources */,
 				2F57C3B42394F78B008B0D69 /* DownloadableHexFile.swift in Sources */,
 				60818EBC2FF561FB0053893F /* ArcadeView.swift in Sources */,
 				60818E7F2FE5A9C90053893F /* EditorsAndProgramsViewModel.swift in Sources */,
 				60C628B22FC0A37D00D23A43 /* GroupViewModel.swift in Sources */,
-				2F526C2426E00696004BA8FF /* HexFileStoreDialog.swift in Sources */,
 				60AA95552F925D3400308FE3 /* ProjectView.swift in Sources */,
 				60BBDB862B6B90C2003AD3CE /* DiscoveredDevice.swift in Sources */,
 				2F61459822BF761F001C2734 /* StreamReader.swift in Sources */,
@@ -1143,18 +1094,13 @@
 				607340203007C05700616062 /* EditorWebView.swift in Sources */,
 				6073401E300785C200616062 /* QRCodeView.swift in Sources */,
 				60030BA02DC9E77C00397E69 /* Coordinates+Extension.swift in Sources */,
-				2F61459422BF761F001C2734 /* EditorViewController.swift in Sources */,
 				60C628702FC0957600D23A43 /* Group.swift in Sources */,
 				60127F6F2FD0061F000A1995 /* DataLoggerViewModel.swift in Sources */,
-				2F2B80A025A1100800A7CCF7 /* PlaygroundCodeSnippetViewController.swift in Sources */,
 				60127E892FC9BD19000A1995 /* ChartView.swift in Sources */,
-				2F08A0E1234AC7400088A8D6 /* EditorAndProgramsContainerViewController.swift in Sources */,
 				60C915932B1F442F00E4039D /* Network.swift in Sources */,
 				604938832E151282008BCE40 /* FileExtensionsEnum.swift in Sources */,
-				607340803007E8B000616062 /* NewsDetailWebViewController.swift in Sources */,
 				60818EBE2FF563D80053893F /* ArcadeViewModel.swift in Sources */,
 				6094C3912C045FA9006F4CB4 /* ApiCalliope.swift in Sources */,
-				2F2B809D25A0F25700A7CCF7 /* PlaygroundSnippetTableViewCell.swift in Sources */,
 				6042149F2F646DD30060064F /* TilePageLayout.swift in Sources */,
 				2F6145A622C7D71B001C2734 /* Settings.swift in Sources */,
 				60D02D7E2BFC8FE400D3C34A /* DatabaseManager.swift in Sources */,
@@ -1168,8 +1114,6 @@
 				2F61457C22BF761F001C2734 /* ExtColor.swift in Sources */,
 				2F61459922BF761F001C2734 /* Hex.swift in Sources */,
 				60CF0EB22BFCD5D400CB2A38 /* Sensor.swift in Sources */,
-				60818EC02FF564E30053893F /* ArcadeViewController.swift in Sources */,
-				2F763FE625A607A400C2029D /* SwiftCodeSnippetHighlighter.swift in Sources */,
 				2F1BD9952674D48C006A47F2 /* AutoHeightCollectionViewFlowLayout.swift in Sources */,
 				60025C622FD041E40065AA36 /* SensordataViewModel.swift in Sources */,
 				601040AC2B592B7300526735 /* HexFileManager.swift in Sources */,
@@ -1198,18 +1142,14 @@
 				2FC2A12B22C962D100675C2F /* NewsDetailWebView.swift in Sources */,
 				60030B9E2DC9E6CC00397E69 /* Double+Extension.swift in Sources */,
 				2F00EAB822DA195A000B5FDE /* HomeScreenViewController.swift in Sources */,
-				2F61459622BF761F001C2734 /* LocalEditorViewController.swift in Sources */,
 				2F1BD9972674D804006A47F2 /* AutoHeightCollectionViewCell.swift in Sources */,
-				2F5E8F0226C94F5F00CE03CB /* PlaygroundInstructionsCollectionCollectionViewController.swift in Sources */,
 				2F61457322BF761F001C2734 /* BluetoothConstants.swift in Sources */,
 				60C90B2D2F237F3E006279B2 /* Jsonifiable.swift in Sources */,
 				60D02D812BFC95E000D3C34A /* Project.swift in Sources */,
 				2F61458022BF761F001C2734 /* NotificationConstants.swift in Sources */,
 				2F61457222BF761F001C2734 /* BLEDataTypes.swift in Sources */,
 				600E63262C2EBF810027AE61 /* CSVHandler.swift in Sources */,
-				608CE91E2F8954B8004EACA7 /* NewsCollectionViewCell.swift in Sources */,
 				60B58BCE2C132ABA00050FE3 /* Chart.swift in Sources */,
-				2F9E404A259DFB00002FFE0B /* PlaygroundSnippetTableViewController.swift in Sources */,
 				2F61458122BF761F001C2734 /* Binary.swift in Sources */,
 				806801512EF5A2D00010448D /* ConnectedCalliopeV3.swift in Sources */,
 				609D9BD62B67AD2200F2ECAE /* Calliope.swift in Sources */,
@@ -1222,7 +1162,6 @@
 				7E25C2F16E2316D7C6EF236F /* UtilityJobProtocol.swift in Sources */,
 				604938852E151BB1008BCE40 /* OperationStatusEnum.swift in Sources */,
 				7E25C1EF8B03BE2835268F12 /* UtilityJobState.swift in Sources */,
-				608CE91C2F89544D004EACA7 /* NewsCollectionViewController.swift in Sources */,
 				7E25CE114DDEDC718EAB742D /* UtilityLogJob.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1230,15 +1169,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		2F4B8D8225978D950026B480 /* EditorAndPrograms.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2F4B8D8D25978D9D0026B480 /* Base */,
-				60818EAA2FEEB46C0053893F /* mul */,
-			);
-			name = EditorAndPrograms.storyboard;
-			sourceTree = "<group>";
-		};
 		2F4B8DA12598D7980026B480 /* HomeScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

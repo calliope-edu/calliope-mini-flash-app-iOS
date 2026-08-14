@@ -513,9 +513,6 @@
         }
       }
     },
-    "Calliope mini 3" : {
-
-    },
     "Calliope mini 3: Download the original program of the Calliope mini 3. Connect and transfer the program!" : {
       "localizations" : {
         "de" : {
@@ -636,6 +633,7 @@
       }
     },
     "Check your internet connection or the snippets url in settings.\n\nThe error description is:\n%@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1097,6 +1095,7 @@
 
     },
     "Don´t save" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1143,6 +1142,7 @@
 
     },
     "Download the Swift Playgrounds App" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1333,6 +1333,7 @@
       }
     },
     "Failed to load snippets" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1920,6 +1921,7 @@
       }
     },
     "No description available" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2504,6 +2506,7 @@
       }
     },
     "Subscribe to the Calliope Playgrounds" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2816,6 +2819,7 @@
       }
     },
     "Upload the start program to your Calliope" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
