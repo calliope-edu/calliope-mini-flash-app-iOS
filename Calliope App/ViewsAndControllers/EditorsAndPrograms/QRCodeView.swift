@@ -60,22 +60,20 @@ final class CameraManager: NSObject, ObservableObject, AVCaptureMetadataOutputOb
 
     override init() {
         super.init()
-        sessionQueue.async {
-            guard let device = AVCaptureDevice.default(for: AVMediaType.video), let input = try? AVCaptureDeviceInput(device: device)
-            else {
-                LogNotify.error("Cannot capture video")
-                return
-            }
-            self.session.addInput(input)
-
-            let output = AVCaptureMetadataOutput()
-            self.session.addOutput(output)
-            output.setMetadataObjectsDelegate(
-                self,
-                queue: .main
-            )
-            output.metadataObjectTypes = [AVMetadataObject.ObjectType.qr]
+        guard let device = AVCaptureDevice.default(for: AVMediaType.video), let input = try? AVCaptureDeviceInput(device: device)
+        else {
+            LogNotify.error("Cannot capture video")
+            return
         }
+        session.addInput(input)
+
+        let output = AVCaptureMetadataOutput()
+        session.addOutput(output)
+        output.setMetadataObjectsDelegate(
+            self,
+            queue: .main
+        )
+        output.metadataObjectTypes = [AVMetadataObject.ObjectType.qr]
     }
 
     func start() {
@@ -148,6 +146,8 @@ class UIKitPreview: UIView {
 
     private let overlayView = UIView()
 
+    private var isObservingOrientation = false
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         overlayView.translatesAutoresizingMaskIntoConstraints = false
@@ -168,6 +168,38 @@ class UIKitPreview: UIView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        if isObservingOrientation {
+            UIDevice.current.endGeneratingDeviceOrientationNotifications()
+            NotificationCenter.default.removeObserver(self)
+        }
+    }
+
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        guard window != nil else { return }
+        beginObservingOrientationChanges()
+        updateVideoOrientation()
+    }
+
+    private func beginObservingOrientationChanges() {
+        guard !isObservingOrientation else { return }
+        isObservingOrientation = true
+        UIDevice.current.beginGeneratingDeviceOrientationNotifications()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(deviceOrientationDidChange),
+            name: UIDevice.orientationDidChangeNotification,
+            object: nil
+        )
+    }
+
+    @objc private func deviceOrientationDidChange() {
+        DispatchQueue.main.async { [weak self] in
+            self?.updateVideoOrientation()
+        }
     }
 
     func updateQRFrame(for object: AVMetadataMachineReadableCodeObject?) {
@@ -205,22 +237,43 @@ class UIKitPreview: UIView {
             connection.isVideoOrientationSupported
         else { return }
 
-        let interfaceOrientation = self.window?.windowScene?.interfaceOrientation ?? .portrait
-
         let videoOrientation: AVCaptureVideoOrientation
-        switch interfaceOrientation {
-        case .landscapeLeft:
-            videoOrientation = .landscapeLeft
-        case .landscapeRight:
-            videoOrientation = .landscapeRight
-        case .portraitUpsideDown:
-            videoOrientation = .portraitUpsideDown
-        case .portrait:
-            videoOrientation = .portrait
-        default:
-            videoOrientation = .portrait
+        if let interfaceOrientation = self.window?.windowScene?.interfaceOrientation,
+            let orientation = Self.videoOrientation(for: interfaceOrientation) {
+            videoOrientation = orientation
+        } else {
+            // Fall back to the physical device orientation while the interface orientation is not available yet
+            videoOrientation = Self.videoOrientation(for: UIDevice.current.orientation)
         }
 
         connection.videoOrientation = videoOrientation
+    }
+
+    private static func videoOrientation(for interfaceOrientation: UIInterfaceOrientation) -> AVCaptureVideoOrientation? {
+        switch interfaceOrientation {
+        case .landscapeLeft:
+            return .landscapeLeft
+        case .landscapeRight:
+            return .landscapeRight
+        case .portraitUpsideDown:
+            return .portraitUpsideDown
+        case .portrait:
+            return .portrait
+        default:
+            return nil
+        }
+    }
+
+    private static func videoOrientation(for deviceOrientation: UIDeviceOrientation) -> AVCaptureVideoOrientation {
+        switch deviceOrientation {
+        case .landscapeLeft:
+            return .landscapeRight
+        case .landscapeRight:
+            return .landscapeLeft
+        case .portraitUpsideDown:
+            return .portraitUpsideDown
+        default:
+            return .portrait
+        }
     }
 }
