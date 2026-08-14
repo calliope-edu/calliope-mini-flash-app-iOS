@@ -16,6 +16,7 @@ struct RootTabView: View {
     @StateObject private var editorsViewModel = EditorsAndProgramsViewModel()
     @StateObject private var sensordataViewModel = SensordataViewModel()
     @StateObject private var lofiAppsViewModel = LofiAppsViewModel()
+    @StateObject private var rootAlertPublisher = RootAlertPublisher()
     @State private var wasInBackground = false
 
     var body: some View {
@@ -40,6 +41,10 @@ struct RootTabView: View {
             MatrixConnectionView(viewModel: MatrixConnectionViewModel.instance)
         }
         .modifier(AlertModifier(alert: MatrixConnectionViewModel.instance.alertBinding))
+        .modifier(AlertModifier(alert: rootAlertPublisher.alertBinding))
+        .onOpenURL { url in
+            handleOpenURL(url)
+        }
         .onAppear(perform: applyCompactSizeClassOverride)
         .onChange(of: scenePhase) { phase in
             switch phase {
@@ -58,6 +63,23 @@ struct RootTabView: View {
         }
     }
 
+    // Handles opening external hex files (e.g. from the Files app or Mail).
+    // Replaces the old AppDelegate.application(_:open:options:), which is not
+    // delivered to SwiftUI scene-based apps.
+    private func handleOpenURL(_ url: URL) {
+        guard url.isFileURL, FileExtension(rawValue: url.pathExtension.lowercased()) == .hex else {
+            return
+        }
+        LogNotify.log("received \(url.lastPathComponent)")
+        HexFileStoreDialogSwiftUI.showStoreHexUI(
+            alertPublisher: rootAlertPublisher,
+            hexFile: url,
+            notSaved: { _ in
+                //TODO: handle error
+            }
+        )
+    }
+
     // Replaces the old MainContainerViewController.updateTraitOverrides():
     // display the original iPhone design on iPad by forcing the compact size class.
     private func applyCompactSizeClassOverride() {
@@ -65,10 +87,26 @@ struct RootTabView: View {
             return
         }
         guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-              let window = scene.windows.first,
-              let rootViewController = window.rootViewController else {
+            let window = scene.windows.first,
+            let rootViewController = window.rootViewController
+        else {
             return
         }
         rootViewController.traitOverrides.horizontalSizeClass = .compact
     }
+}
+
+/// Alert publisher for flows triggered outside any single tab (e.g. a .hex file
+/// opened via onOpenURL), so their dialogs present at the root over any tab.
+final class RootAlertPublisher: ObservableObject, Alertable, CanShowProgess {
+    @Published var alert: (any AppAlert)? = nil
+
+    var alertBinding: Binding<(any AppAlert)?> {
+        Binding(
+            get: { self.alert },
+            set: { self.alert = $0 }
+        )
+    }
+
+    var progress: (any ProgressAlert)?
 }

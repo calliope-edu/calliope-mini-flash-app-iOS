@@ -1930,6 +1930,7 @@
       }
     },
     "No root view controller for presenting File Save UI found" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

@@ -42,31 +42,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
-    //MARK: opening Hex files
-
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-
-        if url.isFileURL && FileExtension(rawValue: url.pathExtension.lowercased()) == .hex {
-            LogNotify.log("received \(url.lastPathComponent)")
-            guard let viewController = UIApplication.shared.keyWindow?.rootViewController else {
-                fatalError(NSLocalizedString("No root view controller for presenting File Save UI found", comment: ""))
-            }
-            HexFileStoreDialog.showStoreHexUI(
-                controller: viewController, hexFile: url,
-                notSaved: { error in
-                    return  //TODO: handle error
-                }
-            ) { savedFile in
-                return  //TODO: handle file saved
-            }
-
-            return true
-        }
-
-        return false
-    }
-
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         if let rootViewController = UIApplication.shared.keyWindow?.rootViewController, let tabBarController = findTabBarController(from: rootViewController),
             let targetViewController = setupTargetViewController(targetActivity: userActivity)
