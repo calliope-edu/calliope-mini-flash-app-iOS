@@ -16,6 +16,7 @@ struct RootTabView: View {
     @StateObject private var editorsViewModel = EditorsAndProgramsViewModel()
     @StateObject private var sensordataViewModel = SensordataViewModel()
     @StateObject private var lofiAppsViewModel = LofiAppsViewModel()
+    @State private var wasInBackground = false
 
     var body: some View {
         TabView(selection: $coordinator.selectedTab) {
@@ -36,8 +37,18 @@ struct RootTabView: View {
         .tint(Color("calliope-lilablau"))
         .onAppear(perform: applyCompactSizeClassOverride)
         .onChange(of: scenePhase) { phase in
-            if phase == .active {
+            switch phase {
+            case .background:
+                MatrixConnectionViewModel.instance.moveToBackground()
+                wasInBackground = true
+            case .active:
+                if wasInBackground {
+                    MatrixConnectionViewModel.instance.moveToForeground()
+                    wasInBackground = false
+                }
                 applyCompactSizeClassOverride()
+            default:
+                break
             }
         }
     }
