@@ -24,6 +24,7 @@ enum EditorsAndProgramRoute: Hashable {
 struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol & ObservableObject & Alertable>: View {
     @ObservedObject var viewModel: viewModelType
     @StateObject private var router = Router<EditorsAndProgramRoute>()
+    @EnvironmentObject private var coordinator: RootCoordinator
     @State private var presentingFileImporter = false
 
     var body: some View {
@@ -53,7 +54,19 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
             }
         }.onAppear{
             MatrixConnectionViewModel.instance.calliopeClass = DiscoveredBLEDevice.self
+            handlePendingEditorsRoute()
         }
+        .onChange(of: coordinator.pendingEditorsRoute) { _ in
+            handlePendingEditorsRoute()
+        }
+    }
+
+    private func handlePendingEditorsRoute() {
+        guard let route = coordinator.pendingEditorsRoute else {
+            return
+        }
+        coordinator.pendingEditorsRoute = nil
+        router.push(route)
     }
 
     @ViewBuilder
@@ -246,7 +259,7 @@ struct EditorTile: View {
 struct EditorAndProgramsView_Previews: PreviewProvider {
     static var previews: some View {
         let viewModel = PreviewEditorsAndProgramsViewModel()
-        EditorsAndProgramsView(viewModel: viewModel).previewInterfaceOrientation(.landscapeLeft)
-        EditorsAndProgramsView(viewModel: viewModel).previewInterfaceOrientation(.portrait)
+        EditorsAndProgramsView(viewModel: viewModel).environmentObject(RootCoordinator()).previewInterfaceOrientation(.landscapeLeft)
+        EditorsAndProgramsView(viewModel: viewModel).environmentObject(RootCoordinator()).previewInterfaceOrientation(.portrait)
     }
 }

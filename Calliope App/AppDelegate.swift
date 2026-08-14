@@ -8,10 +8,7 @@
 
 import UIKit
 
-@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         Settings.registerDefaults()
@@ -84,7 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-        if let rootViewController = window?.rootViewController, let tabBarController = findTabBarController(from: rootViewController),
+        if let rootViewController = UIApplication.shared.keyWindow?.rootViewController, let tabBarController = findTabBarController(from: rootViewController),
             let targetViewController = setupTargetViewController(targetActivity: userActivity)
         {
             pushNewViewController(from: tabBarController, for: targetViewController)

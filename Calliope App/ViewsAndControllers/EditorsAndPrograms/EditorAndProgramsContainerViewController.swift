@@ -18,7 +18,7 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
             coder: coder,
             rootView: EditorsAndProgramsView(
                 viewModel: EditorsAndProgramsViewModel()
-            )
+            ).environmentObject(RootCoordinator())
         )
     }
 }

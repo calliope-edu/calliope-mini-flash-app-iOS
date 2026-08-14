@@ -291,6 +291,9 @@
         }
       }
     },
+    "Apps" : {
+
+    },
     "Apps Info" : {
 
     },
@@ -1207,6 +1210,9 @@
         }
       }
     },
+    "Editors and Programs" : {
+
+    },
     "Einstellungen öffnen" : {
       "comment" : "Open Settings"
     },
@@ -1442,6 +1448,9 @@
           }
         }
       }
+    },
+    "Home" : {
+
     },
     "hTK-ZH-RqL.title" : {
       "comment" : "Class = \"UICommand\"; title = \"Item 2\"; ObjectID = \"hTK-ZH-RqL\";",
@@ -2359,6 +2368,9 @@
           }
         }
       }
+    },
+    "Sensordaten" : {
+
     },
     "Sensors" : {
       "extractionState" : "manual",
