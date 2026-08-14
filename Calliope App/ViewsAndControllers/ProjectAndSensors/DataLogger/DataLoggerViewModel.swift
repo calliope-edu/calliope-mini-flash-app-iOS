@@ -9,8 +9,8 @@
 import Foundation
 import SwiftUI
 
-class DataLoggerViewModel: UIViewController {
-    
+class DataLoggerViewModel: ObservableObject, Alertable {
+
     var html = ""
     var htmlData: Data {
         get {
@@ -20,21 +20,28 @@ class DataLoggerViewModel: UIViewController {
             html = String(decoding: newValue, as: UTF8.self)
         }
     }
-    
-    @IBSegueAction func addSwiftUI(_ coder: NSCoder) -> UIViewController? {
-        return UIHostingController(coder: coder, rootView: DataLoggerView(viewModel: self))
+    @Published var alert: (any AppAlert)? = nil
+    var alertBinding: Binding<(any AppAlert)?> {
+        Binding(
+            get: { self.alert },
+            set: { self.alert = $0 }
+        )
     }
-    
+
+    init(htmlData: Data) {
+        self.htmlData = htmlData
+    }
+
     func saveCSV(csv: String) {
         let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let fileURL = documentsURL.appendingPathComponent("MY_DATA.csv")
 
         do {
             try csv.write(to: fileURL, atomically: true, encoding: String.Encoding.utf8)
-            print("File saved to: \(fileURL.path)")
+            LogNotify.log("File saved to: \(fileURL.path)")
             showAlert(for: .success)
         } catch {
-            print("Error saving file: \(error)")
+            LogNotify.log("Error saving file: \(error)")
             showAlert(for: .failure)
         }
     }
@@ -52,16 +59,6 @@ class DataLoggerViewModel: UIViewController {
             default: NSLocalizedString("The download of the CSV file containing your datalogger data was unsuccessful.", comment: "")
             }
 
-        let alert = UIAlertController(
-            title: title,
-            message: String(format: message),
-            preferredStyle: .alert
-        )
-        alert.addAction(
-            UIAlertAction(title: "OK", style: .cancel) { _ in
-                self.dismiss(animated: true)
-            }
-        )
-        self.present(alert, animated: true)
+        alert = OkAppAlert(title: title, message: message, completion: {})
     }
 }

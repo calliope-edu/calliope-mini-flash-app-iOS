@@ -11,6 +11,27 @@ import Foundation
 import MapKit
 import SwiftUI
 
+struct ProjectDetailView: View {
+    let projectID: Int64
+    var onDelete: () -> Void
+    @StateObject var viewModel: ProjectViewModel
+
+    init(projectID: Int64, onDelete: @escaping () -> Void) {
+        self.projectID = projectID
+        self.onDelete = onDelete
+        _viewModel = StateObject(
+            wrappedValue: ProjectViewModel(
+                project: Project.fetchProject(id: Int(projectID)) ?? Project(id: projectID, name: ""),
+                onDelete: onDelete
+            )
+        )
+    }
+
+    var body: some View {
+        ProjectView(viewModel: viewModel)
+    }
+}
+
 struct ProjectView: View {
     @ObservedObject var viewModel: ProjectViewModel
     @State var showMenu = false
@@ -29,6 +50,10 @@ struct ProjectView: View {
             }
         }.frame(maxHeight: .infinity, alignment: .top)
             .padding(.top, 20)
+            .onDisappear {
+                viewModel.stopRecording()
+            }
+            .modifier(AlertModifier(alert: viewModel.alertBinding))
     }
 
     var projectHeader: some View {
@@ -99,6 +124,6 @@ struct IconButton: View {
 
 struct ProjectView_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectView(viewModel: ProjectViewModel(coder: NSCoder())!)
+        ProjectView(viewModel: ProjectViewModel(project: Project(id: 1, name: "Test")))
     }
 }

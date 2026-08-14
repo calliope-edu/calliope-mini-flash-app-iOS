@@ -12,38 +12,41 @@ import SwiftUI
 protocol SensorDataViewModelProtocol {
     var projects: [Project] { get }
     var dataLoggerButtonEnabled: Bool { get }
+    var isUsbMode: Bool { get }
+    var alert: (any AppAlert)? { get set }
+    var alertBinding: Binding<(any AppAlert)?> { get }
     
     func deleteProject(id: Int64)
     func openBluetoothExtensionPage(openURL: OpenURLAction)
-    func openBluetoothSensorInfoWebView()
-    func openDataLoggerInfoWebView()
-    func createNewProject()
-    func openProject(project: Project)
-    func openDataLogger()
 }
 
-class SensordataViewModel: ObservableObject, SensorDataViewModelProtocol {
+class SensordataViewModel: ObservableObject, SensorDataViewModelProtocol, Alertable {
     @Published var projects: [Project] = []
     @Published var dataLoggerButtonEnabled: Bool
+    @Published var isUsbMode: Bool
+    @Published var alert: (any AppAlert)? = nil
+    var alertBinding: Binding<(any AppAlert)?> {
+        Binding(
+            get: { self.alert },
+            set: { self.alert = $0 }
+        )
+    }
     
-    private var targetUrl: URL?
     private var connectedCalliope: Calliope?
-    private var isUsbMode: Bool
     private var calliopeConnectedSubcription: NSObjectProtocol!
     private var calliopeDisconnectedSubscription: NSObjectProtocol!
     private var programSubscription: NSObjectProtocol!
-    private let viewController: SensordataViewController
     
-    init(viewController: SensordataViewController) {
-        self.viewController = viewController
+    init() {
         projects = Project.fetchProjects()
 
         MatrixConnectionViewModel.instance.calliopeClass = DiscoveredBLEDevice.self
 
         self.connectedCalliope = MatrixConnectionViewModel.instance.usageReadyCalliope
-        self.isUsbMode = MatrixConnectionViewModel.instance.isInUsbMode
+        let usbMode = MatrixConnectionViewModel.instance.isInUsbMode
+        self.isUsbMode = usbMode
         self.dataLoggerButtonEnabled =
-            (self.connectedCalliope as? BLECalliope)?.discoveredOptionalServices.contains(.microbitUtilityService) ?? false || self.isUsbMode
+            (self.connectedCalliope as? BLECalliope)?.discoveredOptionalServices.contains(.microbitUtilityService) ?? false || usbMode
 
         addNotificationSubscriptions()
 
@@ -58,31 +61,6 @@ class SensordataViewModel: ObservableObject, SensorDataViewModelProtocol {
         if let url = URL(string: "https://calliope.cc/programmieren/mobil/ipad#sensordaten") {
             openURL(url)
         }
-    }
-
-    func openBluetoothSensorInfoWebView() {
-        viewController.openBluetoothSensorInfoWebView()
-    }
-
-    func openDataLoggerInfoWebView() {
-        viewController.openDataLoggerInfoWebView()
-    }
-
-    func createNewProject() {
-        LogNotify.log("Starting to create a new Project")
-        viewController.createNewProject()
-    }
-
-    func openProject(project: Project) {
-        viewController.openProject(project: project)
-    }
-
-    func openDataLogger() {
-        if connectedCalliope == nil {
-            LogNotify.error("connectedCalliope is nil. This should not happen.")
-            return
-        }
-        viewController.getDataloggerHtml(connectedCalliope: connectedCalliope!, isUsbMode: isUsbMode)
     }
     
     private func loadProjects() {
@@ -138,34 +116,28 @@ class SensordataViewModel: ObservableObject, SensorDataViewModelProtocol {
     }
 }
 
-class PreviewSensordataViewModel: SensorDataViewModelProtocol, ObservableObject {
+class PreviewSensordataViewModel: SensorDataViewModelProtocol, ObservableObject, Alertable {
     @Published var projects: [Project]
     @Published var dataLoggerButtonEnabled: Bool
+    @Published var isUsbMode: Bool
+    @Published var alert: (any AppAlert)? = nil
+    var alertBinding: Binding<(any AppAlert)?> {
+        Binding(
+            get: { self.alert },
+            set: { self.alert = $0 }
+        )
+    }
     
-    init(projects: [Project], dataLoggerButtonEnabled: Bool) {
+    init(projects: [Project], dataLoggerButtonEnabled: Bool, isUsbMode: Bool = false) {
         self.projects = projects
         self.dataLoggerButtonEnabled = dataLoggerButtonEnabled
+        self.isUsbMode = isUsbMode
     }
     
     func deleteProject(id: Int64) {
         
     }
     func openBluetoothExtensionPage(openURL: OpenURLAction) {
-        
-    }
-    func openBluetoothSensorInfoWebView() {
-        
-    }
-    func openDataLoggerInfoWebView() {
-        
-    }
-    func createNewProject() {
-        
-    }
-    func openProject(project: Project) {
-        
-    }
-    func openDataLogger() {
         
     }
 }

@@ -20,31 +20,10 @@
                     </containerView>
                     <navigationItem key="navigationItem" title="Sensordaten" largeTitleDisplayMode="never" id="DTy-e7-oGc"/>
                     <size key="freeformSize" width="699" height="1000"/>
-                    <connections>
-                        <segue destination="xWF-af-2iy" kind="show" identifier="showNewlyCreatedProject" destinationCreationSelector="segue:" id="iAp-cX-5QA"/>
-                        <segue destination="ghf-jY-ggY" kind="show" identifier="showEditor" destinationCreationSelector="initializeEditorView:" id="ohT-63-Vbv"/>
-                        <segue destination="eqp-p1-CyF" kind="show" identifier="showDataLoggerHTML" destinationCreationSelector="initializeDataLoggerViewModel:" id="knV-6T-hdG"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GtY-mM-QMm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1058" y="-28"/>
-        </scene>
-        <!--Project Overview-->
-        <scene sceneID="R1K-Xb-HtQ">
-            <objects>
-                <viewController title="Project Overview" modalPresentationStyle="fullScreen" id="xWF-af-2iy" customClass="ProjectViewModel" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <containerView key="view" opaque="NO" contentMode="scaleToFill" id="fhZ-QC-uXA">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                        <connections>
-                            <segue destination="dlP-RG-kTe" kind="embed" destinationCreationSelector="addSwiftUI:" id="J0w-aq-E4X"/>
-                        </connections>
-                    </containerView>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="UuD-ux-mgZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1864" y="584"/>
         </scene>
         <!--Sensordaten-->
         <scene sceneID="uHp-mq-DKm">
@@ -68,64 +47,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cRp-53-I8I" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="371" y="-28"/>
-        </scene>
-        <!--Data Logger View Model-->
-        <scene sceneID="rNu-rB-anU">
-            <objects>
-                <viewController id="eqp-p1-CyF" customClass="DataLoggerViewModel" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <containerView key="view" opaque="NO" contentMode="scaleToFill" id="OHY-7d-rr2">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                        <connections>
-                            <segue destination="smk-1R-6T2" kind="embed" destinationCreationSelector="addSwiftUI:" id="VQU-CN-cGa"/>
-                        </connections>
-                    </containerView>
-                    <navigationItem key="navigationItem" id="39S-2J-juY"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="mEm-Ag-Jke" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1864" y="-180"/>
-        </scene>
-        <!--Editor-->
-        <scene sceneID="rlo-SA-83h">
-            <objects>
-                <viewController title="Editor" modalPresentationStyle="fullScreen" id="ghf-jY-ggY" customClass="EditorViewController" customModule="Calliope_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <containerView key="view" opaque="NO" contentMode="scaleToFill" id="Yos-VM-be7">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                        <connections>
-                            <segue destination="cG4-04-2zt" kind="embed" destinationCreationSelector="addSwiftUI:" id="Eyq-he-Ra5"/>
-                        </connections>
-                    </containerView>
-                    <navigationItem key="navigationItem" id="D0d-6l-9Ju"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4vR-oi-1ZQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1864" y="-913"/>
-        </scene>
-        <!--Hosting Controller-->
-        <scene sceneID="0EE-Z6-HBs">
-            <objects>
-                <hostingController id="cG4-04-2zt" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zVh-NK-QU0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2674" y="-914"/>
-        </scene>
-        <!--Hosting Controller-->
-        <scene sceneID="ScS-OU-0Gf">
-            <objects>
-                <hostingController id="dlP-RG-kTe" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Gh6-xm-EVp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2674" y="583"/>
-        </scene>
-        <!--Hosting Controller-->
-        <scene sceneID="iBR-cM-ShH">
-            <objects>
-                <hostingController id="smk-1R-6T2" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="EhD-8K-9KG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2674" y="-181"/>
         </scene>
         <!--Hosting Controller-->
         <scene sceneID="NbD-gm-4ak">

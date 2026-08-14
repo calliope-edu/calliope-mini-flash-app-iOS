@@ -157,11 +157,8 @@
 		60CF0EAD2BFCD25300CB2A38 /* Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CF0EAC2BFCD25300CB2A38 /* Value.swift */; };
 		60CF0EB02BFCD59D00CB2A38 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CF0EAF2BFCD59D00CB2A38 /* DataController.swift */; };
 		60CF0EB22BFCD5D400CB2A38 /* Sensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CF0EB12BFCD5D400CB2A38 /* Sensor.swift */; };
-		60D02D7B2BFC864900D3C34A /* ProjectOverviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D02D7A2BFC864900D3C34A /* ProjectOverviewController.swift */; };
 		60D02D7E2BFC8FE400D3C34A /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D02D7D2BFC8FE400D3C34A /* DatabaseManager.swift */; };
 		60D02D812BFC95E000D3C34A /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D02D802BFC95E000D3C34A /* Project.swift */; };
-		60D02D832BFCA0C400D3C34A /* ProjectCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D02D822BFCA0C400D3C34A /* ProjectCollectionViewController.swift */; };
-		60D02D852BFCA41400D3C34A /* ProjectCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D02D842BFCA41400D3C34A /* ProjectCollectionViewCell.swift */; };
 		60D672522B283D0F00AB974B /* QRCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D672512B283D0F00AB974B /* QRCodeViewController.swift */; };
 		60EBC64C2F9BAD5B00A6DD84 /* ChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EBC64B2F9BAD5A00A6DD84 /* ChartViewModel.swift */; };
 		60EE6AC82F51EF730081CE15 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EE6AC72F51EF730081CE15 /* InfoViewController.swift */; };
@@ -340,11 +337,8 @@
 		60CF0EAC2BFCD25300CB2A38 /* Value.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Value.swift; sourceTree = "<group>"; };
 		60CF0EAF2BFCD59D00CB2A38 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		60CF0EB12BFCD5D400CB2A38 /* Sensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sensor.swift; sourceTree = "<group>"; };
-		60D02D7A2BFC864900D3C34A /* ProjectOverviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectOverviewController.swift; sourceTree = "<group>"; };
 		60D02D7D2BFC8FE400D3C34A /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		60D02D802BFC95E000D3C34A /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
-		60D02D822BFCA0C400D3C34A /* ProjectCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCollectionViewController.swift; sourceTree = "<group>"; };
-		60D02D842BFCA41400D3C34A /* ProjectCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCollectionViewCell.swift; sourceTree = "<group>"; };
 		60D672512B283D0F00AB974B /* QRCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeViewController.swift; sourceTree = "<group>"; };
 		60EBC64B2F9BAD5A00A6DD84 /* ChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewModel.swift; sourceTree = "<group>"; };
 		60EE6AC72F51EF730081CE15 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
@@ -658,9 +652,6 @@
 			isa = PBXGroup;
 			children = (
 				609833BF2FDC01EA00CF6243 /* FlowLayout.swift */,
-				60D02D7A2BFC864900D3C34A /* ProjectOverviewController.swift */,
-				60D02D822BFCA0C400D3C34A /* ProjectCollectionViewController.swift */,
-				60D02D842BFCA41400D3C34A /* ProjectCollectionViewCell.swift */,
 				60025C5F2FD032840065AA36 /* SensordataView.swift */,
 				60025C612FD041E40065AA36 /* SensordataViewModel.swift */,
 				60025C652FD071740065AA36 /* SensordataViewController.swift */,
@@ -1119,7 +1110,6 @@
 				60818E7D2FE5A4150053893F /* EditorsAndProgramsView.swift in Sources */,
 				2FC2A12922C8FA6F00675C2F /* News.swift in Sources */,
 				600E632E2C33D7BB0027AE61 /* DataParser.swift in Sources */,
-				60D02D832BFCA0C400D3C34A /* ProjectCollectionViewController.swift in Sources */,
 				60D672522B283D0F00AB974B /* QRCodeViewController.swift in Sources */,
 				2F61456E22BF761F001C2734 /* CalliopeBLEProfile.swift in Sources */,
 				2F57C3B42394F78B008B0D69 /* DownloadableHexFile.swift in Sources */,
@@ -1165,7 +1155,6 @@
 				6094C3912C045FA9006F4CB4 /* ApiCalliope.swift in Sources */,
 				2F2B809D25A0F25700A7CCF7 /* PlaygroundSnippetTableViewCell.swift in Sources */,
 				6042149F2F646DD30060064F /* TilePageLayout.swift in Sources */,
-				60D02D852BFCA41400D3C34A /* ProjectCollectionViewCell.swift in Sources */,
 				2F6145A622C7D71B001C2734 /* Settings.swift in Sources */,
 				60D02D7E2BFC8FE400D3C34A /* DatabaseManager.swift in Sources */,
 				6094AC582E20F2410066D07A /* WebLogHandler.swift in Sources */,
@@ -1186,7 +1175,6 @@
 				6008D1B8301CE036001673BD /* HexFileStoreDialogSwiftUI.swift in Sources */,
 				2F61457A22BF761F001C2734 /* ExtURL.swift in Sources */,
 				60316BFA2B0210CC00130C0D /* CalliopeFactory.swift in Sources */,
-				60D02D7B2BFC864900D3C34A /* ProjectOverviewController.swift in Sources */,
 				60863394300171B50042ECCD /* OfflineOnboardingView.swift in Sources */,
 				60C051DE3000F1A900DFA868 /* MatrixConnectionViewModel.swift in Sources */,
 				6073406A3007DFDA00616062 /* Router.swift in Sources */,

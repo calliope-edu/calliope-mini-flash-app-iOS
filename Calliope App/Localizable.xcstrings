@@ -1578,6 +1578,7 @@
       }
     },
     "https://calliope.cc/programmieren/mobil/ipad#sensordaten" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2695,6 +2696,7 @@
       }
     },
     "Transfering Datalogger Data" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

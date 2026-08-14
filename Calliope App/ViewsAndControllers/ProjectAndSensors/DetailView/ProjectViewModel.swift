@@ -6,20 +6,25 @@
 //  Copyright © 2024 calliope. All rights reserved.
 //
 
-import Charts
-import DGCharts
 import Foundation
 import SwiftUI
-import UIKit
 
-class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
+class ProjectViewModel: ObservableObject, Alertable {
 
     @Published var project: Project?
     @Published var addGroupButtonEnabled = false
     @Published var groupViewModels: [GroupViewModel] = []
+    @Published var alert: (any AppAlert)? = nil
+    var alertBinding: Binding<(any AppAlert)?> {
+        Binding(
+            get: { self.alert },
+            set: { self.alert = $0 }
+        )
+    }
 
     private var calliopeConnectedSubcription: NSObjectProtocol!
     private var calliopeDisconnectedSubscription: NSObjectProtocol!
+    private let onDelete: () -> Void
 
     func loadGroups() {
         guard project != nil else {
@@ -36,63 +41,11 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
         }
     }
 
-    init?(coder: NSCoder, project: Project) {
+    init(project: Project, onDelete: @escaping () -> Void = {}) {
         self.project = project
-        super.init(coder: coder)
-    }
+        self.onDelete = onDelete
 
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-
-    @IBSegueAction func addSwiftUI(_ coder: NSCoder) -> UIViewController? {
         loadGroups()
-        return UIHostingController(
-            coder: coder,
-            rootView: ProjectView(viewModel: self)
-        )
-    }
-
-    fileprivate func addSubscription(name: NSNotification.Name, onActivated: @escaping @Sendable (Notification) -> Void) -> NSObjectProtocol {
-        return NotificationCenter.default.addObserver(
-            forName: name,
-            object: nil,
-            queue: nil,
-            using: onActivated
-        )
-    }
-
-    fileprivate func setAddGroupButton(value: Bool) {
-        DispatchQueue.main.async {
-            UIView.animate(withDuration: 0.5) {
-                self.addGroupButtonEnabled = value
-            }
-        }
-    }
-
-    fileprivate func showConnectCalliopeAlert() {
-        DispatchQueue.main.async {
-            let alert = UIAlertController(
-                title: NSLocalizedString("Calliope mini verbinden!", comment: ""),
-                message: NSLocalizedString("Verbindung notwendig, um Daten anzeigen zu lassen.", comment: ""),
-                preferredStyle: .alert
-            )
-            let okAction = UIAlertAction(
-                title: "OK",
-                style: .default,
-                handler: nil
-            )
-            alert.addAction(okAction)
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-        // On the new IOS version the gestureRecognizer creates unwanted behaviour, because swipes are not always for navigating back.
-        if #available(iOS 26.0, *), let gestureRecognizer = self.navigationController?.interactiveContentPopGestureRecognizer {
-            gestureRecognizer.isEnabled = false
-        }
 
         calliopeConnectedSubcription = addSubscription(
             name: DiscoveredBLEDevice.usageReadyNotificationName,
@@ -108,8 +61,7 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
             }
         )
 
-        guard MatrixConnectionViewModel.instance.usageReadyCalliope != nil
-        else {
+        guard MatrixConnectionViewModel.instance.usageReadyCalliope != nil else {
             addGroupButtonEnabled = false
             showConnectCalliopeAlert()
             return
@@ -118,44 +70,36 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
         addGroupButtonEnabled = true
     }
 
-    func renameProject() {
-        let alertController = UIAlertController(
-            title: NSLocalizedString("Change project name", comment: ""),
-            message: NSLocalizedString(
-                "Enter the new project name",
-                comment: ""
-            ),
-            preferredStyle: .alert
+    fileprivate func addSubscription(name: NSNotification.Name, onActivated: @escaping @Sendable (Notification) -> Void) -> NSObjectProtocol {
+        return NotificationCenter.default.addObserver(
+            forName: name,
+            object: nil,
+            queue: nil,
+            using: onActivated
         )
-        alertController.addTextField { textField in
-            textField.placeholder = NSLocalizedString(
-                "New project",
-                comment: ""
-            )
-        }
+    }
 
-        let cancelAction = UIAlertAction(
-            title: NSLocalizedString("Cancel", comment: ""),
-            style: .cancel,
-            handler: nil
-        )
-        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
-            if let textField = alertController.textFields?.first,
-                let inputText = textField.text
-            {
-                self.project?.name = inputText
-                if let project = self.project {
-                    Project.updateProject(project: project)
-                    NotificationCenter.default.post(
-                        name: NotificationConstants.projectsChanged,
-                        object: self
-                    )
-                }
+    fileprivate func setAddGroupButton(value: Bool) {
+        DispatchQueue.main.async {
+            self.addGroupButtonEnabled = value
+        }
+    }
+
+    private func showConnectCalliopeAlert() {
+        alert = ConnectCalliopeRequiredAlert()
+    }
+
+    func renameProject() {
+        alert = RenameProjectAlert(defaultName: project?.name ?? "") { [weak self] newName in
+            self?.project?.name = newName
+            if let project = self?.project {
+                Project.updateProject(project: project)
+                NotificationCenter.default.post(
+                    name: NotificationConstants.projectsChanged,
+                    object: self
+                )
             }
         }
-        alertController.addAction(cancelAction)
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
     }
 
     func deleteProject() {
@@ -164,8 +108,7 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
             name: NotificationConstants.projectsChanged,
             object: self
         )
-        dismiss(animated: true, completion: nil)
-        navigationController?.popViewController(animated: true)
+        onDelete()
     }
 
     func addGroup() {
@@ -201,38 +144,16 @@ class ProjectViewModel: UIViewController, ChartViewDelegate, ObservableObject {
     }
 
     func openFileNameDialog(onOk: @escaping (_ filename: String) -> Void) {
-        let alertController = UIAlertController(
-            title: NSLocalizedString("Export Data", comment: ""),
-            message: NSLocalizedString("Enter the CSV file name", comment: ""),
-            preferredStyle: .alert
-        )
-        alertController.addTextField { textField in
-            textField.placeholder = "CSV_Export"
-        }
+        alert = ExportCSVNameAlert(onOk: onOk)
+    }
 
-        let cancelAction = UIAlertAction(
-            title: NSLocalizedString("Cancel", comment: ""),
-            style: .cancel,
-            handler: nil
-        )
-        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
-            if let textField = alertController.textFields?.first, let inputText = textField.text {
-                onOk((inputText == "" ? textField.placeholder : inputText) ?? "placeholder")
-            }
-        }
-        alertController.addAction(cancelAction)
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
-
+    func stopRecording() {
+        groupViewModels.forEach { $0.chartViewModels.forEach { $0.stopRecording() } }
     }
 
     deinit {
         NotificationCenter.default.removeObserver(calliopeConnectedSubcription!)
         NotificationCenter.default.removeObserver(calliopeDisconnectedSubscription!)
-    }
-
-    override func viewDidDisappear(_ animated: Bool) {
-        groupViewModels.forEach { $0.chartViewModels.forEach { $0.stopRecording() } }
     }
 
 }

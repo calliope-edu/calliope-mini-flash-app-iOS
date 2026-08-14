@@ -410,6 +410,86 @@ protocol Alertable: AnyObject {
     var alert: (any AppAlert)? { get set }
 }
 
+struct RenameProjectAlert: TextFieldAppAlert {
+    let id = UUID()
+    let title: String = NSLocalizedString("Change project name", comment: "")
+    let message: String? = NSLocalizedString("Enter the new project name", comment: "")
+    let textActions: [TextFieldAlertAction]
+    let actions: [StandardAlertAction] = []
+    let textFieldHint: String = NSLocalizedString("New project", comment: "")
+    let textFieldDefault: String?
+
+    init(defaultName: String, onRename: @escaping (_ text: String) -> Void) {
+        textActions = [
+            TextFieldAlertAction(NSLocalizedString("OK", comment: ""), handler: onRename),
+            TextFieldAlertAction(NSLocalizedString("Cancel", comment: ""), handler: { _ in }),
+        ]
+        textFieldDefault = defaultName
+    }
+}
+
+struct DeleteProjectAlert: AppAlert {
+    let id = UUID()
+    let title: String = NSLocalizedString("Delete?", comment: "")
+    let message: String?
+    let actions: [StandardAlertAction]
+
+    init(project: Project, onDelete: @escaping () -> Void) {
+        message = String(format: NSLocalizedString("Do you want to delete %@?", comment: ""), project.name)
+        actions = [
+            StandardAlertAction(NSLocalizedString("Delete", comment: ""), role: .destructive, handler: onDelete),
+            StandardAlertAction(NSLocalizedString("Cancel", comment: ""), role: .cancel, handler: {}),
+        ]
+    }
+}
+
+struct ExportCSVNameAlert: TextFieldAppAlert {
+    let id = UUID()
+    let title: String = NSLocalizedString("Export Data", comment: "")
+    let message: String? = NSLocalizedString("Enter the CSV file name", comment: "")
+    let textActions: [TextFieldAlertAction]
+    let actions: [StandardAlertAction] = []
+    let textFieldHint: String = "CSV_Export"
+    let textFieldDefault: String?
+
+    init(onOk: @escaping (_ text: String) -> Void) {
+        textActions = [
+            TextFieldAlertAction(NSLocalizedString("OK", comment: ""), handler: { text in
+                onOk(text.isEmpty ? "CSV_Export" : text)
+            }),
+            TextFieldAlertAction(NSLocalizedString("Cancel", comment: ""), handler: { _ in }),
+        ]
+        textFieldDefault = nil
+    }
+}
+
+struct ConnectCalliopeRequiredAlert: AppAlert {
+    let id = UUID()
+    let title: String = NSLocalizedString("Calliope mini verbinden!", comment: "")
+    let message: String? = NSLocalizedString("Verbindung notwendig, um Daten anzeigen zu lassen.", comment: "")
+    let actions: [StandardAlertAction] = [StandardAlertAction(NSLocalizedString("OK", comment: ""), handler: {})]
+}
+
+struct NewProjectNameAlert: TextFieldAppAlert {
+    let id = UUID()
+    let title: String = NSLocalizedString("Enter an Projectname for the new Project", comment: "")
+    let message: String? = nil
+    let textActions: [TextFieldAlertAction]
+    let actions: [StandardAlertAction] = []
+    let textFieldHint: String = "Calliope Project"
+    let textFieldDefault: String?
+
+    init(onCreate: @escaping (_ text: String) -> Void) {
+        textActions = [
+            TextFieldAlertAction(NSLocalizedString("OK", comment: ""), handler: { text in
+                onCreate(text.isEmpty ? "Calliope Project" : text)
+            }),
+            TextFieldAlertAction(NSLocalizedString("Cancel", comment: ""), handler: { _ in }),
+        ]
+        textFieldDefault = nil
+    }
+}
+
 class TestAlertable: Alertable {
     var alert: (any AppAlert)? {
         didSet {

@@ -85,10 +85,25 @@ struct RepresentedDataLoggerWebView: UIViewRepresentable {
     }
 }
 
+struct DataLoggerDetailView: View {
+    let url: URL
+    @StateObject var viewModel: DataLoggerViewModel
+
+    init(url: URL) {
+        self.url = url
+        _viewModel = StateObject(wrappedValue: DataLoggerViewModel(htmlData: (try? url.asData()) ?? Data()))
+    }
+
+    var body: some View {
+        DataLoggerView(viewModel: viewModel)
+    }
+}
+
 struct DataLoggerView: View {
-    let viewModel: DataLoggerViewModel
+    @ObservedObject var viewModel: DataLoggerViewModel
 
     var body: some View {
         RepresentedDataLoggerWebView(html: viewModel.html, saveCSV: viewModel.saveCSV)
+            .modifier(AlertModifier(alert: viewModel.alertBinding))
     }
 }
