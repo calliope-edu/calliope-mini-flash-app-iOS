@@ -239,10 +239,24 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
                 )
             }
 
-            if uploadProgress.isUploading {
-                uploadProgressView
+            // iOS 26+: place button and progress bar inside the same GlassEffectContainer
+            // so the glass system morphs the circle → capsule when an upload starts.
+            // Pre-iOS 26: keep the existing solid-colour fallback behaviour.
+            if #available(iOS 26.0, *) {
+                GlassEffectContainer(spacing: 12) {
+                    if uploadProgress.isUploading {
+                        uploadProgressContent
+                    } else {
+                        connectionMenuButtonGlass
+                    }
+                }
+                .frame(maxWidth: horizontalSizeClass == .regular ? 420 : .infinity, alignment: .trailing)
             } else {
-                connectionMenuButton
+                if uploadProgress.isUploading {
+                    uploadProgressView
+                } else {
+                    connectionMenuButton
+                }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
@@ -304,6 +318,40 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
             .frame(width: 60, height: 60)
             .background(menuButtonColor)
             .clipShape(Circle())
+        }
+    }
+
+    // MARK: - Connection Menu Button (Liquid Glass variant, iOS 26+)
+    // Shares glassEffectID("progressBar") with the progress bar so the system morphs
+    // the circle into a capsule (and back) when an upload starts or finishes.
+
+    @available(iOS 26.0, *)
+    var connectionMenuButtonGlass: some View {
+        BouncableView(trigger: viewModel.connectionMenuButtonBounceTrigger) {
+            if viewModel.menuExpanded {
+                // X button: no background — it floats over the open menu panel.
+                Button {
+                    withAnimation(.spring()) { viewModel.menuExpanded.toggle() }
+                } label: {
+                    Image(systemName: "xmark").resizable().scaledToFit().frame(width: 20, height: 20)
+                }
+                .padding()
+                .foregroundColor(.white)
+                .frame(width: 60, height: 60)
+            } else {
+                // Normal state: liquid-glass circle that morphs into the progress bar on upload.
+                Button {
+                    withAnimation(.spring()) { viewModel.menuExpanded.toggle() }
+                } label: {
+                    menuButtonImage
+                }
+                .padding()
+                .foregroundColor(.white)
+                .frame(width: 60, height: 60)
+                .glassEffect(.regular.tint(menuButtonColor).interactive(), in: .circle)
+                .glassEffectID("progressBar", in: glassNamespace)
+                .glassEffectTransition(.matchedGeometry)
+            }
         }
     }
 
