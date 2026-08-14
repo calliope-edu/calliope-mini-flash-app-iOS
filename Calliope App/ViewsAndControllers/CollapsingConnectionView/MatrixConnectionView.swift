@@ -208,7 +208,6 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
     @State private var buttonsVisible: Bool = false
     @State private var textVisible: Bool = false
 
-
     @ViewBuilder var content: () -> Content
 
     var body: some View {
@@ -563,7 +562,7 @@ struct MatrixView<ViewModelType: MatrixConnectionViewModelProtocol>: View {
                 dragGesture(cellSize: cellSize)
             )
         }.padding()
-            .background(Color.calliopeYellow.brightness(0.05)).frame(width: 300, height: 300)
+            .background(RoundedRectangle(cornerRadius: 6).fill(Color.calliopeYellow)).brightness(0.05).frame(width: 300, height: 300)
     }
 
     private func cellColor(row: Int, column: Int) -> Color {
