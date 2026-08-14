@@ -24,37 +24,33 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
 
     var body: some View {
         NavigationStack(path: $router.path) {
-            ZStack {
-                ScrollView {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 500))]) {
-                        sendDataTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
-                        dataLoggerTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
-                    }.frame(maxWidth: .infinity)
-                    projectsTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
-                        .frame(maxWidth: .infinity)
-                }.padding()
-
-                MatrixConnectionView(viewModel: MatrixConnectionViewModel.instance)
-            }
-            .navigationDestination(for: ProjectAndSensorsRoute.self) { route in
-                switch route {
-                case .project(let id):
-                    ProjectDetailView(projectID: id, onDelete: { router.pop() })
-                case .dataLogger(let url):
-                    DataLoggerDetailView(url: url)
-                case .infoWebView(let url):
-                    changeMakeCodeURL(url: url.absoluteString)
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 500))]) {
+                    sendDataTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
+                    dataLoggerTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
+                }.frame(maxWidth: .infinity)
+                projectsTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
+                    .frame(maxWidth: .infinity)
+            }.padding()
+                .navigationDestination(for: ProjectAndSensorsRoute.self) { route in
+                    switch route {
+                    case .project(let id):
+                        ProjectDetailView(projectID: id, onDelete: { router.pop() })
+                    case .dataLogger(let url):
+                        DataLoggerDetailView(url: url)
+                    case .infoWebView(let url):
+                        changeMakeCodeURL(url: url.absoluteString)
+                    }
                 }
-            }
-            .modifier(AlertModifier(alert: viewModel.alertBinding))
-            .fileImporter(
-                isPresented: $isImportingDataLoggerFile,
-                allowedContentTypes: [UTType(filenameExtension: "htm")!]
-            ) { result in
-                if case .success(let url) = result {
-                    pushDataLogger(url: url)
+                .modifier(AlertModifier(alert: viewModel.alertBinding))
+                .fileImporter(
+                    isPresented: $isImportingDataLoggerFile,
+                    allowedContentTypes: [UTType(filenameExtension: "htm")!]
+                ) { result in
+                    if case .success(let url) = result {
+                        pushDataLogger(url: url)
+                    }
                 }
-            }
         }
     }
 
@@ -63,7 +59,10 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
             Text("Send sensor data directly from Calliope mini to the app").fontWeight(.bold)
             Text("1. Open MakeCode Editor")
             Text("2. Add the Bluetooth extension to your project")
-            imageButton(imageName: "calliope_bluetooth_extension 1", action: { router.push(.infoWebView(url: URL(string: "https://makecode.calliope.cc/#pub:_30A13o6dM9L2")!)) })
+            imageButton(
+                imageName: "calliope_bluetooth_extension 1",
+                action: { router.push(.infoWebView(url: URL(string: "https://makecode.calliope.cc/#pub:_30A13o6dM9L2")!)) }
+            )
             Text("3. Select the disired services for your program to view or record")
             Text("4. Start the program on your Calliope mini")
             Text("Detailed instructions can be found on the website:").fontWeight(.bold)
@@ -77,7 +76,10 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
                 "Data can be recorded on the Calliope mini 3. With the datalogger extension data can be saved in a table and also displayed as a graph."
             ).fontWeight(.bold)
             Text("1. This template can be used with the extension:")
-            imageButton(imageName: "calliope_datalogger_extension", action: { router.push(.infoWebView(url: URL(string: "https://makecode.calliope.cc/#pub:_Dv9J1xCp6HRy")!)) })
+            imageButton(
+                imageName: "calliope_datalogger_extension",
+                action: { router.push(.infoWebView(url: URL(string: "https://makecode.calliope.cc/#pub:_Dv9J1xCp6HRy")!)) }
+            )
             Text("2. Create the program with the respective data and define the required columns and se tthe corresponding (sensor) data as values.")
             Text("3. Transfer the program to your Calliope mini")
             Text("4. Open the datalogger view")

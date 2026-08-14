@@ -19,22 +19,26 @@ struct RootTabView: View {
     @State private var wasInBackground = false
 
     var body: some View {
-        TabView(selection: $coordinator.selectedTab) {
-            HomeScreenView(viewModel: homeViewModel)
-                .tabItem { Label("Home", image: "IconDevice") }
-                .tag(0)
-            EditorsAndProgramsView(viewModel: editorsViewModel)
-                .environmentObject(coordinator)
-                .tabItem { Label("Editors and Programs", image: "IconCode") }
-                .tag(1)
-            SensordataView(viewModel: sensordataViewModel)
-                .tabItem { Label("Sensordaten", systemImage: "menubar.rectangle") }
-                .tag(2)
-            LofiAppsView(viewModel: lofiAppsViewModel)
-                .tabItem { Label("Apps", systemImage: "rectangle.grid.3x3") }
-                .tag(3)
+        ZStack {
+            TabView(selection: $coordinator.selectedTab) {
+                HomeScreenView(viewModel: homeViewModel)
+                    .tabItem { Label("Home", image: "IconDevice") }
+                    .tag(0)
+                EditorsAndProgramsView(viewModel: editorsViewModel)
+                    .environmentObject(coordinator)
+                    .tabItem { Label("Editors and Programs", image: "IconCode") }
+                    .tag(1)
+                SensordataView(viewModel: sensordataViewModel)
+                    .tabItem { Label("Sensordaten", systemImage: "menubar.rectangle") }
+                    .tag(2)
+                LofiAppsView(viewModel: lofiAppsViewModel)
+                    .tabItem { Label("Apps", systemImage: "rectangle.grid.3x3") }
+                    .tag(3)
+            }
+            .tint(Color("calliope-lilablau"))
+            
+            MatrixConnectionView(viewModel: MatrixConnectionViewModel.instance)
         }
-        .tint(Color("calliope-lilablau"))
         .modifier(AlertModifier(alert: MatrixConnectionViewModel.instance.alertBinding))
         .onAppear(perform: applyCompactSizeClassOverride)
         .onChange(of: scenePhase) { phase in

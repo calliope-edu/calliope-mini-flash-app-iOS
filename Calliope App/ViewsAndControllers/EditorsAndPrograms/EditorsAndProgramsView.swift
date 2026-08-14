@@ -29,30 +29,24 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
 
     var body: some View {
         NavigationStack(path: $router.path) {
-            ZStack {
-                GeometryReader { geo in
-                    ScrollView {
-                        if geo.size.width > 1000 {
-                            MasonryLayout(columns: 2) {
-                                items
-                            }
-                        } else {
-                            MasonryLayout(columns: 1) {
-                                items
-                            }
+            GeometryReader { geo in
+                ScrollView {
+                    if geo.size.width > 1000 {
+                        MasonryLayout(columns: 2) {
+                            items
+                        }
+                    } else {
+                        MasonryLayout(columns: 1) {
+                            items
                         }
                     }
-                    .padding()
                 }
-
-                MatrixConnectionView(viewModel: MatrixConnectionViewModel.instance)
-            }.modifier(
-                AlertModifier(alert: viewModel.alertBinding)
-            )
+                .padding()
+            }
             .navigationDestination(for: EditorsAndProgramRoute.self) { route in
                 switchRoutes(route: route)
             }
-        }.onAppear{
+        }.onAppear {
             MatrixConnectionViewModel.instance.calliopeClass = DiscoveredBLEDevice.self
             handlePendingEditorsRoute()
         }
@@ -83,7 +77,7 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
         case .calliopeMiniBlocks:
             CalliopeMiniBlocksView(viewModel: CalliopeMiniBlocksViewModel())
         case .arcadeLanding:
-            ArcadeView(viewModel: ArcadeViewModel(openArcade: {router.push(.arcadeEditor)}))
+            ArcadeView(viewModel: ArcadeViewModel(openArcade: { router.push(.arcadeEditor) }))
         case .arcadeEditor:
             PopupEditorWebView(editor: ArcadeEditor(), alertPublisher: viewModel)
         case .qrCodeToMakeCode(let url):
