@@ -278,9 +278,6 @@
         }
       }
     },
-    "Add the Bluetooth extension to your project." : {
-
-    },
     "All" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -849,6 +846,9 @@
           }
         }
       }
+    },
+    "Create new project on the Sensordata page and start recording." : {
+
     },
     "Create the program with the respective data and define the required columns and set the corresponding sensor data as values." : {
 
@@ -2043,9 +2043,6 @@
         }
       }
     },
-    "Open the MakeCode Editor and use this example program with the Bluetooth extension:" : {
-
-    },
     "Oracle" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2094,7 +2091,7 @@
         }
       }
     },
-    "Press \"Load Data From Calliope\" to display the recorded data." : {
+    "Press \"Load Data From Calliope\" on the Sensordata page to display the recorded data." : {
 
     },
     "Press both A and B to return to the menu" : {
@@ -2407,7 +2404,7 @@
         }
       }
     },
-    "Send sensor data directly from your Calliope mini to the app via Bluetooth." : {
+    "Send sensor data live from your Calliope mini to the app via Bluetooth." : {
 
     },
     "Sensordaten" : {
@@ -2914,7 +2911,10 @@
     "USB-Verbindung erforderlich" : {
       "comment" : "USB connection required"
     },
-    "Use this MakeCode example program with the datalogger extension:" : {
+    "Use the example program, or create your own MakeCode project and add the Bluetooth extension." : {
+
+    },
+    "Use the example program, or create your own MakeCode project and add the DataLogger Extension." : {
 
     },
     "User defined (UART)" : {
@@ -3016,7 +3016,7 @@
         }
       }
     },
-    "With the datalogger extension the Calliope mini 3 can record data. Afterwards it can be transferred to the app and displayed in a table." : {
+    "With the datalogger extension the Calliope mini 3 can record data. Afterwards you can transfer it to the app and view it in a table." : {
 
     },
     "Wrong storage location" : {

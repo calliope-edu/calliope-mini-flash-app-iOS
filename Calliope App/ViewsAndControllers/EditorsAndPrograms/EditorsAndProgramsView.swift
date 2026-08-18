@@ -302,7 +302,7 @@ struct EditorTile: View {
                     .frame(width: config.imageSize * 130, height: config.imageSize * 130)
             }
             Text(config.name).multilineTextAlignment(.center)
-        }.frame(width: 150)
+        }.frame(width: 150, height: 180, alignment: .top)
     }
 }
 

@@ -52,7 +52,7 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
         EditorTileConfig(name: "Calliope mini Blocks", iconName: "editors_blocks_transparent", backgroundColor: Color.white, imageSize: 0.9),
         EditorTileConfig(name: "Micropython", iconName: "editors_python"),
         EditorTileConfig(name: "Arcade (USB only)", iconName: "editors_swift"),
-        EditorTileConfig(name: "Scan", iconName: "qr_code_scan_button", backgroundColor: Color.white, imageSize: 0.8)
+        EditorTileConfig(name: "Scan", iconName: "qr_code_scan_button", backgroundColor: Color.white, imageSize: 0.65)
     ]
 
     @Published var programs: [ProgramTileConfig] = []
@@ -165,7 +165,7 @@ class PreviewEditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, O
         EditorTileConfig(name: "Calliope mini Blocks", iconName: "editors_blocks_transparent", backgroundColor: Color.white, imageSize: 0.9),
         EditorTileConfig(name: "Micropython", iconName: "editors_python"),
         EditorTileConfig(name: "Arcade (USB only)", iconName: "editors_swift"),
-        EditorTileConfig(name: "Scan", iconName: "qr_code_scan_button", backgroundColor: Color.white, imageSize: 0.7)
+        EditorTileConfig(name: "Scan", iconName: "qr_code_scan_button", backgroundColor: Color.white, imageSize: 0.65)
     ]
 
     @Published var programs: [ProgramTileConfig] = [
