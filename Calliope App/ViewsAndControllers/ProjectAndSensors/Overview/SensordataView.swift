@@ -14,6 +14,8 @@ enum ProjectAndSensorsRoute: Hashable {
     case project(id: Int64)
     case dataLogger(url: URL)
     case infoWebView(url: URL)
+    case dataLoggerInfo
+    case projectsInfo
 }
 
 struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObject & Alertable>: View {
@@ -29,8 +31,6 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
                     sendDataTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
                     dataLoggerTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
                 }.frame(maxWidth: .infinity)
-                projectsTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
-                    .frame(maxWidth: .infinity)
             }.padding()
                 .navigationDestination(for: ProjectAndSensorsRoute.self) { route in
                     switch route {
@@ -40,6 +40,10 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
                         DataLoggerDetailView(url: url)
                     case .infoWebView(let url):
                         changeMakeCodeURL(url: url.absoluteString)
+                    case .dataLoggerInfo:
+                        DataLoggerInfoView(router: router)
+                    case .projectsInfo:
+                        ProjectsInfoView(router: router)
                     }
                 }
                 .modifier(AlertModifier(alert: viewModel.alertBinding))
@@ -56,34 +60,95 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
 
     var sendDataTile: some View {
         VStack(alignment: .leading) {
-            Text("Send sensor data directly from Calliope mini to the app").fontWeight(.bold)
-            Text("1. Open MakeCode Editor")
-            Text("2. Add the Bluetooth extension to your project")
-            imageButton(
-                imageName: "calliope_bluetooth_extension 1",
-                action: { router.push(.infoWebView(url: URL(string: "https://makecode.calliope.cc/#pub:_30A13o6dM9L2")!)) }
-            )
-            Text("3. Select the desired services for your program to view or record")
-            Text("4. Start the program on your Calliope mini")
-            Text("Detailed instructions can be found on the website:").fontWeight(.bold)
-            boxButton(label: "calliope.cc", action: { viewModel.openBluetoothExtensionPage(openURL: openURL) }, enabled: true)
+            Text("Projects").fontWeight(.bold)
+            SizedBox(height: 12)
+            Button {
+                router.push(.projectsInfo)
+            } label: {
+                HStack {
+                    Spacer()
+                    Image("calliope_bluetooth_extension 1")
+                        .resizable().scaledToFit().frame(height: 200)
+                    Spacer()
+                }
+            }
+            Text("Tap for instructions").font(.caption).foregroundColor(Color.calliopePink).frame(maxWidth: .infinity)
+            SizedBox(height: 12)
+
+            VStack {
+                ForEach(viewModel.projects) { project in
+                    ProjectItem(project: project, viewModel: viewModel) {
+                        router.push(.project(id: project.id!))
+                    }
+                }
+            }
+           
+            if(viewModel.projects.count > 0) {
+                SizedBox(height: 12)
+            }
+
+            Button {
+                viewModel.alert = NewProjectNameAlert { name in
+                    if let project = Project.insertProject(name: name), let id = project.id {
+                        router.push(.project(id: id))
+                    }
+                }
+            } label: {
+                HStack {
+                    Spacer()
+                    Image(systemName: "plus")
+                        .foregroundColor(Color(.white))
+                    Text("New Project")
+                        .foregroundColor(Color(.white))
+                    Spacer()
+                }
+                .tiled(color: Color.calliopeDarkgray)
+            }
         }.frame(maxHeight: .infinity, alignment: .top)
     }
 
     var dataLoggerTile: some View {
         VStack(alignment: .leading) {
-            Text(
-                "Data can be recorded on the Calliope mini 3. With the datalogger extension data can be saved in a table and also displayed as a graph."
-            ).fontWeight(.bold)
-            Text("1. This template can be used with the extension:")
-            imageButton(
-                imageName: "calliope_datalogger_extension",
-                action: { router.push(.infoWebView(url: URL(string: "https://makecode.calliope.cc/#pub:_Dv9J1xCp6HRy")!)) }
-            )
-            Text("2. Create the program with the respective data and define the required columns and se tthe corresponding (sensor) data as values.")
-            Text("3. Transfer the program to your Calliope mini")
-            Text("4. Open the datalogger view")
-            boxButton(label: "DataLogger View", action: { openDataLogger() }, enabled: viewModel.dataLoggerButtonEnabled)
+            Text("Data Logger").fontWeight(.bold)
+//            Button {
+//                router.push(.dataLoggerInfo)
+//            } label: {
+//                HStack {
+//                    Image(systemName: "info.circle")
+//                    Text("Instructions")
+//                }
+//                .font(.subheadline)
+//                .foregroundColor(Color.calliopePink)
+//            }
+            //            Text(
+            //                "Data can be recorded on the Calliope mini 3. With the datalogger extension data can be saved in a table and also displayed as a graph."
+            //            ).fontWeight(.bold)
+            //            Text("1. This template can be used with the extension:")
+            //            imageButton(
+            //                imageName: "calliope_datalogger_extension",
+            //                action: { router.push(.infoWebView(url: URL(string: "https://makecode.calliope.cc/#pub:_Dv9J1xCp6HRy")!)) }
+            //            )
+            //            Text("2. Create the program with the respective data and define the required columns and se tthe corresponding (sensor) data as values.")
+            //            Text("3. Transfer the program to your Calliope mini")
+            //            Text("4. Open the datalogger view")
+
+            SizedBox(height: 12)
+            Button {
+                router.push(.dataLoggerInfo)
+            } label: {
+                HStack {
+                    Spacer()
+                    Image("calliope_datalogger_extension")
+                        .resizable().scaledToFit().frame(height: 200)
+                    Spacer()
+                }
+            }
+            Text("Tap for instructions").font(.caption).foregroundColor(Color.calliopePink).frame(maxWidth: .infinity)
+            SizedBox(height: 12)
+
+
+            boxButton(label: "Load Data From Calliope", action: { openDataLogger() }, enabled: viewModel.dataLoggerButtonEnabled)
+            boxButton(label: "Import Data From File", action: { openDataLogger() }, enabled: true)
         }.frame(maxHeight: .infinity, alignment: .top)
     }
 
@@ -241,7 +306,7 @@ struct ProjectItem<ViewModelType: SensorDataViewModelProtocol & ObservableObject
             Text(project.name)
                 .foregroundColor(Color(.white))
                 .lineLimit(1)
-                .frame(width: 150, alignment: .leading)
+            Spacer()
             Button("", systemImage: "trash", action: { viewModel.deleteProject(id: project.id!) }).foregroundColor(Color(.white))
         }
         .tiled(color: Color.calliopeDarkgray)
@@ -255,7 +320,8 @@ struct SensordataView_Previews: PreviewProvider {
     static var previews: some View {
         let viewModel3Projects = PreviewSensordataViewModel(
             projects: [
-                Project(id: 1, name: "Test 1"), Project(id: 2, name: "Test 2"), Project(id: 3, name: "This is a long test name"),
+                Project(id: 1, name: "Test 1"), Project(id: 2, name: "Test 2"),
+                Project(id: 3, name: "This is a extra long test name to how this is formatted in the ui"),
             ],
             dataLoggerButtonEnabled: true
         )
