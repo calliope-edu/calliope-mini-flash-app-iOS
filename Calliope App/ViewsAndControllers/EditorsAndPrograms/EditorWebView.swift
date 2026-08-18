@@ -17,6 +17,25 @@ struct PopupEditorWebView: View {
 
     var body: some View {
         EditorWebViewRepresentable(editor: editor, alertPublisher: alertPublisher, uploadFirmware: FirmwareUploadSwiftUI.uploadWithoutConfirmation)
+            .background(DisableSwipeBackGestureView())
+    }
+}
+
+private struct DisableSwipeBackGestureView: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> DisableSwipeBackViewController {
+        DisableSwipeBackViewController()
+    }
+
+    func updateUIViewController(_ uiViewController: DisableSwipeBackViewController, context: Context) {}
+}
+
+private class DisableSwipeBackViewController: UIViewController {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        if #available(iOS 26.0, *) {
+            navigationController?.interactiveContentPopGestureRecognizer?.isEnabled = false
+        }
     }
 }
 
@@ -280,14 +299,24 @@ extension EditorWebView: WKUIDelegate {
         initiatedByFrame frame: WKFrameInfo,
         completionHandler: @escaping (String?) -> Void
     ) {
-        let alert = GenericTextFieldAlert(title: prompt, actions: [
-            TextFieldAlertAction(NSLocalizedString("OK", comment: ""), handler: { input in
-                completionHandler(input)
-            }),
-            TextFieldAlertAction(NSLocalizedString("Cancel", comment: ""), handler: { input in
-                    completionHandler(nil)
-            })
-        ], defaultName: "")
+        let alert = GenericTextFieldAlert(
+            title: prompt,
+            actions: [
+                TextFieldAlertAction(
+                    NSLocalizedString("OK", comment: ""),
+                    handler: { input in
+                        completionHandler(input)
+                    }
+                ),
+                TextFieldAlertAction(
+                    NSLocalizedString("Cancel", comment: ""),
+                    handler: { input in
+                        completionHandler(nil)
+                    }
+                ),
+            ],
+            defaultName: ""
+        )
         alertPublisher.alert = alert
     }
 }
