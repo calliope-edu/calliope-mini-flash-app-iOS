@@ -238,16 +238,27 @@ struct ProgramTile<viewModelType: EditorsAndProgramsViewModelProtocol & Observab
     @State var showMenu = false
 
     var body: some View {
-        Button(action: { showMenu = true }) {
-            HStack {
-                VStack(alignment: .leading) {
-                    Text(config.name).foregroundStyle(Color.white)
-                    Text(config.lastUsed.formatted()).foregroundStyle(Color.white)
+        HStack {
+            VStack(alignment: .leading) {
+                Text(config.name).foregroundStyle(Color.white)
+                Text(config.lastUsed.formatted()).foregroundStyle(Color.white)
+            }
+            Spacer()
+            Image("button_icon_upload")
+                .resizable().scaledToFit().frame(maxWidth: 30)
+                .onTapGesture {
+                    editorsAndProgramsViewModel.downloadProgram(program: config)
                 }
-                Spacer()
-                Image("button_icon_upload").resizable().scaledToFit().frame(maxWidth: 30)
-            }.frame(maxWidth: 250)
         }
+        .frame(maxWidth: 250)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            showMenu = true
+        }
+        .simultaneousGesture(
+            LongPressGesture(minimumDuration: 0.5)
+                .onEnded { _ in showMenu = true }
+        )
         .confirmationDialog(
             "",
             isPresented: $showMenu,
