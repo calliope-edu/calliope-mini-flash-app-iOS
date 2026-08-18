@@ -365,6 +365,8 @@ struct MatrixPosition: Hashable {
 struct MatrixView<ViewModelType: MatrixConnectionViewModelProtocol>: View {
     @ObservedObject var viewModel: ViewModelType
 
+    @State private var dragValue: Bool?
+    @State private var visitedCells: Set<MatrixPosition> = []
     @State private var bouncingCells: [[Bool]] = Array(repeating: Array(repeating: false, count: 5), count: 5)
 
     private let columns = Array(repeating: GridItem(.flexible(), spacing: 8), count: 5)
@@ -414,20 +416,35 @@ struct MatrixView<ViewModelType: MatrixConnectionViewModelProtocol>: View {
     }
 
     /// Sets a cell and cascades: activation goes downward with a staggered bounce, deactivation clears the whole column.
-    func setCell(at position: MatrixPosition) {
-        let column = position.column
-        for row in position.row..<5 {
-            let delay = Double(row - position.row) * 0.08
-            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-                bouncingCells[row][column] = true
-                viewModel.matrix[row][column] = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                    bouncingCells[row][column] = false
+    func setCell(at position: MatrixPosition, to value: Bool) {
+        if value {
+            // Activate this cell and all below, bouncing each in sequence
+            let column = position.column
+            for row in position.row..<5 {
+                visitedCells.insert(MatrixPosition(row: row, column: column))
+                let delay = Double(row - position.row) * 0.08
+                DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                    bouncingCells[row][column] = true
+                    viewModel.matrix[row][column] = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                        bouncingCells[row][column] = false
+                    }
                 }
             }
-        }
-        for row in 0..<position.row {
-            viewModel.matrix[row][column] = false
+        } else {
+            // Deactivate entire column, bouncing outward from the tapped cell
+            let column = position.column
+            for row in 0..<5 {
+                visitedCells.insert(MatrixPosition(row: row, column: column))
+                let delay = Double(abs(row - position.row)) * 0.08
+                DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                    bouncingCells[row][column] = true
+                    viewModel.matrix[row][column] = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                        bouncingCells[row][column] = false
+                    }
+                }
+            }
         }
     }
 
@@ -441,9 +458,20 @@ struct MatrixView<ViewModelType: MatrixConnectionViewModelProtocol>: View {
                         cellSize: cellSize
                     )
                 else { return }
-                setCell(at: matrixPosition)
+
+                if dragValue == nil {
+                    // First touched cell — toggle and cascade down the column
+                    viewModel.matrix[matrixPosition.row][matrixPosition.column].toggle()
+                    dragValue = viewModel.matrix[matrixPosition.row][matrixPosition.column]
+                    setCell(at: matrixPosition, to: dragValue!)
+                } else if !visitedCells.contains(matrixPosition) {
+                    // New cell while dragging — set and cascade down the column
+                    setCell(at: matrixPosition, to: dragValue!)
+                }
             }
             .onEnded { _ in
+                dragValue = nil
+                visitedCells.removeAll()
             }
     }
 }
