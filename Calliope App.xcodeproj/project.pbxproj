@@ -36,8 +36,6 @@
 		2F61458222BF761F001C2734 /* Checksum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61454322BF761F001C2734 /* Checksum.swift */; };
 		2F61458722BF761F001C2734 /* Extension_Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61454E22BF761F001C2734 /* Extension_Data.swift */; };
 		2F61458E22BF761F001C2734 /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61455822BF761F001C2734 /* Matrix.swift */; };
-		60CA11B1000000000000A1A1 /* CalliopeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CA11B3000000000000A1A3 /* CalliopeApp.swift */; };
-		60CA11B2000000000000A1A2 /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CA11B4000000000000A1A4 /* RootTabView.swift */; };
 		2F61459122BF761F001C2734 /* FirmwareUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61455B22BF761F001C2734 /* FirmwareUpload.swift */; };
 		2F61459722BF761F001C2734 /* Editors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61456222BF761F001C2734 /* Editors.swift */; };
 		2F61459822BF761F001C2734 /* StreamReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61456322BF761F001C2734 /* StreamReader.swift */; };
@@ -102,13 +100,11 @@
 		6073401E300785C200616062 /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6073401D300785C200616062 /* QRCodeView.swift */; };
 		607340203007C05700616062 /* EditorWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6073401F3007C05700616062 /* EditorWebView.swift */; };
 		6073406A3007DFDA00616062 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607340693007DFDA00616062 /* Router.swift */; };
-		60CA11B5000000000000A1A5 /* RootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CA11B6000000000000A1A6 /* RootCoordinator.swift */; };
 		6073406C3007E04D00616062 /* HomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6073406B3007E04D00616062 /* HomeScreenView.swift */; };
 		60818E7D2FE5A4150053893F /* EditorsAndProgramsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818E7C2FE5A4150053893F /* EditorsAndProgramsView.swift */; };
 		60818E7F2FE5A9C90053893F /* EditorsAndProgramsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818E7E2FE5A9C90053893F /* EditorsAndProgramsViewModel.swift */; };
 		60818EA62FEEB46C0053893F /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 60818EA52FEEB46C0053893F /* InfoPlist.xcstrings */; };
 		60818EB02FEEB46C0053893F /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 60818EAF2FEEB46C0053893F /* Localizable.xcstrings */; };
-		60818EB22FEEDA120053893F /* MasonryLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818EB12FEEDA120053893F /* MasonryLayout.swift */; };
 		60818EB42FF5388A0053893F /* CalliopeMiniBlocksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818EB32FF5388A0053893F /* CalliopeMiniBlocksView.swift */; };
 		60818EB62FF540600053893F /* AdaptiveColumnLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818EB52FF5405E0053893F /* AdaptiveColumnLayout.swift */; };
 		60818EB82FF558AF0053893F /* CalliopeMiniBlocksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60818EB72FF558AF0053893F /* CalliopeMiniBlocksViewModel.swift */; };
@@ -141,6 +137,9 @@
 		60C90B452F237F3E006279B2 /* WBEventTarget.js in Resources */ = {isa = PBXBuildFile; fileRef = 60C90B102F237F3E006279B2 /* WBEventTarget.js */; };
 		60C90B462F237F3E006279B2 /* WBDevice.js in Resources */ = {isa = PBXBuildFile; fileRef = 60C90B0F2F237F3E006279B2 /* WBDevice.js */; };
 		60C915932B1F442F00E4039D /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C915922B1F442F00E4039D /* Network.swift */; };
+		60CA11B1000000000000A1A1 /* CalliopeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CA11B3000000000000A1A3 /* CalliopeApp.swift */; };
+		60CA11B2000000000000A1A2 /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CA11B4000000000000A1A4 /* RootTabView.swift */; };
+		60CA11B5000000000000A1A5 /* RootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CA11B6000000000000A1A6 /* RootCoordinator.swift */; };
 		60CF0EA92BFCBE1E00CB2A38 /* ProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CF0EA82BFCBE1E00CB2A38 /* ProjectViewModel.swift */; };
 		60CF0EAD2BFCD25300CB2A38 /* Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CF0EAC2BFCD25300CB2A38 /* Value.swift */; };
 		60CF0EB02BFCD59D00CB2A38 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CF0EAF2BFCD59D00CB2A38 /* DataController.swift */; };
@@ -191,8 +190,6 @@
 		2F61454322BF761F001C2734 /* Checksum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checksum.swift; sourceTree = "<group>"; };
 		2F61454E22BF761F001C2734 /* Extension_Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension_Data.swift; sourceTree = "<group>"; };
 		2F61455822BF761F001C2734 /* Matrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
-		60CA11B3000000000000A1A3 /* CalliopeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeApp.swift; sourceTree = "<group>"; };
-		60CA11B4000000000000A1A4 /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
 		2F61455B22BF761F001C2734 /* FirmwareUpload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirmwareUpload.swift; sourceTree = "<group>"; };
 		2F61456222BF761F001C2734 /* Editors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Editors.swift; sourceTree = "<group>"; };
 		2F61456322BF761F001C2734 /* StreamReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamReader.swift; sourceTree = "<group>"; };
@@ -261,7 +258,6 @@
 		6073401D300785C200616062 /* QRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
 		6073401F3007C05700616062 /* EditorWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorWebView.swift; sourceTree = "<group>"; };
 		607340693007DFDA00616062 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
-		60CA11B6000000000000A1A6 /* RootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinator.swift; sourceTree = "<group>"; };
 		6073406B3007E04D00616062 /* HomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenView.swift; sourceTree = "<group>"; };
 		60818E7C2FE5A4150053893F /* EditorsAndProgramsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorsAndProgramsView.swift; sourceTree = "<group>"; };
 		60818E7E2FE5A9C90053893F /* EditorsAndProgramsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorsAndProgramsViewModel.swift; sourceTree = "<group>"; };
@@ -270,7 +266,6 @@
 		60818EA82FEEB46C0053893F /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/LofiApps.xcstrings; sourceTree = "<group>"; };
 		60818EAD2FEEB46C0053893F /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/HomeScreen.xcstrings; sourceTree = "<group>"; };
 		60818EAF2FEEB46C0053893F /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
-		60818EB12FEEDA120053893F /* MasonryLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasonryLayout.swift; sourceTree = "<group>"; };
 		60818EB32FF5388A0053893F /* CalliopeMiniBlocksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeMiniBlocksView.swift; sourceTree = "<group>"; };
 		60818EB52FF5405E0053893F /* AdaptiveColumnLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveColumnLayout.swift; sourceTree = "<group>"; };
 		60818EB72FF558AF0053893F /* CalliopeMiniBlocksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeMiniBlocksViewModel.swift; sourceTree = "<group>"; };
@@ -305,6 +300,9 @@
 		60C90B122F237F3E006279B2 /* WBUtils.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = WBUtils.js; sourceTree = "<group>"; };
 		60C90B172F237F3E006279B2 /* Jsonifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jsonifiable.swift; sourceTree = "<group>"; };
 		60C915922B1F442F00E4039D /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		60CA11B3000000000000A1A3 /* CalliopeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeApp.swift; sourceTree = "<group>"; };
+		60CA11B4000000000000A1A4 /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
+		60CA11B6000000000000A1A6 /* RootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinator.swift; sourceTree = "<group>"; };
 		60CF0EA82BFCBE1E00CB2A38 /* ProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewModel.swift; sourceTree = "<group>"; };
 		60CF0EAC2BFCD25300CB2A38 /* Value.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Value.swift; sourceTree = "<group>"; };
 		60CF0EAF2BFCD59D00CB2A38 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
@@ -361,7 +359,6 @@
 				2F1BD9962674D804006A47F2 /* AutoHeightCollectionViewCell.swift */,
 				6042149E2F646DD30060064F /* TilePageLayout.swift */,
 				60127F702FD00999000A1995 /* WebView.swift */,
-				60818EB12FEEDA120053893F /* MasonryLayout.swift */,
 				607340693007DFDA00616062 /* Router.swift */,
 				60CA11B6000000000000A1A6 /* RootCoordinator.swift */,
 			);
@@ -1059,7 +1056,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				60025C662FD071740065AA36 /* SensordataViewController.swift in Sources */,
-				60818EB22FEEDA120053893F /* MasonryLayout.swift in Sources */,
 				2F61457B22BF761F001C2734 /* ValueLocalizer.swift in Sources */,
 				60818E7D2FE5A4150053893F /* EditorsAndProgramsView.swift in Sources */,
 				2FC2A12922C8FA6F00675C2F /* News.swift in Sources */,

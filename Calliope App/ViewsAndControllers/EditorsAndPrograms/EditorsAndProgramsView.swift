@@ -33,12 +33,26 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
             GeometryReader { geo in
                 ScrollView {
                     if geo.size.width > 1000 {
-                        MasonryLayout(columns: 2) {
-                            items
+                        // Landscape: original program tile full width on top, editors and programs side by side below
+                        VStack(spacing: 16) {
+                            originalProgramTile(isLandscape: true)
+                                .tiled(color: Color.calliopeTurqoise, takeRemainingSpace: true, padding: 30)
+                            HStack(alignment: .top, spacing: 16) {
+                                editorsTile
+                                    .tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
+                                programsTile
+                                    .tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
+                            }
                         }
                     } else {
-                        MasonryLayout(columns: 1) {
-                            items
+                        // Portrait: all tiles stacked vertically
+                        VStack(spacing: 16) {
+                            originalProgramTile(isLandscape: false)
+                                .tiled(color: Color.calliopeTurqoise, takeRemainingSpace: true, padding: 30)
+                            editorsTile
+                                .tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
+                            programsTile
+                                .tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
                         }
                     }
                 }
@@ -95,13 +109,6 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
         return PopupEditorWebView(editor: makeCode, alertPublisher: viewModel)
     }
 
-    @ViewBuilder
-    var items: some View {
-        editorsTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
-        programsTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
-        originalProgramTile.tiled(color: Color.calliopeTurqoise, takeRemainingSpace: true, padding: 30)
-    }
-
     var editorsTile: some View {
         VStack(alignment: .leading) {
             Text("You can program your Calliope mini with the help of the editors.").fontWeight(.bold)
@@ -136,20 +143,37 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
         }
     }
 
-    var originalProgramTile: some View {
+    func originalProgramTile(isLandscape: Bool) -> some View {
         VStack(alignment: .leading) {
-            Text("Download the original program for your Calliope mini. Connect your device and transfer the program!")
-                .fontWeight(.bold)
-                .foregroundStyle(Color.white)
-            HStack {
-                Spacer()
-                Image("demoa_01").resizable().scaledToFit().frame(maxWidth: 300)
-                Spacer()
-            }.padding(.vertical, 16)
-            HStack {
-                boxButton(label: "Calliope mini 1+2", iconName: "button_icon_upload", action: { viewModel.uploadDefaultV1And2Program() })
-                boxButton(label: "Calliope mini 3", iconName: "button_icon_upload", action: { viewModel.uploadDefaultV3Program() })
+            if isLandscape {
+                Text("Download the original program for your Calliope mini. Connect your device and transfer the program!")
+                    .fontWeight(.bold)
+                    .foregroundStyle(Color.white)
 
+                HStack {
+                    Image("demoa_01").resizable().scaledToFit().frame(maxWidth: 300).padding(.vertical, 10)
+                    SizedBox(width: 100)
+                    boxButton(label: "Calliope mini 1+2", iconName: "button_icon_upload", action: { viewModel.uploadDefaultV1And2Program() })
+                    boxButton(label: "Calliope mini 3", iconName: "button_icon_upload", action: { viewModel.uploadDefaultV3Program() })
+
+                }
+            } else {
+                HStack {
+                    Spacer()
+                    VStack {
+                        Text("Download the original program for your Calliope mini. Connect your device and transfer the program!")
+                            .fontWeight(.bold)
+                            .foregroundStyle(Color.white)
+                        Image("demoa_01").resizable().scaledToFit().frame(maxWidth: 300).padding(.vertical, 10)
+                    }
+                    Spacer()
+                }
+
+                HStack {
+                    boxButton(label: "Calliope mini 1+2", iconName: "button_icon_upload", action: { viewModel.uploadDefaultV1And2Program() })
+                    boxButton(label: "Calliope mini 3", iconName: "button_icon_upload", action: { viewModel.uploadDefaultV3Program() })
+
+                }
             }
         }
     }
