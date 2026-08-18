@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 
 final class Router<RouteType: Hashable>: ObservableObject {
-    @Published var path = NavigationPath()
+    @Published var path: [RouteType] = []
 
     func push(_ route: RouteType) {
         path.append(route)
@@ -21,6 +21,6 @@ final class Router<RouteType: Hashable>: ObservableObject {
     }
 
     func popToRoot() {
-        path.removeLast(path.count)
+        path.removeAll()
     }
 }

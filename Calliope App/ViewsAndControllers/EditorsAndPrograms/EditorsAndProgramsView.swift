@@ -28,6 +28,15 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
     @EnvironmentObject private var coordinator: RootCoordinator
     @State private var presentingFileImporter = false
 
+    private var isEditorWebViewOpen: Bool {
+        switch router.path.last {
+        case .makeCode, .micropython, .openRobertaLab, .arcadeEditor, .makeCodeLink, .qrCodeToMakeCode:
+            return true
+        default:
+            return false
+        }
+    }
+
     var body: some View {
         NavigationStack(path: $router.path) {
             GeometryReader { geo in
@@ -62,7 +71,9 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
                 switchRoutes(route: route)
             }
             .modifier(AlertModifier(alert: viewModel.alertBinding))
-        }.onAppear {
+        }
+        .toolbar(isEditorWebViewOpen ? .hidden : .automatic, for: .tabBar)
+        .onAppear {
             MatrixConnectionViewModel.instance.calliopeClass = DiscoveredBLEDevice.self
             handlePendingEditorsRoute()
         }
