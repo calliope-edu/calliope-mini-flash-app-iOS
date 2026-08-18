@@ -63,7 +63,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
                 imageName: "calliope_bluetooth_extension 1",
                 action: { router.push(.infoWebView(url: URL(string: "https://makecode.calliope.cc/#pub:_30A13o6dM9L2")!)) }
             )
-            Text("3. Select the disired services for your program to view or record")
+            Text("3. Select the desired services for your program to view or record")
             Text("4. Start the program on your Calliope mini")
             Text("Detailed instructions can be found on the website:").fontWeight(.bold)
             boxButton(label: "calliope.cc", action: { viewModel.openBluetoothExtensionPage(openURL: openURL) }, enabled: true)
