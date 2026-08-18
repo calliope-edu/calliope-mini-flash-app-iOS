@@ -49,8 +49,10 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
                             HStack(alignment: .top, spacing: 16) {
                                 editorsTile
                                     .tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
+                                    .fixedSize(horizontal: false, vertical: true)
                                 programsTile
                                     .tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
+                                    .fixedSize(horizontal: false, vertical: true)
                             }
                         }
                     } else {
@@ -60,8 +62,10 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
                                 .tiled(color: Color.calliopeTurqoise, takeRemainingSpace: true, padding: 30)
                             editorsTile
                                 .tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
+                                .fixedSize(horizontal: false, vertical: true)
                             programsTile
                                 .tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
+                                .fixedSize(horizontal: false, vertical: true)
                         }
                     }
                 }
@@ -298,7 +302,7 @@ struct EditorTile: View {
                     .frame(width: config.imageSize * 130, height: config.imageSize * 130)
             }
             Text(config.name).multilineTextAlignment(.center)
-        }.frame(width: 150, height: 180, alignment: .top)
+        }.frame(width: 150)
     }
 }
 
