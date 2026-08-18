@@ -12,6 +12,15 @@ import SwiftUI
 struct EditorTileConfig {
     let name: String
     let iconName: String
+    let backgroundColor: Color?
+    let imageSize: Double
+    
+    init(name: String, iconName: String, backgroundColor: Color? = nil, imageSize: Double = 1.0) {
+        self.name = name
+        self.iconName = iconName
+        self.backgroundColor = backgroundColor
+        self.imageSize = imageSize
+    }
 }
 
 struct ProgramTileConfig: Identifiable {
@@ -40,9 +49,10 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
     @Published var editors: [EditorTileConfig] = [
         EditorTileConfig(name: "Makecode", iconName: "editors_makecode"),
         EditorTileConfig(name: "Open Roberta Lab", iconName: "editors_nepo"),
-        EditorTileConfig(name: "Calliope mini Blocks", iconName: "editors_blocks_transparent"),
+        EditorTileConfig(name: "Calliope mini Blocks", iconName: "editors_blocks_transparent", backgroundColor: Color.white, imageSize: 0.9),
         EditorTileConfig(name: "Micropython", iconName: "editors_python"),
         EditorTileConfig(name: "Arcade (USB only)", iconName: "editors_swift"),
+        EditorTileConfig(name: "Scan", iconName: "qr_code_scan_button", backgroundColor: Color.white, imageSize: 0.8)
     ]
 
     @Published var programs: [ProgramTileConfig] = []
@@ -152,13 +162,24 @@ class PreviewEditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, O
     @Published var editors: [EditorTileConfig] = [
         EditorTileConfig(name: "Makecode", iconName: "editors_makecode"),
         EditorTileConfig(name: "Open Roberta Lab", iconName: "editors_nepo"),
-        EditorTileConfig(name: "Calliope mini Blocks", iconName: "editors_blocks_transparent"),
+        EditorTileConfig(name: "Calliope mini Blocks", iconName: "editors_blocks_transparent", backgroundColor: Color.white, imageSize: 0.9),
         EditorTileConfig(name: "Micropython", iconName: "editors_python"),
         EditorTileConfig(name: "Arcade (USB only)", iconName: "editors_swift"),
+        EditorTileConfig(name: "Scan", iconName: "qr_code_scan_button", backgroundColor: Color.white, imageSize: 0.7)
     ]
 
     @Published var programs: [ProgramTileConfig] = [
         ProgramTileConfig(name: "Test 1", lastUsed: Date.now, hexFile: HexFile(url: URL(fileURLWithPath: ""), name: "", date: Date.now)),
+        ProgramTileConfig(
+            name: "Test 2",
+            lastUsed: Date.now.addingTimeInterval(100),
+            hexFile: HexFile(url: URL(fileURLWithPath: ""), name: "", date: Date.now.addingTimeInterval(100))
+        ),ProgramTileConfig(name: "Test 1", lastUsed: Date.now, hexFile: HexFile(url: URL(fileURLWithPath: ""), name: "", date: Date.now)),
+        ProgramTileConfig(
+            name: "Test 2",
+            lastUsed: Date.now.addingTimeInterval(100),
+            hexFile: HexFile(url: URL(fileURLWithPath: ""), name: "", date: Date.now.addingTimeInterval(100))
+        ),ProgramTileConfig(name: "Test 1", lastUsed: Date.now, hexFile: HexFile(url: URL(fileURLWithPath: ""), name: "", date: Date.now)),
         ProgramTileConfig(
             name: "Test 2",
             lastUsed: Date.now.addingTimeInterval(100),

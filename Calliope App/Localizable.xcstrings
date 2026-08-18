@@ -503,22 +503,12 @@
         }
       }
     },
-    "Calliope mini 1+2: Download the original program of the Calliope mini 1 and Calliope mini 2. Connect and transfer the program!" : {
+    "Download the original program for your Calliope mini. Connect your device and transfer the program!" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Calliope mini 1+2: Lade hier das Startprogramm für den Calliope mini 1 und Calliope mini 2. Einfach verbinden und Programm übertragen!"
-          }
-        }
-      }
-    },
-    "Calliope mini 3: Download the original program of the Calliope mini 3. Connect and transfer the program!" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Calliope mini 3: Lade hier das Startprogramm für den Calliope mini 3. Einfach verbinden und Programm übertragen!"
+            "value" : "Lade hier das Startprogramm für deinen Calliope mini. Verbinde dein Gerät und übertrage das Programm!"
           }
         }
       }

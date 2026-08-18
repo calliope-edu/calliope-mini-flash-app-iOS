@@ -99,31 +99,36 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
     var items: some View {
         editorsTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
         programsTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
-        makeCodeQRCodeTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
-        fileToCalliopeTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
-        originalProgramCalliope3Tile.tiled(color: Color.calliopeTurqoise, takeRemainingSpace: true, padding: 30)
-        originalProgramCalliope12Tile.tiled(color: Color.calliopePink, takeRemainingSpace: true, padding: 30)
+        originalProgramTile.tiled(color: Color.calliopeTurqoise, takeRemainingSpace: true, padding: 30)
     }
 
     var editorsTile: some View {
         VStack(alignment: .leading) {
             Text("You can program your Calliope mini with the help of the editors.").fontWeight(.bold)
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 40) {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 20) {
                 ForEach(0..<viewModel.editors.count) { i in
-                    EditorTile(config: viewModel.editors[i]).onTapGesture {
-                        switch viewModel.editors[i].name {
-                        case "Makecode":
-                            router.push(.makeCode)
-                        case "Open Roberta Lab":
-                            router.push(.openRobertaLab)
-                        case "Calliope mini Blocks":
-                            router.push(.calliopeMiniBlocks)
-                        case "Micropython":
-                            router.push(.micropython)
-                        case "Arcade (USB only)":
-                            router.push(.arcadeLanding)
-                        default:
-                            break
+                    if viewModel.editors[i].name == "Scan" {
+                        EditorTile(config: viewModel.editors[i])
+                            .info(NSLocalizedString("Open a program in MakeCode using a QR code. Simply scan it and off you go!", comment: ""))
+                            .onTapGesture {
+                                router.push(.qrCodeView)
+                            }
+                    } else {
+                        EditorTile(config: viewModel.editors[i]).onTapGesture {
+                            switch viewModel.editors[i].name {
+                            case "Makecode":
+                                router.push(.makeCode)
+                            case "Open Roberta Lab":
+                                router.push(.openRobertaLab)
+                            case "Calliope mini Blocks":
+                                router.push(.calliopeMiniBlocks)
+                            case "Micropython":
+                                router.push(.micropython)
+                            case "Arcade (USB only)":
+                                router.push(.arcadeLanding)
+                            default:
+                                break
+                            }
                         }
                     }
                 }
@@ -131,36 +136,21 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
         }
     }
 
-    var originalProgramCalliope3Tile: some View {
+    var originalProgramTile: some View {
         VStack(alignment: .leading) {
-            Text("Calliope mini 3: Download the original program of the Calliope mini 3. Connect and transfer the program!").fontWeight(.bold)
+            Text("Download the original program for your Calliope mini. Connect your device and transfer the program!")
+                .fontWeight(.bold)
                 .foregroundStyle(Color.white)
             HStack {
                 Spacer()
-                Image("startprogramm3").resizable().scaledToFit().frame(maxWidth: 300)
+                Image("demoa_01").resizable().scaledToFit().frame(maxWidth: 300)
                 Spacer()
             }.padding(.vertical, 16)
-            boxButton(label: "Start program", iconName: "button_icon_upload", action: { viewModel.uploadDefaultV3Program() })
-        }
-    }
-
-    var originalProgramCalliope12Tile: some View {
-        VStack(alignment: .leading) {
-            Text("Calliope mini 1+2: Download the original program of the Calliope mini 1 and Calliope mini 2. Connect and transfer the program!")
-                .fontWeight(.bold).foregroundStyle(Color.white)
             HStack {
-                Spacer()
-                Image("startprogramm1+2").resizable().scaledToFit().frame(maxWidth: 300)
-                Spacer()
-            }.padding(.vertical, 16)
-            boxButton(label: "Start Program", iconName: "button_icon_upload", action: { viewModel.uploadDefaultV1And2Program() })
-        }
-    }
+                boxButton(label: "Calliope mini 1+2", iconName: "button_icon_upload", action: { viewModel.uploadDefaultV1And2Program() })
+                boxButton(label: "Calliope mini 3", iconName: "button_icon_upload", action: { viewModel.uploadDefaultV3Program() })
 
-    var makeCodeQRCodeTile: some View {
-        VStack(alignment: .leading) {
-            Text("Open a program in MakeCode using a QR code. Simply scan it and off you go!").fontWeight(.bold)
-            boxButton(label: "Scan", iconName: "qr_code_scan_button", action: { router.push(.qrCodeView) })
+            }
         }
     }
 
@@ -182,7 +172,14 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
         VStack(alignment: .leading) {
             Text("Select a program to transfer, share, rename or delete it.")
                 .fontWeight(.bold)
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 250))], spacing: 40) {
+            let hexFileType = UTType.init(filenameExtension: "hex")!
+            boxButton(label: "Open File", iconName: "doc", isSystemImage: true, action: { presentingFileImporter = true })
+                .fileImporter(isPresented: $presentingFileImporter, allowedContentTypes: [hexFileType]) { result in
+                    viewModel.openFile(result: result)
+                    presentingFileImporter = false
+                }
+            SizedBox(height: 10)
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 200))], spacing: 20) {
                 ForEach(viewModel.programs) { config in
                     ProgramTile(config: config, editorsAndProgramsViewModel: viewModel)
                         .tiled(color: Color.calliopeGray)
@@ -245,12 +242,17 @@ struct EditorTile: View {
 
     var body: some View {
         VStack {
-            Image(config.iconName)
-                .resizable()
-                .scaledToFit()
-                .frame(maxWidth: 175)
-            Text(config.name)
-        }.frame(width: 150, height: 150)
+            ZStack {
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(config.backgroundColor != nil ? config.backgroundColor! : Color.clear)
+                    .frame(width: 130, height: 130)
+                Image(config.iconName)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: config.imageSize * 130, height: config.imageSize * 130)
+            }
+            Text(config.name).multilineTextAlignment(.center)
+        }.frame(width: 150, height: 180, alignment: .top)
     }
 }
 
@@ -259,5 +261,43 @@ struct EditorAndProgramsView_Previews: PreviewProvider {
         let viewModel = PreviewEditorsAndProgramsViewModel()
         EditorsAndProgramsView(viewModel: viewModel).environmentObject(RootCoordinator()).previewInterfaceOrientation(.landscapeLeft)
         EditorsAndProgramsView(viewModel: viewModel).environmentObject(RootCoordinator()).previewInterfaceOrientation(.portrait)
+    }
+}
+
+struct InfoModifier: ViewModifier {
+    let helpText: String
+    @State private var showHelp = false
+
+    func body(content: Content) -> some View {
+        content
+            .overlay(alignment: .topTrailing) {
+                Button {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        showHelp.toggle()
+                    }
+                } label: {
+                    Image(systemName: "info")
+                        .font(.system(size: 11, weight: .bold))
+                        .foregroundStyle(.white)
+                        .frame(width: 22, height: 22)
+                        .background(.calliopePink, in: Circle())
+                }
+                .buttonStyle(.plain)
+                // The padding is fine tuned for its currently only usage on the EditorAndPrograms page
+                .padding(.vertical, 4)
+                .padding(.horizontal, 12)
+                .popover(isPresented: $showHelp) {
+                    Text(helpText)
+                        .font(.body)
+                        .padding()
+                        .presentationCompactAdaptation(.popover)
+                }
+            }
+    }
+}
+
+extension View {
+    func info(_ helpText: String) -> some View {
+        modifier(InfoModifier(helpText: helpText))
     }
 }
