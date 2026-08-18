@@ -66,8 +66,6 @@
 		2FC2A12922C8FA6F00675C2F /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC2A12822C8FA6F00675C2F /* News.swift */; };
 		2FC2A12B22C962D100675C2F /* NewsDetailWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC2A12A22C962D100675C2F /* NewsDetailWebView.swift */; };
 		60025C602FD032840065AA36 /* SensordataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60025C5F2FD032840065AA36 /* SensordataView.swift */; };
-		60A100012FD100000065AA36 /* DataLoggerInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A100022FD100000065AA36 /* DataLoggerInfoView.swift */; };
-		60A100032FD100000065AA36 /* ProjectsInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A100042FD100000065AA36 /* ProjectsInfoView.swift */; };
 		60025C622FD041E40065AA36 /* SensordataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60025C612FD041E40065AA36 /* SensordataViewModel.swift */; };
 		60025C662FD071740065AA36 /* SensordataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60025C652FD071740065AA36 /* SensordataViewController.swift */; };
 		60030B9C2DC8B2E200397E69 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60030B9B2DC8B2DE00397E69 /* Date.swift */; };
@@ -89,6 +87,7 @@
 		60127F712FD00999000A1995 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60127F702FD00999000A1995 /* WebView.swift */; };
 		60316BF82B01FEC300130C0D /* BLECalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60316BF72B01FEC300130C0D /* BLECalliope.swift */; };
 		60316BFA2B0210CC00130C0D /* CalliopeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60316BF92B0210CC00130C0D /* CalliopeFactory.swift */; };
+		6035545F3034B96500A6C8FA /* UploadProgressPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6035545E3034B96500A6C8FA /* UploadProgressPanel.swift */; };
 		6042149F2F646DD30060064F /* TilePageLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6042149E2F646DD30060064F /* TilePageLayout.swift */; };
 		604938832E151282008BCE40 /* FileExtensionsEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604938822E15127E008BCE40 /* FileExtensionsEnum.swift */; };
 		604938852E151BB1008BCE40 /* OperationStatusEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604938842E151BA7008BCE40 /* OperationStatusEnum.swift */; };
@@ -114,6 +113,8 @@
 		609833C02FDC01EA00CF6243 /* FlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609833BF2FDC01EA00CF6243 /* FlowLayout.swift */; };
 		609D9BD42B67A15500F2ECAE /* USBCalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609D9BD32B67A15500F2ECAE /* USBCalliope.swift */; };
 		609D9BD62B67AD2200F2ECAE /* Calliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609D9BD52B67AD2200F2ECAE /* Calliope.swift */; };
+		60A100012FD100000065AA36 /* DataLoggerInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A100022FD100000065AA36 /* DataLoggerInfoView.swift */; };
+		60A100032FD100000065AA36 /* ProjectsInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A100042FD100000065AA36 /* ProjectsInfoView.swift */; };
 		60AA95552F925D3400308FE3 /* ProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AA95542F925D3400308FE3 /* ProjectView.swift */; };
 		60B58BCE2C132ABA00050FE3 /* Chart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B58BCD2C132ABA00050FE3 /* Chart.swift */; };
 		60BBDB862B6B90C2003AD3CE /* DiscoveredDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BBDB852B6B90C2003AD3CE /* DiscoveredDevice.swift */; };
@@ -222,8 +223,6 @@
 		36B15F9E6DE42C49A76EC47B /* Pods_Calliope_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Calliope_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3849EA7340C0FAB5DB1A4000 /* Pods-Calliope App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.debug.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.debug.xcconfig"; sourceTree = "<group>"; };
 		60025C5F2FD032840065AA36 /* SensordataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensordataView.swift; sourceTree = "<group>"; };
-		60A100022FD100000065AA36 /* DataLoggerInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoggerInfoView.swift; sourceTree = "<group>"; };
-		60A100042FD100000065AA36 /* ProjectsInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsInfoView.swift; sourceTree = "<group>"; };
 		60025C612FD041E40065AA36 /* SensordataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensordataViewModel.swift; sourceTree = "<group>"; };
 		60025C652FD071740065AA36 /* SensordataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensordataViewController.swift; sourceTree = "<group>"; };
 		60030B9B2DC8B2DE00397E69 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
@@ -245,6 +244,7 @@
 		60127F702FD00999000A1995 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		60316BF72B01FEC300130C0D /* BLECalliope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLECalliope.swift; sourceTree = "<group>"; };
 		60316BF92B0210CC00130C0D /* CalliopeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeFactory.swift; sourceTree = "<group>"; };
+		6035545E3034B96500A6C8FA /* UploadProgressPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadProgressPanel.swift; sourceTree = "<group>"; };
 		6042149E2F646DD30060064F /* TilePageLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TilePageLayout.swift; sourceTree = "<group>"; };
 		604938822E15127E008BCE40 /* FileExtensionsEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileExtensionsEnum.swift; sourceTree = "<group>"; };
 		604938842E151BA7008BCE40 /* OperationStatusEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationStatusEnum.swift; sourceTree = "<group>"; };
@@ -270,6 +270,8 @@
 		609833BF2FDC01EA00CF6243 /* FlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLayout.swift; sourceTree = "<group>"; };
 		609D9BD32B67A15500F2ECAE /* USBCalliope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USBCalliope.swift; sourceTree = "<group>"; };
 		609D9BD52B67AD2200F2ECAE /* Calliope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calliope.swift; sourceTree = "<group>"; };
+		60A100022FD100000065AA36 /* DataLoggerInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoggerInfoView.swift; sourceTree = "<group>"; };
+		60A100042FD100000065AA36 /* ProjectsInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsInfoView.swift; sourceTree = "<group>"; };
 		60AA95542F925D3400308FE3 /* ProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectView.swift; sourceTree = "<group>"; };
 		60B58BCD2C132ABA00050FE3 /* Chart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chart.swift; sourceTree = "<group>"; };
 		60BBDB852B6B90C2003AD3CE /* DiscoveredDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredDevice.swift; sourceTree = "<group>"; };
@@ -471,6 +473,7 @@
 				60C051DD3000F1A900DFA868 /* MatrixConnectionViewModel.swift */,
 				2F61455822BF761F001C2734 /* Matrix.swift */,
 				6008D1BB3025E75F001673BD /* UploadProgressViewModel.swift */,
+				6035545E3034B96500A6C8FA /* UploadProgressPanel.swift */,
 			);
 			path = CollapsingConnectionView;
 			sourceTree = "<group>";
@@ -1099,6 +1102,7 @@
 				2F1BD9952674D48C006A47F2 /* AutoHeightCollectionViewFlowLayout.swift in Sources */,
 				60025C622FD041E40065AA36 /* SensordataViewModel.swift in Sources */,
 				601040AC2B592B7300526735 /* HexFileManager.swift in Sources */,
+				6035545F3034B96500A6C8FA /* UploadProgressPanel.swift in Sources */,
 				2F61458E22BF761F001C2734 /* Matrix.swift in Sources */,
 				6008D1B8301CE036001673BD /* HexFileStoreDialogSwiftUI.swift in Sources */,
 				2F61457A22BF761F001C2734 /* ExtURL.swift in Sources */,
