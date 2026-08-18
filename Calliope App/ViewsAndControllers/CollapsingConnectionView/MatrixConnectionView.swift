@@ -769,3 +769,13 @@ struct GlassElementModifier: ViewModifier {
         )
     }
 }
+
+#Preview("On EditorsAndPrograms") {
+    ZStack {
+        EditorsAndProgramsView(viewModel: EditorsAndProgramsViewModel())
+            .environmentObject(RootCoordinator())
+
+        MatrixConnectionView(viewModel: PreviewMatrixConnectionViewModel())
+            .offset(x: -8, y: 8)
+    }
+}
