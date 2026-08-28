@@ -19,6 +19,8 @@ struct UploadProgressPanel: View {
     @State private var buttonsVisible: Bool = false
     @State private var textVisible: Bool = false
 
+    private let animationDuration: Double = 0.2
+
 
 
     var body: some View {
@@ -57,7 +59,7 @@ struct UploadProgressPanel: View {
 
                         Button {
                             startCollapse {
-                                withAnimation(.spring(duration: 0.55)) {
+                                withAnimation(.spring(duration: animationDuration)) {
                                     uploadProgress.isExpanded = false
                                 }
                             }
@@ -104,7 +106,7 @@ struct UploadProgressPanel: View {
                 .opacity(uploadProgress.isExpanded ? 1 : 0)
         )
         .frame(maxWidth: 420, alignment: .trailing)
-        .animation(.spring(duration: 0.55), value: uploadProgress.isExpanded)
+        .animation(.spring(duration: animationDuration), value: uploadProgress.isExpanded)
         .onChange(of: uploadProgress.isExpanded) { newValue in
             if newValue {
                 startExpand()
@@ -198,17 +200,17 @@ struct UploadProgressPanel: View {
     // out of the progress bar (stage 2) → text fades in after. Called once isExpanded
     // has flipped true (see the progress bar button).
     private func startExpand() {
-        // Stage 2 starts once the stage-1 spring (~0.55 s) has settled.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+        // Stage 2 starts once the stage-1 spring has settled.
+        DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration * 0.27) {
             guard uploadProgress.isExpanded else { return }
-            withAnimation(.spring(duration: 1.1)) {
+            withAnimation(.spring(duration: animationDuration * 2)) {
                 buttonsVisible = true
             }
         }
         // Text fades in mid-way through the button morph.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration * 0.45) {
             guard uploadProgress.isExpanded else { return }
-            withAnimation(.easeOut(duration: 0.45)) {
+            withAnimation(.easeOut(duration: animationDuration * 0.8)) {
                 textVisible = true
             }
         }
@@ -221,17 +223,17 @@ struct UploadProgressPanel: View {
     // For Cancel, `done` calls cancel() which removes the view entirely.
     private func startCollapse(done: @escaping () -> Void) {
         // Step 1: fade out the text first (mirror of the text-fade-in at the end of opening).
-        withAnimation(.easeIn(duration: 0.25)) {
+        withAnimation(.easeIn(duration: animationDuration * 0.45)) {
             textVisible = false
         }
         // Step 2: merge buttons back into the progress bar (mirror of stage 2).
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
-            withAnimation(.spring(duration: 1.1)) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration * 0.27) {
+            withAnimation(.spring(duration: animationDuration * 2)) {
                 buttonsVisible = false
             }
         }
         // Step 3: execute the caller's action (collapse background or cancel).
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.55) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration) {
             done()
         }
     }
