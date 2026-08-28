@@ -38,7 +38,7 @@ struct AdaptiveColumnLayout<Left: View, Right: View>: View {
                 )
                 .padding(8)
             }.scrollBounceBehavior(.basedOnSize)
-                .background(Color.calliopeLightgray)
+                .background(Color.calliopeLightgray.ignoresSafeArea())
             ScrollView {
                 right.frame(maxWidth: .infinity).frame(
                     minHeight: geometry.size.height - 16,
@@ -46,20 +46,31 @@ struct AdaptiveColumnLayout<Left: View, Right: View>: View {
                 )
                 .padding(8)
             }.scrollBounceBehavior(.basedOnSize)
+                .background(Color.white.ignoresSafeArea())
         }
     }
 
     func oneColumnLayout(geometry: GeometryProxy) -> some View {
-        GeometryReader { geometry in
+        ZStack {
+            // Color the safe area at the top and the bottom in gray and white
+            VStack(spacing: 0) {
+                Color.calliopeLightgray.ignoresSafeArea(edges: .top)
+                Color.white.ignoresSafeArea(edges: .bottom)
+            }
             ScrollView {
-                    VStack {
-                        left.padding(8)
-                        Divider()
-                        right.padding(8)
-
-                    }.frame(minHeight: geometry.size.height, alignment: .center)
-            }.scrollBounceBehavior(.basedOnSize)
-
+                VStack(spacing: 0) {
+                    left
+                        .padding(8)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.calliopeLightgray)
+                    right
+                        .padding(8)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.white)
+                }
+                .frame(minHeight: geometry.size.height, alignment: .top)
+            }
+            .scrollBounceBehavior(.basedOnSize)
         }
     }
 }

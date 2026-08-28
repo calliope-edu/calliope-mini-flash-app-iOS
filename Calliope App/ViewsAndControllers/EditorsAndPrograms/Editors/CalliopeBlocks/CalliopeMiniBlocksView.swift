@@ -107,7 +107,6 @@ struct SizedBox: View {
 
 struct CalliopeMiniBlocksView_Previews: PreviewProvider {
     static var previews: some View {
-        CalliopeMiniBlocksView(viewModel: PreviewCalliopeMiniBlocksViewModel()).previewInterfaceOrientation(.landscapeLeft)
-        CalliopeMiniBlocksView(viewModel: PreviewCalliopeMiniBlocksViewModel()).previewInterfaceOrientation(.portrait)
+        CalliopeMiniBlocksView(viewModel: PreviewCalliopeMiniBlocksViewModel())
     }
 }
