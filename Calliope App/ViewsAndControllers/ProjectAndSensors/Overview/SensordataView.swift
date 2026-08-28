@@ -46,7 +46,6 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
                         ProjectsInfoView(router: router)
                     }
                 }
-                .modifier(AlertModifier(alert: viewModel.alertBinding))
                 .fileImporter(
                     isPresented: $isImportingDataLoggerFile,
                     allowedContentTypes: [UTType(filenameExtension: "htm")!]
@@ -56,6 +55,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
                     }
                 }
         }
+        .modifier(AlertModifier(alert: viewModel.alertBinding))
     }
 
     var sendDataTile: some View {

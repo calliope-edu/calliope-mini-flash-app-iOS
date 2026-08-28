@@ -26,11 +26,11 @@ struct LofiAppsView: View {
                 leftItemOnTap: { _ in router.push(.info) },
                 rightItemsOnTap: { app in router.push(.appDetail(app: app)) }
             )
-            .modifier(AlertModifier(alert: viewModel.alertBinding))
             .navigationDestination(for: LofiAppsRoute.self) { route in
                 switchRoutes(route: route)
             }
         }
+        .modifier(AlertModifier(alert: viewModel.alertBinding))
         .onAppear {
             MatrixConnectionViewModel.instance.calliopeClass = DiscoveredBLEDevice.self
         }

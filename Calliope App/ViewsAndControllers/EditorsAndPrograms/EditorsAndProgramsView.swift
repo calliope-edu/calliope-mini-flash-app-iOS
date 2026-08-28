@@ -74,8 +74,8 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
             .navigationDestination(for: EditorsAndProgramRoute.self) { route in
                 switchRoutes(route: route)
             }
-            .modifier(AlertModifier(alert: viewModel.alertBinding))
         }
+        .modifier(AlertModifier(alert: viewModel.alertBinding))
         .toolbar(isEditorWebViewOpen ? .hidden : .automatic, for: .tabBar)
         .onAppear {
             MatrixConnectionViewModel.instance.calliopeClass = DiscoveredBLEDevice.self
