@@ -24,22 +24,24 @@ class FirmwareUploadSwiftUI {
                 }
             }
         } else {
+            alertPublisher.setAlert(WaitForProgramDownloadAlert())
             program.load { error in
                 DispatchQueue.main.async {
                     if error == nil, program.calliopeV1andV2Bin.count != 0 {
                         LogNotify.debug("Successfully finished downloading program")
                         let successAlert = ProgramDownloadSuccessAlert(upload: {
                             DispatchQueue.main.async {
+                                LogNotify.debug("Upload confirmed")
                                 FirmwareUploadSwiftUI.uploadWithoutConfirmation(alertPublisher: alertPublisher, program: program) {
                                     completion?(true)
                                 }
                             }
                         })
-                        alertPublisher.alert = successAlert
+                        alertPublisher.setAlert(successAlert)
                     } else {
                         LogNotify.error("Encountered error during program download: " + (error?.localizedDescription ?? ""))
                         let errorAlert = ProgramDownloadFailedAlert(error: error?.localizedDescription, completion: { completion?(false) })
-                        alertPublisher.alert = errorAlert
+                        alertPublisher.setAlert(errorAlert)
                     }
                 }
             }
@@ -54,7 +56,7 @@ class FirmwareUploadSwiftUI {
     ) {
         guard MatrixConnectionViewModel.instance.usageReadyCalliope != nil else {
             LogNotify.error("No calliope connected. Canceling upload.")
-            alertPublisher.alert = CannotUploadAlert()
+            alertPublisher.setAlert(CannotUploadAlert())
             return
         }
         
@@ -66,7 +68,7 @@ class FirmwareUploadSwiftUI {
                 }
             }
         )
-        alertPublisher.alert = confirmationAlert
+        alertPublisher.setAlert(confirmationAlert)
     }
 
     @MainActor public static func uploadWithoutConfirmation(
@@ -106,7 +108,7 @@ class FirmwareUploadSwiftUI {
                     UIApplication.shared.open(url)
                 }
             })
-            alertPublisher.alert = failedAlert
+            alertPublisher.setAlert(failedAlert)
         }
     }
 
@@ -131,7 +133,7 @@ class FirmwareUploadSwiftUI {
                 completion?()
             }
         )
-        alertPublisher.alert = alert
+        alertPublisher.setAlert(alert)
     }
 
     private var file: Hex
@@ -163,7 +165,7 @@ class FirmwareUploadSwiftUI {
 
         guard let calliope else {
             LogNotify.error("No calliope connected. Canceling upload.")
-            alertPublisher.alert = CannotUploadAlert()
+            alertPublisher.setAlert(CannotUploadAlert())
             return
         }
         LogNotify.log("[FirmwareUpload] Calliope compatible types: \(calliope.compatibleHexTypes)")
@@ -245,7 +247,7 @@ class FirmwareUploadSwiftUI {
                 UIApplication.shared.open(url)
             }
         })
-        alertPublisher.alert = failedAlert
+        alertPublisher.setAlert(failedAlert)
         failed()
     }
 }

@@ -432,6 +432,19 @@ protocol Alertable: AnyObject {
     var alert: (any AppAlert)? { get set }
 }
 
+extension Alertable {
+    func setAlert(_ newAlert: (any AppAlert)?) {
+        guard alert != nil else {
+            alert = newAlert
+            return
+        }
+        alert = nil
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.alert = newAlert
+        }
+    }
+}
+
 struct RenameProjectAlert: TextFieldAppAlert {
     let id = UUID()
     let title: String = NSLocalizedString("Change project name", comment: "")
