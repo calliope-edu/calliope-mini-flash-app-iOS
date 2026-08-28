@@ -19,7 +19,7 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
                 VStack(alignment: .leading) {
                     HStack {
                         Text("Connect a Calliope mini!")
-                            .font(.title)
+                            .font(.title3)
                         Spacer()
                         Rectangle().opacity(0).frame(width: 40, height: 40)  // To keep the closing button free
                     }.frame(maxWidth: 300)
@@ -31,7 +31,7 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
                     } else {
                         bluetoothMenu
                     }
-                }
+                }.frame(width: 250)
             }
         }
     }
@@ -40,8 +40,8 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
         Button {
             viewModel.startUsbConnect()
         } label: {
-            Text("Select Calliope mini")  // need the LocalizedStringKey, so it is translated to German
-                .frame(width: 268)
+            Text(NSLocalizedString("Select Calliope mini", comment: ""))
+                .frame(maxWidth: .infinity)
                 .padding(16)
                 .background(Color.calliopeGreen)
                 .foregroundColor(.white)
@@ -56,7 +56,7 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
 
     var bluetoothMenu: some View {
         VStack {
-            MatrixView(viewModel: viewModel).frame(maxWidth: 300, maxHeight: 300)
+            MatrixView(viewModel: viewModel)
 
             connectButton
         }
@@ -66,29 +66,30 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
         HStack {
             Spacer()
 
-            BouncableView(trigger: viewModel.connectButtonBounceTrigger) {
+//            BouncableView(trigger: viewModel.connectButtonBounceTrigger) {
                 Button {
                     viewModel.connect()
                 } label: {
                     ZStack {
                         if connectButtonBackgroundColor != nil {
-                            RoundedRectangle(cornerRadius: 20).fill(connectButtonBackgroundColor!).frame(width: 200, height: 75)
+                            RoundedRectangle(cornerRadius: 20).fill(connectButtonBackgroundColor!).frame(width: 150, height: 55)
                         }
-                        connectButtonForegroundImage
-                    }.frame(width: 150, height: 100)
+                        let buttonSize = 55.0
+                        connectButtonForegroundImage.frame(height: buttonSize)
+                    }
                 }
-            }
+//            }
 
             Spacer()
-        }.frame(maxWidth: 300)
+        }.frame(width: .infinity)
     }
 
     var connectButtonForegroundImage: some View {
         switch viewModel.connectButtonState {
         case .initialized:
-            return AnyView(Image("liveviewconnect/mini_refresh").resizable().scaledToFit().frame(height: 100))
+            return AnyView(Image("liveviewconnect/mini_refresh").resizable().scaledToFit())
         case .waitingForBluetooth:
-            return AnyView(Image("liveviewconnect/bluetooth_disabled").resizable().scaledToFit().frame(height: 65))
+            return AnyView(Image("liveviewconnect/bluetooth_disabled").resizable().scaledToFit())
         case .searching:
             return AnyView(
                 animationView(
@@ -99,13 +100,12 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
                         "AnimProgress/0019", "AnimProgress/0020",
                     ],
                     frameRate: 5,
-                    height: 60
                 )
             )
         case .notFoundRetry:
-            return AnyView(Image("liveviewconnect/connect_refresh").resizable().scaledToFit().frame(height: 100))
+            return AnyView(Image("liveviewconnect/connect_refresh").resizable().scaledToFit())
         case .readyToConnect:
-            return AnyView(Image("liveviewconnect/connect_0001").resizable().scaledToFit().frame(height: 100))
+            return AnyView(Image("liveviewconnect/connect_0001").resizable().scaledToFit())
         case .connecting:
             return AnyView(
                 animationView(
@@ -119,23 +119,22 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
                         "liveviewconnect/connect_0001",
                     ],
                     frameRate: 20,
-                    height: 100
                 )
             )
         case .readyToPlay:
-            return AnyView(Image("liveviewconnect/mini_figur").resizable().scaledToFit().frame(height: 100))
+            return AnyView(Image("liveviewconnect/mini_figur").resizable().scaledToFit())
         case .wrongProgram:
-            return AnyView(Image("liveviewconnect/connect_failed").resizable().scaledToFit().frame(height: 100))
+            return AnyView(Image("liveviewconnect/connect_failed").resizable().scaledToFit())
         }
     }
 
-    func animationView(images: [String], frameRate: Double, height: Double) -> some View {
+    func animationView(images: [String], frameRate: Double) -> some View {
         TimelineView(.animation) { timeline in
             let index =
                 Int(timeline.date.timeIntervalSince1970 * frameRate)
                 % images.count
 
-            Image(images[index]).resizable().scaledToFit().frame(height: height)
+            Image(images[index]).resizable().scaledToFit()
         }
     }
 
@@ -209,6 +208,8 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
     @ObservedObject var uploadProgress = UploadProgressViewModel.instance
     @Namespace private var glassNamespace
 
+    var connectionButtonSize: CGFloat = 50
+
     @ViewBuilder var content: () -> Content
 
     var body: some View {
@@ -267,7 +268,7 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
     // MARK: - Connection Menu Button (normal state)
 
     var connectionMenuButton: some View {
-        BouncableView(trigger: viewModel.connectionMenuButtonBounceTrigger) {
+//        BouncableView(trigger: viewModel.connectionMenuButtonBounceTrigger) {
             Button {
                 withAnimation(.spring()) {
                     viewModel.menuExpanded.toggle()
@@ -281,10 +282,10 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
             }
             .padding()
             .foregroundColor(.white)
-            .frame(width: 60, height: 60)
+            .frame(width: connectionButtonSize, height: connectionButtonSize)
             .background(menuButtonColor)
             .clipShape(Circle())
-        }
+//        }
     }
 
     // MARK: - Connection Menu Button (Liquid Glass variant, iOS 26+)
@@ -293,9 +294,10 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
 
     @available(iOS 26.0, *)
     var connectionMenuButtonGlass: some View {
-        BouncableView(trigger: viewModel.connectionMenuButtonBounceTrigger) {
+//        BouncableView(trigger: viewModel.connectionMenuButtonBounceTrigger) {
             if viewModel.menuExpanded {
                 // X button: no background — it floats over the open menu panel.
+                AnyView(
                 Button {
                     withAnimation(.spring()) { viewModel.menuExpanded.toggle() }
                 } label: {
@@ -303,8 +305,9 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
                 }
                 .padding()
                 .foregroundColor(.white)
-                .frame(width: 60, height: 60)
+                .frame(width: connectionButtonSize, height: connectionButtonSize))
             } else {
+                AnyView(
                 // Normal state: liquid-glass circle that morphs into the progress bar on upload.
                 Button {
                     withAnimation(.spring()) { viewModel.menuExpanded.toggle() }
@@ -313,12 +316,12 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
                 }
                 .padding()
                 .foregroundColor(.white)
-                .frame(width: 60, height: 60)
+                .frame(width: connectionButtonSize, height: connectionButtonSize)
                 .glassEffect(.regular.tint(menuButtonColor).interactive(), in: .circle)
                 .glassEffectID("progressBar", in: glassNamespace)
-                .glassEffectTransition(.matchedGeometry)
+                .glassEffectTransition(.matchedGeometry))
             }
-        }
+//        }
     }
 
     // MARK: - Menu Button Appearance
@@ -342,17 +345,18 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
     }
 
     var menuButtonImage: some View {
+        let imageSize = 55.0
         switch viewModel.connectionMenuButtonState {
         case .disabled:
-            return AnyView(Image("liveviewconnect/bluetooth_disabled").resizable().scaledToFit().frame(width: 50, height: 50))
+            return AnyView(Image("liveviewconnect/bluetooth_disabled").resizable().scaledToFit().frame(width: imageSize, height: imageSize))
         case .disconnected:
-            return AnyView(Image("liveviewconnect/mini_mini"))
+            return AnyView(Image("liveviewconnect/mini_mini").resizable().scaledToFit().frame(width: imageSize, height: imageSize))
         case .connecting:
-            return AnyView(Image("liveviewconnect/connect"))
+            return AnyView(Image("liveviewconnect/connect").resizable().scaledToFit().frame(width: imageSize, height: imageSize))
         case .connected:
-            return AnyView(Image("liveviewconnect/mini_mini"))
+            return AnyView(Image("liveviewconnect/mini_mini").resizable().scaledToFit().frame(width: imageSize, height: imageSize))
         case .transmitting:
-            return AnyView(Image("liveviewconnect/connect"))  // TODO: Update as soon as we have the corresponding assets
+            return AnyView(Image("liveviewconnect/connect").resizable().scaledToFit().frame(width: imageSize, height: imageSize))  // TODO: Update as soon as we have the corresponding assets
         }
     }
 }
@@ -395,7 +399,7 @@ struct MatrixView<ViewModelType: MatrixConnectionViewModelProtocol>: View {
                 dragGesture(cellSize: cellSize)
             )
         }.padding()
-            .background(RoundedRectangle(cornerRadius: 6).fill(Color.calliopeYellow)).brightness(0.05).frame(width: 300, height: 300)
+            .background(RoundedRectangle(cornerRadius: 6).fill(Color.calliopeYellow)).brightness(0.05).aspectRatio(1, contentMode: .fit)
     }
 
     private func cellColor(row: Int, column: Int) -> Color {
