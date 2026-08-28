@@ -580,6 +580,7 @@
       }
     },
     "Calliope mini will start the program as soon as the transmission is complete." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -601,6 +602,7 @@
     },
     "Cannot upload" : {
       "comment" : "Übertragung nicht möglich",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1192,6 +1194,7 @@
     },
     "Duration: about 10 seconds" : {
       "comment" : "USB transfer duration message",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1418,6 +1421,7 @@
       }
     },
     "Further Information" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2335,6 +2339,7 @@
       }
     },
     "seconds" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2686,6 +2691,7 @@
     },
     "There is no connected Calliope mini in DFU mode" : {
       "comment" : "Es konnte kein Calliope mini gefunden werden",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2776,6 +2782,7 @@
 
     },
     "Transmission running" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2852,6 +2859,7 @@
       }
     },
     "Upload failed!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
