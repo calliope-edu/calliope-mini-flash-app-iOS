@@ -52,6 +52,12 @@ class FirmwareUploadSwiftUI {
         name: String = NSLocalizedString("the program", comment: ""),
         completion: (() -> Void)? = nil
     ) {
+        guard MatrixConnectionViewModel.instance.usageReadyCalliope != nil else {
+            LogNotify.error("No calliope connected. Canceling upload.")
+            alertPublisher.alert = CannotUploadAlert()
+            return
+        }
+        
         let confirmationAlert = UploadConfirmationAlert(
             name: name,
             upload: {
