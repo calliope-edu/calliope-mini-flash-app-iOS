@@ -105,26 +105,11 @@ struct UploadProgressPanel: View {
         )
         .frame(maxWidth: 420, alignment: .trailing)
         .animation(.spring(duration: 0.55), value: uploadProgress.isExpanded)
-        // Two-stage expansion: when isExpanded flips true, delay the buttons so the
-        // background and progress bar finish animating first (stage 1), then morph
-        // the buttons out of the progress bar (stage 2) with the text fading in after.
         .onChange(of: uploadProgress.isExpanded) { newValue in
             if newValue {
-                // Stage 2 starts once the stage-1 spring (~0.55 s) has settled.
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
-                    guard uploadProgress.isExpanded else { return }
-                    withAnimation(.spring(duration: 1.1)) {
-                        buttonsVisible = true
-                    }
-                }
-                // Text fades in mid-way through the button morph.
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-                    guard uploadProgress.isExpanded else { return }
-                    withAnimation(.easeOut(duration: 0.45)) {
-                        textVisible = true
-                    }
-                }
-            } else {
+                startExpand()
+            }
+            else {
                 withAnimation(.spring()) {
                     buttonsVisible = false
                     textVisible = false
@@ -205,6 +190,28 @@ struct UploadProgressPanel: View {
                 .frame(maxWidth: .infinity)
         }
         .clipShape(Capsule())
+    }
+
+    // MARK: - Expand Animation (two-stage opening)
+
+    // Sequences: background + progress bar finish expanding (stage 1) → buttons morph
+    // out of the progress bar (stage 2) → text fades in after. Called once isExpanded
+    // has flipped true (see the progress bar button).
+    private func startExpand() {
+        // Stage 2 starts once the stage-1 spring (~0.55 s) has settled.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+            guard uploadProgress.isExpanded else { return }
+            withAnimation(.spring(duration: 1.1)) {
+                buttonsVisible = true
+            }
+        }
+        // Text fades in mid-way through the button morph.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            guard uploadProgress.isExpanded else { return }
+            withAnimation(.easeOut(duration: 0.45)) {
+                textVisible = true
+            }
+        }
     }
 
     // MARK: - Collapse Animation (inverse of two-stage opening)
