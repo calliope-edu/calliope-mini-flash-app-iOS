@@ -239,6 +239,13 @@ class FirmwareUploadSwiftUI {
 
     func showUploadError(_ error: Error) {
         LogNotify.error("Upload failed")
+        let failedAlert = UploadFailedAlert(goToInformation: {
+            let informationLink: String = "https://calliope.cc/programmieren/mobil/ipad#hardware"
+            if let url = URL(string: informationLink) {
+                UIApplication.shared.open(url)
+            }
+        })
+        alertPublisher.alert = failedAlert
         failed()
     }
 }
