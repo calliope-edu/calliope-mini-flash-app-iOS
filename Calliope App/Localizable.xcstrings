@@ -602,7 +602,6 @@
     },
     "Cannot upload" : {
       "comment" : "Übertragung nicht möglich",
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2691,7 +2690,6 @@
     },
     "There is no connected Calliope mini in DFU mode" : {
       "comment" : "Es konnte kein Calliope mini gefunden werden",
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

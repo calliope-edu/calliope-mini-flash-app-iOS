@@ -6,7 +6,6 @@
 //
 
 import NordicDFU
-import UICircularProgressRing
 import UIKit
 
 class FirmwareUploadSwiftUI {
@@ -84,14 +83,10 @@ class FirmwareUploadSwiftUI {
             }
         }
 
-        let uploader = FirmwareUploadSwiftUI(file: program)
-        let tempCalliope = MatrixConnectionViewModel.instance.usageReadyCalliope
-
-        // PopupManager.instance.show(uploader.alertView)
+        let uploader = FirmwareUploadSwiftUI(file: program, alertPublisher: alertPublisher)
 
         do {
             try uploader.upload(finishedCallback: {
-                // PopupManager.instance.dismiss(id: uploader.alertView.id)
                 completion?()
             })
         } catch {
@@ -134,9 +129,11 @@ class FirmwareUploadSwiftUI {
     }
 
     private var file: Hex
+    private var alertPublisher: Alertable
 
-    init(file: Hex) {
+    init(file: Hex, alertPublisher: Alertable) {
         self.file = file
+        self.alertPublisher = alertPublisher
     }
 
     //keep last upload, so it cannot be de-inited prematurely
@@ -146,131 +143,6 @@ class FirmwareUploadSwiftUI {
         }
     }
 
-    lazy var alertView: ProgressAlert? = {
-        return nil
-        /*guard let calliope = calliope else {
-            let alertController = UIAlertController(
-                title: NSLocalizedString("Cannot upload", comment: "Übertragung nicht möglich"),
-                message: NSLocalizedString(
-                    "There is no connected Calliope mini in DFU mode",
-                    comment: "Es konnte kein Calliope mini gefunden werden"
-                ),
-                preferredStyle: .alert
-            )
-            alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: nil))
-            MatrixConnectionViewModel.instance.animateBounce()
-            return alertController
-        }
-
-        let uploadController = UIAlertController(title: NSLocalizedString("Transmission running", comment: ""), message: "", preferredStyle: .alert)
-
-        let progressView: UIView
-        let logHeight = 0
-
-        if calliope is USBCalliope {
-            uploadController.message = NSLocalizedString("Calliope mini will start the program as soon as the transmission is complete.", comment: "")
-
-            // Container für Spinner + Timer
-            let containerView = UIView()
-            containerView.translatesAutoresizingMaskIntoConstraints = false
-
-            let activityIndicator = UIActivityIndicatorView(style: .large)
-            activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-            activityIndicator.startAnimating()
-
-            containerView.addSubview(activityIndicator)
-            containerView.addSubview(usbTimerLabel)
-
-            NSLayoutConstraint.activate([
-                activityIndicator.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-                activityIndicator.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 30),
-
-                usbTimerLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-                usbTimerLabel.topAnchor.constraint(equalTo: activityIndicator.bottomAnchor, constant: 30),
-                usbTimerLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -10),
-            ])
-
-            // Statische Nachricht anzeigen (kein Timer wegen Blocking-Operationen)
-            usbTimerLabel.text = NSLocalizedString("Duration: about 10 seconds", comment: "USB transfer duration message")
-
-            progressView = containerView
-        } else {
-            progressView = progressRing
-        }
-        progressView.translatesAutoresizingMaskIntoConstraints = false
-
-        uploadController.view.addSubview(progressView)
-        uploadController.view.addSubview(logTextView)
-
-        // BLE uses smaller top margin and larger bottom margin for taller alert
-        let topMargin = (calliope is USBCalliope) ? 80 : 60
-        let bottomMargin = (calliope is USBCalliope) ? 50 : 80
-
-        // Vertical constraints for progressView and logTextView
-        uploadController.view.addConstraints(
-            NSLayoutConstraint.constraints(
-                withVisualFormat: "V:|-(topMargin)-[progressView(120)]-(8)-[logTextView(logHeight)]-(bottomMargin)-|",
-                options: [],
-                metrics: ["topMargin": topMargin, "logHeight": logHeight, "bottomMargin": bottomMargin],
-                views: ["progressView": progressView, "logTextView": logTextView]
-            )
-        )
-
-        // Center progressView horizontally with fixed width
-        NSLayoutConstraint.activate([
-            progressView.centerXAnchor.constraint(equalTo: uploadController.view.centerXAnchor),
-            progressView.widthAnchor.constraint(equalToConstant: 120),
-        ])
-
-        // Center logTextView horizontally with fixed width
-        NSLayoutConstraint.activate([
-            logTextView.centerXAnchor.constraint(equalTo: uploadController.view.centerXAnchor),
-            logTextView.widthAnchor.constraint(equalToConstant: 264),
-        ])
-
-        uploadController.addAction(cancelUploadAction)
-        return uploadController*/
-    }()
-
-    private lazy var progressRing: UICircularProgressRing = {
-        let ring = UICircularProgressRing()
-        ring.minValue = 0
-        ring.maxValue = 100
-        ring.style = UICircularRingStyle.ontop
-        ring.outerRingColor = #colorLiteral(red: 0.976000011, green: 0.7760000229, blue: 0.1490000039, alpha: 1)
-        ring.innerRingColor = #colorLiteral(red: 0.2980000079, green: 0.851000011, blue: 0.3919999897, alpha: 1)
-        ring.shouldShowValueText = true
-        //ring.gradientOptions = UICircularRingGradientOptions(startPosition: .top, endPosition: .top, colors: [#colorLiteral(red: 0.2469999939, green: 0.7839999795, blue: 0.3880000114, alpha: 1), #colorLiteral(red: 0.2980000079, green: 0.851000011, blue: 0.3919999897, alpha: 1)], colorLocations: [0.0, 100.0])
-        ring.valueFormatter = UICircularProgressRingFormatter(valueIndicator: "%", rightToLeft: false, showFloatingPoint: false, decimalPlaces: 0)
-        return ring
-    }()
-
-    private lazy var cancelUploadAction: UIAlertAction = {
-        return UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .destructive) { [weak self] _ in
-            self?.finished()
-        }
-    }()
-    private var usbTimer: Timer?
-    private var usbStartTime: Date?
-
-    private lazy var usbTimerLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .center
-        label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .medium)
-        label.textColor = .gray
-        return label
-    }()
-    private lazy var logTextView: UITextView = {
-        let textView = UITextView()
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.backgroundColor = .clear
-        textView.isEditable = false
-        textView.isSelectable = true
-        textView.clipsToBounds = true
-        return textView
-    }()
-
     private var finished: () -> Void = {
     }
     private var failed: () -> Void = {
@@ -279,17 +151,13 @@ class FirmwareUploadSwiftUI {
     private var calliope = MatrixConnectionViewModel.instance.usageReadyCalliope
 
     func upload(finishedCallback: @escaping () -> Void) throws {
-        // Timer deaktiviert - USB-Kopieren blockiert Main-Thread, daher zeigen wir statisch "~15 Sekunden"
-        // if MatrixConnectionViewModel.instance.usageReadyCalliope is USBCalliope {
-        //     startUSBTimer()
-        // }
-
         // Validating for the correct Version of the Hex File
         let fileHexTypes = file.getHexTypes()
         LogNotify.log("[FirmwareUpload] File hex types: \(fileHexTypes)")
 
         guard let calliope else {
             LogNotify.error("No calliope connected. Canceling upload.")
+            alertPublisher.alert = CannotUploadAlert()
             return
         }
         LogNotify.log("[FirmwareUpload] Calliope compatible types: \(calliope.compatibleHexTypes)")
@@ -323,13 +191,11 @@ class FirmwareUploadSwiftUI {
 
         self.failed = {
             downloadCompletion()
-            // self.stopUSBTimer() // Timer deaktiviert
             UploadProgressViewModel.instance.finishUpload()
             MatrixConnectionViewModel.instance.enableDfuMode(mode: false)
         }
         self.finished = {
             downloadCompletion()
-            // self.stopUSBTimer() // Timer deaktiviert
             UploadProgressViewModel.instance.finishUpload()
             finishedCallback()
             MatrixConnectionViewModel.instance.enableDfuMode(mode: false)
@@ -338,7 +204,13 @@ class FirmwareUploadSwiftUI {
         do {
             MatrixConnectionViewModel.instance.enableDfuMode(mode: true)
 
-            UploadProgressViewModel.instance.startUpload()
+            // USB flashing works by copying a file to the device, so real progress
+            // cannot be measured. Show an indeterminate progress instead.
+            let isUSB = calliope is USBCalliope
+            UploadProgressViewModel.instance.startUpload(
+                isIndeterminate: isUSB,
+                statusText: isUSB ? NSLocalizedString("Transferring to Calliope", comment: "") : ""
+            )
             UploadProgressViewModel.instance.cancelAction = { [weak self] in
                 self?.finished()
             }
@@ -361,65 +233,7 @@ class FirmwareUploadSwiftUI {
 
     func showUploadError(_ error: Error) {
         LogNotify.error("Upload failed")
-        /*alertView.title = NSLocalizedString("Upload failed!", comment: "")
-        // Don't set alertView.message to prevent overlap with progress ring
-        // Instead show error in logTextView
-        logTextView.text = error.localizedDescription
-        // Don't change ring color to red - keep original color
-
-        // Re-enable cancel button so user can dismiss the alert
-        cancelUploadAction.isEnabled = true
-
-        failed()*/
-    }
-
-    /* Usage above is commented out. Why do we need this?
-     func startUSBTimer() {
-        LogNotify.log("⏱️ USB Timer starting now")
-        usbStartTime = Date()
-        usbTimerLabel.text = "00:00 / 15 " + NSLocalizedString("seconds", comment: "")
-
-        usbTimer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { [weak self] _ in
-            self?.updateUSBTimerLabel()
-        }
-        LogNotify.log("⏱️ USB Timer scheduled")
-    }
-
-    private func updateUSBTimerLabel() {
-        guard let startTime = usbStartTime else { return }
-
-        let elapsed = Date().timeIntervalSince(startTime)
-
-        // Log first update
-        if elapsed < 0.1 {
-            LogNotify.log("⏱️ USB Timer first update: \(elapsed)s")
-        }
-
-        // Timer bei 15 Sekunden stoppen
-        if elapsed >= 15.0 {
-            let timeString = String(format: "15:00 / 15 %@", NSLocalizedString("seconds", comment: ""))
-            self.usbTimerLabel.text = timeString
-            stopUSBTimer()
-            return
-        }
-
-        let seconds = Int(elapsed)
-        let hundredths = Int((elapsed - Double(seconds)) * 100)
-
-        let timeString = String(format: "%02d:%02d / 15 %@", seconds, hundredths, NSLocalizedString("seconds", comment: ""))
-
-        // Update label directly (we're already on main thread since timer is on main runloop)
-        self.usbTimerLabel.text = timeString
-    }
-
-    private func stopUSBTimer() {
-        usbTimer?.invalidate()
-        usbTimer = nil
-        usbStartTime = nil
-    }*/
-
-    deinit {
-        // stopUSBTimer() // Timer deaktiviert
+        failed()
     }
 }
 
@@ -431,26 +245,13 @@ extension FirmwareUploadSwiftUI: DFUProgressDelegate, DFUServiceDelegate, Logger
         currentSpeedBytesPerSecond: Double,
         avgSpeedBytesPerSecond: Double
     ) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else {
-                return
-            }
-            self.progressRing.startProgress(to: CGFloat(progress), duration: 0.2)
+        DispatchQueue.main.async {
             UploadProgressViewModel.instance.updateProgress(Double(progress) / 100.0)
-            if progress > 0 && self.cancelUploadAction.isEnabled {
-                self.cancelUploadAction.isEnabled = false
-                let failed = self.failed
-                self.failed = {
-                    self.cancelUploadAction.isEnabled = true
-                    failed()
-                }
-            }
         }
     }
 
     func logWith(_ level: LogLevel, message: String) {
         LogNotify.log("DFU Message: \(message)")
-        logTextView.text = message + "\n" + logTextView.text
     }
 
     func dfuStateDidChange(to state: DFUState) {

@@ -277,6 +277,16 @@ struct UploadFailedAlert: AppAlert {
     }
 }
 
+struct CannotUploadAlert: AppAlert {
+    let id = UUID()
+    let title: String = NSLocalizedString("Cannot upload", comment: "Übertragung nicht möglich")
+    let message: String? = NSLocalizedString(
+        "There is no connected Calliope mini in DFU mode",
+        comment: "Es konnte kein Calliope mini gefunden werden"
+    )
+    let actions = [StandardAlertAction(NSLocalizedString("OK", comment: ""), handler: {})]
+}
+
 struct ArcadeUsbRequiredAlert: AppAlert {
     let id = UUID()
     let title: String = NSLocalizedString("USB-Verbindung erforderlich", comment: "USB connection required")
