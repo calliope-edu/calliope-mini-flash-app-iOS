@@ -19,6 +19,8 @@ struct UploadProgressPanel: View {
     @State private var buttonsVisible: Bool = false
     @State private var textVisible: Bool = false
 
+
+
     var body: some View {
         VStack(spacing: buttonsVisible ? 16 : 0) {
             // Stage 2: buttons morph out of the progress bar; text fades in afterwards.
@@ -140,7 +142,17 @@ struct UploadProgressPanel: View {
 
     // MARK: - Progress Bar Content
 
+    @ViewBuilder
     var progressBarContent: some View {
+        if uploadProgress.isIndeterminate {
+            indeterminateBarContent
+        } else {
+            determinateBarContent
+        }
+    }
+
+    /// Determinate bar: green fill grows from left proportional to `progress`, percentage centred.
+    private var determinateBarContent: some View {
         ZStack(alignment: .leading) {
             Capsule()
                 .fill(Color.calliopeYellow)
@@ -153,6 +165,41 @@ struct UploadProgressPanel: View {
             }
 
             Text("\(Int(uploadProgress.progress * 100))%")
+                .font(.system(size: 14, weight: .bold, design: .rounded))
+                .foregroundColor(.primary)
+                .frame(maxWidth: .infinity)
+        }
+        .clipShape(Capsule())
+    }
+
+    /// Indeterminate bar: a green capsule bounces left-to-right; `statusText` is centred on top.
+    private var indeterminateBarContent: some View {
+        ZStack {
+            Capsule()
+                .fill(Color.calliopeYellow)
+                .brightness(0.05)
+
+            // TimelineView drives position purely from wall-clock time so it cannot be
+            // interrupted by parent spring animations or geometry changes during expansion.
+            TimelineView(.animation) { context in
+                GeometryReader { geometry in
+                    let capsuleWidth = geometry.size.width * 0.30
+                    let maxOffset = geometry.size.width - capsuleWidth
+                    // 2-second period: 0→1→0 triangle wave, smoothed with easeInOut cubic
+                    let t = context.date.timeIntervalSinceReferenceDate
+                        .truncatingRemainder(dividingBy: 2.0) / 2.0
+                    let linear: Double = t < 0.5 ? t * 2.0 : 2.0 - t * 2.0
+                    let eased: Double = linear < 0.5
+                        ? 4.0 * linear * linear * linear
+                        : 1.0 - pow(-2.0 * linear + 2.0, 3) / 2.0
+                    Capsule()
+                        .fill(Color.calliopeGreen)
+                        .frame(width: capsuleWidth, height: geometry.size.height)
+                        .offset(x: CGFloat(eased) * maxOffset)
+                }
+            }
+
+            Text(uploadProgress.statusText)
                 .font(.system(size: 14, weight: .bold, design: .rounded))
                 .foregroundColor(.primary)
                 .frame(maxWidth: .infinity)
