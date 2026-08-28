@@ -89,33 +89,43 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
             return
         }
 
-        let accessResource = USBCalliope.calliopeLocation?.startAccessingSecurityScopedResource()
-        defer {
-            if accessResource ?? false {
-                USBCalliope.calliopeLocation?.stopAccessingSecurityScopedResource()
-            }
-        }
-
-        // Direkt die komplette Datei kopieren
-        LogNotify.log("USB Transfer - copying complete file")
-        let destinationUrl = USBCalliope.calliopeLocation!.appendingPathComponent(file.calliopeUSBUrl.lastPathComponent)
-        var sourceFileSize: Int64 = 0
-
-        do {
-            let data = try Data(contentsOf: file.calliopeUSBUrl)
-            sourceFileSize = Int64(data.count)
-            try data.write(to: destinationUrl, options: .atomic)
-            LogNotify.log("File copied successfully (\(sourceFileSize) bytes)")
-        } catch {
-            LogNotify.log("Error copying file: \(error)")
-            DispatchQueue.main.async {
-                completion()
-            }
+        guard let calliopeLocation = USBCalliope.calliopeLocation else {
+            LogNotify.log("USB Transfer - no known Calliope location")
+            completion()
             return
         }
 
-        // Verify file was written correctly by checking it exists and has correct size
-        verifyFileWritten(at: destinationUrl, expectedSize: sourceFileSize, completion: completion)
+        let accessResource = calliopeLocation.startAccessingSecurityScopedResource()
+        let destinationUrl = calliopeLocation.appendingPathComponent(file.calliopeUSBUrl.lastPathComponent)
+        LogNotify.log("USB Transfer - copying complete file")
+
+        // Copy off the main thread: a synchronous write to USB storage can block for
+        // a while, which would freeze the UI (and the upload progress animation).
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            defer {
+                if accessResource {
+                    calliopeLocation.stopAccessingSecurityScopedResource()
+                }
+            }
+
+            var sourceFileSize: Int64 = 0
+
+            do {
+                let data = try Data(contentsOf: file.calliopeUSBUrl)
+                sourceFileSize = Int64(data.count)
+                try data.write(to: destinationUrl, options: .atomic)
+                LogNotify.log("File copied successfully (\(sourceFileSize) bytes)")
+            } catch {
+                LogNotify.log("Error copying file: \(error)")
+                DispatchQueue.main.async {
+                    completion()
+                }
+                return
+            }
+
+            // Verify file was written correctly by checking it exists and has correct size
+            self?.verifyFileWritten(at: destinationUrl, expectedSize: sourceFileSize, completion: completion)
+        }
     }
 
     /// Verifies that the file was written to the USB device by polling for its existence and size.
