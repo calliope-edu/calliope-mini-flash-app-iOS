@@ -75,6 +75,7 @@ class HomeScreenViewModel: ObservableObject {
     }
 
     func loadNews() {
+        guard !loadedOnlineContent else { return }
         NewsManager.getNews { [weak self] result in
             switch result {
             case .success(let news):
