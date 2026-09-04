@@ -34,42 +34,42 @@ struct ProjectDetailView: View {
 
 struct ProjectView: View {
     @ObservedObject var viewModel: ProjectViewModel
-    @State var showMenu = false
-
     var body: some View {
-        VStack {
-            projectHeader
-
-            ScrollView {
-                VStack {
-                    ForEach(viewModel.groupViewModels) { groupViewModel in
-                        GroupView(viewModel: groupViewModel)
+        ScrollView {
+            VStack {
+                SizedBox(height:2)
+                ForEach(viewModel.groupViewModels) { groupViewModel in
+                    GroupView(viewModel: groupViewModel)
+                }
+                addGroupButton
+            }
+        }
+        .onDisappear {
+            viewModel.stopRecording()
+        }
+        .modifier(AlertModifier(alert: viewModel.alertBinding))
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackground(Color("calliope-turqoise"), for: .navigationBar)
+        .toolbarBackground(.visible, for: .navigationBar)
+        .toolbarColorScheme(.dark, for: .navigationBar)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                Menu {
+                    Button("Rename") { viewModel.renameProject() }
+                    Button("Export (CSV)") { viewModel.exportToCSVFile() }
+                    Button("Delete", role: .destructive) { viewModel.deleteProject() }
+                } label: {
+                    HStack(spacing: 4) {
+                        Text(viewModel.project!.name)
+                            .font(.headline)
+                            .foregroundStyle(.white)
+                        Image(systemName: "chevron.down")
+                            .font(.caption)
+                            .foregroundStyle(.white)
                     }
-                    addGroupButton
                 }
             }
-        }.frame(maxHeight: .infinity, alignment: .top)
-            .padding(.top, 20)
-            .onDisappear {
-                viewModel.stopRecording()
-            }
-            .modifier(AlertModifier(alert: viewModel.alertBinding))
-    }
-
-    var projectHeader: some View {
-        HStack {
-            Text(viewModel.project!.name)
-                .foregroundColor(.white)
-                .font(.title)
-            Spacer()
-            projectSettingsButton
         }
-        .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 16)
-                .fill(Color("calliope-turqoise"))
-        )
-        .padding(.horizontal)
     }
 
     var addGroupButton: some View {
@@ -83,24 +83,6 @@ struct ProjectView: View {
 
     }
 
-    var projectSettingsButton: some View {
-        IconButton(
-            imageSystemName: "ellipsis.circle",
-            action: { showMenu = true },
-            rotation: 90,
-            iconColor: Color(.white),
-            backgroundColor: Color(.white).opacity(0)
-        )
-        .confirmationDialog(
-            "",
-            isPresented: $showMenu,
-            titleVisibility: .visible
-        ) {
-            Button("Delete", role: .destructive) { viewModel.deleteProject() }
-            Button("Export (CSV)") { viewModel.exportToCSVFile() }
-            Button("Rename") { viewModel.renameProject() }
-        }
-    }
 }
 
 struct IconButton: View {
