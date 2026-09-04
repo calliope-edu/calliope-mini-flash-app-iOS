@@ -21,6 +21,15 @@ enum ProjectAndSensorsRoute: Hashable {
 struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObject & Alertable>: View {
     @ObservedObject var viewModel: ViewModelType
     @StateObject private var router = Router<ProjectAndSensorsRoute>()
+
+    private var shouldHideTabBar: Bool {
+        switch router.path.last {
+        case .project:
+            return true
+        default:
+            return false
+        }
+    }
     @Environment(\.openURL) var openURL
     @State private var isImportingDataLoggerFile = false
 
@@ -56,6 +65,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
                 }
         }
         .modifier(AlertModifier(alert: viewModel.alertBinding))
+        .toolbar(shouldHideTabBar ? .hidden : .automatic, for: .tabBar)
     }
 
     var sendDataTile: some View {
