@@ -24,7 +24,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
 
     private var shouldHideTabBar: Bool {
         switch router.path.last {
-        case .project:
+        case .project, .infoWebView:
             return true
         default:
             return false
