@@ -49,6 +49,8 @@ struct EditorWebViewRepresentable: UIViewRepresentable {
     }
 
     func updateUIView(_ editorWebView: EditorWebView, context: Context) {
+        // Only reload the webview, when the url has changed
+        guard editorWebView.editor?.url != editor.url else { return }
         editorWebView.load(editor: editor)
     }
 }
