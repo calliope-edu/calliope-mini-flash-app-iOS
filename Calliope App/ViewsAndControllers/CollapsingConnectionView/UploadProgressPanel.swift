@@ -97,6 +97,7 @@ struct UploadProgressPanel: View {
                     )
             }
             .frame(maxWidth: uploadProgress.isExpanded ? .infinity : 200)
+            .matchedGeometryEffect(id: "progressBarMorph", in: namespace)
         }
         .padding(uploadProgress.isExpanded ? 20 : 0)
         .background(

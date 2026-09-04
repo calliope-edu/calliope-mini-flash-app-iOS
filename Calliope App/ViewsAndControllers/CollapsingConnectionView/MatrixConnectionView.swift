@@ -322,6 +322,7 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
             .frame(width: connectionButtonSize, height: connectionButtonSize)
             .background(menuButtonColor)
             .clipShape(Circle())
+            .matchedGeometryEffect(id: "progressBarMorph", in: glassNamespace)
 //        }
     }
 
