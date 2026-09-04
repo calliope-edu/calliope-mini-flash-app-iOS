@@ -57,6 +57,7 @@ class FirmwareUploadSwiftUI {
         guard MatrixConnectionViewModel.instance.usageReadyCalliope != nil else {
             LogNotify.error("No calliope connected. Canceling upload.")
             alertPublisher.setAlert(CannotUploadAlert())
+            MatrixConnectionViewModel.instance.animateBounce()
             return
         }
         
@@ -166,6 +167,7 @@ class FirmwareUploadSwiftUI {
         guard let calliope else {
             LogNotify.error("No calliope connected. Canceling upload.")
             alertPublisher.setAlert(CannotUploadAlert())
+            MatrixConnectionViewModel.instance.animateBounce()
             return
         }
         LogNotify.log("[FirmwareUpload] Calliope compatible types: \(calliope.compatibleHexTypes)")

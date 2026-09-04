@@ -6,9 +6,9 @@
 //  Copyright © 2026 calliope. All rights reserved.
 //
 
+import CoreBluetooth
 import Foundation
 import SwiftUI
-import CoreBluetooth
 
 enum ConnectionMenuButtonState {
     case disabled
@@ -38,16 +38,17 @@ protocol MatrixConnectionViewModelProtocol: ObservableObject {
     var connectButtonState: ConnectButtonState { get }
     var connectionMenuButtonBounceTrigger: Int { get }
     var connectButtonBounceTrigger: Int { get }
-    
+
     func connect()
     func startUsbConnect()
     func handleUSBFolderPicked(_ url: URL)
     var isFolderPickerPresented: Bool { get set }
+    func animateBounce()
 }
 
 class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
     static let instance: MatrixConnectionViewModel = MatrixConnectionViewModel()
-    
+
     @Published var matrix = Array(repeating: Array(repeating: false, count: 5), count: 5) {
         didSet {
             //matrix has been changed manually, this always triggers a disconnect
@@ -79,13 +80,13 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
 
     let restoreLastMatrixEnabled = UserDefaults.standard.bool(forKey: SettingsKey.restoreLastMatrix.rawValue)
     private let queue = DispatchQueue(label: "bluetooth")
-    
+
     private var attemptReconnect = false
     private var reconnecting = false
     private var delayedDiscovery = false
-    
+
     var isInDfuMode: Bool = false
-    
+
     public var discoveredCalliopeWithCurrentMatrix: DiscoveredDevice? {
         if isInUsbMode {
             return connector.discoveredCalliopes["USB_CALLIOPE"]
@@ -93,7 +94,7 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
             return connector.discoveredCalliopes[Matrix.matrix2friendly(matrix) ?? ""]
         }
     }
-    
+
     public var usageReadyCalliope: Calliope? {
         if isInUsbMode {
             return connector.connectedUSBCalliope?.usageReadyCalliope
@@ -101,8 +102,8 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
             return connector.connectedCalliope?.usageReadyCalliope
         }
     }
-    
-     public var calliopeClass: DiscoveredBLEDevice.Type? = nil {
+
+    public var calliopeClass: DiscoveredBLEDevice.Type? = nil {
         didSet {
             guard calliopeClass != oldValue else {
                 return
@@ -117,7 +118,7 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
             connector = CalliopeDiscovery(calliopeBuilder)
         }
     }
-    
+
     private var connectionDisabled = true {
         didSet {
             if connectionDisabled {
@@ -126,8 +127,8 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
             }
         }
     }
-    
-     public var connector: CalliopeDiscovery = CalliopeDiscovery({ peripheral, name in
+
+    public var connector: CalliopeDiscovery = CalliopeDiscovery({ peripheral, name in
         DiscoveredBLEDevice(peripheral: peripheral, name: name)
     })
     {
@@ -135,7 +136,7 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
             self.changedConnector(oldValue)
         }
     }
-    
+
     public func moveToForeground() {
         connector.isInBackground = false
         connector.startCalliopeDiscovery()
@@ -154,7 +155,7 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
         connector.disconnectFromCalliope()
 
     }
-    
+
     public func restartFromBLEConnectionDrop() {
         connector.updateBlock = updateDiscoveryState
         connector.isInBackground = false
@@ -168,17 +169,17 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
         connector.bluetoothStateChangedBlock = handleBluetoothStateChange
         restoreLastMatrix()
     }
-    
+
     func matrixIsBlank() -> Bool {
         for row in matrix {
             for cell in row {
                 if cell { return false }
             }
         }
-        
+
         return true
     }
-    
+
     func getMatrixString() -> String {
         var result = ""
         for b1 in matrix {
@@ -188,13 +189,13 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
         }
         return result
     }
-    
-    func setMatrixString(pattern:String) {
+
+    func setMatrixString(pattern: String) {
         if pattern.count != getMatrixString().count { return }
-        
+
         var index = 0
-        for (i1,b1) in matrix.enumerated() {
-            for (i2,_) in b1.enumerated() {
+        for (i1, b1) in matrix.enumerated() {
+            for (i2, _) in b1.enumerated() {
                 matrix[i1][i2] = (pattern[index] == "1") ? true : false
                 index += 1
             }
@@ -209,7 +210,7 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
             setMatrixString(pattern: UserDefaults.standard.string(forKey: SettingsKey.lastMatrix.rawValue) ?? "")
         }
     }
-    
+
     func startUsbConnect() {
         isFolderPickerPresented = true
     }
@@ -218,41 +219,40 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
         LogNotify.log("Start connection to USB Device")
         connector.handleUSBFolderPicked(url)
     }
-    
+
     /// Prüft ob eine USB-Verbindung zum Calliope besteht
     public func isUSBConnected() -> Bool {
         return isInUsbMode && connector.discoveredCalliopes["USB_CALLIOPE"] != nil
     }
-    
+
     func showFalseLocationAlert() {
         DispatchQueue.main.async {
             self.alert = WrongStorageLocationAlert()
         }
     }
-    
+
     public func disconnectFromCalliope() {
         connector.disconnectFromCalliope()
     }
-    
+
     public func onExpand() {
         if self.connector.state == .initialized {
-                self.connector.startCalliopeDiscovery()
-            }
+            self.connector.startCalliopeDiscovery()
+        }
     }
-    
+
     public func onCollapse() {
         self.connector.stopCalliopeDiscovery()
     }
-    
+
     public func animateBounce() {
         if menuExpanded {
-//            self.connectButton.animateBounce()
+            connectButtonBounceTrigger += 1
         } else {
-//            self.collapseButton.animateBounce()
+            connectionMenuButtonBounceTrigger += 1
         }
-        print("Bouncing has to still be implemented")
-    }  // Create a SwiftUI equivalent
-    
+    }
+
     func connect() {
         if self.connector.state == .initialized && !isInUsbMode
             || self.discoveredCalliopeWithCurrentMatrix == nil && self.connector.state == .discoveredAll
@@ -279,7 +279,7 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
             )
         }
     }
-    
+
     private func updateDiscoveryState() {
         switch self.connector.state {
         case .initialized:
@@ -287,9 +287,9 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
             connectButtonState = .initialized
             connectionMenuButtonState = .disconnected
             restoreLastMatrix()
-//            if !matrixIsBlank() {
-//                startDelayedDiscovery()
-//            }
+        //            if !matrixIsBlank() {
+        //                startDelayedDiscovery()
+        //            }
         case .discoveryWaitingForBluetooth:
             matrixInteractionEnabled = true
             connectButtonState = .waitingForBluetooth
@@ -315,7 +315,7 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
                     matrixInteractionEnabled = true
                     connectButtonState = .notFoundRetry
                     connectionMenuButtonState = .disconnected
-//                    startDelayedDiscovery()
+                    //                    startDelayedDiscovery()
                 }
             }
         case .connecting:
@@ -345,11 +345,11 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
             evaluateCalliopeState(discoveredCalliopeWithCurrentMatrix!)
         }
     }
-    
+
     public func enableDfuMode(mode: Bool) {
         isInDfuMode = mode
     }
-    
+
     private func evaluateCalliopeState(_ calliope: DiscoveredDevice) {
         if isInDfuMode {
             return
@@ -377,15 +377,15 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
         switch calliope.state {
         case .discovered:
             matrixInteractionEnabled = !reconnecting
-            connectButtonState = reconnecting ? .connecting : .readyToConnect // The first was previously testingMode
+            connectButtonState = reconnecting ? .connecting : .readyToConnect  // The first was previously testingMode
         case .connected:
             reconnecting = false
             attemptReconnect = false
             matrixInteractionEnabled = false
-            connectButtonState = .connecting // Previously testingMode
+            connectButtonState = .connecting  // Previously testingMode
         case .evaluateMode:
             matrixInteractionEnabled = false
-            connectButtonState = .connecting // Previously testingMode
+            connectButtonState = .connecting  // Previously testingMode
         case .usageReady:
             // Verbindung erfolgreich - merken für Fehlerbehandlung
             hasEverConnected = true
@@ -399,7 +399,7 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
             connectButtonState = .wrongProgram
         }
     }
-    
+
     private var isShowingErrorAlert = false
 
     /// Speichert ob jemals eine erfolgreiche Verbindung hergestellt wurde
@@ -408,8 +408,7 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
 
     /// Speichert ob bereits ein Bluetooth-Alert angezeigt wird
     private var isShowingBluetoothAlert = false
-   
-    
+
     private func handleBluetoothStateChange(_ state: CBManagerState) {
         // Show alert only when Bluetooth is powered off
         if state == .poweredOff && !isShowingBluetoothAlert {
@@ -434,7 +433,7 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
             isShowingBluetoothAlert = false
         }
     }
-    
+
     private func error(_ error: Error) {
         // Prüfe, ob bereits ein Fehler-Alert angezeigt wird
         if isShowingErrorAlert {
@@ -470,7 +469,6 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
             LogNotify.log("Error suppressed (alert commented out): \(error.localizedDescription)")
         }
     }
-    
 
 }
 
@@ -484,23 +482,31 @@ class PreviewMatrixConnectionViewModel: MatrixConnectionViewModelProtocol {
     @Published var connectionMenuButtonBounceTrigger: Int = 0
     @Published var connectButtonBounceTrigger: Int = 0
     @Published var isFolderPickerPresented = false
-    
+
     init(connectionMenuButtonState: ConnectionMenuButtonState = .disconnected, connectButtonState: ConnectButtonState = .readyToConnect) {
         self.connectionMenuButtonState = connectionMenuButtonState
         self.connectButtonState = connectButtonState
     }
-    
+
     func connect() {
         LogNotify.log("Pressed connect")
         connectionMenuButtonBounceTrigger += 1
         connectButtonBounceTrigger += 1
     }
-    
+
     func startUsbConnect() {
         isFolderPickerPresented = true
     }
-    
+
     func handleUSBFolderPicked(_ url: URL) {
         LogNotify.log("Pressed startUsbConnect")
+    }
+
+    public func animateBounce() {
+        if menuExpanded {
+            connectButtonBounceTrigger += 1
+        } else {
+            connectionMenuButtonBounceTrigger += 1
+        }
     }
 }

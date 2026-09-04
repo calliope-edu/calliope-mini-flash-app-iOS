@@ -103,7 +103,7 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
         HStack {
             Spacer()
 
-//            BouncableView(trigger: viewModel.connectButtonBounceTrigger) {
+            BouncableView(trigger: viewModel.connectButtonBounceTrigger) {
                 Button {
                     viewModel.connect()
                 } label: {
@@ -115,7 +115,7 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
                         connectButtonForegroundImage.frame(height: buttonSize)
                     }
                 }
-//            }
+            }
 
             Spacer()
         }.frame(width: .infinity)
@@ -220,22 +220,31 @@ struct BouncableView<Content: View>: View {
     var body: some View {
         content()
             .scaleEffect(bouncing ? scale : 1.0)
-            .animation(
-                .easeInOut(duration: duration)
-                    .repeatCount(2, autoreverses: true),
-                value: bouncing
-            )
             .onChange(of: trigger) { _ in
                 bounce()
             }
     }
 
     private func bounce() {
-        bouncing = false
+        let halfCycle = duration
 
-        // Ensure SwiftUI sees a state transition
-        DispatchQueue.main.async {
+        withAnimation(.easeOut(duration: halfCycle)) {
             bouncing = true
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + halfCycle) {
+            withAnimation(.easeIn(duration: halfCycle)) {
+                bouncing = false
+            }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + halfCycle * 2) {
+            withAnimation(.easeOut(duration: halfCycle)) {
+                bouncing = true
+            }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + halfCycle * 3) {
+            withAnimation(.easeIn(duration: halfCycle)) {
+                bouncing = false
+            }
         }
     }
 }
@@ -305,7 +314,7 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
     // MARK: - Connection Menu Button (normal state)
 
     var connectionMenuButton: some View {
-//        BouncableView(trigger: viewModel.connectionMenuButtonBounceTrigger) {
+        BouncableView(trigger: viewModel.connectionMenuButtonBounceTrigger) {
             Button {
                 withAnimation(.spring()) {
                     viewModel.menuExpanded.toggle()
@@ -323,7 +332,7 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
             .background(menuButtonColor)
             .clipShape(Circle())
             .matchedGeometryEffect(id: "progressBarMorph", in: glassNamespace)
-//        }
+        }
     }
 
     // MARK: - Connection Menu Button (Liquid Glass variant, iOS 26+)
@@ -331,11 +340,9 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
     // the circle into a capsule (and back) when an upload starts or finishes.
 
     @available(iOS 26.0, *)
-    var connectionMenuButtonGlass: some View {
-//        BouncableView(trigger: viewModel.connectionMenuButtonBounceTrigger) {
-            if viewModel.menuExpanded {
-                // X button: no background — it floats over the open menu panel.
-                AnyView(
+    @ViewBuilder var connectionMenuButtonGlass: some View {
+        if viewModel.menuExpanded {
+            BouncableView(trigger: viewModel.connectionMenuButtonBounceTrigger) {
                 Button {
                     withAnimation(.spring()) { viewModel.menuExpanded.toggle() }
                 } label: {
@@ -343,25 +350,27 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
                 }
                 .padding()
                 .foregroundColor(.white)
-                .frame(width: connectionButtonSize, height: connectionButtonSize))
-            } else {
-                AnyView(
-                // Normal state: liquid-glass circle that morphs into the progress bar on upload.
+                .frame(width: connectionButtonSize, height: connectionButtonSize)
+            }
+        } else {
+            BouncableView(trigger: viewModel.connectionMenuButtonBounceTrigger) {
                 Button {
                     withAnimation(.spring()) { viewModel.menuExpanded.toggle() }
                 } label: {
                     menuButtonImage
                 }
+                .buttonStyle(.plain)
                 .padding()
                 .foregroundColor(.white)
                 .frame(width: connectionButtonSize, height: connectionButtonSize)
-                .glassEffect(.identity, in: .circle)
-                .glassEffectID("progressBar", in: glassNamespace)
-                .glassEffectTransition(.matchedGeometry)
                 .background(menuButtonColor)
-                .clipShape(Circle()))
+                .clipShape(Circle())
             }
-//        }
+            .contentShape(Circle())
+            .glassEffect(.identity, in: .circle)
+            .glassEffectID("progressBar", in: glassNamespace)
+            .glassEffectTransition(.matchedGeometry)
+        }
     }
 
     // MARK: - Menu Button Appearance
@@ -675,4 +684,25 @@ struct GlassElementModifier: ViewModifier {
         MatrixConnectionView(viewModel: PreviewMatrixConnectionViewModel())
             .offset(x: -8, y: 8)
     }
+}
+
+#Preview("Bounce") {
+    struct BouncePreview: View {
+        @StateObject var viewModel = PreviewMatrixConnectionViewModel()
+
+        var body: some View {
+            VStack {
+                MatrixConnectionView(viewModel: viewModel)
+
+                Button("Bounce") {
+                    viewModel.animateBounce()
+                }
+                .padding()
+                .background(Color.calliopeGreen)
+                .foregroundColor(.white)
+                .cornerRadius(12)
+            }
+        }
+    }
+    return BouncePreview()
 }
