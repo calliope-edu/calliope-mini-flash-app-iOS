@@ -12,6 +12,10 @@ import UniformTypeIdentifiers
 
 struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: View {
     @ObservedObject var viewModel: ViewModelType
+    @State private var displayedIsUsb = false
+    @State private var contentVisible = true
+
+    private let totalAnimationDuration: Double = 0.2
 
     var body: some View {
         ZStack {
@@ -26,12 +30,45 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
 
                     Toggle("Connect with cable", isOn: $viewModel.isInUsbMode).frame(maxWidth: 300).padding(.bottom, 8)
 
-                    if viewModel.isInUsbMode {
-                        selectUSBCalliopeButton
-                    } else {
-                        bluetoothMenu
+                    VStack(spacing: 0) {
+                        if displayedIsUsb {
+                            selectUSBCalliopeButton
+                        } else {
+                            bluetoothMenu
+                        }
                     }
-                }.frame(width: 250)
+                    .opacity(contentVisible ? 1 : 0)
+                }
+                .frame(width: 250)
+            }
+        }
+        .onAppear { displayedIsUsb = viewModel.isInUsbMode }
+        .onChange(of: viewModel.isInUsbMode) { newValue in
+            animateSwitch(to: newValue)
+        }
+    }
+
+    private func animateSwitch(to isUsb: Bool) {
+        guard isUsb != displayedIsUsb else { return }
+
+        let fadeDuration = totalAnimationDuration * 0.2
+        let resizeDelay = fadeDuration
+        let resizeDuration = totalAnimationDuration * 0.6
+        let fadeInDelay = resizeDelay + resizeDuration * 0.4
+
+        withAnimation(.easeOut(duration: fadeDuration)) {
+            contentVisible = false
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + resizeDelay) {
+            withAnimation(.spring(response: resizeDuration, dampingFraction: 0.8)) {
+                displayedIsUsb = isUsb
+            }
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + fadeInDelay) {
+                withAnimation(.easeIn(duration: fadeDuration)) {
+                    contentVisible = true
+                }
             }
         }
     }
