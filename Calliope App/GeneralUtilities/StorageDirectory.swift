@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class StorageDirectory {
 
@@ -32,9 +33,14 @@ final class StorageDirectory {
     }
 
     /// Returns the Documents directory for storing user files.
-    /// Uses the iCloud container (visible in Files app under iCloud Drive)
-    /// on both personal and shared iPads. Falls back to local Documents
-    /// only when iCloud is genuinely unavailable.
+    ///
+    /// - Shared iPad: the iCloud container (Files → iCloud Drive → "Calliope mini
+    ///   App", per `NSUbiquitousContainerName`), so a user's programs travel with
+    ///   their Managed Apple ID instead of staying on one shared device.
+    /// - Every other device: the app's own on-device Documents folder, which the
+    ///   Files app shows under "On My iPad" → "Calliope mini" (the app's
+    ///   `CFBundleDisplayName`). This is the original location and stays the
+    ///   default — a personal iPad must not silently move user files to iCloud.
     func documentsDirectory() throws -> URL {
         lock.lock()
         defer { lock.unlock() }
@@ -78,15 +84,21 @@ final class StorageDirectory {
     private func resolveDirectory() throws -> URL {
         let fm = FileManager.default
 
-        if let containerURL = fm.url(forUbiquityContainerIdentifier: Self.containerIdentifier) {
+        // iCloud is the Shared-iPad case only. On a personal device the files
+        // belong in the on-device "Calliope mini" folder.
+        if UIDevice.current.isSharedIPad,
+           let containerURL = fm.url(forUbiquityContainerIdentifier: Self.containerIdentifier) {
             let icloudDocs = containerURL.appendingPathComponent("Documents")
             if !fm.fileExists(atPath: icloudDocs.path) {
                 try fm.createDirectory(at: icloudDocs, withIntermediateDirectories: true)
             }
+            LogNotify.log("Shared iPad - storing programs in iCloud container")
             return icloudDocs
         }
 
-        LogNotify.log("iCloud container unavailable — falling back to local Documents")
+        if UIDevice.current.isSharedIPad {
+            LogNotify.log("Shared iPad but iCloud container unavailable - falling back to local Documents")
+        }
         return try fm.url(
             for: .documentDirectory,
             in: .userDomainMask,

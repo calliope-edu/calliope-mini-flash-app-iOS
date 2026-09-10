@@ -45,6 +45,28 @@ enum HexFileStoreDialog {
         alertPublisher.alert = getStandardHexUI(alertPublisher: alertPublisher, hexFile: hexFile, notSaved: notSaved)
     }
 
+    /// "Share" — hands the picked file to the system share sheet.
+    private static func presentShareSheet(for hexFile: URL) {
+        guard let presenter = topMostViewController() else { return }
+        let activityViewController = UIActivityViewController(activityItems: [hexFile], applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = presenter.view
+        activityViewController.popoverPresentationController?.sourceRect = CGRect(
+            x: presenter.view.bounds.midX, y: presenter.view.bounds.midY, width: 0, height: 0)
+        presenter.present(activityViewController, animated: true)
+    }
+
+    /// Walks the active scene's key window to find the top-most presented
+    /// view controller, since there is no stored UIKit controller reference
+    /// to present from in the SwiftUI-driven flow.
+    private static func topMostViewController() -> UIViewController? {
+        let scenes = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .filter { $0.activationState == .foregroundActive }
+        let keyWindow = scenes.flatMap { $0.windows }.first(where: { $0.isKeyWindow })
+            ?? scenes.flatMap { $0.windows }.first
+        return keyWindow?.rootViewController?.topMostPresented()
+    }
+
     /// Alert für Arcade-Dateien wenn KEIN USB verbunden ist
     private static func getArcadeUSBRequiredAlert(
         alertPublisher: Alertable,
@@ -53,8 +75,8 @@ enum HexFileStoreDialog {
         saveCompleted: ((Hex) -> Void)? = nil
     ) -> AppAlert {
         return .arcadeUSBRequired(
-            saved: {
-                saveFileWithNameAlert(alertPublisher: alertPublisher, hexFile: hexFile, notSaved: notSaved, saveCompleted: saveCompleted)
+            shared: {
+                presentShareSheet(for: hexFile)
             },
             closed: {
                 notSaved(nil)
@@ -70,8 +92,8 @@ enum HexFileStoreDialog {
         saveCompleted: ((Hex) -> Void)? = nil
     ) -> AppAlert {
         return .arcadeTransfer(
-            saved: {
-                saveFileWithNameAlert(alertPublisher: alertPublisher, hexFile: hexFile, notSaved: notSaved, saveCompleted: saveCompleted)
+            shared: {
+                presentShareSheet(for: hexFile)
             },
             transfer: {
                 let program = DefaultProgram(
@@ -96,9 +118,15 @@ enum HexFileStoreDialog {
         notSaved: @escaping (Error?) -> Void,
         saveCompleted: ((Hex) -> Void)? = nil
     ) -> AppAlert {
+        // "(USB)" while a USB Calliope is the active connection, so it is
+        // obvious which way the program takes.
+        let transferTitle = MatrixConnectionViewModel.instance.isUSBConnected()
+            ? NSLocalizedString("Übertragen (USB)", comment: "")
+            : NSLocalizedString("Übertragen", comment: "")
         return .standardHexUI(
-            saved: {
-                saveFileWithNameAlert(alertPublisher: alertPublisher, hexFile: hexFile, notSaved: notSaved, saveCompleted: saveCompleted)
+            transferTitle: transferTitle,
+            shared: {
+                presentShareSheet(for: hexFile)
             },
             transfer: {
                 let program = DefaultProgram(
@@ -112,43 +140,5 @@ enum HexFileStoreDialog {
             },
             closed: {}
         )
-    }
-
-    private static func saveFileWithNameAlert(
-        alertPublisher: Alertable,
-        hexFile: URL,
-        notSaved: @escaping (Error?) -> Void,
-        saveCompleted: ((Hex) -> Void)? = nil
-    ) {
-        let name = hexFile.deletingPathExtension().lastPathComponent
-
-        let data: Data
-        do {
-            data = try hexFile.asData()
-        } catch {
-            notSaved(error)
-            return
-        }
-
-        let alert = AppAlert.saveFileWithName(
-            save: { enteredName in
-                LogNotify.debug(enteredName)
-                do {
-                    guard let file = try HexFileManager.store(name: enteredName, data: data) else {
-                        return
-                    }
-                    saveCompleted?(file)
-                } catch {
-                    notSaved(error)
-                }
-            },
-            dontSave: { _ in
-                notSaved(nil)
-            },
-            defaultName: name
-        )
-        DispatchQueue.main.async {
-            alertPublisher.alert = alert
-        }
     }
 }

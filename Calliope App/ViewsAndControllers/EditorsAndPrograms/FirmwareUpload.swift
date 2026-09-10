@@ -188,6 +188,62 @@ class FirmwareUpload {
         return keyWindow?.rootViewController?.topMostPresented()
     }
 
+    /// DIAGNOSTICS (Shared-iPad USB investigation): shows what happened during
+    /// the last transfer attempt, including DAPLink's verdict, plus an action to
+    /// share the full log. Remove together with
+    /// `USBCalliope.showTransferDiagnostics` once the cause is understood.
+    static func presentTransferDiagnosticsAlert(verdict: String) {
+        let excerpt = LogNotify.recentLines(
+            matching: ["Export picker", "Editor download", "USB Transfer"], limit: 12)
+
+        let alert = UIAlertController(
+            title: NSLocalizedString("Transfer diagnostics", comment: "Diagnostics alert title"),
+            message: verdict + "\n\n" + excerpt,
+            preferredStyle: .alert)
+        alert.addAction(UIAlertAction(
+            title: NSLocalizedString("Share log", comment: "Action to share the in-app log"),
+            style: .default) { _ in
+                FirmwareUpload.presentLogShareSheet()
+            })
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel))
+
+        guard let presenter = topMostViewController() else { return }
+        presenter.present(alert, animated: true)
+    }
+
+    /// Failure alert for a USB transfer, with an action to share the recent log.
+    ///
+    /// A Shared iPad can only be updated through TestFlight, where no console
+    /// output exists — so the log has to be reachable from inside the app for a
+    /// problem to be reportable at all.
+    static func makeUsbTransferFailureAlert(message: String) -> UIAlertController {
+        let alert = UIAlertController(
+            title: NSLocalizedString("Upload failed!", comment: ""),
+            message: message,
+            preferredStyle: .alert)
+        alert.addAction(UIAlertAction(
+            title: NSLocalizedString("Share log", comment: "Action to share the in-app log"),
+            style: .default) { _ in
+                FirmwareUpload.presentLogShareSheet()
+            })
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel))
+        return alert
+    }
+
+    /// Offers the buffered log through the normal share sheet.
+    private static func presentLogShareSheet() {
+        guard let presenter = topMostViewController() else { return }
+
+        let activityController = UIActivityViewController(
+            activityItems: [LogNotify.recentLog], applicationActivities: nil)
+        // On iPad an activity sheet must have an anchor, otherwise it traps.
+        activityController.popoverPresentationController?.sourceView = presenter.view
+        activityController.popoverPresentationController?.sourceRect = CGRect(
+            x: presenter.view.bounds.midX, y: presenter.view.bounds.midY, width: 0, height: 0)
+        activityController.popoverPresentationController?.permittedArrowDirections = []
+        presenter.present(activityController, animated: true)
+    }
+
     private static func makeHexMismatchAlert(informationLink: String) -> UIAlertController {
         let alert = UIAlertController(
             title: NSLocalizedString("Upload failed", comment: ""),
@@ -319,6 +375,19 @@ class FirmwareUpload {
 
     func showUploadError(_ error: Error) {
         LogNotify.error("Upload failed")
+
+        // Export-picker mode has no progress alert to write the error into, so
+        // surface it as its own alert — otherwise the failure would be silent.
+        if usesExportPicker {
+            // Export-picker failures reported through this path are connection /
+            // picker problems. A rejected transfer (DAPLink FAIL.TXT) is detected
+            // asynchronously in USBCalliope and shows the same alert from there.
+            presentStandalone(FirmwareUpload.makeUsbTransferFailureAlert(
+                message: NSLocalizedString("USB transfer failed retry instructions", comment: "")))
+            failed()
+            return
+        }
+
         let failedAlert: AppAlert
         // TODO: Do these two different errors make sense and should the raw error be outputted?
         if calliope is USBCalliope {

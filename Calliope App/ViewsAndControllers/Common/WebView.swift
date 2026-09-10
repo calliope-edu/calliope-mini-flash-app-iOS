@@ -27,7 +27,7 @@ struct WebView: UIViewRepresentable {
         }
         #endif
         if url != nil {
-            let request = URLRequest(url: url!)
+            let request = URLRequest(url: url!.withCalliopeAppLayout)
             webView.load(request)
         } else if html != nil {
             webView.loadHTMLString(html!, baseURL: nil)

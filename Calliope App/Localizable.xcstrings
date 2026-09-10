@@ -311,8 +311,16 @@
     "Arcade-Dateien können nur per USB übertragen werden." : {
 
     },
-    "Arcade-Dateien können nur per USB-Kabel übertragen werden. Bitte verbinde deinen Calliope mini per USB oder sichere die Datei für später." : {
-
+    "Arcade-Dateien können nur per USB-Kabel übertragen werden. Bitte verbinde deinen Calliope mini per USB oder teile die Datei." : {
+      "comment" : "Arcade file picked but no USB connection",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arcade files can only be transferred via USB cable. Please connect your Calliope mini via USB or share the file."
+          }
+        }
+      }
     },
     "Arcade-Programme können nur per USB auf den Calliope mini übertragen werden.\n\nBitte verbinde den Calliope mini per USB-Kabel und wähle den MINI-Ordner aus." : {
       "comment" : "Arcade programs can only be transferred via USB"
@@ -352,6 +360,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vor jeder Kopie einer Datei muss der Calliope mini ausgewählt werden."
+          }
+        }
+      }
+    },
+    "Before every file copy you have to select the Calliope mini. If there are problems copying, disconnect the Calliope mini from the device and connect it again before copying." : {
+      "comment" : "USB connection alert body on older iPadOS",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vor jeder Kopie einer Datei muss der Calliope mini ausgewählt werden. Sollte es Kopierprobleme geben, muss der Calliope mini vor dem Kopieren vom Gerät getrennt und erneut verbunden werden."
           }
         }
       }
@@ -817,7 +836,6 @@
     },
     "Continue" : {
       "comment" : "Continue button",
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1829,8 +1847,27 @@
         }
       }
     },
-    "Möchtest du die Arcade-Datei auf deinen Calliope mini übertragen oder sichern?" : {
-
+    "Möchtest du das Programm auf deinen Calliope mini übertragen oder teilen?" : {
+      "comment" : "Program picked from the file picker: transfer or share",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Do you want to transfer the program to your Calliope mini or share it?"
+          }
+        }
+      }
+    },
+    "Möchtest du die Arcade-Datei auf deinen Calliope mini übertragen oder teilen?" : {
+      "comment" : "Arcade file picked: transfer via USB or share",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Do you want to transfer the Arcade file to your Calliope mini or share it?"
+          }
+        }
+      }
     },
     "Möchtest du die Datei in MakeCode öffnen oder direkt auf deinen Calliope mini übertragen?" : {
       "extractionState" : "manual",
@@ -1844,6 +1881,7 @@
       }
     },
     "Möchtest du die Datei sichern oder auf deinen Calliope mini übertragen?" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2053,6 +2091,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "OK"
+          }
+        }
+      }
+    },
+    "On a Shared iPad the Calliope mini has to be selected for every file copy. Transferring over the cable is not reliable here, so we recommend transferring via Bluetooth." : {
+      "comment" : "USB connection alert body on Shared iPad",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auf einem geteilten iPad (Shared iPad) muss der Calliope mini vor jeder Kopie einer Datei ausgewählt werden. Die Übertragung per Kabel ist hier nicht zuverlässig, wir empfehlen daher die Übertragung per Bluetooth."
           }
         }
       }
@@ -2537,6 +2586,7 @@
       }
     },
     "Share" : {
+      "comment" : "Teilen",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2546,7 +2596,19 @@
         }
       }
     },
+    "Share log" : {
+      "comment" : "Action to share the in-app log",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log teilen"
+          }
+        }
+      }
+    },
     "Sichern" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2639,6 +2701,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Temperatur"
+          }
+        }
+      }
+    },
+    "The Calliope mini accepted the file." : {
+      "comment" : "Diagnostics verdict, success",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Calliope mini hat die Datei angenommen."
           }
         }
       }
@@ -2752,6 +2825,17 @@
     "The program is not ready. The reason is: %@" : {
 
     },
+    "The result cannot be verified: the app is not allowed to read the Calliope mini." : {
+      "comment" : "Diagnostics verdict, not verifiable",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Ergebnis lässt sich nicht prüfen: Die App darf den Calliope mini nicht lesen."
+          }
+        }
+      }
+    },
     "There is no connected calliope in DFU mode" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2775,7 +2859,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Es ist kein Calliope mini im DFU-Modus verbunden"
+            "value" : "Es ist kein Calliope mini verbunden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There is no Calliope mini connected"
           }
         }
       }
@@ -2819,6 +2909,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Übertragen"
+          }
+        }
+      }
+    },
+    "Transfer diagnostics" : {
+      "comment" : "Diagnostics alert title",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diagnose: Kopierversuch"
           }
         }
       }
@@ -2882,7 +2983,15 @@
       }
     },
     "Übertragen (USB)" : {
-
+      "comment" : "Transfer action while a USB Calliope mini is connected",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transfer (USB)"
+          }
+        }
+      }
     },
     "Übertragung abgeschlossen" : {
       "extractionState" : "manual",
@@ -2938,7 +3047,6 @@
       }
     },
     "Upload failed!" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2994,12 +3102,44 @@
     },
     "USB connection" : {
       "comment" : "USB connection alert title on Shared iPad",
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "USB Verbindung"
+          }
+        }
+      }
+    },
+    "USB transfer failed retry instructions" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Datei konnte nicht übertragen werden. Trenne den Calliope mini und verbinde ihn erneut, bevor du das nächste Programm überträgst."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The file could not be transferred. Unplug the Calliope mini and plug it in again before you transfer the next program."
+          }
+        }
+      }
+    },
+    "USB transfer verification failed retry instructions" : {
+      "comment" : "Shown when DAPLink reported a FAIL.TXT for the transferred hex",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Es gab einen Fehler bei der Dateiübertragung. Bitte versuche es erneut. Sollte der Fehler weiterhin auftreten, trenne und verbinde das Datenkabel."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There was an error transferring the file. Please try again. If the error persists, unplug the data cable and plug it back in."
           }
         }
       }

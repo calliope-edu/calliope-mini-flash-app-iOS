@@ -22,11 +22,20 @@ class DataController: NSObject, CLLocationManagerDelegate {
 //    var getLastLocation: (() -> CLLocationCoordinate2D?)?
     let locationManager = CLLocationManager()
 
+    /// The Bluetooth-connected Calliope mini, if it can deliver sensor values.
+    /// Deliberately not `usageReadyCalliope`: that follows the USB/Bluetooth
+    /// switch and reports the USB device (or nil) while the switch is on USB,
+    /// even though sensor values only ever come over Bluetooth.
+    private static var sensorCapableCalliope: CalliopeAPI? {
+        MatrixConnectionViewModel.instance.connector
+            .connectedCalliope?.usageReadyCalliope as? CalliopeAPI
+    }
+
     override init() {
-        guard let connectedCalliope = MatrixConnectionViewModel.instance.usageReadyCalliope else {
+        guard let connectedCalliope = DataController.sensorCapableCalliope else {
             return
         }
-        self.apiCalliope = connectedCalliope as? CalliopeAPI
+        self.apiCalliope = connectedCalliope
         self.availableSensors =
             apiCalliope?.discoveredOptionalServices.compactMap { key in
                 return SensorUtility.serviceSensorMap[key]
@@ -34,7 +43,7 @@ class DataController: NSObject, CLLocationManagerDelegate {
     }
 
     func getAvailableSensors() -> [Sensor] {
-        apiCalliope = MatrixConnectionViewModel.instance.usageReadyCalliope as? CalliopeAPI
+        apiCalliope = DataController.sensorCapableCalliope
         return apiCalliope?.discoveredOptionalServices.compactMap { key in
             return SensorUtility.serviceSensorMap[key]
         } ?? []
@@ -67,6 +76,13 @@ class DataController: NSObject, CLLocationManagerDelegate {
             }
             self.isRecording = true
             DataController.activeServices.append(chart.sensorType ?? .empty)
+        } else {
+            // Nothing was started: the Calliope mini does not expose this
+            // service. A micro:bit/Calliope only advertises the BLE services its
+            // running program actually uses, so a program without the Bluetooth
+            // UART service means no UART sensor data — worth seeing in the log,
+            // because the UI otherwise just stays empty.
+            LogNotify.log("Sensor \(String(describing: chart.sensorType)) is not among the available sensors \(self.getAvailableSensors().map { $0.calliopeService }) - not recording")
         }
     }
     
@@ -134,8 +150,22 @@ class DataController: NSObject, CLLocationManagerDelegate {
                 }
                 var returnValues: [(String, Double, Double)] = []
                 for element in uartValue {
+                    // A line has to look like "name:value". Anything else — an
+                    // empty packet, a bare number, a line split across two BLE
+                    // packets (UART carries 20 bytes at a time) — used to crash
+                    // here on `stringList[1]`.
                     let stringList = element.split(separator: ":")
-                    returnValues.append((String(stringList[0]), timestamp, Double(stringList[1].trimmingCharacters(in: .whitespacesAndNewlines)) ?? 0.0))
+                    guard stringList.count >= 2 else {
+                        LogNotify.log("UART sensor: ignoring line without \"name:value\" format: \(element)")
+                        continue
+                    }
+                    let axis = String(stringList[0])
+                    let rawValue = stringList[1].trimmingCharacters(in: .whitespacesAndNewlines)
+                    guard let numericValue = Double(rawValue) else {
+                        LogNotify.log("UART sensor: value for \(axis) is not a number: \(rawValue)")
+                        continue
+                    }
+                    returnValues.append((axis, timestamp, numericValue))
                 }
                 self.uartValue.removeAll()
                 return returnValues

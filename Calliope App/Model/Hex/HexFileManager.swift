@@ -47,12 +47,17 @@ final class HexFileManager {
             at: dir,
             includingPropertiesForKeys: [.ubiquitousItemDownloadingStatusKey],
             options: .skipsSubdirectoryDescendants)
+        // Programs are not hex-only: the Python editor saves .py, the Blocks
+        // editor .sb3, and editors can save images (.png). They all belong in the
+        // list — only transferring is restricted to hex (see
+        // `FileExtension.isFlashable`).
+        let listed = Set(FileExtension.listedInPrograms.map { $0.rawValue })
         return try urls.filter({ url -> Bool in
-            return url.absoluteString.hasSuffix(".hex")
+            return listed.contains(url.pathExtension.lowercased())
         })
         .map { url -> HexFile in
             StorageDirectory.shared.startDownloadIfNeeded(at: url)
-            let name = String(url.lastPathComponent.dropLast(4))
+            let name = url.deletingPathExtension().lastPathComponent
             let date = try dateFor(url:url)
             return HexFile(url: url, name: name, date: date)
         }.sorted(by: { (a,b) -> Bool in
@@ -60,10 +65,20 @@ final class HexFileManager {
         })
     }
     
+    /// Legacy entry point. `isHexFile: false` means "an image", and it keeps
+    /// returning `nil` for it, because callers use that to decide NOT to flash
+    /// what they just saved.
     public static func store(name: String, data: Data, overrideDuplicate: Bool = true, isHexFile: Bool = true) throws -> HexFile? {
+        let stored = try store(name: name, data: data, fileExtension: isHexFile ? .hex : .png, overrideDuplicate: overrideDuplicate)
+        return isHexFile ? stored : nil
+    }
+
+    /// Writes a program file of any listed type into the programs directory and
+    /// returns it, so non-hex saves (.py, .sb3, .png) show up in the list too.
+    @discardableResult
+    public static func store(name: String, data: Data, fileExtension: FileExtension, overrideDuplicate: Bool = true) throws -> HexFile? {
         let dir = try self.dir()
-        let fileSuffix = isHexFile ? ".hex" : ".png"
-        let file = dir.appendingPathComponent(name + fileSuffix)
+        let file = dir.appendingPathComponent(name + "." + fileExtension.rawValue)
         LogNotify.log("writing file \(file)")
         if !overrideDuplicate && FileManager.default.fileExists(atPath: file.path) {
             throw NSLocalizedString("File already exists", comment: "")
@@ -71,17 +86,14 @@ final class HexFileManager {
         do {
             try data.write(to: file)
             // Clear filtered hex cache when new hex file is written
-            if isHexFile {
+            if fileExtension == .hex {
                 PartialFlashManager.clearCache()
             }
         } catch {
             LogNotify.log("\(error)")
-        }
-        if !isHexFile {
             return nil
         }
-        let date = Date()
-        let hexFile = HexFile(url: file, name: name, date: date)
+        let hexFile = HexFile(url: file, name: name, date: Date())
         notifyChange()
         return hexFile
     }
@@ -94,7 +106,9 @@ final class HexFileManager {
     
     public static func rename(file: HexFile) throws -> URL {
         LogNotify.log("renaming file \(file)")
-        let newURL = file.url.deletingLastPathComponent().appendingPathComponent(file.name + ".hex")
+        // Keep the original extension — a .py must not become a .hex on rename.
+        let ext = file.url.pathExtension.isEmpty ? "hex" : file.url.pathExtension
+        let newURL = file.url.deletingLastPathComponent().appendingPathComponent(file.name + "." + ext)
         try FileManager.default.moveItem(at: file.url, to: newURL)
         notifyChange()
         return newURL

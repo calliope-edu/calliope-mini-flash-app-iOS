@@ -259,11 +259,16 @@ struct ProgramTile<viewModelType: EditorsAndProgramsViewModelProtocol & Observab
                 Text(config.lastUsed.formatted()).foregroundStyle(Color.white)
             }
             Spacer()
-            Image("button_icon_upload")
-                .resizable().scaledToFit().frame(maxWidth: 30)
-                .onTapGesture {
-                    editorsAndProgramsViewModel.downloadProgram(program: config)
-                }
+            // Only a hex can go to the mini. A stored Python source can be
+            // shared, renamed and deleted, but offering "Transfer" for it
+            // would fail, so the upload icon is hidden for it.
+            if config.hexFile.isFlashable {
+                Image("button_icon_upload")
+                    .resizable().scaledToFit().frame(maxWidth: 30)
+                    .onTapGesture {
+                        editorsAndProgramsViewModel.downloadProgram(program: config)
+                    }
+            }
         }
         .frame(maxWidth: 250)
         .contentShape(Rectangle())
@@ -279,7 +284,10 @@ struct ProgramTile<viewModelType: EditorsAndProgramsViewModelProtocol & Observab
             isPresented: $showMenu,
             titleVisibility: .visible
         ) {
-            Button("Transfer", systemImage: "arrow.left.arrow.right") { editorsAndProgramsViewModel.downloadProgram(program: config) }
+            // Same rule as the upload icon: transferring is hex-only.
+            if config.hexFile.isFlashable {
+                Button("Transfer", systemImage: "arrow.left.arrow.right") { editorsAndProgramsViewModel.downloadProgram(program: config) }
+            }
             ShareLink("Share", item: config.hexFile.url)
             Button("Rename", systemImage: "rectangle.and.pencil.and.ellipsis") { editorsAndProgramsViewModel.renameProgram(program: config) }
             Button("Delete", systemImage: "trash", role: .destructive) { editorsAndProgramsViewModel.deleteProgram(program: config) }

@@ -56,9 +56,9 @@ private struct AlertGalleryPreview: View {
     )
 
     let entries: [AlertGalleryEntry] = [
-        AlertGalleryEntry(name: "arcadeUSBRequired", alert: .arcadeUSBRequired(saved: {}, closed: {})),
-        AlertGalleryEntry(name: "arcadeTransfer", alert: .arcadeTransfer(saved: {}, transfer: {}, closed: {})),
-        AlertGalleryEntry(name: "standardHexUI", alert: .standardHexUI(saved: {}, transfer: {}, closed: {})),
+        AlertGalleryEntry(name: "arcadeUSBRequired", alert: .arcadeUSBRequired(shared: {}, closed: {})),
+        AlertGalleryEntry(name: "arcadeTransfer", alert: .arcadeTransfer(shared: {}, transfer: {}, closed: {})),
+        AlertGalleryEntry(name: "standardHexUI", alert: .standardHexUI(transferTitle: "Übertragen", shared: {}, transfer: {}, closed: {})),
         AlertGalleryEntry(
             name: "saveFileWithName",
             alert: .saveFileWithName(save: { _ in }, dontSave: { _ in }, defaultName: "my_program")

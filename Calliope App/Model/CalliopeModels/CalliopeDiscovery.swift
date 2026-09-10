@@ -6,6 +6,7 @@
 //
 
 import CoreBluetooth
+import UIKit
 
 class CalliopeDiscovery: NSObject, CBCentralManagerDelegate {
     
@@ -331,11 +332,10 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate {
             // Don't clear connectedCalliope - let didDisconnectPeripheral handle reconnection
         }
     }
-    
     func startUsbConnect() {
         state = .usbConnecting
     }
-    
+
     func handleUSBFolderPicked(_ url: URL) {
         let discoveredCalliope = DiscoveredUSBDevice(url: url, name: CalliopeDiscovery.usbCalliopeName)
 
@@ -352,7 +352,23 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate {
         // Verbinde automatisch mit dem ausgewählten USB-Gerät
         connectToCalliope(discoveredCalliope)
     }
-    
+
+    /// Connects a USB Calliope that has no folder URL: the destination is
+    /// picked per flash through `USBCalliope`'s export picker instead.
+    ///
+    /// Used wherever the destination has to be picked per flash — Shared iPad
+    /// and iPadOS below 26 (see `UIDevice.usbNeedsExportPicker`) — in place of
+    /// `handleUSBFolderPicked`, which needs a one-time folder URL the sandbox
+    /// will not grant there.
+    func connectExportPickerUsbCalliope() {
+        LogNotify.log("Folder picker unavailable (shared iPad: \(UIDevice.current.isSharedIPad), iOS \(ProcessInfo.processInfo.operatingSystemVersion.majorVersion)) - using export-picker flow")
+        let discovered = DiscoveredUSBDevice(exportPickerName: CalliopeDiscovery.usbCalliopeName)
+        disconnectFromCalliope()
+        discovered.state = .discovered
+        self.discoveredCalliopes.updateValue(discovered, forKey: CalliopeDiscovery.usbCalliopeName)
+        self.connectToCalliope(discovered)
+    }
+
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         guard let name = discoveredCalliopeUUIDNameMap[peripheral.identifier],
               let calliope = discoveredCalliopes[name]

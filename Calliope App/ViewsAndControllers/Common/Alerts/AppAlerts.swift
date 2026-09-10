@@ -14,39 +14,41 @@ import SwiftUI
 // AppAlert(title:message:actions:) or AppAlert(title:message:textField:) directly.
 
 extension AppAlert {
-    static func arcadeUSBRequired(saved: @escaping () -> Void, closed: @escaping () -> Void) -> AppAlert {
+    static func arcadeUSBRequired(shared: @escaping () -> Void, closed: @escaping () -> Void) -> AppAlert {
         AppAlert(
             title: NSLocalizedString("Arcade-Datei", comment: ""),
             message: NSLocalizedString(
-                "Arcade-Dateien können nur per USB-Kabel übertragen werden. Bitte verbinde deinen Calliope mini per USB oder sichere die Datei für später.",
+                "Arcade-Dateien können nur per USB-Kabel übertragen werden. Bitte verbinde deinen Calliope mini per USB oder teile die Datei.",
                 comment: ""
             ),
             actions: [
-                StandardAlertAction(NSLocalizedString("Sichern", comment: ""), handler: saved),
+                StandardAlertAction(NSLocalizedString("Share", comment: "Teilen"), handler: shared),
                 StandardAlertAction(NSLocalizedString("Schließen", comment: ""), role: .cancel, handler: closed),
             ]
         )
     }
 
-    static func arcadeTransfer(saved: @escaping () -> Void, transfer: @escaping () -> Void, closed: @escaping () -> Void) -> AppAlert {
+    static func arcadeTransfer(shared: @escaping () -> Void, transfer: @escaping () -> Void, closed: @escaping () -> Void) -> AppAlert {
         AppAlert(
             title: NSLocalizedString("Arcade-Datei", comment: ""),
-            message: NSLocalizedString("Möchtest du die Arcade-Datei auf deinen Calliope mini übertragen oder sichern?", comment: ""),
+            message: NSLocalizedString("Möchtest du die Arcade-Datei auf deinen Calliope mini übertragen oder teilen?", comment: ""),
             actions: [
-                StandardAlertAction(NSLocalizedString("Sichern", comment: ""), handler: saved),
                 StandardAlertAction(NSLocalizedString("Übertragen (USB)", comment: ""), handler: transfer),
+                StandardAlertAction(NSLocalizedString("Share", comment: "Teilen"), handler: shared),
                 StandardAlertAction(NSLocalizedString("Schließen", comment: ""), role: .cancel, handler: closed),
             ]
         )
     }
 
-    static func standardHexUI(saved: @escaping () -> Void, transfer: @escaping () -> Void, closed: @escaping () -> Void) -> AppAlert {
+    /// `transferTitle` carries "(USB)" while a USB Calliope is the active
+    /// connection, so it is obvious which way the program takes.
+    static func standardHexUI(transferTitle: String, shared: @escaping () -> Void, transfer: @escaping () -> Void, closed: @escaping () -> Void) -> AppAlert {
         AppAlert(
             title: NSLocalizedString("Datei geöffnet", comment: ""),
-            message: NSLocalizedString("Möchtest du die Datei sichern oder auf deinen Calliope mini übertragen?", comment: ""),
+            message: NSLocalizedString("Möchtest du das Programm auf deinen Calliope mini übertragen oder teilen?", comment: ""),
             actions: [
-                StandardAlertAction(NSLocalizedString("Sichern", comment: ""), handler: saved),
-                StandardAlertAction(NSLocalizedString("Übertragen", comment: ""), handler: transfer),
+                StandardAlertAction(transferTitle, handler: transfer),
+                StandardAlertAction(NSLocalizedString("Share", comment: "Teilen"), handler: shared),
                 StandardAlertAction(NSLocalizedString("Schließen", comment: ""), role: .cancel, handler: closed),
             ]
         )
@@ -306,6 +308,21 @@ extension AppAlert {
                 StandardAlertAction("OK", role: .cancel, handler: {}),
             ],
             severity: .warning
+        )
+    }
+
+    /// Heads-up shown once per session before the first per-flash export
+    /// picker (Shared iPad, or any iPadOS below 26 — see
+    /// `UIDevice.usbNeedsExportPicker`), since there the folder picker cannot
+    /// be used and the Calliope mini has to be reselected before every copy.
+    static func usbExportPickerNotice(isSharedIPad: Bool, continueAction: @escaping () -> Void) -> AppAlert {
+        let message = isSharedIPad
+            ? NSLocalizedString("On a Shared iPad the Calliope mini has to be selected for every file copy. Transferring over the cable is not reliable here, so we recommend transferring via Bluetooth.", comment: "USB connection alert body on Shared iPad")
+            : NSLocalizedString("Before every file copy you have to select the Calliope mini. If there are problems copying, disconnect the Calliope mini from the device and connect it again before copying.", comment: "USB connection alert body on older iPadOS")
+        return AppAlert(
+            title: NSLocalizedString("USB connection", comment: "USB connection alert title on Shared iPad"),
+            message: message,
+            actions: [StandardAlertAction(NSLocalizedString("Continue", comment: "Continue button"), handler: continueAction)]
         )
     }
 

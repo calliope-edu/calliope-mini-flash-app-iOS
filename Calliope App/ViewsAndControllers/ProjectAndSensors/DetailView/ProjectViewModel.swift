@@ -26,6 +26,18 @@ class ProjectViewModel: ObservableObject, Alertable {
     private var calliopeDisconnectedSubscription: NSObjectProtocol!
     private let onDelete: () -> Void
 
+    /// The Bluetooth-connected Calliope mini, if it can deliver sensor values.
+    ///
+    /// Recording reads `CalliopeAPI` characteristics, so it needs a Bluetooth
+    /// connection — a USB-connected Calliope has none. `usageReadyCalliope`
+    /// cannot be used for this check: it follows the USB/Bluetooth switch, so
+    /// while the switch sits on USB it reports the USB device (or nil) even
+    /// though a Bluetooth Calliope is connected and perfectly usable here.
+    private var sensorCapableCalliope: CalliopeAPI? {
+        MatrixConnectionViewModel.instance.connector
+            .connectedCalliope?.usageReadyCalliope as? CalliopeAPI
+    }
+
     func loadGroups() {
         guard project != nil else {
             LogNotify.error("Project was not set. This is not supposed to happen.")
@@ -61,7 +73,7 @@ class ProjectViewModel: ObservableObject, Alertable {
             }
         )
 
-        guard MatrixConnectionViewModel.instance.usageReadyCalliope != nil else {
+        guard sensorCapableCalliope != nil else {
             addGroupButtonEnabled = false
             showConnectCalliopeAlert()
             return

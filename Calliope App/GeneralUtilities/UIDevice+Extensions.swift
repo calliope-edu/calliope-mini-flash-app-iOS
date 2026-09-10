@@ -27,9 +27,9 @@ extension UIDevice {
     /// The USB flashing flow itself — switch, folder picker, copy — is identical
     /// to a personal iPad. This flag only adds the two Shared-iPad specifics:
     /// a one-time heads-up alert before the first pick
-    /// (`CalliopeDiscovery.initializeConnectionToUsbCalliope`), and dropping the
+    /// (`MatrixConnectionViewModel.startUsbConnect`), and dropping the
     /// connection plus switching USB back off after every copy
-    /// (`MatrixConnectionViewController.resetUsbConnectionAfterCopy`), because
+    /// (`MatrixConnectionViewModel.resetUsbConnectionAfterCopy`), because
     /// the picked volume's authorization does not survive a copy here.
     var isSharedIPad: Bool {
         if UserDefaults.standard.object(forKey: "sharedIPadOverride") != nil {
@@ -42,6 +42,24 @@ extension UIDevice {
             return flag
         }
         return false
+    }
+
+    /// True when the app cannot obtain a writable folder URL for a mounted USB
+    /// volume and therefore has to let the user pick the destination for every
+    /// single flash through an export picker:
+    ///
+    /// - **Shared iPad:** the managed sandbox silently refuses the folder pick —
+    ///   tapping "Öffnen" does nothing at all.
+    /// - **iPadOS < 26:** the picker puts a search field where the
+    ///   "Öffnen"/"Auswählen" button belongs, so the volume can never be
+    ///   confirmed.
+    ///
+    /// Single source of truth for both the picker route
+    /// (`MatrixConnectionViewModel.startUsbConnect`) and the teardown
+    /// after a copy (`MatrixConnectionViewModel.resetUsbConnectionAfterCopy`),
+    /// so the two can never disagree.
+    var usbNeedsExportPicker: Bool {
+        isSharedIPad || ProcessInfo.processInfo.operatingSystemVersion.majorVersion < 26
     }
 
     var hasUSBC: Bool {

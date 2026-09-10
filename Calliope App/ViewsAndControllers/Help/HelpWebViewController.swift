@@ -43,7 +43,7 @@ class HelpWebViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
     override func viewDidAppear(_ animated: Bool) {
         initialLoadPerformed = false
         showActivityIndicator(show: true)
-        webView.load(URLRequest(url: url))
+        webView.load(URLRequest(url: url.withCalliopeAppLayout))
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError: Error) {
