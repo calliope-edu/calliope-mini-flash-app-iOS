@@ -247,7 +247,16 @@ final class ArcadeEditor: Editor {
            let url = URL(string: s) {
             return EditorDownload(name: "arcade-" + UUID().uuidString, url: url, isHex: true)
         }
-        
+
+        // Image export (e.g. the project screenshot Arcade offers for saving).
+        // Marked as not-a-hex so the caller opens the save dialog instead of
+        // trying to flash it — without this the navigation was simply dropped
+        // and saving appeared to do nothing.
+        if s.matches(regex: "^([^:]*://)?data:image/png").count == 1,
+           let url = URL(string: s) {
+            return EditorDownload(name: "arcade-" + UUID().uuidString, url: url, isHex: false)
+        }
+
         return nil
     }
     

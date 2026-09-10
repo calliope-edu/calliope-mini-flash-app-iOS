@@ -334,29 +334,42 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         }
     }
 
-    /// Whether the one-time Shared-iPad USB heads-up alert has already been
-    /// shown in this app session. Reset on each app launch so a fresh user of
-    /// the shared device sees it once.
-    private var hasShownSharedUsbAlert = false
+    /// Whether the one-time heads-up alert before the per-flash export picker
+    /// has already been shown in this app session. Reset on each app launch so a
+    /// fresh user of a shared device sees it once.
+    private var hasShownUsbPickerAlert = false
+
+    /// Devices that cannot hand the app a writable folder URL for a mounted USB
+    /// volume and therefore have to pick the destination for every single flash
+    /// through an export picker:
+    ///
+    /// - **Shared iPad:** the managed sandbox silently refuses the folder pick —
+    ///   tapping "Öffnen" does nothing at all.
+    /// - **iPadOS < 26:** the picker puts a search field where the
+    ///   "Öffnen"/"Auswählen" button belongs, so the selected volume can never
+    ///   be confirmed.
+    ///
+    /// iPadOS 26+ on a personal device keeps the folder picker: the user picks
+    /// the volume once and the app then copies each hex itself, which is the
+    /// most reliable transfer we have.
 
     func initializeConnectionToUsbCalliope(view: UIViewController) {
         state = .usbConnecting
 
-        // Shared iPad: the folder picker is a dead end here — the system silently
-        // refuses to return a folder URL for a mounted USB volume, so tapping
-        // "Öffnen" does nothing at all. Instead connect a virtual USB Calliope
-        // and ask for the destination per flash via an export picker, which the
-        // managed sandbox does allow.
-        //
-        // The FIRST time in a session we show a heads-up alert explaining that
-        // the mini has to be picked for every copy; later activations connect
-        // straight away.
-        if UIDevice.current.isSharedIPad {
-            guard hasShownSharedUsbAlert else {
-                hasShownSharedUsbAlert = true
+        // Where no writable folder URL can be obtained (Shared iPad, or any
+        // iPadOS below 26), fall back to picking the destination per flash via
+        // the export picker. A one-time heads-up alert explains that before the
+        // first USB activation of a session; later activations connect straight
+        // away.
+        if UIDevice.current.usbNeedsExportPicker {
+            guard hasShownUsbPickerAlert else {
+                hasShownUsbPickerAlert = true
+                let message = UIDevice.current.isSharedIPad
+                    ? NSLocalizedString("On a Shared iPad the Calliope mini has to be selected for every file copy. Transferring over the cable is not reliable here, so we recommend transferring via Bluetooth.", comment: "USB connection alert body on Shared iPad")
+                    : NSLocalizedString("Before every file copy you have to select the Calliope mini. If there are problems copying, disconnect the Calliope mini from the device and connect it again before copying.", comment: "USB connection alert body on older iPadOS")
                 let alert = UIAlertController(
                     title: NSLocalizedString("USB connection", comment: "USB connection alert title on Shared iPad"),
-                    message: NSLocalizedString("On a Shared iPad the Calliope mini has to be selected for every file copy. After each transfer, unplug the Calliope mini from the iPad and plug it in again before you transfer the next program.", comment: "USB connection alert body on Shared iPad"),
+                    message: message,
                     preferredStyle: .alert)
                 alert.addAction(UIAlertAction(
                     title: NSLocalizedString("Continue", comment: "Continue button"),
@@ -377,7 +390,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
     /// Shared iPad: connect a USB Calliope that has no folder URL. The
     /// destination is picked per flash through `USBCalliope`'s export picker.
     private func connectExportPickerUsbCalliope() {
-        LogNotify.log("Shared iPad detected - skipping folder picker, using export-picker flow")
+        LogNotify.log("Folder picker unavailable (shared iPad: \(UIDevice.current.isSharedIPad), iOS \(ProcessInfo.processInfo.operatingSystemVersion.majorVersion)) - using export-picker flow")
         let discovered = DiscoveredUSBDevice(exportPickerName: CalliopeDiscovery.usbCalliopeName)
         disconnectFromCalliope()
         discovered.state = .discovered
@@ -396,16 +409,9 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         documentPicker.delegate = self
         documentPicker.allowsMultipleSelection = false
         documentPicker.shouldShowFileExtensions = true
-        // On older iPadOS versions (< 26) the picker, when shown as a sheet,
-        // hides the "Open"/"Auswählen" button because the navigation bar is
-        // too short — leaving the user unable to confirm a volume selection.
-        // Full-screen presentation gives the nav bar enough room for the
-        // action button. iPadOS 26+ uses a new layout that already shows the
-        // button reliably in the default sheet, so we don't force full-screen
-        // there and keep the system's native look.
-        if ProcessInfo.processInfo.operatingSystemVersion.majorVersion < 26 {
-            documentPicker.modalPresentationStyle = .fullScreen
-        }
+        // Only reached on iPadOS 26+ (see `usbNeedsExportPicker`), where the
+        // default sheet reliably shows the "Öffnen"/"Auswählen" button, so no
+        // full-screen override is needed here.
         view.present(documentPicker, animated: true, completion: nil)
     }
 

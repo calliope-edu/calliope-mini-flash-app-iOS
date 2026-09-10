@@ -43,6 +43,24 @@ extension UIDevice {
         return false
     }
 
+    /// True when the app cannot obtain a writable folder URL for a mounted USB
+    /// volume and therefore has to let the user pick the destination for every
+    /// single flash through an export picker:
+    ///
+    /// - **Shared iPad:** the managed sandbox silently refuses the folder pick —
+    ///   tapping "Öffnen" does nothing at all.
+    /// - **iPadOS < 26:** the picker puts a search field where the
+    ///   "Öffnen"/"Auswählen" button belongs, so the volume can never be
+    ///   confirmed.
+    ///
+    /// Single source of truth for both the picker route
+    /// (`CalliopeDiscovery.initializeConnectionToUsbCalliope`) and the teardown
+    /// after a copy (`MatrixConnectionViewController.resetUsbConnectionAfterCopy`),
+    /// so the two can never disagree.
+    var usbNeedsExportPicker: Bool {
+        isSharedIPad || ProcessInfo.processInfo.operatingSystemVersion.majorVersion < 26
+    }
+
     var hasUSBC: Bool {
         get {
             let pattern = "([A-z]+)(\\d+),(\\d+)"

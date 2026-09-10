@@ -31,7 +31,7 @@ class LofiAppDetailViewController: UIViewController, WKNavigationDelegate, WKUID
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = appTitle
-        self.webView.load(URLRequest(url: url))
+        self.webView.load(URLRequest(url: url.withCalliopeAppLayout))
         #if DEBUG
         if #available(iOS 16.4, *) {
             webView.isInspectable = true

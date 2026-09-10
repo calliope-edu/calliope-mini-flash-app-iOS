@@ -43,6 +43,52 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
     /// connection, so the next flash goes straight back to the picker.
     private(set) var lastExportCancelledByUser = false
 
+    /// DIAGNOSTICS (Shared-iPad USB investigation): when true, every transfer
+    /// attempt ends with an alert showing DAPLink's verdict and the relevant log
+    /// lines, with an option to share the full log. A Shared iPad can only be
+    /// updated through TestFlight, where no console output is available.
+    ///
+    /// Set to `false` to go back to showing an alert only when the transfer
+    /// actually failed.
+    static let showTransferDiagnostics = false
+
+    /// Whether the export picker is pointed at the volume used last
+    /// (`picker.directoryURL`), so the user does not have to navigate to MINI
+    /// every time.
+    ///
+    /// **Currently off.** Field observation: the first transfer after a fresh
+    /// install always worked, later ones often did not — and the pre-selection
+    /// is exactly what differs, because on the first run there is no stored path
+    /// yet. The stored path points into the file provider
+    /// (`…/LiveFiles/com.apple.filesystems.userfsd/<UUID>/`), and DAPLink
+    /// re-mounts its volume after every flash, so from the second transfer on
+    /// the picker can be aimed at a handle that no longer refers to the device.
+    ///
+    /// Set to `true` to bring the convenience back if this turns out not to be
+    /// the cause.
+    static let preselectLastExportDirectory = false
+
+    /// Directory the user last saved a hex into, remembered so the next export
+    /// picker opens straight in it instead of the default location — normally
+    /// the Calliope mini's "MINI" volume.
+    ///
+    /// iOS gives the app no way to learn about a mounted USB volume up front, so
+    /// this can only take effect from the second transfer onwards. A stale path
+    /// (volume unplugged, different device) is harmless: `directoryURL` is a
+    /// hint, and the picker falls back to its default location.
+    private static var lastExportDirectoryURL: URL? {
+        get {
+            guard let stored = UserDefaults.standard.string(forKey: "lastUsbExportDirectory") else {
+                return nil
+            }
+            return URL(string: stored)
+        }
+        set {
+            UserDefaults.standard.set(newValue?.absoluteString, forKey: "lastUsbExportDirectory")
+        }
+    }
+
+
     override var compatibleHexTypes: Set<HexParser.HexVersion> {
         return [.universal, .v3, .v3Shield, .v2, .arcade]
     }
@@ -132,6 +178,21 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
     private func uploadViaExportPicker(file: Hex,
                                        progressReceiver: DFUProgressDelegate?,
                                        statusDelegate: DFUServiceDelegate?) {
+        // Never stack a second picker on top of a running export. FirmwareUpload
+        // shows no progress sheet in export mode, so nothing else stops a second
+        // transfer request (a double tap on "Herunterladen", or the editor
+        // firing its download handler twice) from opening another picker. Two
+        // pickers meant two concurrent copies onto the same DAPLink volume,
+        // which the Calliope mini reports as a flash error.
+        if exportPickerInstance != nil {
+            LogNotify.log("Export picker: already on screen - ignoring duplicate transfer request")
+            // Treat like a cancel so FirmwareUpload releases its background task
+            // and idle timer quietly, without showing a failure alert.
+            lastExportCancelledByUser = true
+            statusDelegate?.dfuStateDidChange(to: .aborted)
+            return
+        }
+
         guard let presenter = resolvePresentingController() else {
             LogNotify.log("Export picker: no presenting view controller available")
             statusDelegate?.dfuStateDidChange(to: .aborted)
@@ -151,50 +212,153 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
         // Export the hex under a DAPLink-friendly name (short, lowercase, no
         // spaces) instead of the project name. The picker takes the suggested
         // filename straight from the URL, and a long name with spaces invites
-        // trouble on the FAT12 volume — plus, if that name already exists at the
-        // destination, iOS silently saves a duplicate ("… 2.hex") rather than
-        // replacing it, which DAPLink does not expect.
-        let exportURL = stagedExportURL(for: file) ?? file.calliopeUSBUrl
-        stagedExportFileURL = (exportURL == file.calliopeUSBUrl) ? nil : exportURL
+        // trouble on the FAT12 volume.
+        //
+        // Staging runs off the main thread because it may have to wait for the
+        // hex to be downloaded from iCloud first (Shared iPad keeps programs in
+        // the iCloud container).
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            let staged = self?.stagedExportURL(for: file)
 
-        let picker = UIDocumentPickerViewController(forExporting: [exportURL], asCopy: true)
-        picker.delegate = self
-        picker.allowsMultipleSelection = false
-        picker.shouldShowFileExtensions = true
-        picker.modalPresentationStyle = .fullScreen
-        exportPickerInstance = picker
+            DispatchQueue.main.async {
+                guard let self = self else { return }
 
-        DispatchQueue.main.async {
-            presenter.present(picker, animated: true)
+                // Deliberately NO fallback to `file.calliopeUSBUrl`. On Shared
+                // iPad that is the iCloud-backed original; handing it to the
+                // picker makes iOS materialise it while copying, which shows as
+                // an indeterminate spinner and frequently ends in a truncated
+                // transfer. Better to fail with a clear message than to open a
+                // picker whose copy cannot succeed.
+                guard let staged = staged else {
+                    LogNotify.log("Export picker: no usable local copy of the hex - aborting instead of exporting the iCloud original")
+                    self.lastExportCancelledByUser = false
+                    self.finishExportPicker(success: false)
+                    return
+                }
+                self.stagedExportFileURL = staged
+
+                let picker = UIDocumentPickerViewController(forExporting: [staged], asCopy: true)
+                picker.delegate = self
+                picker.allowsMultipleSelection = false
+                picker.shouldShowFileExtensions = true
+                picker.modalPresentationStyle = .fullScreen
+                // Open in the volume the user picked last (the MINI drive), so
+                // they do not have to navigate there again for every transfer.
+                if USBCalliope.preselectLastExportDirectory,
+                   let lastDirectory = USBCalliope.lastExportDirectoryURL {
+                    picker.directoryURL = lastDirectory
+                }
+                self.exportPickerInstance = picker
+                presenter.present(picker, animated: true)
+            }
         }
+    }
+
+    /// Forces an iCloud-backed file to download and waits (bounded) for it to
+    /// become available locally. Returns `true` if the file is materialised, or
+    /// was never an iCloud item. Blocks — call off the main queue.
+    private static func materializeIfNeeded(_ url: URL, timeout: TimeInterval = 15) -> Bool {
+        func isAvailable() -> Bool {
+            guard let values = try? url.resourceValues(forKeys: [.ubiquitousItemDownloadingStatusKey]),
+                  let status = values.ubiquitousItemDownloadingStatus else {
+                return true      // not an iCloud item — nothing to wait for
+            }
+            return status == .current
+        }
+
+        if isAvailable() { return true }
+
+        LogNotify.log("Export picker: hex is not available locally yet - requesting iCloud download")
+        try? FileManager.default.startDownloadingUbiquitousItem(at: url)
+
+        let deadline = Date().addingTimeInterval(timeout)
+        while Date() < deadline {
+            if isAvailable() {
+                LogNotify.log("Export picker: iCloud download finished")
+                return true
+            }
+            Thread.sleep(forTimeInterval: 0.2)
+        }
+        return isAvailable()
     }
 
     /// Copies the hex into a temporary folder under a DAPLink-friendly filename
     /// and returns that URL, or `nil` if staging failed (caller then exports the
     /// original). The staged file is removed once the picker finishes.
     private func stagedExportURL(for file: Hex) -> URL? {
+        USBCalliope.sweepStaleStagingDirectories()
+
         let source = file.calliopeUSBUrl
         let name = USBCalliope.sanitizedDAPLinkName(from: source.lastPathComponent)
         let stagingDir = FileManager.default.temporaryDirectory
             .appendingPathComponent("usb-export-\(UUID().uuidString)", isDirectory: true)
         let destination = stagingDir.appendingPathComponent(name)
+        if !USBCalliope.materializeIfNeeded(source) {
+            LogNotify.log("Export picker: iCloud download of \(source.lastPathComponent) did not complete - the copy may be incomplete")
+        }
+
+        let sourceAttributes = try? FileManager.default.attributesOfItem(atPath: source.path)
+        let sourceBytes = (sourceAttributes?[.size] as? Int) ?? -1
+
         do {
             try FileManager.default.createDirectory(at: stagingDir, withIntermediateDirectories: true)
             try FileManager.default.copyItem(at: source, to: destination)
-            LogNotify.log("Export picker: staged \(source.lastPathComponent) as \(name)")
+            let attributes = try? FileManager.default.attributesOfItem(atPath: destination.path)
+            let bytes = (attributes?[.size] as? Int) ?? -1
+
+            // A copy from an iCloud placeholder can come back short without
+            // throwing. Exporting a truncated hex is exactly what DAPLink then
+            // reports as "checksum calculation failure", so refuse it here
+            // instead of letting it reach the Calliope mini.
+            if sourceBytes > 0, bytes != sourceBytes {
+                LogNotify.log("Export picker: ⚠️ staged copy is incomplete (\(bytes) of \(sourceBytes) bytes) - discarding")
+                try? FileManager.default.removeItem(at: stagingDir)
+                return nil
+            }
+
+            LogNotify.log("Export picker: staged \(source.lastPathComponent) as \(name) (\(bytes) bytes)")
             return destination
         } catch {
-            LogNotify.log("Export picker: staging failed (\(error.localizedDescription)) - exporting original name")
+            LogNotify.log("Export picker: staging failed (\(error.localizedDescription))")
             try? FileManager.default.removeItem(at: stagingDir)
             return nil
         }
     }
 
-    private func clearStagedExportFile() {
+    /// Removes the staged export file — but only after a grace period.
+    ///
+    /// `didPickDocumentsAt` fires as soon as iOS has *accepted* the export, not
+    /// when the bytes have actually landed on the (slow) USB mass-storage
+    /// volume. Deleting the source right away can therefore truncate a copy that
+    /// is still in flight, and DAPLink reports the result as
+    /// "checksum calculation failure … type: transient" — intermittently,
+    /// depending on timing. Keeping the staged file around costs nothing (it
+    /// lives in the temp directory) and removes that race entirely.
+    private func scheduleStagedExportCleanup() {
         guard let staged = stagedExportFileURL else { return }
-        // Remove the whole per-export staging folder, not just the file.
-        try? FileManager.default.removeItem(at: staged.deletingLastPathComponent())
         stagedExportFileURL = nil
+        let stagingDir = staged.deletingLastPathComponent()
+        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 120) {
+            try? FileManager.default.removeItem(at: stagingDir)
+        }
+    }
+
+    /// Deletes staging folders left over from earlier exports (e.g. when the app
+    /// was terminated before the deferred cleanup ran).
+    private static func sweepStaleStagingDirectories() {
+        let fm = FileManager.default
+        guard let entries = try? fm.contentsOfDirectory(
+            at: fm.temporaryDirectory,
+            includingPropertiesForKeys: [.contentModificationDateKey],
+            options: [.skipsHiddenFiles]) else { return }
+
+        let cutoff = Date().addingTimeInterval(-600)   // older than 10 minutes
+        for entry in entries where entry.lastPathComponent.hasPrefix("usb-export-") {
+            let modified = (try? entry.resourceValues(forKeys: [.contentModificationDateKey]))?
+                .contentModificationDate
+            if let modified, modified > cutoff { continue }
+            try? fm.removeItem(at: entry)
+        }
     }
 
     private func resolvePresentingController() -> UIViewController? {
@@ -215,7 +379,7 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
         exportProgressReceiver = nil
         exportStatusDelegate = nil
         writeInProgress = false
-        clearStagedExportFile()
+        scheduleStagedExportCleanup()
 
         if success {
             progress?.dfuProgressDidChange(for: 100, outOf: 100, to: 100,
@@ -232,9 +396,152 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
 
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         guard controller === exportPickerInstance else { return }
-        LogNotify.log("Export picker: hex copied to \(urls.first?.path ?? "<unknown>")")
+        LogNotify.log("Export picker: hex handed to \(urls.first?.path ?? "<unknown>")")
         lastExportCancelledByUser = false
+        if let destination = urls.first {
+            if USBCalliope.preselectLastExportDirectory {
+                USBCalliope.lastExportDirectoryURL = destination.deletingLastPathComponent()
+            }
+        }
+
+        // How many bytes we handed over — needed to judge what actually arrived.
+        var expectedBytes = -1
+        if let staged = stagedExportFileURL,
+           let attributes = try? FileManager.default.attributesOfItem(atPath: staged.path),
+           let size = attributes[.size] as? Int {
+            expectedBytes = size
+        }
+
+        // Finish right away so nothing keeps the user waiting: the copy has been
+        // handed over. The verdict only arrives seconds later and is checked in
+        // the background.
         finishExportPicker(success: true)
+
+        if let destination = urls.first {
+            verifyFlashOutcome(destinationURL: destination, expectedBytes: expectedBytes)
+        }
+    }
+
+    /// Checks in the background what actually became of the transfer and reports
+    /// it. Two independent signals are used:
+    ///
+    /// 1. **How much arrived.** The picker grants access to exactly the file it
+    ///    created, so its size can really be read — unlike anything else on the
+    ///    volume. This is the only reliable window into what iOS delivered.
+    /// 2. **DAPLink's verdict.** A `FAIL.TXT` in the volume root means the hex
+    ///    was rejected. Reading it may be denied by the sandbox, so read access
+    ///    is probed with `DETAILS.TXT` first — otherwise a missing `FAIL.TXT`
+    ///    would look like success when we simply cannot see it.
+    private func verifyFlashOutcome(destinationURL: URL, expectedBytes: Int) {
+        let volumeRoot = destinationURL.deletingLastPathComponent()
+        DispatchQueue.global(qos: .utility).async {
+            let delivery = USBCalliope.pollDestinationDelivery(destinationURL, expectedBytes: expectedBytes)
+            let daplink = USBCalliope.pollForDAPLinkVerdict(volumeRoot: volumeRoot)
+
+            let verdict: String
+            if let failureText = daplink.failureText {
+                LogNotify.log("Export picker: DAPLink rejected the hex - \(failureText)")
+                verdict = failureText
+            } else if daplink.volumeReadable {
+                LogNotify.log("Export picker: volume readable, no FAIL.TXT - transfer accepted")
+                verdict = NSLocalizedString("The Calliope mini accepted the file.", comment: "Diagnostics verdict, success")
+            } else {
+                LogNotify.log("Export picker: cannot read the Calliope volume - outcome unknown")
+                verdict = NSLocalizedString("The result cannot be verified: the app is not allowed to read the Calliope mini.", comment: "Diagnostics verdict, not verifiable")
+            }
+
+            DispatchQueue.main.async {
+                if USBCalliope.showTransferDiagnostics {
+                    FirmwareUpload.presentTransferDiagnosticsAlert(verdict: verdict + "\n" + delivery)
+                    return
+                }
+                if daplink.failureText != nil {
+                    USBCalliope.presentTransferFailureAlert()
+                }
+            }
+        }
+    }
+
+    /// Watches the file iOS created on the volume and reports how much of it
+    /// arrived. Blocks — call off the main queue.
+    private static func pollDestinationDelivery(_ url: URL, expectedBytes: Int) -> String {
+        let accessed = url.startAccessingSecurityScopedResource()
+        defer { if accessed { url.stopAccessingSecurityScopedResource() } }
+
+        let deadline = Date().addingTimeInterval(15)
+        var lastSeen = -1
+
+        while Date() < deadline {
+            if let attributes = try? FileManager.default.attributesOfItem(atPath: url.path),
+               let size = attributes[.size] as? Int {
+                lastSeen = size
+                if expectedBytes > 0, size >= expectedBytes {
+                    // NOTE: this is the file provider's own bookkeeping, and it
+                    // reports the full size within milliseconds — far faster than
+                    // a real write to the DAPLink mass-storage device could be.
+                    // It therefore proves that iOS accepted the whole file, NOT
+                    // that the bytes reached the Calliope mini.
+                    LogNotify.log("Export picker: iOS reports \(size) of \(expectedBytes) bytes handed over (file provider bookkeeping, not a device confirmation)")
+                    return "iOS accepted \(size) of \(expectedBytes) bytes (no confirmation from the Calliope mini)."
+                }
+            } else if lastSeen >= 0 {
+                // DAPLink unmounts the volume once it starts programming, so the
+                // file disappearing is expected — what matters is how much had
+                // arrived by then.
+                LogNotify.log("Export picker: destination vanished after \(lastSeen) of \(expectedBytes) bytes")
+                return "Vanished after \(lastSeen) of \(expectedBytes) bytes."
+            }
+            Thread.sleep(forTimeInterval: 0.5)
+        }
+
+        LogNotify.log("Export picker: destination stalled at \(lastSeen) of \(expectedBytes) bytes")
+        return "Stalled at \(lastSeen) of \(expectedBytes) bytes."
+    }
+
+    /// Polls for `FAIL.TXT` and, in parallel, establishes whether the volume can
+    /// be read at all. Blocks — call off the main queue.
+    private static func pollForDAPLinkVerdict(volumeRoot: URL) -> (failureText: String?, volumeReadable: Bool) {
+        Thread.sleep(forTimeInterval: 2.0)
+
+        let accessed = volumeRoot.startAccessingSecurityScopedResource()
+        defer { if accessed { volumeRoot.stopAccessingSecurityScopedResource() } }
+
+        let failURL = volumeRoot.appendingPathComponent("FAIL.TXT")
+        let detailsURL = volumeRoot.appendingPathComponent("DETAILS.TXT")
+        let deadline = Date().addingTimeInterval(10)
+        var volumeReadable = false
+
+        while Date() < deadline {
+            if let data = try? Data(contentsOf: failURL, options: [.uncached]),
+               let text = String(data: data, encoding: .utf8) {
+                return (text.trimmingCharacters(in: .whitespacesAndNewlines), true)
+            }
+            // Reachability is not enough: the sandbox can allow stat() while
+            // denying read(). DETAILS.TXT always exists on a DAPLink volume, so
+            // reading it proves we could have seen a FAIL.TXT too.
+            if !volumeReadable,
+               (try? Data(contentsOf: detailsURL, options: [.uncached])) != nil {
+                volumeReadable = true
+            }
+            Thread.sleep(forTimeInterval: 0.5)
+        }
+        return (nil, volumeReadable)
+    }
+
+    /// Shows the "transfer went wrong" hint. Static so it still works if this
+    /// `USBCalliope` was released while we were waiting for DAPLink's verdict.
+    private static func presentTransferFailureAlert() {
+        let scenes = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .filter { $0.activationState == .foregroundActive }
+        let keyWindow = scenes.flatMap { $0.windows }.first(where: { $0.isKeyWindow })
+            ?? scenes.flatMap { $0.windows }.first
+        guard let presenter = keyWindow?.rootViewController?.topMostPresented() else { return }
+
+        presenter.present(
+            FirmwareUpload.makeUsbTransferFailureAlert(
+                message: NSLocalizedString("USB transfer verification failed retry instructions", comment: "")),
+            animated: true)
     }
 
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
@@ -439,8 +746,15 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
             if [" ", ".", "+", "(", ")", "[", "]"].contains(ch) { return "_" }
             return nil
         })
-        let trimmed = String(sanitized.prefix(8))
-        return (trimmed.isEmpty ? "program" : trimmed) + ".hex"
+        let stem = sanitized.isEmpty ? "prog" : String(sanitized.prefix(4))
+        // A fresh suffix for every transfer. DAPLink leaves the previously
+        // written hex on its volume, so a fixed name makes iOS ask
+        // "Vorhandene Objekte ersetzen?" — and if the user does not choose
+        // "Ersetzen", iOS saves a duplicate ("… 2.hex"). The Calliope mini then
+        // sees two hex files and the flash fails. A unique name avoids the
+        // dialog (and the duplicate) altogether. Stays within 8.3: 4 + 4 chars.
+        let suffix = String(format: "%04x", UInt16.random(in: 0...UInt16.max))
+        return stem + suffix + ".hex"
     }
 
     /// Copies `sourceURL` to `destinationURL` via `FileManager.copyItem(at:to:)`

@@ -95,13 +95,17 @@ class ProgramsCollectionViewController: UICollectionViewController, ProgramCellD
         }
         
         let alert = UIAlertController(title: cell.program.name, message: nil, preferredStyle: .actionSheet)
-        
-        let transferAction = UIAlertAction(title: NSLocalizedString("Transfer", comment: ""), style: .default) { _ in
-            self.uploadProgram(of: cell)
+
+        // Only a hex can go to the mini. A stored Python source can be shared,
+        // renamed and deleted, but offering "Transfer" for it would fail.
+        if cell.program.isFlashable {
+            let transferAction = UIAlertAction(title: NSLocalizedString("Transfer", comment: ""), style: .default) { _ in
+                self.uploadProgram(of: cell)
+            }
+            transferAction.setValue(UIImage(systemName: "arrow.left.arrow.right"), forKey: "image")
+            alert.addAction(transferAction)
         }
-        transferAction.setValue(UIImage(systemName: "arrow.left.arrow.right"), forKey: "image")
-        alert.addAction(transferAction)
-        
+
         let shareAction = UIAlertAction(title: NSLocalizedString("Share", comment: ""), style: .default) { _ in
             cell.share()
         }
@@ -144,11 +148,17 @@ class ProgramsCollectionViewController: UICollectionViewController, ProgramCellD
 
     override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedMenuElements -> UIMenu? in
-            let actions: [UIMenuElement] = [
-                UIAction(title: NSLocalizedString("Transfer", comment: ""), image: UIImage(systemName: "arrow.left.arrow.right"), handler: { (action) in
-                    (
-                        self.uploadProgram(of: collectionView.cellForItem(at: indexPath) as! ProgramCollectionViewCell))
-                }),
+            var actions: [UIMenuElement] = []
+            // Same rule as the action sheet: transferring is hex-only.
+            if (collectionView.cellForItem(at: indexPath) as? ProgramCollectionViewCell)?.program?.isFlashable ?? false {
+                actions.append(
+                    UIAction(title: NSLocalizedString("Transfer", comment: ""), image: UIImage(systemName: "arrow.left.arrow.right"), handler: { (action) in
+                        guard let cell = collectionView.cellForItem(at: indexPath) as? ProgramCollectionViewCell else { return }
+                        self.uploadProgram(of: cell)
+                    })
+                )
+            }
+            actions.append(contentsOf: [
                 UIAction(title: NSLocalizedString("Share", comment: ""), image: UIImage(systemName: "square.and.arrow.up"), handler: { (action) in
                     (
                         self.collectionView.cellForItem(at: indexPath) as? ProgramCollectionViewCell)?.share()
@@ -161,7 +171,7 @@ class ProgramsCollectionViewController: UICollectionViewController, ProgramCellD
                     (
                         self.collectionView.cellForItem(at: indexPath) as? ProgramCollectionViewCell)?.delete(nil)
                 })
-            ]
+            ])
             return UIMenu(title: "", children: actions)
         }
     }

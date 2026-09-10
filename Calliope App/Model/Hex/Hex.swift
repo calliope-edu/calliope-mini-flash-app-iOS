@@ -79,9 +79,23 @@ struct HexFile: Hex, Equatable, DiffAware {
     
     private(set) var url: URL
 
+    /// The file's type, derived from its extension. `nil` for anything the app
+    /// does not know — such a file is treated as not flashable.
+    var fileExtension: FileExtension? {
+        return FileExtension(rawValue: url.pathExtension.lowercased())
+    }
+
+    /// Only hex files can be written to the mini. A Python source is stored,
+    /// shared and renamed — but never transferred.
+    var isFlashable: Bool {
+        return fileExtension?.isFlashable ?? false
+    }
+
     var name: String {
         didSet {
-            let lastURLPart = String(url.lastPathComponent.dropLast(4))
+            // Derive from the real extension: ".hex" is 4 characters but ".py"
+            // is 3, so dropping a fixed count would mangle the name.
+            let lastURLPart = url.deletingPathExtension().lastPathComponent
             if lastURLPart != name {
                 if name == "" {
                     name = lastURLPart

@@ -7,6 +7,30 @@
 /* USB connection alert body on Shared iPad */
 "On a Shared iPad the Calliope mini has to be selected for every file copy. After each transfer, unplug the Calliope mini from the iPad and plug it in again before you transfer the next program." = "Auf einem geteilten iPad (Shared iPad) muss der Calliope mini vor jeder Kopie einer Datei ausgewählt werden. Trenne den Calliope mini nach jeder Übertragung vom iPad und verbinde ihn erneut, bevor du das nächste Programm überträgst.";
 
+/* USB connection alert body on Shared iPad (folder picker) */
+"Please select your Calliope mini (the \"MINI\" drive) in the next dialog and tap Open." = "Bitte wähle im nächsten Dialog deinen Calliope mini (das Laufwerk \"MINI\") aus und tippe auf \"Öffnen\".";
+
+/* USB connection alert body on older iPadOS (export picker) */
+"Before every file copy you have to select the Calliope mini." = "Vor jeder Kopie einer Datei muss der Calliope mini ausgewählt werden.";
+
+/* USB connection alert body on older iPadOS, incl. reconnect hint */
+"Before every file copy you have to select the Calliope mini. If there are problems copying, disconnect the Calliope mini from the device and connect it again before copying." = "Vor jeder Kopie einer Datei muss der Calliope mini ausgewählt werden. Sollte es Kopierprobleme geben, muss der Calliope mini vor dem Kopieren vom Gerät getrennt und erneut verbunden werden.";
+
+/* Action to share the in-app log */
+"Share log" = "Log teilen";
+
+/* Diagnostics alert title */
+"Transfer diagnostics" = "Diagnose: Kopierversuch";
+
+/* Diagnostics verdict, success */
+"The Calliope mini accepted the file." = "Der Calliope mini hat die Datei angenommen.";
+
+/* Diagnostics verdict, not verifiable */
+"The result cannot be verified: the app is not allowed to read the Calliope mini." = "Das Ergebnis lässt sich nicht prüfen: Die App darf den Calliope mini nicht lesen.";
+
+/* USB connection alert body on Shared iPad, recommends Bluetooth */
+"On a Shared iPad the Calliope mini has to be selected for every file copy. Transferring over the cable is not reliable here, so we recommend transferring via Bluetooth." = "Auf einem geteilten iPad (Shared iPad) muss der Calliope mini vor jeder Kopie einer Datei ausgewählt werden. Die Übertragung per Kabel ist hier nicht zuverlässig, wir empfehlen daher die Übertragung per Bluetooth.";
+
 /* Continue button */
 "Continue" = "Fortfahren";
 
@@ -310,6 +334,9 @@
 /* Body text shown in the upload alert when a USB transfer fails. */
 "USB transfer failed retry instructions" = "Die Datei konnte nicht übertragen werden. Trenne den Calliope mini und verbinde ihn erneut, bevor du das nächste Programm überträgst.";
 
+/* Shown when DAPLink reported a FAIL.TXT for the transferred hex */
+"USB transfer verification failed retry instructions" = "Es gab einen Fehler bei der Dateiübertragung. Bitte versuche es erneut. Sollte der Fehler weiterhin auftreten, trenne und verbinde das Datenkabel.";
+
 /* No comment provided by engineer. */
 "Upload the start program to your Calliope" = "Übertrag das Startprogramm auf den Calliope mini";
 
@@ -393,7 +420,7 @@
 "Cancel" = "Abbrechen";
 
 /* DFU/Upload alerts */
-"There is no connected Calliope mini in DFU mode" = "Es ist kein Calliope mini im DFU-Modus verbunden";
+"There is no connected Calliope mini in DFU mode" = "Es ist kein Calliope mini verbunden";
 
 "Transmission running" = "Übertragung läuft";
 
@@ -424,3 +451,15 @@
 
 /* Proxy bridge: reconnect-before-flash timed out */
 "Couldn't reach your Calliope mini. Hold A+B and press reset on the mini to turn Bluetooth back on, then try flashing again." = "Dein Calliope mini ist nicht erreichbar. Halte A+B gedrückt und drücke Reset, um Bluetooth wieder einzuschalten, und flashe dann erneut.";
+
+/* Program picked from the file picker: transfer or share */
+"Möchtest du das Programm auf deinen Calliope mini übertragen oder teilen?" = "Möchtest du das Programm auf deinen Calliope mini übertragen oder teilen?";
+
+/* Arcade file picked: transfer via USB or share */
+"Möchtest du die Arcade-Datei auf deinen Calliope mini übertragen oder teilen?" = "Möchtest du die Arcade-Datei auf deinen Calliope mini übertragen oder teilen?";
+
+/* Arcade file picked but no USB connection */
+"Arcade-Dateien können nur per USB-Kabel übertragen werden. Bitte verbinde deinen Calliope mini per USB oder teile die Datei." = "Arcade-Dateien können nur per USB-Kabel übertragen werden. Bitte verbinde deinen Calliope mini per USB oder teile die Datei.";
+
+/* Transfer action while a USB Calliope mini is connected */
+"Übertragen (USB)" = "Übertragen (USB)";

@@ -210,6 +210,25 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
                 }
             }
         }
+
+        // Where the destination is picked per flash (Shared iPad, iPadOS < 26),
+        // flipping the switch is already the whole decision: connect right away
+        // instead of waiting for the confirmation button below it, which is easy
+        // to overlook. The heads-up alert and the green connection icon then
+        // appear immediately.
+        //
+        // iPadOS 26+ on a personal device keeps the button: there the folder
+        // picker opens and needs a deliberate action anyway.
+        //
+        // Only on switching ON — `resetUsbConnectionAfterCopy` calls this method
+        // with the switch already off, so this cannot loop.
+        if isInUsbMode, UIDevice.current.usbNeedsExportPicker {
+            DispatchQueue.main.async { [weak self] in
+                guard let self, self.isInUsbMode else { return }
+                LogNotify.log("USB switch turned on - connecting straight away (export-picker device)")
+                self.connector.initializeConnectionToUsbCalliope(view: self)
+            }
+        }
     }
 
 
@@ -233,14 +252,16 @@ class MatrixConnectionViewController: UIViewController, CollapsingViewController
     /// shows "disconnected" and the user has to switch USB on again — and pick
     /// the Calliope mini drive again — before the next flash.
     ///
-    /// Shared iPad only. There the picked volume's authorization does not
-    /// survive a copy: DAPLink unmounts the MSD volume right after writing, and
-    /// the managed sandbox hands it back only after a fresh pick. Keeping a
-    /// stale "connected" state would just let the next flash fail with no
-    /// explanation, so we make the required re-selection visible instead. A
-    /// personal iPad keeps its volume access and stays connected as before.
+    /// Applies wherever the destination has to be picked per flash — Shared iPad
+    /// and iPadOS below 26 (see `UIDevice.usbNeedsExportPicker`). There the
+    /// picked volume's authorization does not survive a copy: DAPLink unmounts
+    /// the MSD volume right after writing, and the system hands it back only
+    /// after a fresh pick. Keeping a stale "connected" state would just let the
+    /// next flash fail with no explanation, so we make the required
+    /// re-selection visible instead. iPadOS 26+ on a personal device keeps its
+    /// volume access and stays connected as before.
     public func resetUsbConnectionAfterCopy() {
-        guard UIDevice.current.isSharedIPad, isInUsbMode else { return }
+        guard UIDevice.current.usbNeedsExportPicker, isInUsbMode else { return }
 
         // Hop to the next main-queue turn: the finish callback still dismisses
         // the upload sheet and may run a connect() of its own, and this teardown

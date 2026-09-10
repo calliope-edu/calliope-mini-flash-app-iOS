@@ -51,10 +51,15 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
     }
 
     private func configureLayout(_ size: CGSize) {
-        let landscape = size.width > size.height
-        stackView?.distribution = landscape ? .fillEqually : .fill
-        stackView?.alignment = landscape ? .top : .fill
-        stackView?.axis = landscape ? .horizontal : .vertical
+        // Two columns only on an iPad in landscape. On an iPhone the cards stay
+        // stacked over the full width in BOTH orientations: side by side they get
+        // squeezed into unreadable narrow columns, and the projects card
+        // ("Hier findest du …") ends up next to the instructions instead of at
+        // the bottom, where it belongs.
+        let sideBySide = UIDevice.current.userInterfaceIdiom != .phone && size.width > size.height
+        stackView?.distribution = sideBySide ? .fillEqually : .fill
+        stackView?.alignment = sideBySide ? .top : .fill
+        stackView?.axis = sideBySide ? .horizontal : .vertical
     }
 
     override func viewDidLoad() {
@@ -64,7 +69,9 @@ class ProjectOverviewController: UIViewController, UINavigationControllerDelegat
         projectHeightConstraint = projectContainerView?.heightAnchor.constraint(equalToConstant: 10)
         projectHeightConstraint?.isActive = true
 
-        configureLayout(UIApplication.shared.keyWindow!.frame.size)
+        // `keyWindow!` used to be force-unwrapped here — deprecated and nil at
+        // this point in some launch paths, which crashes the tab.
+        configureLayout(view.window?.frame.size ?? UIScreen.main.bounds.size)
         
         addNotificationSubscriptions()
     }

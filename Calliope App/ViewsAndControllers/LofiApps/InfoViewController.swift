@@ -16,6 +16,6 @@ class InfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Apps Info"
-        self.webView.load(URLRequest(url: url))        
+        self.webView.load(URLRequest(url: url.withCalliopeAppLayout))        
     }
 }

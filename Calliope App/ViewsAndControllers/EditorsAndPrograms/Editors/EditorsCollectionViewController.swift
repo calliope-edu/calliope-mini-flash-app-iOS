@@ -28,27 +28,31 @@ class EditorsCollectionViewController: UICollectionViewController, UICollectionV
         var keys: [SettingsKey] = []
         let settings = UserDefaults.standard
         let isPhone = UIDevice.current.userInterfaceIdiom == .phone
+        // TEMPORARILY HIDDEN: Calliope Campus and all campus-hosted editors
+        // (Campus Blocks / MakeCode / Python) are not shown in this release.
+        // Uncomment the four blocks below to bring them back.
+        //
         // Calliope Campus is the new flagship editor — it owns its own
         // connection via the native-proxy bridge (CalliopeProxyMessageHandler)
         // so it sits at the top of the list, ahead of the legacy editors
         // that still go through download-capture.
-        if settings.bool(forKey: SettingsKey.campus.rawValue) {
-            keys.append(.campus)
-        }
+//        if settings.bool(forKey: SettingsKey.campus.rawValue) {
+//            keys.append(.campus)
+//        }
         // The campus-hosted flavours of the classic editors, right behind the
         // campus home: same deployment, same native-proxy bridge, just deep
         // links into /blocks, /makecode and /python. They sit next to their
         // legacy counterparts further down the list on purpose — the two can be
         // compared side by side while the campus versions are being rolled out.
-        if settings.bool(forKey: SettingsKey.campusBlocks.rawValue) {
-            keys.append(.campusBlocks)
-        }
-        if settings.bool(forKey: SettingsKey.campusMakeCode.rawValue) {
-            keys.append(.campusMakeCode)
-        }
-        if settings.bool(forKey: SettingsKey.campusPython.rawValue) {
-            keys.append(.campusPython)
-        }
+//        if settings.bool(forKey: SettingsKey.campusBlocks.rawValue) {
+//            keys.append(.campusBlocks)
+//        }
+//        if settings.bool(forKey: SettingsKey.campusMakeCode.rawValue) {
+//            keys.append(.campusMakeCode)
+//        }
+//        if settings.bool(forKey: SettingsKey.campusPython.rawValue) {
+//            keys.append(.campusPython)
+//        }
         if settings.bool(forKey: SettingsKey.localEditor.rawValue) {
             keys.append(.localEditor)
         }

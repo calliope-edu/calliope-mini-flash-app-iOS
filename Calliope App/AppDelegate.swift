@@ -78,22 +78,59 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         if url.isFileURL && FileExtension(rawValue: url.pathExtension.lowercased()) == .hex {
             LogNotify.log("received \(url.lastPathComponent)")
-            guard let viewController = UIApplication.shared.keyWindow?.rootViewController else {
-                fatalError(NSLocalizedString("No root view controller for presenting File Save UI found", comment: ""))
-            }
-            HexFileStoreDialog.showStoreHexUI(
-                controller: viewController, hexFile: url,
-                notSaved: { error in
-                    return  //TODO: handle error
-                }
-            ) { savedFile in
-                return  //TODO: handle file saved
-            }
-
+            // Opening a file from Files/Spotlight can launch the app cold, so the
+            // root view controller may not exist yet. This used to be a
+            // `fatalError` on `keyWindow` (deprecated and nil at that moment),
+            // which crashed the app instead of importing the file — retry on the
+            // next run loop turns until the UI is up, then give up quietly.
+            presentStoreHexUI(for: url, attemptsLeft: 20)
             return true
         }
 
         return false
+    }
+
+    /// Presents the save dialog for an externally opened hex file as soon as a
+    /// view controller is available. `url` may be a security-scoped file owned by
+    /// another app, so access is held while the dialog reads it.
+    private func presentStoreHexUI(for url: URL, attemptsLeft: Int) {
+        guard let controller = Self.topMostViewController() else {
+            guard attemptsLeft > 0 else {
+                LogNotify.log("No view controller available to present the hex import dialog")
+                return
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+                self?.presentStoreHexUI(for: url, attemptsLeft: attemptsLeft - 1)
+            }
+            return
+        }
+
+        let accessed = url.startAccessingSecurityScopedResource()
+        HexFileStoreDialog.showStoreHexUI(
+            controller: controller, hexFile: url,
+            notSaved: { error in
+                if accessed { url.stopAccessingSecurityScopedResource() }
+                if let error = error {
+                    LogNotify.log("Importing \(url.lastPathComponent) failed: \(error.localizedDescription)")
+                }
+            }
+        ) { _ in
+            if accessed { url.stopAccessingSecurityScopedResource() }
+        }
+    }
+
+    /// Top-most presented view controller of the active window, without the
+    /// deprecated `keyWindow`.
+    private static func topMostViewController() -> UIViewController? {
+        let windows = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap { $0.windows }
+        let window = windows.first(where: { $0.isKeyWindow }) ?? windows.first
+        guard var top = window?.rootViewController else { return nil }
+        while let presented = top.presentedViewController, !presented.isBeingDismissed {
+            top = presented
+        }
+        return top
     }
 
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {

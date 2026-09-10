@@ -170,6 +170,12 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
         DispatchQueue.main.async {
             let documentPickerController = UIDocumentPickerViewController(forOpeningContentTypes: types)
             documentPickerController.delegate = self
+            // Open right where the programs live: "Calliope mini" on the device,
+            // or "Calliope mini App" in iCloud on a Shared iPad. The user can
+            // still navigate elsewhere from there.
+            if let programsDirectory = try? StorageDirectory.shared.documentsDirectory() {
+                documentPickerController.directoryURL = programsDirectory
+            }
             self.present(documentPickerController, animated: true, completion: nil)
         }
     }

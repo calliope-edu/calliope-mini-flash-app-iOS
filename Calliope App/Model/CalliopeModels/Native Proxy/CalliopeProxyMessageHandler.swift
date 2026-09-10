@@ -58,6 +58,47 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
     /// kept working — they re-resolve their characteristic on every call.
     private var desiredSubscriptions: [CBUUID: DesiredSubscription] = [:]
 
+    // MARK: Re-arm verification state
+    //
+    // Re-arming on the usage-ready edge is a RACE, and on a manual reset we only
+    // get one shot at it:
+    //
+    // `DiscoveredBLEDevice.servicesWithUndiscoveredCharacteristics` is a `lazy
+    // var` seeded once and only ever drained (DiscoveredBLEDevice.swift:23-25 and
+    // :95-97). From the SECOND connection of a device on, that set is already
+    // empty, so the "all characteristics known" gate passes on the FIRST of the
+    // ~10 `discoverCharacteristics` callbacks that were issued together — and
+    // `state = .usageReady` (plus the notification we re-arm on) fires while the
+    // rest are still in flight. MbitMore is discovered wholesale (it is
+    // deliberately absent from `serviceCharacteristicMap`), so its
+    // SENSOR_EVENT characteristic is typically among the last to land.
+    //
+    // Result: `armSubscription` either finds no characteristic yet, or gets the
+    // pre-reset cached one whose `setNotifyValue(true, …)` is a client-side no-op
+    // that times out — and its failure branch then deletes the handler again.
+    // After a FLASH further usage-ready edges follow (reboot branch +
+    // `didModifyServices` → `evaluateMode`), which is why re-arm recovers there.
+    // After a manual RESET there is exactly one edge, so the attempt has to be
+    // allowed to fail and be retried — that is what this bounded poll does.
+    private var rearmRetryTimer: DispatchSourceTimer?
+
+    /// Characteristics whose notify state we have verifiably (re-)enabled on
+    /// `armedOn`. Reset whenever the peripheral object changes or the link drops.
+    private var armedCharacteristics: Set<CBUUID> = []
+
+    /// The `BLECalliope` instance `armedCharacteristics` refers to. A reconnect
+    /// hands us a brand-new instance, which invalidates every earlier arming.
+    private weak var armedOn: BLECalliope?
+
+    /// Characteristics with an arming attempt currently in flight — see
+    /// `armOutstandingSubscriptions`.
+    private var armingInFlight: Set<CBUUID> = []
+
+    private static let rearmRetryIntervalMs = 400
+    /// ~5 s of retries — comfortably inside `serviceDiscoveryTimeout` (10 s) and
+    /// short enough that a mini which never exposes the service gives up quietly.
+    private static let rearmRetryAttempts = 12
+
     private enum SubscribeError: LocalizedError {
         case characteristicUnavailable
 
@@ -156,6 +197,7 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
         disconnectDebounceTimer = nil
         flashReconnectTimer?.cancel()
         flashReconnectTimer = nil
+        cancelRearmRetry()
         // Clean up any active subscriptions on the live peripheral. Avoids
         // leaving the radio in notify-on state after the editor closes.
         disarmSubscriptions(forget: true)
@@ -408,6 +450,12 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
             if self.activeCalliope() != nil { return }
             guard self.bridgeConnected else { return }
             self.bridgeConnected = false
+            // The link is gone for good: stop retrying and forget what was armed
+            // (the intent below is what brings the subscriptions back).
+            self.cancelRearmRetry()
+            self.armedCharacteristics.removeAll()
+            self.armingInFlight.removeAll()
+            self.armedOn = nil
             // Keep `desiredSubscriptions` — the link died under us, so the
             // notify state is gone either way, but the widget still WANTS those
             // notifications and `handleHostUsageReady` re-arms them on the way
@@ -547,6 +595,7 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
         // Drop the intent first — an unsubscribe must not be undone by a later
         // re-arm, even if there's no live peripheral to switch the CCCD off on.
         desiredSubscriptions.removeValue(forKey: chUuid)
+        armedCharacteristics.remove(chUuid)
         guard let cal = activeCalliope() else {
             replyOk(id: id)
             return
@@ -567,6 +616,7 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
     private func armSubscription(
         _ sub: DesiredSubscription,
         on cal: BLECalliope,
+        forceRetoggle: Bool = false,
         completion: ((Result<Void, Error>) -> Void)? = nil
     ) {
         guard let ch = findCharacteristic(
@@ -576,6 +626,16 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
         ) else {
             completion?(.failure(SubscribeError.characteristicUnavailable))
             return
+        }
+        // A characteristic that still reports `isNotifying` from before the reboot
+        // turns `setNotifyValue(true, …)` into a client-side no-op: no CCCD write
+        // goes out, the operation runs into `readTimeout`, and the failure branch
+        // below would then delete the handler we just installed. Force a real
+        // off→on transition instead — the flash path gets this for free from
+        // `disarmSubscriptions(forget: false)`, the reset path does not.
+        if forceRetoggle && ch.isNotifying {
+            LogNotify.log("[ProxyBridge] \(ch.uuid) still marked notifying - forcing off before on")
+            cal.setNotify(characteristic: ch, false, nil)
         }
         cal.rawNotificationHandlers[ch.uuid] = { [weak self] data in
             self?.sendEvent(kind: "gattNotify", data: [
@@ -604,13 +664,81 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
     /// edge — including ones where the widget also re-subscribes by itself.
     private func rearmDesiredSubscriptions(_ cal: BLECalliope) {
         guard !desiredSubscriptions.isEmpty else { return }
-        for sub in desiredSubscriptions.values {
-            armSubscription(sub, on: cal) { result in
-                if case .failure(let err) = result {
-                    LogNotify.log("[ProxyBridge] re-arm of \(sub.characteristicUuid) failed: \(err.localizedDescription)")
+        if armedOn !== cal {
+            // Fresh peripheral/GATT session: nothing from the previous link counts.
+            armedCharacteristics.removeAll()
+            armedOn = cal
+        }
+        armOutstandingSubscriptions(on: cal)
+        scheduleRearmRetryIfNeeded(attemptsLeft: Self.rearmRetryAttempts)
+    }
+
+    /// Arm every desired subscription that is not verifiably armed on `cal` yet.
+    /// Successes are recorded so a retry tick only touches what is still missing.
+    ///
+    /// `armingInFlight` keeps a tick from re-issuing an attempt that is still
+    /// running: `setNotify` goes through `BLECalliope`'s serial operation queue
+    /// with a 1 s timeout, which is longer than the retry interval, so without
+    /// this guard a slow characteristic would pile up duplicate off/on pairs.
+    private func armOutstandingSubscriptions(on cal: BLECalliope) {
+        for sub in desiredSubscriptions.values
+        where !armedCharacteristics.contains(sub.characteristicUuid)
+            && !armingInFlight.contains(sub.characteristicUuid) {
+            armingInFlight.insert(sub.characteristicUuid)
+            armSubscription(sub, on: cal, forceRetoggle: true) { [weak self] result in
+                guard let self = self else { return }
+                self.armingInFlight.remove(sub.characteristicUuid)
+                switch result {
+                case .success:
+                    self.armedCharacteristics.insert(sub.characteristicUuid)
+                    LogNotify.log("[ProxyBridge] re-armed \(sub.characteristicUuid)")
+                case .failure(let err):
+                    LogNotify.log("[ProxyBridge] re-arm of \(sub.characteristicUuid) not possible yet: \(err.localizedDescription)")
                 }
             }
         }
+    }
+
+    /// Keep retrying the outstanding subscriptions while characteristic discovery
+    /// of the reconnect catches up. Stops as soon as everything is armed, when the
+    /// attempts run out, or when a flash takes over the radio.
+    private func scheduleRearmRetryIfNeeded(attemptsLeft: Int) {
+        cancelRearmRetry()
+        let outstanding = desiredSubscriptions.keys.filter { !armedCharacteristics.contains($0) }
+        guard !outstanding.isEmpty else { return }
+        guard attemptsLeft > 0 else {
+            LogNotify.log("[ProxyBridge] gave up re-arming \(outstanding.count) subscription(s) after \(Self.rearmRetryAttempts) attempts")
+            return
+        }
+        let timer = DispatchSource.makeTimerSource(queue: .main)
+        rearmRetryTimer = timer
+        timer.schedule(deadline: .now() + .milliseconds(Self.rearmRetryIntervalMs))
+        timer.setEventHandler { [weak self] in
+            guard let self = self else { return }
+            self.rearmRetryTimer = nil
+            // A flash owns the radio and re-arms itself on completion.
+            guard self.pendingFlashReplyId == nil else {
+                LogNotify.log("[ProxyBridge] re-arm retry paused - flash in progress")
+                return
+            }
+            guard let cal = self.activeCalliope() else {
+                // Link still coming back — keep waiting.
+                self.scheduleRearmRetryIfNeeded(attemptsLeft: attemptsLeft - 1)
+                return
+            }
+            if self.armedOn !== cal {
+                self.armedCharacteristics.removeAll()
+                self.armedOn = cal
+            }
+            self.armOutstandingSubscriptions(on: cal)
+            self.scheduleRearmRetryIfNeeded(attemptsLeft: attemptsLeft - 1)
+        }
+        timer.resume()
+    }
+
+    private func cancelRearmRetry() {
+        rearmRetryTimer?.cancel()
+        rearmRetryTimer = nil
     }
 
     /// Switch notifications off on the live peripheral for every desired
@@ -618,6 +746,13 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
     /// edge restores it (used before a flash, where DFU needs the radio to
     /// itself); `forget: true` ends the session's subscriptions for good.
     private func disarmSubscriptions(forget: Bool) {
+        // Notify is being lowered, so nothing counts as armed any more, and a
+        // pending retry would fight whoever asked for the disarm (a flash, an
+        // explicit disconnect, or editor teardown).
+        cancelRearmRetry()
+        armedCharacteristics.removeAll()
+        armingInFlight.removeAll()
+        armedOn = nil
         if let cal = activeCalliope() {
             for sub in desiredSubscriptions.values {
                 guard let ch = findCharacteristic(
