@@ -45,6 +45,14 @@ public enum SettingsKey: String, CaseIterable {
 
     case campus = "campusOnPreference"
     case campusUrl = "campusOnUrlPreference"
+
+    // Campus-hosted flavours of the classic editors. They live under routes of
+    // the SAME deployment as `campusUrl` (/blocks, /makecode, /python), so they
+    // have no URL preference of their own — see `CampusRoute`. Only an on/off
+    // toggle each, so a release can hide them without a code change.
+    case campusBlocks = "campusBlocksOnPreference"
+    case campusMakeCode = "campusMakecodeOnPreference"
+    case campusPython = "campusPythonOnPreference"
 }
 
 public struct Settings {
@@ -52,14 +60,21 @@ public struct Settings {
     static var defaultNewsUrl = NSLocalizedString("https://calliope.cc/forumassets/news.json", comment: "The url for the news json");
     static var defaultOpenRobertaUrl = "https://app.calliope.cc/ios/openroberta/"
 
-    static var defaultMakecodeUrl = "https://makecode.calliope.cc/beta"
+    static var defaultMakecodeUrl = "https://makecode.calliope.cc/"
     static var defaultProgramV3 = "https://go.calliope.cc/downloads/Demov3.hex"
     static var defaultProgramV2andV1 = "https://go.calliope.cc/downloads/Demov1.hex"
     static var defaultArcadeUrl = "https://arcade.makecode.com"
     static var defaultCalliopeBlocksUrl = "https://calliope.cc/downloads/blocks.hex"
     static var defaultBlocksMiniEditorUrl = "https://blocks.calliope.cc"
     static var defaultMicroPythonUrl = "https://python.calliope.cc?mobile=true"
-    static var defaultCampusUrl = "https://campus.calliope.cc"
+    // Cloudflare Pages branch alias of campus `rc-v1.1.3`. Switch to
+    // https://campus.calliope.cc once the proxy ships.
+    //
+    // ORIGIN ONLY — no path. Every campus-hosted editor (the campus home plus
+    // the /blocks, /makecode and /python flavours) derives its URL from this
+    // one value via `CampusRoute`, so bumping the deployment is a one-line
+    // change here.
+    static var defaultCampusUrl = "https://rc-v1-1-3.calliope-campus.pages.dev"
 
     static var defaultLocalEditorEnabled = false
     static var defaultMakeCodeEnabled = true
@@ -68,9 +83,17 @@ public struct Settings {
     static var defaultArcadeEnabled = true
     static var defaultPlaygroundsEnabled = UIDevice.current.userInterfaceIdiom != .phone
     static var defaultMicroPythonEnabled = UIDevice.current.userInterfaceIdiom != .phone
-    static var defaultCampusEnabled = UIDevice.current.userInterfaceIdiom != .phone
-    
-    
+    // Campus uses the native-proxy bridge for BLE/flash, so it works on
+    // iPhone too — the legacy iPad-only gate that other editors keep
+    // doesn't apply here.
+    static var defaultCampusEnabled = true
+    // The campus-hosted flavours of blocks / MakeCode / python. Same bridge, so
+    // same reasoning as `defaultCampusEnabled` — no iPad-only gate.
+    static var defaultCampusBlocksEnabled = true
+    static var defaultCampusMakeCodeEnabled = true
+    static var defaultCampusPythonEnabled = true
+
+
     static var defaultRestoreLastMatrixEnabled = true
 
     static var defaultAppVersion = "1.0"
@@ -112,6 +135,13 @@ public struct Settings {
             return defaultCampusEnabled
         case .campusUrl:
             return defaultCampusUrl
+
+        case .campusBlocks:
+            return defaultCampusBlocksEnabled
+        case .campusMakeCode:
+            return defaultCampusMakeCodeEnabled
+        case .campusPython:
+            return defaultCampusPythonEnabled
             
             
         case .appVersion:

@@ -89,7 +89,7 @@
         <scene sceneID="Xg8-NT-NZl">
             <objects>
                 <viewControllerPlaceholder storyboardName="LofiApps" id="bCa-df-eRO" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="JRE-fX-fPw"/>
+                    <tabBarItem key="tabBarItem" title="Anwendungen" id="JRE-fX-fPw"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yli-4P-XoO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

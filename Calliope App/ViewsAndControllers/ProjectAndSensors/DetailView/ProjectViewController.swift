@@ -24,6 +24,18 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
     var chartHeightConstraint: NSLayoutConstraint?
     var chartsKvo: Any?
 
+    /// The Bluetooth-connected Calliope mini, if it can deliver sensor values.
+    ///
+    /// Recording reads `CalliopeAPI` characteristics, so it needs a Bluetooth
+    /// connection — a USB-connected Calliope has none. `usageReadyCalliope`
+    /// cannot be used for this check: it follows the USB/Bluetooth switch, so
+    /// while the switch sits on USB it reports the USB device (or nil) even
+    /// though a Bluetooth Calliope is connected and perfectly usable here.
+    private var sensorCapableCalliope: CalliopeAPI? {
+        MatrixConnectionViewController.instance.connector
+            .connectedCalliope?.usageReadyCalliope as? CalliopeAPI
+    }
+
     private var calliopeConnectedSubcription: NSObjectProtocol!
     private var calliopeDisconnectedSubscription: NSObjectProtocol!
 
@@ -68,6 +80,17 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         chartsKvo = nil
+
+        // `viewDidAppear` registers both observers on every appearance, so
+        // without this they pile up and the handlers run once per past visit.
+        if let subscription = calliopeConnectedSubcription {
+            NotificationCenter.default.removeObserver(subscription)
+            calliopeConnectedSubcription = nil
+        }
+        if let subscription = calliopeDisconnectedSubscription {
+            NotificationCenter.default.removeObserver(subscription)
+            calliopeDisconnectedSubscription = nil
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -91,7 +114,7 @@ class ProjectViewController: UIViewController, ChartViewDelegate {
                 }
             })
 
-        guard let _ = MatrixConnectionViewController.instance.usageReadyCalliope else {
+        guard sensorCapableCalliope != nil else {
             self.addChartButton.isEnabled = false
             DispatchQueue.main.async {
                 let alert = UIAlertController(title: NSLocalizedString("Calliope mini verbinden!", comment: ""), message: NSLocalizedString("Verbindung notwendig, um Daten anzeigen zu lassen.", comment: ""), preferredStyle: .alert)

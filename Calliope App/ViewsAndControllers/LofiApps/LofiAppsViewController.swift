@@ -16,14 +16,19 @@ final class LofiAppsViewController: UIViewController {
     private let infoItem = AppItem(tileItem: TileItem(title: "INFO", imageName: "info", color: Color("calliope-pink")), url: "https://calliope.cc/programmieren/mobil/ble-anwendungen")
     private let appItems = [
         AppItem(tileItem: TileItem(title: "ROBOTER MIT GESICHTSERKENNUNG STEUERN",    imageName: "facerobot", color: Color("calliope-lilablau")), url: "https://go.calliope.cc/facerobot?mobile=true"),
-        AppItem(tileItem: TileItem(title: "SPRACHROBOTER",  imageName: "speak", color: Color("calliope-orange")), url: "https://cardboard.lofirobot.com/apps/talking-robots"),
+//        "Sprachroboter" tile — temporarily hidden. Uncomment the line below to show it again.
+//        AppItem(tileItem: TileItem(title: "SPRACHROBOTER",  imageName: "speak", color: Color("calliope-orange")), url: "https://cardboard.lofirobot.com/apps/talking-robots"),
         AppItem(tileItem: TileItem(title: "STEUERUNG PER COMPUTER",    imageName: "control", color: Color("calliope-turqoise")), url: "https://go.calliope.cc/apps/control/index.html?mobile=true"),
-        AppItem(tileItem: TileItem(title: "OBJEKTERKENNUNG MIT KÜNSTLICHER INTELLIGENZ",   imageName: "teachablemachine", color: Color("calliope-darkgreen")), url: "https://go.calliope.cc/teachablemachine/index.html?mobile=true"),
+        AppItem(tileItem: TileItem(title: "OBJEKTERKENNUNG MIT KÜNSTLICHER INTELLIGENZ",   imageName: "teachablemachine", color: Color("calliope-darkgreen")), url: "https://teachablemachine.calliope.cc"),
     ]
 
     @IBSegueAction func addSwiftUIView(_ coder: NSCoder) -> UIViewController? {
         let appsPage = TilePageLayout(leftItem: infoItem, rightItems: appItems, leftItemOnTap: onInfoSelected, rightItemsOnTap: onAppSelected)
-        return UIHostingController(coder: coder, rootView: appsPage)
+        // Let the tiles run all the way to the bottom edge instead of stopping
+        // above the tab bar. A hosting controller honours the safe area by
+        // default, which is why this screen ended with a hard edge while the
+        // other tabs show their content through the translucent bar.
+        return UIHostingController(coder: coder, rootView: appsPage.ignoresSafeArea(edges: .bottom))
     }
     
     override func viewWillAppear(_ animated: Bool)  {

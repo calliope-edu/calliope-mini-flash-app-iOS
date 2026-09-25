@@ -16,6 +16,11 @@ class LofiAppDetailViewController: UIViewController, WKNavigationDelegate, WKUID
     
     public var url: URL!
     public var appTitle: String!
+
+    /// Native-proxy bridge, non-nil only for app pages that use the Campus API
+    /// (currently teachablemachine.calliope.cc). Every other page keeps the
+    /// Web-Bluetooth shim that `WBWebView` provides on its own.
+    private var proxyMessageHandler: CalliopeProxyMessageHandler?
     
     var WBWebViewContainerController: WBWebViewContainerController {
         get {
@@ -31,7 +36,23 @@ class LofiAppDetailViewController: UIViewController, WKNavigationDelegate, WKUID
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = appTitle
-        self.webView.load(URLRequest(url: url))
+
+        // Register the bridge BEFORE loading: the page probes
+        // `window.webkit?.messageHandlers?.calliope` at script start, and a
+        // handler added later would arrive after that check.
+        //
+        // Note `webView.configuration.userContentController` — the LIVE
+        // controller. WKWebView copies its configuration when it is created, so
+        // a handler added anywhere else would never reach the running page.
+        if CalliopeProxyMessageHandler.supportsNativeBridge(url: url) {
+            let handler = CalliopeProxyMessageHandler(webView: webView)
+            proxyMessageHandler = handler
+            webView.configuration.userContentController.add(
+                handler, name: CalliopeProxyMessageHandler.handlerName)
+            LogNotify.log("Native bridge enabled for \(url.host ?? "unknown host")")
+        }
+
+        self.webView.load(URLRequest(url: url.withCalliopeAppLayout))
         #if DEBUG
         if #available(iOS 16.4, *) {
             webView.isInspectable = true
@@ -39,5 +60,18 @@ class LofiAppDetailViewController: UIViewController, WKNavigationDelegate, WKUID
         }
         #endif
         
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        // WKUserContentController retains script-message handlers strongly, so
+        // without an explicit removal the handler — and the BLE observers it
+        // installs — would outlive this screen.
+        if proxyMessageHandler != nil {
+            webView.configuration.userContentController.removeScriptMessageHandler(
+                forName: CalliopeProxyMessageHandler.handlerName)
+            proxyMessageHandler = nil
+        }
     }
 }

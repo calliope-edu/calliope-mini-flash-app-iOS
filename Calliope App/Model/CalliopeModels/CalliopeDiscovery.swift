@@ -78,13 +78,22 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
                     let connectingUSBCalliope = connectingCalliope as! DiscoveredUSBDevice
                     do {
                         connectedUSBCalliope = connectingUSBCalliope
-                        connectedUSBCalliope?.usageReadyCalliope = try USBCalliope(calliopeLocation: connectingUSBCalliope.url)
-                        dispatchUSBCalliopePolling()
+                        if connectingUSBCalliope.useExportPicker {
+                            // Shared iPad: no folder URL exists, every flash asks
+                            // for the destination via an export picker.
+                            connectedUSBCalliope?.usageReadyCalliope = USBCalliope(exportPickerMode: true)
+                            // Skip reachability polling — there is no persistent
+                            // volume URL that could be polled.
+                            LogNotify.log("USB Calliope (export-picker mode) ready")
+                        } else if let url = connectingUSBCalliope.url {
+                            connectedUSBCalliope?.usageReadyCalliope = try USBCalliope(calliopeLocation: url)
+                            dispatchUSBCalliopePolling()
+                        }
                         LogNotify.log("Calliope mini Discovery State now: \(state)")
                     } catch {
                         LogNotify.log("Connecting to USB Calliope mini failed")
                     }
-                    
+
                 }
                 
             }
@@ -182,7 +191,14 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
     
     private func attemptReconnect() {
         // Make shure that we want to connect to a calliope right now. Otherwise it connects on the home screen without the ConnectionView even showing.
-        guard MatrixConnectionViewController.instance.calliopeClass != nil else {
+        //
+        // `instance` is an implicitly unwrapped static that is only assigned in
+        // `MatrixConnectionViewController.viewDidLoad`, while this method runs
+        // from `centralManagerDidUpdateState` — which CoreBluetooth can call as
+        // soon as the central manager powers on, i.e. before that view ever
+        // loads. Force-unwrapping crashed there. Optional chaining keeps the
+        // intent exactly: no connection view yet means no auto-reconnect.
+        guard MatrixConnectionViewController.instance?.calliopeClass != nil else {
            return
         }
         LogNotify.log("attempt reconnect")
@@ -325,14 +341,87 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
         }
     }
 
+    /// Whether the one-time heads-up alert before the per-flash export picker
+    /// has already been shown in this app session. Reset on each app launch so a
+    /// fresh user of a shared device sees it once.
+    private var hasShownUsbPickerAlert = false
+
+    /// Devices that cannot hand the app a writable folder URL for a mounted USB
+    /// volume and therefore have to pick the destination for every single flash
+    /// through an export picker:
+    ///
+    /// - **Shared iPad:** the managed sandbox silently refuses the folder pick —
+    ///   tapping "Öffnen" does nothing at all.
+    /// - **iPadOS < 26:** the picker puts a search field where the
+    ///   "Öffnen"/"Auswählen" button belongs, so the selected volume can never
+    ///   be confirmed.
+    ///
+    /// iPadOS 26+ on a personal device keeps the folder picker: the user picks
+    /// the volume once and the app then copies each hex itself, which is the
+    /// most reliable transfer we have.
+
     func initializeConnectionToUsbCalliope(view: UIViewController) {
         state = .usbConnecting
-        let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.folder])
+
+        // Where no writable folder URL can be obtained (Shared iPad, or any
+        // iPadOS below 26), fall back to picking the destination per flash via
+        // the export picker. A one-time heads-up alert explains that before the
+        // first USB activation of a session; later activations connect straight
+        // away.
+        if UIDevice.current.usbNeedsExportPicker {
+            guard hasShownUsbPickerAlert else {
+                hasShownUsbPickerAlert = true
+                let message = UIDevice.current.isSharedIPad
+                    ? NSLocalizedString("On a Shared iPad the Calliope mini has to be selected for every file copy. Transferring over the cable is not reliable here, so we recommend transferring via Bluetooth.", comment: "USB connection alert body on Shared iPad")
+                    : NSLocalizedString("Before every file copy you have to select the Calliope mini. If there are problems copying, disconnect the Calliope mini from the device and connect it again before copying.", comment: "USB connection alert body on older iPadOS")
+                let alert = UIAlertController(
+                    title: NSLocalizedString("USB connection", comment: "USB connection alert title on Shared iPad"),
+                    message: message,
+                    preferredStyle: .alert)
+                alert.addAction(UIAlertAction(
+                    title: NSLocalizedString("Continue", comment: "Continue button"),
+                    style: .default) { [weak self] _ in
+                        self?.connectExportPickerUsbCalliope()
+                    })
+                view.present(alert, animated: true, completion: nil)
+                return
+            }
+
+            connectExportPickerUsbCalliope()
+            return
+        }
+
+        presentUsbFolderPicker(view: view)
+    }
+
+    /// Shared iPad: connect a USB Calliope that has no folder URL. The
+    /// destination is picked per flash through `USBCalliope`'s export picker.
+    private func connectExportPickerUsbCalliope() {
+        LogNotify.log("Folder picker unavailable (shared iPad: \(UIDevice.current.isSharedIPad), iOS \(ProcessInfo.processInfo.operatingSystemVersion.majorVersion)) - using export-picker flow")
+        let discovered = DiscoveredUSBDevice(exportPickerName: CalliopeDiscovery.usbCalliopeName)
+        disconnectFromCalliope()
+        discovered.state = .discovered
+        self.discoveredCalliopes.updateValue(discovered, forKey: CalliopeDiscovery.usbCalliopeName)
+        self.connectToCalliope(discovered)
+    }
+
+    /// Presents the document picker for selecting the Calliope mini's USB
+    /// volume. Used by both the normal-iPad flow and (after the heads-up alert)
+    /// the Shared-iPad flow.
+    private func presentUsbFolderPicker(view: UIViewController) {
+        // Including .folder, .directory and .volume makes the DAPLink mass-storage
+        // volume reliably selectable in the picker.
+        let contentTypes: [UTType] = [.folder, .directory, .volume]
+        let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: contentTypes)
         documentPicker.delegate = self
         documentPicker.allowsMultipleSelection = false
+        documentPicker.shouldShowFileExtensions = true
+        // Only reached on iPadOS 26+ (see `usbNeedsExportPicker`), where the
+        // default sheet reliably shows the "Öffnen"/"Auswählen" button, so no
+        // full-screen override is needed here.
         view.present(documentPicker, animated: true, completion: nil)
     }
-    
+
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         let url = urls.first
         let discoveredCalliope = DiscoveredUSBDevice(url: url!, name: CalliopeDiscovery.usbCalliopeName)
