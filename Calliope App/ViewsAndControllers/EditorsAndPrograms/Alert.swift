@@ -9,68 +9,167 @@
 import Foundation
 import SwiftUI
 
+// This file contains the general alert logic for this app.
+// Using .alert() does not allow to consistently replace one alert by another.
+
+
 struct AlertModifier: ViewModifier {
     @Binding var alert: (any AppAlert)?
     @State var textFieldContent: String = ""
 
     func body(content: Content) -> some View {
-        content.alert(
-            alert?.title ?? "",
-            isPresented: .isPresent($alert),
-            presenting: alert
-        ) { alert in
-            textFieldAppAlertContent
-            standardAppAlertContent
-        } message: { alert in
-            if let message = alert.message {
-                Text(message)
-            }
-        }
-    }
+        content.overlay {
+            ZStack {
+                // The two seperate if statements are necessary, because otherwise the transition does not trigger
+                if alert != nil {
+                    Color.black.opacity(0.35)
+                        .ignoresSafeArea()
+                        .transition(.opacity)
+                }
 
-    @ViewBuilder
-    var standardAppAlertContent: some View {
-        if !(alert is any TextFieldAppAlert) {
-            ForEach(alert?.actions ?? []) { action in
-                Button(action.title, role: action.role) {
-                    action.execute()
+                if let alert {
+                    CalliopeAlertCard(alert: alert, textFieldContent: $textFieldContent, perform: dismissAfter)
+                        .padding(.horizontal, 40)
+                        .transition(.scale(scale: 0.7).combined(with: .opacity))
                 }
             }
         }
+        .animation(.spring(response: 0.35, dampingFraction: 0.85), value: alert == nil)
     }
 
-    @ViewBuilder
-    var textFieldAppAlertContent: some View {
-        if alert is any TextFieldAppAlert {
-            let textFieldAlert = alert as! any TextFieldAppAlert
-            TextField(textFieldAlert.textFieldHint, text: $textFieldContent).onAppear {
-                textFieldContent = textFieldAlert.textFieldDefault ?? ""
-            }
-            ForEach(textFieldAlert.textActions) { action in
-                Button(action.title, role: action.role) {
-                    textFieldAlert.textActions.forEach { action in
-                        action.updateText(text: textFieldContent)
-                    }
-                    action.execute()
-                }
-            }
-
+    private func dismissAfter(_ action: () -> Void) {
+        let presentedID = alert?.id
+        action()
+        if alert?.id == presentedID {
+            alert = nil
         }
     }
 }
 
-extension Binding {
-    static func isPresent<T>(_ value: Binding<T?>) -> Binding<Bool> {
-        Binding<Bool>(
-            get: {
-                value.wrappedValue != nil
-            },
-            set: { isPresented in
-                if !isPresented {
-                    value.wrappedValue = nil
+private struct CalliopeAlertCard: View {
+    let alert: any AppAlert
+    @Binding var textFieldContent: String
+    let perform: (() -> Void) -> Void
+    @FocusState private var textFieldFocused: Bool
+
+    private var textFieldAlert: (any TextFieldAppAlert)? {
+        alert as? any TextFieldAppAlert
+    }
+
+    var body: some View {
+        VStack(spacing: 0) {
+            VStack(spacing: 8) {
+                Text(alert.title)
+                    .font(.headline)
+                    .multilineTextAlignment(.center)
+
+                if let message = alert.message {
+                    Text(message)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
+                }
+
+                if let textFieldAlert {
+                    TextField(textFieldAlert.textFieldHint, text: $textFieldContent)
+                        .focused($textFieldFocused)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 8)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(Color(.tertiarySystemFill))
+                        )
+                        .padding(.top, 4)
                 }
             }
+            .padding(20)
+
+            Divider()
+
+            buttonArea
+        }
+        .frame(width: 270)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color(.systemBackground))
         )
+        .shadow(radius: 10)
+        .task(id: alert.id) {
+            textFieldContent = textFieldAlert?.textFieldDefault ?? ""
+            textFieldFocused = textFieldAlert != nil
+        }
+    }
+
+    @ViewBuilder
+    private var buttonArea: some View {
+        if let textFieldAlert {
+            actionList(textFieldAlert.textActions) { action in
+                perform {
+                    textFieldAlert.textActions.forEach { $0.updateText(text: textFieldContent) }
+                    action.execute()
+                }
+            }
+        } else {
+            actionList(alert.actions) { action in
+                perform {
+                    action.execute()
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func actionList<Action: AlertActionType>(
+        _ actions: [Action],
+        onSelect: @escaping (Action) -> Void
+    ) -> some View {
+        if actions.count <= 2 {
+            HStack(spacing: 0) {
+                ForEach(Array(actions.enumerated()), id: \.element.id) { index, action in
+                    if index > 0 {
+                        Divider()
+                    }
+                    alertButton(action, onSelect: onSelect)
+                }
+            }
+            // `Divider()` fills the height of its containing HStack by design; without this,
+            // it greedily expands the whole row to whatever height the parent proposes.
+            .fixedSize(horizontal: false, vertical: true)
+        } else {
+            VStack(spacing: 0) {
+                ForEach(Array(actions.enumerated()), id: \.element.id) { index, action in
+                    if index > 0 {
+                        Divider()
+                    }
+                    alertButton(action, onSelect: onSelect)
+                }
+            }
+        }
+    }
+
+    private func alertButton<Action: AlertActionType>(
+        _ action: Action,
+        onSelect: @escaping (Action) -> Void
+    ) -> some View {
+        Button {
+            onSelect(action)
+        } label: {
+            Text(action.title)
+                .font(action.role == nil ? .body.weight(.semibold) : .body)
+                .foregroundColor(color(for: action.role))
+                .frame(maxWidth: .infinity, minHeight: 44)
+        }
+    }
+
+    private func color(for role: ButtonRole?) -> Color {
+        switch role {
+        case .destructive:
+            return .calliopeRed
+        case .cancel:
+            return .secondary
+        default:
+            return Color("calliope-lilablau")
+        }
     }
 }
 
@@ -239,7 +338,7 @@ struct ProgramDownloadFailedAlert: AppAlert {
 
     init(error: String?, completion: @escaping () -> Void) {
         let reason = error ?? NSLocalizedString("The downloaded program is empty", comment: "")
-        message = String(format: NSLocalizedString("The program is not ready. The reason is:\n%@", comment: ""), reason)
+        message = String(format: NSLocalizedString("The program is not ready. The reason is: %@", comment: ""), reason)
         actions = [StandardAlertAction(NSLocalizedString("OK", comment: ""), handler: completion)]
     }
 }
@@ -434,14 +533,7 @@ protocol Alertable: AnyObject {
 
 extension Alertable {
     func setAlert(_ newAlert: (any AppAlert)?) {
-        guard alert != nil else {
-            alert = newAlert
-            return
-        }
-        alert = nil
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.alert = newAlert
-        }
+        alert = newAlert
     }
 }
 
@@ -577,4 +669,102 @@ protocol CanShowProgess: AnyObject {
 
 protocol ProgressAlert {
 
+}
+
+private struct AlertGalleryEntry: Identifiable {
+    let id = UUID()
+    let name: String
+    let alert: any AppAlert
+}
+
+private struct AlertGalleryPreview: View {
+    let entries: [AlertGalleryEntry]
+    @State private var selectedID: AlertGalleryEntry.ID?
+    @State private var presentedAlert: (any AppAlert)?
+
+    var body: some View {
+        HStack(spacing: 0) {
+            List(entries, selection: $selectedID) { entry in
+                Text(entry.name)
+                    .font(.footnote)
+            }
+            .listStyle(.plain)
+            .frame(width: 240)
+
+            Divider()
+            
+            Rectangle()
+                .fill(.white)
+                .modifier(AlertModifier(alert: $presentedAlert))
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+        .onAppear {
+            selectedID = entries.first?.id
+            presentedAlert = entries.first?.alert
+        }
+        .onChange(of: selectedID) { newValue in
+            presentedAlert = entries.first { $0.id == newValue }?.alert
+        }
+    }
+}
+
+#Preview("Alerts - Master Detail") {
+    let previewHexFile = HexFile(url: URL(fileURLWithPath: "/tmp/my_program.hex"), name: "my_program.hex", date: .now)
+    let previewProject = Project(id: 1, name: "My Project")
+    let previewError = NSError(
+        domain: "Preview",
+        code: 0,
+        userInfo: [NSLocalizedDescriptionKey: "The requested page could not be loaded."]
+    )
+
+    let entries: [AlertGalleryEntry] = [
+        AlertGalleryEntry(name: "ArcadeUSBRequiredAlert", alert: ArcadeUSBRequiredAlert(saved: {}, closed: {})),
+        AlertGalleryEntry(name: "ArcadeTransferAlert", alert: ArcadeTransferAlert(saved: {}, transfer: {}, closed: {})),
+        AlertGalleryEntry(name: "StandardHexUIAlert", alert: StandardHexUIAlert(saved: {}, transfer: {}, closed: {})),
+        AlertGalleryEntry(
+            name: "SaveFileWithNameAlert",
+            alert: SaveFileWithNameAlert(save: { _ in }, dontSave: { _ in }, defaultName: "my_program")
+        ),
+        AlertGalleryEntry(name: "WaitForProgramDownloadAlert", alert: WaitForProgramDownloadAlert()),
+        AlertGalleryEntry(name: "ProgramDownloadSuccessAlert", alert: ProgramDownloadSuccessAlert(upload: {})),
+        AlertGalleryEntry(
+            name: "ProgramDownloadFailedAlert",
+            alert: ProgramDownloadFailedAlert(error: "Connection timed out", completion: {})
+        ),
+        AlertGalleryEntry(name: "UploadConfirmationAlert", alert: UploadConfirmationAlert(name: "my_program.hex", upload: {})),
+        AlertGalleryEntry(name: "UploadFailedAlert", alert: UploadFailedAlert(goToInformation: {})),
+        AlertGalleryEntry(name: "CannotUploadAlert", alert: CannotUploadAlert()),
+        AlertGalleryEntry(name: "ArcadeUsbRequiredAlert", alert: ArcadeUsbRequiredAlert(onOpenUsbMode: {}, onCancel: {})),
+        AlertGalleryEntry(name: "OkAppAlert", alert: OkAppAlert(title: "Done", message: "Everything worked.", completion: {})),
+        AlertGalleryEntry(name: "WebViewNavigationErrorAlert", alert: WebViewNavigationErrorAlert(error: previewError)),
+        AlertGalleryEntry(
+            name: "GenericAlert",
+            alert: GenericAlert(title: "Generic Alert", message: "This is a generic alert message.", actions: [
+                StandardAlertAction("OK", handler: {}),
+            ])
+        ),
+        AlertGalleryEntry(
+            name: "GenericTextFieldAlert",
+            alert: GenericTextFieldAlert(title: "Generic Text Field", message: "Enter something", actions: [
+                TextFieldAlertAction("OK", handler: { _ in }),
+            ], defaultName: "Default")
+        ),
+        AlertGalleryEntry(name: "RenameProgramAlert", alert: RenameProgramAlert(defaultName: "my_program", onRename: { _ in })),
+        AlertGalleryEntry(name: "DeleteProgramAlert", alert: DeleteProgramAlert(program: previewHexFile, onDelete: {})),
+        AlertGalleryEntry(
+            name: "DeleteProgramFailedAlert",
+            alert: DeleteProgramFailedAlert(program: previewHexFile, error: previewError)
+        ),
+        AlertGalleryEntry(name: "RenameFailedAlert", alert: RenameFailedAlert(oldName: "old_name", newName: "new/name")),
+        AlertGalleryEntry(name: "RenameProjectAlert", alert: RenameProjectAlert(defaultName: "My Project", onRename: { _ in })),
+        AlertGalleryEntry(name: "DeleteProjectAlert", alert: DeleteProjectAlert(project: previewProject, onDelete: {})),
+        AlertGalleryEntry(name: "ExportCSVNameAlert", alert: ExportCSVNameAlert(onOk: { _ in })),
+        AlertGalleryEntry(name: "ConnectCalliopeRequiredAlert", alert: ConnectCalliopeRequiredAlert()),
+        AlertGalleryEntry(name: "WrongStorageLocationAlert", alert: WrongStorageLocationAlert()),
+        AlertGalleryEntry(name: "BluetoothDeactivatedAlert", alert: BluetoothDeactivatedAlert(openSettings: {}, ok: {})),
+        AlertGalleryEntry(name: "BluetoothResetRequiredAlert", alert: BluetoothResetRequiredAlert(openSettings: {})),
+        AlertGalleryEntry(name: "NewProjectNameAlert", alert: NewProjectNameAlert(onCreate: { _ in })),
+    ]
+
+    return AlertGalleryPreview(entries: entries)
 }

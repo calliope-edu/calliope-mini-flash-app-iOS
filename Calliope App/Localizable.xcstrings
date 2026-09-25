@@ -2656,6 +2656,7 @@
       }
     },
     "The program is not ready. The reason is:\n%@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2670,6 +2671,9 @@
           }
         }
       }
+    },
+    "The program is not ready. The reason is: %@" : {
+
     },
     "There is no connected calliope in DFU mode" : {
       "extractionState" : "manual",
