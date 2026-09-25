@@ -58,14 +58,27 @@ private struct CalliopeAlertCard: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            VStack(spacing: 8) {
-                Text(alert.title)
-                    .font(.headline)
-                    .multilineTextAlignment(.center)
+            if alert.severity != .none {
+                Rectangle()
+                    .fill(alert.severity.color)
+                    .frame(height: 8)
+            }
+
+            VStack(spacing: 10) {
+                HStack(spacing: 8) {
+                    if alert.severity != .none {
+                        Image(systemName: alert.severity.icon)
+                            .font(.title3)
+                            .foregroundColor(alert.severity.color)
+                    }
+                    Text(alert.title)
+                        .font(.title3.weight(.semibold))
+                        .multilineTextAlignment(.center)
+                }
 
                 if let message = alert.message {
                     Text(message)
-                        .font(.subheadline)
+                        .font(.body)
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
                 }
@@ -73,26 +86,24 @@ private struct CalliopeAlertCard: View {
                 if let textFieldAlert {
                     TextField(textFieldAlert.textFieldHint, text: $textFieldContent)
                         .focused($textFieldFocused)
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 8)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 10)
                         .background(
-                            RoundedRectangle(cornerRadius: 8)
+                            RoundedRectangle(cornerRadius: 10)
                                 .fill(Color(.tertiarySystemFill))
                         )
                         .padding(.top, 4)
                 }
             }
-            .padding(20)
-
-            Divider()
+            .padding(24)
 
             buttonArea
+                .padding(.horizontal, 24)
+                .padding(.bottom, 24)
         }
-        .frame(width: 270)
-        .background(
-            RoundedRectangle(cornerRadius: 20)
-                .fill(Color(.systemBackground))
-        )
+        .frame(width: 340)
+        .background(Color(.systemBackground))
+        .clipShape(RoundedRectangle(cornerRadius: 28))
         .shadow(radius: 10)
         .task(id: alert.id) {
             textFieldContent = textFieldAlert?.textFieldDefault ?? ""
@@ -124,23 +135,14 @@ private struct CalliopeAlertCard: View {
         onSelect: @escaping (Action) -> Void
     ) -> some View {
         if actions.count <= 2 {
-            HStack(spacing: 0) {
-                ForEach(Array(actions.enumerated()), id: \.element.id) { index, action in
-                    if index > 0 {
-                        Divider()
-                    }
+            HStack(spacing: 12) {
+                ForEach(actions) { action in
                     alertButton(action, onSelect: onSelect)
                 }
             }
-            // `Divider()` fills the height of its containing HStack by design; without this,
-            // it greedily expands the whole row to whatever height the parent proposes.
-            .fixedSize(horizontal: false, vertical: true)
         } else {
-            VStack(spacing: 0) {
-                ForEach(Array(actions.enumerated()), id: \.element.id) { index, action in
-                    if index > 0 {
-                        Divider()
-                    }
+            VStack(spacing: 12) {
+                ForEach(actions) { action in
                     alertButton(action, onSelect: onSelect)
                 }
             }
@@ -155,20 +157,62 @@ private struct CalliopeAlertCard: View {
             onSelect(action)
         } label: {
             Text(action.title)
-                .font(action.role == nil ? .body.weight(.semibold) : .body)
-                .foregroundColor(color(for: action.role))
-                .frame(maxWidth: .infinity, minHeight: 44)
+                .font(.body.weight(.semibold))
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
+                .foregroundColor(foregroundColor(for: action.role))
+                .padding(.horizontal, 16)
+                .frame(maxWidth: .infinity, minHeight: 56)
+                .background(background(for: action.role))
+                .clipShape(Capsule())
+                .overlay(
+                    Capsule()
+                        .strokeBorder(Color("calliope-lilablau"), lineWidth: action.role == .cancel ? 1.5 : 0)
+                )
         }
     }
 
-    private func color(for role: ButtonRole?) -> Color {
+    private func foregroundColor(for role: ButtonRole?) -> Color {
+        role == .cancel ? Color("calliope-lilablau") : .white
+    }
+
+    private func background(for role: ButtonRole?) -> Color {
         switch role {
         case .destructive:
             return .calliopeRed
         case .cancel:
-            return .secondary
+            return .clear
         default:
             return Color("calliope-lilablau")
+        }
+    }
+}
+
+enum AlertSeverity: Equatable {
+    case none
+    case warning
+    case destructive
+
+    var color: Color {
+        switch self {
+        case .none:
+            return Color("calliope-lilablau")
+        case .warning:
+            return .calliopeOrange
+        case .destructive:
+            return .calliopeRed
+        }
+    }
+
+    var icon: String {
+        switch self {
+        case .none:
+            return ""
+        case .warning:
+            return "exclamationmark.triangle.fill"
+        case .destructive:
+            return "trash.fill"
         }
     }
 }
@@ -178,6 +222,14 @@ protocol AppAlert: Identifiable {
     var title: String { get }
     var message: String? { get }
     var actions: [StandardAlertAction] { get }
+    var severity: AlertSeverity { get }
+}
+
+extension AppAlert {
+    // Alerts opt into a stronger severity explicitly; a destructive action implies it on its own.
+    var severity: AlertSeverity {
+        actions.contains { $0.role == .destructive } ? .destructive : .none
+    }
 }
 
 protocol TextFieldAppAlert: AppAlert {
@@ -335,6 +387,7 @@ struct ProgramDownloadFailedAlert: AppAlert {
     let title: String = NSLocalizedString("Program download failed", comment: "")
     let message: String?
     let actions: [StandardAlertAction]
+    let severity: AlertSeverity = .warning
 
     init(error: String?, completion: @escaping () -> Void) {
         let reason = error ?? NSLocalizedString("The downloaded program is empty", comment: "")
@@ -367,6 +420,7 @@ struct UploadFailedAlert: AppAlert {
         comment: ""
     )
     let actions: [StandardAlertAction]
+    let severity: AlertSeverity = .warning
 
     init(goToInformation: @escaping () -> Void) {
         actions = [
@@ -384,6 +438,7 @@ struct CannotUploadAlert: AppAlert {
         comment: "Es konnte kein Calliope mini gefunden werden"
     )
     let actions = [StandardAlertAction(NSLocalizedString("OK", comment: ""), handler: {})]
+    let severity: AlertSeverity = .warning
 }
 
 struct ArcadeUsbRequiredAlert: AppAlert {
@@ -428,6 +483,7 @@ struct WebViewNavigationErrorAlert: AppAlert {
     let title: String = NSLocalizedString("Navigation Failed", comment: "")
     let message: String?
     let actions: [StandardAlertAction]
+    let severity: AlertSeverity = .warning
 
     init(error: Error) {
         message = error.localizedDescription
@@ -503,6 +559,7 @@ struct DeleteProgramFailedAlert: AppAlert {
     let title: String = NSLocalizedString("Delete failed", comment: "")
     let message: String?
     let actions: [StandardAlertAction]
+    let severity: AlertSeverity = .warning
 
     init(program: HexFile, error: Error) {
         message = String(format: NSLocalizedString("Could not delete %@\n", comment: ""), program.name) + error.localizedDescription
@@ -515,6 +572,7 @@ struct RenameFailedAlert: AppAlert {
     let title: String
     let message: String?
     let actions: [StandardAlertAction]
+    let severity: AlertSeverity = .warning
 
     init(oldName: String, newName: String) {
         self.title = String(format: NSLocalizedString("Could not rename %@", comment: ""), oldName)
@@ -602,6 +660,7 @@ struct WrongStorageLocationAlert: AppAlert {
     let title: String = NSLocalizedString("Wrong storage location", comment: "")
     let message: String? = NSLocalizedString("You have not selected a Calliope folder as storage location", comment: "")
     let actions: [StandardAlertAction] = [StandardAlertAction(NSLocalizedString("OK", comment: ""), handler: {})]
+    let severity: AlertSeverity = .warning
 }
 
 struct BluetoothDeactivatedAlert: AppAlert {
@@ -609,6 +668,7 @@ struct BluetoothDeactivatedAlert: AppAlert {
     let title: String = NSLocalizedString("Bluetooth deactivated", comment: "Bluetooth is turned off")
     let message: String? = NSLocalizedString("Bluetooth must be activated to send data to Calliope mini!", comment: "Bluetooth required message")
     let actions: [StandardAlertAction]
+    let severity: AlertSeverity = .warning
 
     init(openSettings: @escaping () -> Void, ok: @escaping () -> Void) {
         actions = [
@@ -626,6 +686,7 @@ struct BluetoothResetRequiredAlert: AppAlert {
         comment: "Instructions to reset Bluetooth pairing"
     )
     let actions: [StandardAlertAction]
+    let severity: AlertSeverity = .warning
 
     init(openSettings: @escaping () -> Void) {
         actions = [
