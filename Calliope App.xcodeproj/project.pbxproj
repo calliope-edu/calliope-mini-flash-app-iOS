@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		10F219B63C07E643D0BE0F21 /* AppAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6241D0B1D9F4DCC6F6FFAC13 /* AppAlerts.swift */; };
 		2F1BD9952674D48C006A47F2 /* AutoHeightCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1BD9942674D48C006A47F2 /* AutoHeightCollectionViewFlowLayout.swift */; };
 		2F1BD9972674D804006A47F2 /* AutoHeightCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1BD9962674D804006A47F2 /* AutoHeightCollectionViewCell.swift */; };
 		2F2B809A25A0E01500A7CCF7 /* CodeSnippets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2B809925A0E01500A7CCF7 /* CodeSnippets.swift */; };
@@ -151,6 +152,7 @@
 		806801512EF5A2D00010448D /* ConnectedCalliopeV3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806801502EF5A2D00010448D /* ConnectedCalliopeV3.swift */; };
 		80EB0D422F0ECA3C000C3269 /* PartialFlashing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB0D412F0ECA3A000C3269 /* PartialFlashing.swift */; };
 		B16DD0D6E28647BDAC9EA8CB /* Pods_Calliope_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B15F9E6DE42C49A76EC47B /* Pods_Calliope_App.framework */; };
+		C34564C10D2D72E4C316AD19 /* AlertPreviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD78D17741D0EA279A3D68F1 /* AlertPreviews.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -302,6 +304,7 @@
 		60D02D802BFC95E000D3C34A /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		60EBC64B2F9BAD5A00A6DD84 /* ChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewModel.swift; sourceTree = "<group>"; };
 		60FF510C2BB55324002B24A2 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = "Calliope App/PrivacyInfo.xcprivacy"; sourceTree = SOURCE_ROOT; };
+		6241D0B1D9F4DCC6F6FFAC13 /* AppAlerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAlerts.swift; sourceTree = "<group>"; };
 		7E25C5F2B4FF55234B28A749 /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
 		7E25C80C2A4E87716138A0E0 /* UtilityJobState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityJobState.swift; sourceTree = "<group>"; };
 		7E25C8370320F1AE86E741A5 /* UtilityLogJob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityLogJob.swift; sourceTree = "<group>"; };
@@ -310,31 +313,12 @@
 		806801522EF7008B0010448D /* PartialFlashingOptimized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartialFlashingOptimized.swift; sourceTree = "<group>"; };
 		80EB0D412F0ECA3A000C3269 /* PartialFlashing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartialFlashing.swift; sourceTree = "<group>"; };
 		BD1AFC4008F992EADC1C557D /* Pods-Calliope App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.release.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.release.xcconfig"; sourceTree = "<group>"; };
+		FD78D17741D0EA279A3D68F1 /* AlertPreviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPreviews.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		60F6C3E42F2D243500A6C193 /* LofiAppWebView */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
-			explicitFileTypes = {
-			};
-			explicitFolders = (
-			);
-			path = LofiAppWebView;
-			sourceTree = "<group>";
-		};
-		60F6C3E52F2D24A300A6C193 /* Web Bluetooth */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
-			explicitFileTypes = {
-			};
-			explicitFolders = (
-			);
-			path = "Web Bluetooth";
-			sourceTree = "<group>";
-		};
+		60F6C3E42F2D243500A6C193 /* LofiAppWebView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LofiAppWebView; sourceTree = "<group>"; };
+		60F6C3E52F2D24A300A6C193 /* Web Bluetooth */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Web Bluetooth"; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -588,6 +572,8 @@
 				6073401D300785C200616062 /* QRCodeView.swift */,
 				6073401F3007C05700616062 /* EditorWebView.swift */,
 				6008D1B93025C7DB001673BD /* Alert.swift */,
+				6241D0B1D9F4DCC6F6FFAC13 /* AppAlerts.swift */,
+				FD78D17741D0EA279A3D68F1 /* AlertPreviews.swift */,
 			);
 			path = EditorsAndPrograms;
 			sourceTree = "<group>";
@@ -952,7 +938,7 @@
 			);
 			mainGroup = 2F61450322BF75DE001C2734;
 			packageReferences = (
-				604938BC2E1BAF6C008BCE40 /* XCLocalSwiftPackageReference "ScratchLinkKit" */,
+				604938BC2E1BAF6C008BCE40 /* XCLocalSwiftPackageReference "Packages/ScratchLinkKit" */,
 			);
 			productRefGroup = 2F61450D22BF75DE001C2734 /* Products */;
 			projectDirPath = "";
@@ -1039,9 +1025,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Calliope App/Pods-Calliope App-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Calliope App/Pods-Calliope App-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1135,6 +1125,8 @@
 				60030B9C2DC8B2E200397E69 /* Date.swift in Sources */,
 				6073406C3007E04D00616062 /* HomeScreenView.swift in Sources */,
 				6008D1BA3025C7DB001673BD /* Alert.swift in Sources */,
+				10F219B63C07E643D0BE0F21 /* AppAlerts.swift in Sources */,
+				C34564C10D2D72E4C316AD19 /* AlertPreviews.swift in Sources */,
 				60CF0EB02BFCD59D00CB2A38 /* DataController.swift in Sources */,
 				60127F6D2FD005DF000A1995 /* DataLoggerView.swift in Sources */,
 				60CF0EAD2BFCD25300CB2A38 /* Value.swift in Sources */,
@@ -1382,7 +1374,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		604938BC2E1BAF6C008BCE40 /* XCLocalSwiftPackageReference "ScratchLinkKit" */ = {
+		604938BC2E1BAF6C008BCE40 /* XCLocalSwiftPackageReference "Packages/ScratchLinkKit" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Packages/ScratchLinkKit;
 		};

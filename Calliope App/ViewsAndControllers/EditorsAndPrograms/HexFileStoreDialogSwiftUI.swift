@@ -20,7 +20,7 @@ enum HexFileStoreDialogSwiftUI {
     }
 
     public static func showStoreHexUI(
-        alertPublisher: Alertable & CanShowProgess,
+        alertPublisher: Alertable,
         hexFile: URL,
         notSaved: @escaping (Error?) -> Void,
         saveCompleted: ((Hex) -> Void)? = nil
@@ -64,7 +64,7 @@ enum HexFileStoreDialogSwiftUI {
 
     /// Alert für Arcade-Dateien wenn USB verbunden ist
     private static func getArcadeTransferAlert(
-        alertPublisher: Alertable & CanShowProgess,
+        alertPublisher: Alertable,
         hexFile: URL,
         notSaved: @escaping (Error?) -> Void,
         saveCompleted: ((Hex) -> Void)? = nil
@@ -91,7 +91,7 @@ enum HexFileStoreDialogSwiftUI {
 
     /// Standard UI für normale Hex-Dateien
     private static func getStandardHexUI(
-        alertPublisher: Alertable & CanShowProgess,
+        alertPublisher: Alertable,
         hexFile: URL,
         notSaved: @escaping (Error?) -> Void,
         saveCompleted: ((Hex) -> Void)? = nil

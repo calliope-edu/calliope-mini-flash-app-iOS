@@ -44,7 +44,7 @@ protocol EditorsAndProgramsViewModelProtocol {
     func openFile(result: Result<URL, Error>)
 }
 
-class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, ObservableObject, Alertable, CanShowProgess {
+class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, ObservableObject, Alertable {
 
     @Published var editors: [EditorTileConfig] = [
         EditorTileConfig(name: "Makecode", iconName: "editors_makecode"),
@@ -64,8 +64,6 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
             set: { self.alert = $0 }
         )
     }
-    
-    var progress: (any ProgressAlert)?
 
     var programSubscription: NSObjectProtocol!
 

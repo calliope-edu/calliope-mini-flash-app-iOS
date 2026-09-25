@@ -60,7 +60,7 @@ class FirmwareUploadSwiftUI {
             MatrixConnectionViewModel.instance.animateBounce()
             return
         }
-        
+
         let confirmationAlert = UploadConfirmationAlert(
             name: name,
             upload: {
@@ -115,7 +115,7 @@ class FirmwareUploadSwiftUI {
 
     // NEU: Hilfsmethode für Arcade USB Alert
     private static func showArcadeUSBAlert(alertPublisher: Alertable, completion: (() -> Void)?) {
-        let alert = ArcadeUsbRequiredAlert(
+        let alert = ArcadeUsbModeRequiredAlert(
             onOpenUsbMode: {
                 // Wechsle in USB-Modus
                 // Expand the matrix connection view if it's collapsed
