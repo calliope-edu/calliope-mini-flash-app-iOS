@@ -18,8 +18,8 @@ class LofiAppsViewModel: ObservableObject, Alertable {
         AppItem(tileItem: TileItem(title: "OBJEKTERKENNUNG MIT KÜNSTLICHER INTELLIGENZ", imageSource: ImageSource.local("teachablemachine"), color: Color("calliope-darkgreen"), textColor: .white), url: "https://go.calliope.cc/teachablemachine/index.html?mobile=true"),
     ])
 
-    @Published var alert: (any AppAlert)? = nil
-    var alertBinding: Binding<(any AppAlert)?> {
+    @Published var alert: AppAlert? = nil
+    var alertBinding: Binding<AppAlert?> {
         Binding(
             get: { self.alert },
             set: { self.alert = $0 }

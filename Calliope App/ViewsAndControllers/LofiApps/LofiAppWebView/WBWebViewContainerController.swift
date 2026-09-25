@@ -78,7 +78,7 @@ class WBWebViewContainerController: UIViewController, WKNavigationDelegate, WKUI
     
     // MARK: - WKUIDelegate
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: (@escaping () -> Void)) {
-        alertPublisher.alert = OkAppAlert(title: message, completion: completionHandler)
+        alertPublisher.alert = .ok(title: message, completion: completionHandler)
     }
     
     // MARK: - Observe protocol
@@ -115,7 +115,7 @@ class WBWebViewContainerController: UIViewController, WKNavigationDelegate, WKUI
         ) {
             return
         }
-        self.alertPublisher.alert = WebViewNavigationErrorAlert(error: error)
+        self.alertPublisher.alert = .webViewNavigationError(error: error)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

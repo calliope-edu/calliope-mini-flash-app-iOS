@@ -11,7 +11,7 @@ import UIKit
 import SwiftUI
 
 protocol CalliopeMiniBlocksViewModelProtocol {
-    var alertBinding: Binding<(any AppAlert)?> { get }
+    var alertBinding: Binding<AppAlert?> { get }
     
     func openLinkToAppStorePage()
     func openLinkToCalliopeBlocksGetStatedPage()
@@ -20,8 +20,8 @@ protocol CalliopeMiniBlocksViewModelProtocol {
 }
 
 class CalliopeMiniBlocksViewModel: CalliopeMiniBlocksViewModelProtocol, ObservableObject, Alertable {
-    @Published var alert: (any AppAlert)? = nil
-    var alertBinding: Binding<(any AppAlert)?> {
+    @Published var alert: AppAlert? = nil
+    var alertBinding: Binding<AppAlert?> {
         Binding(
             get: { self.alert },
             set: { self.alert = $0 }
@@ -73,8 +73,8 @@ class CalliopeMiniBlocksViewModel: CalliopeMiniBlocksViewModelProtocol, Observab
 }
 
 class PreviewCalliopeMiniBlocksViewModel: CalliopeMiniBlocksViewModelProtocol, ObservableObject {
-    @Published var alert: (any AppAlert)? = nil
-    var alertBinding: Binding<(any AppAlert)?> {
+    @Published var alert: AppAlert? = nil
+    var alertBinding: Binding<AppAlert?> {
         Binding(
             get: { self.alert },
             set: { self.alert = $0 }

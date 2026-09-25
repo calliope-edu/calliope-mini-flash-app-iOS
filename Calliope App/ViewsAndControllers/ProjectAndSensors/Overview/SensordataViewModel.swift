@@ -13,8 +13,8 @@ protocol SensorDataViewModelProtocol {
     var projects: [Project] { get }
     var dataLoggerButtonEnabled: Bool { get }
     var isUsbMode: Bool { get }
-    var alert: (any AppAlert)? { get set }
-    var alertBinding: Binding<(any AppAlert)?> { get }
+    var alert: AppAlert? { get set }
+    var alertBinding: Binding<AppAlert?> { get }
     
     func deleteProject(id: Int64)
     func openBluetoothExtensionPage(openURL: OpenURLAction)
@@ -24,8 +24,8 @@ class SensordataViewModel: ObservableObject, SensorDataViewModelProtocol, Alerta
     @Published var projects: [Project] = []
     @Published var dataLoggerButtonEnabled: Bool
     @Published var isUsbMode: Bool
-    @Published var alert: (any AppAlert)? = nil
-    var alertBinding: Binding<(any AppAlert)?> {
+    @Published var alert: AppAlert? = nil
+    var alertBinding: Binding<AppAlert?> {
         Binding(
             get: { self.alert },
             set: { self.alert = $0 }
@@ -120,8 +120,8 @@ class PreviewSensordataViewModel: SensorDataViewModelProtocol, ObservableObject,
     @Published var projects: [Project]
     @Published var dataLoggerButtonEnabled: Bool
     @Published var isUsbMode: Bool
-    @Published var alert: (any AppAlert)? = nil
-    var alertBinding: Binding<(any AppAlert)?> {
+    @Published var alert: AppAlert? = nil
+    var alertBinding: Binding<AppAlert?> {
         Binding(
             get: { self.alert },
             set: { self.alert = $0 }

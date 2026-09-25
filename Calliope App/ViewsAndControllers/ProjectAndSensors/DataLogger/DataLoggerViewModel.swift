@@ -20,8 +20,8 @@ class DataLoggerViewModel: ObservableObject, Alertable {
             html = String(decoding: newValue, as: UTF8.self)
         }
     }
-    @Published var alert: (any AppAlert)? = nil
-    var alertBinding: Binding<(any AppAlert)?> {
+    @Published var alert: AppAlert? = nil
+    var alertBinding: Binding<AppAlert?> {
         Binding(
             get: { self.alert },
             set: { self.alert = $0 }
@@ -59,6 +59,6 @@ class DataLoggerViewModel: ObservableObject, Alertable {
             default: NSLocalizedString("The download of the CSV file containing your datalogger data was unsuccessful.", comment: "")
             }
 
-        alert = OkAppAlert(title: title, message: message, completion: {})
+        alert = .ok(title: title, message: message, completion: {})
     }
 }

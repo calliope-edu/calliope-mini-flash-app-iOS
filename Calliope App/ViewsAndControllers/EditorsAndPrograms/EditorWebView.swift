@@ -274,7 +274,7 @@ extension EditorWebView: WKUIDelegate {
         initiatedByFrame frame: WKFrameInfo,
         completionHandler: @escaping () -> Void
     ) {
-        let alert = OkAppAlert(title: message, completion: completionHandler)
+        let alert = AppAlert.ok(title: message, completion: completionHandler)
         alertPublisher.alert = alert
     }
 
@@ -284,7 +284,7 @@ extension EditorWebView: WKUIDelegate {
         initiatedByFrame frame: WKFrameInfo,
         completionHandler: @escaping (Bool) -> Void
     ) {
-        let alert = GenericAlert(
+        let alert = AppAlert(
             title: message,
             actions: [
                 StandardAlertAction(NSLocalizedString("OK", comment: ""), handler: { completionHandler(true) }),
@@ -301,23 +301,26 @@ extension EditorWebView: WKUIDelegate {
         initiatedByFrame frame: WKFrameInfo,
         completionHandler: @escaping (String?) -> Void
     ) {
-        let alert = GenericTextFieldAlert(
+        let alert = AppAlert(
             title: prompt,
-            actions: [
-                TextFieldAlertAction(
-                    NSLocalizedString("OK", comment: ""),
-                    handler: { input in
-                        completionHandler(input)
-                    }
-                ),
-                TextFieldAlertAction(
-                    NSLocalizedString("Cancel", comment: ""),
-                    handler: { input in
-                        completionHandler(nil)
-                    }
-                ),
-            ],
-            defaultName: ""
+            textField: .init(
+                hint: "Program Name",
+                defaultValue: "",
+                actions: [
+                    TextFieldAlertAction(
+                        NSLocalizedString("OK", comment: ""),
+                        handler: { input in
+                            completionHandler(input)
+                        }
+                    ),
+                    TextFieldAlertAction(
+                        NSLocalizedString("Cancel", comment: ""),
+                        handler: { input in
+                            completionHandler(nil)
+                        }
+                    ),
+                ]
+            )
         )
         alertPublisher.alert = alert
     }
@@ -424,7 +427,7 @@ extension EditorWebView: WKDownloadDelegate {
             default: NSLocalizedString("The download of the session data was unsuccessful.", comment: "")
             }
 
-        let alert = OkAppAlert(title: message, completion: {})
+        let alert = AppAlert.ok(title: message, completion: {})
         alertPublisher.alert = alert
 
     }
@@ -542,7 +545,7 @@ extension EditorWebView {
             let xml = try download.url.asData()
             let (success, error) = saveFile(filename: "\(download.name).xml", data: xml)
             if success {
-                let alert = OkAppAlert(
+                let alert = AppAlert.ok(
                     title: NSLocalizedString("Program exported", comment: ""),
                     message: NSLocalizedString("Program exported message", comment: "actual message in translation file"),
                     completion: {}

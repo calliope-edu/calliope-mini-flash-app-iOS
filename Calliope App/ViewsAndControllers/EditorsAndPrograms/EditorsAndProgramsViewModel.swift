@@ -33,8 +33,8 @@ struct ProgramTileConfig: Identifiable {
 protocol EditorsAndProgramsViewModelProtocol {
     var editors: [EditorTileConfig] { get }
     var programs: [ProgramTileConfig] { get }
-    var alert: (any AppAlert)? { get set }
-    var alertBinding: Binding<(any AppAlert)?> { get }
+    var alert: AppAlert? { get set }
+    var alertBinding: Binding<AppAlert?> { get }
 
     func downloadProgram(program: ProgramTileConfig)
     func renameProgram(program: ProgramTileConfig)
@@ -57,8 +57,8 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
 
     @Published var programs: [ProgramTileConfig] = []
 
-    @Published var alert: (any AppAlert)? = nil
-    var alertBinding: Binding<(any AppAlert)?> {
+    @Published var alert: AppAlert? = nil
+    var alertBinding: Binding<AppAlert?> {
         Binding(
             get: { self.alert },
             set: { self.alert = $0 }
@@ -99,13 +99,13 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
     }
 
     func renameProgram(program: ProgramTileConfig) {
-        let alert = RenameProgramAlert(defaultName: program.name, onRename: { newName in
+        let alert = AppAlert.renameProgram(defaultName: program.name, onRename: { newName in
                 if newName != "" {
                     var renamableProgram = program.hexFile
                     renamableProgram.name = newName
                     if renamableProgram.name != newName {
                         //rename was not successful
-                        let failedAlert = RenameFailedAlert(oldName: renamableProgram.name, newName: newName)
+                        let failedAlert = AppAlert.renameFailed(oldName: renamableProgram.name, newName: newName)
                         self.alert = failedAlert
                     }
                 }
@@ -115,11 +115,11 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
 
     func deleteProgram(program: ProgramTileConfig) {
         let hexFile = program.hexFile
-        self.alert = DeleteProgramAlert(program: hexFile) {
+        self.alert = .deleteProgram(program: hexFile) {
             do {
                 try HexFileManager.delete(file: hexFile)
             } catch {
-                self.alert = DeleteProgramFailedAlert(program: hexFile, error: error)
+                self.alert = .deleteProgramFailed(program: hexFile, error: error)
             }
         }
     }
@@ -185,8 +185,8 @@ class PreviewEditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, O
         ),
     ]
 
-    @Published var alert: (any AppAlert)? = nil
-    var alertBinding: Binding<(any AppAlert)?> {
+    @Published var alert: AppAlert? = nil
+    var alertBinding: Binding<AppAlert?> {
         Binding(
             get: { self.alert },
             set: { self.alert = $0 }

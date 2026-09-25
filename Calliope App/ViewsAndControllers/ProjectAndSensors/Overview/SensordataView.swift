@@ -98,7 +98,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
             }
 
             Button {
-                viewModel.alert = NewProjectNameAlert { name in
+                viewModel.alert = .newProjectName { name in
                     if let project = Project.insertProject(name: name), let id = project.id {
                         router.push(.project(id: id))
                     }
@@ -226,7 +226,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
                     if calliope.currentJob?.jobState == .Canceled {
                         return
                     }
-                    viewModel.alert = GenericAlert(
+                    viewModel.alert = AppAlert(
                         title: NSLocalizedString("Datalogger Download Failed!", comment: ""),
                         message: NSLocalizedString(
                             "There was an issue downloading the datalogger data from your Calliope mini. Please ensure you are connected to the Calliope and try again.",
@@ -281,7 +281,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
             IconButton(
                 imageSystemName: "plus",
                 action: {
-                    viewModel.alert = NewProjectNameAlert { name in
+                    viewModel.alert = .newProjectName { name in
                         if let project = Project.insertProject(name: name), let id = project.id {
                             router.push(.project(id: id))
                         }

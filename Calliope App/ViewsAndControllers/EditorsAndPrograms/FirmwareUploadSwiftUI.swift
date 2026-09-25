@@ -24,12 +24,12 @@ class FirmwareUploadSwiftUI {
                 }
             }
         } else {
-            alertPublisher.setAlert(WaitForProgramDownloadAlert())
+            alertPublisher.setAlert(.waitForProgramDownload())
             program.load { error in
                 DispatchQueue.main.async {
                     if error == nil, program.calliopeV1andV2Bin.count != 0 {
                         LogNotify.debug("Successfully finished downloading program")
-                        let successAlert = ProgramDownloadSuccessAlert(upload: {
+                        let successAlert = AppAlert.programDownloadSuccess(upload: {
                             DispatchQueue.main.async {
                                 LogNotify.debug("Upload confirmed")
                                 FirmwareUploadSwiftUI.uploadWithoutConfirmation(alertPublisher: alertPublisher, program: program) {
@@ -40,7 +40,7 @@ class FirmwareUploadSwiftUI {
                         alertPublisher.setAlert(successAlert)
                     } else {
                         LogNotify.error("Encountered error during program download: " + (error?.localizedDescription ?? ""))
-                        let errorAlert = ProgramDownloadFailedAlert(error: error?.localizedDescription, completion: { completion?(false) })
+                        let errorAlert = AppAlert.programDownloadFailed(error: error?.localizedDescription, completion: { completion?(false) })
                         alertPublisher.setAlert(errorAlert)
                     }
                 }
@@ -56,12 +56,12 @@ class FirmwareUploadSwiftUI {
     ) {
         guard MatrixConnectionViewModel.instance.usageReadyCalliope != nil else {
             LogNotify.error("No calliope connected. Canceling upload.")
-            alertPublisher.setAlert(CannotUploadAlert())
+            alertPublisher.setAlert(.cannotUpload())
             MatrixConnectionViewModel.instance.animateBounce()
             return
         }
 
-        let confirmationAlert = UploadConfirmationAlert(
+        let confirmationAlert = AppAlert.uploadConfirmation(
             name: name,
             upload: {
                 DispatchQueue.main.async {
@@ -103,7 +103,7 @@ class FirmwareUploadSwiftUI {
             FirmwareUploadSwiftUI.uploadingInstance = nil
             UIApplication.shared.isIdleTimerDisabled = false
 
-            let failedAlert = UploadFailedAlert(goToInformation: {
+            let failedAlert = AppAlert.uploadFailed(goToInformation: {
                 let informationLink: String = "https://calliope.cc/programmieren/mobil/ipad#hardware"
                 if let url = URL(string: informationLink) {
                     UIApplication.shared.open(url)
@@ -115,7 +115,7 @@ class FirmwareUploadSwiftUI {
 
     // NEU: Hilfsmethode für Arcade USB Alert
     private static func showArcadeUSBAlert(alertPublisher: Alertable, completion: (() -> Void)?) {
-        let alert = ArcadeUsbModeRequiredAlert(
+        let alert = AppAlert.arcadeUsbModeRequired(
             onOpenUsbMode: {
                 // Wechsle in USB-Modus
                 // Expand the matrix connection view if it's collapsed
@@ -166,7 +166,7 @@ class FirmwareUploadSwiftUI {
 
         guard let calliope else {
             LogNotify.error("No calliope connected. Canceling upload.")
-            alertPublisher.setAlert(CannotUploadAlert())
+            alertPublisher.setAlert(.cannotUpload())
             MatrixConnectionViewModel.instance.animateBounce()
             return
         }
@@ -243,7 +243,7 @@ class FirmwareUploadSwiftUI {
 
     func showUploadError(_ error: Error) {
         LogNotify.error("Upload failed")
-        let failedAlert = UploadFailedAlert(goToInformation: {
+        let failedAlert = AppAlert.uploadFailed(goToInformation: {
             let informationLink: String = "https://calliope.cc/programmieren/mobil/ipad#hardware"
             if let url = URL(string: informationLink) {
                 UIApplication.shared.open(url)

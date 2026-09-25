@@ -51,8 +51,8 @@ enum HexFileStoreDialogSwiftUI {
         hexFile: URL,
         notSaved: @escaping (Error?) -> Void,
         saveCompleted: ((Hex) -> Void)? = nil
-    ) -> ArcadeUSBRequiredAlert {
-        return ArcadeUSBRequiredAlert(
+    ) -> AppAlert {
+        return .arcadeUSBRequired(
             saved: {
                 saveFileWithNameAlert(alertPublisher: alertPublisher, hexFile: hexFile, notSaved: notSaved, saveCompleted: saveCompleted)
             },
@@ -68,8 +68,8 @@ enum HexFileStoreDialogSwiftUI {
         hexFile: URL,
         notSaved: @escaping (Error?) -> Void,
         saveCompleted: ((Hex) -> Void)? = nil
-    ) -> ArcadeTransferAlert {
-        return ArcadeTransferAlert(
+    ) -> AppAlert {
+        return .arcadeTransfer(
             saved: {
                 saveFileWithNameAlert(alertPublisher: alertPublisher, hexFile: hexFile, notSaved: notSaved, saveCompleted: saveCompleted)
             },
@@ -95,8 +95,8 @@ enum HexFileStoreDialogSwiftUI {
         hexFile: URL,
         notSaved: @escaping (Error?) -> Void,
         saveCompleted: ((Hex) -> Void)? = nil
-    ) -> StandardHexUIAlert {
-        return StandardHexUIAlert(
+    ) -> AppAlert {
+        return .standardHexUI(
             saved: {
                 saveFileWithNameAlert(alertPublisher: alertPublisher, hexFile: hexFile, notSaved: notSaved, saveCompleted: saveCompleted)
             },
@@ -130,7 +130,7 @@ enum HexFileStoreDialogSwiftUI {
             return
         }
 
-        let alert = SaveFileWithNameAlert(
+        let alert = AppAlert.saveFileWithName(
             save: { enteredName in
                 LogNotify.debug(enteredName)
                 do {

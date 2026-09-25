@@ -1,5 +1,5 @@
 //
-//  Alert+Previews.swift
+//  AlertPreviews.swift
 //  Calliope App
 //
 //  Created by Calliope on 07.08.26.
@@ -13,13 +13,13 @@ import SwiftUI
 private struct AlertGalleryEntry: Identifiable {
     let id = UUID()
     let name: String
-    let alert: any AppAlert
+    let alert: AppAlert
 }
 
 private struct AlertGalleryPreview: View {
     let entries: [AlertGalleryEntry]
     @State private var selectedID: AlertGalleryEntry.ID?
-    @State private var presentedAlert: (any AppAlert)?
+    @State private var presentedAlert: AppAlert?
 
     var body: some View {
         HStack(spacing: 0) {
@@ -49,7 +49,6 @@ private struct AlertGalleryPreview: View {
 
 #Preview("Alerts - Master Detail") {
     let previewHexFile = HexFile(url: URL(fileURLWithPath: "/tmp/my_program.hex"), name: "my_program.hex", date: .now)
-    let previewProject = Project(id: 1, name: "My Project")
     let previewError = NSError(
         domain: "Preview",
         code: 0,
@@ -57,52 +56,55 @@ private struct AlertGalleryPreview: View {
     )
 
     let entries: [AlertGalleryEntry] = [
-        AlertGalleryEntry(name: "ArcadeUSBRequiredAlert", alert: ArcadeUSBRequiredAlert(saved: {}, closed: {})),
-        AlertGalleryEntry(name: "ArcadeTransferAlert", alert: ArcadeTransferAlert(saved: {}, transfer: {}, closed: {})),
-        AlertGalleryEntry(name: "StandardHexUIAlert", alert: StandardHexUIAlert(saved: {}, transfer: {}, closed: {})),
+        AlertGalleryEntry(name: "arcadeUSBRequired", alert: .arcadeUSBRequired(saved: {}, closed: {})),
+        AlertGalleryEntry(name: "arcadeTransfer", alert: .arcadeTransfer(saved: {}, transfer: {}, closed: {})),
+        AlertGalleryEntry(name: "standardHexUI", alert: .standardHexUI(saved: {}, transfer: {}, closed: {})),
         AlertGalleryEntry(
-            name: "SaveFileWithNameAlert",
-            alert: SaveFileWithNameAlert(save: { _ in }, dontSave: { _ in }, defaultName: "my_program")
+            name: "saveFileWithName",
+            alert: .saveFileWithName(save: { _ in }, dontSave: { _ in }, defaultName: "my_program")
         ),
-        AlertGalleryEntry(name: "WaitForProgramDownloadAlert", alert: WaitForProgramDownloadAlert()),
-        AlertGalleryEntry(name: "ProgramDownloadSuccessAlert", alert: ProgramDownloadSuccessAlert(upload: {})),
+        AlertGalleryEntry(name: "waitForProgramDownload", alert: .waitForProgramDownload()),
+        AlertGalleryEntry(name: "programDownloadSuccess", alert: .programDownloadSuccess(upload: {})),
         AlertGalleryEntry(
-            name: "ProgramDownloadFailedAlert",
-            alert: ProgramDownloadFailedAlert(error: "Connection timed out", completion: {})
+            name: "programDownloadFailed",
+            alert: .programDownloadFailed(error: "Connection timed out", completion: {})
         ),
-        AlertGalleryEntry(name: "UploadConfirmationAlert", alert: UploadConfirmationAlert(name: "my_program.hex", upload: {})),
-        AlertGalleryEntry(name: "UploadFailedAlert", alert: UploadFailedAlert(goToInformation: {})),
-        AlertGalleryEntry(name: "CannotUploadAlert", alert: CannotUploadAlert()),
-        AlertGalleryEntry(name: "ArcadeUsbModeRequiredAlert", alert: ArcadeUsbModeRequiredAlert(onOpenUsbMode: {}, onCancel: {})),
-        AlertGalleryEntry(name: "OkAppAlert", alert: OkAppAlert(title: "Done", message: "Everything worked.", completion: {})),
-        AlertGalleryEntry(name: "WebViewNavigationErrorAlert", alert: WebViewNavigationErrorAlert(error: previewError)),
+        AlertGalleryEntry(name: "uploadConfirmation", alert: .uploadConfirmation(name: "my_program.hex", upload: {})),
+        AlertGalleryEntry(name: "uploadFailed", alert: .uploadFailed(goToInformation: {})),
+        AlertGalleryEntry(name: "cannotUpload", alert: .cannotUpload()),
+        AlertGalleryEntry(name: "arcadeUsbModeRequired", alert: .arcadeUsbModeRequired(onOpenUsbMode: {}, onCancel: {})),
+        AlertGalleryEntry(name: "ok", alert: .ok(title: "Done", message: "Everything worked.", completion: {})),
+        AlertGalleryEntry(name: "webViewNavigationError", alert: .webViewNavigationError(error: previewError)),
         AlertGalleryEntry(
-            name: "GenericAlert",
-            alert: GenericAlert(title: "Generic Alert", message: "This is a generic alert message.", actions: [
+            name: "generic (title/message/actions)",
+            alert: AppAlert(title: "Generic Alert", message: "This is a generic alert message.", actions: [
                 StandardAlertAction("OK", handler: {}),
             ])
         ),
         AlertGalleryEntry(
-            name: "GenericTextFieldAlert",
-            alert: GenericTextFieldAlert(title: "Generic Text Field", message: "Enter something", actions: [
-                TextFieldAlertAction("OK", handler: { _ in }),
-            ], defaultName: "Default")
+            name: "generic (text field)",
+            alert: AppAlert(
+                title: "Generic Text Field",
+                message: "Enter something",
+                textField: .init(hint: "Program Name", defaultValue: "Default", actions: [
+                    TextFieldAlertAction("OK", handler: { _ in }),
+                ])
+            )
         ),
-        AlertGalleryEntry(name: "RenameProgramAlert", alert: RenameProgramAlert(defaultName: "my_program", onRename: { _ in })),
-        AlertGalleryEntry(name: "DeleteProgramAlert", alert: DeleteProgramAlert(program: previewHexFile, onDelete: {})),
+        AlertGalleryEntry(name: "renameProgram", alert: .renameProgram(defaultName: "my_program", onRename: { _ in })),
+        AlertGalleryEntry(name: "deleteProgram", alert: .deleteProgram(program: previewHexFile, onDelete: {})),
         AlertGalleryEntry(
-            name: "DeleteProgramFailedAlert",
-            alert: DeleteProgramFailedAlert(program: previewHexFile, error: previewError)
+            name: "deleteProgramFailed",
+            alert: .deleteProgramFailed(program: previewHexFile, error: previewError)
         ),
-        AlertGalleryEntry(name: "RenameFailedAlert", alert: RenameFailedAlert(oldName: "old_name", newName: "new/name")),
-        AlertGalleryEntry(name: "RenameProjectAlert", alert: RenameProjectAlert(defaultName: "My Project", onRename: { _ in })),
-        AlertGalleryEntry(name: "DeleteProjectAlert", alert: DeleteProjectAlert(project: previewProject, onDelete: {})),
-        AlertGalleryEntry(name: "ExportCSVNameAlert", alert: ExportCSVNameAlert(onOk: { _ in })),
-        AlertGalleryEntry(name: "ConnectCalliopeRequiredAlert", alert: ConnectCalliopeRequiredAlert()),
-        AlertGalleryEntry(name: "WrongStorageLocationAlert", alert: WrongStorageLocationAlert()),
-        AlertGalleryEntry(name: "BluetoothDeactivatedAlert", alert: BluetoothDeactivatedAlert(openSettings: {}, ok: {})),
-        AlertGalleryEntry(name: "BluetoothResetRequiredAlert", alert: BluetoothResetRequiredAlert(openSettings: {})),
-        AlertGalleryEntry(name: "NewProjectNameAlert", alert: NewProjectNameAlert(onCreate: { _ in })),
+        AlertGalleryEntry(name: "renameFailed", alert: .renameFailed(oldName: "old_name", newName: "new/name")),
+        AlertGalleryEntry(name: "renameProject", alert: .renameProject(defaultName: "My Project", onRename: { _ in })),
+        AlertGalleryEntry(name: "exportCSVName", alert: .exportCSVName(onOk: { _ in })),
+        AlertGalleryEntry(name: "connectCalliopeRequired", alert: .connectCalliopeRequired()),
+        AlertGalleryEntry(name: "wrongStorageLocation", alert: .wrongStorageLocation()),
+        AlertGalleryEntry(name: "bluetoothDeactivated", alert: .bluetoothDeactivated(openSettings: {}, ok: {})),
+        AlertGalleryEntry(name: "bluetoothResetRequired", alert: .bluetoothResetRequired(openSettings: {})),
+        AlertGalleryEntry(name: "newProjectName", alert: .newProjectName(onCreate: { _ in })),
     ]
 
     return AlertGalleryPreview(entries: entries)

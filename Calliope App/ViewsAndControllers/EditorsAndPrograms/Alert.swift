@@ -12,10 +12,39 @@ import SwiftUI
 // This file contains the general alert logic for this app.
 // Using .alert() does not allow to consistently replace one alert by another.
 //
-// Concrete alert types live in AppAlerts.swift; the preview gallery lives in Alert+Previews.swift.
+
+struct AppAlert: Identifiable {
+    struct TextFieldConfig {
+        let hint: String
+        let defaultValue: String?
+        let actions: [TextFieldAlertAction]
+    }
+
+    let id = UUID()
+    let title: String
+    let message: String?
+    let actions: [StandardAlertAction]
+    let severity: AlertSeverity
+    let textField: TextFieldConfig?
+
+    init(
+        title: String,
+        message: String? = nil,
+        actions: [StandardAlertAction] = [],
+        severity: AlertSeverity? = nil,
+        textField: TextFieldConfig? = nil
+    ) {
+        self.title = title
+        self.message = message
+        self.actions = actions
+        self.textField = textField
+        // Alerts opt into a stronger severity explicitly; a destructive action implies it on its own.
+        self.severity = severity ?? (actions.contains { $0.role == .destructive } ? .destructive : .none)
+    }
+}
 
 struct AlertModifier: ViewModifier {
-    @Binding var alert: (any AppAlert)?
+    @Binding var alert: AppAlert?
     @State var textFieldContent: String = ""
 
     func body(content: Content) -> some View {
@@ -48,14 +77,10 @@ struct AlertModifier: ViewModifier {
 }
 
 private struct CalliopeAlertCard: View {
-    let alert: any AppAlert
+    let alert: AppAlert
     @Binding var textFieldContent: String
     let perform: (() -> Void) -> Void
     @FocusState private var textFieldFocused: Bool
-
-    private var textFieldAlert: (any TextFieldAppAlert)? {
-        alert as? any TextFieldAppAlert
-    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -84,8 +109,8 @@ private struct CalliopeAlertCard: View {
                         .multilineTextAlignment(.center)
                 }
 
-                if let textFieldAlert {
-                    TextField(textFieldAlert.textFieldHint, text: $textFieldContent)
+                if let textField = alert.textField {
+                    TextField(textField.hint, text: $textFieldContent)
                         .focused($textFieldFocused)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 10)
@@ -107,17 +132,17 @@ private struct CalliopeAlertCard: View {
         .clipShape(RoundedRectangle(cornerRadius: 28))
         .shadow(radius: 10)
         .task(id: alert.id) {
-            textFieldContent = textFieldAlert?.textFieldDefault ?? ""
-            textFieldFocused = textFieldAlert != nil
+            textFieldContent = alert.textField?.defaultValue ?? ""
+            textFieldFocused = alert.textField != nil
         }
     }
 
     @ViewBuilder
     private var buttonArea: some View {
-        if let textFieldAlert {
-            actionList(textFieldAlert.textActions) { action in
+        if let textField = alert.textField {
+            actionList(textField.actions) { action in
                 perform {
-                    textFieldAlert.textActions.forEach { $0.updateText(text: textFieldContent) }
+                    textField.actions.forEach { $0.updateText(text: textFieldContent) }
                     action.execute()
                 }
             }
@@ -218,27 +243,6 @@ enum AlertSeverity: Equatable {
     }
 }
 
-protocol AppAlert: Identifiable {
-    var id: UUID { get }
-    var title: String { get }
-    var message: String? { get }
-    var actions: [StandardAlertAction] { get }
-    var severity: AlertSeverity { get }
-}
-
-extension AppAlert {
-    // Alerts opt into a stronger severity explicitly; a destructive action implies it on its own.
-    var severity: AlertSeverity {
-        actions.contains { $0.role == .destructive } ? .destructive : .none
-    }
-}
-
-protocol TextFieldAppAlert: AppAlert {
-    var textFieldHint: String { get }
-    var textFieldDefault: String? { get }
-    var textActions: [TextFieldAlertAction] { get }
-}
-
 protocol AlertActionType: Identifiable {
     var id: UUID { get }
     var title: String { get }
@@ -290,24 +294,24 @@ class TextFieldAlertAction: AlertActionType {
 
 extension View {
     func appAlerts(
-        _ alert: Binding<(any AppAlert)?>
+        _ alert: Binding<AppAlert?>
     ) -> some View {
         modifier(AlertModifier(alert: alert))
     }
 }
 
 protocol Alertable: AnyObject {
-    var alert: (any AppAlert)? { get set }
+    var alert: AppAlert? { get set }
 }
 
 extension Alertable {
-    func setAlert(_ newAlert: (any AppAlert)?) {
+    func setAlert(_ newAlert: AppAlert?) {
         alert = newAlert
     }
 }
 
 class TestAlertable: Alertable {
-    var alert: (any AppAlert)? {
+    var alert: AppAlert? {
         didSet {
             LogNotify.error("Tried to show alert, but only the TestAlertable was initialized. This should not happen.")
         }

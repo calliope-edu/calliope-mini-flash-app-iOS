@@ -14,8 +14,8 @@ class ProjectViewModel: ObservableObject, Alertable {
     @Published var project: Project?
     @Published var addGroupButtonEnabled = false
     @Published var groupViewModels: [GroupViewModel] = []
-    @Published var alert: (any AppAlert)? = nil
-    var alertBinding: Binding<(any AppAlert)?> {
+    @Published var alert: AppAlert? = nil
+    var alertBinding: Binding<AppAlert?> {
         Binding(
             get: { self.alert },
             set: { self.alert = $0 }
@@ -86,11 +86,11 @@ class ProjectViewModel: ObservableObject, Alertable {
     }
 
     private func showConnectCalliopeAlert() {
-        alert = ConnectCalliopeRequiredAlert()
+        alert = .connectCalliopeRequired()
     }
 
     func renameProject() {
-        alert = RenameProjectAlert(defaultName: project?.name ?? "") { [weak self] newName in
+        alert = .renameProject(defaultName: project?.name ?? "") { [weak self] newName in
             self?.project?.name = newName
             if let project = self?.project {
                 Project.updateProject(project: project)
@@ -144,7 +144,7 @@ class ProjectViewModel: ObservableObject, Alertable {
     }
 
     func openFileNameDialog(onOk: @escaping (_ filename: String) -> Void) {
-        alert = ExportCSVNameAlert(onOk: onOk)
+        alert = .exportCSVName(onOk: onOk)
     }
 
     func stopRecording() {

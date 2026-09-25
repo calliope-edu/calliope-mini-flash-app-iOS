@@ -132,9 +132,9 @@ struct RootTabView: View {
 /// Alert publisher for flows triggered outside any single tab (e.g. a .hex file
 /// opened via onOpenURL), so their dialogs present at the root over any tab.
 final class RootAlertPublisher: ObservableObject, Alertable {
-    @Published var alert: (any AppAlert)? = nil
+    @Published var alert: AppAlert? = nil
 
-    var alertBinding: Binding<(any AppAlert)?> {
+    var alertBinding: Binding<AppAlert?> {
         Binding(
             get: { self.alert },
             set: { self.alert = $0 }

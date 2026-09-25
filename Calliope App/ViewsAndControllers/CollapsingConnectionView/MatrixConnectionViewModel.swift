@@ -68,10 +68,10 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
     @Published var connectButtonState: ConnectButtonState = .initialized
     @Published var connectionMenuButtonBounceTrigger: Int = 0
     @Published var connectButtonBounceTrigger: Int = 0
-    @Published var alert: (any AppAlert)? = nil
+    @Published var alert: AppAlert? = nil
     @Published var isFolderPickerPresented = false
 
-    var alertBinding: Binding<(any AppAlert)?> {
+    var alertBinding: Binding<AppAlert?> {
         Binding(
             get: { self.alert },
             set: { self.alert = $0 }
@@ -227,7 +227,7 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
 
     func showFalseLocationAlert() {
         DispatchQueue.main.async {
-            self.alert = WrongStorageLocationAlert()
+            self.alert = .wrongStorageLocation()
         }
     }
 
@@ -415,7 +415,7 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
             isShowingBluetoothAlert = true
 
             DispatchQueue.main.async {
-                self.alert = BluetoothDeactivatedAlert(
+                self.alert = .bluetoothDeactivated(
                     openSettings: { [weak self] in
                         self?.isShowingBluetoothAlert = false
                         // Open iOS Settings app - Bluetooth section
@@ -444,7 +444,7 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
             // CBError 14 = Peer removed pairing information
             // Das passiert nach Verwendung einer anderen App (z.B. Blocks mit UART)
             DispatchQueue.main.async {
-                self.alert = BluetoothResetRequiredAlert(
+                self.alert = .bluetoothResetRequired(
                     openSettings: {
                         // Öffnet die iOS Einstellungen (nicht App-Einstellungen!)
                         // Der Benutzer kann dann manuell zu Bluetooth navigieren
