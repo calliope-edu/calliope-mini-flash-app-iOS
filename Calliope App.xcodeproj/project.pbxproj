@@ -313,8 +313,28 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		60F6C3E42F2D243500A6C193 /* LofiAppWebView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LofiAppWebView; sourceTree = "<group>"; };
-		60F6C3E52F2D24A300A6C193 /* Web Bluetooth */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Web Bluetooth"; sourceTree = "<group>"; };
+		60F6C3E42F2D243500A6C193 /* LofiAppWebView */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = LofiAppWebView;
+			sourceTree = "<group>";
+		};
+		60F6C3E52F2D24A300A6C193 /* Web Bluetooth */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = "Web Bluetooth";
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -932,7 +952,7 @@
 			);
 			mainGroup = 2F61450322BF75DE001C2734;
 			packageReferences = (
-				604938BC2E1BAF6C008BCE40 /* XCLocalSwiftPackageReference "Packages/ScratchLinkKit" */,
+				604938BC2E1BAF6C008BCE40 /* XCLocalSwiftPackageReference "ScratchLinkKit" */,
 			);
 			productRefGroup = 2F61450D22BF75DE001C2734 /* Products */;
 			projectDirPath = "";
@@ -1019,13 +1039,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Calliope App/Pods-Calliope App-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Calliope App/Pods-Calliope App-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1366,7 +1382,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		604938BC2E1BAF6C008BCE40 /* XCLocalSwiftPackageReference "Packages/ScratchLinkKit" */ = {
+		604938BC2E1BAF6C008BCE40 /* XCLocalSwiftPackageReference "ScratchLinkKit" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Packages/ScratchLinkKit;
 		};
