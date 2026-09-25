@@ -36,7 +36,14 @@ class MainContainerViewController: UIViewController {
             return
         }
 
-        let window = (UIApplication.shared.delegate!.window!)!
+        // Under the scene life cycle the window belongs to the scene, so
+        // `UIApplication.shared.delegate.window` is nil — force-unwrapping it
+        // crashed here. This runs from `viewDidAppear`, so the controller is in
+        // a window; should it ever not be, the next appearance retries.
+        guard let window = view.window else {
+            LogNotify.log("No window yet - connection view is attached on the next appearance")
+            return
+        }   
 
         DispatchQueue.main.async {
             let connectionVC = UIStoryboard(name: "ConnectionView", bundle: nil).instantiateInitialViewController() as! MatrixConnectionViewController

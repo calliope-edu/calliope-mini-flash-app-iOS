@@ -54,14 +54,14 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>LSSupportsOpeningDocumentsInPlace</key>
-	<true/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>scrub</string>
 	</array>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -77,6 +77,8 @@
 	<string>To record location of specific sensor value, this apps needs to have access to the current location!</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>To record location connected to a sensor value, this apps needs to have access to the current location!</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>To use Open Roberta, this app uses the Microphone</string>
 	<key>NSUbiquitousContainers</key>
 	<dict>
 		<key>iCloud.cc.calliope.ios.flash</key>
@@ -89,8 +91,6 @@
 			<string>Any</string>
 		</dict>
 	</dict>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>To use Open Roberta, this app uses the Microphone</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>RobotoMono-ThinItalic.ttf</string>
@@ -116,6 +116,25 @@
 		<string>Roboto-BlackItalic.ttf</string>
 		<string>Roboto-Black.ttf</string>
 	</array>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+		<key>UISceneConfigurations</key>
+		<dict>
+			<key>UIWindowSceneSessionRoleApplication</key>
+			<array>
+				<dict>
+					<key>UISceneConfigurationName</key>
+					<string>Default Configuration</string>
+					<key>UISceneDelegateClassName</key>
+					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
+					<key>UISceneStoryboardFile</key>
+					<string>CalliopeApp</string>
+				</dict>
+			</array>
+		</dict>
+	</dict>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>bluetooth-central</string>

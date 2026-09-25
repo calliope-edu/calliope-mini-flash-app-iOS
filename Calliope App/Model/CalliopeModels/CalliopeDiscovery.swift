@@ -191,7 +191,14 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate, UIDocumentPickerDel
     
     private func attemptReconnect() {
         // Make shure that we want to connect to a calliope right now. Otherwise it connects on the home screen without the ConnectionView even showing.
-        guard MatrixConnectionViewController.instance.calliopeClass != nil else {
+        //
+        // `instance` is an implicitly unwrapped static that is only assigned in
+        // `MatrixConnectionViewController.viewDidLoad`, while this method runs
+        // from `centralManagerDidUpdateState` — which CoreBluetooth can call as
+        // soon as the central manager powers on, i.e. before that view ever
+        // loads. Force-unwrapping crashed there. Optional chaining keeps the
+        // intent exactly: no connection view yet means no auto-reconnect.
+        guard MatrixConnectionViewController.instance?.calliopeClass != nil else {
            return
         }
         LogNotify.log("attempt reconnect")

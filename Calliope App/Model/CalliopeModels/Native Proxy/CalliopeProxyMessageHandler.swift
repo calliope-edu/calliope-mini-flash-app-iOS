@@ -26,6 +26,15 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
 
     static let handlerName = "calliope"
 
+    /// Whether a page may talk to the app through this bridge.
+    ///
+    /// Uses the very same allowlist that gates the bridge's own calls, so
+    /// enabling another page means adding its host to `CampusUrls.allowedHosts`
+    /// and nothing else — the two can never drift apart.
+    static func supportsNativeBridge(url: URL?) -> Bool {
+        CampusUrls.isCampusUrl(url)
+    }
+
     private weak var webView: WKWebView?
 
     /// One `gattSubscribe` the widget asked for. Keeps the raw `serviceId` /
@@ -1285,6 +1294,7 @@ private enum CampusUrls {
     static let allowedHosts = [
         "campus.calliope.cc",
         "calliope-campus.pages.dev",
+        "teachablemachine.calliope.cc",
     ]
 
     /// Mirrors Android `CampusUrls.isCampusUrl`, but split so it can gate a

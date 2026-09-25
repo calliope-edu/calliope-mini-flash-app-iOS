@@ -67,7 +67,9 @@ class EditorAndProgramsContainerViewController: UIViewController, UINavigationCo
         programsHeightConstraint = programContainerView?.heightAnchor.constraint(equalToConstant: 10)
         programsHeightConstraint?.isActive = true
 
-        configureLayout(UIApplication.shared.keyWindow!.frame.size)
+        // `keyWindow` is deprecated and nil at this point under the scene life
+        // cycle — the same force-unwrap crash as in MainContainerViewController.
+        configureLayout(view.window?.frame.size ?? UIScreen.main.bounds.size)
         scanButton?.imageView?.contentMode = UIView.ContentMode.scaleAspectFit
         scanButton?.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         scanButton?.tintColor = UIColor.white

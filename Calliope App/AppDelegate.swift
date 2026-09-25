@@ -11,8 +11,6 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var window: UIWindow?
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         Settings.registerDefaults()
         Settings.resetSettingsIfRequired()
@@ -40,41 +38,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func applicationWillResignActive(_ application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
-    }
+    // MARK: UIScene life cycle
 
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-        LogNotify.log("App Entered Background")
-        MatrixConnectionViewController.instance.moveToBackground()
+    /// Required since the app is built against the iOS 27 SDK: UIKit refuses to
+    /// launch an app that still relies on the `UIApplicationDelegate`-only life
+    /// cycle ("UIScene life cycle is required for apps built with this SDK").
+    ///
+    /// The per-scene callbacks — foreground/background, opened files, universal
+    /// links — now live in `SceneDelegate` below. The app-wide one-time setup
+    /// stays in `didFinishLaunchingWithOptions`, which is still the right place
+    /// for it.
+    func application(_ application: UIApplication,
+                     configurationForConnecting connectingSceneSession: UISceneSession,
+                     options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+        UISceneConfiguration(name: "Default Configuration",
+                             sessionRole: connectingSceneSession.role)
     }
-
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-        LogNotify.log("App Entered Foreground")
-        MatrixConnectionViewController.instance.moveToForeground()
-        // Re-arm the storage watcher and trigger one immediate refresh — covers
-        // the case where files were added/removed via Files app while we were
-        // backgrounded (the watcher's fd may have been suspended by the system).
-        HexFileManager.startWatchingForExternalChanges()
-        NotificationCenter.default.post(name: NotificationConstants.hexFileChanged, object: nil)
-    }
-
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    }
-
-    func applicationWillTerminate(_ application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    }
-
 
     //MARK: opening Hex files
 
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+    /// Imports an externally opened hex file. Called from `SceneDelegate` — with
+    /// the scene life cycle, `application(_:open:options:)` is no longer invoked.
+    @discardableResult
+    func importHexFile(at url: URL) -> Bool {
 
         if url.isFileURL && FileExtension(rawValue: url.pathExtension.lowercased()) == .hex {
             LogNotify.log("received \(url.lastPathComponent)")
@@ -133,8 +119,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return top
     }
 
-    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-        if let rootViewController = window?.rootViewController, let tabBarController = findTabBarController(from: rootViewController),
+    /// Handles a universal link. Called from `SceneDelegate` — with the scene
+    /// life cycle, `application(_:continue:restorationHandler:)` is no longer
+    /// invoked, and the window belongs to the scene rather than to this class.
+    @discardableResult
+    func continueUserActivity(_ userActivity: NSUserActivity, rootViewController: UIViewController?) -> Bool {
+        if let rootViewController = rootViewController, let tabBarController = findTabBarController(from: rootViewController),
             let targetViewController = setupTargetViewController(targetActivity: userActivity)
         {
             pushNewViewController(from: tabBarController, for: targetViewController)
@@ -219,5 +209,61 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         viewController.editor = editor
 
         return viewController
+    }
+}
+
+
+/// UIScene life cycle for the single window the app uses.
+///
+/// Deliberately kept next to `AppDelegate` so both halves of the life cycle are
+/// visible in one place; the window and its root view controller are created by
+/// UIKit from the storyboard named in `UISceneStoryboardFile`.
+class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+
+    var window: UIWindow?
+
+    private var appDelegate: AppDelegate? {
+        UIApplication.shared.delegate as? AppDelegate
+    }
+
+    func scene(_ scene: UIScene, willConnectTo session: UISceneSession,
+               options connectionOptions: UIScene.ConnectionOptions) {
+        Styles.applyTint(to: window)
+
+        // A cold launch triggered by opening a file or a universal link delivers
+        // the payload here instead of through the per-event callbacks below.
+        for context in connectionOptions.urlContexts {
+            appDelegate?.importHexFile(at: context.url)
+        }
+        if let userActivity = connectionOptions.userActivities.first {
+            appDelegate?.continueUserActivity(userActivity,
+                                              rootViewController: window?.rootViewController)
+        }
+    }
+
+    func sceneDidEnterBackground(_ scene: UIScene) {
+        LogNotify.log("App Entered Background")
+        MatrixConnectionViewController.instance?.moveToBackground()
+    }
+
+    func sceneWillEnterForeground(_ scene: UIScene) {
+        LogNotify.log("App Entered Foreground")
+        MatrixConnectionViewController.instance?.moveToForeground()
+        // Re-arm the storage watcher and trigger one immediate refresh — covers
+        // the case where files were added/removed via Files app while we were
+        // backgrounded (the watcher's fd may have been suspended by the system).
+        HexFileManager.startWatchingForExternalChanges()
+        NotificationCenter.default.post(name: NotificationConstants.hexFileChanged, object: nil)
+    }
+
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        for context in URLContexts {
+            appDelegate?.importHexFile(at: context.url)
+        }
+    }
+
+    func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+        appDelegate?.continueUserActivity(userActivity,
+                                          rootViewController: window?.rootViewController)
     }
 }
