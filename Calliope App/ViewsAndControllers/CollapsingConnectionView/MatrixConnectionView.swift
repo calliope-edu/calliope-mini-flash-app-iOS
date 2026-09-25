@@ -10,6 +10,9 @@ import Foundation
 import SwiftUI
 import UniformTypeIdentifiers
 
+// delay before the connection button starts bouncing
+private let bounceDelay: Double = 0.75
+
 struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: View {
     @ObservedObject var viewModel: ViewModelType
     @State private var displayedIsUsb = false
@@ -103,7 +106,7 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
         HStack {
             Spacer()
 
-            BouncableView(trigger: viewModel.connectButtonBounceTrigger) {
+            BouncableView(trigger: viewModel.connectButtonBounceTrigger, delay: bounceDelay) {
                 Button {
                     viewModel.connect()
                 } label: {
@@ -201,6 +204,7 @@ struct BouncableView<Content: View>: View {
     let trigger: Int
     let scale: CGFloat
     let duration: Double
+    let delay: Double
     @ViewBuilder let content: () -> Content
 
     @State private var bouncing = false
@@ -209,11 +213,13 @@ struct BouncableView<Content: View>: View {
         trigger: Int,
         scale: CGFloat = 1.2,
         duration: Double = 0.3,
+        delay: Double = 0,
         @ViewBuilder content: @escaping () -> Content
     ) {
         self.trigger = trigger
         self.scale = scale
         self.duration = duration
+        self.delay = delay
         self.content = content
     }
 
@@ -228,20 +234,22 @@ struct BouncableView<Content: View>: View {
     private func bounce() {
         let halfCycle = duration
 
-        withAnimation(.easeOut(duration: halfCycle)) {
-            bouncing = true
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + halfCycle) {
-            withAnimation(.easeIn(duration: halfCycle)) {
-                bouncing = false
-            }
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + halfCycle * 2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             withAnimation(.easeOut(duration: halfCycle)) {
                 bouncing = true
             }
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + halfCycle * 3) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay + halfCycle) {
+            withAnimation(.easeIn(duration: halfCycle)) {
+                bouncing = false
+            }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay + halfCycle * 2) {
+            withAnimation(.easeOut(duration: halfCycle)) {
+                bouncing = true
+            }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay + halfCycle * 3) {
             withAnimation(.easeIn(duration: halfCycle)) {
                 bouncing = false
             }
@@ -314,7 +322,7 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
     // MARK: - Connection Menu Button (normal state)
 
     var connectionMenuButton: some View {
-        BouncableView(trigger: viewModel.connectionMenuButtonBounceTrigger) {
+        BouncableView(trigger: viewModel.connectionMenuButtonBounceTrigger, delay: bounceDelay) {
             Button {
                 withAnimation(.spring()) {
                     viewModel.menuExpanded.toggle()
@@ -342,7 +350,7 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
     @available(iOS 26.0, *)
     @ViewBuilder var connectionMenuButtonGlass: some View {
         if viewModel.menuExpanded {
-            BouncableView(trigger: viewModel.connectionMenuButtonBounceTrigger) {
+            BouncableView(trigger: viewModel.connectionMenuButtonBounceTrigger, delay: bounceDelay) {
                 Button {
                     withAnimation(.spring()) { viewModel.menuExpanded.toggle() }
                 } label: {
@@ -353,7 +361,7 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
                 .frame(width: connectionButtonSize, height: connectionButtonSize)
             }
         } else {
-            BouncableView(trigger: viewModel.connectionMenuButtonBounceTrigger) {
+            BouncableView(trigger: viewModel.connectionMenuButtonBounceTrigger, delay: bounceDelay) {
                 Button {
                     withAnimation(.spring()) { viewModel.menuExpanded.toggle() }
                 } label: {
