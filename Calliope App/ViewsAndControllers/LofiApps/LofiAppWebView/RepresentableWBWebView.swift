@@ -31,6 +31,7 @@ struct RepresentableWBWebView: UIViewControllerRepresentable {
 
     func updateUIViewController(_ controller: WBWebViewContainerController, context: Context) {
         if controller.isViewLoaded {
+            controller.enableNativeBridgeIfNeeded(for: url)
             controller.webView.load(URLRequest(url: url))
         }
     }
