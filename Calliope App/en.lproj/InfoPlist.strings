@@ -1,12 +1,23 @@
 /* Bundle name */
 "CFBundleName" = "Calliope mini App";
 
-/* (No Comment) */
+/* Document type display name */
 "Hex File" = "Hex file";
 
 /* Privacy - Bluetooth Always Usage Description */
-"NSBluetoothAlwaysUsageDescription" = "You need Bluetooth to be connected to your Calliope mini";
+"NSBluetoothAlwaysUsageDescription" = "Bluetooth is used to connect wirelessly to your Calliope mini, so you can flash programs and exchange data.";
 
 /* Privacy - Bluetooth Peripheral Usage Description */
-"NSBluetoothPeripheralUsageDescription" = "You need Bluetooth to be connected to your Calliope mini";
+"NSBluetoothPeripheralUsageDescription" = "Bluetooth is used to connect wirelessly to your Calliope mini, so you can flash programs and exchange data.";
 
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "The camera is used to scan QR codes when sharing or loading programs.";
+
+/* Privacy - Location Usage Description (legacy) */
+"NSLocationUsageDescription" = "Your location is used to tag sensor readings so you can see where each measurement was recorded.";
+
+/* Privacy - Location When In Use Usage Description */
+"NSLocationWhenInUseUsageDescription" = "Your location is used to tag sensor readings so you can see where each measurement was recorded.";
+
+/* Privacy - Microphone Usage Description */
+"NSMicrophoneUsageDescription" = "The microphone is required for voice‑based features in the Open Roberta editor.";

@@ -37,7 +37,7 @@ class OnboardingDetailWebViewController: UIViewController, WKNavigationDelegate,
 
     override func viewDidAppear(_ animated: Bool) {
         showActivityIndicator(show: true)
-        webView.load(URLRequest(url: url))
+        webView.load(URLRequest(url: url.withCalliopeAppLayout))
     }
 
 

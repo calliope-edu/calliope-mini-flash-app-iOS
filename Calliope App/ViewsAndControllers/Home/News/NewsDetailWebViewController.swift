@@ -23,7 +23,7 @@ class NewsDetailWebViewController: UIViewController, WKNavigationDelegate, WKUID
         webView.navigationDelegate = self
         webView.uiDelegate = self
 
-        webView.load(URLRequest(url: url))
+        webView.load(URLRequest(url: url.withCalliopeAppLayout))
 
         // add activity indicator
         activityIndicator = UIActivityIndicatorView()

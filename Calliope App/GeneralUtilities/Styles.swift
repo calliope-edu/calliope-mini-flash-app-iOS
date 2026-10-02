@@ -49,12 +49,22 @@ struct Styles {
         UILabel.appearance().adjustsFontForContentSizeCategory = true
     }
 
+    static let globalTintColor = UIColor(named: "calliope-lilablau")
+
+    /// Appearance-proxy tints. Safe to call at launch — unlike the window tint,
+    /// which needs a window and is therefore applied in `applyTint(to:)` once
+    /// the scene has one.
     static func setGlobalTint() {
-        let tintColor = UIColor(named: "calliope-lilablau")
-        UIApplication.shared.keyWindow?.tintColor = tintColor
-        UITabBar.appearance().tintColor = tintColor
-        UINavigationBar.appearance().tintColor = tintColor
-        UIButton.appearance().tintColor = tintColor
+        UITabBar.appearance().tintColor = globalTintColor
+        UINavigationBar.appearance().tintColor = globalTintColor
+        UIButton.appearance().tintColor = globalTintColor
+    }
+
+    /// Tints the scene's window. Under the scene life cycle no window exists
+    /// during `didFinishLaunchingWithOptions`, so setting it there silently did
+    /// nothing after the migration.
+    static func applyTint(to window: UIWindow?) {
+        window?.tintColor = globalTintColor
     }
 }
 

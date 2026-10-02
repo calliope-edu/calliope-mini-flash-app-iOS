@@ -17,6 +17,50 @@ extension UIDevice {
         }
     }
 
+    /// True if the device is running in Shared iPad mode (Managed Apple ID, e.g. ASM/ASE).
+    ///
+    /// Detection priority:
+    /// 1. **MDM Managed App Configuration**: admins push a key `sharedIPad` (Bool)
+    ///    via Managed App Config; we read it from `com.apple.configuration.managed`.
+    /// 2. **Manual override**: `UserDefaults` key `sharedIPadOverride` (Bool) — useful for
+    ///    development/testing without an MDM.
+    ///
+    /// The USB flashing flow itself — switch, folder picker, copy — is identical
+    /// to a personal iPad. This flag only adds the two Shared-iPad specifics:
+    /// a one-time heads-up alert before the first pick
+    /// (`CalliopeDiscovery.initializeConnectionToUsbCalliope`), and dropping the
+    /// connection plus switching USB back off after every copy
+    /// (`MatrixConnectionViewController.resetUsbConnectionAfterCopy`), because
+    /// the picked volume's authorization does not survive a copy here.
+    var isSharedIPad: Bool {
+        if let override = UserDefaults.standard.object(forKey: "sharedIPadOverride") as? Bool {
+            return override
+        }
+        if let managed = UserDefaults.standard.dictionary(forKey: "com.apple.configuration.managed"),
+           let flag = managed["sharedIPad"] as? Bool {
+            return flag
+        }
+        return false
+    }
+
+    /// True when the app cannot obtain a writable folder URL for a mounted USB
+    /// volume and therefore has to let the user pick the destination for every
+    /// single flash through an export picker:
+    ///
+    /// - **Shared iPad:** the managed sandbox silently refuses the folder pick —
+    ///   tapping "Öffnen" does nothing at all.
+    /// - **iPadOS < 26:** the picker puts a search field where the
+    ///   "Öffnen"/"Auswählen" button belongs, so the volume can never be
+    ///   confirmed.
+    ///
+    /// Single source of truth for both the picker route
+    /// (`CalliopeDiscovery.initializeConnectionToUsbCalliope`) and the teardown
+    /// after a copy (`MatrixConnectionViewController.resetUsbConnectionAfterCopy`),
+    /// so the two can never disagree.
+    var usbNeedsExportPicker: Bool {
+        isSharedIPad || ProcessInfo.processInfo.operatingSystemVersion.majorVersion < 26
+    }
+
     var hasUSBC: Bool {
         get {
             let pattern = "([A-z]+)(\\d+),(\\d+)"

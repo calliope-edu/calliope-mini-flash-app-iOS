@@ -7,9 +7,18 @@ final class EditorViewController: UIViewController {
 
     var webview: WKWebView!  //webviews are buggy and cannot be placed via interface builder
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
-    
+
     var editor: Editor?
+    /// Native-proxy bridge for the Calliope Campus editor. Non-nil only
+    /// when `editor is CampusBridgedEditor` — keeps the legacy editors on the
+    /// download-capture path and routes Campus's BLE/flash/GATT through
+    /// the WKScriptMessageHandler.
+    private var proxyMessageHandler: CalliopeProxyMessageHandler?
     private var latestDownloadedTargetFile: URL?
+
+    /// Retained while the "where do you want to save this?" dialog for a
+    /// non-hex editor download is on screen, so its delegate stays alive.
+    private var savePickerInstance: UIDocumentPickerViewController?
     var documentsPath: URL {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
     }
@@ -44,11 +53,11 @@ final class EditorViewController: UIViewController {
         view.backgroundColor = Styles.colorWhite
 
         let controller = WKUserContentController()
-        
+
         #if DEBUG
         WebLogHandler().register(with: controller, WebLogHandler.ALL_LEVELS)
         #endif
-        
+
         let configuration = WKWebViewConfiguration()
         configuration.userContentController = controller
         configuration.mediaTypesRequiringUserActionForPlayback = .video
@@ -59,6 +68,35 @@ final class EditorViewController: UIViewController {
         
         webview = WKWebView(frame: self.view.bounds, configuration: configuration)
         webview.translatesAutoresizingMaskIntoConstraints = false
+
+        // For every Calliope Campus editor (the campus home and its /blocks,
+        // /makecode and /python flavours — anything conforming to
+        // `CampusBridgedEditor`), register the native-proxy bridge as the
+        // `calliope` script-message handler BEFORE the page loads. The widget's
+        // detection probe (`window.webkit?.messageHandlers?.calliope`) needs
+        // this present at script start.
+        //
+        // Important: use `webview.configuration.userContentController` —
+        // the LIVE controller — not the local `controller` variable.
+        // WKWebView makes its own copy of WKWebViewConfiguration when
+        // created (Apple docs), so modifying the original-config's
+        // controller after WKWebView init has NO EFFECT on the actual
+        // running webview. The local-controller path was the bug behind
+        // the widget showing "Browser nicht unterstützt": the handler
+        // got attached to an unused controller and the JS never saw
+        // `window.webkit.messageHandlers.calliope`, so isNativeMode()
+        // returned false and the widget fell back to web-mode
+        // (where iOS WKWebView has neither WebUSB nor Web Bluetooth →
+        // status = unsupported). Same pattern used by the working
+        // WBWebView reference impl.
+        if editor is CampusBridgedEditor {
+            let handler = CalliopeProxyMessageHandler(webView: webview)
+            self.proxyMessageHandler = handler
+            webview.configuration.userContentController.add(
+                handler,
+                name: CalliopeProxyMessageHandler.handlerName
+            )
+        }
 
         webview.navigationDelegate = self
         webview.uiDelegate = self
@@ -110,6 +148,17 @@ final class EditorViewController: UIViewController {
         self.tabBarController?.tabBar.isHidden = false
 
         MatrixConnectionViewController.instance.restartFromBLEConnectionDrop()
+
+        // Tear down the proxy bridge — WKUserContentController retains
+        // script-message handlers strongly, so without an explicit remove
+        // the handler (and its captured BLE notify subscriptions) would
+        // outlive the editor.
+        if proxyMessageHandler != nil {
+            webview?.configuration.userContentController.removeScriptMessageHandler(
+                forName: CalliopeProxyMessageHandler.handlerName
+            )
+            proxyMessageHandler = nil
+        }
 
         // Re-enable navigation gestures
         enableNavigationGestures()
@@ -173,7 +222,17 @@ extension EditorViewController: WKNavigationDelegate {
         
         let request = navigationAction.request
         
-        if navigationAction.shouldPerformDownload && (editor is MicroPython || editor is CampusEditor){
+        // Any editor may hand us a download — the Python editor saving a .py, the
+        // Blocks editor a .sb3, Arcade an image. Restricting this to two editors
+        // is what made "save" do nothing in the others.
+        //
+        // `blob:` needs the same treatment even though WebKit does NOT set
+        // `shouldPerformDownload` for it: the campus editors build their save
+        // files in memory and navigate to a blob URL, which used to fall through
+        // to `.allow` — the web view then navigated nowhere and saving looked
+        // like the app was blocking it. Turning the navigation into a download
+        // lets WebKit resolve the blob for us.
+        if navigationAction.shouldPerformDownload || editor.isBlob(request.url ?? URL(fileURLWithPath: "/")) {
             decisionHandler(.download)
         } else if let download = editor.download(request) {
             decisionHandler(.cancel)
@@ -320,27 +379,74 @@ extension EditorViewController: WKDownloadDelegate {
     }
     
     func download(_ download: WKDownload, decideDestinationUsing response: URLResponse, suggestedFilename: String, completionHandler: @escaping (URL?) -> Void) {
-        guard let editor = editor, editor is MicroPython || editor is CampusEditor else {
+        // Accept downloads from EVERY editor. The previous editor allow-list left
+        // `completionHandler` uncalled for the others, which is what made saving
+        // from an editor look like the app was blocking it: WebKit waits for a
+        // destination that never arrives. What happens with the file afterwards is
+        // decided by its type in `downloadDidFinish`.
+        guard let target = prepareTemporaryStorage(for: suggestedFilename) else {
+            completionHandler(nil)
             return
         }
-        
-        latestDownloadedTargetFile = prepareTemporaryStorage(for: suggestedFilename)
-        try? FileManager.default.removeItem(at: latestDownloadedTargetFile!)
-        completionHandler(latestDownloadedTargetFile)
+
+        latestDownloadedTargetFile = target
+        try? FileManager.default.removeItem(at: target)
+        completionHandler(target)
     }
     
     func downloadDidFinish(_ download: WKDownload) {
-        guard let url = latestDownloadedTargetFile, let fileextension = FileExtension(rawValue: url.pathExtension.lowercased()) else {
+        guard let url = latestDownloadedTargetFile else {
             return
         }
-        
+        guard let fileextension = FileExtension(rawValue: url.pathExtension.lowercased()) else {
+            // Unknown or missing extension (blob downloads sometimes arrive
+            // without one). Don't drop the file — let the user save it.
+            LogNotify.log("Downloaded file \(url.lastPathComponent) has no known extension - offering to save it")
+            presentSaveDialog(for: url)
+            return
+        }
+
         switch fileextension {
         case .hex:
+            // Keep a copy in the programs list before flashing — the download
+            // itself only lives in the temporary directory, which is why hex
+            // files from MicroPython, Campus and Arcade never appeared there.
+            storeDownloadedProgram(from: url, fileExtension: .hex)
             uploadHex(from: url)
+        case .py, .sb3, .png:
+            // A Python source, a Blocks project or an Arcade image is a user
+            // document, not a program for the mini: let the user pick where it
+            // goes (the "Calliope mini" folder, the iCloud "Calliope mini App"
+            // folder, or anywhere else).
+            presentSaveDialog(for: url)
         case .html, .json:
             storeSessionData(for: url)
         }
-        
+
+    }
+
+    /// Copies a finished download into the programs directory so it shows up in
+    /// "Editors and Programs". Best effort: a failure here must not stop a flash.
+    private func storeDownloadedProgram(from location: URL, fileExtension: FileExtension) {
+        let name = location.deletingPathExtension().lastPathComponent
+        do {
+            let data = try Data(contentsOf: location)
+            _ = try HexFileManager.store(name: name, data: data, fileExtension: fileExtension)
+            LogNotify.log("Stored downloaded \(fileExtension.rawValue) file as program \(name)")
+        } catch {
+            LogNotify.log("Could not store downloaded \(fileExtension.rawValue) file: \(error.localizedDescription)")
+        }
+    }
+
+    /// Hands a downloaded file to the system save dialog so the user chooses the
+    /// destination. The temporary copy is removed once the dialog is done.
+    private func presentSaveDialog(for location: URL) {
+        LogNotify.log("Offering \(location.lastPathComponent) for saving")
+        let picker = UIDocumentPickerViewController(forExporting: [location], asCopy: true)
+        picker.delegate = self
+        picker.shouldShowFileExtensions = true
+        savePickerInstance = picker
+        present(picker, animated: true)
     }
     
     public func download(_ download: WKDownload, didFailWithError error: Error, resumeData: Data?) {
@@ -384,8 +490,9 @@ extension EditorViewController: WKDownloadDelegate {
             return
         }
         
-        let destination = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(location.lastPathComponent)
         do {
+            let documentsDir = try StorageDirectory.shared.documentsDirectory()
+            let destination = documentsDir.appendingPathComponent(location.lastPathComponent)
             try FileManager.default.moveItem(at: location, to: destination)
             showAlertSessionDataDownload(for: .success)
         } catch {
@@ -423,6 +530,30 @@ extension EditorViewController: WKDownloadDelegate {
 
 }
 
+// MARK: - Save dialog for non-hex editor downloads
+
+extension EditorViewController: UIDocumentPickerDelegate {
+
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        guard controller === savePickerInstance else { return }
+        LogNotify.log("Saved editor file to \(urls.first?.path ?? "<unknown>")")
+        savePickerInstance = nil
+        // Do NOT delete the staged file here. `asCopy: true` hands the copy to the
+        // file provider, which may still be reading the source when this callback
+        // arrives — deleting it made the copy fail with "the file does not exist".
+        // Just drop our reference; the staged file lives in the temporary
+        // directory (the system reclaims it, and the next download overwrites it).
+        latestDownloadedTargetFile = nil
+    }
+
+    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        guard controller === savePickerInstance else { return }
+        LogNotify.log("Saving editor file cancelled")
+        savePickerInstance = nil
+        clearTemporaryStorage()
+    }
+}
+
 extension EditorViewController: ScratchLinkDelegate {
     
     func canStartSession(type: ScratchLinkKit.SessionType) -> Bool {
@@ -444,6 +575,24 @@ extension EditorViewController {
     // MARK: Handle possible editor change (i.e. Scratch Based with own BLE connection)
     
     private func handlePossibleEditorChanges() {
+        // Campus is Scratch-based (it loads the scratch-link extension script),
+        // but it does NOT drive BLE through ScratchLink — it goes through the
+        // native-proxy bridge, which reads the app's own usageReadyCalliope.
+        // Running the scratch branch here would call dropBLEConnection() and
+        // tear down exactly the connection the bridge needs (plus set
+        // isInBackground, which suppresses the app's auto-reconnect), so the
+        // editor came up disconnected until the user hit the connect icon.
+        // Skipping is safe: the non-scratch branch would only re-apply the
+        // user-agent values viewDidLoad already set for Campus.
+        //
+        // This matters most for the campus /blocks flavour: it IS a scratch
+        // editor by the probe's definition (the scratch-link script tag is
+        // present), so without widening this gate to every CampusBridgedEditor
+        // it would take the scratch branch and drop the very BLE connection the
+        // bridge is built on.
+        if editor is CampusBridgedEditor {
+            return
+        }
         determineIfScratchBasedEditor() { self.switchEditorImperatives($0)}
     }
     
@@ -478,19 +627,101 @@ extension EditorViewController {
     
     //MARK: uploading
     
+    /// Writes the freshly downloaded hex into the app's temporary directory and
+    /// returns it as a `HexFile`, so the transfer to the Calliope mini reads from
+    /// local storage instead of the program library (which is iCloud-backed on a
+    /// Shared iPad).
+    ///
+    /// Returns `nil` when the local copy could not be written; the caller then
+    /// falls back to the stored program.
+    private static func localFlashCopy(of data: Data, named name: String) -> HexFile? {
+        sweepStaleFlashCopies()
+
+        // Keep the project name, but make sure it cannot break the path.
+        let safeName = name
+            .replacingOccurrences(of: "/", with: "_")
+            .replacingOccurrences(of: ":", with: "_")
+        let directory = FileManager.default.temporaryDirectory
+            .appendingPathComponent("editor-flash-\(UUID().uuidString)", isDirectory: true)
+        let url = directory.appendingPathComponent(safeName + ".hex")
+
+        do {
+            try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+            try data.write(to: url)
+            LogNotify.log("Editor download: transferring from local copy (\(data.count) bytes)")
+            return HexFile(url: url, name: name, date: Date())
+        } catch {
+            LogNotify.log("Editor download: could not write local copy (\(error.localizedDescription)) - using the stored program instead")
+            try? FileManager.default.removeItem(at: directory)
+            return nil
+        }
+    }
+
+    /// Removes local flash copies left over from earlier downloads.
+    private static func sweepStaleFlashCopies() {
+        let fileManager = FileManager.default
+        guard let entries = try? fileManager.contentsOfDirectory(
+            at: fileManager.temporaryDirectory,
+            includingPropertiesForKeys: [.contentModificationDateKey],
+            options: [.skipsHiddenFiles]) else { return }
+
+        let cutoff = Date().addingTimeInterval(-600)   // older than 10 minutes
+        for entry in entries where entry.lastPathComponent.hasPrefix("editor-flash-") {
+            let modified = (try? entry.resourceValues(forKeys: [.contentModificationDateKey]))?
+                .contentModificationDate
+            if let modified, modified > cutoff { continue }
+            try? fileManager.removeItem(at: entry)
+        }
+    }
+
     private func upload(result download: EditorDownload) {
         self.webview.evaluateJavaScript(filenameQuery) { (result, error) in
             let filename = "\(result ?? "no-project-name")"
             do {
-                guard let file = try HexFileManager.store(name: filename, data: download.url.asData(), isHexFile: download.isHex) else {
+                let data = try download.url.asData()
+
+                // Not a hex (e.g. an image saved out of Arcade): there is nothing
+                // to flash, so ask where to save it instead of quietly dropping a
+                // file into the programs folder.
+                guard download.isHex else {
+                    self.offerSaveOfEditorFile(named: filename, data: data, fileExtension: .png)
                     return
                 }
-                FirmwareUpload.uploadWithoutConfirmation(controller: self, program: file) {
+
+                guard let file = try HexFileManager.store(name: filename, data: data, isHexFile: true) else {
+                    return
+                }
+
+                // Transfer from a LOCAL copy of the freshly downloaded bytes,
+                // never from the stored program itself. On a Shared iPad the
+                // program library lives in the iCloud container, and reading a
+                // hex back from there while copying to the Calliope mini has
+                // proven unreliable — DAPLink then reports a checksum failure.
+                // The library copy above is still written first, so the program
+                // is never lost, even if the transfer is cancelled.
+                let flashSource = EditorViewController.localFlashCopy(of: data, named: filename) ?? file
+
+                FirmwareUpload.uploadWithoutConfirmation(controller: self, program: flashSource) {
                     MatrixConnectionViewController.instance.connect()
                 }
             } catch {
                 LogNotify.log(error.localizedDescription)
             }
+        }
+    }
+
+    /// Stages editor data under a sensible filename and opens the save dialog.
+    private func offerSaveOfEditorFile(named name: String, data: Data, fileExtension: FileExtension) {
+        guard let staged = prepareTemporaryStorage(for: "\(name).\(fileExtension.rawValue)") else {
+            return
+        }
+        do {
+            try? FileManager.default.removeItem(at: staged)
+            try data.write(to: staged)
+            latestDownloadedTargetFile = staged
+            presentSaveDialog(for: staged)
+        } catch {
+            LogNotify.log("Could not stage \(fileExtension.rawValue) file for saving: \(error.localizedDescription)")
         }
     }
 

@@ -98,7 +98,7 @@
                         <viewLayoutGuide key="safeArea" id="EZz-7t-xZZ"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="EZz-7t-xZZ" firstAttribute="bottom" secondItem="S6w-BL-I6E" secondAttribute="bottom" constant="10" id="DUQ-Bi-u6U"/>
+                            <constraint firstAttribute="bottom" secondItem="S6w-BL-I6E" secondAttribute="bottom" id="DUQ-Bi-u6U"/>
                             <constraint firstItem="S6w-BL-I6E" firstAttribute="trailing" secondItem="EZz-7t-xZZ" secondAttribute="trailing" id="EiF-6D-7Hg"/>
                             <constraint firstItem="S6w-BL-I6E" firstAttribute="top" secondItem="EZz-7t-xZZ" secondAttribute="top" constant="10" id="r4v-jb-Dn1"/>
                             <constraint firstItem="S6w-BL-I6E" firstAttribute="leading" secondItem="EZz-7t-xZZ" secondAttribute="leading" id="wRc-Lu-pIm"/>

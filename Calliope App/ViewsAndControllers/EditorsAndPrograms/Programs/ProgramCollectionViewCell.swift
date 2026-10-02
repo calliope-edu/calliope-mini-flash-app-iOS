@@ -23,6 +23,9 @@ class ProgramCollectionViewCell: AutoHeightCollectionViewCell {
 	@IBOutlet weak var buttonContainer: UIView?
 	@IBOutlet weak var editButton: UIButton?
 	@IBOutlet weak var shareButton: UIButton?
+	/// The upload arrow. Purely decorative, but it promises a transfer — so it is
+	/// hidden for files that cannot go to the mini (e.g. a saved Python source).
+	@IBOutlet weak var transferIndicator: UIImageView?
 
     @IBOutlet weak var containerView: UIView?
     
@@ -38,6 +41,7 @@ class ProgramCollectionViewCell: AutoHeightCollectionViewCell {
 			nameEditField.text = program.name
             descriptionText?.text = program.dateString
             dateLabel?.text = program.dateString
+            transferIndicator?.isHidden = !(program?.isFlashable ?? false)
 		}
 	}
 

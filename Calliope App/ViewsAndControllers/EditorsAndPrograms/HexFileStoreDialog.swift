@@ -48,14 +48,12 @@ enum HexFileStoreDialog {
                                                     saveCompleted: ((Hex) -> ())? = nil) {
         let alert = UIAlertController(
             title: NSLocalizedString("Arcade-Datei", comment: ""),
-            message: NSLocalizedString("Arcade-Dateien können nur per USB-Kabel übertragen werden. Bitte verbinde deinen Calliope mini per USB oder sichere die Datei für später.", comment: ""),
+            message: NSLocalizedString("Arcade-Dateien können nur per USB-Kabel übertragen werden. Bitte verbinde deinen Calliope mini per USB oder teile die Datei.", comment: ""),
             preferredStyle: .alert
         )
-        
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Sichern", comment: ""), style: .default) { _ in
-            saveFileWithNameAlert(controller: controller, hexFile: hexFile, notSaved: notSaved, saveCompleted: saveCompleted)
-        })
-        
+
+        alert.addAction(shareAction(controller: controller, hexFile: hexFile))
+
         alert.addAction(UIAlertAction(title: NSLocalizedString("Schließen", comment: ""), style: .cancel) { _ in
             notSaved(nil)
         })
@@ -69,14 +67,10 @@ enum HexFileStoreDialog {
                                                  saveCompleted: ((Hex) -> ())? = nil) {
         let alert = UIAlertController(
             title: NSLocalizedString("Arcade-Datei", comment: ""),
-            message: NSLocalizedString("Möchtest du die Arcade-Datei auf deinen Calliope mini übertragen oder sichern?", comment: ""),
+            message: NSLocalizedString("Möchtest du die Arcade-Datei auf deinen Calliope mini übertragen oder teilen?", comment: ""),
             preferredStyle: .alert
         )
-        
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Sichern", comment: ""), style: .default) { _ in
-            saveFileWithNameAlert(controller: controller, hexFile: hexFile, notSaved: notSaved, saveCompleted: saveCompleted)
-        })
-        
+
         alert.addAction(UIAlertAction(title: NSLocalizedString("Übertragen (USB)", comment: ""), style: .default) { _ in
             let program = DefaultProgram(programName: hexFile.deletingPathExtension().lastPathComponent, url: hexFile.standardizedFileURL.relativeString)
             program.downloadFile = false
@@ -84,11 +78,13 @@ enum HexFileStoreDialog {
                 MatrixConnectionViewController.instance.connect()
             }
         })
-        
+
+        alert.addAction(shareAction(controller: controller, hexFile: hexFile))
+
         alert.addAction(UIAlertAction(title: NSLocalizedString("Schließen", comment: ""), style: .cancel) { _ in
             notSaved(nil)
         })
-        
+
         controller.present(alert, animated: true)
     }
     
@@ -98,24 +94,44 @@ enum HexFileStoreDialog {
                                           saveCompleted: ((Hex) -> ())? = nil) {
         let alertStart = UIAlertController(
             title: NSLocalizedString("Datei geöffnet", comment: ""),
-            message: NSLocalizedString("Möchtest du die Datei sichern oder auf deinen Calliope mini übertragen?", comment: ""),
+            message: NSLocalizedString("Möchtest du das Programm auf deinen Calliope mini übertragen oder teilen?", comment: ""),
             preferredStyle: .alert
         )
-        
-        alertStart.addAction(UIAlertAction(title: NSLocalizedString("Sichern", comment: ""), style: .default) { _ in
-            saveFileWithNameAlert(controller: controller, hexFile: hexFile, notSaved: notSaved, saveCompleted: saveCompleted)
+
+        alertStart.addAction(transferAction(controller: controller, hexFile: hexFile))
+        alertStart.addAction(shareAction(controller: controller, hexFile: hexFile))
+
+        alertStart.addAction(UIAlertAction(title: NSLocalizedString("Schließen", comment: ""), style: .cancel) { _ in
+            notSaved(nil)
         })
-        
-        alertStart.addAction(UIAlertAction(title: NSLocalizedString("Übertragen", comment: ""), style: .default) { _ in
+        controller.present(alertStart, animated: true)
+    }
+
+    /// "Transfer" — labelled "(USB)" while a USB Calliope is the active
+    /// connection, so it is obvious which way the program takes.
+    private static func transferAction(controller: UIViewController, hexFile: URL) -> UIAlertAction {
+        let isUSB = MatrixConnectionViewController.instance?.isUSBConnected() ?? false
+        let title = isUSB
+            ? NSLocalizedString("Übertragen (USB)", comment: "")
+            : NSLocalizedString("Übertragen", comment: "")
+        return UIAlertAction(title: title, style: .default) { _ in
             let program = DefaultProgram(programName: hexFile.deletingPathExtension().lastPathComponent, url: hexFile.standardizedFileURL.relativeString)
             program.downloadFile = false
             FirmwareUpload.showUploadUI(controller: controller, program: program) {
                 MatrixConnectionViewController.instance.connect()
             }
-        })
-        
-        alertStart.addAction(UIAlertAction(title: NSLocalizedString("Schließen", comment: ""), style: .cancel))
-        controller.present(alertStart, animated: true)
+        }
+    }
+
+    /// "Share" — hands the picked file to the system share sheet.
+    private static func shareAction(controller: UIViewController, hexFile: URL) -> UIAlertAction {
+        return UIAlertAction(title: NSLocalizedString("Share", comment: "Teilen"), style: .default) { _ in
+            let activityViewController = UIActivityViewController(activityItems: [hexFile], applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = controller.view
+            activityViewController.popoverPresentationController?.sourceRect = CGRect(
+                x: controller.view.bounds.midX, y: controller.view.bounds.midY, width: 0, height: 0)
+            controller.present(activityViewController, animated: true)
+        }
     }
 
     private static func saveFileWithNameAlert(controller: UIViewController, hexFile: URL,
