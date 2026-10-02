@@ -1,0 +1,637 @@
+//
+//  FirmwareUploadViewController.swift
+//  Calliope
+//
+//  Created by Tassilo Karge on 15.06.19.
+//
+
+import NordicDFU
+import UICircularProgressRing
+import UIKit
+
+class FirmwareUpload {
+
+    public static func showUIForDownloadableProgram(controller: UIViewController, program: DownloadableHexFile, name: String = NSLocalizedString("the program", comment: ""), completion: ((_ success: Bool) -> Void)? = nil) {
+        if program.calliopeV1andV2Bin.count != 0 {
+            DispatchQueue.main.async {
+                FirmwareUpload.showUploadUI(controller: controller, program: program) {
+                    completion?(true)
+                    MatrixConnectionViewController.instance.connect()
+                }
+            }
+        } else {
+            let alertStart = UIAlertController(title: NSLocalizedString("Wait a little", comment: ""), message: NSLocalizedString("The program is being downloaded. Please wait a little.", comment: ""), preferredStyle: .alert)
+            alertStart.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default))
+
+            controller.present(alertStart, animated: true) {
+                program.load { error in
+                    DispatchQueue.main.async {
+                        let alert: UIAlertController
+
+                        if error == nil, program.calliopeV1andV2Bin.count != 0 {
+                            let alertDone = UIAlertController(title: NSLocalizedString("Download finished", comment: ""), message: NSLocalizedString("The program is downloaded. Do you want to upload it now?", comment: ""), preferredStyle: .alert)
+                            alertDone.addAction(
+                                UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default) { _ in
+                                    FirmwareUpload.uploadWithoutConfirmation(controller: controller, program: program) {
+                                        completion?(true)
+                                    }
+                                })
+                            alertDone.addAction(UIAlertAction(title: NSLocalizedString("No", comment: ""), style: .cancel))
+                            alert = alertDone
+                        } else {
+                            let reason = error?.localizedDescription ?? "The downloaded program is empty"
+                            let alertError = UIAlertController(title: NSLocalizedString("Program download failed", comment: ""), message: String(format: NSLocalizedString("The program is not ready. The reason is:\n%@", comment: ""), reason), preferredStyle: .alert)
+                            alertError.addAction(
+                                UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
+                                    completion?(false)
+                                })
+                            alert = alertError
+                        }
+                        
+                        alertStart.dismiss(animated: true) {
+                            controller.present(alert, animated: true)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public static func showUploadUI(controller: UIViewController, program: Hex, name: String = NSLocalizedString("the program", comment: ""), completion: (() -> Void)? = nil) {
+        let alert = UIAlertController(title: NSLocalizedString("Upload?", comment: ""), message: String(format: NSLocalizedString("Do you want to upload %@ to your Calliope mini?", comment: ""), name), preferredStyle: .alert)
+        alert.addAction(
+            UIAlertAction(title: NSLocalizedString("Upload", comment: ""), style: .default) { _ in
+                uploadWithoutConfirmation(controller: controller, program: program, completion: completion)
+            })
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel))
+        controller.present(alert, animated: true)
+    }
+
+    public static func uploadWithoutConfirmation(
+        controller: UIViewController, program: Hex,
+        completion: (() -> Void)? = nil
+    ) {
+        // NEU: Prüfe ob es eine Arcade-Datei ist
+        let hexTypes = program.getHexTypes()
+        if hexTypes.contains(.arcade) {
+            // Arcade-Dateien können nur per USB übertragen werden
+            // Prüfe zuerst ob bereits eine USB-Verbindung besteht
+            if let matrixVC = MatrixConnectionViewController.instance,
+               matrixVC.isUSBConnected() {
+                // USB ist bereits verbunden, fahre mit Upload fort
+                // (Der Code fällt durch zu uploadAlert unten)
+            } else {
+                // Keine USB-Verbindung, zeige Alert
+                showArcadeUSBAlert(controller: controller, completion: completion)
+                return
+            }
+        }
+        
+        let informationLink: String = "https://calliope.cc/programmieren/mobil/ipad#hardware"
+
+        let uploader = FirmwareUpload(file: program, controller: controller)
+
+        // Shared iPad: the system export picker performs the copy itself and is
+        // the only sheet the user should see. Presenting our progress alert here
+        // would stack a sheet in front of the picker and pop up again afterwards
+        // (progress → picker → progress). Start the upload straight away so the
+        // picker is what opens.
+        if uploader.usesExportPicker {
+            do {
+                try uploader.upload(finishedCallback: { completion?() })
+            } catch {
+                FirmwareUpload.uploadingInstance = nil
+                UIApplication.shared.isIdleTimerDisabled = false
+                uploader.presentStandalone(
+                    FirmwareUpload.makeHexMismatchAlert(informationLink: informationLink))
+            }
+            return
+        }
+
+        controller.present(uploader.alertView, animated: true) {
+            do {
+                try uploader.upload(finishedCallback: {
+                    controller.dismiss(animated: true, completion: nil)
+                    completion?()
+                })
+            } catch {
+                FirmwareUpload.uploadingInstance = nil
+                UIApplication.shared.isIdleTimerDisabled = false
+
+                let alert = UIAlertController(
+                    title: NSLocalizedString("Upload failed", comment: ""),
+                    message: String(format: NSLocalizedString("The program does not seem to match the version of your Calliope mini. Please check the hardware selection in your editor again.", comment: "")),
+                    preferredStyle: .alert
+                )
+                alert.addAction(
+                    UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel) { _ in
+                        uploader.alertView.dismiss(animated: true)
+                    })
+                alert.addAction(
+                    UIAlertAction(title: NSLocalizedString("Further Information", comment: ""), style: .default) { _ in
+                        if let url = URL(string: informationLink) {
+                            UIApplication.shared.open(url)
+                        }
+                        uploader.alertView.dismiss(animated: true)
+                    })
+                uploader.alertView.present(alert, animated: true)
+            }
+        }
+    }
+
+    /// True when this upload is handed to the Shared-iPad export picker. There
+    /// the system picker IS the transfer UI (it performs the copy), so the app
+    /// must not put its own progress alert on top of it.
+    private var usesExportPicker: Bool {
+        (calliope as? USBCalliope)?.useExportPicker == true
+    }
+
+    /// Presents an alert without relying on our progress alert being on screen —
+    /// in export-picker mode there is none.
+    private func presentStandalone(_ alert: UIAlertController) {
+        guard let presenter = controller?.topMostPresented() else { return }
+        DispatchQueue.main.async {
+            presenter.present(alert, animated: true)
+        }
+    }
+
+    /// DIAGNOSTICS (Shared-iPad USB investigation): shows what happened during
+    /// the last transfer attempt, including DAPLink's verdict, plus an action to
+    /// share the full log. Remove together with
+    /// `USBCalliope.showTransferDiagnostics` once the cause is understood.
+    static func presentTransferDiagnosticsAlert(verdict: String) {
+        let excerpt = LogNotify.recentLines(
+            matching: ["Export picker", "Editor download", "USB Transfer"], limit: 12)
+
+        let alert = UIAlertController(
+            title: NSLocalizedString("Transfer diagnostics", comment: "Diagnostics alert title"),
+            message: verdict + "\n\n" + excerpt,
+            preferredStyle: .alert)
+        alert.addAction(UIAlertAction(
+            title: NSLocalizedString("Share log", comment: "Action to share the in-app log"),
+            style: .default) { _ in
+                FirmwareUpload.presentLogShareSheet()
+            })
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel))
+
+        let scenes = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .filter { $0.activationState == .foregroundActive }
+        let keyWindow = scenes.flatMap { $0.windows }.first(where: { $0.isKeyWindow })
+            ?? scenes.flatMap { $0.windows }.first
+        guard let presenter = keyWindow?.rootViewController?.topMostPresented() else { return }
+        presenter.present(alert, animated: true)
+    }
+
+    /// Failure alert for a USB transfer, with an action to share the recent log.
+    ///
+    /// A Shared iPad can only be updated through TestFlight, where no console
+    /// output exists — so the log has to be reachable from inside the app for a
+    /// problem to be reportable at all.
+    static func makeUsbTransferFailureAlert(message: String) -> UIAlertController {
+        let alert = UIAlertController(
+            title: NSLocalizedString("Upload failed!", comment: ""),
+            message: message,
+            preferredStyle: .alert)
+        alert.addAction(UIAlertAction(
+            title: NSLocalizedString("Share log", comment: "Action to share the in-app log"),
+            style: .default) { _ in
+                FirmwareUpload.presentLogShareSheet()
+            })
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel))
+        return alert
+    }
+
+    /// Offers the buffered log through the normal share sheet.
+    private static func presentLogShareSheet() {
+        let scenes = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .filter { $0.activationState == .foregroundActive }
+        let keyWindow = scenes.flatMap { $0.windows }.first(where: { $0.isKeyWindow })
+            ?? scenes.flatMap { $0.windows }.first
+        guard let presenter = keyWindow?.rootViewController?.topMostPresented() else { return }
+
+        let activityController = UIActivityViewController(
+            activityItems: [LogNotify.recentLog], applicationActivities: nil)
+        // On iPad an activity sheet must have an anchor, otherwise it traps.
+        activityController.popoverPresentationController?.sourceView = presenter.view
+        activityController.popoverPresentationController?.sourceRect = CGRect(
+            x: presenter.view.bounds.midX, y: presenter.view.bounds.midY, width: 0, height: 0)
+        activityController.popoverPresentationController?.permittedArrowDirections = []
+        presenter.present(activityController, animated: true)
+    }
+
+    private static func makeHexMismatchAlert(informationLink: String) -> UIAlertController {
+        let alert = UIAlertController(
+            title: NSLocalizedString("Upload failed", comment: ""),
+            message: String(format: NSLocalizedString("The program does not seem to match the version of your Calliope mini. Please check the hardware selection in your editor again.", comment: "")),
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel))
+        alert.addAction(
+            UIAlertAction(title: NSLocalizedString("Further Information", comment: ""), style: .default) { _ in
+                if let url = URL(string: informationLink) {
+                    UIApplication.shared.open(url)
+                }
+            })
+        return alert
+    }
+
+    // NEU: Hilfsmethode für Arcade USB Alert
+    private static func showArcadeUSBAlert(controller: UIViewController, completion: (() -> Void)?) {
+        let alert = UIAlertController(
+            title: NSLocalizedString("USB-Verbindung erforderlich", comment: "USB connection required"),
+            message: NSLocalizedString("Arcade-Programme können nur per USB auf den Calliope mini übertragen werden.\n\nBitte verbinde den Calliope mini per USB-Kabel und wähle den MINI-Ordner aus.", comment: "Arcade programs can only be transferred via USB"),
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(
+            title: NSLocalizedString("USB-Modus öffnen", comment: "Open USB mode"),
+            style: .default
+        ) { _ in
+            // Wechsle in USB-Modus
+            if let matrixVC = MatrixConnectionViewController.instance {
+                // Expand the matrix connection view if it's collapsed
+                if matrixVC.collapseButton.expansionState != .open {
+                    matrixVC.animate(expand: true)
+                }
+
+                // Switch to USB mode (this triggers switchChanged which updates the UI)
+                matrixVC.usbSwitch.isOn = true
+                matrixVC.switchChanged(usbSwitch: matrixVC.usbSwitch)
+
+                // Open the file picker after a short delay to allow the UI to update
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    matrixVC.startUSBconnect(matrixVC.connectButton as Any)
+                }
+            }
+            completion?()
+        })
+        
+        alert.addAction(UIAlertAction(
+            title: NSLocalizedString("Abbrechen", comment: "Cancel"),
+            style: .cancel
+        ) { _ in
+            completion?()
+        })
+        
+        controller.present(alert, animated: true)
+    }
+
+    private var file: Hex
+    private weak var controller: UIViewController?
+
+    init(file: Hex, controller: UIViewController) {
+        self.file = file
+        self.controller = controller
+    }
+
+    //keep last upload, so it cannot be de-inited prematurely
+    private static var uploadingInstance: FirmwareUpload? = nil {
+        didSet {
+            _ = oldValue?.calliope?.cancelUpload()
+        }
+    }
+
+    lazy var alertView: UIAlertController = {
+        guard let calliope = calliope else {
+            let alertController = UIAlertController(title: NSLocalizedString("Cannot upload", comment: "Übertragung nicht möglich"), message: NSLocalizedString("There is no connected Calliope mini in DFU mode", comment: "Es konnte kein Calliope mini gefunden werden"), preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: nil))
+            MatrixConnectionViewController.instance.animateBounce()
+            return alertController
+        }
+
+        let uploadController = UIAlertController(title: NSLocalizedString("Transmission running", comment: ""), message: "", preferredStyle: .alert)
+
+        let progressView: UIView
+        let logHeight = 0
+
+        if calliope is USBCalliope {
+            uploadController.message = NSLocalizedString("Calliope mini will start the program as soon as the transmission is complete.", comment: "")
+        }
+
+        // Both BLE and USB now use the same progress ring. For BLE the percentage
+        // comes from Nordic's DFU progress callbacks; for USB it is driven by
+        // the time-based progress animation in USBCalliope (the file copy itself
+        // is opaque, so the bar fills smoothly over the typical flash duration
+        // and snaps to 100 % when the copy syscall returns).
+        progressView = progressRing
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+
+        uploadController.view.addSubview(progressView)
+        uploadController.view.addSubview(logTextView)
+
+        // USB shows a multi-line message above the ring ("Calliope mini will
+        // start the program as soon as the transmission is complete." or the
+        // failure-retry text); BLE has no message. The extra top margin keeps
+        // the message from overlapping the ring on USB.
+        let topMargin = (calliope is USBCalliope) ? 140 : 60
+        let bottomMargin = 80
+
+        // Vertical constraints for progressView and logTextView
+        uploadController.view.addConstraints(
+            NSLayoutConstraint.constraints(withVisualFormat: "V:|-(topMargin)-[progressView(120)]-(8)-[logTextView(logHeight)]-(bottomMargin)-|", options: [], metrics: ["topMargin": topMargin, "logHeight": logHeight, "bottomMargin": bottomMargin], views: ["progressView": progressView, "logTextView": logTextView]))
+
+        // Center progressView horizontally with fixed width
+        NSLayoutConstraint.activate([
+            progressView.centerXAnchor.constraint(equalTo: uploadController.view.centerXAnchor),
+            progressView.widthAnchor.constraint(equalToConstant: 120)
+        ])
+
+        // Center logTextView horizontally with fixed width
+        NSLayoutConstraint.activate([
+            logTextView.centerXAnchor.constraint(equalTo: uploadController.view.centerXAnchor),
+            logTextView.widthAnchor.constraint(equalToConstant: 264)
+        ])
+
+        uploadController.addAction(cancelUploadAction)
+        return uploadController
+    }()
+
+    private lazy var progressRing: UICircularProgressRing = {
+        let ring = UICircularProgressRing()
+        ring.minValue = 0
+        ring.maxValue = 100
+        ring.style = UICircularRingStyle.ontop
+        ring.outerRingColor = #colorLiteral(red: 0.976000011, green: 0.7760000229, blue: 0.1490000039, alpha: 1)
+        ring.innerRingColor = #colorLiteral(red: 0.2980000079, green: 0.851000011, blue: 0.3919999897, alpha: 1)
+        ring.shouldShowValueText = true
+        //ring.gradientOptions = UICircularRingGradientOptions(startPosition: .top, endPosition: .top, colors: [#colorLiteral(red: 0.2469999939, green: 0.7839999795, blue: 0.3880000114, alpha: 1), #colorLiteral(red: 0.2980000079, green: 0.851000011, blue: 0.3919999897, alpha: 1)], colorLocations: [0.0, 100.0])
+        ring.valueFormatter = UICircularProgressRingFormatter(valueIndicator: "%", rightToLeft: false, showFloatingPoint: false, decimalPlaces: 0)
+        return ring
+    }()
+
+    private lazy var cancelUploadAction: UIAlertAction = {
+        return UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .destructive) { [weak self] _ in
+            self?.finished()
+        }
+    }()
+    private var usbTimer: Timer?
+    private var usbStartTime: Date?
+
+    private lazy var usbTimerLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .medium)
+        label.textColor = .gray
+        return label
+    }()
+    private lazy var logTextView: UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.backgroundColor = .clear
+        textView.isEditable = false
+        textView.isSelectable = true
+        textView.clipsToBounds = true
+        return textView
+    }()
+
+    private var finished: () -> Void = {
+    }
+    private var failed: () -> Void = {
+    }
+
+    private var calliope = MatrixConnectionViewController.instance.usageReadyCalliope
+
+    func upload(finishedCallback: @escaping () -> Void) throws {
+        // Timer deaktiviert - USB-Kopieren blockiert Main-Thread, daher zeigen wir statisch "~15 Sekunden"
+        // if MatrixConnectionViewController.instance.usageReadyCalliope is USBCalliope {
+        //     startUSBTimer()
+        // }
+
+        // Validating for the correct Version of the Hex File
+        let fileHexTypes = file.getHexTypes()
+        LogNotify.log("[FirmwareUpload] File hex types: \(fileHexTypes)")
+
+        guard let calliope else {
+            return
+        }
+        LogNotify.log("[FirmwareUpload] Calliope compatible types: \(calliope.compatibleHexTypes)")
+        if !calliope.compatibleHexTypes.contains(where: fileHexTypes.contains) {
+            LogNotify.log("[FirmwareUpload] ERROR: Hex version mismatch!")
+            throw "Unexpected Hex file version"
+        }
+
+        FirmwareUpload.uploadingInstance = self
+
+        // WICHTIG: Idle Timer SOFORT deaktivieren, damit der Bildschirm an bleibt
+        // Muss VOR beginBackgroundTask() passieren
+        UIApplication.shared.isIdleTimerDisabled = true
+        LogNotify.log("🔋 Idle timer disabled - screen will stay on during flashing")
+
+        let background_ident = UIApplication.shared.beginBackgroundTask(
+            withName: "flashing",
+            expirationHandler: { [weak self] () -> Void in
+                LogNotify.log("⚠️ Background task expiring - this should not happen during active flashing!")
+                LogNotify.log("App should remain in foreground during flashing to prevent iOS from terminating the task")
+                // Warnung: Wenn dieser Handler aufgerufen wird, sind nur noch wenige Sekunden Zeit
+                // Die App MUSS im Foreground bleiben während des Flashings
+            })
+
+        let downloadCompletion = {
+            FirmwareUpload.uploadingInstance = nil
+            UIApplication.shared.isIdleTimerDisabled = false
+            UIApplication.shared.endBackgroundTask(background_ident)
+        }
+
+        self.failed = {
+            downloadCompletion()
+            // self.stopUSBTimer() // Timer deaktiviert
+            MatrixConnectionViewController.instance.enableDfuMode(mode: false)
+        }
+        self.finished = {
+            downloadCompletion()
+            // self.stopUSBTimer() // Timer deaktiviert
+            finishedCallback()
+            MatrixConnectionViewController.instance.enableDfuMode(mode: false)
+            // On Shared iPad the picked USB volume is no longer usable once the
+            // copy is through, so end the connection here and let the user
+            // re-pick the drive for the next flash. No-op everywhere else.
+            if calliope is USBCalliope {
+                MatrixConnectionViewController.instance.resetUsbConnectionAfterCopy()
+            }
+        }
+
+        let startUpload = { [weak self] in
+            guard let self else { return }
+            do {
+                MatrixConnectionViewController.instance.enableDfuMode(mode: true)
+
+                // Set up disconnect callback for partial flashing optimization
+                if let flashableCalliope = calliope as? FlashableBLECalliope {
+                    // Captures nothing (no `self` reference), so no retain cycle
+                    // via calliope -> callback -> FirmwareUpload.
+                    flashableCalliope.requestDisconnectCallback = {
+                        LogNotify.log("[PartialFlash] Disconnect requested - triggering immediate disconnect")
+                        MatrixConnectionViewController.instance.connector.disconnectForReboot()
+                    }
+                }
+
+                // Shared-iPad export-picker flow needs a view controller to
+                // present the picker from.
+                if let usbCalliope = calliope as? USBCalliope, usbCalliope.useExportPicker {
+                    usbCalliope.presentingController = self.controller
+                }
+
+                try calliope.upload(file: self.file, progressReceiver: self, statusDelegate: self, logReceiver: self)
+            } catch {
+                DispatchQueue.main.async { [weak self] in
+                    self?.showUploadError(error)
+                }
+            }
+        }
+
+        // Decide partial vs full flash BEFORE touching the BLE stack: a device
+        // still running the Blocks/Campus runtime must get a full DFU, and only
+        // a live GATT probe can tell (the partial-flash DAL check can't). USB
+        // uploads skip this - they always write a whole image anyway.
+        if let flashableCalliope = calliope as? FlashableBLECalliope {
+            flashableCalliope.prepareFlashMode { startUpload() }
+        } else {
+            startUpload()
+        }
+    }
+
+    func showUploadError(_ error: Error) {
+        // Export-picker mode has no progress alert to write the error into, so
+        // surface it as its own alert — otherwise the failure would be silent.
+        if usesExportPicker {
+            // Export-picker failures reported through this path are connection /
+            // picker problems. A rejected transfer (DAPLink FAIL.TXT) is detected
+            // asynchronously in USBCalliope and shows the same alert from there.
+            presentStandalone(FirmwareUpload.makeUsbTransferFailureAlert(
+                message: NSLocalizedString("USB transfer failed retry instructions", comment: "")))
+            failed()
+            return
+        }
+
+        alertView.title = NSLocalizedString("Upload failed!", comment: "")
+
+        if calliope is USBCalliope {
+            // USB failures get a user-friendly retry instruction instead of the
+            // raw DFU error text — and the progress ring is hidden since the
+            // operation didn't complete.
+            alertView.message = NSLocalizedString("USB transfer failed retry instructions", comment: "")
+            progressRing.isHidden = true
+            logTextView.text = ""
+        } else {
+            // BLE keeps the original behavior: technical error in the log view,
+            // ring stays visible at whatever value it had.
+            logTextView.text = error.localizedDescription
+        }
+
+        // Re-enable cancel button so user can dismiss the alert
+        cancelUploadAction.isEnabled = true
+
+        failed()
+    }
+
+    func startUSBTimer() {
+        LogNotify.log("⏱️ USB Timer starting now")
+        usbStartTime = Date()
+        usbTimerLabel.text = "00:00 / 15 " + NSLocalizedString("seconds", comment: "")
+
+        usbTimer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { [weak self] _ in
+            self?.updateUSBTimerLabel()
+        }
+        LogNotify.log("⏱️ USB Timer scheduled")
+    }
+
+    private func updateUSBTimerLabel() {
+        guard let startTime = usbStartTime else { return }
+
+        let elapsed = Date().timeIntervalSince(startTime)
+
+        // Log first update
+        if elapsed < 0.1 {
+            LogNotify.log("⏱️ USB Timer first update: \(elapsed)s")
+        }
+
+        // Timer bei 15 Sekunden stoppen
+        if elapsed >= 15.0 {
+            let timeString = String(format: "15:00 / 15 %@", NSLocalizedString("seconds", comment: ""))
+            self.usbTimerLabel.text = timeString
+            stopUSBTimer()
+            return
+        }
+
+        let seconds = Int(elapsed)
+        let hundredths = Int((elapsed - Double(seconds)) * 100)
+
+        let timeString = String(format: "%02d:%02d / 15 %@", seconds, hundredths, NSLocalizedString("seconds", comment: ""))
+
+        // Update label directly (we're already on main thread since timer is on main runloop)
+        self.usbTimerLabel.text = timeString
+    }
+
+    private func stopUSBTimer() {
+        usbTimer?.invalidate()
+        usbTimer = nil
+        usbStartTime = nil
+    }
+    
+    deinit {
+        // stopUSBTimer() // Timer deaktiviert
+        NSLog("FirmwareUpload deinited")
+    }
+}
+
+extension FirmwareUpload: DFUProgressDelegate, DFUServiceDelegate, LoggerDelegate {
+    func dfuProgressDidChange(for part: Int, outOf totalParts: Int, to progress: Int, currentSpeedBytesPerSecond: Double, avgSpeedBytesPerSecond: Double) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else {
+                return
+            }
+            self.progressRing.startProgress(to: CGFloat(progress), duration: 0.2)
+            if progress > 0 && self.cancelUploadAction.isEnabled {
+                self.cancelUploadAction.isEnabled = false
+                let failed = self.failed
+                self.failed = {
+                    self.cancelUploadAction.isEnabled = true
+                    failed()
+                }
+            }
+        }
+    }
+
+    func logWith(_ level: LogLevel, message: String) {
+        LogNotify.log("DFU Message: \(message)")
+        logTextView.text = message + "\n" + logTextView.text
+    }
+
+    func dfuStateDidChange(to state: DFUState) {
+        LogNotify.log("DFU State change: \(state)")
+        if [DFUState.completed].contains(state) {
+            self.finished()
+        }
+        if [DFUState.aborted].contains(state) {
+            // Bei Verbindungswechsel keine Fehlermeldung anzeigen
+            if Calliope.isConnectionSwitching {
+                LogNotify.log("Connection switching - suppressing abort message")
+                return
+            }
+            // The user dismissed the Shared-iPad export picker without saving.
+            // Release the upload resources, but no error alert and no teardown of
+            // the USB connection — the next flash should reopen the picker.
+            if (calliope as? USBCalliope)?.lastExportCancelledByUser == true {
+                LogNotify.log("Export picker cancelled by user - suppressing abort message")
+                failed()
+                return
+            }
+            self.dfuError(.deviceDisconnected, didOccurWithMessage: "DFU process aborted")
+        }
+    }
+    
+    func dfuError(_ error: DFUError, didOccurWithMessage message: String) {
+        LogNotify.log("DFU Error \(error) while uploading: \(message)")
+        
+        // Bei Verbindungswechsel keine Fehlermeldung anzeigen
+        if Calliope.isConnectionSwitching {
+            LogNotify.log("Connection switching - suppressing error message")
+            return
+        }
+        
+        showUploadError(message)
+    }
+}

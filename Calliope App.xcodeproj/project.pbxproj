@@ -83,6 +83,9 @@
 		60127F6D2FD005DF000A1995 /* DataLoggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60127F6C2FD005DF000A1995 /* DataLoggerView.swift */; };
 		60127F6F2FD0061F000A1995 /* DataLoggerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60127F6E2FD0061F000A1995 /* DataLoggerViewModel.swift */; };
 		60127F712FD00999000A1995 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60127F702FD00999000A1995 /* WebView.swift */; };
+		6030A1A1307009B300E2627C /* MatrixConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6030A1A0307009B300E2627C /* MatrixConnectionViewController.swift */; };
+		6030A1A5307009E100E2627C /* EditorAndPrograms.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6030A1A3307009E100E2627C /* EditorAndPrograms.storyboard */; };
+		6030A1A730700A1400E2627C /* EditorAndProgramsContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6030A1A630700A1400E2627C /* EditorAndProgramsContainerViewController.swift */; };
 		60316BF82B01FEC300130C0D /* BLECalliope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60316BF72B01FEC300130C0D /* BLECalliope.swift */; };
 		60316BFA2B0210CC00130C0D /* CalliopeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60316BF92B0210CC00130C0D /* CalliopeFactory.swift */; };
 		6035545F3034B96500A6C8FA /* UploadProgressPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6035545E3034B96500A6C8FA /* UploadProgressPanel.swift */; };
@@ -133,10 +136,11 @@
 		60C90B452F237F3E006279B2 /* WBEventTarget.js in Resources */ = {isa = PBXBuildFile; fileRef = 60C90B102F237F3E006279B2 /* WBEventTarget.js */; };
 		60C90B462F237F3E006279B2 /* WBDevice.js in Resources */ = {isa = PBXBuildFile; fileRef = 60C90B0F2F237F3E006279B2 /* WBDevice.js */; };
 		60C915932B1F442F00E4039D /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C915922B1F442F00E4039D /* Network.swift */; };
+		60CA110D2E40000000000001 /* StorageDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CA110D2E40000000000002 /* StorageDirectory.swift */; };
 		60CA11B1000000000000A1A1 /* CalliopeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CA11B3000000000000A1A3 /* CalliopeApp.swift */; };
 		60CA11B2000000000000A1A2 /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CA11B4000000000000A1A4 /* RootTabView.swift */; };
 		60CA11B5000000000000A1A5 /* RootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CA11B6000000000000A1A6 /* RootCoordinator.swift */; };
-		60CF0EA92BFCBE1E00CB2A38 /* ProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CF0EA82BFCBE1E00CB2A38 /* ProjectViewModel.swift */; };
+		60CF0EA92BFCBE1E00CB2A38 /* ProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CF0EA82BFCBE1E00CB2A38 /* ProjectViewController.swift */; };
 		60CF0EAD2BFCD25300CB2A38 /* Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CF0EAC2BFCD25300CB2A38 /* Value.swift */; };
 		60CF0EB02BFCD59D00CB2A38 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CF0EAF2BFCD59D00CB2A38 /* DataController.swift */; };
 		60CF0EB22BFCD5D400CB2A38 /* Sensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CF0EB12BFCD5D400CB2A38 /* Sensor.swift */; };
@@ -238,6 +242,9 @@
 		60127F6C2FD005DF000A1995 /* DataLoggerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoggerView.swift; sourceTree = "<group>"; };
 		60127F6E2FD0061F000A1995 /* DataLoggerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoggerViewModel.swift; sourceTree = "<group>"; };
 		60127F702FD00999000A1995 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		6030A1A0307009B300E2627C /* MatrixConnectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixConnectionViewController.swift; sourceTree = "<group>"; };
+		6030A1A2307009E100E2627C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = EditorAndPrograms.storyboard; sourceTree = "<group>"; };
+		6030A1A630700A1400E2627C /* EditorAndProgramsContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorAndProgramsContainerViewController.swift; sourceTree = "<group>"; };
 		60316BF72B01FEC300130C0D /* BLECalliope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLECalliope.swift; sourceTree = "<group>"; };
 		60316BF92B0210CC00130C0D /* CalliopeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeFactory.swift; sourceTree = "<group>"; };
 		6035545E3034B96500A6C8FA /* UploadProgressPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadProgressPanel.swift; sourceTree = "<group>"; };
@@ -289,10 +296,11 @@
 		60C90B122F237F3E006279B2 /* WBUtils.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = WBUtils.js; sourceTree = "<group>"; };
 		60C90B172F237F3E006279B2 /* Jsonifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jsonifiable.swift; sourceTree = "<group>"; };
 		60C915922B1F442F00E4039D /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		60CA110D2E40000000000002 /* StorageDirectory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageDirectory.swift; sourceTree = "<group>"; };
 		60CA11B3000000000000A1A3 /* CalliopeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeApp.swift; sourceTree = "<group>"; };
 		60CA11B4000000000000A1A4 /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
 		60CA11B6000000000000A1A6 /* RootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinator.swift; sourceTree = "<group>"; };
-		60CF0EA82BFCBE1E00CB2A38 /* ProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewModel.swift; sourceTree = "<group>"; };
+		60CF0EA82BFCBE1E00CB2A38 /* ProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewController.swift; sourceTree = "<group>"; };
 		60CF0EAC2BFCD25300CB2A38 /* Value.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Value.swift; sourceTree = "<group>"; };
 		60CF0EAF2BFCD59D00CB2A38 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		60CF0EB12BFCD5D400CB2A38 /* Sensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sensor.swift; sourceTree = "<group>"; };
@@ -314,6 +322,7 @@
 		6030A04B3066CD2800E2627C /* Alerts */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Alerts; sourceTree = "<group>"; };
 		60F6C3E42F2D243500A6C193 /* LofiAppWebView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LofiAppWebView; sourceTree = "<group>"; };
 		60F6C3E52F2D24A300A6C193 /* Web Bluetooth */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Web Bluetooth"; sourceTree = "<group>"; };
+		60F6C3F02F2D250000A6C193 /* Native Proxy */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Native Proxy"; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -438,6 +447,7 @@
 				2F61453C22BF761F001C2734 /* ValueLocalizer.swift */,
 				2F61453D22BF761F001C2734 /* ExtColor.swift */,
 				2F61453E22BF761F001C2734 /* LogNotify.swift */,
+				60CA110D2E40000000000002 /* StorageDirectory.swift */,
 				2F61454022BF761F001C2734 /* Async.swift */,
 				2F61454122BF761F001C2734 /* NotificationConstants.swift */,
 				2F61454222BF761F001C2734 /* Binary.swift */,
@@ -467,6 +477,7 @@
 		2F61455122BF761F001C2734 /* CollapsingConnectionView */ = {
 			isa = PBXGroup;
 			children = (
+				6030A1A0307009B300E2627C /* MatrixConnectionViewController.swift */,
 				60C051DB3000D98800DFA868 /* MatrixConnectionView.swift */,
 				60C051DD3000F1A900DFA868 /* MatrixConnectionViewModel.swift */,
 				2F61455822BF761F001C2734 /* Matrix.swift */,
@@ -560,6 +571,8 @@
 		2FAA2D0922DB3C4D00BC1A5F /* EditorsAndPrograms */ = {
 			isa = PBXGroup;
 			children = (
+				6030A1A630700A1400E2627C /* EditorAndProgramsContainerViewController.swift */,
+				6030A1A4307009E100E2627C /* Base.lproj */,
 				6008D1B53013B505001673BD /* FirmwareUploadSwiftUI.swift */,
 				6008D1B7301CE036001673BD /* HexFileStoreDialogSwiftUI.swift */,
 				2F91665C2354062A0065AD81 /* Editors */,
@@ -604,7 +617,7 @@
 		600E63292C328DAE0027AE61 /* DetailView */ = {
 			isa = PBXGroup;
 			children = (
-				60CF0EA82BFCBE1E00CB2A38 /* ProjectViewModel.swift */,
+				60CF0EA82BFCBE1E00CB2A38 /* ProjectViewController.swift */,
 				60AA95542F925D3400308FE3 /* ProjectView.swift */,
 				60EBC64B2F9BAD5A00A6DD84 /* ChartViewModel.swift */,
 				60C627F92FAE4BF100D23A43 /* GroupView.swift */,
@@ -636,6 +649,14 @@
 				60F6C3E42F2D243500A6C193 /* LofiAppWebView */,
 			);
 			path = LofiApps;
+			sourceTree = "<group>";
+		};
+		6030A1A4307009E100E2627C /* Base.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				6030A1A3307009E100E2627C /* EditorAndPrograms.storyboard */,
+			);
+			path = Base.lproj;
 			sourceTree = "<group>";
 		};
 		604938B32E1BAF16008BCE40 /* Packages */ = {
@@ -724,6 +745,7 @@
 			isa = PBXGroup;
 			children = (
 				60F6C3E52F2D24A300A6C193 /* Web Bluetooth */,
+				60F6C3F02F2D250000A6C193 /* Native Proxy */,
 				60D1FD6B2B6BCF9800BC6202 /* ConnectedCalliopes */,
 				60D1FD6A2B6BCF8700BC6202 /* DiscoveryCalliopes */,
 				60316BF92B0210CC00130C0D /* CalliopeFactory.swift */,
@@ -787,6 +809,7 @@
 				6030A04B3066CD2800E2627C /* Alerts */,
 				60F6C3E42F2D243500A6C193 /* LofiAppWebView */,
 				60F6C3E52F2D24A300A6C193 /* Web Bluetooth */,
+				60F6C3F02F2D250000A6C193 /* Native Proxy */,
 			);
 			name = "Calliope App";
 			productName = "Calliope App";
@@ -964,6 +987,7 @@
 				60C90B3E2F237F3E006279B2 /* WBBluetoothRemoteGATTCharacteristic.js in Resources */,
 				60C90B412F237F3E006279B2 /* WBBluetoothRemoteGATTServer.js in Resources */,
 				60C90B422F237F3E006279B2 /* stringview.js in Resources */,
+				6030A1A5307009E100E2627C /* EditorAndPrograms.storyboard in Resources */,
 				60C90B432F237F3E006279B2 /* WBPolyfill.js in Resources */,
 				60C90B442F237F3E006279B2 /* WBUtils.js in Resources */,
 				60818EA62FEEB46C0053893F /* InfoPlist.xcstrings in Resources */,
@@ -1083,6 +1107,7 @@
 				604938832E151282008BCE40 /* FileExtensionsEnum.swift in Sources */,
 				60818EBE2FF563D80053893F /* ArcadeViewModel.swift in Sources */,
 				6094C3912C045FA9006F4CB4 /* ApiCalliope.swift in Sources */,
+				6030A1A1307009B300E2627C /* MatrixConnectionViewController.swift in Sources */,
 				6042149F2F646DD30060064F /* TilePageLayout.swift in Sources */,
 				2F6145A622C7D71B001C2734 /* Settings.swift in Sources */,
 				60D02D7E2BFC8FE400D3C34A /* DatabaseManager.swift in Sources */,
@@ -1111,7 +1136,9 @@
 				6008D1B63013B505001673BD /* FirmwareUploadSwiftUI.swift in Sources */,
 				2F61457522BF761F001C2734 /* DiscoveredBLEDevice.swift in Sources */,
 				2F2B809A25A0E01500A7CCF7 /* CodeSnippets.swift in Sources */,
-				60CF0EA92BFCBE1E00CB2A38 /* ProjectViewModel.swift in Sources */,
+				60CF0EA92BFCBE1E00CB2A38 /* ProjectViewController.swift in Sources */,
+				60CF0EA92BFCBE1E00CB2A38 /* ProjectViewController.swift in Sources */,
+				6030A1A730700A1400E2627C /* EditorAndProgramsContainerViewController.swift in Sources */,
 				609D9BD42B67A15500F2ECAE /* USBCalliope.swift in Sources */,
 				60127F712FD00999000A1995 /* WebView.swift in Sources */,
 				60818EB62FF540600053893F /* AdaptiveColumnLayout.swift in Sources */,
@@ -1137,6 +1164,7 @@
 				2F61457922BF761F001C2734 /* Ext.swift in Sources */,
 				2F61457D22BF761F001C2734 /* LogNotify.swift in Sources */,
 				60C051DC3000D98800DFA868 /* MatrixConnectionView.swift in Sources */,
+				60CA110D2E40000000000001 /* StorageDirectory.swift in Sources */,
 				7E25CB63E012B25A80606449 /* UIDevice+Extensions.swift in Sources */,
 				80EB0D422F0ECA3C000C3269 /* PartialFlashing.swift in Sources */,
 				7E25C2F16E2316D7C6EF236F /* UtilityJobProtocol.swift in Sources */,
@@ -1157,6 +1185,14 @@
 			);
 			name = Settings.strings;
 			path = Settings.bundle;
+			sourceTree = "<group>";
+		};
+		6030A1A3307009E100E2627C /* EditorAndPrograms.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6030A1A2307009E100E2627C /* Base */,
+			);
+			name = EditorAndPrograms.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1294,7 +1330,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Calliope App/Calliope App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = GKA87N33H4;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "Calliope App/Info.plist";
@@ -1322,7 +1358,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Calliope App/Calliope AppRelease.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = GKA87N33H4;
 				INFOPLIST_FILE = "Calliope App/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;

@@ -1,0 +1,223 @@
+//
+//  EditorsCollectionViewController.swift
+//  Calliope App
+//
+//  Created by Tassilo Karge on 07.10.19.
+//  Copyright © 2019 calliope. All rights reserved.
+//
+
+import UIKit
+
+private let reuseIdentifier = "Cell"
+
+class EditorsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+
+    private let reuseIdentifierMakeCode = "makecodeEditorCell"
+    private let reuseIdentifierNepo = "nepoEditorCell"
+    private let reuseIdentifierOfflineEditor = "localEditorCell"
+    private let reuseIdentifierArcade = "arcadeCell"
+    private let reuseIdentifierCalliopeBlocks = "calliopeBlocksCell"
+    private let reuseIdentifierMicroPython = "microPythonEditorCell"
+    private let reuseIdentifierCampus = "campusEditorCell"
+    private let reuseIdentifierBlocksEditor = "calliopeBlocksEditorCell"
+    private let reuseIdentifierCampusBlocks = "campusBlocksEditorCell"
+    private let reuseIdentifierCampusMakeCode = "campusMakecodeEditorCell"
+    private let reuseIdentifierCampusPython = "campusPythonEditorCell"
+
+    private lazy var activatedEditors: [SettingsKey] = {
+        var keys: [SettingsKey] = []
+        let settings = UserDefaults.standard
+        let isPhone = UIDevice.current.userInterfaceIdiom == .phone
+        // TEMPORARILY HIDDEN: Calliope Campus and all campus-hosted editors
+        // (Campus Blocks / MakeCode / Python) are not shown in this release.
+        // Uncomment the four blocks below to bring them back.
+        //
+        // Calliope Campus is the new flagship editor — it owns its own
+        // connection via the native-proxy bridge (CalliopeProxyMessageHandler)
+        // so it sits at the top of the list, ahead of the legacy editors
+        // that still go through download-capture.
+//        if settings.bool(forKey: SettingsKey.campus.rawValue) {
+//            keys.append(.campus)
+//        }
+        // The campus-hosted flavours of the classic editors, right behind the
+        // campus home: same deployment, same native-proxy bridge, just deep
+        // links into /blocks, /makecode and /python. They sit next to their
+        // legacy counterparts further down the list on purpose — the two can be
+        // compared side by side while the campus versions are being rolled out.
+//        if settings.bool(forKey: SettingsKey.campusBlocks.rawValue) {
+//            keys.append(.campusBlocks)
+//        }
+//        if settings.bool(forKey: SettingsKey.campusMakeCode.rawValue) {
+//            keys.append(.campusMakeCode)
+//        }
+//        if settings.bool(forKey: SettingsKey.campusPython.rawValue) {
+//            keys.append(.campusPython)
+//        }
+        if settings.bool(forKey: SettingsKey.localEditor.rawValue) {
+            keys.append(.localEditor)
+        }
+        if settings.bool(forKey: SettingsKey.makeCode.rawValue) {
+            keys.append(.makeCode)
+        }
+        if settings.bool(forKey: SettingsKey.roberta.rawValue) {
+            keys.append(.roberta)
+        }
+        if settings.bool(forKey: SettingsKey.calliopeBlocks.rawValue)  && !isPhone { keys.append(.calliopeBlocks)
+        }
+//        TODO: Next release, we will include the Blocks Editor, but for now we disable this
+//        if settings.bool(forKey: SettingsKey.blocksMiniEditor.rawValue) {
+//            keys.append(.blocksMiniEditor)
+//        }
+        if settings.bool(forKey: SettingsKey.microPython.rawValue) {
+            keys.append(.microPython)
+        }
+        if settings.bool(forKey: SettingsKey.arcade.rawValue) {
+            keys.append(.arcade)
+        }
+
+        return keys
+        }()
+    
+    var heightConstraint: NSLayoutConstraint!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        (collectionViewLayout as! UICollectionViewFlowLayout).estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+    }
+    
+    // MARK: UICollectionViewDataSource
+
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return activatedEditors.count
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell: UICollectionViewCell
+        cell = createEditorCell(indexPath, collectionView)
+        
+        return cell
+    }
+    
+    private func createEditorCell(_ indexPath: IndexPath, _ collectionView: UICollectionView) -> UICollectionViewCell {
+        guard indexPath.row < activatedEditors.count else {
+            fatalError("The program editor collection view features only \(activatedEditors.count) editors. numberOfItemsInSection must be set to that value.")
+        }
+        
+        let cell: EditorCollectionViewCell
+        let editorKey = activatedEditors[indexPath.row]
+        
+        switch editorKey {
+        case .makeCode:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierMakeCode, for: indexPath) as! EditorCollectionViewCell
+        case .microPython:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierMicroPython, for: indexPath) as! EditorCollectionViewCell
+        case .roberta:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierNepo, for: indexPath) as! EditorCollectionViewCell
+        case .arcade:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierArcade, for: indexPath) as! EditorCollectionViewCell
+        case .localEditor:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierOfflineEditor, for: indexPath) as! EditorCollectionViewCell
+        case .calliopeBlocks:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierCalliopeBlocks, for: indexPath) as! EditorCollectionViewCell
+        case .campus:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierCampus, for: indexPath) as! EditorCollectionViewCell
+        case .campusBlocks:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierCampusBlocks, for: indexPath) as! EditorCollectionViewCell
+        case .campusMakeCode:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierCampusMakeCode, for: indexPath) as! EditorCollectionViewCell
+        case .campusPython:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierCampusPython, for: indexPath) as! EditorCollectionViewCell
+        case .blocksMiniEditor:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierBlocksEditor, for: indexPath) as! EditorCollectionViewCell
+
+        default:
+            fatalError("invalid key found in active editors array")
+        }
+        
+        cell.editor = editorKey
+        
+        return cell
+    }
+
+    // MARK: UICollectionViewDelegate
+
+    /*
+    // Uncomment this method to specify if the specified item should be highlighted during tracking
+    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    */
+
+    // Uncomment this method to specify if the specified item should be selected
+    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    // MARK: UICollectionViewDelegateFlowLayout
+
+    let editorButtonSize: CGFloat = 180
+    let spacing: CGFloat = 10
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        let width = collectionView.frame.size.width
+        let maxItems = width / (editorButtonSize + spacing)
+        let numEditors = CGFloat(activatedEditors.count)
+        if maxItems <= 2 {
+            // flowlayout centers single cells
+            return UIEdgeInsets.zero
+        } else if maxItems < numEditors {
+            let remainingSpace = width - 2 * editorButtonSize - spacing
+            return UIEdgeInsets(top: 0, left: remainingSpace / 2, bottom: 0, right: remainingSpace / 2)
+        } else {
+            let remainingSpace = width - numEditors * editorButtonSize - (numEditors - 1) * spacing
+            return UIEdgeInsets(top: 0, left: remainingSpace / 2, bottom: 0, right: remainingSpace / 2)
+        }
+    }
+    
+    // MARK: - Navigation
+    
+    @IBSegueAction
+    func createMakecodeEditor(coder: NSCoder, sender: Any?) -> EditorViewController? {
+        EditorViewController(coder: coder, editor: MakeCode())
+    }
+    
+    @IBSegueAction
+    func createNepoEditor(coder: NSCoder, sender: Any?) -> EditorViewController? {
+        EditorViewController(coder: coder, editor: RobertaEditor())
+    }
+    
+    @IBSegueAction func createMicroPythonEditorWithCoder(_ coder: NSCoder, sender: Any?) -> EditorViewController? {
+        EditorViewController(coder: coder, editor: MicroPython())
+    }
+    
+    @IBSegueAction func createCampusEditor(_ coder: NSCoder, sender: Any?) -> EditorViewController? {
+        EditorViewController(coder: coder, editor: CampusEditor())
+    }
+
+    @IBSegueAction func createCampusBlocksEditor(_ coder: NSCoder, sender: Any?) -> EditorViewController? {
+        EditorViewController(coder: coder, editor: CampusBlocksEditor())
+    }
+
+    @IBSegueAction func createCampusMakeCodeEditor(_ coder: NSCoder, sender: Any?) -> EditorViewController? {
+        EditorViewController(coder: coder, editor: CampusMakeCodeEditor())
+    }
+
+    @IBSegueAction func createCampusPythonEditor(_ coder: NSCoder, sender: Any?) -> EditorViewController? {
+        EditorViewController(coder: coder, editor: CampusPythonEditor())
+    }
+    
+    @IBSegueAction func createBlocksEditor(_ coder: NSCoder, sender: Any?) -> EditorViewController? {
+        EditorViewController(coder: coder, editor: BlocksMiniEditor())
+    }
+    
+    @IBSegueAction func createArcadeStartView(_ coder: NSCoder, sender: Any?) -> ArcadeStartViewController? {
+        let storyboard = UIStoryboard(name: "PlaygroundSnippets", bundle: nil)
+        return storyboard.instantiateViewController(identifier: "ArcadeStartViewController") { coder in
+            ArcadeStartViewController(coder: coder)
+        }
+    }
+}

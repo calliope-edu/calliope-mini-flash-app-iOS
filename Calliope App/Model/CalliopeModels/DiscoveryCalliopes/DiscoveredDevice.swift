@@ -26,7 +26,13 @@ class DiscoveredDevice: NSObject, CBPeripheralDelegate {
     var rebootingCalliope: Calliope? = nil
 
     //discoverable Services of the BLE Devices
-    static var discoverableServices: Set<CalliopeService> = [.secureDfuService, .dfuControlService, .partialFlashing, .microbitUtilityService, .accelerometer, .magnetometer, .led, .temperature, .uart]
+    // `.mbitMore` is the MakeCode/Blocks (MbitMore) extension service. We
+    // discover it so the native-proxy bridge (Calliope Campus) can reach its
+    // COMMAND/STATE characteristics via raw GATT to detect the running program
+    // type and Blocks runtime version. It is intentionally absent from
+    // `CalliopeBLEProfile.serviceCharacteristicMap`, so its characteristics are
+    // discovered wholesale via `discoverCharacteristics(nil, …)`.
+    static var discoverableServices: Set<CalliopeService> = [.secureDfuService, .dfuControlService, .partialFlashing, .microbitUtilityService, .accelerometer, .magnetometer, .led, .temperature, .uart, .mbitMore]
     static var discoverableServicesUUIDs: Set<CBUUID> = Set(
         discoverableServices.map {
             $0.uuid

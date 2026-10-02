@@ -40,6 +40,12 @@ class BLECalliope: Calliope {
     let name: String
     let servicesChangedCallback: () -> ()?
     var wbNotifications: [CalliopeCharacteristic: (String, String, String) -> Void] // This allows the WBMessageHandler to subscribe to notifications via the extension of this class
+    /// Raw-UUID notification handlers keyed by CBUUID. Lets the native-proxy
+    /// message handler subscribe to characteristics that aren't part of the
+    /// `CalliopeCharacteristic` enum (notably the MbitMore Blocks service
+    /// `0b50f3e4-…` used by Calliope Campus). Populated by
+    /// `CalliopeProxyMessageHandler` via `setRawNotificationHandler`.
+    var rawNotificationHandlers: [CBUUID: (Data) -> Void] = [:]
     
     required init?(peripheral: CBPeripheral, name: String, discoveredServices: Set<CalliopeService>, discoveredCharacteristicUUIDsForServiceUUID: [CBUUID: Set<CBUUID>], servicesChangedCallback: @escaping () -> ()?) {
         self.peripheral = peripheral
@@ -130,7 +136,16 @@ class BLECalliope: Calliope {
             LogNotify.log(bleError?.localizedDescription ?? "characteristic \(characteristic.uuid) does not have a value")
             return
         }
-        
+
+        // Native-proxy path: characteristics not declared in the
+        // `CalliopeCharacteristic` enum (e.g. MbitMore Blocks) reach us via
+        // the raw-UUID dict. Multiple handlers per UUID are not supported —
+        // the proxy ensures one-per-key.
+        if let rawHandler = rawNotificationHandlers[characteristic.uuid] {
+            rawHandler(value)
+            return
+        }
+
         guard let calliopeCharacteristic = CalliopeBLEProfile.uuidCharacteristicMap[characteristic.uuid]
         else {
             LogNotify.log("received value from unknown characteristic: \(characteristic.uuid)")
@@ -602,6 +617,67 @@ extension BLECalliope: Jsonifiable {
         } catch let error {
             assert(false, "error converting to json: \(error)")
             return ""
+        }
+    }
+}
+
+// MARK: - Blocks-runtime detection
+
+extension BLECalliope {
+
+    /// MbitMore STATE characteristic — non-zero data confirms pxt-blocks-runtime
+    /// is actively running (it fills the buffer with sensor data). The service
+    /// itself is not proof: the newer CODAL stub may register the service shell
+    /// but leaves STATE all zeros.
+    static let mbitMoreStateUUID = CBUUID(string: "0b500101-607f-4151-9091-7d008d6ffc5c")
+
+    /// Probe MbitMore STATE and call `completion` with `true` if this device is
+    /// running pxt-blocks-runtime, `false` otherwise (zeros, characteristic
+    /// missing, read failed, or 1.5 s timeout).
+    ///
+    /// Shared by the native-proxy bridge (Calliope Campus) and the legacy
+    /// download-capture flash path (`FirmwareUpload`). Both need it because the
+    /// partial-flash protocol cannot detect a blocks-runtime device on its own:
+    /// pxt-blocks-runtime and pxt-calliope share the same DAL hash, so the DAL
+    /// check inside partial flashing passes and only the user-program area gets
+    /// rewritten — leaving a broken hybrid. Callers turn a `true` result into
+    /// `forceFullDfuForNextUpload`.
+    ///
+    /// `completion` is always called exactly once, on the main queue.
+    func probeBlocksRuntime(completion: @escaping (Bool) -> Void) {
+        guard
+            let service = peripheral.services?.first(where: { $0.uuid == CalliopeService.mbitMore.uuid }),
+            let characteristic = service.characteristics?.first(where: { $0.uuid == BLECalliope.mbitMoreStateUUID })
+        else {
+            completion(false)
+            return
+        }
+
+        // Latch the result so neither the read callback nor the timeout can
+        // fire it twice (e.g. a slow read returning just after the timer).
+        var settled = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            if !settled {
+                settled = true
+                LogNotify.log("[BlocksRuntime] STATE read timed out — assuming no blocks-runtime")
+                completion(false)
+            }
+        }
+
+        read(characteristic: characteristic) { result in
+            DispatchQueue.main.async {
+                if settled { return }
+                settled = true
+                switch result {
+                case .success(let data):
+                    let isBlocksRuntime = data.contains { $0 != 0 }
+                    LogNotify.log("[BlocksRuntime] STATE read \(data.count) bytes — blocks-runtime: \(isBlocksRuntime)")
+                    completion(isBlocksRuntime)
+                case .failure(let error):
+                    LogNotify.log("[BlocksRuntime] STATE read failed (\(error.localizedDescription)) — assuming no blocks-runtime")
+                    completion(false)
+                }
+            }
         }
     }
 }

@@ -11,14 +11,14 @@ import Foundation
 class CSVHandler {
     
     static func exportToCSVFile(contents: String, fileName: String) {
-        let fileManager = FileManager.default
-        
-        // Get the documents directory URL
-        guard let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
-            LogNotify.log("Error getting documents directory URL")
+        let documentsURL: URL
+        do {
+            documentsURL = try StorageDirectory.shared.documentsDirectory()
+        } catch {
+            LogNotify.log("Error getting documents directory URL: \(error)")
             return
         }
-        
+
         let fileURL = documentsURL.appendingPathComponent("\(fileName).csv")
         
         // Write the string to the file
