@@ -1,6 +1,310 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Arcade-Dateien können nur per USB-Kabel übertragen werden. Bitte verbinde deinen Calliope mini per USB oder teile die Datei." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arcade files can only be transferred via USB cable. Please connect your Calliope mini via USB or share the file."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arcade-Dateien können nur per USB-Kabel übertragen werden. Bitte verbinde deinen Calliope mini per USB oder teile die Datei."
+          }
+        }
+      }
+    },
+    "Before every file copy you have to select the Calliope mini." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vor jeder Kopie einer Datei muss der Calliope mini ausgewählt werden."
+          }
+        }
+      }
+    },
+    "Before every file copy you have to select the Calliope mini. If there are problems copying, disconnect the Calliope mini from the device and connect it again before copying." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vor jeder Kopie einer Datei muss der Calliope mini ausgewählt werden. Sollte es Kopierprobleme geben, muss der Calliope mini vor dem Kopieren vom Gerät getrennt und erneut verbunden werden."
+          }
+        }
+      }
+    },
+    "Blocks runtime detected — using full flash instead of partial flash" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blocks-Runtime erkannt — vollständiger DFU statt partial-flash"
+          }
+        }
+      }
+    },
+    "Calliope mini Discovery State now: \\(state)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Verbindungsstatus zum Calliope mini ist \\(state)"
+          }
+        }
+      }
+    },
+    "Calliope mini discovery state: \\(state)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calliope mini Bluetooth Status: \\(state)"
+          }
+        }
+      }
+    },
+    "Continue" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fortfahren"
+          }
+        }
+      }
+    },
+    "Couldn't reach your Calliope mini. Hold A+B and press reset on the mini to turn Bluetooth back on, then try flashing again." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Calliope mini ist nicht erreichbar. Halte A+B gedrückt und drücke Reset, um Bluetooth wieder einzuschalten, und flashe dann erneut."
+          }
+        }
+      }
+    },
+    "Du findest die CSV-Datei mit den Datalogger-Daten im Calliope-Verzeichnis auf deinem Gerät unter den namen MY_DATA.csv" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can find the CSV file containing your datalogger data, named MY_DATA.csv, in the Calliope directory on your device."
+          }
+        }
+      }
+    },
+    "Edit" : {
+      "localizations" : {
+      }
+    },
+    "Es gab ein Problem beim Herunterladen der Datalogger-Daten von deinem Calliope mini. Bitte stelle sicher, dass du mit deinem Calliope mini verbunden bist, und versuche es erneut." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There was an issue downloading the datalogger data from your Calliope mini. Please ensure you are connected to the Calliope mini and try again."
+          }
+        }
+      }
+    },
+    "Möchtest du das Programm auf deinen Calliope mini übertragen oder teilen?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Do you want to transfer the program to your Calliope mini or share it?"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Möchtest du das Programm auf deinen Calliope mini übertragen oder teilen?"
+          }
+        }
+      }
+    },
+    "Möchtest du die Arcade-Datei auf deinen Calliope mini übertragen oder teilen?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Do you want to transfer the Arcade file to your Calliope mini or share it?"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Möchtest du die Arcade-Datei auf deinen Calliope mini übertragen oder teilen?"
+          }
+        }
+      }
+    },
+    "No Calliope mini paired" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kein Calliope mini gekoppelt"
+          }
+        }
+      }
+    },
+    "No Calliope mini paired — please pair one via the connection icon at the top of the app and try again." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kein Calliope mini gekoppelt — bitte oben über das Verbindungssymbol einen Calliope mini koppeln und erneut versuchen."
+          }
+        }
+      }
+    },
+    "On a Shared iPad the Calliope mini has to be selected for every file copy. After each transfer, unplug the Calliope mini from the iPad and plug it in again before you transfer the next program." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auf einem geteilten iPad (Shared iPad) muss der Calliope mini vor jeder Kopie einer Datei ausgewählt werden. Trenne den Calliope mini nach jeder Übertragung vom iPad und verbinde ihn erneut, bevor du das nächste Programm überträgst."
+          }
+        }
+      }
+    },
+    "On a Shared iPad the Calliope mini has to be selected for every file copy. Transferring over the cable is not reliable here, so we recommend transferring via Bluetooth." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auf einem geteilten iPad (Shared iPad) muss der Calliope mini vor jeder Kopie einer Datei ausgewählt werden. Die Übertragung per Kabel ist hier nicht zuverlässig, wir empfehlen daher die Übertragung per Bluetooth."
+          }
+        }
+      }
+    },
+    "Please select and connect a Calliope mini using the Calliope icon at the top." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bitte oben im Calliope-Symbol einen Calliope mini auswählen und verbinden."
+          }
+        }
+      }
+    },
+    "Please select your Calliope mini (the \"MINI\" drive) in the next dialog and tap Open." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bitte wähle im nächsten Dialog deinen Calliope mini (das Laufwerk \"MINI\") aus und tippe auf \"Öffnen\"."
+          }
+        }
+      }
+    },
+    "Reconnecting to your Calliope mini before flashing …" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbinde erneut mit deinem Calliope mini, bevor geflasht wird …"
+          }
+        }
+      }
+    },
+    "Share log" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log teilen"
+          }
+        }
+      }
+    },
+    "The Calliope mini accepted the file." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Calliope mini hat die Datei angenommen."
+          }
+        }
+      }
+    },
+    "The result cannot be verified: the app is not allowed to read the Calliope mini." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Ergebnis lässt sich nicht prüfen: Die App darf den Calliope mini nicht lesen."
+          }
+        }
+      }
+    },
+    "Transfer diagnostics" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diagnose: Kopierversuch"
+          }
+        }
+      }
+    },
+    "USB connection" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "USB Verbindung"
+          }
+        }
+      }
+    },
+    "USB transfer failed retry instructions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The file could not be transferred. Unplug the Calliope mini and plug it in again before you transfer the next program."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Datei konnte nicht übertragen werden. Trenne den Calliope mini und verbinde ihn erneut, bevor du das nächste Programm überträgst."
+          }
+        }
+      }
+    },
+    "USB transfer verification failed retry instructions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There was an error transferring the file. Please try again. If the error persists, unplug the data cable and plug it back in."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Es gab einen Fehler bei der Dateiübertragung. Bitte versuche es erneut. Sollte der Fehler weiterhin auftreten, trenne und verbinde das Datenkabel."
+          }
+        }
+      }
+    },
+    "Your Calliope mini isn't in Bluetooth mode. Hold A+B and press reset on the mini — it will then flash automatically." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Calliope mini ist nicht im Bluetooth-Modus. Halte A+B gedrückt und drücke Reset – dann wird automatisch geflasht."
+          }
+        }
+      }
+    },
     "" : {
 
     },
@@ -2805,7 +3109,20 @@
       }
     },
     "Übertragen (USB)" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transfer (USB)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Übertragen (USB)"
+          }
+        }
+      }
     },
     "Übertragung abgeschlossen" : {
       "extractionState" : "manual",

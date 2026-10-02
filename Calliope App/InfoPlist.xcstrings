@@ -16,6 +16,12 @@
     "CFBundleName" : {
       "comment" : "Bundle name",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calliope mini App"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -26,6 +32,12 @@
     },
     "Hex File" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hex‑Datei"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -37,10 +49,16 @@
     "NSBluetoothAlwaysUsageDescription" : {
       "comment" : "Privacy - Bluetooth Always Usage Description",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bluetooth wird benötigt, um sich kabellos mit deinem Calliope mini zu verbinden – damit du Programme übertragen und Daten austauschen kannst."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You need Bluetooth to be connected to your Calliope mini"
+            "value" : "Bluetooth is used to connect wirelessly to your Calliope mini, so you can flash programs and exchange data."
           }
         }
       }
@@ -48,10 +66,16 @@
     "NSBluetoothPeripheralUsageDescription" : {
       "comment" : "Privacy - Bluetooth Peripheral Usage Description",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bluetooth wird benötigt, um sich kabellos mit deinem Calliope mini zu verbinden – damit du Programme übertragen und Daten austauschen kannst."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You need Bluetooth to be connected to your Calliope mini"
+            "value" : "Bluetooth is used to connect wirelessly to your Calliope mini, so you can flash programs and exchange data."
           }
         }
       }
@@ -60,10 +84,16 @@
       "comment" : "Privacy - Camera Usage Description",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Kamera wird zum Scannen von QR‑Codes verwendet, mit denen du Programme teilst oder lädst."
+          }
+        },
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "To read a QR Code this app uses the camera. "
+            "state" : "translated",
+            "value" : "The camera is used to scan QR codes when sharing or loading programs."
           }
         }
       }
@@ -72,10 +102,16 @@
       "comment" : "Privacy - Location Usage Description",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Standort wird verwendet, um Sensormessungen mit dem Ort zu versehen, an dem sie aufgezeichnet wurden."
+          }
+        },
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "To record location of specific sensor value, this apps needs to have access to the current location!"
+            "state" : "translated",
+            "value" : "Your location is used to tag sensor readings so you can see where each measurement was recorded."
           }
         }
       }
@@ -84,10 +120,16 @@
       "comment" : "Privacy - Location When In Use Usage Description",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Standort wird verwendet, um Sensormessungen mit dem Ort zu versehen, an dem sie aufgezeichnet wurden."
+          }
+        },
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "To record location connected to a sensor value, this apps needs to have access to the current location!"
+            "state" : "translated",
+            "value" : "Your location is used to tag sensor readings so you can see where each measurement was recorded."
           }
         }
       }
@@ -96,10 +138,16 @@
       "comment" : "Privacy - Microphone Usage Description",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Mikrofon wird für Sprachfunktionen im Open Roberta Editor benötigt."
+          }
+        },
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "To use Open Roberta, this app uses the Microphone"
+            "state" : "translated",
+            "value" : "The microphone is required for voice‑based features in the Open Roberta editor."
           }
         }
       }
