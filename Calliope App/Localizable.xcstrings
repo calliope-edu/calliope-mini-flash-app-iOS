@@ -604,7 +604,14 @@
       }
     },
     "Apps" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anwendungen"
+          }
+        }
+      }
     },
     "Apps Info" : {
 
