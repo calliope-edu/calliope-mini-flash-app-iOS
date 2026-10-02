@@ -58,6 +58,12 @@ struct RootTabView: View {
                 if wasInBackground {
                     MatrixConnectionViewModel.instance.moveToForeground()
                     wasInBackground = false
+                    // Re-arm the storage watcher and trigger one immediate refresh —
+                    // covers the case where files were added/removed via Files app
+                    // while we were backgrounded (the watcher's fd may have been
+                    // suspended by the system).
+                    HexFileManager.startWatchingForExternalChanges()
+                    NotificationCenter.default.post(name: NotificationConstants.hexFileChanged, object: nil)
                 }
                 applyCompactSizeClassOverride()
             default:
