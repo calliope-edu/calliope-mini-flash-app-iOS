@@ -136,6 +136,104 @@ class FirmwareUpload {
         }
     }
 
+    /// True when this upload is handed to the Shared-iPad export picker. There
+    /// the system picker IS the transfer UI (it performs the copy), so the app
+    /// must not put its own progress alert on top of it.
+    private var usesExportPicker: Bool {
+        (calliope as? USBCalliope)?.useExportPicker == true
+    }
+
+    /// Presents an alert without relying on our progress alert being on screen —
+    /// in export-picker mode there is none.
+    private func presentStandalone(_ alert: UIAlertController) {
+        guard let presenter = controller?.topMostPresented() else { return }
+        DispatchQueue.main.async {
+            presenter.present(alert, animated: true)
+        }
+    }
+
+    /// DIAGNOSTICS (Shared-iPad USB investigation): shows what happened during
+    /// the last transfer attempt, including DAPLink's verdict, plus an action to
+    /// share the full log. Remove together with
+    /// `USBCalliope.showTransferDiagnostics` once the cause is understood.
+    static func presentTransferDiagnosticsAlert(verdict: String) {
+        let excerpt = LogNotify.recentLines(
+            matching: ["Export picker", "Editor download", "USB Transfer"], limit: 12)
+
+        let alert = UIAlertController(
+            title: NSLocalizedString("Transfer diagnostics", comment: "Diagnostics alert title"),
+            message: verdict + "\n\n" + excerpt,
+            preferredStyle: .alert)
+        alert.addAction(UIAlertAction(
+            title: NSLocalizedString("Share log", comment: "Action to share the in-app log"),
+            style: .default) { _ in
+                FirmwareUpload.presentLogShareSheet()
+            })
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel))
+
+        let scenes = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .filter { $0.activationState == .foregroundActive }
+        let keyWindow = scenes.flatMap { $0.windows }.first(where: { $0.isKeyWindow })
+            ?? scenes.flatMap { $0.windows }.first
+        guard let presenter = keyWindow?.rootViewController?.topMostPresented() else { return }
+        presenter.present(alert, animated: true)
+    }
+
+    /// Failure alert for a USB transfer, with an action to share the recent log.
+    ///
+    /// A Shared iPad can only be updated through TestFlight, where no console
+    /// output exists — so the log has to be reachable from inside the app for a
+    /// problem to be reportable at all.
+    static func makeUsbTransferFailureAlert(message: String) -> UIAlertController {
+        let alert = UIAlertController(
+            title: NSLocalizedString("Upload failed!", comment: ""),
+            message: message,
+            preferredStyle: .alert)
+        alert.addAction(UIAlertAction(
+            title: NSLocalizedString("Share log", comment: "Action to share the in-app log"),
+            style: .default) { _ in
+                FirmwareUpload.presentLogShareSheet()
+            })
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel))
+        return alert
+    }
+
+    /// Offers the buffered log through the normal share sheet.
+    private static func presentLogShareSheet() {
+        let scenes = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .filter { $0.activationState == .foregroundActive }
+        let keyWindow = scenes.flatMap { $0.windows }.first(where: { $0.isKeyWindow })
+            ?? scenes.flatMap { $0.windows }.first
+        guard let presenter = keyWindow?.rootViewController?.topMostPresented() else { return }
+
+        let activityController = UIActivityViewController(
+            activityItems: [LogNotify.recentLog], applicationActivities: nil)
+        // On iPad an activity sheet must have an anchor, otherwise it traps.
+        activityController.popoverPresentationController?.sourceView = presenter.view
+        activityController.popoverPresentationController?.sourceRect = CGRect(
+            x: presenter.view.bounds.midX, y: presenter.view.bounds.midY, width: 0, height: 0)
+        activityController.popoverPresentationController?.permittedArrowDirections = []
+        presenter.present(activityController, animated: true)
+    }
+
+    private static func makeHexMismatchAlert(informationLink: String) -> UIAlertController {
+        let alert = UIAlertController(
+            title: NSLocalizedString("Upload failed", comment: ""),
+            message: String(format: NSLocalizedString("The program does not seem to match the version of your Calliope mini. Please check the hardware selection in your editor again.", comment: "")),
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel))
+        alert.addAction(
+            UIAlertAction(title: NSLocalizedString("Further Information", comment: ""), style: .default) { _ in
+                if let url = URL(string: informationLink) {
+                    UIApplication.shared.open(url)
+                }
+            })
+        return alert
+    }
+
     // NEU: Hilfsmethode für Arcade USB Alert
     private static func showArcadeUSBAlert(alertPublisher: Alertable, completion: (() -> Void)?) {
         let alert = AppAlert.arcadeUsbModeRequired(
