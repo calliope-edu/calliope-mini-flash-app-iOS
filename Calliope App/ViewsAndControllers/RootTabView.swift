@@ -76,7 +76,7 @@ struct RootTabView: View {
     private func handleOpenURL(_ url: URL) {
         if url.isFileURL, FileExtension(rawValue: url.pathExtension.lowercased()) == .hex {
             LogNotify.log("received \(url.lastPathComponent)")
-            HexFileStoreDialogSwiftUI.showStoreHexUI(
+            HexFileStoreDialog.showStoreHexUI(
                 alertPublisher: rootAlertPublisher,
                 hexFile: url,
                 notSaved: { _ in

@@ -8,7 +8,7 @@
 import NordicDFU
 import UIKit
 
-class FirmwareUploadSwiftUI {
+class FirmwareUpload {
 
     public static func showUIForDownloadableProgram(
         alertPublisher: Alertable,
@@ -18,7 +18,7 @@ class FirmwareUploadSwiftUI {
     ) {
         if program.calliopeV1andV2Bin.count != 0 {
             DispatchQueue.main.async {
-                FirmwareUploadSwiftUI.showUploadUI(alertPublisher: alertPublisher, program: program) {
+                FirmwareUpload.showUploadUI(alertPublisher: alertPublisher, program: program) {
                     completion?(true)
                     MatrixConnectionViewModel.instance.connect()
                 }
@@ -32,7 +32,7 @@ class FirmwareUploadSwiftUI {
                         let successAlert = AppAlert.programDownloadSuccess(upload: {
                             DispatchQueue.main.async {
                                 LogNotify.debug("Upload confirmed")
-                                FirmwareUploadSwiftUI.uploadWithoutConfirmation(alertPublisher: alertPublisher, program: program) {
+                                FirmwareUpload.uploadWithoutConfirmation(alertPublisher: alertPublisher, program: program) {
                                     completion?(true)
                                 }
                             }
@@ -93,7 +93,7 @@ class FirmwareUploadSwiftUI {
             }
         }
 
-        let uploader = FirmwareUploadSwiftUI(file: program, alertPublisher: alertPublisher)
+        let uploader = FirmwareUpload(file: program, alertPublisher: alertPublisher)
         
         // Shared iPad: the system export picker performs the copy itself and is
         // the only sheet the user should see. Presenting our progress alert here
@@ -106,10 +106,10 @@ class FirmwareUploadSwiftUI {
             do {
                 try uploader.upload(finishedCallback: { completion?() })
             } catch {
-                FirmwareUploadSwiftUI.uploadingInstance = nil
+                FirmwareUpload.uploadingInstance = nil
                 UIApplication.shared.isIdleTimerDisabled = false
                 uploader.presentStandalone(
-                    FirmwareUploadSwiftUI.makeHexMismatchAlert(informationLink: "https://calliope.cc/programmieren/mobil/ipad#hardware"))
+                    FirmwareUpload.makeHexMismatchAlert(informationLink: "https://calliope.cc/programmieren/mobil/ipad#hardware"))
             }
             return
         }
@@ -123,7 +123,7 @@ class FirmwareUploadSwiftUI {
             })
         } catch {
             LogNotify.debug("Upload failed and we are in the catch block")
-            FirmwareUploadSwiftUI.uploadingInstance = nil
+            FirmwareUpload.uploadingInstance = nil
             UIApplication.shared.isIdleTimerDisabled = false
 
             let failedAlert = AppAlert.uploadFailed(goToInformation: {
@@ -170,7 +170,7 @@ class FirmwareUploadSwiftUI {
     /// Presents an alert without relying on our progress alert being on screen —
     /// in export-picker mode there is none.
     private func presentStandalone(_ alert: UIAlertController) {
-        guard let presenter = FirmwareUploadSwiftUI.topMostViewController() else { return }
+        guard let presenter = FirmwareUpload.topMostViewController() else { return }
         DispatchQueue.main.async {
             presenter.present(alert, animated: true)
         }
@@ -213,7 +213,7 @@ class FirmwareUploadSwiftUI {
     }
 
     //keep last upload, so it cannot be de-inited prematurely
-    private static var uploadingInstance: FirmwareUploadSwiftUI? = nil {
+    private static var uploadingInstance: FirmwareUpload? = nil {
         didSet {
             _ = oldValue?.calliope?.cancelUpload()
         }
@@ -243,7 +243,7 @@ class FirmwareUploadSwiftUI {
             throw "Unexpected Hex file version"
         }
 
-        FirmwareUploadSwiftUI.uploadingInstance = self
+        FirmwareUpload.uploadingInstance = self
 
         // WICHTIG: Idle Timer SOFORT deaktivieren, damit der Bildschirm an bleibt
         // Muss VOR beginBackgroundTask() passieren
@@ -261,7 +261,7 @@ class FirmwareUploadSwiftUI {
         )
 
         let downloadCompletion = {
-            FirmwareUploadSwiftUI.uploadingInstance = nil
+            FirmwareUpload.uploadingInstance = nil
             UIApplication.shared.isIdleTimerDisabled = false
             UIApplication.shared.endBackgroundTask(background_ident)
         }
@@ -336,7 +336,7 @@ class FirmwareUploadSwiftUI {
     }
 }
 
-extension FirmwareUploadSwiftUI: DFUProgressDelegate, DFUServiceDelegate, LoggerDelegate {
+extension FirmwareUpload: DFUProgressDelegate, DFUServiceDelegate, LoggerDelegate {
     func dfuProgressDidChange(
         for part: Int,
         outOf totalParts: Int,

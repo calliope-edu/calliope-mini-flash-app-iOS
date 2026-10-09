@@ -5,7 +5,7 @@
 
 import UIKit
 
-enum HexFileStoreDialogSwiftUI {
+enum HexFileStoreDialog {
 
     /// Prüft ob es sich um eine Arcade Hex-Datei handelt
     private static func isArcadeHexFile(_ hexFile: URL) -> Bool {
@@ -79,7 +79,7 @@ enum HexFileStoreDialogSwiftUI {
                     url: hexFile.standardizedFileURL.relativeString
                 )
                 program.downloadFile = false
-                FirmwareUploadSwiftUI.showUploadUI(alertPublisher: alertPublisher, program: program) {
+                FirmwareUpload.showUploadUI(alertPublisher: alertPublisher, program: program) {
                     MatrixConnectionViewModel.instance.connect()
                 }
             },
@@ -106,7 +106,7 @@ enum HexFileStoreDialogSwiftUI {
                     url: hexFile.standardizedFileURL.relativeString
                 )
                 program.downloadFile = false
-                FirmwareUploadSwiftUI.showUploadUI(alertPublisher: alertPublisher, program: program) {
+                FirmwareUpload.showUploadUI(alertPublisher: alertPublisher, program: program) {
                     MatrixConnectionViewModel.instance.connect()
                 }
             },

@@ -93,7 +93,7 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
     }
 
     func downloadProgram(program: ProgramTileConfig) {
-        FirmwareUploadSwiftUI.showUploadUI(alertPublisher: self, program: program.hexFile, name: program.name) {
+        FirmwareUpload.showUploadUI(alertPublisher: self, program: program.hexFile, name: program.name) {
             MatrixConnectionViewModel.instance.connect()
         }
     }
@@ -129,7 +129,7 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
             programName: NSLocalizedString("Calliope mini V3", comment: ""),
             url: UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV3Url.rawValue)!
         )
-        FirmwareUploadSwiftUI.showUIForDownloadableProgram(alertPublisher: self, program: program)
+        FirmwareUpload.showUIForDownloadableProgram(alertPublisher: self, program: program)
     }
 
     func uploadDefaultV1And2Program() {
@@ -137,14 +137,14 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
             programName: NSLocalizedString("Calliope mini V1 + 2", comment: ""),
             url: UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV1AndV2Url.rawValue)!
         )
-        FirmwareUploadSwiftUI.showUIForDownloadableProgram(alertPublisher: self, program: program)
+        FirmwareUpload.showUIForDownloadableProgram(alertPublisher: self, program: program)
     }
 
     func openFile(result: Result<URL, Error>) {
         switch result {
         case .success(let url):
             if !(url.lastPathComponent.isEmpty) {
-                HexFileStoreDialogSwiftUI.showStoreHexUI(alertPublisher: self, hexFile: url, notSaved: { _ in})
+                HexFileStoreDialog.showStoreHexUI(alertPublisher: self, hexFile: url, notSaved: { _ in})
             }
         case .failure(let error):
             LogNotify.error("Program import failed: \(error)")

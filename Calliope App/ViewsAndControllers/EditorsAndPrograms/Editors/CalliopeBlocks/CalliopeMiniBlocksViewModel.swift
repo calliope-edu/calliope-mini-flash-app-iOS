@@ -59,7 +59,7 @@ class CalliopeMiniBlocksViewModel: CalliopeMiniBlocksViewModelProtocol, Observab
             programName: NSLocalizedString("Mini_Blocks_Program", comment: ""),
             url: "https://go.calliope.cc/downloads/BlocksV2.hex"
         )
-        FirmwareUploadSwiftUI.showUIForDownloadableProgram(alertPublisher: self, program: program)
+        FirmwareUpload.showUIForDownloadableProgram(alertPublisher: self, program: program)
     }
 
     func uploadBlocksV3Program() {
@@ -67,7 +67,7 @@ class CalliopeMiniBlocksViewModel: CalliopeMiniBlocksViewModelProtocol, Observab
             programName: NSLocalizedString("Mini_Blocks_Program", comment: ""),
             url: "https://go.calliope.cc/downloads/BlocksV3.hex"
         )
-        FirmwareUploadSwiftUI.showUIForDownloadableProgram(alertPublisher: self, program: program)
+        FirmwareUpload.showUIForDownloadableProgram(alertPublisher: self, program: program)
     }
 
 }

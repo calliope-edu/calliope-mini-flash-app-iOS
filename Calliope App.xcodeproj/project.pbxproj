@@ -70,8 +70,8 @@
 		60030B9C2DC8B2E200397E69 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60030B9B2DC8B2DE00397E69 /* Date.swift */; };
 		60030B9E2DC9E6CC00397E69 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60030B9D2DC9E6C600397E69 /* Double+Extension.swift */; };
 		60030BA02DC9E77C00397E69 /* Coordinates+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60030B9F2DC9E77600397E69 /* Coordinates+Extension.swift */; };
-		6008D1B63013B505001673BD /* FirmwareUploadSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6008D1B53013B505001673BD /* FirmwareUploadSwiftUI.swift */; };
-		6008D1B8301CE036001673BD /* HexFileStoreDialogSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6008D1B7301CE036001673BD /* HexFileStoreDialogSwiftUI.swift */; };
+		6008D1B63013B505001673BD /* FirmwareUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6008D1B53013B505001673BD /* FirmwareUpload.swift */; };
+		6008D1B8301CE036001673BD /* HexFileStoreDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6008D1B7301CE036001673BD /* HexFileStoreDialog.swift */; };
 		6008D1BC3025E75F001673BD /* UploadProgressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6008D1BB3025E75F001673BD /* UploadProgressViewModel.swift */; };
 		600E63262C2EBF810027AE61 /* CSVHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600E63252C2EBF810027AE61 /* CSVHandler.swift */; };
 		600E632E2C33D7BB0027AE61 /* DataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600E632D2C33D7BB0027AE61 /* DataParser.swift */; };
@@ -227,8 +227,8 @@
 		60030B9B2DC8B2DE00397E69 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		60030B9D2DC9E6C600397E69 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		60030B9F2DC9E77600397E69 /* Coordinates+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Coordinates+Extension.swift"; sourceTree = "<group>"; };
-		6008D1B53013B505001673BD /* FirmwareUploadSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirmwareUploadSwiftUI.swift; sourceTree = "<group>"; };
-		6008D1B7301CE036001673BD /* HexFileStoreDialogSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexFileStoreDialogSwiftUI.swift; sourceTree = "<group>"; };
+		6008D1B53013B505001673BD /* FirmwareUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirmwareUpload.swift; sourceTree = "<group>"; };
+		6008D1B7301CE036001673BD /* HexFileStoreDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexFileStoreDialog.swift; sourceTree = "<group>"; };
 		6008D1BB3025E75F001673BD /* UploadProgressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadProgressViewModel.swift; sourceTree = "<group>"; };
 		600E63252C2EBF810027AE61 /* CSVHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVHandler.swift; sourceTree = "<group>"; };
 		600E632D2C33D7BB0027AE61 /* DataParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataParser.swift; sourceTree = "<group>"; };
@@ -565,8 +565,8 @@
 		2FAA2D0922DB3C4D00BC1A5F /* EditorsAndPrograms */ = {
 			isa = PBXGroup;
 			children = (
-				6008D1B53013B505001673BD /* FirmwareUploadSwiftUI.swift */,
-				6008D1B7301CE036001673BD /* HexFileStoreDialogSwiftUI.swift */,
+				6008D1B53013B505001673BD /* FirmwareUpload.swift */,
+				6008D1B7301CE036001673BD /* HexFileStoreDialog.swift */,
 				2F91665C2354062A0065AD81 /* Editors */,
 				60818E7E2FE5A9C90053893F /* EditorsAndProgramsViewModel.swift */,
 				60818E7C2FE5A4150053893F /* EditorsAndProgramsView.swift */,
@@ -649,6 +649,14 @@
 				604938B42E1BAF1D008BCE40 /* ScratchLinkKit */,
 			);
 			path = Packages;
+			sourceTree = "<group>";
+		};
+		604F00E2307928CA00866E12 /* Native Proxy */ = {
+			isa = PBXGroup;
+			children = (
+				604F00DF307928C000866E12 /* CalliopeProxyMessageHandler.swift */,
+			);
+			path = "Native Proxy";
 			sourceTree = "<group>";
 		};
 		6055CDB02BBED7D90007F6B0 /* CalliopeBlocks */ = {
@@ -736,14 +744,6 @@
 				2F61452F22BF761F001C2734 /* CalliopeDiscovery.swift */,
 			);
 			path = CalliopeModels;
-			sourceTree = "<group>";
-		};
-		604F00E2307928CA00866E12 /* Native Proxy */ = {
-			isa = PBXGroup;
-			children = (
-				604F00DF307928C000866E12 /* CalliopeProxyMessageHandler.swift */,
-			);
-			path = "Native Proxy";
 			sourceTree = "<group>";
 		};
 		60D1FD6A2B6BCF8700BC6202 /* DiscoveryCalliopes */ = {
@@ -1116,14 +1116,14 @@
 				601040AC2B592B7300526735 /* HexFileManager.swift in Sources */,
 				6035545F3034B96500A6C8FA /* UploadProgressPanel.swift in Sources */,
 				2F61458E22BF761F001C2734 /* Matrix.swift in Sources */,
-				6008D1B8301CE036001673BD /* HexFileStoreDialogSwiftUI.swift in Sources */,
+				6008D1B8301CE036001673BD /* HexFileStoreDialog.swift in Sources */,
 				2F61457A22BF761F001C2734 /* ExtURL.swift in Sources */,
 				60316BFA2B0210CC00130C0D /* CalliopeFactory.swift in Sources */,
 				60863394300171B50042ECCD /* OfflineOnboardingView.swift in Sources */,
 				60C051DE3000F1A900DFA868 /* MatrixConnectionViewModel.swift in Sources */,
 				6073406A3007DFDA00616062 /* Router.swift in Sources */,
 				60CA11B5000000000000A1A5 /* RootCoordinator.swift in Sources */,
-				6008D1B63013B505001673BD /* FirmwareUploadSwiftUI.swift in Sources */,
+				6008D1B63013B505001673BD /* FirmwareUpload.swift in Sources */,
 				2F61457522BF761F001C2734 /* DiscoveredBLEDevice.swift in Sources */,
 				2F2B809A25A0E01500A7CCF7 /* CodeSnippets.swift in Sources */,
 				60CF0EA92BFCBE1E00CB2A38 /* ProjectViewModel.swift in Sources */,

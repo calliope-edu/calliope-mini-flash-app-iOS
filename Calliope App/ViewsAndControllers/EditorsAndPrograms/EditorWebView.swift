@@ -16,7 +16,7 @@ struct PopupEditorWebView: View {
     let alertPublisher: Alertable
 
     var body: some View {
-        EditorWebViewRepresentable(editor: editor, alertPublisher: alertPublisher, uploadFirmware: FirmwareUploadSwiftUI.uploadWithoutConfirmation)
+        EditorWebViewRepresentable(editor: editor, alertPublisher: alertPublisher, uploadFirmware: FirmwareUpload.uploadWithoutConfirmation)
             .background(DisableSwipeBackGestureView())
     }
 }
