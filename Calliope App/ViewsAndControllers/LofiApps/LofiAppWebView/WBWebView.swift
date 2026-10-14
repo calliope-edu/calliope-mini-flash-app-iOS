@@ -162,15 +162,20 @@ class WBWebView: WKWebView, WKNavigationDelegate {
             }
         )
     }
-    
-    public func threadsafeEvaluateJavaScript(_ javaScript: String) -> Void {
-        // This functions should always run on the main thread. This seems to be ensured by it being attached to an UI element.
-        self.evaluateJavaScript(javaScript, completionHandler: {
-            _, error in
-            if let err = error {
-                LogNotify.log("Error evaluating javascript: \(err)", level: LogNotify.LEVEL.ERROR)
-            }
-        })
+
+    public func threadsafeEvaluateJavaScript(_ javaScript: String) {
+        DispatchQueue.main.async {
+            self.evaluateJavaScript(
+                javaScript,
+                completionHandler: {
+                    _,
+                    error in
+                    if let err = error {
+                        LogNotify.log("Error evaluating javascript: \(err)", level: LogNotify.LEVEL.ERROR)
+                    }
+                }
+            )
+        }
     }
 }
 
