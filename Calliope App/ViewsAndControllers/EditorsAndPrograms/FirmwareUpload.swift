@@ -396,7 +396,7 @@ class FirmwareUpload {
             // picker problems. A rejected transfer (DAPLink FAIL.TXT) is detected
             // asynchronously in USBCalliope and shows the same alert from there.
             presentStandalone(FirmwareUpload.makeUsbTransferFailureAlert(
-                message: NSLocalizedString("USB transfer failed retry instructions", comment: "")))
+                message: NSLocalizedString("The file could not be transferred. Unplug the Calliope mini and plug it in again before you transfer the next program.", comment: "")))
             failed()
             return
         }

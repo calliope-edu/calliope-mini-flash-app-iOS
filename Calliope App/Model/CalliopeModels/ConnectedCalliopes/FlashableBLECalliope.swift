@@ -147,7 +147,7 @@ class FlashableBLECalliope: CalliopeAPI {
         let hexTypes = file.getHexTypes()
         if hexTypes.contains(.arcade) {
             LogNotify.log("Arcade files cannot be uploaded via Bluetooth")
-            statusDelegate?.dfuError(.unsupportedResponse, didOccurWithMessage: NSLocalizedString("Arcade-Dateien können nur per USB übertragen werden.", comment: ""))
+            statusDelegate?.dfuError(.unsupportedResponse, didOccurWithMessage: NSLocalizedString("Arcade files can only be transferred via USB.", comment: ""))
             return
         }
 

@@ -20,14 +20,14 @@ class TutorialPageMiniMenuNavigationCollectionViewController: UIViewController, 
     
     var cellConfigurations: [(String?, UIImage?, [UIImage]?, [UIImage]?)] =
         [(NSLocalizedString("Flip through the programs by pressing the keys A or B", comment: ""), nil, [#imageLiteral(resourceName: "menu_01.pdf")], nil),
-         (NSLocalizedString("By shaking, you confirm the selection", comment: ""), nil, [#imageLiteral(resourceName: "menu_02.pdf")], nil),
+         (NSLocalizedString("Shake to confirm your selection", comment: ""), nil, [#imageLiteral(resourceName: "menu_02.pdf")], nil),
          (NSLocalizedString("Press both A and B to return to the menu", comment: ""), nil, [#imageLiteral(resourceName: "menu_03.pdf")], nil),
          //SECTION 2
          (NSLocalizedString("Oracle", comment: ""), #imageLiteral(resourceName: "num_01.pdf"), nil, nil),
          (NSLocalizedString("Paper, Rock, Scissor", comment: ""), #imageLiteral(resourceName: "num_02.pdf"), nil, nil),
-         (NSLocalizedString("Multiplication tables", comment: ""), #imageLiteral(resourceName: "num_03.pdf"), nil, nil),
+         (NSLocalizedString("1x1 Multiplication", comment: ""), #imageLiteral(resourceName: "num_03.pdf"), nil, nil),
          (NSLocalizedString("Noise-o-meter", comment: ""), #imageLiteral(resourceName: "num_04.pdf"), nil, nil),
-         (NSLocalizedString("Bluetooth", comment: ""), #imageLiteral(resourceName: "num_05.pdf"), nil, nil)]
+         (NSLocalizedString("Bluetooth Swift Playground", comment: ""), #imageLiteral(resourceName: "num_05.pdf"), nil, nil)]
     
     var animationStep: Int = 0
 

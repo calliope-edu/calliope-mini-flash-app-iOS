@@ -121,8 +121,8 @@ enum HexFileStoreDialog {
         // "(USB)" while a USB Calliope is the active connection, so it is
         // obvious which way the program takes.
         let transferTitle = MatrixConnectionViewModel.instance.isUSBConnected()
-            ? NSLocalizedString("Übertragen (USB)", comment: "")
-            : NSLocalizedString("Übertragen", comment: "")
+            ? NSLocalizedString("Transfer (USB)", comment: "")
+            : NSLocalizedString("Transfer", comment: "")
         return .standardHexUI(
             transferTitle: transferTitle,
             shared: {

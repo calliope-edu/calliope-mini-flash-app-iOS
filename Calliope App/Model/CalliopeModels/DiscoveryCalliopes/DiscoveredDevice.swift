@@ -87,7 +87,7 @@ class DiscoveredDevice: NSObject, CBPeripheralDelegate {
                 //has not discovered all services in time, probably stuck
                 if self.state == .evaluateMode {
                     self.updateQueue.async {
-                        self.errorBlock(NSLocalizedString("Service discovery on calliope has timed out!", comment: ""))
+                        self.errorBlock(NSLocalizedString("Timeout", comment: ""))
                     }
                     self.state = .wrongMode
                 }

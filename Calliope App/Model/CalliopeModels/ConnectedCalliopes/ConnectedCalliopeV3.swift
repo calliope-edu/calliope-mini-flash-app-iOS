@@ -94,7 +94,7 @@ class ConnectedCalliopeV3: CalliopeAPI {
         let hexTypes = file.getHexTypes()
         if hexTypes.contains(.arcade) {
             LogNotify.log("Arcade files cannot be uploaded via Bluetooth")
-            statusDelegate?.dfuError(.unsupportedResponse, didOccurWithMessage: NSLocalizedString("Arcade-Dateien können nur per USB übertragen werden.", comment: ""))
+            statusDelegate?.dfuError(.unsupportedResponse, didOccurWithMessage: NSLocalizedString("Arcade files can only be transferred via USB.", comment: ""))
             return
         }
         
@@ -120,7 +120,7 @@ class ConnectedCalliopeV3: CalliopeAPI {
             // Reboot nicht möglich - informiere Nutzer
             LogNotify.log("ConnectedCalliopeV3: Cannot automatically switch to DFU Mode")
             statusDelegate?.dfuError(.deviceNotSupported, didOccurWithMessage: NSLocalizedString(
-                "Bitte versetze den Calliope mini in den Bluetooth-Modus (A+B+Reset), um ein Programm zu übertragen.",
+                "Please put the Calliope mini into Bluetooth mode (A+B+Reset) to transfer a program.",
                 comment: "Manual DFU mode instruction"
             ))
         }

@@ -16,26 +16,26 @@ import SwiftUI
 extension AppAlert {
     static func arcadeUSBRequired(shared: @escaping () -> Void, closed: @escaping () -> Void) -> AppAlert {
         AppAlert(
-            title: NSLocalizedString("Arcade-Datei", comment: ""),
+            title: NSLocalizedString("Arcade file", comment: ""),
             message: NSLocalizedString(
-                "Arcade-Dateien können nur per USB-Kabel übertragen werden. Bitte verbinde deinen Calliope mini per USB oder teile die Datei.",
+                "Arcade files can only be transferred via USB cable. Please connect your Calliope mini via USB or share the file.",
                 comment: ""
             ),
             actions: [
                 StandardAlertAction(NSLocalizedString("Share", comment: "Teilen"), handler: shared),
-                StandardAlertAction(NSLocalizedString("Schließen", comment: ""), role: .cancel, handler: closed),
+                StandardAlertAction(NSLocalizedString("Close", comment: ""), role: .cancel, handler: closed),
             ]
         )
     }
 
     static func arcadeTransfer(shared: @escaping () -> Void, transfer: @escaping () -> Void, closed: @escaping () -> Void) -> AppAlert {
         AppAlert(
-            title: NSLocalizedString("Arcade-Datei", comment: ""),
-            message: NSLocalizedString("Möchtest du die Arcade-Datei auf deinen Calliope mini übertragen oder teilen?", comment: ""),
+            title: NSLocalizedString("Arcade file", comment: ""),
+            message: NSLocalizedString("Do you want to transfer the Arcade file to your Calliope mini or share it?", comment: ""),
             actions: [
-                StandardAlertAction(NSLocalizedString("Übertragen (USB)", comment: ""), handler: transfer),
+                StandardAlertAction(NSLocalizedString("Transfer (USB)", comment: ""), handler: transfer),
                 StandardAlertAction(NSLocalizedString("Share", comment: "Teilen"), handler: shared),
-                StandardAlertAction(NSLocalizedString("Schließen", comment: ""), role: .cancel, handler: closed),
+                StandardAlertAction(NSLocalizedString("Close", comment: ""), role: .cancel, handler: closed),
             ]
         )
     }
@@ -44,12 +44,12 @@ extension AppAlert {
     /// connection, so it is obvious which way the program takes.
     static func standardHexUI(transferTitle: String, shared: @escaping () -> Void, transfer: @escaping () -> Void, closed: @escaping () -> Void) -> AppAlert {
         AppAlert(
-            title: NSLocalizedString("Datei geöffnet", comment: ""),
-            message: NSLocalizedString("Möchtest du das Programm auf deinen Calliope mini übertragen oder teilen?", comment: ""),
+            title: NSLocalizedString("Opened file", comment: ""),
+            message: NSLocalizedString("Do you want to transfer the program to your Calliope mini or share it?", comment: ""),
             actions: [
                 StandardAlertAction(transferTitle, handler: transfer),
                 StandardAlertAction(NSLocalizedString("Share", comment: "Teilen"), handler: shared),
-                StandardAlertAction(NSLocalizedString("Schließen", comment: ""), role: .cancel, handler: closed),
+                StandardAlertAction(NSLocalizedString("Close", comment: ""), role: .cancel, handler: closed),
             ]
         )
     }
@@ -75,8 +75,8 @@ extension AppAlert {
 
     static func waitForProgramDownload() -> AppAlert {
         AppAlert(
-            title: NSLocalizedString("Wait a little", comment: ""),
-            message: NSLocalizedString("The program is being downloaded. Please wait a little.", comment: ""),
+            title: NSLocalizedString("One moment please", comment: ""),
+            message: NSLocalizedString("Downloading… Please wait a little.", comment: ""),
             actions: [StandardAlertAction(NSLocalizedString("OK", comment: ""), handler: {})]
         )
     }
@@ -95,7 +95,7 @@ extension AppAlert {
     static func programDownloadFailed(error: String?, completion: @escaping () -> Void) -> AppAlert {
         let reason = error ?? NSLocalizedString("The downloaded program is empty", comment: "")
         return AppAlert(
-            title: NSLocalizedString("Program download failed", comment: ""),
+            title: NSLocalizedString("Download failed", comment: ""),
             message: String(format: NSLocalizedString("The program is not ready. The reason is: %@", comment: ""), reason),
             actions: [StandardAlertAction(NSLocalizedString("OK", comment: ""), handler: completion)],
             severity: .warning
@@ -147,7 +147,7 @@ extension AppAlert {
         AppAlert(
             title: NSLocalizedString("Cannot upload", comment: "Übertragung nicht möglich"),
             message: NSLocalizedString(
-                "There is no connected Calliope mini in DFU mode",
+                "There is no Calliope mini connected",
                 comment: "Es konnte kein Calliope mini gefunden werden"
             ),
             actions: [StandardAlertAction(NSLocalizedString("OK", comment: ""), handler: {})],
@@ -159,14 +159,14 @@ extension AppAlert {
     /// Not to be confused with `.arcadeUSBRequired`, which is shown when *saving* an Arcade file without USB connected.
     static func arcadeUsbModeRequired(onOpenUsbMode: @escaping () -> Void, onCancel: @escaping () -> Void) -> AppAlert {
         AppAlert(
-            title: NSLocalizedString("USB-Verbindung erforderlich", comment: "USB connection required"),
+            title: NSLocalizedString("USB connection required", comment: ""),
             message: NSLocalizedString(
-                "Arcade-Programme können nur per USB auf den Calliope mini übertragen werden.\n\nBitte verbinde den Calliope mini per USB-Kabel und wähle den MINI-Ordner aus.",
+                "Arcade programs can only be transferred to the Calliope mini via USB.\n\nPlease connect the Calliope mini with a USB cable and select the MINI folder.",
                 comment: "Arcade programs can only be transferred via USB"
             ),
             actions: [
-                StandardAlertAction(NSLocalizedString("USB-Modus öffnen", comment: "Open USB mode"), handler: onOpenUsbMode),
-                StandardAlertAction(NSLocalizedString("Abbrechen", comment: "Cancel"), role: .cancel, handler: onCancel),
+                StandardAlertAction(NSLocalizedString("Open USB mode", comment: ""), handler: onOpenUsbMode),
+                StandardAlertAction(NSLocalizedString("Cancel", comment: ""), role: .cancel, handler: onCancel),
             ]
         )
     }
@@ -269,8 +269,8 @@ extension AppAlert {
 
     static func connectCalliopeRequired() -> AppAlert {
         AppAlert(
-            title: NSLocalizedString("Calliope mini verbinden!", comment: ""),
-            message: NSLocalizedString("Verbindung notwendig, um Daten anzeigen zu lassen.", comment: ""),
+            title: NSLocalizedString("Connect a Calliope mini!", comment: ""),
+            message: NSLocalizedString("Connection required for data collection.", comment: ""),
             actions: [StandardAlertAction(NSLocalizedString("OK", comment: ""), handler: {})]
         )
     }
@@ -298,13 +298,13 @@ extension AppAlert {
 
     static func bluetoothResetRequired(openSettings: @escaping () -> Void) -> AppAlert {
         AppAlert(
-            title: NSLocalizedString("Bluetooth-Verbindung zurücksetzen", comment: "Reset Bluetooth connection"),
+            title: NSLocalizedString("Reset Bluetooth connection", comment: ""),
             message: NSLocalizedString(
-                "Der Calliope mini wurde schon einmal gekoppelt. Diese Informationen müssen erneut angelegt werden:\n\n1. Gehe zu Einstellungen → Bluetooth\n2. Tippe auf das (i) neben dem Calliope mini\n3. Wähle \"Dieses Gerät ignorieren\"\n4. Kehre zur Calliope mini App zurück und verbinde erneut",
+                "The Calliope mini has been paired before. This pairing information has to be created again:\n\n1. Go to Settings → Bluetooth\n2. Tap the (i) next to the Calliope mini\n3. Choose \"Forget This Device\"\n4. Return to the Calliope mini app and connect again",
                 comment: "Instructions to reset Bluetooth pairing"
             ),
             actions: [
-                StandardAlertAction(NSLocalizedString("Einstellungen öffnen", comment: "Open Settings"), handler: openSettings),
+                StandardAlertAction(NSLocalizedString("Open Settings", comment: ""), handler: openSettings),
                 StandardAlertAction("OK", role: .cancel, handler: {}),
             ],
             severity: .warning

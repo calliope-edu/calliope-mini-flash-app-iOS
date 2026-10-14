@@ -540,7 +540,7 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
 
         presenter.present(
             FirmwareUpload.makeUsbTransferFailureAlert(
-                message: NSLocalizedString("USB transfer verification failed retry instructions", comment: "")),
+                message: NSLocalizedString("There was an error transferring the file. Please try again. If the error persists, unplug the data cable and plug it back in.", comment: "")),
             animated: true)
     }
 

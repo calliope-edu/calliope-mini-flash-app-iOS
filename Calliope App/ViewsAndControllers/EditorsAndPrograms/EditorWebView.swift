@@ -1116,7 +1116,7 @@ extension EditorWebView {
             if success {
                 let alert = AppAlert.ok(
                     title: NSLocalizedString("Program exported", comment: ""),
-                    message: NSLocalizedString("Program exported message", comment: "actual message in translation file"),
+                    message: NSLocalizedString("The program was saved in the Calliope mini folder on your device.", comment: ""),
                     completion: {}
                 )
                 alertPublisher.alert = alert
