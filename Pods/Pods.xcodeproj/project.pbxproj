@@ -84,7 +84,8 @@
 		54A19010EC6077522DDB5B671F36B27F /* DatabaseRegionObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 219918532E7FC424B794108D4A7C9101 /* DatabaseRegionObservation.swift */; };
 		54DB055E694A753889421FC299D72A46 /* EncodableRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B209DA28F1BF32987A7977443E57040 /* EncodableRecord.swift */; };
 		550A4E334FA1B1E5F35D90378782BCB8 /* Statement.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64DC10138CEB4E07194DAC70AAB3330 /* Statement.swift */; };
-		57074B30B244B5C4CBE47A1A75489E3C /* Pods-Calliope App-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D548D08654C134364D5716543C398C6 /* Pods-Calliope App-dummy.m */; };
+		556B0B777853A3932070CA592AF339A5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB74A84DF62E0DBFFA4715EF79E08A1 /* Foundation.framework */; };
+		57074B30B244B5C4CBE47A1A75489E3C /* Pods-Calliope App-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = AF5E81343D46B37BF977A13902CC480A /* Pods-Calliope App-dummy.m */; };
 		57881F6D2B3916B7399C3AA4F128718C /* StatementColumnConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0369341CBAA208D7A44CC3A817A6359E /* StatementColumnConvertible.swift */; };
 		58122DD33D34022F82AE716228AAA722 /* SQLCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF26CA9C9C18F8906656F957172F5BD /* SQLCollection.swift */; };
 		5A280B8F04E7B7447B42C723B46B429B /* SQLExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DC7C16E419833D5394C72D7DA28AC9 /* SQLExpression.swift */; };
@@ -115,6 +116,7 @@
 		78319B7B4582FFFAEB7EE5447A6D3622 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB74A84DF62E0DBFFA4715EF79E08A1 /* Foundation.framework */; };
 		7C9315163D58E0B948AA7252BCC6B947 /* DatabaseWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8596249C70CD71FF8742EBC80CA31B /* DatabaseWriter.swift */; };
 		7E7B0DD63549CD1CB50117A1D279CE40 /* Entry+Serialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84B51B8DF615F10E1AE4BAE7B824FDC /* Entry+Serialization.swift */; };
+		7EBEF306B0CD3ED91335AA22E887A711 /* Pods-Calliope AppTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B426B584544A83BDD43E08F360B5DF8E /* Pods-Calliope AppTests-dummy.m */; };
 		80AE3BF61AA2162772C664C77899D4FA /* Archive+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24C2BAF2A9C8D9CD250F9453E5AF9DC /* Archive+Helpers.swift */; };
 		80C463274D2DA344BCF8CD95FB2B83FE /* grdb_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A49D4A67AB58FD2B682573526560AAF /* grdb_config.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		80EF8D0CF87165C23D832CDEC9D8E82C /* LegacyDFUExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F0EC35A6441AA3109D6972D21F0972 /* LegacyDFUExecutor.swift */; };
@@ -191,6 +193,7 @@
 		B972F6008A824C800961888D2C2BFF49 /* FTS5Pattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9FFCBF8A50124100CFAD54CCEB8433 /* FTS5Pattern.swift */; };
 		BA0A362B41F34E7BABE9EFC45F007F63 /* DFUExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0363A159893AA723D346271602DDFBB /* DFUExecutor.swift */; };
 		BC74ED8731D6E92349D3A6734189CC1B /* SQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EF64701E3690A467F1C9F8A58D2AA3 /* SQL.swift */; };
+		BC78BDECB10E52EE5856DAECB4DA9699 /* Pods-Calliope AppTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 84DC277158E65F8B45291ECACA14736E /* Pods-Calliope AppTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC99EA6EC042EE74DC53218F6A95327A /* DFUServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95BD0327EA4F9220FB9F04C3D4F5BEE2 /* DFUServiceDelegate.swift */; };
 		BCE54E5E6D5DD2D9937EECB4AC42622E /* LegacyDFUServiceInitiator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F83380EA2023FC2C480FC111D23793 /* LegacyDFUServiceInitiator.swift */; };
 		BD15C0E724D8FD1BC3A9DD14F5BB476A /* DatabaseBackupProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = B122427EA36BD1ADA538C9068D2492E8 /* DatabaseBackupProgress.swift */; };
@@ -214,7 +217,7 @@
 		D1EAAA1C81CF4578C17B6EE1A6EFC98A /* Migration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEB3B075AA62380F837BD0CF812BBF5 /* Migration.swift */; };
 		D2077E449E6D33C89DAF221FB9D3F913 /* Database+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EEC3056080AC855346F4861B190F7B /* Database+Schema.swift */; };
 		D437E4A9C0765D988276324ACAEF7043 /* SQLOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE764F885D296F80DB0615B8251993 /* SQLOperators.swift */; };
-		D46035C87E1D74E081D2A437D2A3BBAB /* Pods-Calliope App-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A486E00889BABE0040A24CCFB9F283C /* Pods-Calliope App-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D46035C87E1D74E081D2A437D2A3BBAB /* Pods-Calliope App-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B91F61CA60346C3BE75381342A056B5A /* Pods-Calliope App-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D505A790661868FC14F98A0A5A3C200C /* ForeignKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9110B08118E5D1B068DF373DD48A8D /* ForeignKey.swift */; };
 		D571870A4735E562FD578037B0663DA7 /* LegacyDFUService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3FDF969FC5BD7709B42E39897FD4C5 /* LegacyDFUService.swift */; };
 		D8D1DD086C2274F3743DE9009EABCA64 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB74A84DF62E0DBFFA4715EF79E08A1 /* Foundation.framework */; };
@@ -272,6 +275,13 @@
 			remoteGlobalIDString = AA15C8469D67684160CC2A7098EB841C;
 			remoteInfo = ZIPFoundation;
 		};
+		28DB2375E4FE4F28C0BB3CE5D4AA105B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B161232B03995821A334EEF13E4D45B7;
+			remoteInfo = "Pods-Calliope App";
+		};
 		4DD23B864F5320449FD082080CF294AB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
@@ -303,8 +313,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		005CD8905C5F5C1FB2EA60975E174A8A /* Pods-Calliope App-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Calliope App-frameworks.sh"; sourceTree = "<group>"; };
 		020E3751A2B98649F88F0421BDB9A9C5 /* LoggerHelper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LoggerHelper.swift; path = Library/Classes/Utilities/Logging/LoggerHelper.swift; sourceTree = "<group>"; };
 		022300EF91E407185113AEB2EEBF84E5 /* GRDB.swift-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GRDB.swift-umbrella.h"; sourceTree = "<group>"; };
+		02D47CCB1AC473F4FB29CED5F924F925 /* Pods-Calliope AppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Calliope AppTests.release.xcconfig"; sourceTree = "<group>"; };
 		0301DAAA3DB212B540889BE89E5A13C6 /* SQLJSONFunctions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SQLJSONFunctions.swift; path = GRDB/JSON/SQLJSONFunctions.swift; sourceTree = "<group>"; };
 		0369341CBAA208D7A44CC3A817A6359E /* StatementColumnConvertible.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StatementColumnConvertible.swift; path = GRDB/Core/StatementColumnConvertible.swift; sourceTree = "<group>"; };
 		037EC993B6C7139052CADFF85BE7D9E8 /* DFUPacket.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUPacket.swift; path = Library/Classes/Implementation/LegacyDFU/Characteristics/DFUPacket.swift; sourceTree = "<group>"; };
@@ -314,7 +326,6 @@
 		06EAAF0D8BD50AF0C1659FE25DC30E61 /* DFUStream.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUStream.swift; path = Library/Classes/Utilities/Streams/DFUStream.swift; sourceTree = "<group>"; };
 		082BF5B5AA32E5B90CA7962CD908A345 /* MutablePersistableRecord+Save.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "MutablePersistableRecord+Save.swift"; path = "GRDB/Record/MutablePersistableRecord+Save.swift"; sourceTree = "<group>"; };
 		09F0EC35A6441AA3109D6972D21F0972 /* LegacyDFUExecutor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LegacyDFUExecutor.swift; path = Library/Classes/Implementation/LegacyDFU/DFU/LegacyDFUExecutor.swift; sourceTree = "<group>"; };
-		0AB9039C77B5A0529E24EAF414809631 /* Pods-Calliope App-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Calliope App-frameworks.sh"; sourceTree = "<group>"; };
 		0ACF23C91B04BDE36991372E6F33C9D7 /* FTS5+QueryInterface.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "FTS5+QueryInterface.swift"; path = "GRDB/QueryInterface/FTS5+QueryInterface.swift"; sourceTree = "<group>"; };
 		0BCE764F885D296F80DB0615B8251993 /* SQLOperators.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SQLOperators.swift; path = GRDB/QueryInterface/SQL/SQLOperators.swift; sourceTree = "<group>"; };
 		0C688D1BB7B91FAF68E7C6DEAB8387E8 /* FetchableRecord+TableRecord.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "FetchableRecord+TableRecord.swift"; path = "GRDB/Record/FetchableRecord+TableRecord.swift"; sourceTree = "<group>"; };
@@ -326,6 +337,7 @@
 		0F5C1169DD80559429D9C2165185B8EC /* URL+ZIP.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "URL+ZIP.swift"; path = "Sources/ZIPFoundation/URL+ZIP.swift"; sourceTree = "<group>"; };
 		0F792A882FD8CD1B482C6CC1C8A6C5A9 /* Data+Serialization.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Data+Serialization.swift"; path = "Sources/ZIPFoundation/Data+Serialization.swift"; sourceTree = "<group>"; };
 		10EBF50C0E75F76039C9EB42128C5000 /* SQLSubquery.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SQLSubquery.swift; path = GRDB/QueryInterface/SQL/SQLSubquery.swift; sourceTree = "<group>"; };
+		1239A1AA0EC4158CF3A9317494B4A0C7 /* Pods-Calliope App.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Calliope App.modulemap"; sourceTree = "<group>"; };
 		14018B3C0E740C5DB7F20E9BBD113767 /* Refinable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Refinable.swift; path = GRDB/Utils/Refinable.swift; sourceTree = "<group>"; };
 		1452E2E9EAC9AB849F47DD81191103A6 /* MutablePersistableRecord.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MutablePersistableRecord.swift; path = GRDB/Record/MutablePersistableRecord.swift; sourceTree = "<group>"; };
 		147FD1F65DA52E99B92D7E000875690E /* ValueObservation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ValueObservation.swift; path = GRDB/ValueObservation/ValueObservation.swift; sourceTree = "<group>"; };
@@ -339,7 +351,6 @@
 		1B9FFCBF8A50124100CFAD54CCEB8433 /* FTS5Pattern.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FTS5Pattern.swift; path = GRDB/FTS/FTS5Pattern.swift; sourceTree = "<group>"; };
 		1C34D9CBB88F77F2410C310401BAF82F /* DatabaseCancellable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatabaseCancellable.swift; path = GRDB/ValueObservation/DatabaseCancellable.swift; sourceTree = "<group>"; };
 		1C35F1357561BBF4F7E957E36210DC9A /* Archive+ReadingDeprecated.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Archive+ReadingDeprecated.swift"; path = "Sources/ZIPFoundation/Archive+ReadingDeprecated.swift"; sourceTree = "<group>"; };
-		1D548D08654C134364D5716543C398C6 /* Pods-Calliope App-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Calliope App-dummy.m"; sourceTree = "<group>"; };
 		1D94158BC61C2E2C4F422AB06B07D175 /* DFUService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUService.swift; path = Library/Classes/Implementation/GenericDFU/DFUService.swift; sourceTree = "<group>"; };
 		1E6208F8A3A44454F81EBCC5509E893E /* Map.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Map.swift; path = GRDB/ValueObservation/Reducers/Map.swift; sourceTree = "<group>"; };
 		1F9B185E1E5439976E86F5209AFB638E /* Optional.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Optional.swift; path = GRDB/Core/Support/StandardLibrary/Optional.swift; sourceTree = "<group>"; };
@@ -352,8 +363,8 @@
 		28BCED188425DE7FEE63FD8C9E0BC92D /* TableDefinition.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TableDefinition.swift; path = GRDB/QueryInterface/Schema/TableDefinition.swift; sourceTree = "<group>"; };
 		295ABE2EABDAA0AB113A0D5D3298F5A2 /* FetchRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FetchRequest.swift; path = GRDB/Core/FetchRequest.swift; sourceTree = "<group>"; };
 		29EEC3056080AC855346F4861B190F7B /* Database+Schema.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Database+Schema.swift"; path = "GRDB/Core/Database+Schema.swift"; sourceTree = "<group>"; };
-		2A13ACA4A04D30F73C9EE5C6DEDE17EB /* Pods-Calliope App-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Calliope App-Info.plist"; sourceTree = "<group>"; };
 		2A43C1B1B8DEEECC81C6D3ACDE21E888 /* SQLFunctions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SQLFunctions.swift; path = GRDB/QueryInterface/SQL/SQLFunctions.swift; sourceTree = "<group>"; };
+		2A9C412026905C31B3E905F0E619F074 /* Pods-Calliope AppTests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-Calliope AppTests"; path = Pods_Calliope_AppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B3BA6030CB8AE1D34E5F9FFEC275F68 /* NSNumber.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NSNumber.swift; path = GRDB/Core/Support/Foundation/NSNumber.swift; sourceTree = "<group>"; };
 		2C5C81E8A9E40EAC08B910D945BF41F5 /* TableRecord+QueryInterfaceRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "TableRecord+QueryInterfaceRequest.swift"; path = "GRDB/QueryInterface/TableRecord+QueryInterfaceRequest.swift"; sourceTree = "<group>"; };
 		2CB74A84DF62E0DBFFA4715EF79E08A1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -377,13 +388,11 @@
 		3DEB3B075AA62380F837BD0CF812BBF5 /* Migration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Migration.swift; path = GRDB/Migration/Migration.swift; sourceTree = "<group>"; };
 		3E0857BE4CE9BB18A4BFABCEC4612DC8 /* DFUStarterPeripheral.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUStarterPeripheral.swift; path = Library/Classes/Implementation/DFUSelector/DFUStarterPeripheral.swift; sourceTree = "<group>"; };
 		3F3FDF969FC5BD7709B42E39897FD4C5 /* LegacyDFUService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LegacyDFUService.swift; path = Library/Classes/Implementation/LegacyDFU/Services/LegacyDFUService.swift; sourceTree = "<group>"; };
-		3F79DC307674549C82560A318E84671D /* Pods-Calliope App.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Calliope App.modulemap"; sourceTree = "<group>"; };
 		40EF64701E3690A467F1C9F8A58D2AA3 /* SQL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SQL.swift; path = GRDB/Core/SQL.swift; sourceTree = "<group>"; };
 		416F76AC7AE0BA3D2EE4D9596BC56074 /* SQLGenerationContext.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SQLGenerationContext.swift; path = GRDB/QueryInterface/SQLGeneration/SQLGenerationContext.swift; sourceTree = "<group>"; };
 		41C49533C8E594A60701795E7F8B04DB /* HasOneThroughAssociation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HasOneThroughAssociation.swift; path = GRDB/QueryInterface/Request/Association/HasOneThroughAssociation.swift; sourceTree = "<group>"; };
 		436ECD1FEC82CD93913DBF9B1A739D68 /* URL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = URL.swift; path = GRDB/Core/Support/Foundation/URL.swift; sourceTree = "<group>"; };
 		455757ABC8296A0B081169A8CED87ED4 /* DFUPeripheralSelector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUPeripheralSelector.swift; path = Library/Classes/Implementation/DFUPeripheralSelector.swift; sourceTree = "<group>"; };
-		46F87773060BD2AF1E885963495EFEC4 /* Pods-Calliope App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Calliope App.debug.xcconfig"; sourceTree = "<group>"; };
 		4721F05224331C58B72DEC45B2864D63 /* Association.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Association.swift; path = GRDB/QueryInterface/Request/Association/Association.swift; sourceTree = "<group>"; };
 		483193BB92EFA5B949D0F39C014FC8CA /* CaseInsensitiveIdentifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CaseInsensitiveIdentifier.swift; path = GRDB/Utils/CaseInsensitiveIdentifier.swift; sourceTree = "<group>"; };
 		48A4A6EDC08C8AC933D0DCD507E9D173 /* ZIPFoundation */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = ZIPFoundation; path = ZIPFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -405,7 +414,6 @@
 		597F87D990EA71BF5350111980D0326A /* JSONDumpFormat.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = JSONDumpFormat.swift; path = GRDB/Dump/DumpFormats/JSONDumpFormat.swift; sourceTree = "<group>"; };
 		5C9382DDF3349D2506BE3298F62BC976 /* Data.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Data.swift; path = Library/Classes/Utilities/Data.swift; sourceTree = "<group>"; };
 		5D07AF4ACD44C8AE2FB496C5C592B18F /* PersistableRecord.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PersistableRecord.swift; path = GRDB/Record/PersistableRecord.swift; sourceTree = "<group>"; };
-		5E607E8C9F202D388F37C51BF208126E /* Pods-Calliope App-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Calliope App-acknowledgements.plist"; sourceTree = "<group>"; };
 		5EEC3A8D5CCE9ACCEBBDA226E2D6D184 /* ZIPFoundation-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ZIPFoundation-umbrella.h"; sourceTree = "<group>"; };
 		5EF14EA940E2C8FF6FEECA64AA2F9594 /* TransactionObserver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TransactionObserver.swift; path = GRDB/Core/TransactionObserver.swift; sourceTree = "<group>"; };
 		5FC4E830340DD3FFD5F33EC6108268F1 /* iOSDFULibrary-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "iOSDFULibrary-Info.plist"; sourceTree = "<group>"; };
@@ -440,12 +448,15 @@
 		78694A84F5E8ECCA08A96E4CC9499D30 /* DatabaseReader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatabaseReader.swift; path = GRDB/Core/DatabaseReader.swift; sourceTree = "<group>"; };
 		79AC6B324AAB547D6B63282F384A543D /* Data+Compression.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Data+Compression.swift"; path = "Sources/ZIPFoundation/Data+Compression.swift"; sourceTree = "<group>"; };
 		79D8C833752E7227D9425A18FDA486A2 /* VirtualTableModule.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VirtualTableModule.swift; path = GRDB/QueryInterface/Schema/VirtualTableModule.swift; sourceTree = "<group>"; };
+		7DFC8AB780EDB00186B8AA730E9741C0 /* Pods-Calliope AppTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Calliope AppTests-Info.plist"; sourceTree = "<group>"; };
 		7F82BC3D01A882DC6A0F8A08C0E98073 /* OnDemandFuture.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OnDemandFuture.swift; path = GRDB/Utils/OnDemandFuture.swift; sourceTree = "<group>"; };
+		8010A84F6064D2BE55F981EDE53F0F63 /* Pods-Calliope App-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Calliope App-acknowledgements.plist"; sourceTree = "<group>"; };
 		803EA03EEB0AB88D5F448843C3A1D541 /* RowAdapter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RowAdapter.swift; path = GRDB/Core/RowAdapter.swift; sourceTree = "<group>"; };
 		81B5F65B6ECECCC3C83152B2B03079B9 /* DatabaseSnapshotPool.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatabaseSnapshotPool.swift; path = GRDB/Core/DatabaseSnapshotPool.swift; sourceTree = "<group>"; };
 		8390D20263D004CFBDF79533C53A55D9 /* SQLInterpolation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SQLInterpolation.swift; path = GRDB/Core/SQLInterpolation.swift; sourceTree = "<group>"; };
 		8428898EA9ED9519598B971E440C433C /* ZIPFoundation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ZIPFoundation.release.xcconfig; sourceTree = "<group>"; };
 		8498028E9D050264AE2FC4D54A826752 /* SQLRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SQLRequest.swift; path = GRDB/Core/SQLRequest.swift; sourceTree = "<group>"; };
+		84DC277158E65F8B45291ECACA14736E /* Pods-Calliope AppTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Calliope AppTests-umbrella.h"; sourceTree = "<group>"; };
 		85B36A4BA4A9B333EBF0D1B6ED52FAEE /* DatabaseFunction.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatabaseFunction.swift; path = GRDB/Core/DatabaseFunction.swift; sourceTree = "<group>"; };
 		85F83380EA2023FC2C480FC111D23793 /* LegacyDFUServiceInitiator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LegacyDFUServiceInitiator.swift; path = Library/Classes/Implementation/LegacyDFU/DFU/LegacyDFUServiceInitiator.swift; sourceTree = "<group>"; };
 		86E9E55E6DDCB2E8D331066B752B59CB /* DatabaseError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatabaseError.swift; path = GRDB/Core/DatabaseError.swift; sourceTree = "<group>"; };
@@ -454,6 +465,7 @@
 		87AFFD7845CB5B67BBE96B2819D473DD /* SQLTableAlterationGenerator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SQLTableAlterationGenerator.swift; path = GRDB/QueryInterface/SQLGeneration/SQLTableAlterationGenerator.swift; sourceTree = "<group>"; };
 		880764FAD13056CBF39CE79A4E3F4EAB /* ZIPFoundation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ZIPFoundation.debug.xcconfig; sourceTree = "<group>"; };
 		88A886A2751A51CC61642AA87B3BE3B3 /* Column.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Column.swift; path = GRDB/QueryInterface/SQL/Column.swift; sourceTree = "<group>"; };
+		8A32EB245528971AED87BC8340CA2AC5 /* Pods-Calliope App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Calliope App.release.xcconfig"; sourceTree = "<group>"; };
 		8A49D4A67AB58FD2B682573526560AAF /* grdb_config.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = grdb_config.h; path = Support/grdb_config.h; sourceTree = "<group>"; };
 		8C0D0D6A8B1E3A534F1D4A698618C843 /* SecureDFUPeripheral.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SecureDFUPeripheral.swift; path = Library/Classes/Implementation/SecureDFU/Peripheral/SecureDFUPeripheral.swift; sourceTree = "<group>"; };
 		8DD8930880A4A43859E50C9A33545228 /* GRDB.swift-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "GRDB.swift-Info.plist"; sourceTree = "<group>"; };
@@ -463,6 +475,7 @@
 		91F6E9F5C2D820F538927293E1C957BC /* DFUControlPoint.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUControlPoint.swift; path = Library/Classes/Implementation/LegacyDFU/Characteristics/DFUControlPoint.swift; sourceTree = "<group>"; };
 		91FCF3669C8F71FC0CE285214F1CE988 /* SecureDFUControlPoint.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SecureDFUControlPoint.swift; path = Library/Classes/Implementation/SecureDFU/Characteristics/SecureDFUControlPoint.swift; sourceTree = "<group>"; };
 		9332B5FAD8C8BDC4413257C4CD1C3867 /* SQLSelection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SQLSelection.swift; path = GRDB/QueryInterface/SQL/SQLSelection.swift; sourceTree = "<group>"; };
+		941D2202DBF01D1BCADE8A4779934511 /* Pods-Calliope AppTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Calliope AppTests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		94FA205C802424E3C6CFF88CA020326E /* Database+Dump.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Database+Dump.swift"; path = "GRDB/Dump/Database+Dump.swift"; sourceTree = "<group>"; };
 		95459373F02C161DAFA8D8032A719333 /* TableAlteration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TableAlteration.swift; path = GRDB/QueryInterface/Schema/TableAlteration.swift; sourceTree = "<group>"; };
 		95ADF9AA5B9DA1AB4A0415A7DE055489 /* MutablePersistableRecord+Insert.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "MutablePersistableRecord+Insert.swift"; path = "GRDB/Record/MutablePersistableRecord+Insert.swift"; sourceTree = "<group>"; };
@@ -472,7 +485,6 @@
 		9703DFF59788F6FDB6BD8D0F8D408582 /* Entry.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Entry.swift; path = Sources/ZIPFoundation/Entry.swift; sourceTree = "<group>"; };
 		990E8CD4DA4A1E931FAB57A03241D40C /* Archive.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Archive.swift; path = Sources/ZIPFoundation/Archive.swift; sourceTree = "<group>"; };
 		99124184CB9B4FDEEC735219B6C4D382 /* DatabaseValueConvertible+Encodable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "DatabaseValueConvertible+Encodable.swift"; path = "GRDB/Core/Support/StandardLibrary/DatabaseValueConvertible+Encodable.swift"; sourceTree = "<group>"; };
-		9A486E00889BABE0040A24CCFB9F283C /* Pods-Calliope App-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Calliope App-umbrella.h"; sourceTree = "<group>"; };
 		9B28762F1BF560872D248413CA04B61B /* JSONColumn.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = JSONColumn.swift; path = GRDB/JSON/JSONColumn.swift; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9D95FF48B398082BCA2C4279FD1F09B0 /* FTS3Pattern.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FTS3Pattern.swift; path = GRDB/FTS/FTS3Pattern.swift; sourceTree = "<group>"; };
@@ -495,10 +507,14 @@
 		ACF356E42EF6BE643480CC2B9B6E228A /* ZIPFoundation.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = ZIPFoundation.modulemap; sourceTree = "<group>"; };
 		ADF8AFA810828D3C871474D940CD8223 /* WALSnapshotTransaction.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WALSnapshotTransaction.swift; path = GRDB/Core/WALSnapshotTransaction.swift; sourceTree = "<group>"; };
 		AF206EC2A3C708F8585267503116A206 /* NSNull.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NSNull.swift; path = GRDB/Core/Support/Foundation/NSNull.swift; sourceTree = "<group>"; };
+		AF5E81343D46B37BF977A13902CC480A /* Pods-Calliope App-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Calliope App-dummy.m"; sourceTree = "<group>"; };
 		B0F56C4CD969CFC36063C5897998FA3D /* CGFloat.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CGFloat.swift; path = GRDB/Core/Support/CoreGraphics/CGFloat.swift; sourceTree = "<group>"; };
 		B122427EA36BD1ADA538C9068D2492E8 /* DatabaseBackupProgress.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatabaseBackupProgress.swift; path = GRDB/Core/DatabaseBackupProgress.swift; sourceTree = "<group>"; };
 		B24C2BAF2A9C8D9CD250F9453E5AF9DC /* Archive+Helpers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Archive+Helpers.swift"; path = "Sources/ZIPFoundation/Archive+Helpers.swift"; sourceTree = "<group>"; };
 		B26CEEA665D74A37E020172F6F88EF98 /* ColumnDefinition.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ColumnDefinition.swift; path = GRDB/QueryInterface/Schema/ColumnDefinition.swift; sourceTree = "<group>"; };
+		B29429AD840FE83A9825E64A028514EA /* Pods-Calliope App-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Calliope App-acknowledgements.markdown"; sourceTree = "<group>"; };
+		B2EE2E403846C582A214CB50A6A2D1EC /* Pods-Calliope AppTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Calliope AppTests.modulemap"; sourceTree = "<group>"; };
+		B426B584544A83BDD43E08F360B5DF8E /* Pods-Calliope AppTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Calliope AppTests-dummy.m"; sourceTree = "<group>"; };
 		B56C9F48E92C1B5DD1069C7CA615A0DA /* Date+ZIP.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Date+ZIP.swift"; path = "Sources/ZIPFoundation/Date+ZIP.swift"; sourceTree = "<group>"; };
 		B6646B1276AF805DEE30F20CB2D66EA6 /* DFUController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUController.swift; path = Library/Classes/Implementation/GenericDFU/DFUController.swift; sourceTree = "<group>"; };
 		B68C52B220A00915E353CFE17C400B91 /* Database.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Database.swift; path = GRDB/Core/Database.swift; sourceTree = "<group>"; };
@@ -507,9 +523,10 @@
 		B7B8BA26A64BF07DD28FD0E2778E63CE /* SQLQueryGenerator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SQLQueryGenerator.swift; path = GRDB/QueryInterface/SQLGeneration/SQLQueryGenerator.swift; sourceTree = "<group>"; };
 		B7EA4D55BEABD56A73482BD686236DD9 /* StandardLibrary.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StandardLibrary.swift; path = GRDB/Core/Support/StandardLibrary/StandardLibrary.swift; sourceTree = "<group>"; };
 		B811FCDAD891B1463259E2916626EA66 /* FileManager+ZIP.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "FileManager+ZIP.swift"; path = "Sources/ZIPFoundation/FileManager+ZIP.swift"; sourceTree = "<group>"; };
+		B91F61CA60346C3BE75381342A056B5A /* Pods-Calliope App-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Calliope App-umbrella.h"; sourceTree = "<group>"; };
+		BAA1C38FD748D74BB2A50C256C367B8D /* Pods-Calliope App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Calliope App.debug.xcconfig"; sourceTree = "<group>"; };
 		BAEAFE9D172197801A811393CCB0BC01 /* SQLJSONExpressible.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SQLJSONExpressible.swift; path = GRDB/JSON/SQLJSONExpressible.swift; sourceTree = "<group>"; };
 		BEE581E8D26F80065115ECA34C3B60E4 /* FTS3TokenizerDescriptor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FTS3TokenizerDescriptor.swift; path = GRDB/FTS/FTS3TokenizerDescriptor.swift; sourceTree = "<group>"; };
-		C0890F5440661BDCB38E391D0C36E50D /* Pods-Calliope App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Calliope App.release.xcconfig"; sourceTree = "<group>"; };
 		C1AE915BAC2762CB75FD8B88AAC81488 /* DatabaseValueConvertible+ReferenceConvertible.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "DatabaseValueConvertible+ReferenceConvertible.swift"; path = "GRDB/Core/Support/Foundation/DatabaseValueConvertible+ReferenceConvertible.swift"; sourceTree = "<group>"; };
 		C2181823551D8D38DBBFD988D9D51790 /* Record.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Record.swift; path = GRDB/Record/Record.swift; sourceTree = "<group>"; };
 		C3DC7C16E419833D5394C72D7DA28AC9 /* SQLExpression.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SQLExpression.swift; path = GRDB/QueryInterface/SQL/SQLExpression.swift; sourceTree = "<group>"; };
@@ -522,7 +539,6 @@
 		CBF26CA9C9C18F8906656F957172F5BD /* SQLCollection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SQLCollection.swift; path = GRDB/QueryInterface/SQL/SQLCollection.swift; sourceTree = "<group>"; };
 		CC16DD4FBB85EDF40B84B4E5A52A96E6 /* SharedValueObservation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SharedValueObservation.swift; path = GRDB/ValueObservation/SharedValueObservation.swift; sourceTree = "<group>"; };
 		CCC0445281D024DA7369428A0B18D3C4 /* PersistableRecord+Upsert.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "PersistableRecord+Upsert.swift"; path = "GRDB/Record/PersistableRecord+Upsert.swift"; sourceTree = "<group>"; };
-		CEE13A11D83C4953275B76FCE3CC79AA /* Pods-Calliope App-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Calliope App-acknowledgements.markdown"; sourceTree = "<group>"; };
 		CF3ACF920B9EDA7FA3289276A81ECFEC /* Entry+ZIP64.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Entry+ZIP64.swift"; path = "Sources/ZIPFoundation/Entry+ZIP64.swift"; sourceTree = "<group>"; };
 		CF3CA83854771D9FE42C9B3F07B009A3 /* GRDB.swift-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "GRDB.swift-dummy.m"; sourceTree = "<group>"; };
 		D179845916AF8D7426742CB462EF37A4 /* GRDB.swift-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GRDB.swift-prefix.pch"; sourceTree = "<group>"; };
@@ -535,12 +551,15 @@
 		D9A194DDF09444E1478228F42C989306 /* ReadWriteBox.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReadWriteBox.swift; path = GRDB/Utils/ReadWriteBox.swift; sourceTree = "<group>"; };
 		D9B7AF86FB8A12C3C4A6E9E4B76925CB /* LegacyDFUPeripheral.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LegacyDFUPeripheral.swift; path = Library/Classes/Implementation/LegacyDFU/Peripherals/LegacyDFUPeripheral.swift; sourceTree = "<group>"; };
 		DB0F9164B6B8A8D9ED3D0D565EA9C65A /* MutablePersistableRecord+Upsert.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "MutablePersistableRecord+Upsert.swift"; path = "GRDB/Record/MutablePersistableRecord+Upsert.swift"; sourceTree = "<group>"; };
+		DB5884B44942197377F8C42AC3CE8BF7 /* Pods-Calliope AppTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Calliope AppTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		DCF5CA39B0E128A9B264B2F3D7FEDFF9 /* Pods-Calliope AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Calliope AppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DD07DC6F460ACF6E8E34481243C7304A /* ValueWriteOnlyObserver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ValueWriteOnlyObserver.swift; path = GRDB/ValueObservation/Observers/ValueWriteOnlyObserver.swift; sourceTree = "<group>"; };
 		DDDA4B1D41739614473F1898612366BD /* DFUVersion.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUVersion.swift; path = Library/Classes/Implementation/LegacyDFU/Characteristics/DFUVersion.swift; sourceTree = "<group>"; };
 		DF6BC54FB4E1C1E1B5FC000E2A7E0C1F /* SecureDFUServiceInitiator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SecureDFUServiceInitiator.swift; path = Library/Classes/Implementation/SecureDFU/DFU/SecureDFUServiceInitiator.swift; sourceTree = "<group>"; };
 		DFB21BDFAA0EC02CF440753CF5C48C50 /* RemoveDuplicates.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RemoveDuplicates.swift; path = GRDB/ValueObservation/Reducers/RemoveDuplicates.swift; sourceTree = "<group>"; };
 		E025F5F5212BA0223AF440A5E44FA9AB /* DFUServiceSelector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUServiceSelector.swift; path = Library/Classes/Implementation/DFUSelector/DFUServiceSelector.swift; sourceTree = "<group>"; };
 		E0363A159893AA723D346271602DDFBB /* DFUExecutor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DFUExecutor.swift; path = Library/Classes/Implementation/GenericDFU/DFUExecutor.swift; sourceTree = "<group>"; };
+		E06A2FA42B9A136540717C1D74C257DA /* Pods-Calliope App-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Calliope App-Info.plist"; sourceTree = "<group>"; };
 		E1DB756AB7F3709526C4EFD8B47DD1B2 /* SecureDFUService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SecureDFUService.swift; path = Library/Classes/Implementation/SecureDFU/Services/SecureDFUService.swift; sourceTree = "<group>"; };
 		E24815C75958B9755AD7E0823E0E47EE /* Archive+Deprecated.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Archive+Deprecated.swift"; path = "Sources/ZIPFoundation/Archive+Deprecated.swift"; sourceTree = "<group>"; };
 		E29FA6DF3F489D5DCA4320DE4DE9A0A9 /* ValueConcurrentObserver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ValueConcurrentObserver.swift; path = GRDB/ValueObservation/Observers/ValueConcurrentObserver.swift; sourceTree = "<group>"; };
@@ -602,6 +621,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9D2D86FED4354B3CBB5FAF7B1DF9AAFF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				556B0B777853A3932070CA592AF339A5 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AA88CDDDC4A1630790CF549E7ED88F85 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -644,23 +671,6 @@
 			path = "../Target Support Files/GRDB.swift";
 			sourceTree = "<group>";
 		};
-		24ABBB74E813B09067C08179CB6813C6 /* Pods-Calliope App */ = {
-			isa = PBXGroup;
-			children = (
-				3F79DC307674549C82560A318E84671D /* Pods-Calliope App.modulemap */,
-				CEE13A11D83C4953275B76FCE3CC79AA /* Pods-Calliope App-acknowledgements.markdown */,
-				5E607E8C9F202D388F37C51BF208126E /* Pods-Calliope App-acknowledgements.plist */,
-				1D548D08654C134364D5716543C398C6 /* Pods-Calliope App-dummy.m */,
-				0AB9039C77B5A0529E24EAF414809631 /* Pods-Calliope App-frameworks.sh */,
-				2A13ACA4A04D30F73C9EE5C6DEDE17EB /* Pods-Calliope App-Info.plist */,
-				9A486E00889BABE0040A24CCFB9F283C /* Pods-Calliope App-umbrella.h */,
-				46F87773060BD2AF1E885963495EFEC4 /* Pods-Calliope App.debug.xcconfig */,
-				C0890F5440661BDCB38E391D0C36E50D /* Pods-Calliope App.release.xcconfig */,
-			);
-			name = "Pods-Calliope App";
-			path = "Target Support Files/Pods-Calliope App";
-			sourceTree = "<group>";
-		};
 		26BFA75D2A6231FE1A499A5FABE346D1 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -675,6 +685,23 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/iOSDFULibrary";
+			sourceTree = "<group>";
+		};
+		28C1EFE0EB4960A044E9AC6B22FB6610 /* Pods-Calliope App */ = {
+			isa = PBXGroup;
+			children = (
+				1239A1AA0EC4158CF3A9317494B4A0C7 /* Pods-Calliope App.modulemap */,
+				B29429AD840FE83A9825E64A028514EA /* Pods-Calliope App-acknowledgements.markdown */,
+				8010A84F6064D2BE55F981EDE53F0F63 /* Pods-Calliope App-acknowledgements.plist */,
+				AF5E81343D46B37BF977A13902CC480A /* Pods-Calliope App-dummy.m */,
+				005CD8905C5F5C1FB2EA60975E174A8A /* Pods-Calliope App-frameworks.sh */,
+				E06A2FA42B9A136540717C1D74C257DA /* Pods-Calliope App-Info.plist */,
+				B91F61CA60346C3BE75381342A056B5A /* Pods-Calliope App-umbrella.h */,
+				BAA1C38FD748D74BB2A50C256C367B8D /* Pods-Calliope App.debug.xcconfig */,
+				8A32EB245528971AED87BC8340CA2AC5 /* Pods-Calliope App.release.xcconfig */,
+			);
+			name = "Pods-Calliope App";
+			path = "Target Support Files/Pods-Calliope App";
 			sourceTree = "<group>";
 		};
 		45DD43AB092EB50790C96BA6F8BD96E9 /* ZIPFoundation */ = {
@@ -880,6 +907,15 @@
 			name = standard;
 			sourceTree = "<group>";
 		};
+		5B408E3EF6E79A3E3EA68FA30E153AFD /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				28C1EFE0EB4960A044E9AC6B22FB6610 /* Pods-Calliope App */,
+				7001CDD4EE6457E13EF019C5E4954E06 /* Pods-Calliope AppTests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
 		68C6EE86636A29FE84A0FAADBBDEB991 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -902,6 +938,22 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/ZIPFoundation";
+			sourceTree = "<group>";
+		};
+		7001CDD4EE6457E13EF019C5E4954E06 /* Pods-Calliope AppTests */ = {
+			isa = PBXGroup;
+			children = (
+				B2EE2E403846C582A214CB50A6A2D1EC /* Pods-Calliope AppTests.modulemap */,
+				941D2202DBF01D1BCADE8A4779934511 /* Pods-Calliope AppTests-acknowledgements.markdown */,
+				DB5884B44942197377F8C42AC3CE8BF7 /* Pods-Calliope AppTests-acknowledgements.plist */,
+				B426B584544A83BDD43E08F360B5DF8E /* Pods-Calliope AppTests-dummy.m */,
+				7DFC8AB780EDB00186B8AA730E9741C0 /* Pods-Calliope AppTests-Info.plist */,
+				84DC277158E65F8B45291ECACA14736E /* Pods-Calliope AppTests-umbrella.h */,
+				DCF5CA39B0E128A9B264B2F3D7FEDFF9 /* Pods-Calliope AppTests.debug.xcconfig */,
+				02D47CCB1AC473F4FB29CED5F924F925 /* Pods-Calliope AppTests.release.xcconfig */,
+			);
+			name = "Pods-Calliope AppTests";
+			path = "Target Support Files/Pods-Calliope AppTests";
 			sourceTree = "<group>";
 		};
 		7AECBA61365544F357B06DE1C8710425 /* iOS */ = {
@@ -968,25 +1020,18 @@
 			path = iOSDFULibrary;
 			sourceTree = "<group>";
 		};
-		A9684D5B7256CCAA83D344BE432B0692 /* Products */ = {
+		BB7E059F608D73D56D26472AC30FDAAE /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				17ABD68E920293F080122810A8881638 /* GRDB.swift */,
 				21B1375088A0310C7AE2BE4C8188D12F /* iOSDFULibrary */,
 				0EE5861D3D974E0FB54076B343780F1B /* iOSDFULibrary-NordicDFUPrivacyInfo */,
 				1B367864007A754006ED1F9949709BFF /* Pods-Calliope App */,
+				2A9C412026905C31B3E905F0E619F074 /* Pods-Calliope AppTests */,
 				48A4A6EDC08C8AC933D0DCD507E9D173 /* ZIPFoundation */,
 				CA4A114775B98CEA4A566C18123B145F /* ZIPFoundation-ZIPFoundation_Privacy */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		AEBF5BA9E851A92E2E9D95FAAC320B9C /* Targets Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				24ABBB74E813B09067C08179CB6813C6 /* Pods-Calliope App */,
-			);
-			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
 		C4022F0A5FD1640564E0488511F61408 /* Pods */ = {
@@ -1005,8 +1050,8 @@
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
 				C4022F0A5FD1640564E0488511F61408 /* Pods */,
-				A9684D5B7256CCAA83D344BE432B0692 /* Products */,
-				AEBF5BA9E851A92E2E9D95FAAC320B9C /* Targets Support Files */,
+				BB7E059F608D73D56D26472AC30FDAAE /* Products */,
+				5B408E3EF6E79A3E3EA68FA30E153AFD /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1044,6 +1089,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				42149CEDD7020FBC14F82BFCF0A5C909 /* ZIPFoundation-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7D8C5E7C40613F959785B1F70DA115F3 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BC78BDECB10E52EE5856DAECB4DA9699 /* Pods-Calliope AppTests-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1187,6 +1240,25 @@
 			productReference = CA4A114775B98CEA4A566C18123B145F /* ZIPFoundation-ZIPFoundation_Privacy */;
 			productType = "com.apple.product-type.bundle";
 		};
+		CA25183DC714D0E8BB45642B9E8641FC /* Pods-Calliope AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0BB24B71EA547FE2EA5E01C98EAF0473 /* Build configuration list for PBXNativeTarget "Pods-Calliope AppTests" */;
+			buildPhases = (
+				7D8C5E7C40613F959785B1F70DA115F3 /* Headers */,
+				8830032F79099E59250B6633FDE5913C /* Sources */,
+				9D2D86FED4354B3CBB5FAF7B1DF9AAFF /* Frameworks */,
+				A03FA34401D43FAD15DFCD4D41966051 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				32284DC2D2541E69F1DB90E6FF890077 /* PBXTargetDependency */,
+			);
+			name = "Pods-Calliope AppTests";
+			productName = Pods_Calliope_AppTests;
+			productReference = 2A9C412026905C31B3E905F0E619F074 /* Pods-Calliope AppTests */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1207,7 +1279,7 @@
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
 			minimizedProjectReferenceProxies = 0;
 			preferredProjectObjectVersion = 100;
-			productRefGroup = A9684D5B7256CCAA83D344BE432B0692 /* Products */;
+			productRefGroup = BB7E059F608D73D56D26472AC30FDAAE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -1215,6 +1287,7 @@
 				9506C7FCDAE6E6967A99655F452EEE93 /* iOSDFULibrary */,
 				593440025C0DE6BCC1F0AC48E8946FBB /* iOSDFULibrary-NordicDFUPrivacyInfo */,
 				B161232B03995821A334EEF13E4D45B7 /* Pods-Calliope App */,
+				CA25183DC714D0E8BB45642B9E8641FC /* Pods-Calliope AppTests */,
 				AA15C8469D67684160CC2A7098EB841C /* ZIPFoundation */,
 				C7A8D82E407CD3FDC3BA55CEE519B252 /* ZIPFoundation-ZIPFoundation_Privacy */,
 			);
@@ -1258,6 +1331,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				6CE4E8AEE2D5AD71BE5D393D8833D258 /* iOSDFULibrary-NordicDFUPrivacyInfo in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A03FA34401D43FAD15DFCD4D41966051 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1511,6 +1591,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8830032F79099E59250B6633FDE5913C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7EBEF306B0CD3ED91335AA22E887A711 /* Pods-Calliope AppTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CC9388B329497E8254B578BC4C7D8CCA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1556,6 +1644,12 @@
 			name = "ZIPFoundation-ZIPFoundation_Privacy";
 			target = C7A8D82E407CD3FDC3BA55CEE519B252 /* ZIPFoundation-ZIPFoundation_Privacy */;
 			targetProxy = 4DD23B864F5320449FD082080CF294AB /* PBXContainerItemProxy */;
+		};
+		32284DC2D2541E69F1DB90E6FF890077 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-Calliope App";
+			target = B161232B03995821A334EEF13E4D45B7 /* Pods-Calliope App */;
+			targetProxy = 28DB2375E4FE4F28C0BB3CE5D4AA105B /* PBXContainerItemProxy */;
 		};
 		45A7D7159B3B6721DA0B742C56A7DC5C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1888,6 +1982,85 @@
 			};
 			name = Debug;
 		};
+		6A317A61575D204A0198DCE014A5AFF6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 02D47CCB1AC473F4FB29CED5F924F925 /* Pods-Calliope AppTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-Calliope AppTests/Pods-Calliope AppTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Calliope AppTests/Pods-Calliope AppTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		933AD8AA5BBEA4F7B706CBAA23FA64EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DCF5CA39B0E128A9B264B2F3D7FEDFF9 /* Pods-Calliope AppTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-Calliope AppTests/Pods-Calliope AppTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Calliope AppTests/Pods-Calliope AppTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 		B28603E181EABC049D4EFEB064B9319E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A1735D098F4C6A4FA44DFFCC9B4F97EA /* GRDB.swift.debug.xcconfig */;
@@ -1946,7 +2119,7 @@
 		};
 		C74280A8B060A83821F3268A3AC23C93 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C0890F5440661BDCB38E391D0C36E50D /* Pods-Calliope App.release.xcconfig */;
+			baseConfigurationReference = 8A32EB245528971AED87BC8340CA2AC5 /* Pods-Calliope App.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -2065,7 +2238,7 @@
 		};
 		F03351BD8843D2C21A54CB718EC42895 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 46F87773060BD2AF1E885963495EFEC4 /* Pods-Calliope App.debug.xcconfig */;
+			baseConfigurationReference = BAA1C38FD748D74BB2A50C256C367B8D /* Pods-Calliope App.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -2105,6 +2278,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0BB24B71EA547FE2EA5E01C98EAF0473 /* Build configuration list for PBXNativeTarget "Pods-Calliope AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				933AD8AA5BBEA4F7B706CBAA23FA64EB /* Debug */,
+				6A317A61575D204A0198DCE014A5AFF6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		2B7B9232B47DEC19AE541D1785D048A0 /* Build configuration list for PBXNativeTarget "ZIPFoundation" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

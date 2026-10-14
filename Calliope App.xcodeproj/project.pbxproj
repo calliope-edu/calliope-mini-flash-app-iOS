@@ -7,17 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F0DF42AE360D626C22B07CC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F99A3887E27CA071FDC4D19 /* Foundation.framework */; };
 		604938BE2E1BAF6C008BCE40 /* DummyModules in Frameworks */ = {isa = PBXBuildFile; productRef = 604938BD2E1BAF6C008BCE40 /* DummyModules */; };
 		604938C02E1BAF6C008BCE40 /* ScratchLinkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 604938BF2E1BAF6C008BCE40 /* ScratchLinkKit */; };
+		8823E37DD10F45F839AD2121 /* Pods_Calliope_AppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C08714ABB55868EBB7300B55 /* Pods_Calliope_AppTests.framework */; };
 		B16DD0D6E28647BDAC9EA8CB /* Pods_Calliope_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B15F9E6DE42C49A76EC47B /* Pods_Calliope_App.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B4231421FF3A0C20EEEC8A6E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2F61450422BF75DE001C2734 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2F61450B22BF75DE001C2734;
+			remoteInfo = "Calliope App";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		2F61450C22BF75DE001C2734 /* Calliope App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Calliope App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		36B15F9E6DE42C49A76EC47B /* Pods_Calliope_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Calliope_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3849EA7340C0FAB5DB1A4000 /* Pods-Calliope App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.debug.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.debug.xcconfig"; sourceTree = "<group>"; };
+		394E26993699A879C976DAFE /* Pods-Calliope AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope AppTests.debug.xcconfig"; path = "Target Support Files/Pods-Calliope AppTests/Pods-Calliope AppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		604938B42E1BAF1D008BCE40 /* ScratchLinkKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ScratchLinkKit; sourceTree = "<group>"; };
+		7C89FDCADE4B0E20C4BB76D8 /* Pods-Calliope AppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope AppTests.release.xcconfig"; path = "Target Support Files/Pods-Calliope AppTests/Pods-Calliope AppTests.release.xcconfig"; sourceTree = "<group>"; };
+		9F99A3887E27CA071FDC4D19 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		BD1AFC4008F992EADC1C557D /* Pods-Calliope App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.release.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.release.xcconfig"; sourceTree = "<group>"; };
+		C08714ABB55868EBB7300B55 /* Pods_Calliope_AppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Calliope_AppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F86D92A0CAA799DBE4966CB2 /* Calliope AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Calliope AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -36,6 +53,13 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		4DB7183A9E47407A49DCE399 /* Calliope AppTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			path = "Calliope AppTests";
+			sourceTree = "<group>";
+		};
 		D27C149EB4184041A986ECD9 /* Calliope App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -51,6 +75,15 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		103964F970AA1AD68AAC909A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F0DF42AE360D626C22B07CC /* Foundation.framework in Frameworks */,
+				8823E37DD10F45F839AD2121 /* Pods_Calliope_AppTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2F61450922BF75DE001C2734 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -68,6 +101,8 @@
 			isa = PBXGroup;
 			children = (
 				36B15F9E6DE42C49A76EC47B /* Pods_Calliope_App.framework */,
+				87C153F291D9538CEE2047EE /* iOS */,
+				C08714ABB55868EBB7300B55 /* Pods_Calliope_AppTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -80,6 +115,7 @@
 				2F61450D22BF75DE001C2734 /* Products */,
 				5764819361F6510AB656C448 /* Pods */,
 				2521C112B48B4BBD7252C3D2 /* Frameworks */,
+				4DB7183A9E47407A49DCE399 /* Calliope AppTests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -87,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				2F61450C22BF75DE001C2734 /* Calliope App.app */,
+				F86D92A0CAA799DBE4966CB2 /* Calliope AppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -96,6 +133,8 @@
 			children = (
 				3849EA7340C0FAB5DB1A4000 /* Pods-Calliope App.debug.xcconfig */,
 				BD1AFC4008F992EADC1C557D /* Pods-Calliope App.release.xcconfig */,
+				7C89FDCADE4B0E20C4BB76D8 /* Pods-Calliope AppTests.release.xcconfig */,
+				394E26993699A879C976DAFE /* Pods-Calliope AppTests.debug.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -106,6 +145,14 @@
 				604938B42E1BAF1D008BCE40 /* ScratchLinkKit */,
 			);
 			path = Packages;
+			sourceTree = "<group>";
+		};
+		87C153F291D9538CEE2047EE /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				9F99A3887E27CA071FDC4D19 /* Foundation.framework */,
+			);
+			name = iOS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -132,6 +179,28 @@
 			productName = "Calliope App";
 			productReference = 2F61450C22BF75DE001C2734 /* Calliope App.app */;
 			productType = "com.apple.product-type.application";
+		};
+		750E2FDEDE7E928556391A58 /* Calliope AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B81CDE9C40A923FC4BECA485 /* Build configuration list for PBXNativeTarget "Calliope AppTests" */;
+			buildPhases = (
+				A1F9F6B95A63E11958D3E32F /* [CP] Check Pods Manifest.lock */,
+				CCA4B3F7A80F7BA6B581D4AD /* Sources */,
+				103964F970AA1AD68AAC909A /* Frameworks */,
+				BEEFE2EAA29F2BE48FF60829 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7DA1523DE0FE2C67FFD7E61E /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				4DB7183A9E47407A49DCE399 /* Calliope AppTests */,
+			);
+			name = "Calliope AppTests";
+			productName = "Calliope AppTests";
+			productReference = F86D92A0CAA799DBE4966CB2 /* Calliope AppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -279,12 +348,20 @@
 			projectRoot = "";
 			targets = (
 				2F61450B22BF75DE001C2734 /* Calliope App */,
+				750E2FDEDE7E928556391A58 /* Calliope AppTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		2F61450A22BF75DE001C2734 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BEEFE2EAA29F2BE48FF60829 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -310,6 +387,28 @@
 			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-Calliope App-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A1F9F6B95A63E11958D3E32F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Calliope AppTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -343,9 +442,45 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CCA4B3F7A80F7BA6B581D4AD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		7DA1523DE0FE2C67FFD7E61E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Calliope App";
+			target = 2F61450B22BF75DE001C2734 /* Calliope App */;
+			targetProxy = B4231421FF3A0C20EEEC8A6E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		1D0F9581EF4F2A80AA22E169 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7C89FDCADE4B0E20C4BB76D8 /* Pods-Calliope AppTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GKA87N33H4;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				PRODUCT_BUNDLE_IDENTIFIER = cc.calliope.ios.flash.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Calliope App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Calliope App";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		2F61451E22BF75DF001C2734 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -525,6 +660,25 @@
 			};
 			name = Release;
 		};
+		4D72D1A57341FEBE74FF6215 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 394E26993699A879C976DAFE /* Pods-Calliope AppTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GKA87N33H4;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				PRODUCT_BUNDLE_IDENTIFIER = cc.calliope.ios.flash.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Calliope App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Calliope App";
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -542,6 +696,15 @@
 			buildConfigurations = (
 				2F61452122BF75DF001C2734 /* Debug */,
 				2F61452222BF75DF001C2734 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B81CDE9C40A923FC4BECA485 /* Build configuration list for PBXNativeTarget "Calliope AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D0F9581EF4F2A80AA22E169 /* Release */,
+				4D72D1A57341FEBE74FF6215 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

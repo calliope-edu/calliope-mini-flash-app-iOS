@@ -7,6 +7,10 @@ target 'Calliope App' do
   pod 'iOSDFULibrary'
   pod 'GRDB.swift', '~> 6.24'
 
+  target 'Calliope AppTests' do
+    inherit! :search_paths
+  end
+
   post_install do |installer|
     installer.pods_project.targets.each do |target|
       target.build_configurations.each do |config|
