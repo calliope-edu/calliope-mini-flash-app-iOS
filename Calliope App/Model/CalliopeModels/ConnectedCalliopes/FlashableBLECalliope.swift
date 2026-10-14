@@ -48,7 +48,7 @@ class FlashableBLECalliope: CalliopeAPI {
     /// exactly once).
     ///
     /// Call this immediately before `upload(...)` on the legacy
-    /// download-capture path (`FirmwareUpload`). Without it, switching from
+    /// download-capture path (`FlashJob`). Without it, switching from
     /// Blocks/Campus to any other editor (MakeCode, Open Roberta, …) would
     /// partial-flash a blocks-runtime device and leave a broken hybrid — the
     /// DAL hashes match across pxt-blocks-runtime and pxt-calliope, so partial

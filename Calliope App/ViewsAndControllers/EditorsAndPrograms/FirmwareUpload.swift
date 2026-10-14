@@ -93,48 +93,76 @@ class FirmwareUpload {
             }
         }
 
-        let uploader = FirmwareUpload(file: program, alertPublisher: alertPublisher)
-        
-        // Shared iPad: the system export picker is the only sheet the user
-        // should see. Presenting our progress alert here
-        // would stack a sheet in front of the picker and pop up again afterwards
-        // (progress → picker → progress). Start the upload straight away so the
-        // picker is what opens.
-        LogNotify.debug("useExportPicker = \(uploader.usesExportPicker)")
-        if uploader.usesExportPicker {
-            LogNotify.debug("Executing upload using export picker.")
-            do {
-                try uploader.upload(finishedCallback: { completion?() })
-            } catch {
-                FirmwareUpload.uploadingInstance = nil
-                UIApplication.shared.isIdleTimerDisabled = false
-                uploader.presentStandalone(
-                    FirmwareUpload.makeHexMismatchAlert(informationLink: "https://calliope.cc/programmieren/mobil/ipad#hardware"))
-            }
-            return
-        }
-        
-        
-        let tempCalliope = MatrixConnectionViewModel.instance.usageReadyCalliope
+        let target = MatrixConnectionViewModel.instance.usageReadyCalliope
+        let isUSB = target is USBCalliope
+        // On Shared iPad the system export picker is the transfer UI; failures there need a standalone alert.
+        let usesExportPicker = (target as? USBCalliope)?.useExportPicker == true
+        LogNotify.debug("useExportPicker = \(usesExportPicker)")
 
-        do {
-            try uploader.upload(finishedCallback: {
-                completion?()
-            })
-        } catch {
-            LogNotify.debug("Upload failed and we are in the catch block")
-            FirmwareUpload.uploadingInstance = nil
-            UIApplication.shared.isIdleTimerDisabled = false
-
-            let failedAlert = AppAlert.uploadFailed(goToInformation: {
-                let informationLink: String = "https://calliope.cc/programmieren/mobil/ipad#hardware"
-                if let url = URL(string: informationLink) {
-                    UIApplication.shared.open(url)
+        weak var job: FlashJob?
+        var progressStarted = false
+        job = flashService.flash(program) { event in
+            let progress = UploadProgressViewModel.instance
+            switch event {
+            case .progress(let value):
+                if !progressStarted {
+                    progressStarted = true
+                    progress.startUpload(
+                        isIndeterminate: value == nil,
+                        statusText: value == nil ? NSLocalizedString("Transferring to Calliope", comment: "") : ""
+                    )
+                    // Bound to this job, so a stale panel action cannot cancel a newer upload.
+                    progress.cancelAction = { job?.cancel() }
+                    progress.connectionLostAction = { job?.connectionLost() }
+                } else if let value {
+                    progress.updateProgress(value)
                 }
-            })
-            alertPublisher.setAlert(failedAlert)
+            case .completed, .cancelled:
+                progress.finishUpload()
+                completion?()
+            case .failed(let error):
+                progress.finishUpload()
+                presentFailure(error, alertPublisher: alertPublisher, isUSB: isUSB, usesExportPicker: usesExportPicker)
+            }
         }
     }
+
+    private static func presentFailure(_ error: UploadError, alertPublisher: Alertable, isUSB: Bool, usesExportPicker: Bool) {
+        switch error {
+        case .notConnected:
+            alertPublisher.setAlert(.cannotUpload())
+            MatrixConnectionViewModel.instance.animateBounce()
+        case .connectionLost:
+            break
+        case .incompatibleHex:
+            if usesExportPicker {
+                presentStandalone(makeHexMismatchAlert(informationLink: hardwareInformationLink))
+            } else {
+                alertPublisher.setAlert(.uploadFailed(goToInformation: openHardwareInformation))
+            }
+        case .dfu:
+            if usesExportPicker {
+                // A rejected transfer (DAPLink FAIL.TXT) is detected in USBCalliope and shows the same alert from there.
+                presentStandalone(makeUsbTransferFailureAlert(
+                    message: NSLocalizedString("The file could not be transferred. Unplug the Calliope mini and plug it in again before you transfer the next program.", comment: "")))
+            } else if isUSB {
+                alertPublisher.setAlert(.usbUploadFailed())
+            } else {
+                alertPublisher.setAlert(.uploadFailed(goToInformation: openHardwareInformation))
+            }
+        }
+    }
+
+    private static let hardwareInformationLink = "https://calliope.cc/programmieren/mobil/ipad#hardware"
+
+    private static func openHardwareInformation() {
+        if let url = URL(string: hardwareInformationLink) {
+            UIApplication.shared.open(url)
+        }
+    }
+
+    // Temporary owner until UploadViewModel gets the service injected.
+    private static let flashService = FlashService(connection: MatrixDeviceConnectionService(viewModel: .instance))
 
     // NEU: Hilfsmethode für Arcade USB Alert
     private static func showArcadeUSBAlert(alertPublisher: Alertable, completion: (() -> Void)?) {
@@ -160,16 +188,9 @@ class FirmwareUpload {
         alertPublisher.setAlert(alert)
     }
     
-    /// True when this upload is handed to the Shared-iPad export picker. There
-    /// the system picker is the transfer UI, so the app must not put its own
-    /// progress alert on top of it.
-    private var usesExportPicker: Bool {
-        (calliope as? USBCalliope)?.useExportPicker == true
-    }
-
     /// Presents an alert without relying on our progress alert being on screen —
     /// in export-picker mode there is none.
-    private func presentStandalone(_ alert: UIAlertController) {
+    private static func presentStandalone(_ alert: UIAlertController) {
         guard let presenter = FirmwareUpload.topMostViewController() else { return }
         DispatchQueue.main.async {
             presenter.present(alert, animated: true)
@@ -258,215 +279,5 @@ class FirmwareUpload {
                 }
             })
         return alert
-    }
-
-    private var file: Hex
-    private var alertPublisher: Alertable
-
-    init(file: Hex, alertPublisher: Alertable) {
-        self.file = file
-        self.alertPublisher = alertPublisher
-    }
-
-    //keep last upload, so it cannot be de-inited prematurely
-    private static var uploadingInstance: FirmwareUpload? = nil {
-        didSet {
-            _ = oldValue?.calliope?.cancelUpload()
-        }
-    }
-
-    private var finished: () -> Void = {
-    }
-    private var failed: () -> Void = {
-    }
-
-    private var calliope = MatrixConnectionViewModel.instance.usageReadyCalliope
-
-    func upload(finishedCallback: @escaping () -> Void) throws {
-        // Validating for the correct Version of the Hex File
-        let fileHexTypes = file.getHexTypes()
-        LogNotify.log("[FirmwareUpload] File hex types: \(fileHexTypes)")
-        
-        guard let calliope else {
-            LogNotify.error("No calliope connected. Canceling upload.")
-            alertPublisher.setAlert(.cannotUpload())
-            MatrixConnectionViewModel.instance.animateBounce()
-            return
-        }
-        LogNotify.log("[FirmwareUpload] Calliope compatible types: \(calliope.compatibleHexTypes)")
-        if !calliope.compatibleHexTypes.contains(where: fileHexTypes.contains) {
-            LogNotify.log("[FirmwareUpload] ERROR: Hex version mismatch!")
-            throw "Unexpected Hex file version"
-        }
-
-        FirmwareUpload.uploadingInstance = self
-
-        // WICHTIG: Idle Timer SOFORT deaktivieren, damit der Bildschirm an bleibt
-        // Muss VOR beginBackgroundTask() passieren
-        UIApplication.shared.isIdleTimerDisabled = true
-        LogNotify.log("🔋 Idle timer disabled - screen will stay on during flashing")
-
-        let background_ident = UIApplication.shared.beginBackgroundTask(
-            withName: "flashing",
-            expirationHandler: { [weak self] () -> Void in
-                LogNotify.log("⚠️ Background task expiring - this should not happen during active flashing!")
-                LogNotify.log("App should remain in foreground during flashing to prevent iOS from terminating the task")
-                // Warnung: Wenn dieser Handler aufgerufen wird, sind nur noch wenige Sekunden Zeit
-                // Die App MUSS im Foreground bleiben während des Flashings
-            }
-        )
-
-        let downloadCompletion = {
-            FirmwareUpload.uploadingInstance = nil
-            UIApplication.shared.isIdleTimerDisabled = false
-            UIApplication.shared.endBackgroundTask(background_ident)
-        }
-
-        self.failed = {
-            downloadCompletion()
-            UploadProgressViewModel.instance.finishUpload()
-            MatrixConnectionViewModel.instance.enableDfuMode(mode: false)
-        }
-        self.finished = {
-            downloadCompletion()
-            UploadProgressViewModel.instance.finishUpload()
-            finishedCallback()
-            MatrixConnectionViewModel.instance.enableDfuMode(mode: false)
-            // On Shared iPad the picked USB volume is no longer usable once the
-            // copy is through, so end the connection here and let the user
-            // re-pick the drive for the next flash. No-op everywhere else.
-            if calliope is USBCalliope {
-                MatrixConnectionViewModel.instance.resetUsbConnectionAfterCopy()
-            }
-        }
-
-        let startUpload = { [weak self] in
-            guard let self else { return }
-            do {
-                MatrixConnectionViewModel.instance.enableDfuMode(mode: true)
-
-                // USB flashing works by copying a file to the device, so real progress cannot be measured.
-                let isUSB = calliope is USBCalliope
-                UploadProgressViewModel.instance.startUpload(
-                    isIndeterminate: isUSB,
-                    statusText: isUSB ? NSLocalizedString("Transferring to Calliope", comment: "") : ""
-                )
-                UploadProgressViewModel.instance.cancelAction = { [weak self] in
-                    self?.finished()
-                }
-                UploadProgressViewModel.instance.connectionLostAction = { [weak self] in
-                    self?.failed()
-                }
-
-                // Set up disconnect callback for partial flashing optimization
-                if let flashableCalliope = calliope as? FlashableBLECalliope {
-                    // Captures nothing (no `self` reference), so no retain cycle
-                    // via calliope -> callback -> FirmwareUpload.
-                    flashableCalliope.requestDisconnectCallback = {
-                        LogNotify.log("[PartialFlash] Disconnect requested - triggering immediate disconnect")
-                        MatrixConnectionViewModel.instance.connector.disconnectForReboot()
-                    }
-                }
-                
-                try calliope.upload(file: self.file, progressReceiver: self, statusDelegate: self, logReceiver: self)
-            } catch {
-                DispatchQueue.main.async { [weak self] in
-                    self?.showUploadError(error)
-                }
-            }
-        }
-        // Decide partial vs full flash BEFORE touching the BLE stack: a device
-        // still running the Blocks/Campus runtime must get a full DFU, and only
-        // a live GATT probe can tell (the partial-flash DAL check can't). USB
-        // uploads skip this - they always write a whole image anyway.
-        if let flashableCalliope = calliope as? FlashableBLECalliope {
-            flashableCalliope.prepareFlashMode { startUpload() }
-        } else {
-            startUpload()
-        }
-    }
-
-    func showUploadError(_ error: Error) {
-        LogNotify.error("Upload failed")
-
-        // Export-picker mode has no progress alert to write the error into, so
-        // surface it as its own alert — otherwise the failure would be silent.
-        if usesExportPicker {
-            // Export-picker failures reported through this path are connection /
-            // picker problems. A rejected transfer (DAPLink FAIL.TXT) is detected
-            // asynchronously in USBCalliope and shows the same alert from there.
-            presentStandalone(FirmwareUpload.makeUsbTransferFailureAlert(
-                message: NSLocalizedString("The file could not be transferred. Unplug the Calliope mini and plug it in again before you transfer the next program.", comment: "")))
-            failed()
-            return
-        }
-
-        let failedAlert: AppAlert
-        // TODO: Do these two different errors make sense and should the raw error be outputted?
-        if calliope is USBCalliope {
-            failedAlert = AppAlert.usbUploadFailed()
-        } else {
-            failedAlert = AppAlert.uploadFailed(goToInformation: {
-                let informationLink: String = "https://calliope.cc/programmieren/mobil/ipad#hardware"
-                if let url = URL(string: informationLink) {
-                    UIApplication.shared.open(url)
-                }
-            })
-        }
-        alertPublisher.setAlert(failedAlert)
-        failed()
-    }
-}
-
-extension FirmwareUpload: DFUProgressDelegate, DFUServiceDelegate, LoggerDelegate {
-    func dfuProgressDidChange(
-        for part: Int,
-        outOf totalParts: Int,
-        to progress: Int,
-        currentSpeedBytesPerSecond: Double,
-        avgSpeedBytesPerSecond: Double
-    ) {
-        DispatchQueue.main.async {
-            UploadProgressViewModel.instance.updateProgress(Double(progress) / 100.0)
-        }
-    }
-
-    func logWith(_ level: LogLevel, message: String) {
-        LogNotify.log("DFU Message: \(message)")
-    }
-
-    func dfuStateDidChange(to state: DFUState) {
-        LogNotify.log("DFU State change: \(state)")
-        if [DFUState.completed].contains(state) {
-            self.finished()
-        }
-        if [DFUState.aborted].contains(state) {
-            // Bei Verbindungswechsel keine Fehlermeldung anzeigen
-            if Calliope.isConnectionSwitching {
-                LogNotify.log("Connection switching - suppressing abort message")
-                return
-            }
-            // The user dismissed the Shared-iPad export picker without saving.
-            // Release the upload resources, but no error alert and no teardown of
-            // the USB connection — the next flash should reopen the picker.
-            if (calliope as? USBCalliope)?.lastExportCancelledByUser == true {
-                LogNotify.log("Export picker cancelled by user - suppressing abort message")
-                failed()
-                return
-            }
-            self.dfuError(.deviceDisconnected, didOccurWithMessage: "DFU process aborted")
-        }
-    }
-
-    func dfuError(_ error: DFUError, didOccurWithMessage message: String) {
-        LogNotify.log("DFU Error \(error) while uploading: \(message)")
-
-        // Bei Verbindungswechsel keine Fehlermeldung anzeigen
-        if Calliope.isConnectionSwitching {
-            LogNotify.log("Connection switching - suppressing error message")
-            return
-        }
-
-        showUploadError(message)
     }
 }

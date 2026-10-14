@@ -23,9 +23,9 @@ class USBCalliope: Calliope {
     private var exportInProgress = false
 
     /// Set when the user dismissed the export picker without saving. The upload
-    /// still has to report `.aborted` so `FirmwareUpload` can release the
+    /// still has to report `.aborted` so `FlashJob` can release the
     /// background task and idle timer, but a deliberate cancel is not an error —
-    /// `FirmwareUpload` reads this to skip the failure alert and keep the
+    /// `FlashJob` reads this to skip the failure alert and keep the
     /// connection, so the next flash goes straight back to the picker.
     private(set) var lastExportCancelledByUser = false
 
@@ -123,7 +123,7 @@ class USBCalliope: Calliope {
         // Two pickers would mean two concurrent copies onto the same DAPLink volume.
         if exportInProgress {
             LogNotify.log("Export picker: already on screen - ignoring duplicate transfer request")
-            // Treat like a cancel so FirmwareUpload releases its background task
+            // Treat like a cancel so FlashJob releases its background task
             // and idle timer quietly, without showing a failure alert.
             lastExportCancelledByUser = true
             statusDelegate?.dfuStateDidChange(to: .aborted)
