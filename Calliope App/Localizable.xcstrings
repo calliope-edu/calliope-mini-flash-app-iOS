@@ -2,10 +2,24 @@
   "sourceLanguage" : "en",
   "strings" : {
     "" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : ""
+          }
+        }
+      }
     },
     "\n" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "\n"
+          }
+        }
+      }
     },
     "- Additionally press the Reset button for 1 second" : {
       "localizations" : {
@@ -148,7 +162,14 @@
       }
     },
     "%lld%%" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%lld%%"
+          }
+        }
+      }
     },
     "1. Open MakeCode Editor" : {
       "extractionState" : "stale",
@@ -256,7 +277,15 @@
       }
     },
     "Abbrechen" : {
-      "comment" : "Cancel"
+      "comment" : "Cancel",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Abbrechen"
+          }
+        }
+      }
     },
     "Accelerometer" : {
       "localizations" : {
@@ -310,17 +339,44 @@
       }
     },
     "Apps Info" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Apps-Info"
+          }
+        }
+      }
     },
     "Arcade-Datei" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Arcade-Datei"
+          }
+        }
+      }
     },
     "Arcade-Dateien können nur per USB übertragen werden." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Arcade-Dateien können nur per USB übertragen werden."
+          }
+        }
+      }
     },
     "Arcade-Dateien können nur per USB-Kabel übertragen werden. Bitte verbinde deinen Calliope mini per USB oder teile die Datei." : {
       "comment" : "Arcade file picked but no USB connection",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Arcade-Dateien können nur per USB-Kabel übertragen werden. Bitte verbinde deinen Calliope mini per USB oder teile die Datei."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -330,7 +386,15 @@
       }
     },
     "Arcade-Programme können nur per USB auf den Calliope mini übertragen werden.\n\nBitte verbinde den Calliope mini per USB-Kabel und wähle den MINI-Ordner aus." : {
-      "comment" : "Arcade programs can only be transferred via USB"
+      "comment" : "Arcade programs can only be transferred via USB",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Arcade-Programme können nur per USB auf den Calliope mini übertragen werden.\n\nBitte verbinde den Calliope mini per USB-Kabel und wähle den MINI-Ordner aus."
+          }
+        }
+      }
     },
     "Average" : {
       "extractionState" : "manual",
@@ -383,7 +447,15 @@
       }
     },
     "Bitte versetze den Calliope mini in den Bluetooth-Modus (A+B+Reset), um ein Programm zu übertragen." : {
-      "comment" : "Manual DFU mode instruction"
+      "comment" : "Manual DFU mode instruction",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Bitte versetze den Calliope mini in den Bluetooth-Modus (A+B+Reset), um ein Programm zu übertragen."
+          }
+        }
+      }
     },
     "bkL-vr-KqE.configuration.title" : {
       "comment" : "Class = \"UIButton\"; configuration.title = \"Record Sensordata\"; ObjectID = \"bkL-vr-KqE\";",
@@ -407,6 +479,12 @@
       "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"bkL-vr-KqE\";",
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Schaltfläche"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -418,6 +496,12 @@
     "Blinking Heart" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Blinkendes Herz"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -477,7 +561,15 @@
       }
     },
     "Bluetooth-Verbindung zurücksetzen" : {
-      "comment" : "Reset Bluetooth connection"
+      "comment" : "Reset Bluetooth connection",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Bluetooth-Verbindung zurücksetzen"
+          }
+        }
+      }
     },
     "Brightness" : {
       "localizations" : {
@@ -490,7 +582,14 @@
       }
     },
     "Button" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Taste"
+          }
+        }
+      }
     },
     "Button A" : {
       "extractionState" : "manual",
@@ -761,6 +860,12 @@
     "Connect to enable uploading programs" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Verbinde dich mit dem Calliope mini, um Programme übertragen zu können."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -853,7 +958,14 @@
       }
     },
     "Could not delete %@\n" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%@ konnte nicht gelöscht werden."
+          }
+        }
+      }
     },
     "Could not find connected calliope in discovered calliopes" : {
       "extractionState" : "manual",
@@ -920,10 +1032,24 @@
       }
     },
     "Create new project on the Sensordata page and start recording." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Erstelle ein neues Projekt auf der Sensordaten-Seite und starte die Aufzeichnung."
+          }
+        }
+      }
     },
     "Create the program with the respective data and define the required columns and set the corresponding sensor data as values." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Erstelle das Programm mit den jeweiligen Daten und definiere die benötigten Spalten und setze die entsprechenden Sensordaten als Werte."
+          }
+        }
+      }
     },
     "Current" : {
       "extractionState" : "manual",
@@ -945,6 +1071,12 @@
     "Das Herunterladen der Sitzungsdaten ist fehlgeschlagen." : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Das Herunterladen der Sitzungsdaten ist fehlgeschlagen."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -965,11 +1097,24 @@
       }
     },
     "Data Logger" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Datalogger"
+          }
+        }
+      }
     },
     "Datalogger CSV erfolgreich heruntergeladen!" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Datalogger CSV erfolgreich heruntergeladen!"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -991,6 +1136,12 @@
     "Datalogger Daten Anzeigen" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Datalogger anzeigen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1012,6 +1163,12 @@
     "Datalogger Download fehlgeschlagen!" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Datalogger Download fehlgeschlagen!"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1080,6 +1237,12 @@
     "Der Calliope mini startet das Programm, sobald die Übertragung beendet ist." : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Der Calliope mini startet das Programm, sobald die Übertragung beendet ist."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1089,11 +1252,25 @@
       }
     },
     "Der Calliope mini wurde schon einmal gekoppelt. Diese Informationen müssen erneut angelegt werden:\n\n1. Gehe zu Einstellungen → Bluetooth\n2. Tippe auf das (i) neben dem Calliope mini\n3. Wähle \"Dieses Gerät ignorieren\"\n4. Kehre zur Calliope mini App zurück und verbinde erneut" : {
-      "comment" : "Instructions to reset Bluetooth pairing"
+      "comment" : "Instructions to reset Bluetooth pairing",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Der Calliope mini wurde schon einmal gekoppelt. Diese Informationen müssen erneut angelegt werden:\n\n1. Gehe zu Einstellungen → Bluetooth\n2. Tippe auf das (i) neben dem Calliope mini\n3. Wähle „Dieses Gerät ignorieren“\n4. Kehre zur Calliope mini App zurück und verbinde erneut"
+          }
+        }
+      }
     },
     "Der Download der CSV-Datei mit deinen Datalogger-Daten war nicht erfolgreich." : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Der Download der CSV-Datei mit deinen Datalogger-Daten war nicht erfolgreich."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1163,7 +1340,14 @@
       }
     },
     "Don't save" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Nicht sichern"
+          }
+        }
+      }
     },
     "Don´t save" : {
       "extractionState" : "stale",
@@ -1180,6 +1364,12 @@
       "comment" : "Campus Editor",
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Download erfolgreich!"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1191,6 +1381,12 @@
     "Download fehlgeschlagen!" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Download fehlgeschlagen!"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1210,7 +1406,14 @@
       }
     },
     "Download is not a proper hex file" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Der Download ist keine gültige Hex-Datei."
+          }
+        }
+      }
     },
     "Download the original program for your Calliope mini. Connect your device and transfer the program!" : {
       "localizations" : {
@@ -1273,6 +1476,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Label\"; ObjectID = \"dYM-tW-0Gf\";",
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Bezeichnung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1282,10 +1491,25 @@
       }
     },
     "Editors and Programs" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Editoren und Programme"
+          }
+        }
+      }
     },
     "Einstellungen öffnen" : {
-      "comment" : "Open Settings"
+      "comment" : "Open Settings",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Einstellungen öffnen"
+          }
+        }
+      }
     },
     "Encountered an error discovering or connecting calliope:" : {
       "extractionState" : "manual",
@@ -1325,7 +1549,14 @@
       }
     },
     "Enter the new program title" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Gib den neuen Programmnamen ein"
+          }
+        }
+      }
     },
     "Enter the new project name" : {
       "localizations" : {
@@ -1349,7 +1580,14 @@
       }
     },
     "Event" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ereignis"
+          }
+        }
+      }
     },
     "Export (CSV)" : {
       "localizations" : {
@@ -1406,6 +1644,12 @@
     "Fehler beim Herunterladen der Datalogger CSV!" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Fehler beim Herunterladen der Datalogger CSV!"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1479,10 +1723,24 @@
       }
     },
     "Futher Information" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Weitere Informationen"
+          }
+        }
+      }
     },
     "Gesture" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Geste"
+          }
+        }
+      }
     },
     "Greetings" : {
       "extractionState" : "manual",
@@ -1512,12 +1770,25 @@
       }
     },
     "Home" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Home"
+          }
+        }
+      }
     },
     "hTK-ZH-RqL.title" : {
       "comment" : "Class = \"UICommand\"; title = \"Item 2\"; ObjectID = \"hTK-ZH-RqL\";",
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Element 2"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1654,6 +1925,12 @@
     "https://calliope.cc/programmieren/mobil/ipad#sensordaten" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "https://calliope.cc/programmieren/mobil/ipad#sensordaten"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1699,12 +1976,25 @@
       }
     },
     "IO Pin" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "IO-Pin"
+          }
+        }
+      }
     },
     "k7z-ya-z6E.text" : {
       "comment" : "Class = \"UILabel\"; text = \"0.0\"; ObjectID = \"k7z-ya-z6E\";",
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "0,0"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1717,6 +2007,12 @@
       "comment" : "Class = \"UIButton\"; configuration.title = \"Button\"; ObjectID = \"k32-SG-WvS\";",
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Schaltfläche"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1729,6 +2025,12 @@
       "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"k32-SG-WvS\";",
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Schaltfläche"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1773,7 +2075,14 @@
       }
     },
     "Live Bluetooth Sensor Data" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Live-Bluetooth-Sensordaten"
+          }
+        }
+      }
     },
     "Load the Calliope mini Blocks app from the app store and get started!" : {
       "localizations" : {
@@ -1823,7 +2132,14 @@
       }
     },
     "Mini_Blocks_Program" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Mini_Blocks_Program"
+          }
+        }
+      }
     },
     "Minimum" : {
       "extractionState" : "manual",
@@ -1846,6 +2162,12 @@
       "comment" : "Class = \"UICommand\"; title = \"Y\"; ObjectID = \"MlM-W4-l4K\";",
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Y"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1857,6 +2179,12 @@
     "Möchtest du das Programm auf deinen Calliope mini übertragen oder teilen?" : {
       "comment" : "Program picked from the file picker: transfer or share",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Möchtest du das Programm auf deinen Calliope mini übertragen oder teilen?"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1868,6 +2196,12 @@
     "Möchtest du die Arcade-Datei auf deinen Calliope mini übertragen oder teilen?" : {
       "comment" : "Arcade file picked: transfer via USB or share",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Möchtest du die Arcade-Datei auf deinen Calliope mini übertragen oder teilen?"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1879,6 +2213,12 @@
     "Möchtest du die Datei in MakeCode öffnen oder direkt auf deinen Calliope mini übertragen?" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Möchtest du die Datei in MakeCode öffnen oder direkt auf deinen Calliope mini übertragen?"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1905,7 +2245,14 @@
       }
     },
     "More detailed instructions on calliope.cc" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ausführlichere Anweisungen auf calliope.cc"
+          }
+        }
+      }
     },
     "Multiplication tables" : {
       "extractionState" : "manual",
@@ -1928,6 +2275,12 @@
       "comment" : "Class = \"UICommand\"; title = \"X\"; ObjectID = \"MwQ-F7-XGJ\";",
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "X"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1937,12 +2290,25 @@
       }
     },
     "Navigation Failed" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Navigation fehlgeschlagen"
+          }
+        }
+      }
     },
     "nBn-0t-SZp.text" : {
       "comment" : "Class = \"UILabel\"; text = \"0.0\"; ObjectID = \"nBn-0t-SZp\";",
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "0,0"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1962,7 +2328,14 @@
       }
     },
     "New Project" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Neues Projekt"
+          }
+        }
+      }
     },
     "nJx-VD-M8y.title" : {
       "comment" : "Class = \"UIViewController\"; title = \"Sensordaten\"; ObjectID = \"nJx-VD-M8y\";",
@@ -2084,6 +2457,12 @@
     "Öffnen" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Öffnen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2124,7 +2503,14 @@
       }
     },
     "Open Example Program" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Beispielprogramm öffnen"
+          }
+        }
+      }
     },
     "Open program" : {
       "localizations" : {
@@ -2182,7 +2568,14 @@
       }
     },
     "Partial flash failed. Please try again or use a different program." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Partial-Flash fehlgeschlagen. Bitte versuche es erneut oder verwende ein anderes Programm."
+          }
+        }
+      }
     },
     "Please choose a name" : {
       "comment" : "In dialog to choose name for new program",
@@ -2207,7 +2600,14 @@
       }
     },
     "Press \"Load Data From Calliope\" on the Sensordata page to display the recorded data." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Drücke auf der Sensordaten-Seite auf „Daten von Calliope laden“, um die aufgezeichneten Daten anzuzeigen."
+          }
+        }
+      }
     },
     "Press both A and B to return to the menu" : {
       "extractionState" : "manual",
@@ -2280,7 +2680,14 @@
       }
     },
     "Projects" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Projekte"
+          }
+        }
+      }
     },
     "Push the button and follow the instructions for connecting to your Calliope" : {
       "extractionState" : "manual",
@@ -2355,12 +2762,25 @@
       }
     },
     "RGB Led" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "RGB-LED"
+          }
+        }
+      }
     },
     "rN9-hs-kc2.text" : {
       "comment" : "Class = \"UILabel\"; text = \"0.0\"; ObjectID = \"rN9-hs-kc2\";",
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "0,0"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2432,6 +2852,12 @@
     },
     "Schließen" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Schließen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2504,7 +2930,14 @@
       }
     },
     "Select Calliope mini" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Calliope mini Auswählen"
+          }
+        }
+      }
     },
     "Select Sensor" : {
       "extractionState" : "manual",
@@ -2518,7 +2951,14 @@
       }
     },
     "Select the desired services for your program to view or record." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Wähle die gewünschten Dienste für dein Programm aus, um diese anzusehen oder aufzunehmen."
+          }
+        }
+      }
     },
     "Send sensor data directly from Calliope mini to the app" : {
       "extractionState" : "stale",
@@ -2532,10 +2972,24 @@
       }
     },
     "Send sensor data live from your Calliope mini to the app via Bluetooth." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Sende Live-Sensordaten per Bluetooth von deinem Calliope mini an die App."
+          }
+        }
+      }
     },
     "Sensordaten" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Sensordaten"
+          }
+        }
+      }
     },
     "Sensors" : {
       "extractionState" : "manual",
@@ -2669,7 +3123,14 @@
       }
     },
     "Start the program on your Calliope mini." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Starte das Programm auf deinem Calliope mini."
+          }
+        }
+      }
     },
     "Subscribe to the Calliope Playgrounds" : {
       "extractionState" : "stale",
@@ -2700,7 +3161,14 @@
       }
     },
     "Tap for instructions" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Tippen für Anleitung"
+          }
+        }
+      }
     },
     "Temperature" : {
       "localizations" : {
@@ -2744,7 +3212,14 @@
       }
     },
     "The downloaded program is empty" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Das heruntergeladene Programm ist leer"
+          }
+        }
+      }
     },
     "The file could not be transferred. Please select your Calliope mini again (tap the icon at the top right) and try again!" : {
       "extractionState" : "stale",
@@ -2841,7 +3316,14 @@
       }
     },
     "The program is not ready. The reason is: %@" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Das Programm ist nicht fertig. Der Grund ist: %@"
+          }
+        }
+      }
     },
     "The result cannot be verified: the app is not allowed to read the Calliope mini." : {
       "comment" : "Diagnostics verdict, not verifiable",
@@ -2916,10 +3398,24 @@
       }
     },
     "Time" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zeit"
+          }
+        }
+      }
     },
     "Touch Pin" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Touch-Pin"
+          }
+        }
+      }
     },
     "Transfer" : {
       "localizations" : {
@@ -2963,7 +3459,14 @@
       }
     },
     "Transfer the program to your Calliope mini." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Übertrage das Programm auf deinen Calliope mini."
+          }
+        }
+      }
     },
     "Transfering Datalogger Data" : {
       "extractionState" : "stale",
@@ -2977,7 +3480,14 @@
       }
     },
     "Transferring to Calliope" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Übertragung zu Calliope"
+          }
+        }
+      }
     },
     "Transmission running" : {
       "extractionState" : "stale",
@@ -2992,6 +3502,12 @@
     },
     "Übertragen" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Übertragen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3003,6 +3519,12 @@
     "Übertragen (USB)" : {
       "comment" : "Transfer action while a USB Calliope mini is connected",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Übertragen (USB)"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3014,6 +3536,12 @@
     "Übertragung abgeschlossen" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Übertragung abgeschlossen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3025,6 +3553,12 @@
     "Übertragung der Datalogger-Daten" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Übertragung der Datalogger-Daten"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3036,6 +3570,12 @@
     "Übertragung läuft" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Übertragung läuft"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3163,16 +3703,46 @@
       }
     },
     "USB-Modus öffnen" : {
-      "comment" : "Open USB mode"
+      "comment" : "Open USB mode",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "USB-Modus öffnen"
+          }
+        }
+      }
     },
     "USB-Verbindung erforderlich" : {
-      "comment" : "USB connection required"
+      "comment" : "USB connection required",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "USB-Verbindung erforderlich"
+          }
+        }
+      }
     },
     "Use the example program, or create your own MakeCode project and add the Bluetooth extension." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Nutze das Beispielprogramm oder erstelle dein eigenes MakeCode-Projekt und füge die Bluetooth-Erweiterung hinzu."
+          }
+        }
+      }
     },
     "Use the example program, or create your own MakeCode project and add the DataLogger Extension." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Nutze das Beispielprogramm oder erstelle dein eigenes MakeCode-Projekt und füge die Datalogger-Erweiterung hinzu."
+          }
+        }
+      }
     },
     "User defined (UART)" : {
       "localizations" : {
@@ -3188,6 +3758,12 @@
       "comment" : "Class = \"UICommand\"; title = \"Item 2\"; ObjectID = \"vAZ-zR-LYX\";",
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Element 2"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3198,6 +3774,12 @@
     },
     "Verbindung notwendig, um Daten anzeigen zu lassen." : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Verbindung notwendig, um Daten anzeigen zu lassen."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3210,6 +3792,12 @@
       "comment" : "Class = \"UIButton\"; configuration.title = \" \"; ObjectID = \"vNv-X5-tfZ\";",
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : " "
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3222,6 +3810,12 @@
       "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"vNv-X5-tfZ\";",
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Schaltfläche"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3233,6 +3827,12 @@
     "Vor der nächsten Verbindung muss die Verbindung wieder hergestellt werden und der Calliope mini ausgewählt werden." : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Vor der nächsten Verbindung muss die Verbindung wieder hergestellt und der Calliope mini ausgewählt werden."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3261,8 +3861,8 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Mit MakeCode Arcade kannst du Spiele für deinen Calliope mini erstellen und diese auf einem Display anzeigen lassen oder sogar einer Spielekonsole spielen. Die Übertragung der Datei funktioniert nur per USB-Kabel."
+            "state" : "machine_translated",
+            "value" : "Mit MakeCode Arcade kannst du Spiele für deinen Calliope mini erstellen und sie mit einem zusätzlichen Display oder sogar einer Spielekonsole spielen. Die Dateien können nur per USB-Kabel übertragen werden."
           }
         },
         "en" : {
@@ -3274,7 +3874,14 @@
       }
     },
     "With the datalogger extension the Calliope mini 3 can record data. Afterwards you can transfer it to the app and view it in a table." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Mit der Datalogger-Erweiterung kann der Calliope mini 3 Daten aufzeichnen. Anschließend kannst du sie in die App übertragen und als Tabelle anzeigen lassen."
+          }
+        }
+      }
     },
     "Wrong storage location" : {
       "comment" : "Storage location alert",
@@ -3291,6 +3898,12 @@
       "comment" : "Class = \"UILabel\"; text = \"0.0\"; ObjectID = \"wtX-TM-5dr\";",
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "0,0"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3303,6 +3916,12 @@
       "comment" : "Class = \"UICommand\"; title = \"Item 1\"; ObjectID = \"X8y-xM-amD\";",
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Element 1"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3315,6 +3934,12 @@
       "comment" : "Class = \"UIButton\"; configuration.title = \"Button\"; ObjectID = \"XBq-b6-ul5\";",
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Schaltfläche"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3327,6 +3952,12 @@
       "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"XBq-b6-ul5\";",
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Schaltfläche"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3357,6 +3988,12 @@
       "comment" : "Class = \"UICommand\"; title = \"Item 1\"; ObjectID = \"Y6a-Xn-IV9\";",
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Element 1"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3487,5 +4124,5 @@
       }
     }
   },
-  "version" : "1.2"
+  "version" : "1.3"
 }
