@@ -38,13 +38,11 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		A6A7E27E29E947218CD26CA8 /* Exceptions for "Calliope App" folder in "Calliope App" target */ = {
+		A6A7E27E29E947218CD26CA8 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				"Calliope App.entitlements",
-				"Calliope AppRelease.entitlements",
-				Fonts/Roboto/LICENSE.txt,
 				Fonts/Roboto_Mono/LICENSE.txt,
+				Fonts/Roboto/LICENSE.txt,
 				Info.plist,
 				PrivacyInfo.xcprivacy,
 			);
@@ -53,25 +51,8 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		4DB7183A9E47407A49DCE399 /* Calliope AppTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
-			path = "Calliope AppTests";
-			sourceTree = "<group>";
-		};
-		D27C149EB4184041A986ECD9 /* Calliope App */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				A6A7E27E29E947218CD26CA8 /* Exceptions for "Calliope App" folder in "Calliope App" target */,
-			);
-			explicitFileTypes = {
-			};
-			explicitFolders = (
-			);
-			path = "Calliope App";
-			sourceTree = "<group>";
-		};
+		4DB7183A9E47407A49DCE399 /* Calliope AppTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Calliope AppTests"; sourceTree = "<group>"; };
+		D27C149EB4184041A986ECD9 /* Calliope App */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (A6A7E27E29E947218CD26CA8 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "Calliope App"; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -341,7 +322,7 @@
 			);
 			mainGroup = 2F61450322BF75DE001C2734;
 			packageReferences = (
-				604938BC2E1BAF6C008BCE40 /* XCLocalSwiftPackageReference "ScratchLinkKit" */,
+				604938BC2E1BAF6C008BCE40 /* XCLocalSwiftPackageReference "Packages/ScratchLinkKit" */,
 			);
 			productRefGroup = 2F61450D22BF75DE001C2734 /* Products */;
 			projectDirPath = "";
@@ -423,9 +404,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Calliope App/Pods-Calliope App-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Calliope App/Pods-Calliope App-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -712,7 +697,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		604938BC2E1BAF6C008BCE40 /* XCLocalSwiftPackageReference "ScratchLinkKit" */ = {
+		604938BC2E1BAF6C008BCE40 /* XCLocalSwiftPackageReference "Packages/ScratchLinkKit" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Packages/ScratchLinkKit;
 		};

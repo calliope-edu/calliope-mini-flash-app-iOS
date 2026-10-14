@@ -186,7 +186,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate {
             state = .usbConnected
         } else if connectingCalliope != nil {
             state = .connecting
-        } else if centralManager.isScanning && !(context?.isInUsbMode ?? false) {
+        } else if centralManager.isScanning && !(context?.isUsbMode ?? false) {
             state = discoveredCalliopes.isEmpty ? .discovering : .discovered
         } else {
             state = discoveredCalliopes.isEmpty ? .initialized : .discoveredAll
@@ -236,14 +236,14 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate {
         //start scan only if central manger already connected to bluetooth system service (=poweredOn)
         //alternatively, this is invoked after the state of the central mananger changed to poweredOn.
         if centralManager.state != .poweredOn {
-            if context?.isInUsbMode ?? false {
+            if context?.isUsbMode ?? false {
                 updateQueue.async {
                     self.errorBlock(NSLocalizedString("Activate Bluetooth!", comment: ""))
                 }
                 state = .discoveryWaitingForBluetooth
             }
         } else if !centralManager.isScanning {
-            if context?.isInUsbMode ?? false, let discoveredCalliope = discoveredCalliopes[CalliopeDiscovery.usbCalliopeName] {
+            if context?.isUsbMode ?? false, let discoveredCalliope = discoveredCalliopes[CalliopeDiscovery.usbCalliopeName] {
                 discoveredCalliopes = [ CalliopeDiscovery.usbCalliopeName : discoveredCalliope ]
             } else {
                 discoveredCalliopes = [:]
@@ -342,7 +342,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate {
         let discoveredCalliope = DiscoveredUSBDevice(url: url, name: CalliopeDiscovery.usbCalliopeName)
 
         guard let discoveredCalliope = discoveredCalliope else {
-            context?.showFalseLocationAlert()
+            context?.reportInvalidUsbLocation()
             state = .initialized
             return
         }

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol CalliopeDiscoveryContext: AnyObject {
-    var isInUsbMode: Bool { get }
+    var isUsbMode: Bool { get }
     var isConnectionEnabled: Bool { get }
-    func showFalseLocationAlert()
+    func reportInvalidUsbLocation()
 }

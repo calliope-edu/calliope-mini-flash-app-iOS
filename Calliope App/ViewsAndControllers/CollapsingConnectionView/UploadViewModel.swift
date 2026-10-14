@@ -237,6 +237,6 @@ final class UploadViewModel: ObservableObject {
 
     static func preview() -> UploadViewModel {
         let connection = PreviewDeviceConnectionService()
-        return UploadViewModel(flashService: FlashService(connection: connection), connection: connection, connectionPanel: MatrixConnectionViewModel())
+        return UploadViewModel(flashService: FlashService(connection: connection), connection: connection, connectionPanel: MatrixConnectionViewModel(connection: connection))
     }
 }

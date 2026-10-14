@@ -942,7 +942,7 @@ extension EditorWebView {
         // Campus is Scratch-based (it loads the scratch-link extension script),
         // but it does NOT drive BLE through ScratchLink — it goes through the
         // native-proxy bridge, which reads the app's own usageReadyCalliope.
-        // Running the scratch branch here would call dropBLEConnection() and
+        // Running the scratch branch here would call suspendBluetooth() and
         // tear down exactly the connection the bridge needs (plus set
         // isInBackground, which suppresses the app's auto-reconnect), so the
         // editor came up disconnected until the user hit the connect icon.

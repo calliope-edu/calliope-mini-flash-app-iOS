@@ -14,7 +14,7 @@ final class AppDependencies {
 
     init() {
         connectionPanel = .instance
-        connection = MatrixDeviceConnectionService(viewModel: connectionPanel)
+        connection = connectionPanel.connection
         flashService = FlashService(connection: connection)
         connection.start()
     }

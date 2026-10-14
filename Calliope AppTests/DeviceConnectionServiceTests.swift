@@ -18,7 +18,7 @@ final class DeviceConnectionServiceTests: XCTestCase {
     private var savedDefaults: [String: Any] = [:]
     private var discoveries: [FakeDiscovery] = []
     private var viewModel: MatrixConnectionViewModel!
-    private var service: MatrixDeviceConnectionService!
+    private var service: CalliopeConnectionService!
     private var subscriptions: Set<AnyCancellable> = []
 
     private var discovery: FakeDiscovery {
@@ -33,12 +33,12 @@ final class DeviceConnectionServiceTests: XCTestCase {
         UserDefaults.standard.set(false, forKey: SettingsKey.restoreLastMatrix.rawValue)
 
         discoveries = []
-        viewModel = MatrixConnectionViewModel(makeDiscovery: { [unowned self] _, context in
+        service = CalliopeConnectionService(makeDiscovery: { [unowned self] _, context in
             let discovery = FakeDiscovery(context: context)
             discoveries.append(discovery)
             return discovery
         })
-        service = MatrixDeviceConnectionService(viewModel: viewModel)
+        viewModel = MatrixConnectionViewModel(connection: service)
         service.start()
     }
 
@@ -56,7 +56,7 @@ final class DeviceConnectionServiceTests: XCTestCase {
     func testStartReplacesTheInitialDiscovery() {
         XCTAssertEqual(discoveries.count, 2)
         XCTAssertTrue(discoveries[0].gaveUpResponsibility)
-        XCTAssertTrue(discoveries[1].context === viewModel)
+        XCTAssertTrue(discoveries[1].context === service)
     }
 
     func testBackgroundStopsAndForegroundRestartsDiscovery() {
@@ -115,7 +115,7 @@ final class DeviceConnectionServiceTests: XCTestCase {
 
         XCTAssertTrue(service.currentCalliope === calliope)
         XCTAssertTrue(service.bleCalliope === calliope)
-        XCTAssertEqual(UserDefaults.standard.string(forKey: SettingsKey.lastMatrix.rawValue), viewModel.getMatrixString())
+        XCTAssertEqual(UserDefaults.standard.string(forKey: SettingsKey.lastMatrix.rawValue), service.matrixString)
         XCTAssertEqual(viewModel.connectionMenuButtonState, .connected)
     }
 
