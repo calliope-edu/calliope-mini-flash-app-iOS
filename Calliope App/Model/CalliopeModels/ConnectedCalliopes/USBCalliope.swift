@@ -577,8 +577,7 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
 
      1. Resolve a safe FAT12-compatible destination name (8.3, ASCII).
      2. `NSFileCoordinator(.forReplacing)` to coordinate via File Provider.
-     3. `FileManager.copyItem` (= `copyfile(3)` = same as `/bin/cp`) — DAPLink
-        sees the file appear with full contents in a single FAT transaction.
+     3. A single non-atomic `Data.write` — one open/write/close, no rename.
      4. Hold the security-scoped resource for the entire async operation.
      5. Treat a successful copy call as success. No post-write verification.
      */
@@ -664,28 +663,6 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
         return stem + suffix + ".hex"
     }
 
-    /// Copies `sourceURL` to `destinationURL` via `FileManager.copyItem(at:to:)`
-    /// wrapped in `NSFileCoordinator` with `.forReplacing` intent.
-    ///
-    /// **Why this combination is the only one that works for DAPLink:**
-    ///
-    /// DAPLink's MSD parser starts processing a `*.hex` file the instant it
-    /// appears on the FAT. If we create the destination first and *then* write
-    /// (FileHandle / chunked / streaming), DAPLink sees a 0-byte hex, marks the
-    /// FAT entry as failed, and every subsequent `write(2)` returns `EIO`.
-    /// `Data.write(to:, options: .atomic)` solves the 0-byte problem by writing
-    /// to a non-.hex temp file and renaming, but the rename is unreliable on
-    /// the DAPLink filesystem (causing the ~25 % failure rate we used to see).
-    ///
-    /// `FileManager.copyItem` on Apple platforms uses `copyfile(3)` — the same
-    /// syscall `/bin/cp` uses on macOS, where DAPLink flashing works reliably.
-    /// `copyfile` opens the destination with `O_WRONLY|O_CREAT|O_TRUNC`, writes
-    /// the entire payload, and closes. DAPLink sees the file appear *with full
-    /// contents* in a single FAT transaction, parses it, and programs the chip.
-    ///
-    /// `NSFileCoordinator(.forReplacing)` wraps the call so that the File
-    /// Provider machinery (which DAPLink-via-Files-app runs through) acquires
-    /// the right exclusive lock and tears down any cached observers.
     private static func sequentialCopy(from sourceURL: URL, to destinationURL: URL) -> Bool {
         let coordinator = NSFileCoordinator()
         var coordError: NSError?
@@ -694,26 +671,13 @@ class USBCalliope: Calliope, UIDocumentPickerDelegate {
         coordinator.coordinate(writingItemAt: destinationURL,
                                options: .forReplacing,
                                error: &coordError) { coordinatedURL in
-            // Some DAPLink firmware revisions keep a stale FAT entry around
-            // after a previous flash. Best-effort remove before copy.
-            try? FileManager.default.removeItem(at: coordinatedURL)
-
             do {
-                try FileManager.default.copyItem(at: sourceURL, to: coordinatedURL)
+                let data = try Data(contentsOf: sourceURL, options: [.uncached])
+                // No .atomic: DAPLink breaks on the temp file + rename.
+                try data.write(to: coordinatedURL)
                 success = true
             } catch {
-                LogNotify.log("USB Transfer: copyItem failed: \(error)")
-                // Fallback: copyItem can fail with file-provider quirks even when
-                // a plain Data.write succeeds. Try the lower-level form once.
-                if let data = try? Data(contentsOf: sourceURL, options: [.uncached]) {
-                    do {
-                        try data.write(to: coordinatedURL) // no .atomic — single open/write/close
-                        success = true
-                        LogNotify.log("USB Transfer: fallback Data.write succeeded")
-                    } catch {
-                        LogNotify.log("USB Transfer: fallback Data.write failed: \(error)")
-                    }
-                }
+                LogNotify.log("USB Transfer: write failed: \(error)")
             }
         }
 
