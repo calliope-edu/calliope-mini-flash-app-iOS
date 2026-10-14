@@ -19,6 +19,8 @@ class UploadProgressViewModel: ObservableObject {
     @Published var statusText: String = ""
 
     var cancelAction: (() -> Void)?
+    /// Teardown for a connection lost outside the DFU library's own callbacks.
+    var connectionLostAction: (() -> Void)?
 
     func startUpload(isIndeterminate: Bool = false, statusText: String = "") {
         if isUploading {
@@ -45,10 +47,20 @@ class UploadProgressViewModel: ObservableObject {
         isIndeterminate = false
         statusText = ""
         cancelAction = nil
+        connectionLostAction = nil
     }
 
     func cancel() {
         cancelAction?()
         finishUpload()
+    }
+
+    func handleConnectionLost() {
+        guard isUploading else { return }
+        if let connectionLostAction {
+            connectionLostAction()
+        } else {
+            finishUpload()
+        }
     }
 }

@@ -499,6 +499,8 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
                         }
                     }
                 )
+                // A gone peripheral never reaches the DFU library's finished/failed callback.
+                UploadProgressViewModel.instance.handleConnectionLost()
             }
         } else if error.localizedDescription == NSLocalizedString("Connection to calliope timed out!", comment: "") {
             // Timeout ignorieren wenn noch nie verbunden war

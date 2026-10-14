@@ -354,6 +354,9 @@ class FirmwareUpload {
                 UploadProgressViewModel.instance.cancelAction = { [weak self] in
                     self?.finished()
                 }
+                UploadProgressViewModel.instance.connectionLostAction = { [weak self] in
+                    self?.failed()
+                }
 
                 // Set up disconnect callback for partial flashing optimization
                 if let flashableCalliope = calliope as? FlashableBLECalliope {
