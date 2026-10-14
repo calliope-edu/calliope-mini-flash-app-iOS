@@ -8,6 +8,7 @@
 
 import SwiftUI
 import UIKit
+import UniformTypeIdentifiers
 
 struct RootTabView: View {
     @Environment(\.scenePhase) private var scenePhase
@@ -44,6 +45,14 @@ struct RootTabView: View {
         }
         .modifier(AlertModifier(alert: matrixConnectionViewModel.alertBinding))
         .modifier(AlertModifier(alert: rootAlertPublisher.alertBinding))
+        .fileExporter(
+            isPresented: matrixConnectionViewModel.usbExportPresentedBinding,
+            document: EmptyHexDocument(),
+            contentType: EmptyHexDocument.hexType,
+            defaultFilename: matrixConnectionViewModel.usbExportRequest?.filename
+        ) { result in
+            matrixConnectionViewModel.completeUsbExport(result)
+        }
         .onOpenURL { url in
             handleOpenURL(url)
         }
@@ -143,5 +152,19 @@ final class RootAlertPublisher: ObservableObject, Alertable {
             get: { self.alert },
             set: { self.alert = $0 }
         )
+    }
+}
+
+// The app writes the hex content itself after the export, see USBCalliope.uploadViaExportPicker.
+private struct EmptyHexDocument: FileDocument {
+    static let hexType = UTType(filenameExtension: "hex") ?? .data
+    static var readableContentTypes: [UTType] { [hexType] }
+
+    init() {}
+
+    init(configuration: ReadConfiguration) throws {}
+
+    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
+        FileWrapper(regularFileWithContents: Data())
     }
 }

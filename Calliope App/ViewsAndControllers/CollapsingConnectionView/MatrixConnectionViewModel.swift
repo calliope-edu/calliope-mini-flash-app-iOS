@@ -98,6 +98,21 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
         )
     }
     @Published var isSharedIpad: Bool = UIDevice.current.isSharedIPad
+    @Published private(set) var usbExportRequest: UsbExportRequest?
+
+    var usbExportPresentedBinding: Binding<Bool> {
+        Binding(
+            get: { self.usbExportRequest != nil },
+            set: { isPresented in
+                guard !isPresented, let request = self.usbExportRequest else { return }
+                // iOS 16 has no cancel callback; the delay lets a success result arrive first.
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    guard self.usbExportRequest?.id == request.id else { return }
+                    self.completeUsbExport(nil)
+                }
+            }
+        )
+    }
 
     /// Whether the one-time heads-up alert before the per-flash export picker
     /// has already been shown in this app session. Reset on each app launch so
@@ -259,6 +274,17 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
 
         // Personal iPad: use the existing folder-picker flow.
         isFolderPickerPresented = true
+    }
+
+    func requestUsbExport(filename: String, completion: @escaping (Result<URL, Error>?) -> Void) {
+        usbExportRequest = UsbExportRequest(filename: filename, completion: completion)
+    }
+
+    // A nil result means the user cancelled the export picker.
+    func completeUsbExport(_ result: Result<URL, Error>?) {
+        guard let request = usbExportRequest else { return }
+        usbExportRequest = nil
+        request.completion(result)
     }
 
     func handleUSBFolderPicked(_ url: URL) {
@@ -549,6 +575,12 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
     }
 
 
+}
+
+struct UsbExportRequest {
+    let id = UUID()
+    let filename: String
+    let completion: (Result<URL, Error>?) -> Void
 }
 
 class PreviewMatrixConnectionViewModel: MatrixConnectionViewModelProtocol {

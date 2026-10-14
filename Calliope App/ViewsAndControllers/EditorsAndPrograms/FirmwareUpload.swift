@@ -95,8 +95,8 @@ class FirmwareUpload {
 
         let uploader = FirmwareUpload(file: program, alertPublisher: alertPublisher)
         
-        // Shared iPad: the system export picker performs the copy itself and is
-        // the only sheet the user should see. Presenting our progress alert here
+        // Shared iPad: the system export picker is the only sheet the user
+        // should see. Presenting our progress alert here
         // would stack a sheet in front of the picker and pop up again afterwards
         // (progress → picker → progress). Start the upload straight away so the
         // picker is what opens.
@@ -161,8 +161,8 @@ class FirmwareUpload {
     }
     
     /// True when this upload is handed to the Shared-iPad export picker. There
-    /// the system picker IS the transfer UI (it performs the copy), so the app
-    /// must not put its own progress alert on top of it.
+    /// the system picker is the transfer UI, so the app must not put its own
+    /// progress alert on top of it.
     private var usesExportPicker: Bool {
         (calliope as? USBCalliope)?.useExportPicker == true
     }
