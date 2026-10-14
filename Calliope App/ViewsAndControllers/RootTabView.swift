@@ -58,6 +58,9 @@ struct RootTabView: View {
         .modifier(AlertModifier(alert: matrixConnectionViewModel.alertBinding))
         .modifier(AlertModifier(alert: rootAlertPublisher.alertBinding))
         .modifier(AlertModifier(alert: uploadViewModel.alertBinding))
+        .sheet(isPresented: $uploadViewModel.isSharingLog) {
+            ActivityView(items: [LogNotify.recentLog])
+        }
         .environmentObject(uploadViewModel)
         .fileExporter(
             isPresented: matrixConnectionViewModel.usbExportPresentedBinding,

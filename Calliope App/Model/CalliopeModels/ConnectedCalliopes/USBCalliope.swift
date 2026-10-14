@@ -29,14 +29,8 @@ class USBCalliope: Calliope {
     /// connection, so the next flash goes straight back to the picker.
     private(set) var lastExportCancelledByUser = false
 
-    /// DIAGNOSTICS (Shared-iPad USB investigation): when true, every transfer
-    /// attempt ends with an alert showing DAPLink's verdict and the relevant log
-    /// lines, with an option to share the full log. A Shared iPad can only be
-    /// updated through TestFlight, where no console output is available.
-    ///
-    /// Set to `false` to go back to showing an alert only when the transfer
-    /// actually failed.
-    static let showTransferDiagnostics = false
+    // DAPLink's verdict arrives after the upload already reported completion.
+    var onTransferRejected: ((String) -> Void)?
 
     override var compatibleHexTypes: Set<HexParser.HexVersion> {
         return [.universal, .v3, .v3Shield, .v2, .arcade]
@@ -253,8 +247,8 @@ class USBCalliope: Calliope {
         }
     }
 
-    /// Checks in the background what actually became of the transfer and reports
-    /// it. Two independent signals are used:
+    /// Checks in the background what actually became of the transfer, logs it
+    /// and reports a rejection to `onTransferRejected`. Two independent signals are used:
     ///
     /// 1. **How much arrived.** The export picker grants access to exactly the
     ///    file it created, so its size can really be read — unlike anything else on the
@@ -265,37 +259,30 @@ class USBCalliope: Calliope {
     ///    would look like success when we simply cannot see it.
     private func verifyFlashOutcome(destinationURL: URL, expectedBytes: Int) {
         let volumeRoot = destinationURL.deletingLastPathComponent()
+        // Captured up front: on Shared iPad this USBCalliope is released once the copy is through.
+        let onTransferRejected = self.onTransferRejected
         DispatchQueue.global(qos: .utility).async {
-            let delivery = USBCalliope.pollDestinationDelivery(destinationURL, expectedBytes: expectedBytes)
+            USBCalliope.pollDestinationDelivery(destinationURL, expectedBytes: expectedBytes)
             let daplink = USBCalliope.pollForDAPLinkVerdict(volumeRoot: volumeRoot)
 
-            let verdict: String
-            if let failureText = daplink.failureText {
-                LogNotify.log("Export picker: DAPLink rejected the hex - \(failureText)")
-                verdict = failureText
-            } else if daplink.volumeReadable {
-                LogNotify.log("Export picker: volume readable, no FAIL.TXT - transfer accepted")
-                verdict = NSLocalizedString("The Calliope mini accepted the file.", comment: "Diagnostics verdict, success")
-            } else {
-                LogNotify.log("Export picker: cannot read the Calliope volume - outcome unknown")
-                verdict = NSLocalizedString("The result cannot be verified: the app is not allowed to read the Calliope mini.", comment: "Diagnostics verdict, not verifiable")
+            guard let failureText = daplink.failureText else {
+                if daplink.volumeReadable {
+                    LogNotify.log("Export picker: volume readable, no FAIL.TXT - transfer accepted")
+                } else {
+                    LogNotify.log("Export picker: cannot read the Calliope volume - outcome unknown")
+                }
+                return
             }
-
+            LogNotify.log("Export picker: DAPLink rejected the hex - \(failureText)")
             DispatchQueue.main.async {
-                if USBCalliope.showTransferDiagnostics {
-                    FirmwareUpload.presentTransferDiagnosticsAlert(verdict: verdict + "\n" + delivery)
-                    return
-                }
-                if daplink.failureText != nil {
-                    USBCalliope.presentTransferFailureAlert()
-                }
+                onTransferRejected?(failureText)
             }
         }
     }
 
-    /// Watches the file iOS created on the volume and reports how much of it
+    /// Watches the file iOS created on the volume and logs how much of it
     /// arrived. Blocks — call off the main queue.
-    private static func pollDestinationDelivery(_ url: URL, expectedBytes: Int) -> String {
+    private static func pollDestinationDelivery(_ url: URL, expectedBytes: Int) {
         let accessed = url.startAccessingSecurityScopedResource()
         defer { if accessed { url.stopAccessingSecurityScopedResource() } }
 
@@ -313,20 +300,19 @@ class USBCalliope: Calliope {
                     // It therefore proves that iOS accepted the whole file, NOT
                     // that the bytes reached the Calliope mini.
                     LogNotify.log("Export picker: iOS reports \(size) of \(expectedBytes) bytes handed over (file provider bookkeeping, not a device confirmation)")
-                    return "iOS accepted \(size) of \(expectedBytes) bytes (no confirmation from the Calliope mini)."
+                    return
                 }
             } else if lastSeen >= 0 {
                 // DAPLink unmounts the volume once it starts programming, so the
                 // file disappearing is expected — what matters is how much had
                 // arrived by then.
                 LogNotify.log("Export picker: destination vanished after \(lastSeen) of \(expectedBytes) bytes")
-                return "Vanished after \(lastSeen) of \(expectedBytes) bytes."
+                return
             }
             Thread.sleep(forTimeInterval: 0.5)
         }
 
         LogNotify.log("Export picker: destination stalled at \(lastSeen) of \(expectedBytes) bytes")
-        return "Stalled at \(lastSeen) of \(expectedBytes) bytes."
     }
 
     /// Polls for `FAIL.TXT` and, in parallel, establishes whether the volume can
@@ -358,23 +344,6 @@ class USBCalliope: Calliope {
         }
         return (nil, volumeReadable)
     }
-
-    /// Shows the "transfer went wrong" hint. Static so it still works if this
-    /// `USBCalliope` was released while we were waiting for DAPLink's verdict.
-    private static func presentTransferFailureAlert() {
-        let scenes = UIApplication.shared.connectedScenes
-            .compactMap { $0 as? UIWindowScene }
-            .filter { $0.activationState == .foregroundActive }
-        let keyWindow = scenes.flatMap { $0.windows }.first(where: { $0.isKeyWindow })
-            ?? scenes.flatMap { $0.windows }.first
-        guard let presenter = keyWindow?.rootViewController?.topMostPresented() else { return }
-
-        presenter.present(
-            FirmwareUpload.makeUsbTransferFailureAlert(
-                message: NSLocalizedString("There was an error transferring the file. Please try again. If the error persists, unplug the data cable and plug it back in.", comment: "")),
-            animated: true)
-    }
-
 
     /**
      USB flashing on Calliope mini (DAPLink-based) via the Files / Documents API.

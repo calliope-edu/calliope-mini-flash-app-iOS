@@ -34,17 +34,6 @@ class LogNotify {
         return buffer.joined(separator: "\n")
     }
 
-    /// The most recent buffered lines that contain one of `keywords`, oldest
-    /// first, capped at `limit` — short enough to show inside an alert.
-    public static func recentLines(matching keywords: [String], limit: Int) -> String {
-        bufferLock.lock()
-        defer { bufferLock.unlock() }
-        let relevant = keywords.isEmpty
-            ? buffer
-            : buffer.filter { line in keywords.contains(where: { line.contains($0) }) }
-        return relevant.suffix(limit).joined(separator: "\n")
-    }
-
     public class func log(_ msg: @autoclosure () -> String, level: LEVEL = .INFO, fileName: String = #file, lineNumber: Int = #line) {
         let lastPathComponent = (fileName as NSString).lastPathComponent
         let filenameOnly = lastPathComponent.components(separatedBy: ".")[0]

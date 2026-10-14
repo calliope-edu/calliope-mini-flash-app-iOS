@@ -1041,7 +1041,7 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
     /// upload. Split from handleFlash so the async probe completion can
     /// inject `forceFullDfu` before we touch the BLE stack.
     private func beginFlash(id: String, cal: BLECalliope, hexFile: HexFile, forceFullDfu: Bool) {
-        // Mirror the legacy FirmwareUpload.upload setup so partial-flash
+        // Mirror the FlashJob setup so partial-flash
         // works identically here: enable DFU-mode on the connection view,
         // and forward the partial-flash mid-flow disconnect request to
         // the host's connector. Without these the partial-flash post-reboot
@@ -1069,7 +1069,7 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
     /// widget's `program-type.ts probeBle` heuristic.
     ///
     /// The implementation lives on `BLECalliope` so the legacy
-    /// download-capture path (`FirmwareUpload`) applies the exact same
+    /// download-capture path (`FlashJob`) applies the exact same
     /// detection — see `BLECalliope.probeBlocksRuntime`.
     private func probeBlocksRuntime(on cal: BLECalliope, onResult: @escaping (Bool) -> Void) {
         cal.probeBlocksRuntime(completion: onResult)

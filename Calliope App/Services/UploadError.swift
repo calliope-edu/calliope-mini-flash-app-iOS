@@ -12,4 +12,5 @@ enum UploadError: Error {
     case incompatibleHex
     case connectionLost
     case dfu(String)
+    case transferRejected(String)
 }

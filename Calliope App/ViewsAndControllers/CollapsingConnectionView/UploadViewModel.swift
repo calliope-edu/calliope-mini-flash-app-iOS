@@ -19,6 +19,7 @@ final class UploadViewModel: ObservableObject {
     @Published var statusText = ""
 
     @Published var alert: AppAlert?
+    @Published var isSharingLog = false
     var alertBinding: Binding<AppAlert?> {
         Binding(
             get: { self.alert },
@@ -91,7 +92,7 @@ final class UploadViewModel: ObservableObject {
 
         let target = connection.currentCalliope
         let isUSB = target is USBCalliope
-        // On Shared iPad the system export picker is the transfer UI; failures there need a standalone alert.
+        // Export-picker failures are usually a stale USB volume, so they offer the log for reporting.
         let usesExportPicker = (target as? USBCalliope)?.useExportPicker == true
         LogNotify.debug("useExportPicker = \(usesExportPicker)")
 
@@ -202,21 +203,23 @@ final class UploadViewModel: ObservableObject {
         case .connectionLost:
             break
         case .incompatibleHex:
-            if usesExportPicker {
-                FirmwareUpload.presentStandalone(FirmwareUpload.makeHexMismatchAlert(informationLink: Self.hardwareInformationLink))
-            } else {
-                alert = .uploadFailed(goToInformation: Self.openHardwareInformation)
-            }
+            alert = .uploadFailed(goToInformation: Self.openHardwareInformation)
         case .dfu:
             if usesExportPicker {
-                // A rejected transfer (DAPLink FAIL.TXT) is detected in USBCalliope and shows the same alert from there.
-                FirmwareUpload.presentStandalone(FirmwareUpload.makeUsbTransferFailureAlert(
-                    message: NSLocalizedString("The file could not be transferred. Unplug the Calliope mini and plug it in again before you transfer the next program.", comment: "")))
+                alert = .usbTransferFailed(
+                    message: NSLocalizedString("The file could not be transferred. Unplug the Calliope mini and plug it in again before you transfer the next program.", comment: ""),
+                    shareLog: { [weak self] in self?.isSharingLog = true }
+                )
             } else if isUSB {
                 alert = .usbUploadFailed()
             } else {
                 alert = .uploadFailed(goToInformation: Self.openHardwareInformation)
             }
+        case .transferRejected:
+            alert = .usbTransferFailed(
+                message: NSLocalizedString("There was an error transferring the file. Please try again. If the error persists, unplug the data cable and plug it back in.", comment: ""),
+                shareLog: { [weak self] in self?.isSharingLog = true }
+            )
         }
     }
 

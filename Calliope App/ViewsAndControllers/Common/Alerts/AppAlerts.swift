@@ -143,6 +143,19 @@ extension AppAlert {
         )
     }
 
+    // Shared iPads only get TestFlight builds, so the in-app log is the only way to report a failed transfer.
+    static func usbTransferFailed(message: String, shareLog: @escaping () -> Void) -> AppAlert {
+        AppAlert(
+            title: NSLocalizedString("Upload failed!", comment: ""),
+            message: message,
+            actions: [
+                StandardAlertAction(NSLocalizedString("Share log", comment: "Action to share the in-app log"), handler: shareLog),
+                StandardAlertAction(NSLocalizedString("OK", comment: ""), role: .cancel, handler: {}),
+            ],
+            severity: .warning
+        )
+    }
+
     static func cannotUpload() -> AppAlert {
         AppAlert(
             title: NSLocalizedString("Cannot upload", comment: "Übertragung nicht möglich"),

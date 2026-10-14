@@ -12,5 +12,6 @@ enum UploadEvent {
     case progress(Double?)
     case completed
     case cancelled
+    // May follow .completed for USB, once DAPLink has checked the file.
     case failed(UploadError)
 }

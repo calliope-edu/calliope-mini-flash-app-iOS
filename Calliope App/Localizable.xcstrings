@@ -1285,6 +1285,7 @@
       }
     },
     "Further Information" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2261,6 +2262,7 @@
     },
     "The Calliope mini accepted the file." : {
       "comment" : "Diagnostics verdict, success",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2395,6 +2397,7 @@
     },
     "The result cannot be verified: the app is not allowed to read the Calliope mini." : {
       "comment" : "Diagnostics verdict, not verifiable",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2489,6 +2492,7 @@
     },
     "Transfer diagnostics" : {
       "comment" : "Diagnostics alert title",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
