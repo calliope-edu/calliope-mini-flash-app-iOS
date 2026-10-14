@@ -79,7 +79,9 @@ final class FlashJob {
         if let usb = target as? USBCalliope {
             // Must not capture self: the target would otherwise retain this job.
             usb.onTransferRejected = { [events] reason in
-                events(.failed(.transferRejected(reason)))
+                DispatchQueue.main.async {
+                    events(.failed(.transferRejected(reason)))
+                }
             }
         }
 
