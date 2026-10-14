@@ -6,10 +6,9 @@
 //  Copyright © 2024 calliope. All rights reserved.
 //
 
-import DeepDiff
 import GRDB
 
-struct Chart: Codable, FetchableRecord, PersistableRecord, DiffAware,
+struct Chart: Codable, FetchableRecord, PersistableRecord,
     Identifiable, Hashable
 {
 
@@ -19,15 +18,6 @@ struct Chart: Codable, FetchableRecord, PersistableRecord, DiffAware,
     var sensorType: CalliopeService?
     var groupsId: Int64?
 
-    typealias DiffId = String
-    var diffId: DiffId {
-        return ""
-    }
-
-    static func compareContent(_ a: Chart, _ b: Chart) -> Bool {
-        a.sensorType == b.sensorType && a.id == b.id
-    }
-    
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
         hasher.combine(sensorType)

@@ -7,23 +7,12 @@
 //
 
 import GRDB
-import DeepDiff
-
-struct Group: Codable, FetchableRecord, PersistableRecord, DiffAware {
+struct Group: Codable, FetchableRecord, PersistableRecord {
     
     static let databaseTableName = "groups"
     
     var id: Int64?
     var projectsId: Int64?
-    
-    typealias DiffId = String
-    var diffId: DiffId {
-        return ""
-    }
-    
-    static func compareContent(_ a: Group, _ b: Group) -> Bool {
-        a.id == b.id && a.projectsId == b.projectsId
-    }
     
     static func insertGroup(projectsId: Int64) -> Group? {
         
