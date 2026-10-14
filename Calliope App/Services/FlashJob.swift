@@ -104,10 +104,6 @@ final class FlashJob {
         guard !isEnded else { return }
         end()
         emit(.completed)
-        // On Shared iPad the picked USB volume is unusable after a copy, so the user has to re-pick it.
-        if target is USBCalliope {
-            connection.resetUsbConnectionAfterCopy()
-        }
     }
 
     private func fail(_ error: UploadError) {

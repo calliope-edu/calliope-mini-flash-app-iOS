@@ -28,9 +28,9 @@ extension UIDevice {
     /// to a personal iPad. This flag only adds the two Shared-iPad specifics:
     /// a one-time heads-up alert before the first pick
     /// (`MatrixConnectionViewModel.startUsbConnect`), and dropping the
-    /// connection plus switching USB back off after every copy
-    /// (`MatrixConnectionViewModel.resetUsbConnectionAfterCopy`), because
-    /// the picked volume's authorization does not survive a copy here.
+    /// connection plus switching USB back off after a cancelled copy
+    /// (`CalliopeConnectionService.resetUsbConnectionAfterCopy`). After a
+    /// successful copy USB stays on: the next flash opens a fresh picker anyway.
     var isSharedIPad: Bool {
         if UserDefaults.standard.object(forKey: "sharedIPadOverride") != nil {
             let override = UserDefaults.standard.bool(forKey: "sharedIPadOverride")
@@ -56,7 +56,7 @@ extension UIDevice {
     ///
     /// Single source of truth for both the picker route
     /// (`MatrixConnectionViewModel.startUsbConnect`) and the teardown
-    /// after a copy (`MatrixConnectionViewModel.resetUsbConnectionAfterCopy`),
+    /// after a cancelled copy (`CalliopeConnectionService.resetUsbConnectionAfterCopy`),
     /// so the two can never disagree.
     var usbNeedsExportPicker: Bool {
         isSharedIPad || ProcessInfo.processInfo.operatingSystemVersion.majorVersion < 26

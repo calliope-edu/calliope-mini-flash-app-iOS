@@ -212,7 +212,7 @@ final class CalliopeConnectionService: ConnectionControl, CalliopeDiscoveryConte
         connector.handleUSBFolderPicked(url)
     }
 
-    // The picked volume's access does not survive a copy where the destination is picked per flash, so the user has to pick it again.
+    // Where the destination is picked per flash, a cancelled copy may leave the volume unusable, so the user has to pick it again.
     func resetUsbConnectionAfterCopy() {
         guard UIDevice.current.usbNeedsExportPicker, isUsbMode else { return }
 
