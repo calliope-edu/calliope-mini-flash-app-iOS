@@ -344,7 +344,17 @@ class FirmwareUpload {
             guard let self else { return }
             do {
                 MatrixConnectionViewModel.instance.enableDfuMode(mode: true)
-                
+
+                // USB flashing works by copying a file to the device, so real progress cannot be measured.
+                let isUSB = calliope is USBCalliope
+                UploadProgressViewModel.instance.startUpload(
+                    isIndeterminate: isUSB,
+                    statusText: isUSB ? NSLocalizedString("Transferring to Calliope", comment: "") : ""
+                )
+                UploadProgressViewModel.instance.cancelAction = { [weak self] in
+                    self?.finished()
+                }
+
                 // Set up disconnect callback for partial flashing optimization
                 if let flashableCalliope = calliope as? FlashableBLECalliope {
                     // Captures nothing (no `self` reference), so no retain cycle
