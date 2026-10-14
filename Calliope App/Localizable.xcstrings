@@ -1314,6 +1314,16 @@
         }
       }
     },
+    "GETTING STARTED" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loslegen"
+          }
+        }
+      }
+    },
     "Here you will find your projects. You can view, process and share the recorded data, as well as download it as a table." : {
       "localizations" : {
         "de" : {
@@ -1452,6 +1462,16 @@
         }
       }
     },
+    "Import Data From File" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daten von Datei importieren"
+          }
+        }
+      }
+    },
     "IO Pin" : {
       "localizations" : {
         "de" : {
@@ -1479,6 +1499,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Live-Bluetooth-Sensordaten"
+          }
+        }
+      }
+    },
+    "Load Data From Calliope" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daten vom Calliope laden"
           }
         }
       }

@@ -56,7 +56,7 @@ struct HomeScreenView: View {
 class HomeScreenViewModel: ObservableObject {
     @Published var gettingStartedItem = NewsItem(
         tileItem: TileItem(
-            title: "GETTING STARTED",
+            title: NSLocalizedString("GETTING STARTED", comment: ""),
             imageSource: ImageSource.local("teaser_onboarding"),
             color: Color("calliope-pink"),
             textColor: .white

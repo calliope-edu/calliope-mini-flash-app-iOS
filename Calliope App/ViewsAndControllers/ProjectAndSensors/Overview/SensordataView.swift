@@ -157,8 +157,8 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
             SizedBox(height: 12)
 
 
-            boxButton(label: "Load Data From Calliope", action: { openDataLogger() }, enabled: viewModel.dataLoggerButtonEnabled)
-            boxButton(label: "Import Data From File", action: { openDataLogger() }, enabled: true)
+            boxButton(label: NSLocalizedString("Load Data From Calliope", comment: ""), action: { openDataLogger() }, enabled: viewModel.dataLoggerButtonEnabled)
+            boxButton(label: NSLocalizedString("Import Data From File", comment: ""), action: { openDataLogger() }, enabled: true)
         }.frame(maxHeight: .infinity, alignment: .top)
     }
 
