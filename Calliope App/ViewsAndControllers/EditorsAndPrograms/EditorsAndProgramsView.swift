@@ -69,6 +69,9 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
                         }
                     }
                 }
+                .refreshable {
+                    viewModel.loadPrograms()
+                }
                 .padding()
             }
             .navigationDestination(for: EditorsAndProgramRoute.self) { route in

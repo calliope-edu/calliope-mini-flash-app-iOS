@@ -36,6 +36,7 @@ protocol EditorsAndProgramsViewModelProtocol {
     var alert: AppAlert? { get set }
     var alertBinding: Binding<AppAlert?> { get }
 
+    func loadPrograms()
     func downloadProgram(program: ProgramTileConfig)
     func renameProgram(program: ProgramTileConfig)
     func deleteProgram(program: ProgramTileConfig)
@@ -191,6 +192,10 @@ class PreviewEditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, O
             get: { self.alert },
             set: { self.alert = $0 }
         )
+    }
+
+    func loadPrograms() {
+        print("Trying to load programs")
     }
 
     func downloadProgram(program: ProgramTileConfig) {
