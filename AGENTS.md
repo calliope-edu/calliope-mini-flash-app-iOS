@@ -18,3 +18,4 @@ Partial flashing (`Model/Hex/PartialFlashing.swift`) is documented in `PARTIAL_F
 
 ## Notes
 - Generally all code should be in English. There remains some older code and comments in German.
+- Any text displayed in the App should be in English in the code. There remains some older code with German text. For the English text there should be a German translation in the Localizable.xcstrings.
