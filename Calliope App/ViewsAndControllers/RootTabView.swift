@@ -17,6 +17,7 @@ struct RootTabView: View {
     @StateObject private var sensordataViewModel = SensordataViewModel()
     @StateObject private var lofiAppsViewModel = LofiAppsViewModel()
     @StateObject private var rootAlertPublisher = RootAlertPublisher()
+    @ObservedObject private var matrixConnectionViewModel = MatrixConnectionViewModel.instance
     @State private var wasInBackground = false
 
     var body: some View {
@@ -38,10 +39,10 @@ struct RootTabView: View {
             }
             .tint(Color("calliope-lilablau"))
             
-            MatrixConnectionView(viewModel: MatrixConnectionViewModel.instance)
+            MatrixConnectionView(viewModel: matrixConnectionViewModel)
                 .offset(x: -8, y: 8)
         }
-        .modifier(AlertModifier(alert: MatrixConnectionViewModel.instance.alertBinding))
+        .modifier(AlertModifier(alert: matrixConnectionViewModel.alertBinding))
         .modifier(AlertModifier(alert: rootAlertPublisher.alertBinding))
         .onOpenURL { url in
             handleOpenURL(url)
