@@ -36,14 +36,7 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
                     VStack(alignment: .leading, spacing: 4) {
                         if displayedIsUsb {
                             if viewModel.isSharedIpad {
-                                Text("You're on a shared iPad")
-                                    .font(.subheadline.bold())
-
-                                Text("You'll need to select the Calliope mini again before every file transfer. Switching to Bluetooth avoids this.")
-                                    .font(.footnote)
-                                    .foregroundColor(.secondary)
-                                    .multilineTextAlignment(.leading)
-                                    .fixedSize(horizontal: false, vertical: true)
+                                Text("On a Shared iPad the Calliope mini has to be selected for every file copy. Transferring over the cable is not reliable here, so we recommend transferring via Bluetooth.")
                             }
                             else{
                                 selectUSBCalliopeButton

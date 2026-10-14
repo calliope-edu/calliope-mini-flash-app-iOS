@@ -2747,11 +2747,22 @@
 
     },
     "The file could not be transferred. Please select your Calliope mini again (tap the icon at the top right) and try again!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Die Datei konnte nicht übertragen werden, probiere es noch einmal oder erstelle eine neue Verbindung zu deinem Calliope mini (das Icon oben rechts drücken) und versuche es danach erneut!"
+          }
+        }
+      }
+    },
+    "The file could not be transferred. Unplug the Calliope mini and plug it in again before you transfer the next program." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Datei konnte nicht übertragen werden. Trenne den Calliope mini und verbinde ihn erneut, bevor du das nächste Programm überträgst"
           }
         }
       }
@@ -3443,6 +3454,7 @@
       }
     },
     "You'll need to select the Calliope mini again before every file transfer. Switching to Bluetooth avoids this." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3453,6 +3465,7 @@
       }
     },
     "You're on a shared iPad" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
