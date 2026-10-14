@@ -30,9 +30,6 @@
 				Fonts/Roboto_Mono/LICENSE.txt,
 				Info.plist,
 				PrivacyInfo.xcprivacy,
-				SensorData/SensorData/DataModel.xcdatamodeld,
-				"/Localized: ViewsAndControllers/CarRemote/CarRemote.storyboard",
-				"/Localized: ViewsAndControllers/CarRemote/CarRemote.strings",
 			);
 			target = 2F61450B22BF75DE001C2734 /* Calliope App */;
 		};
