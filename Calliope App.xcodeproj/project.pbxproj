@@ -91,7 +91,6 @@
 		604938852E151BB1008BCE40 /* OperationStatusEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604938842E151BA7008BCE40 /* OperationStatusEnum.swift */; };
 		604938BE2E1BAF6C008BCE40 /* DummyModules in Frameworks */ = {isa = PBXBuildFile; productRef = 604938BD2E1BAF6C008BCE40 /* DummyModules */; };
 		604938C02E1BAF6C008BCE40 /* ScratchLinkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 604938BF2E1BAF6C008BCE40 /* ScratchLinkKit */; };
-		604F00E0307928C000866E12 /* CalliopeProxyMessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604F00DF307928C000866E12 /* CalliopeProxyMessageHandler.swift */; };
 		6073401E300785C200616062 /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6073401D300785C200616062 /* QRCodeView.swift */; };
 		607340203007C05700616062 /* EditorWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6073401F3007C05700616062 /* EditorWebView.swift */; };
 		6073406A3007DFDA00616062 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607340693007DFDA00616062 /* Router.swift */; };
@@ -247,7 +246,6 @@
 		604938822E15127E008BCE40 /* FileExtensionsEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileExtensionsEnum.swift; sourceTree = "<group>"; };
 		604938842E151BA7008BCE40 /* OperationStatusEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationStatusEnum.swift; sourceTree = "<group>"; };
 		604938B42E1BAF1D008BCE40 /* ScratchLinkKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ScratchLinkKit; sourceTree = "<group>"; };
-		604F00DF307928C000866E12 /* CalliopeProxyMessageHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalliopeProxyMessageHandler.swift; sourceTree = "<group>"; };
 		6073401D300785C200616062 /* QRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
 		6073401F3007C05700616062 /* EditorWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorWebView.swift; sourceTree = "<group>"; };
 		607340693007DFDA00616062 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
@@ -309,56 +307,15 @@
 		7E25C8370320F1AE86E741A5 /* UtilityLogJob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityLogJob.swift; sourceTree = "<group>"; };
 		7E25CF0763552A9F4EBCE00E /* UtilityJobProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityJobProtocol.swift; sourceTree = "<group>"; };
 		806801502EF5A2D00010448D /* ConnectedCalliopeV3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedCalliopeV3.swift; sourceTree = "<group>"; };
-		806801522EF7008B0010448D /* PartialFlashingOptimized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartialFlashingOptimized.swift; sourceTree = "<group>"; };
 		80EB0D412F0ECA3A000C3269 /* PartialFlashing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartialFlashing.swift; sourceTree = "<group>"; };
 		BD1AFC4008F992EADC1C557D /* Pods-Calliope App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.release.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		6030A04B3066CD2800E2627C /* Alerts */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
-			explicitFileTypes = {
-			};
-			explicitFolders = (
-			);
-			path = Alerts;
-			sourceTree = "<group>";
-		};
-		60F6C3E42F2D243500A6C193 /* LofiAppWebView */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
-			explicitFileTypes = {
-			};
-			explicitFolders = (
-			);
-			path = LofiAppWebView;
-			sourceTree = "<group>";
-		};
-		60F6C3E52F2D24A300A6C193 /* Web Bluetooth */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
-			explicitFileTypes = {
-			};
-			explicitFolders = (
-			);
-			path = "Web Bluetooth";
-			sourceTree = "<group>";
-		};
-		60F6C3F02F2D250000A6C193 /* Native Proxy */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
-			explicitFileTypes = {
-			};
-			explicitFolders = (
-			);
-			path = "Native Proxy";
-			sourceTree = "<group>";
-		};
+		6030A04B3066CD2800E2627C /* Alerts */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Alerts; sourceTree = "<group>"; };
+		60F6C3E42F2D243500A6C193 /* LofiAppWebView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LofiAppWebView; sourceTree = "<group>"; };
+		60F6C3E52F2D24A300A6C193 /* Web Bluetooth */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Web Bluetooth"; sourceTree = "<group>"; };
+		60F6C3F02F2D250000A6C193 /* Native Proxy */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Native Proxy"; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -692,14 +649,6 @@
 			path = Packages;
 			sourceTree = "<group>";
 		};
-		604F00E2307928CA00866E12 /* Native Proxy */ = {
-			isa = PBXGroup;
-			children = (
-				604F00DF307928C000866E12 /* CalliopeProxyMessageHandler.swift */,
-			);
-			path = "Native Proxy";
-			sourceTree = "<group>";
-		};
 		6055CDB02BBED7D90007F6B0 /* CalliopeBlocks */ = {
 			isa = PBXGroup;
 			children = (
@@ -777,7 +726,6 @@
 		60D1FD692B6BCF3D00BC6202 /* CalliopeModels */ = {
 			isa = PBXGroup;
 			children = (
-				604F00E2307928CA00866E12 /* Native Proxy */,
 				60F6C3E52F2D24A300A6C193 /* Web Bluetooth */,
 				60F6C3F02F2D250000A6C193 /* Native Proxy */,
 				60D1FD6B2B6BCF9800BC6202 /* ConnectedCalliopes */,
@@ -801,7 +749,6 @@
 		60D1FD6B2B6BCF9800BC6202 /* ConnectedCalliopes */ = {
 			isa = PBXGroup;
 			children = (
-				806801522EF7008B0010448D /* PartialFlashingOptimized.swift */,
 				60316BF72B01FEC300130C0D /* BLECalliope.swift */,
 				6094C3902C045FA9006F4CB4 /* ApiCalliope.swift */,
 				609D9BD52B67AD2200F2ECAE /* Calliope.swift */,
@@ -989,7 +936,7 @@
 			);
 			mainGroup = 2F61450322BF75DE001C2734;
 			packageReferences = (
-				604938BC2E1BAF6C008BCE40 /* XCLocalSwiftPackageReference "ScratchLinkKit" */,
+				604938BC2E1BAF6C008BCE40 /* XCLocalSwiftPackageReference "Packages/ScratchLinkKit" */,
 			);
 			productRefGroup = 2F61450D22BF75DE001C2734 /* Products */;
 			projectDirPath = "";
@@ -1076,9 +1023,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Calliope App/Pods-Calliope App-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Calliope App/Pods-Calliope App-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1097,7 +1048,6 @@
 				60818E7D2FE5A4150053893F /* EditorsAndProgramsView.swift in Sources */,
 				2FC2A12922C8FA6F00675C2F /* News.swift in Sources */,
 				600E632E2C33D7BB0027AE61 /* DataParser.swift in Sources */,
-				604F00E0307928C000866E12 /* CalliopeProxyMessageHandler.swift in Sources */,
 				2F61456E22BF761F001C2734 /* CalliopeBLEProfile.swift in Sources */,
 				2F57C3B42394F78B008B0D69 /* DownloadableHexFile.swift in Sources */,
 				60818EBC2FF561FB0053893F /* ArcadeView.swift in Sources */,
@@ -1420,7 +1370,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		604938BC2E1BAF6C008BCE40 /* XCLocalSwiftPackageReference "ScratchLinkKit" */ = {
+		604938BC2E1BAF6C008BCE40 /* XCLocalSwiftPackageReference "Packages/ScratchLinkKit" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Packages/ScratchLinkKit;
 		};
