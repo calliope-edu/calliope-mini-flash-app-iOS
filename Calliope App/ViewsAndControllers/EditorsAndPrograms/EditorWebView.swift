@@ -14,9 +14,10 @@ import WebKit
 struct PopupEditorWebView: View {
     let editor: Editor
     let alertPublisher: Alertable
+    @EnvironmentObject private var uploadViewModel: UploadViewModel
 
     var body: some View {
-        EditorWebViewRepresentable(editor: editor, alertPublisher: alertPublisher, uploadFirmware: FirmwareUpload.uploadWithoutConfirmation)
+        EditorWebViewRepresentable(editor: editor, alertPublisher: alertPublisher, uploadFirmware: uploadViewModel.uploadWithoutConfirmation)
             .background(DisableSwipeBackGestureView())
     }
 }
@@ -42,7 +43,7 @@ private class DisableSwipeBackViewController: UIViewController {
 struct EditorWebViewRepresentable: UIViewRepresentable {
     let editor: Editor
     let alertPublisher: Alertable
-    let uploadFirmware: (_ alertPublisher: Alertable, _ program: HexFile, _ completion: (() -> Void)?) -> Void
+    let uploadFirmware: (_ program: HexFile, _ completion: (() -> Void)?) -> Void
 
     func makeUIView(context: Context) -> EditorWebView {
         return EditorWebView(frame: .zero, alertPublisher: alertPublisher, uploadFirmware: uploadFirmware)
@@ -378,7 +379,7 @@ final class EditorWebView: UIView {
 
     var editor: Editor?
     let alertPublisher: Alertable
-    let uploadFirmware: (_ alertPublisher: Alertable, _ program: HexFile, _ completion: (() -> Void)?) -> Void
+    let uploadFirmware: (_ program: HexFile, _ completion: (() -> Void)?) -> Void
 
     /// Native-proxy bridge for the Calliope Campus editor. Non-nil only
     /// when `editor is CampusBridgedEditor` — keeps the legacy editors on the
@@ -405,7 +406,7 @@ final class EditorWebView: UIView {
     init(
         frame: CGRect,
         alertPublisher: Alertable,
-        uploadFirmware: @escaping (_ alertPublisher: Alertable, _ program: HexFile, _ completion: (() -> Void)?) -> Void
+        uploadFirmware: @escaping (_ program: HexFile, _ completion: (() -> Void)?) -> Void
     ) {
         self.alertPublisher = alertPublisher
         self.uploadFirmware = uploadFirmware
@@ -418,7 +419,7 @@ final class EditorWebView: UIView {
 
     required init?(coder: NSCoder) {
         self.alertPublisher = TestAlertable()
-        self.uploadFirmware = { alertPublisher, program, completion in }
+        self.uploadFirmware = { _, _ in }
         super.init(coder: coder)
         setupLoadingIndicator()
         webView = setupWebView()
@@ -835,8 +836,7 @@ extension EditorWebView: WKDownloadDelegate {
         }
 
         let file = HexFile(url: location, name: location.lastPathComponent, date: Date())
-        uploadFirmware(alertPublisher, file) {
-            MatrixConnectionViewModel.instance.connect()
+        uploadFirmware(file) {
             self.clearTemporaryStorage()
         }
     }
@@ -1062,9 +1062,7 @@ extension EditorWebView {
                 // is never lost, even if the transfer is cancelled.
                 let flashSource = EditorWebView.localFlashCopy(of: data, named: filename) ?? file
 
-                self.uploadFirmware(self.alertPublisher, flashSource) {
-                    MatrixConnectionViewModel.instance.connect()
-                }
+                self.uploadFirmware(flashSource, nil)
             } catch {
                 LogNotify.log(error.localizedDescription)
             }

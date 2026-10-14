@@ -5,6 +5,7 @@
 //  Copyright © 2026 calliope. All rights reserved.
 //
 
+import Combine
 import Foundation
 
 // Thin wrapper until the non-UI connection state moves out of MatrixConnectionViewModel.
@@ -18,6 +19,10 @@ final class MatrixDeviceConnectionService: DeviceConnectionService {
 
     var currentCalliope: Calliope? {
         viewModel.usageReadyCalliope
+    }
+
+    var connectionLost: AnyPublisher<Void, Never> {
+        viewModel.connectionLost.eraseToAnyPublisher()
     }
 
     func setDfuMode(_ enabled: Bool) {

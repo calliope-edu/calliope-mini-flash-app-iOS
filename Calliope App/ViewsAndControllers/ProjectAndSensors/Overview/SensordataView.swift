@@ -32,6 +32,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
     }
     @Environment(\.openURL) var openURL
     @State private var isImportingDataLoggerFile = false
+    @EnvironmentObject private var uploadViewModel: UploadViewModel
 
     var body: some View {
         NavigationStack(path: $router.path) {
@@ -193,36 +194,35 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
     }
 
     private func downloadDataLogger(bleCalliope calliope: CalliopeAPI) {
-        UploadProgressViewModel.instance.startUpload()
-        UploadProgressViewModel.instance.cancelAction = { calliope.cancelUtilityJob() }
+        uploadViewModel.startProgress(cancel: { calliope.cancelUtilityJob() })
         calliope.startUtilityJob(
             for: .LOG_HTML,
             onProgress: { progress in
                 DispatchQueue.main.async {
-                    UploadProgressViewModel.instance.updateProgress(Double(progress) / 100.0)
+                    uploadViewModel.updateProgress(Double(progress) / 100.0)
                 }
             },
             onCompletion: {
                 DispatchQueue.main.async {
                     guard let result = calliope.currentJob?.result else {
-                        UploadProgressViewModel.instance.finishUpload()
+                        uploadViewModel.finishProgress()
                         return
                     }
                     let tempURL = FileManager.default.temporaryDirectory
                         .appendingPathComponent("datalogger_\(Int(Date().timeIntervalSince1970)).htm")
                     do {
                         try result.write(to: tempURL)
-                        UploadProgressViewModel.instance.finishUpload()
+                        uploadViewModel.finishProgress()
                         router.push(.dataLogger(url: tempURL))
                     } catch {
                         LogNotify.log("Failed to store datalogger data: \(error)")
-                        UploadProgressViewModel.instance.finishUpload()
+                        uploadViewModel.finishProgress()
                     }
                 }
             },
             onFailure: {
                 DispatchQueue.main.async {
-                    UploadProgressViewModel.instance.finishUpload()
+                    uploadViewModel.finishProgress()
                     if calliope.currentJob?.jobState == .Canceled {
                         return
                     }

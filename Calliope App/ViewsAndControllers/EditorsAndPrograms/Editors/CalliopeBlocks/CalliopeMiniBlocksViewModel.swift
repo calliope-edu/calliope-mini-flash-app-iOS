@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import SwiftUI
 
+@MainActor
 protocol CalliopeMiniBlocksViewModelProtocol {
     var alertBinding: Binding<AppAlert?> { get }
     
@@ -19,7 +20,13 @@ protocol CalliopeMiniBlocksViewModelProtocol {
     func uploadBlocksV3Program()
 }
 
-class CalliopeMiniBlocksViewModel: CalliopeMiniBlocksViewModelProtocol, ObservableObject, Alertable {
+class CalliopeMiniBlocksViewModel: CalliopeMiniBlocksViewModelProtocol, ObservableObject, @preconcurrency Alertable {
+    private let uploadViewModel: UploadViewModel
+
+    init(uploadViewModel: UploadViewModel) {
+        self.uploadViewModel = uploadViewModel
+    }
+
     @Published var alert: AppAlert? = nil
     var alertBinding: Binding<AppAlert?> {
         Binding(
@@ -59,7 +66,7 @@ class CalliopeMiniBlocksViewModel: CalliopeMiniBlocksViewModelProtocol, Observab
             programName: NSLocalizedString("Mini_Blocks_Program", comment: ""),
             url: "https://go.calliope.cc/downloads/BlocksV2.hex"
         )
-        FirmwareUpload.showUIForDownloadableProgram(alertPublisher: self, program: program)
+        uploadViewModel.upload(downloadable: program)
     }
 
     func uploadBlocksV3Program() {
@@ -67,7 +74,7 @@ class CalliopeMiniBlocksViewModel: CalliopeMiniBlocksViewModelProtocol, Observab
             programName: NSLocalizedString("Mini_Blocks_Program", comment: ""),
             url: "https://go.calliope.cc/downloads/BlocksV3.hex"
         )
-        FirmwareUpload.showUIForDownloadableProgram(alertPublisher: self, program: program)
+        uploadViewModel.upload(downloadable: program)
     }
 
 }

@@ -5,6 +5,7 @@
 
 import UIKit
 
+@MainActor
 enum HexFileStoreDialog {
 
     /// Prüft ob es sich um eine Arcade Hex-Datei handelt
@@ -21,6 +22,7 @@ enum HexFileStoreDialog {
 
     public static func showStoreHexUI(
         alertPublisher: Alertable,
+        uploadViewModel: UploadViewModel,
         hexFile: URL,
         notSaved: @escaping (Error?) -> Void,
         saveCompleted: ((Hex) -> Void)? = nil
@@ -37,12 +39,12 @@ enum HexFileStoreDialog {
 
         // Wenn es eine Arcade-Datei ist und USB verbunden ist
         if isArcade && isUSBConnected {
-            alertPublisher.alert = getArcadeTransferAlert(alertPublisher: alertPublisher, hexFile: hexFile, notSaved: notSaved)
+            alertPublisher.alert = getArcadeTransferAlert(uploadViewModel: uploadViewModel, hexFile: hexFile, notSaved: notSaved)
             return
         }
 
         // Standard-Verhalten für normale Hex-Dateien
-        alertPublisher.alert = getStandardHexUI(alertPublisher: alertPublisher, hexFile: hexFile, notSaved: notSaved)
+        alertPublisher.alert = getStandardHexUI(uploadViewModel: uploadViewModel, hexFile: hexFile, notSaved: notSaved)
     }
 
     /// "Share" — hands the picked file to the system share sheet.
@@ -86,7 +88,7 @@ enum HexFileStoreDialog {
 
     /// Alert für Arcade-Dateien wenn USB verbunden ist
     private static func getArcadeTransferAlert(
-        alertPublisher: Alertable,
+        uploadViewModel: UploadViewModel,
         hexFile: URL,
         notSaved: @escaping (Error?) -> Void,
         saveCompleted: ((Hex) -> Void)? = nil
@@ -101,9 +103,7 @@ enum HexFileStoreDialog {
                     url: hexFile.standardizedFileURL.relativeString
                 )
                 program.downloadFile = false
-                FirmwareUpload.showUploadUI(alertPublisher: alertPublisher, program: program) {
-                    MatrixConnectionViewModel.instance.connect()
-                }
+                uploadViewModel.upload(program)
             },
             closed: {
                 notSaved(nil)
@@ -113,7 +113,7 @@ enum HexFileStoreDialog {
 
     /// Standard UI für normale Hex-Dateien
     private static func getStandardHexUI(
-        alertPublisher: Alertable,
+        uploadViewModel: UploadViewModel,
         hexFile: URL,
         notSaved: @escaping (Error?) -> Void,
         saveCompleted: ((Hex) -> Void)? = nil
@@ -134,9 +134,7 @@ enum HexFileStoreDialog {
                     url: hexFile.standardizedFileURL.relativeString
                 )
                 program.downloadFile = false
-                FirmwareUpload.showUploadUI(alertPublisher: alertPublisher, program: program) {
-                    MatrixConnectionViewModel.instance.connect()
-                }
+                uploadViewModel.upload(program)
             },
             closed: {}
         )

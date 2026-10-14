@@ -11,7 +11,7 @@ import SwiftUI
 /// Renders the upload progress UI (compact progress bar → expanded cancel panel)
 /// and owns the two-stage expansion animation state.
 struct UploadProgressPanel: View {
-    @ObservedObject var uploadProgress: UploadProgressViewModel
+    @ObservedObject var uploadProgress: UploadViewModel
     var namespace: Namespace.ID
 
     // Two-stage expansion: stage 1 = background + progress bar (isExpanded),

@@ -6,6 +6,7 @@
 //  Copyright © 2026 calliope. All rights reserved.
 //
 
+import Combine
 import CoreBluetooth
 import Foundation
 import SwiftUI
@@ -49,6 +50,8 @@ protocol MatrixConnectionViewModelProtocol: ObservableObject {
 
 class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
     static let instance: MatrixConnectionViewModel = MatrixConnectionViewModel()
+
+    let connectionLost = PassthroughSubject<Void, Never>()
 
     @Published var matrix = Array(repeating: Array(repeating: false, count: 5), count: 5) {
         didSet {
@@ -526,7 +529,7 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
                     }
                 )
                 // A gone peripheral never reaches the DFU library's finished/failed callback.
-                UploadProgressViewModel.instance.handleConnectionLost()
+                self.connectionLost.send()
             }
         } else if error.localizedDescription == NSLocalizedString("Connection to calliope timed out!", comment: "") {
             // Timeout ignorieren wenn noch nie verbunden war

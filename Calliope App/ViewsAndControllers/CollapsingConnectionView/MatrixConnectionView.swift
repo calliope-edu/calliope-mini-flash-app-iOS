@@ -271,7 +271,7 @@ struct BouncableView<Content: View>: View {
 
 struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelProtocol>: View {
     @ObservedObject var viewModel: ViewModelType
-    @ObservedObject var uploadProgress = UploadProgressViewModel.instance
+    @EnvironmentObject private var uploadProgress: UploadViewModel
     @Namespace private var glassNamespace
 
     var connectionButtonSize: CGFloat = 50
@@ -612,6 +612,7 @@ struct GlassElementModifier: ViewModifier {
 
 #Preview("Whole Page") {
     MatrixConnectionView(viewModel: PreviewMatrixConnectionViewModel())
+        .environmentObject(UploadViewModel.preview())
 }
 
 #Preview("Menu Button Variants") {
@@ -623,12 +624,14 @@ struct GlassElementModifier: ViewModifier {
         id: \.self
     ) { connectionMenuButtonState in
         MatrixConnectionView(viewModel: PreviewMatrixConnectionViewModel(connectionMenuButtonState: connectionMenuButtonState))
+            .environmentObject(UploadViewModel.preview())
     }
 }
 
 #Preview("Upload Transition") {
     struct UploadTransitionPreview: View {
         @ObservedObject var viewModel = PreviewMatrixConnectionViewModel()
+        @StateObject var uploadViewModel = UploadViewModel.preview()
         @State private var timer: Timer?
 
         var body: some View {
@@ -640,23 +643,18 @@ struct GlassElementModifier: ViewModifier {
                 VStack {
                     Spacer()
 
-                    if !UploadProgressViewModel.instance.isUploading {
+                    if !uploadViewModel.isUploading {
                         Button("Start Upload") {
-                            //                            withAnimation(.spring()) {
-                            UploadProgressViewModel.instance.startUpload()
-                            //                            }
+                            uploadViewModel.startProgress()
                             // Simulate progress over 5 seconds
-                            timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { t in
-                                if UploadProgressViewModel.instance.progress < 1.0 {
-                                    //                                    withAnimation {
-                                    UploadProgressViewModel.instance.updateProgress(UploadProgressViewModel.instance.progress + 0.005)
-                                    //                                    }
-                                } else {
-                                    t.invalidate()
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                        //                                        withAnimation(.spring()) {
-                                        UploadProgressViewModel.instance.finishUpload()
-                                        //                                        }
+                            timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+                                Task { @MainActor in
+                                    if uploadViewModel.progress < 1.0 {
+                                        uploadViewModel.updateProgress(uploadViewModel.progress + 0.005)
+                                    } else {
+                                        timer?.invalidate()
+                                        try? await Task.sleep(nanoseconds: 500_000_000)
+                                        uploadViewModel.finishProgress()
                                     }
                                 }
                             }
@@ -666,16 +664,17 @@ struct GlassElementModifier: ViewModifier {
                         .foregroundColor(.white)
                         .cornerRadius(12)
                     } else {
-                        Text("Uploading: \(Int(UploadProgressViewModel.instance.progress * 100))%")
+                        Text("Uploading: \(Int(uploadViewModel.progress * 100))%")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
                 }
                 .padding(.bottom, 40)
             }
+            .environmentObject(uploadViewModel)
             .onDisappear {
                 timer?.invalidate()
-                UploadProgressViewModel.instance.finishUpload()
+                uploadViewModel.finishProgress()
             }
         }
     }
@@ -697,13 +696,15 @@ struct GlassElementModifier: ViewModifier {
 }
 
 #Preview("On EditorsAndPrograms") {
+    let uploadViewModel = UploadViewModel.preview()
     ZStack {
-        EditorsAndProgramsView(viewModel: EditorsAndProgramsViewModel())
+        EditorsAndProgramsView(viewModel: EditorsAndProgramsViewModel(uploadViewModel: uploadViewModel))
             .environmentObject(RootCoordinator())
 
         MatrixConnectionView(viewModel: PreviewMatrixConnectionViewModel())
             .offset(x: -8, y: 8)
     }
+    .environmentObject(uploadViewModel)
 }
 
 #Preview("Bounce") {
@@ -713,6 +714,7 @@ struct GlassElementModifier: ViewModifier {
         var body: some View {
             VStack {
                 MatrixConnectionView(viewModel: viewModel)
+                    .environmentObject(UploadViewModel.preview())
 
                 Button("Bounce") {
                     viewModel.animateBounce()

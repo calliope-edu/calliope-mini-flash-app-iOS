@@ -5,6 +5,7 @@
 //  Copyright © 2026 calliope. All rights reserved.
 //
 
+import Combine
 import Foundation
 
 final class FlashService {
@@ -12,17 +13,21 @@ final class FlashService {
     private let connection: DeviceConnectionService
     // The calliopes hold their DFU delegates weakly, so the running job has to be retained here.
     private var activeJob: FlashJob?
+    private var connectionLostSubscription: AnyCancellable?
 
     init(connection: DeviceConnectionService) {
         self.connection = connection
+        // A gone peripheral never reaches the DFU library's finished/failed callback.
+        connectionLostSubscription = connection.connectionLost.sink { [weak self] in
+            self?.activeJob?.connectionLost()
+        }
     }
 
-    @discardableResult
-    func flash(_ hex: Hex, events: @escaping (UploadEvent) -> Void) -> FlashJob? {
+    func flash(_ hex: Hex, events: @escaping (UploadEvent) -> Void) {
         guard let target = connection.currentCalliope else {
             LogNotify.error("No calliope connected. Canceling upload.")
             events(.failed(.notConnected))
-            return nil
+            return
         }
 
         let fileHexTypes = hex.getHexTypes()
@@ -30,7 +35,7 @@ final class FlashService {
         guard target.compatibleHexTypes.contains(where: fileHexTypes.contains) else {
             LogNotify.log("[FlashService] ERROR: Hex version mismatch!")
             events(.failed(.incompatibleHex))
-            return nil
+            return
         }
 
         activeJob?.abandon()
@@ -42,6 +47,9 @@ final class FlashService {
         }
         activeJob = job
         job.start()
-        return job
+    }
+
+    func cancel() {
+        activeJob?.cancel()
     }
 }

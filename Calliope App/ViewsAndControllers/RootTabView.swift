@@ -14,12 +14,24 @@ struct RootTabView: View {
     @Environment(\.scenePhase) private var scenePhase
     @StateObject private var coordinator = RootCoordinator()
     @StateObject private var homeViewModel = HomeScreenViewModel()
-    @StateObject private var editorsViewModel = EditorsAndProgramsViewModel()
+    @StateObject private var uploadViewModel: UploadViewModel
+    @StateObject private var editorsViewModel: EditorsAndProgramsViewModel
     @StateObject private var sensordataViewModel = SensordataViewModel()
     @StateObject private var lofiAppsViewModel = LofiAppsViewModel()
     @StateObject private var rootAlertPublisher = RootAlertPublisher()
     @ObservedObject private var matrixConnectionViewModel = MatrixConnectionViewModel.instance
     @State private var wasInBackground = false
+
+    init() {
+        let connection = MatrixDeviceConnectionService(viewModel: .instance)
+        let uploadViewModel = UploadViewModel(
+            flashService: FlashService(connection: connection),
+            connection: connection,
+            connectionPanel: .instance
+        )
+        _uploadViewModel = StateObject(wrappedValue: uploadViewModel)
+        _editorsViewModel = StateObject(wrappedValue: EditorsAndProgramsViewModel(uploadViewModel: uploadViewModel))
+    }
 
     var body: some View {
         ZStack {
@@ -45,6 +57,8 @@ struct RootTabView: View {
         }
         .modifier(AlertModifier(alert: matrixConnectionViewModel.alertBinding))
         .modifier(AlertModifier(alert: rootAlertPublisher.alertBinding))
+        .modifier(AlertModifier(alert: uploadViewModel.alertBinding))
+        .environmentObject(uploadViewModel)
         .fileExporter(
             isPresented: matrixConnectionViewModel.usbExportPresentedBinding,
             document: EmptyHexDocument(),
@@ -88,6 +102,7 @@ struct RootTabView: View {
             LogNotify.log("received \(url.lastPathComponent)")
             HexFileStoreDialog.showStoreHexUI(
                 alertPublisher: rootAlertPublisher,
+                uploadViewModel: uploadViewModel,
                 hexFile: url,
                 notSaved: { _ in
                     //TODO: handle error

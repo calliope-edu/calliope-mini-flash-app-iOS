@@ -27,6 +27,7 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
     @StateObject private var router = Router<EditorsAndProgramRoute>()
     @EnvironmentObject private var coordinator: RootCoordinator
     @State private var presentingFileImporter = false
+    @EnvironmentObject private var uploadViewModel: UploadViewModel
 
     private var isEditorWebViewOpen: Bool {
         switch router.path.last {
@@ -109,7 +110,7 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
         case .openRobertaLab:
             PopupEditorWebView(editor: RobertaEditor(), alertPublisher: viewModel)
         case .calliopeMiniBlocks:
-            CalliopeMiniBlocksView(viewModel: CalliopeMiniBlocksViewModel())
+            CalliopeMiniBlocksView(viewModel: CalliopeMiniBlocksViewModel(uploadViewModel: uploadViewModel))
         case .arcadeLanding:
             ArcadeView(viewModel: ArcadeViewModel(openArcade: { router.push(.arcadeEditor) }))
         case .arcadeEditor:

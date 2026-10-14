@@ -30,6 +30,7 @@ struct ProgramTileConfig: Identifiable {
     let hexFile: HexFile
 }
 
+@MainActor
 protocol EditorsAndProgramsViewModelProtocol {
     var editors: [EditorTileConfig] { get }
     var programs: [ProgramTileConfig] { get }
@@ -45,7 +46,7 @@ protocol EditorsAndProgramsViewModelProtocol {
     func openFile(result: Result<URL, Error>)
 }
 
-class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, ObservableObject, Alertable {
+class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, ObservableObject, @preconcurrency Alertable {
 
     @Published var editors: [EditorTileConfig] = [
         EditorTileConfig(name: "Makecode", iconName: "editors_makecode"),
@@ -67,6 +68,7 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
     }
 
     var programSubscription: NSObjectProtocol!
+    private let uploadViewModel: UploadViewModel
 
     func loadPrograms() {
         programs = []
@@ -77,7 +79,8 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
         }
     }
 
-    init() {
+    init(uploadViewModel: UploadViewModel) {
+        self.uploadViewModel = uploadViewModel
         loadPrograms()
         programSubscription = NotificationCenter.default.addObserver(
             forName: NotificationConstants.hexFileChanged,
@@ -94,9 +97,7 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
     }
 
     func downloadProgram(program: ProgramTileConfig) {
-        FirmwareUpload.showUploadUI(alertPublisher: self, program: program.hexFile, name: program.name) {
-            MatrixConnectionViewModel.instance.connect()
-        }
+        uploadViewModel.upload(program.hexFile, name: program.name)
     }
 
     func renameProgram(program: ProgramTileConfig) {
@@ -130,7 +131,7 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
             programName: NSLocalizedString("Calliope mini V3", comment: ""),
             url: UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV3Url.rawValue)!
         )
-        FirmwareUpload.showUIForDownloadableProgram(alertPublisher: self, program: program)
+        uploadViewModel.upload(downloadable: program)
     }
 
     func uploadDefaultV1And2Program() {
@@ -138,14 +139,14 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
             programName: NSLocalizedString("Calliope mini V1 + 2", comment: ""),
             url: UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV1AndV2Url.rawValue)!
         )
-        FirmwareUpload.showUIForDownloadableProgram(alertPublisher: self, program: program)
+        uploadViewModel.upload(downloadable: program)
     }
 
     func openFile(result: Result<URL, Error>) {
         switch result {
         case .success(let url):
             if !(url.lastPathComponent.isEmpty) {
-                HexFileStoreDialog.showStoreHexUI(alertPublisher: self, hexFile: url, notSaved: { _ in})
+                HexFileStoreDialog.showStoreHexUI(alertPublisher: self, uploadViewModel: uploadViewModel, hexFile: url, notSaved: { _ in})
             }
         case .failure(let error):
             LogNotify.error("Program import failed: \(error)")
