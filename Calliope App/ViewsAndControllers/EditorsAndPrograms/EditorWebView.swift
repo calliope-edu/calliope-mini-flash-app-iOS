@@ -465,6 +465,9 @@ final class EditorWebView: UIView {
         webView.translatesAutoresizingMaskIntoConstraints = false
         webView.backgroundColor = Styles.colorWhite
 
+        webView.navigationDelegate = self
+        webView.uiDelegate = self
+
         // For every Calliope Campus editor (the campus home and its /blocks,
         // /makecode and /python flavours — anything conforming to
         // `CampusBridgedEditor`), register the native-proxy bridge as the
@@ -641,6 +644,7 @@ extension EditorWebView: WKNavigationDelegate {
     }
 
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        hideLoading()
         LogNotify.log("\(error)")
     }
 
