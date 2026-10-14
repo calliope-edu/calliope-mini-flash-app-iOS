@@ -28,6 +28,7 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
     @EnvironmentObject private var coordinator: RootCoordinator
     @State private var presentingFileImporter = false
     @EnvironmentObject private var uploadViewModel: UploadViewModel
+    @Environment(\.connectionPanel) private var connectionPanel
 
     private var isEditorWebViewOpen: Bool {
         switch router.path.last {
@@ -82,7 +83,6 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
         .modifier(AlertModifier(alert: viewModel.alertBinding))
         .toolbar(isEditorWebViewOpen ? .hidden : .automatic, for: .tabBar)
         .onAppear {
-            MatrixConnectionViewModel.instance.calliopeClass = DiscoveredBLEDevice.self
             handlePendingEditorsRoute()
         }
         .onChange(of: coordinator.pendingEditorsRoute) { _ in
@@ -110,7 +110,7 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
         case .openRobertaLab:
             PopupEditorWebView(editor: RobertaEditor(), alertPublisher: viewModel)
         case .calliopeMiniBlocks:
-            CalliopeMiniBlocksView(viewModel: CalliopeMiniBlocksViewModel(uploadViewModel: uploadViewModel))
+            CalliopeMiniBlocksView(viewModel: CalliopeMiniBlocksViewModel(uploadViewModel: uploadViewModel, connectionPanel: connectionPanel))
         case .arcadeLanding:
             ArcadeView(viewModel: ArcadeViewModel(openArcade: { router.push(.arcadeEditor) }))
         case .arcadeEditor:

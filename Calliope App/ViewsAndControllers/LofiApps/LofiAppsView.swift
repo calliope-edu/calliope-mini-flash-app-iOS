@@ -31,9 +31,6 @@ struct LofiAppsView: View {
             }
         }
         .modifier(AlertModifier(alert: viewModel.alertBinding))
-        .onAppear {
-            MatrixConnectionViewModel.instance.calliopeClass = DiscoveredBLEDevice.self
-        }
     }
 
     @ViewBuilder
@@ -51,9 +48,11 @@ struct LofiAppsView: View {
 struct LofiAppDetailView: View {
     let app: AppItem
     let alertPublisher: Alertable
+    @Environment(\.deviceConnection) private var connection
+    @Environment(\.connectionPanel) private var connectionPanel
 
     var body: some View {
-        RepresentableWBWebView(url: URL(string: app.url)!, alertPublisher: alertPublisher)
+        RepresentableWBWebView(url: URL(string: app.url)!, alertPublisher: alertPublisher, connection: connection, connectionPanel: connectionPanel)
             .navigationTitle(app.tileItem.title)
     }
 }

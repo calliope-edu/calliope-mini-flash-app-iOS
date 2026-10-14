@@ -201,6 +201,7 @@ class ChartViewModel: ObservableObject, Identifiable {
 
     init(
         chart: Chart,
+        connection: DeviceConnectionService,
         openFileNameDialog:
             @escaping (@escaping (_ filename: String) -> Void) -> Void,
         onNewLocation: @escaping (_ location: IdentifiableLocation, _ chart: Chart) -> Void,
@@ -213,7 +214,7 @@ class ChartViewModel: ObservableObject, Identifiable {
         self.markLocation = markLocation
         self.getMarkerColorForChart = getMarkerColorForChart
 
-        dataController = DataController()
+        dataController = DataController(connection: connection)
         loadDatabaseDataIntoChart(chart)
         updateAvailableAxis()
         addNotificationSubscriptions()

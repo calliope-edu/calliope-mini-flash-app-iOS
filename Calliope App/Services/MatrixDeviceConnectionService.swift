@@ -21,8 +21,60 @@ final class MatrixDeviceConnectionService: DeviceConnectionService {
         viewModel.usageReadyCalliope
     }
 
+    var bleCalliope: Calliope? {
+        viewModel.connector.connectedCalliope?.usageReadyCalliope
+    }
+
+    var isUsbMode: Bool {
+        viewModel.isInUsbMode
+    }
+
+    var isUsbConnected: Bool {
+        viewModel.isUSBConnected()
+    }
+
+    // TODO: Find a better measure of whether bluetooth is enabled
+    var isBluetoothAvailable: Bool {
+        viewModel.connector.state != .initialized
+    }
+
     var connectionLost: AnyPublisher<Void, Never> {
         viewModel.connectionLost.eraseToAnyPublisher()
+    }
+
+    var deviceDisconnected: AnyPublisher<String, Never> {
+        viewModel.deviceDisconnected.eraseToAnyPublisher()
+    }
+
+    func start() {
+        viewModel.calliopeClass = DiscoveredBLEDevice.self
+    }
+
+    func enterForeground() {
+        viewModel.moveToForeground()
+    }
+
+    func enterBackground() {
+        viewModel.moveToBackground()
+    }
+
+    func suspendBluetooth() {
+        viewModel.dropBLEConnection()
+    }
+
+    func resumeBluetooth() {
+        viewModel.restartFromBLEConnectionDrop()
+    }
+
+    func reconnect(preferredName: String?) {
+        let connector = viewModel.connector
+        guard connector.state != .connecting,
+            let target = reconnectTarget(in: connector, preferredName: preferredName),
+            target.state == .discovered
+        else {
+            return
+        }
+        connector.connectToCalliope(target)
     }
 
     func setDfuMode(_ enabled: Bool) {
@@ -35,5 +87,14 @@ final class MatrixDeviceConnectionService: DeviceConnectionService {
 
     func resetUsbConnectionAfterCopy() {
         viewModel.resetUsbConnectionAfterCopy()
+    }
+
+    // The preferred mini if visible, else the single visible BLE mini if unambiguous.
+    private func reconnectTarget(in connector: CalliopeDiscovery, preferredName: String?) -> DiscoveredDevice? {
+        if let preferredName, let device = connector.discoveredCalliopes[preferredName] {
+            return device
+        }
+        let bleDevices = connector.discoveredCalliopes.values.filter { $0 is DiscoveredBLEDevice }
+        return bleDevices.count == 1 ? bleDevices.first : nil
     }
 }

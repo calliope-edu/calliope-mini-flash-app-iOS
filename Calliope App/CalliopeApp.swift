@@ -11,10 +11,11 @@ import SwiftUI
 @main
 struct CalliopeApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    private let dependencies = AppDependencies()
 
     var body: some Scene {
         WindowGroup {
-            RootTabView()
+            RootTabView(dependencies: dependencies)
         }
     }
 }

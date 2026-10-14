@@ -164,9 +164,14 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate {
     
     private var retryCount = 0
     public var isInBackground = false
+    weak var context: CalliopeDiscoveryContext?
     
-    init(_ calliopeBuilder: @escaping (_ peripheral: CBPeripheral, _ name: String) -> DiscoveredBLEDevice) {
+    init(
+        _ calliopeBuilder: @escaping (_ peripheral: CBPeripheral, _ name: String) -> DiscoveredBLEDevice,
+        context: CalliopeDiscoveryContext? = nil
+    ) {
         self.calliopeBuilder = calliopeBuilder
+        self.context = context
         super.init()
         if centralManager.state == .poweredOn {
             attemptReconnect()
@@ -181,7 +186,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate {
             state = .usbConnected
         } else if connectingCalliope != nil {
             state = .connecting
-        } else if centralManager.isScanning && MatrixConnectionViewModel.instance != nil && !MatrixConnectionViewModel.instance.isInUsbMode {
+        } else if centralManager.isScanning && !(context?.isInUsbMode ?? false) {
             state = discoveredCalliopes.isEmpty ? .discovering : .discovered
         } else {
             state = discoveredCalliopes.isEmpty ? .initialized : .discoveredAll
@@ -190,7 +195,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate {
     
     private func attemptReconnect() {
         // Make shure that we want to connect to a calliope right now. Otherwise it connects on the home screen without the ConnectionView even showing.
-        guard MatrixConnectionViewModel.instance.calliopeClass != nil else {
+        guard context?.isConnectionEnabled ?? false else {
            return
         }
         LogNotify.log("attempt reconnect")
@@ -231,17 +236,14 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate {
         //start scan only if central manger already connected to bluetooth system service (=poweredOn)
         //alternatively, this is invoked after the state of the central mananger changed to poweredOn.
         if centralManager.state != .poweredOn {
-            if MatrixConnectionViewModel.instance.isInUsbMode {
+            if context?.isInUsbMode ?? false {
                 updateQueue.async {
                     self.errorBlock(NSLocalizedString("Activate Bluetooth!", comment: ""))
                 }
                 state = .discoveryWaitingForBluetooth
             }
         } else if !centralManager.isScanning {
-            // When building this line sometimes threw an error that it unexpectedly found a nil value.
-            // The reason was that the vc was nil and so it could not unwrap isInUsbMode.
-            // This fix assumes that isInUsbMode is false, when the vc is not initialized yet.
-            if MatrixConnectionViewModel.instance.isInUsbMode, let discoveredCalliope = discoveredCalliopes[CalliopeDiscovery.usbCalliopeName] {
+            if context?.isInUsbMode ?? false, let discoveredCalliope = discoveredCalliopes[CalliopeDiscovery.usbCalliopeName] {
                 discoveredCalliopes = [ CalliopeDiscovery.usbCalliopeName : discoveredCalliope ]
             } else {
                 discoveredCalliopes = [:]
@@ -340,7 +342,7 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate {
         let discoveredCalliope = DiscoveredUSBDevice(url: url, name: CalliopeDiscovery.usbCalliopeName)
 
         guard let discoveredCalliope = discoveredCalliope else {
-            MatrixConnectionViewModel.instance.showFalseLocationAlert()
+            context?.showFalseLocationAlert()
             state = .initialized
             return
         }

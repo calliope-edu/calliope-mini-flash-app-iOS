@@ -21,18 +21,17 @@ class DataController: NSObject, CLLocationManagerDelegate {
 
 //    var getLastLocation: (() -> CLLocationCoordinate2D?)?
     let locationManager = CLLocationManager()
+    private let connection: DeviceConnectionService
 
-    /// The Bluetooth-connected Calliope mini, if it can deliver sensor values.
-    /// Deliberately not `usageReadyCalliope`: that follows the USB/Bluetooth
-    /// switch and reports the USB device (or nil) while the switch is on USB,
-    /// even though sensor values only ever come over Bluetooth.
-    private static var sensorCapableCalliope: CalliopeAPI? {
-        MatrixConnectionViewModel.instance.connector
-            .connectedCalliope?.usageReadyCalliope as? CalliopeAPI
+    // Not `currentCalliope`: sensor values only come over BLE, and that follows the USB switch.
+    private var sensorCapableCalliope: CalliopeAPI? {
+        connection.bleCalliope as? CalliopeAPI
     }
 
-    override init() {
-        guard let connectedCalliope = DataController.sensorCapableCalliope else {
+    init(connection: DeviceConnectionService) {
+        self.connection = connection
+        super.init()
+        guard let connectedCalliope = sensorCapableCalliope else {
             return
         }
         self.apiCalliope = connectedCalliope
@@ -43,7 +42,7 @@ class DataController: NSObject, CLLocationManagerDelegate {
     }
 
     func getAvailableSensors() -> [Sensor] {
-        apiCalliope = DataController.sensorCapableCalliope
+        apiCalliope = sensorCapableCalliope
         return apiCalliope?.discoveredOptionalServices.compactMap { key in
             return SensorUtility.serviceSensorMap[key]
         } ?? []

@@ -25,17 +25,11 @@ class ProjectViewModel: ObservableObject, Alertable {
     private var calliopeConnectedSubcription: NSObjectProtocol!
     private var calliopeDisconnectedSubscription: NSObjectProtocol!
     private let onDelete: () -> Void
+    private let connection: DeviceConnectionService
 
-    /// The Bluetooth-connected Calliope mini, if it can deliver sensor values.
-    ///
-    /// Recording reads `CalliopeAPI` characteristics, so it needs a Bluetooth
-    /// connection — a USB-connected Calliope has none. `usageReadyCalliope`
-    /// cannot be used for this check: it follows the USB/Bluetooth switch, so
-    /// while the switch sits on USB it reports the USB device (or nil) even
-    /// though a Bluetooth Calliope is connected and perfectly usable here.
+    // Not `currentCalliope`: recording needs BLE, and that follows the USB switch.
     private var sensorCapableCalliope: CalliopeAPI? {
-        MatrixConnectionViewModel.instance.connector
-            .connectedCalliope?.usageReadyCalliope as? CalliopeAPI
+        connection.bleCalliope as? CalliopeAPI
     }
 
     func loadGroups() {
@@ -47,14 +41,16 @@ class ProjectViewModel: ObservableObject, Alertable {
         groupViewModels = groups.map {
             GroupViewModel(
                 group: $0,
+                connection: connection,
                 openFileNameDialog: openFileNameDialog,
                 deleteGroup: deleteGroup
             )
         }
     }
 
-    init(project: Project, onDelete: @escaping () -> Void = {}) {
+    init(project: Project, connection: DeviceConnectionService, onDelete: @escaping () -> Void = {}) {
         self.project = project
+        self.connection = connection
         self.onDelete = onDelete
 
         loadGroups()
@@ -135,6 +131,7 @@ class ProjectViewModel: ObservableObject, Alertable {
         groupViewModels.append(
             GroupViewModel(
                 group: group,
+                connection: connection,
                 openFileNameDialog: openFileNameDialog,
                 deleteGroup: deleteGroup
             )

@@ -33,6 +33,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
     @Environment(\.openURL) var openURL
     @State private var isImportingDataLoggerFile = false
     @EnvironmentObject private var uploadViewModel: UploadViewModel
+    @Environment(\.deviceConnection) private var connection
 
     var body: some View {
         NavigationStack(path: $router.path) {
@@ -45,7 +46,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
                 .navigationDestination(for: ProjectAndSensorsRoute.self) { route in
                     switch route {
                     case .project(let id):
-                        ProjectDetailView(projectID: id, onDelete: { router.pop() })
+                        ProjectDetailView(projectID: id, connection: connection, onDelete: { router.pop() })
                     case .dataLogger(let url):
                         DataLoggerDetailView(url: url)
                     case .infoWebView(let url):
@@ -187,7 +188,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
             isImportingDataLoggerFile = true
             return
         }
-        guard let calliope = MatrixConnectionViewModel.instance.usageReadyCalliope as? CalliopeAPI else {
+        guard let calliope = connection.currentCalliope as? CalliopeAPI else {
             return
         }
         downloadDataLogger(bleCalliope: calliope)

@@ -32,18 +32,18 @@ class SensordataViewModel: ObservableObject, SensorDataViewModelProtocol, Alerta
         )
     }
     
+    let connection: DeviceConnectionService
     private var connectedCalliope: Calliope?
     private var calliopeConnectedSubcription: NSObjectProtocol!
     private var calliopeDisconnectedSubscription: NSObjectProtocol!
     private var programSubscription: NSObjectProtocol!
     
-    init() {
+    init(connection: DeviceConnectionService) {
+        self.connection = connection
         projects = Project.fetchProjects()
 
-        MatrixConnectionViewModel.instance.calliopeClass = DiscoveredBLEDevice.self
-
-        self.connectedCalliope = MatrixConnectionViewModel.instance.usageReadyCalliope
-        let usbMode = MatrixConnectionViewModel.instance.isInUsbMode
+        self.connectedCalliope = connection.currentCalliope
+        let usbMode = connection.isUsbMode
         self.isUsbMode = usbMode
         self.dataLoggerButtonEnabled =
             (self.connectedCalliope as? BLECalliope)?.discoveredOptionalServices.contains(.microbitUtilityService) ?? false || usbMode
@@ -75,8 +75,8 @@ class SensordataViewModel: ObservableObject, SensorDataViewModelProtocol, Alerta
             using: { [weak self] (_) in
                 DispatchQueue.main.async {
                     LogNotify.log("Received usage ready Notification")
-                    self?.connectedCalliope = MatrixConnectionViewModel.instance.usageReadyCalliope
-                    self?.isUsbMode = MatrixConnectionViewModel.instance.isInUsbMode
+                    self?.connectedCalliope = self?.connection.currentCalliope
+                    self?.isUsbMode = self?.connection.isUsbMode ?? false
                     self?.dataLoggerButtonEnabled =
                         (self?.connectedCalliope as? BLECalliope)?.discoveredOptionalServices.contains(.microbitUtilityService) ?? false
                         || self?.isUsbMode ?? false

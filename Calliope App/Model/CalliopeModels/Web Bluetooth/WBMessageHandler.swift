@@ -1,4 +1,5 @@
 import Foundation
+import Combine
 import CoreBluetooth
 import WebKit
 import Dispatch
@@ -6,26 +7,16 @@ import Dispatch
 open class WBMessageHandler: NSObject, WKScriptMessageHandler
 {
     private weak var webView: WBWebView?
-    var disconnectNotificationId: Int?
+    private let connection: DeviceConnectionService
+    private var disconnectSubscription: AnyCancellable?
     
-    func tearDown() {
-        unregisterDisconnectNotification()
-    }
-    
-    init(webView: WBWebView) {
+    init(webView: WBWebView, connection: DeviceConnectionService) {
         self.webView = webView
+        self.connection = connection
         super.init()
-        disconnectNotificationId = MatrixConnectionViewModel.instance.connector.registerDisconnectNotification(onDeviceDisconnect)
-    }
-    
-    func unregisterDisconnectNotification() {
-        if let id = disconnectNotificationId {
-            MatrixConnectionViewModel.instance.connector.unregisterDisconnectNotification(id: id)
+        disconnectSubscription = connection.deviceDisconnected.sink { [weak self] uuid in
+            self?.onDeviceDisconnect(uuid)
         }
-    }
-    
-    deinit {
-        tearDown()
     }
     
     // MARK: - Embedded types
@@ -68,11 +59,10 @@ open class WBMessageHandler: NSObject, WKScriptMessageHandler
         case .device:
             triageDeviceRequests(transaction: transaction)
         case .getAvailability:
-            // TODO: Find a better measure of wether bluetooth is enabled
-            let bluetoothEnabled = MatrixConnectionViewModel.instance.connector.state != .initialized
+            let bluetoothEnabled = connection.isBluetoothAvailable
             transaction.resolveAsSuccess(withObject: bluetoothEnabled)
         case .requestDevice:
-            let connectedCalliope = MatrixConnectionViewModel.instance.usageReadyCalliope
+            let connectedCalliope = connection.currentCalliope
             if(connectedCalliope != nil && connectedCalliope is BLECalliope) {
                 transaction.resolveAsSuccess(withObject: connectedCalliope! as! BLECalliope)
             }
@@ -92,7 +82,7 @@ open class WBMessageHandler: NSObject, WKScriptMessageHandler
             return
         }
         
-        guard let calliope = MatrixConnectionViewModel.instance.usageReadyCalliope as? BLECalliope else {
+        guard let calliope = connection.currentCalliope as? BLECalliope else {
             transaction.resolveAsFailure(withMessage: "There is no bluetooth device connected!")
             LogNotify.log("WB Bluetooth device call although no device was connected", level: LogNotify.LEVEL.ERROR)
             return

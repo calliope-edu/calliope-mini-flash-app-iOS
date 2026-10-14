@@ -48,10 +48,16 @@ protocol MatrixConnectionViewModelProtocol: ObservableObject {
     func animateBounce()
 }
 
-class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
+class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable, ConnectionPanel, CalliopeDiscoveryContext {
     static let instance: MatrixConnectionViewModel = MatrixConnectionViewModel()
 
     let connectionLost = PassthroughSubject<Void, Never>()
+    let deviceDisconnected = PassthroughSubject<String, Never>()
+
+    init() {
+        connector.context = self
+        forwardDisconnects(of: connector)
+    }
 
     @Published var matrix = Array(repeating: Array(repeating: false, count: 5), count: 5) {
         didSet {
@@ -159,8 +165,12 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
             let calliopeBuilder = { (_ peripheral: CBPeripheral, _ name: String) -> DiscoveredBLEDevice in
                 return calliopeClass.init(peripheral: peripheral, name: name)
             }
-            connector = CalliopeDiscovery(calliopeBuilder)
+            connector = CalliopeDiscovery(calliopeBuilder, context: self)
         }
+    }
+
+    var isConnectionEnabled: Bool {
+        calliopeClass != nil
     }
 
     private var connectionDisabled = true {
@@ -211,7 +221,14 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable {
         connector.updateBlock = updateDiscoveryState
         connector.errorBlock = error
         connector.bluetoothStateChangedBlock = handleBluetoothStateChange
+        forwardDisconnects(of: connector)
         restoreLastMatrix()
+    }
+
+    private func forwardDisconnects(of connector: CalliopeDiscovery) {
+        _ = connector.registerDisconnectNotification { [weak self] uuid in
+            self?.deviceDisconnected.send(uuid)
+        }
     }
 
     func matrixIsBlank() -> Bool {

@@ -22,6 +22,8 @@ class WBWebViewContainerController: UIViewController, WKNavigationDelegate, WKUI
     @IBOutlet var loadingProgressView: UIView!
     
     var alertPublisher: Alertable!
+    var connection: DeviceConnectionService!
+    var connectionPanel: ConnectionPanel!
 
     /// Native-proxy bridge, non-nil only for pages that use the Campus API
     /// (currently teachablemachine.calliope.cc). Every other page keeps the
@@ -43,6 +45,7 @@ class WBWebViewContainerController: UIViewController, WKNavigationDelegate, WKUI
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.webView.wbMessageHandler = WBMessageHandler(webView: webView, connection: connection)
         self.webView.addNavigationDelegate(self)
         self.webView.uiDelegate = self
         
@@ -125,7 +128,7 @@ class WBWebViewContainerController: UIViewController, WKNavigationDelegate, WKUI
             return
         }
 
-        let handler = CalliopeProxyMessageHandler(webView: webView)
+        let handler = CalliopeProxyMessageHandler(webView: webView, connection: connection, connectionPanel: connectionPanel)
         proxyMessageHandler = handler
         webView.configuration.userContentController.add(
             handler, name: CalliopeProxyMessageHandler.handlerName)

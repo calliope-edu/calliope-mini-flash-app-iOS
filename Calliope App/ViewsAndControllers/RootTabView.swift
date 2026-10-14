@@ -16,21 +16,24 @@ struct RootTabView: View {
     @StateObject private var homeViewModel = HomeScreenViewModel()
     @StateObject private var uploadViewModel: UploadViewModel
     @StateObject private var editorsViewModel: EditorsAndProgramsViewModel
-    @StateObject private var sensordataViewModel = SensordataViewModel()
+    @StateObject private var sensordataViewModel: SensordataViewModel
     @StateObject private var lofiAppsViewModel = LofiAppsViewModel()
     @StateObject private var rootAlertPublisher = RootAlertPublisher()
-    @ObservedObject private var matrixConnectionViewModel = MatrixConnectionViewModel.instance
+    @ObservedObject private var matrixConnectionViewModel: MatrixConnectionViewModel
     @State private var wasInBackground = false
+    private let dependencies: AppDependencies
 
-    init() {
-        let connection = MatrixDeviceConnectionService(viewModel: .instance)
+    init(dependencies: AppDependencies) {
+        self.dependencies = dependencies
+        _matrixConnectionViewModel = ObservedObject(wrappedValue: dependencies.connectionPanel)
         let uploadViewModel = UploadViewModel(
-            flashService: FlashService(connection: connection),
-            connection: connection,
-            connectionPanel: .instance
+            flashService: dependencies.flashService,
+            connection: dependencies.connection,
+            connectionPanel: dependencies.connectionPanel
         )
         _uploadViewModel = StateObject(wrappedValue: uploadViewModel)
         _editorsViewModel = StateObject(wrappedValue: EditorsAndProgramsViewModel(uploadViewModel: uploadViewModel))
+        _sensordataViewModel = StateObject(wrappedValue: SensordataViewModel(connection: dependencies.connection))
     }
 
     var body: some View {
@@ -62,6 +65,8 @@ struct RootTabView: View {
             ActivityView(items: [LogNotify.recentLog])
         }
         .environmentObject(uploadViewModel)
+        .environment(\.deviceConnection, dependencies.connection)
+        .environment(\.connectionPanel, dependencies.connectionPanel)
         .fileExporter(
             isPresented: matrixConnectionViewModel.usbExportPresentedBinding,
             document: EmptyHexDocument(),
@@ -79,14 +84,14 @@ struct RootTabView: View {
         .onChange(of: scenePhase) { phase in
             switch phase {
             case .background:
-                MatrixConnectionViewModel.instance.moveToBackground()
+                dependencies.connection.enterBackground()
                 wasInBackground = true
             case .active:
                 if wasInBackground {
                     HexFileManager.startWatchingForExternalChanges()
                     NotificationCenter.default.post(name: NotificationConstants.hexFileChanged, object: nil)
                     
-                    MatrixConnectionViewModel.instance.moveToForeground()
+                    dependencies.connection.enterForeground()
                     wasInBackground = false
                 }
                 applyCompactSizeClassOverride()

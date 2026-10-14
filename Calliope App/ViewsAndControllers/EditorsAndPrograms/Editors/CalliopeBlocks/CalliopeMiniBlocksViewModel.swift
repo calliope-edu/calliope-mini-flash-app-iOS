@@ -22,9 +22,11 @@ protocol CalliopeMiniBlocksViewModelProtocol {
 
 class CalliopeMiniBlocksViewModel: CalliopeMiniBlocksViewModelProtocol, ObservableObject, @preconcurrency Alertable {
     private let uploadViewModel: UploadViewModel
+    private let connectionPanel: ConnectionPanel
 
-    init(uploadViewModel: UploadViewModel) {
+    init(uploadViewModel: UploadViewModel, connectionPanel: ConnectionPanel) {
         self.uploadViewModel = uploadViewModel
+        self.connectionPanel = connectionPanel
     }
 
     @Published var alert: AppAlert? = nil
@@ -49,7 +51,7 @@ class CalliopeMiniBlocksViewModel: CalliopeMiniBlocksViewModelProtocol, Observab
         // 1. Reset the saved bluetooth pattern so the connection button starts blank
         let blankMatrix = String(repeating: "0", count: 25)
         UserDefaults.standard.set("", forKey: SettingsKey.lastMatrix.rawValue)
-        MatrixConnectionViewModel.instance.setMatrixString(pattern: blankMatrix)
+        connectionPanel.setMatrixString(pattern: blankMatrix)
 
         // 2. Open the Calliope mini Blocks app; fall back to the App Store if not installed
         if let appURL = URL(string: calliopeBlocksAppURLScheme),

@@ -15,9 +15,17 @@ struct PopupEditorWebView: View {
     let editor: Editor
     let alertPublisher: Alertable
     @EnvironmentObject private var uploadViewModel: UploadViewModel
+    @Environment(\.deviceConnection) private var connection
+    @Environment(\.connectionPanel) private var connectionPanel
 
     var body: some View {
-        EditorWebViewRepresentable(editor: editor, alertPublisher: alertPublisher, uploadFirmware: uploadViewModel.uploadWithoutConfirmation)
+        EditorWebViewRepresentable(
+            editor: editor,
+            alertPublisher: alertPublisher,
+            connection: connection,
+            connectionPanel: connectionPanel,
+            uploadFirmware: uploadViewModel.uploadWithoutConfirmation
+        )
             .background(DisableSwipeBackGestureView())
     }
 }
@@ -43,10 +51,18 @@ private class DisableSwipeBackViewController: UIViewController {
 struct EditorWebViewRepresentable: UIViewRepresentable {
     let editor: Editor
     let alertPublisher: Alertable
+    let connection: DeviceConnectionService
+    let connectionPanel: ConnectionPanel
     let uploadFirmware: (_ program: HexFile, _ completion: (() -> Void)?) -> Void
 
     func makeUIView(context: Context) -> EditorWebView {
-        return EditorWebView(frame: .zero, alertPublisher: alertPublisher, uploadFirmware: uploadFirmware)
+        return EditorWebView(
+            frame: .zero,
+            alertPublisher: alertPublisher,
+            connection: connection,
+            connectionPanel: connectionPanel,
+            uploadFirmware: uploadFirmware
+        )
     }
 
     func updateUIView(_ editorWebView: EditorWebView, context: Context) {
@@ -379,6 +395,8 @@ final class EditorWebView: UIView {
 
     var editor: Editor?
     let alertPublisher: Alertable
+    private let connection: DeviceConnectionService
+    private let connectionPanel: ConnectionPanel
     let uploadFirmware: (_ program: HexFile, _ completion: (() -> Void)?) -> Void
 
     /// Native-proxy bridge for the Calliope Campus editor. Non-nil only
@@ -406,9 +424,13 @@ final class EditorWebView: UIView {
     init(
         frame: CGRect,
         alertPublisher: Alertable,
+        connection: DeviceConnectionService,
+        connectionPanel: ConnectionPanel,
         uploadFirmware: @escaping (_ program: HexFile, _ completion: (() -> Void)?) -> Void
     ) {
         self.alertPublisher = alertPublisher
+        self.connection = connection
+        self.connectionPanel = connectionPanel
         self.uploadFirmware = uploadFirmware
         super.init(frame: frame)
         setupLoadingIndicator()
@@ -418,13 +440,7 @@ final class EditorWebView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        self.alertPublisher = TestAlertable()
-        self.uploadFirmware = { _, _ in }
-        super.init(coder: coder)
-        setupLoadingIndicator()
-        webView = setupWebView()
-        scratchLink.setup(webView: webView!)
-        scratchLink.delegate = self
+        fatalError("init(coder:) is not supported")
     }
 
     private func setupLoadingIndicator() {
@@ -490,7 +506,7 @@ final class EditorWebView: UIView {
         // status = unsupported). Same pattern used by the working
         // WBWebView reference impl.
         if editor is CampusBridgedEditor {
-            let handler = CalliopeProxyMessageHandler(webView: webView)
+            let handler = CalliopeProxyMessageHandler(webView: webView, connection: connection, connectionPanel: connectionPanel)
             self.proxyMessageHandler = handler
             webView.configuration.userContentController.add(
                 handler,
@@ -557,7 +573,7 @@ final class EditorWebView: UIView {
         super.willMove(toWindow: newWindow)
         guard newWindow == nil else { return }
 
-        MatrixConnectionViewModel.instance.restartFromBLEConnectionDrop()
+        connection.resumeBluetooth()
 
         // Tear down the proxy bridge — WKUserContentController retains
         // script-message handlers strongly, so without an explicit remove
@@ -964,7 +980,7 @@ extension EditorWebView {
         }
         if isScratchEditor {
             LogNotify.log("Switching editor imperatives to handle scratch based editor")
-            MatrixConnectionViewModel.instance.dropBLEConnection()
+            connection.suspendBluetooth()
             self.webView!.customUserAgent = nil
             self.webView!.configuration.applicationNameForUserAgent = "Scrub"
             return
@@ -976,7 +992,7 @@ extension EditorWebView {
             traitCollection.userInterfaceIdiom == .pad
             ? "Mozilla/5.0 (iPad; CPU OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.1 Mobile/15E148 Safari/604.1"
             : nil
-        MatrixConnectionViewModel.instance.restartFromBLEConnectionDrop()
+        connection.resumeBluetooth()
     }
 }
 

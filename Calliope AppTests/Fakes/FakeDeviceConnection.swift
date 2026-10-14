@@ -21,6 +21,20 @@ final class FakeDeviceConnection: DeviceConnectionService {
         lostSubject.send()
     }
 
+    var bleCalliope: Calliope?
+    var isUsbMode = false
+    var isUsbConnected = false
+    var isBluetoothAvailable = true
+    var deviceDisconnected: AnyPublisher<String, Never> {
+        Empty().eraseToAnyPublisher()
+    }
+
+    func start() {}
+    func enterForeground() {}
+    func enterBackground() {}
+    func suspendBluetooth() {}
+    func resumeBluetooth() {}
+    func reconnect(preferredName: String?) {}
     func setDfuMode(_ enabled: Bool) {}
     func disconnectForReboot() {}
     func resetUsbConnectionAfterCopy() {}

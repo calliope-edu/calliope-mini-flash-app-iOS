@@ -76,8 +76,12 @@ final class UploadViewModel: ObservableObject {
         }
     }
 
+    var isUsbConnected: Bool {
+        connection.isUsbConnected
+    }
+
     func uploadWithoutConfirmation(_ program: Hex, completion: (() -> Void)? = nil) {
-        if program.getHexTypes().contains(.arcade) && !connectionPanel.isUSBConnected() {
+        if program.getHexTypes().contains(.arcade) && !isUsbConnected {
             alert = .arcadeUsbModeRequired(
                 onOpenUsbMode: { [weak self] in
                     self?.openUsbMode()
@@ -232,7 +236,7 @@ final class UploadViewModel: ObservableObject {
     // MARK: - Previews
 
     static func preview() -> UploadViewModel {
-        let connection = MatrixDeviceConnectionService(viewModel: .instance)
-        return UploadViewModel(flashService: FlashService(connection: connection), connection: connection, connectionPanel: .instance)
+        let connection = PreviewDeviceConnectionService()
+        return UploadViewModel(flashService: FlashService(connection: connection), connection: connection, connectionPanel: MatrixConnectionViewModel())
     }
 }
