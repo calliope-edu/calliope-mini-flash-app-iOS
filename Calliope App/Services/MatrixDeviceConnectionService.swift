@@ -22,7 +22,7 @@ final class MatrixDeviceConnectionService: DeviceConnectionService {
     }
 
     var bleCalliope: Calliope? {
-        viewModel.connector.connectedCalliope?.usageReadyCalliope
+        viewModel.connector.connectedBLEDevice?.usageReadyCalliope
     }
 
     var isUsbMode: Bool {
@@ -90,11 +90,11 @@ final class MatrixDeviceConnectionService: DeviceConnectionService {
     }
 
     // The preferred mini if visible, else the single visible BLE mini if unambiguous.
-    private func reconnectTarget(in connector: CalliopeDiscovery, preferredName: String?) -> DiscoveredDevice? {
+    private func reconnectTarget(in connector: DeviceDiscovery, preferredName: String?) -> DiscoveredDevice? {
         if let preferredName, let device = connector.discoveredCalliopes[preferredName] {
             return device
         }
-        let bleDevices = connector.discoveredCalliopes.values.filter { $0 is DiscoveredBLEDevice }
+        let bleDevices = connector.discoveredCalliopes.values.filter { !($0 is DiscoveredUSBDevice) }
         return bleDevices.count == 1 ? bleDevices.first : nil
     }
 }

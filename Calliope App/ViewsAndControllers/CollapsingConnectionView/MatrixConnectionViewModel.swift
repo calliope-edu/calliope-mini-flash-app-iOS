@@ -54,7 +54,11 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable, C
     let connectionLost = PassthroughSubject<Void, Never>()
     let deviceDisconnected = PassthroughSubject<String, Never>()
 
-    init() {
+    private let makeDiscovery: DeviceDiscovery.Factory
+
+    init(makeDiscovery: @escaping DeviceDiscovery.Factory = { CalliopeDiscovery($0, context: $1) }) {
+        self.makeDiscovery = makeDiscovery
+        connector = makeDiscovery({ peripheral, name in DiscoveredBLEDevice(peripheral: peripheral, name: name) }, nil)
         connector.context = self
         forwardDisconnects(of: connector)
     }
@@ -147,9 +151,9 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable, C
 
     public var usageReadyCalliope: Calliope? {
         if isInUsbMode {
-            return connector.connectedUSBCalliope?.usageReadyCalliope
+            return connector.connectedUSBDevice?.usageReadyCalliope
         } else {
-            return connector.connectedCalliope?.usageReadyCalliope
+            return connector.connectedBLEDevice?.usageReadyCalliope
         }
     }
 
@@ -165,7 +169,7 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable, C
             let calliopeBuilder = { (_ peripheral: CBPeripheral, _ name: String) -> DiscoveredBLEDevice in
                 return calliopeClass.init(peripheral: peripheral, name: name)
             }
-            connector = CalliopeDiscovery(calliopeBuilder, context: self)
+            connector = makeDiscovery(calliopeBuilder, self)
         }
     }
 
@@ -182,10 +186,7 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable, C
         }
     }
 
-    public var connector: CalliopeDiscovery = CalliopeDiscovery({ peripheral, name in
-        DiscoveredBLEDevice(peripheral: peripheral, name: name)
-    })
-    {
+    var connector: DeviceDiscovery {
         didSet {
             self.changedConnector(oldValue)
         }
@@ -216,7 +217,7 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable, C
         connect()
     }
 
-    private func changedConnector(_ oldValue: CalliopeDiscovery) {
+    private func changedConnector(_ oldValue: DeviceDiscovery) {
         oldValue.giveUpResponsibility()
         connector.updateBlock = updateDiscoveryState
         connector.errorBlock = error
@@ -225,7 +226,7 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable, C
         restoreLastMatrix()
     }
 
-    private func forwardDisconnects(of connector: CalliopeDiscovery) {
+    private func forwardDisconnects(of connector: DeviceDiscovery) {
         _ = connector.registerDisconnectNotification { [weak self] uuid in
             self?.deviceDisconnected.send(uuid)
         }
@@ -417,7 +418,7 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable, C
             connectButtonState = .connecting
             connectionMenuButtonState = isInDfuMode ? .transmitting : .connecting
         case .connected:
-            if let connectedCalliope = connector.connectedCalliope, discoveredCalliopeWithCurrentMatrix != connector.connectedCalliope {
+            if let connectedCalliope = connector.connectedBLEDevice, discoveredCalliopeWithCurrentMatrix != connectedCalliope {
                 //set matrix in case of auto-reconnect, where we do not have corresponding matrix yet
                 matrix = Matrix.friendly2Matrix(connectedCalliope.name)
                 connectedCalliope.updateBlock = updateDiscoveryState
@@ -431,7 +432,7 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable, C
         case .usbConnecting:
             connectButtonState = .connecting
         case .usbConnected:
-            if let connectedCalliope = connector.connectedUSBCalliope, discoveredCalliopeWithCurrentMatrix != connectedCalliope {
+            if let connectedCalliope = connector.connectedUSBDevice, discoveredCalliopeWithCurrentMatrix != connectedCalliope {
                 connectedCalliope.updateBlock = updateDiscoveryState
             }
             evaluateCalliopeState(discoveredCalliopeWithCurrentMatrix!)
