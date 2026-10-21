@@ -75,24 +75,13 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate {
                 if connectingCalliope is DiscoveredUSBDevice {
                     LogNotify.log("Connect to USB Calliope mini")
                     let connectingUSBCalliope = connectingCalliope as! DiscoveredUSBDevice
-                    do {
-                        connectedUSBCalliope = connectingUSBCalliope
-                        if connectingUSBCalliope.useExportPicker {
-                            // Shared iPad: no folder URL exists, every flash asks
-                            // for the destination via an export picker.
-                            connectedUSBCalliope?.usageReadyCalliope = USBCalliope(exportPickerMode: true)
-                            // Skip reachability polling — there is no persistent
-                            // volume URL that could be polled.
-                            LogNotify.log("USB Calliope (export-picker mode) ready")
-                        } else if let url = connectingUSBCalliope.url {
-                            connectedUSBCalliope?.usageReadyCalliope = try USBCalliope(calliopeLocation: url)
-                            dispatchUSBCalliopePolling()
-                        }
-                        LogNotify.log("Calliope mini Discovery State now: \(state)")
-                    } catch {
-                        LogNotify.log("Connecting to USB Calliope mini failed")
+                    connectedUSBCalliope = connectingUSBCalliope
+                    connectedUSBCalliope?.usageReadyCalliope = USBCalliope(destination: connectingUSBCalliope.destination)
+                    // Only a folder can be polled; a destination picked per flash has no volume URL until the flash.
+                    if !connectingUSBCalliope.destination.picksPerFlash {
+                        dispatchUSBCalliopePolling()
                     }
-
+                    LogNotify.log("Calliope mini Discovery State now: \(state)")
                 }
                 
             }
@@ -338,37 +327,19 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate {
         state = .usbConnecting
     }
 
-    func handleUSBFolderPicked(_ url: URL) {
-        let discoveredCalliope = DiscoveredUSBDevice(url: url, name: CalliopeDiscovery.usbCalliopeName)
-
-        guard let discoveredCalliope = discoveredCalliope else {
+    func connectUsbCalliope(to destination: USBDestination) {
+        if case .folder(let url) = destination, !USBCalliope.isCalliopeVolume(url) {
             context?.reportInvalidUsbLocation()
             state = .initialized
             return
         }
+        LogNotify.log("USB destination picked per flash: \(destination.picksPerFlash)")
 
+        let discoveredCalliope = DiscoveredUSBDevice(name: CalliopeDiscovery.usbCalliopeName, destination: destination)
         disconnectFromCalliope()
         discoveredCalliope.state = DiscoveredDevice.CalliopeBLEDeviceState.discovered
         self.discoveredCalliopes.updateValue(discoveredCalliope, forKey: CalliopeDiscovery.usbCalliopeName)
-
-        // Verbinde automatisch mit dem ausgewählten USB-Gerät
         connectToCalliope(discoveredCalliope)
-    }
-
-    /// Connects a USB Calliope that has no folder URL: the destination is
-    /// picked per flash through `USBCalliope`'s export picker instead.
-    ///
-    /// Used wherever the destination has to be picked per flash — Shared iPad
-    /// and iPadOS below 26 (see `USBTransferPolicy.picksDestinationPerFlash`) — in place of
-    /// `handleUSBFolderPicked`, which needs a one-time folder URL the sandbox
-    /// will not grant there.
-    func connectExportPickerUsbCalliope() {
-        LogNotify.log("Destination is picked per flash - using export-picker flow")
-        let discovered = DiscoveredUSBDevice(exportPickerName: CalliopeDiscovery.usbCalliopeName)
-        disconnectFromCalliope()
-        discovered.state = .discovered
-        self.discoveredCalliopes.updateValue(discovered, forKey: CalliopeDiscovery.usbCalliopeName)
-        self.connectToCalliope(discovered)
     }
 
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {

@@ -15,11 +15,6 @@ enum HexFileStoreDialog {
         return hexTypes.contains(.arcade)
     }
 
-    /// Prüft ob ein USB-Calliope verbunden ist
-    private static func isUSBCalliopeConnected() -> Bool {
-        return USBCalliope.calliopeLocation != nil
-    }
-
     public static func showStoreHexUI(
         alertPublisher: Alertable,
         uploadViewModel: UploadViewModel,
@@ -29,7 +24,7 @@ enum HexFileStoreDialog {
     ) {
 
         let isArcade = isArcadeHexFile(hexFile)
-        let isUSBConnected = isUSBCalliopeConnected()
+        let isUSBConnected = uploadViewModel.isUsbConnected
 
         // Wenn es eine Arcade-Datei ist und KEIN USB verbunden ist
         if isArcade && !isUSBConnected {

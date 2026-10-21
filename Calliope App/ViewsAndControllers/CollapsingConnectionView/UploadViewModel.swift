@@ -99,8 +99,7 @@ final class UploadViewModel: ObservableObject {
         let target = connection.currentCalliope
         let isUSB = target is USBCalliope
         // Export-picker failures are usually a stale USB volume, so they offer the log for reporting.
-        let usesExportPicker = (target as? USBCalliope)?.useExportPicker == true
-        LogNotify.debug("useExportPicker = \(usesExportPicker)")
+        let usesExportPicker = (target as? USBCalliope)?.destination.picksPerFlash == true
 
         let flashID = UUID()
         flashService.flash(program) { [weak self] event in

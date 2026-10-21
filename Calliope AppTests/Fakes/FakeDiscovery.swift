@@ -22,6 +22,7 @@ final class FakeDiscovery: DeviceDiscovery {
     weak var context: CalliopeDiscoveryContext?
 
     private(set) var connectRequests: [DiscoveredDevice] = []
+    private(set) var usbDestinations: [USBDestination] = []
     private(set) var startDiscoveryCount = 0
     private(set) var stopDiscoveryCount = 0
     private(set) var disconnectCount = 0
@@ -93,8 +94,10 @@ final class FakeDiscovery: DeviceDiscovery {
     }
 
     func startUsbConnect() {}
-    func handleUSBFolderPicked(_ url: URL) {}
-    func connectExportPickerUsbCalliope() {}
+
+    func connectUsbCalliope(to destination: USBDestination) {
+        usbDestinations.append(destination)
+    }
 
     func registerDisconnectNotification(_ callback: @escaping (String) -> Void) -> Int {
         disconnectCallbacks.append(callback)

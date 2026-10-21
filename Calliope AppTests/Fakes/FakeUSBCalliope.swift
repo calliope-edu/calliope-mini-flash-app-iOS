@@ -13,7 +13,7 @@ final class FakeUSBCalliope: USBCalliope {
     private var statusDelegate: DFUServiceDelegate?
 
     init() {
-        super.init(exportPickerMode: false)
+        super.init(destination: .folder(URL(fileURLWithPath: "/dev/null")))
         // The USBCalliope initializer flags a connection switch, which would suppress errors in the test.
         Calliope.isConnectionSwitching = false
     }

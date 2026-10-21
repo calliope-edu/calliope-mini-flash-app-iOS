@@ -21,6 +21,7 @@ final class DeviceConnectionServiceTests: XCTestCase {
     private var discoveries: [FakeDiscovery] = []
     private var viewModel: MatrixConnectionViewModel!
     private var service: CalliopeConnectionService!
+    private var picker: FakeUSBDestinationPicker!
     private var subscriptions: Set<AnyCancellable> = []
 
     private var discovery: FakeDiscovery {
@@ -127,7 +128,7 @@ final class DeviceConnectionServiceTests: XCTestCase {
     func testUsbModeUsesTheUsbDevice() {
         viewModel.isInUsbMode = true
         let calliope = FakeUSBCalliope()
-        let device = DiscoveredUSBDevice(exportPickerName: "USB_CALLIOPE")
+        let device = DiscoveredUSBDevice(name: "USB_CALLIOPE", destination: .pickPerFlash(picker))
         device.usageReadyCalliope = calliope
 
         discovery.connectUSB(device)
@@ -143,6 +144,29 @@ final class DeviceConnectionServiceTests: XCTestCase {
 
         XCTAssertTrue(viewModel.isFolderPickerPresented)
         XCTAssertNil(viewModel.alert)
+    }
+
+    func testPickedFolderBecomesTheUsbDestination() {
+        let folder = URL(fileURLWithPath: "/Volumes/MINI")
+
+        viewModel.handleUSBFolderPicked(folder)
+
+        guard case .folder(let url) = discovery.usbDestinations.last else {
+            return XCTFail("Expected a folder destination")
+        }
+        XCTAssertEqual(url, folder)
+    }
+
+    func testContinuingTheHeadsUpConnectsWithTheInjectedPicker() {
+        makeService(usbPolicy: pickPerFlashPolicy)
+        viewModel.startUsbConnect()
+
+        viewModel.alert?.actions.first?.handler()
+
+        guard case .pickPerFlash(let usedPicker) = discovery.usbDestinations.last else {
+            return XCTFail("Expected a pick-per-flash destination")
+        }
+        XCTAssertTrue(usedPicker === picker)
     }
 
     func testSwitchingUsbOnShowsTheHeadsUpWhenTheDestinationIsPickedPerFlash() {
@@ -249,7 +273,8 @@ final class DeviceConnectionServiceTests: XCTestCase {
 
     private func makeService(usbPolicy: USBTransferPolicy) {
         discoveries = []
-        service = CalliopeConnectionService(usbPolicy: usbPolicy, makeDiscovery: { [unowned self] _, context in
+        picker = FakeUSBDestinationPicker()
+        service = CalliopeConnectionService(usbPolicy: usbPolicy, usbDestinationPicker: picker, makeDiscovery: { [unowned self] _, context in
             let discovery = FakeDiscovery(context: context)
             discoveries.append(discovery)
             return discovery

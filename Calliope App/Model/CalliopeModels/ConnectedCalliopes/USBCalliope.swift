@@ -13,20 +13,9 @@ import UniformTypeIdentifiers
 
 class USBCalliope: Calliope {
 
-    static var calliopeLocation: URL?
+    let destination: USBDestination
 
-    // Shared iPad refuses folder picks of USB volumes, so every flash goes through an export picker instead.
-    let useExportPicker: Bool
-
-    private weak var exportProgressReceiver: DFUProgressDelegate?
-    private weak var exportStatusDelegate: DFUServiceDelegate?
-    private var exportInProgress = false
-
-    /// Set when the user dismissed the export picker without saving. The upload
-    /// still has to report `.aborted` so `FlashJob` can release the
-    /// background task and idle timer, but a deliberate cancel is not an error —
-    /// `FlashJob` reads this to skip the failure alert and keep the
-    /// connection, so the next flash goes straight back to the picker.
+    // Set when the user dismissed the export picker: FlashJob then reports a cancel instead of an error and keeps the connection.
     private(set) var lastExportCancelledByUser = false
 
     // DAPLink's verdict arrives after the upload already reported completion.
@@ -36,160 +25,161 @@ class USBCalliope: Calliope {
         return [.universal, .v3, .v3Shield, .v2, .arcade]
     }
 
-    var writeInProgress: Bool = false
+    private(set) var writeInProgress: Bool = false
 
-    public init(calliopeLocation: URL) throws {
-        self.useExportPicker = false
-        super.init()
-        // Verbindungswechsel signalisieren
-        Calliope.startConnectionSwitch()
-
-        try validateCalliope(url: calliopeLocation)
-        USBCalliope.calliopeLocation = calliopeLocation
+    private struct Target {
+        let url: URL
+        let securityScope: URL
+        let coordination: NSFileCoordinator.WritingOptions
+        let isPicked: Bool
     }
 
-    public init(exportPickerMode: Bool) {
-        self.useExportPicker = exportPickerMode
+    init(destination: USBDestination) {
+        self.destination = destination
         super.init()
         Calliope.startConnectionSwitch()
-        USBCalliope.calliopeLocation = nil
     }
 
-
-    func validateCalliope(url: URL) throws {
-        let pathComponent = url.appendingPathComponent("DETAILS.TXT")
-        let filePath = pathComponent.path
-        let fileManager = FileManager.default
-        let access = url.startAccessingSecurityScopedResource()
-        
+    static func isCalliopeVolume(_ url: URL) -> Bool {
+        let accessed = url.startAccessingSecurityScopedResource()
         defer {
-            if access {
+            if accessed {
                 url.stopAccessingSecurityScopedResource()
             }
         }
-        
-        if fileManager.fileExists(atPath: filePath) {
-            LogNotify.log("Validated Calliope mini folder")
-        } else {
-            LogNotify.log("Failed to validate Calliope mini")
-        }
+        return FileManager.default.fileExists(atPath: url.appendingPathComponent("DETAILS.TXT").path)
     }
-    
+
     func isConnected() -> Bool {
-        // In export-picker mode there is no persistent volume URL — the picker
-        // is presented per-flash. Treat as always connected so upload proceeds.
-        if useExportPicker {
+        switch destination {
+        case .folder(let url):
+            return (try? url.checkResourceIsReachable()) ?? false
+        case .pickPerFlash:
+            // There is no volume URL before the picker, so the copy itself has to show whether the mini is there.
             return true
         }
-        guard let calliopeLocation = USBCalliope.calliopeLocation else {
-            return false
-        }
-
-        return (try? calliopeLocation.checkResourceIsReachable()) ?? false
     }
 
     override func upload(file: Hex, progressReceiver: DFUProgressDelegate? = nil, statusDelegate: DFUServiceDelegate? = nil, logReceiver: LoggerDelegate? = nil) throws {
-        if useExportPicker {
-            uploadViaExportPicker(file: file, progressReceiver: progressReceiver, statusDelegate: statusDelegate)
+        // A second picker would mean two concurrent copies onto the same DAPLink volume.
+        if writeInProgress && destination.picksPerFlash {
+            LogNotify.log("USB Transfer: export picker already on screen - ignoring duplicate request")
+            // Reported like a cancel so FlashJob ends quietly without a failure alert.
+            lastExportCancelledByUser = true
+            statusDelegate?.dfuStateDidChange(to: .aborted)
             return
         }
-        if isConnected() || writeInProgress {
-            writeInProgress = true
-            writeToCalliope(file, progressReceiver: progressReceiver) { success in
-                if success {
-                    statusDelegate?.dfuStateDidChange(to: .completed)
-                } else {
-                    statusDelegate?.dfuStateDidChange(to: .aborted)
-                }
-                self.writeInProgress = false
-            }
-        } else {
-            statusDelegate?.dfuStateDidChange(to: .aborted)
-        }
-    }
-
-    // MARK: - Shared iPad: export-picker flashing
-
-    // The system copy through the export picker fails on DAPLink, so the picker only creates an empty file and the app writes the hex into it.
-    private func uploadViaExportPicker(file: Hex,
-                                       progressReceiver: DFUProgressDelegate?,
-                                       statusDelegate: DFUServiceDelegate?) {
-        // Two pickers would mean two concurrent copies onto the same DAPLink volume.
-        if exportInProgress {
-            LogNotify.log("Export picker: already on screen - ignoring duplicate transfer request")
-            // Treat like a cancel so FlashJob releases its background task
-            // and idle timer quietly, without showing a failure alert.
-            lastExportCancelledByUser = true
+        guard isConnected() || writeInProgress else {
             statusDelegate?.dfuStateDidChange(to: .aborted)
             return
         }
 
         writeInProgress = true
-        exportInProgress = true
-        exportProgressReceiver = progressReceiver
-        exportStatusDelegate = statusDelegate
-
-        progressReceiver?.dfuProgressDidChange(for: 50, outOf: 100, to: 30,
-                                               currentSpeedBytesPerSecond: 0.0,
-                                               avgSpeedBytesPerSecond: 0.0)
-
+        lastExportCancelledByUser = false
         let source = file.calliopeUSBUrl
+        let name = Self.sanitizedDAPLinkName(from: source.lastPathComponent)
+        LogNotify.log("USB Transfer: queued copy \(source.lastPathComponent) → \(name)")
+
         // Off the main thread: on Shared iPad the hex may have to be downloaded from iCloud first.
-        DispatchQueue.global(qos: .userInitiated).async {
-            let available = USBCalliope.materializeIfNeeded(source)
+        DispatchQueue.global(qos: .userInitiated).async { [weak statusDelegate] in
+            let available = Self.materializeIfNeeded(source)
 
             DispatchQueue.main.async {
                 guard available else {
-                    LogNotify.log("Export picker: \(source.lastPathComponent) is not available locally - aborting")
-                    self.lastExportCancelledByUser = false
-                    self.finishExportPicker(success: false)
+                    LogNotify.log("USB Transfer: \(source.lastPathComponent) is not available locally - aborting")
+                    self.finishTransfer(success: false, statusDelegate: statusDelegate)
                     return
                 }
-                let name = USBCalliope.sanitizedDAPLinkName(from: source.lastPathComponent)
-                MatrixConnectionViewModel.instance.requestUsbExport(filename: name) { result in
-                    self.handleExportResult(result, source: source)
-                }
-            }
-        }
-    }
-
-    private func handleExportResult(_ result: Result<URL, Error>?, source: URL) {
-        switch result {
-        case nil:
-            LogNotify.log("Export picker: cancelled by user - keeping USB connection")
-            lastExportCancelledByUser = true
-            finishExportPicker(success: false)
-        case .failure(let error):
-            LogNotify.log("Export picker: creating the placeholder failed (\(error.localizedDescription))")
-            lastExportCancelledByUser = false
-            finishExportPicker(success: false)
-        case .success(let destination):
-            lastExportCancelledByUser = false
-            let expectedBytes = ((try? FileManager.default.attributesOfItem(atPath: source.path))?[.size] as? Int) ?? -1
-            DispatchQueue.global(qos: .userInitiated).async {
-                let accessed = destination.startAccessingSecurityScopedResource()
-                defer { if accessed { destination.stopAccessingSecurityScopedResource() } }
-                LogNotify.log("Export picker: placeholder at \(destination.path), security scope granted: \(accessed)")
-
-                let placeholderExists = USBCalliope.waitForFile(destination, timeout: 5)
-                if !placeholderExists {
-                    LogNotify.log("Export picker: placeholder did not appear on the volume")
-                }
-                // .forReplacing could make the file provider recreate the file instead of writing into it.
-                let copyOK = placeholderExists && USBCalliope.sequentialCopy(from: source, to: destination, options: [])
-                LogNotify.log("Export picker: app-side write of \(expectedBytes) bytes \(copyOK ? "succeeded" : "failed")")
-
-                DispatchQueue.main.async {
-                    self.finishExportPicker(success: copyOK)
-                    if copyOK {
-                        self.verifyFlashOutcome(destinationURL: destination, expectedBytes: expectedBytes)
+                self.resolveTarget(named: name) { target in
+                    guard let target else {
+                        self.finishTransfer(success: false, statusDelegate: statusDelegate)
+                        return
                     }
+                    self.writeHex(source, to: target, statusDelegate: statusDelegate)
                 }
             }
         }
     }
 
-    // didPickDocumentsAt fires before iOS has finished creating the file on the slow USB volume. Blocks — call off the main queue.
+    // MARK: - Private Helpers
+
+    private func resolveTarget(named name: String, completion: @escaping (Target?) -> Void) {
+        switch destination {
+        case .folder(let folder):
+            completion(Target(url: folder.appendingPathComponent(name), securityScope: folder, coordination: .forReplacing, isPicked: false))
+        case .pickPerFlash(let picker):
+            picker.pickDestination(filename: name) { result in
+                switch result {
+                case nil:
+                    LogNotify.log("USB Transfer: export picker cancelled by user - keeping USB connection")
+                    self.lastExportCancelledByUser = true
+                    completion(nil)
+                case .failure(let error):
+                    LogNotify.log("USB Transfer: creating the placeholder failed (\(error.localizedDescription))")
+                    completion(nil)
+                case .success(let url):
+                    // .forReplacing could make the file provider recreate the picked file instead of writing into it.
+                    completion(Target(url: url, securityScope: url, coordination: [], isPicked: true))
+                }
+            }
+        }
+    }
+
+    /**
+     USB flashing on Calliope mini (DAPLink-based) via the Files / Documents API.
+
+     **DAPLink quirks that drive the implementation:**
+
+     - DAPLink exposes a FAT12 mass-storage volume and parses an Intel-HEX file
+       **as it streams in**. Writes must arrive in **sequential ascending offsets**.
+       Any out-of-order delivery or rename-during-write fails the parse and DAPLink
+       drops a `FAIL.TXT` instead of programming the chip.
+     - `Data.write(to:, options: .atomic)` writes to a temp file with a random
+       name and then renames it — both of those operations break DAPLink.
+     - For large files (universal hex, ~600 KB) Foundation switches its internal
+       write path to `sendfile`/`mmap`, which produces unordered burst writes.
+       That is why universal hex *never* worked with the old code.
+     - DAPLink **unmounts** the MSD volume immediately after a successful write
+       to program the target and reset. The destination file therefore *vanishes*
+       on success — verifying that the file still exists after the copy is
+       misleading and was producing false negatives.
+     */
+    private func writeHex(_ source: URL, to target: Target, statusDelegate: DFUServiceDelegate?) {
+        let expectedBytes = ((try? FileManager.default.attributesOfItem(atPath: source.path))?[.size] as? Int) ?? -1
+
+        // Without this delay the first flash after plug-in fails sporadically, because DAPLink may have not finished remounting
+        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.25) { [weak statusDelegate] in
+            let accessed = target.securityScope.startAccessingSecurityScopedResource()
+            defer {
+                if accessed {
+                    target.securityScope.stopAccessingSecurityScopedResource()
+                }
+            }
+
+            // didPickDocumentsAt fires before iOS has finished creating the file on the slow USB volume.
+            let ready = !target.isPicked || Self.waitForFile(target.url, timeout: 5)
+            if !ready {
+                LogNotify.log("USB Transfer: placeholder did not appear on the volume")
+            }
+            let copyOK = ready && Self.sequentialCopy(from: source, to: target.url, options: target.coordination)
+            LogNotify.log("USB Transfer: writing \(expectedBytes) bytes to \(target.url.lastPathComponent) \(copyOK ? "succeeded - DAPLink will program & reset" : "FAILED")")
+
+            DispatchQueue.main.async {
+                self.finishTransfer(success: copyOK, statusDelegate: statusDelegate)
+                // Folder copies are not verified: iOS keeps a stale view of the volume for seconds, which made back-to-back flashes report false failures.
+                if copyOK && target.isPicked {
+                    self.verifyFlashOutcome(destinationURL: target.url, expectedBytes: expectedBytes)
+                }
+            }
+        }
+    }
+
+    private func finishTransfer(success: Bool, statusDelegate: DFUServiceDelegate?) {
+        writeInProgress = false
+        statusDelegate?.dfuStateDidChange(to: success ? .completed : .aborted)
+    }
+
+    // Blocks — call off the main queue.
     private static func waitForFile(_ url: URL, timeout: TimeInterval) -> Bool {
         let deadline = Date().addingTimeInterval(timeout)
         while Date() < deadline {
@@ -227,24 +217,6 @@ class USBCalliope: Calliope {
             Thread.sleep(forTimeInterval: 0.2)
         }
         return isAvailable()
-    }
-
-    private func finishExportPicker(success: Bool) {
-        let progress = exportProgressReceiver
-        let status = exportStatusDelegate
-        exportProgressReceiver = nil
-        exportStatusDelegate = nil
-        exportInProgress = false
-        writeInProgress = false
-
-        if success {
-            progress?.dfuProgressDidChange(for: 100, outOf: 100, to: 100,
-                                           currentSpeedBytesPerSecond: 0.0,
-                                           avgSpeedBytesPerSecond: 0.0)
-            status?.dfuStateDidChange(to: .completed)
-        } else {
-            status?.dfuStateDidChange(to: .aborted)
-        }
     }
 
     /// Checks in the background what actually became of the transfer, logs it
@@ -344,91 +316,6 @@ class USBCalliope: Calliope {
         }
         return (nil, volumeReadable)
     }
-
-    /**
-     USB flashing on Calliope mini (DAPLink-based) via the Files / Documents API.
-
-     **DAPLink quirks that drive the implementation:**
-
-     - DAPLink exposes a FAT12 mass-storage volume and parses an Intel-HEX file
-       **as it streams in**. Writes must arrive in **sequential ascending offsets**.
-       Any out-of-order delivery or rename-during-write fails the parse and DAPLink
-       drops a `FAIL.TXT` instead of programming the chip.
-     - `Data.write(to:, options: .atomic)` writes to a temp file with a random
-       name and then renames it — both of those operations break DAPLink.
-     - For large files (universal hex, ~600 KB) Foundation switches its internal
-       write path to `sendfile`/`mmap`, which produces unordered burst writes.
-       That is why universal hex *never* worked with the old code.
-     - DAPLink **unmounts** the MSD volume immediately after a successful write
-       to program the target and reset. The destination file therefore *vanishes*
-       on success — verifying that the file still exists after the copy is
-       misleading and was producing false negatives.
-
-     **What we do here:**
-
-     1. Resolve a safe FAT12-compatible destination name (8.3, ASCII).
-     2. `NSFileCoordinator(.forReplacing)` to coordinate via File Provider.
-     3. A single non-atomic `Data.write` — one open/write/close, no rename.
-     4. Hold the security-scoped resource for the entire async operation.
-     5. Treat a successful copy call as success. No post-write verification.
-     */
-    fileprivate func writeToCalliope(_ file: Hex?, progressReceiver: DFUProgressDelegate?, _ completion: @escaping (Bool) -> Void) {
-        guard let file = file else {
-            completion(false)
-            return
-        }
-        guard let dirURL = USBCalliope.calliopeLocation else {
-            LogNotify.log("USB Transfer: destination URL is nil")
-            DispatchQueue.main.async { completion(false) }
-            return
-        }
-
-        guard let calliopeLocation = USBCalliope.calliopeLocation else {
-            LogNotify.log("USB Transfer - no known Calliope location")
-            completion(false)
-            return
-        }
-
-        let sourceURL = file.calliopeUSBUrl
-        let safeName = Self.sanitizedDAPLinkName(from: sourceURL.lastPathComponent)
-        let destinationURL = dirURL.appendingPathComponent(safeName)
-
-        LogNotify.log("USB Transfer: queued copy \(sourceURL.lastPathComponent) → \(safeName)")
-
-        // Without this delay the first flash after plug-in fails sporadically, because DAPLink may have not finished remounting
-        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.25) { [weak self] in
-            let acquired = dirURL.startAccessingSecurityScopedResource()
-            let copyOK = USBCalliope.sequentialCopy(from: sourceURL, to: destinationURL)
-            if acquired { dirURL.stopAccessingSecurityScopedResource() }
-
-            if !copyOK {
-                LogNotify.log("USB Transfer: FAILED to stream \(safeName)")
-                DispatchQueue.main.async {
-                    completion(false)
-                }
-                return
-            }
-
-            // Copy succeeded — trust it. We used to additionally poll the volume
-            // for DAPLink's unmount or remount as a "confirmation" signal, but
-            // iOS's File Provider keeps a stale view of the URL for several
-            // seconds after each flash. That made the *next* flash (e.g. after
-            // switching editors) report a false failure even though DAPLink
-            // had clearly programmed the chip. iOS's volume reachability is
-            // simply not a reliable signal for back-to-back DAPLink flashes.
-            //
-            // Trade-off: if DAPLink later writes FAIL.TXT (invalid hex, wrong
-            // board ID, etc.) we report success anyway. The user notices that
-            // the calliope is still running the old program and retries. This
-            // is rare; false failures on valid flashes were common.
-            LogNotify.log("USB Transfer: file streamed to \(safeName) — DAPLink will program & reset")
-            DispatchQueue.main.async {
-                completion(true)
-            }
-        }
-    }
-
-
 
     /// FAT12-friendly file name: lowercase ASCII, max 8 chars + ".hex".
     /// DAPLink's MSD parser tolerates LFNs but parses 8.3 most reliably,

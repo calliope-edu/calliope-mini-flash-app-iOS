@@ -15,7 +15,7 @@ struct FakeHex: Hex {
     let date = Date()
     let calliopeV1andV2Bin = Data()
     let calliopeV3Bin = Data()
-    let calliopeUSBUrl = URL(fileURLWithPath: "/dev/null")
+    var calliopeUSBUrl = URL(fileURLWithPath: "/dev/null")
     let calliopeArcadeBin = Data()
     let partialFlashingInfo: (fileHash: Data, programHash: Data, partialFlashData: PartialFlashData)? = nil
 

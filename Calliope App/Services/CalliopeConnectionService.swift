@@ -13,6 +13,7 @@ final class CalliopeConnectionService: ConnectionControl, CalliopeDiscoveryConte
 
     private let makeDiscovery: DeviceDiscovery.Factory
     private let usbPolicy: USBTransferPolicy
+    private let usbDestinationPicker: USBDestinationPicker
     private let stateSubject = CurrentValueSubject<DeviceConnectionState, Never>(.idle)
     private let matrixSubject = CurrentValueSubject<[[Bool]], Never>(Array(repeating: Array(repeating: false, count: 5), count: 5))
     private let usbModeSubject = CurrentValueSubject<Bool, Never>(false)
@@ -31,8 +32,13 @@ final class CalliopeConnectionService: ConnectionControl, CalliopeDiscoveryConte
         }
     }
 
-    init(usbPolicy: USBTransferPolicy, makeDiscovery: @escaping DeviceDiscovery.Factory = { CalliopeDiscovery($0, context: $1) }) {
+    init(
+        usbPolicy: USBTransferPolicy,
+        usbDestinationPicker: USBDestinationPicker,
+        makeDiscovery: @escaping DeviceDiscovery.Factory = { CalliopeDiscovery($0, context: $1) }
+    ) {
         self.usbPolicy = usbPolicy
+        self.usbDestinationPicker = usbDestinationPicker
         self.makeDiscovery = makeDiscovery
         connector = makeDiscovery(Self.buildBLEDevice, nil)
         connector.context = self
@@ -206,12 +212,12 @@ final class CalliopeConnectionService: ConnectionControl, CalliopeDiscoveryConte
     }
 
     func connectExportPickerUsb() {
-        connector.connectExportPickerUsbCalliope()
+        connector.connectUsbCalliope(to: .pickPerFlash(usbDestinationPicker))
     }
 
     func useUsbFolder(_ url: URL) {
         LogNotify.log("Start connection to USB Device")
-        connector.handleUSBFolderPicked(url)
+        connector.connectUsbCalliope(to: .folder(url))
     }
 
     func resetUsbConnectionAfterCopy() {

@@ -5,7 +5,7 @@
 //  Copyright © 2026 calliope. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 struct USBTransferPolicy {
     let isSharedIPad: Bool
@@ -25,12 +25,5 @@ struct USBTransferPolicy {
     // Without a folder there is no device to connect to before the first flash.
     var allowsUploadWithoutDevice: Bool {
         picksDestinationPerFlash
-    }
-
-    static var current: USBTransferPolicy {
-        USBTransferPolicy(
-            isSharedIPad: UIDevice.current.isSharedIPad,
-            systemMajorVersion: ProcessInfo.processInfo.operatingSystemVersion.majorVersion
-        )
     }
 }

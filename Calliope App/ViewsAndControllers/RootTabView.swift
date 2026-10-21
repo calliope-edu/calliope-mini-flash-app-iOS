@@ -20,12 +20,14 @@ struct RootTabView: View {
     @StateObject private var lofiAppsViewModel = LofiAppsViewModel()
     @StateObject private var rootAlertPublisher = RootAlertPublisher()
     @ObservedObject private var matrixConnectionViewModel: MatrixConnectionViewModel
+    @ObservedObject private var usbDestinationPicker: USBDestinationPickerViewModel
     @State private var wasInBackground = false
     private let dependencies: AppDependencies
 
     init(dependencies: AppDependencies) {
         self.dependencies = dependencies
         _matrixConnectionViewModel = ObservedObject(wrappedValue: dependencies.connectionPanel)
+        _usbDestinationPicker = ObservedObject(wrappedValue: dependencies.usbDestinationPicker)
         let uploadViewModel = UploadViewModel(
             flashService: dependencies.flashService,
             connection: dependencies.connection,
@@ -69,12 +71,12 @@ struct RootTabView: View {
         .environment(\.deviceConnection, dependencies.connection)
         .environment(\.connectionPanel, dependencies.connectionPanel)
         .fileExporter(
-            isPresented: matrixConnectionViewModel.usbExportPresentedBinding,
+            isPresented: usbDestinationPicker.isPresentedBinding,
             document: EmptyHexDocument(),
             contentType: EmptyHexDocument.hexType,
-            defaultFilename: matrixConnectionViewModel.usbExportRequest?.filename
+            defaultFilename: usbDestinationPicker.request?.filename
         ) { result in
-            matrixConnectionViewModel.completeUsbExport(result)
+            usbDestinationPicker.complete(result)
         }
         .onOpenURL { url in
             handleOpenURL(url)

@@ -31,8 +31,7 @@ protocol DeviceDiscovery: AnyObject {
     func disconnectForReboot()
     func giveUpResponsibility()
     func startUsbConnect()
-    func handleUSBFolderPicked(_ url: URL)
-    func connectExportPickerUsbCalliope()
+    func connectUsbCalliope(to destination: USBDestination)
     func registerDisconnectNotification(_ callback: @escaping (String) -> Void) -> Int
 }
 
