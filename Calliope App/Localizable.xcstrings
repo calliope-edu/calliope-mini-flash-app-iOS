@@ -2502,6 +2502,16 @@
         }
       }
     },
+    "Transfer failed" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Übertragung fehlgeschlagen"
+          }
+        }
+      }
+    },
     "Transfer Program" : {
       "localizations" : {
         "de" : {
@@ -2519,6 +2529,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Übertrage Programme vom iPhone oder iPad direkt auf deinen Calliope mini oder speichere sie in dem Calliope mini Ordner."
+          }
+        }
+      }
+    },
+    "Transfer succeeded" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Übertragung erfolgreich"
           }
         }
       }

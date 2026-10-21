@@ -19,7 +19,14 @@ struct UploadProgressPanel: View {
     @State private var buttonsVisible: Bool = false
     @State private var textVisible: Bool = false
 
+    // Local copy of the view model's result, so the fill, colour change and icon animate.
+    @State private var shownResult: TransferResult?
+    // Freezes the indeterminate capsule where it was, so the fill grows out of it.
+    @State private var resultDate: Date?
+    @State private var iconVisible: Bool = false
+
     private let animationDuration: Double = 0.2
+    private let fillDuration: Double = 0.45
 
 
 
@@ -41,7 +48,7 @@ struct UploadProgressPanel: View {
                     // Cancel and X grouped together at trailing
                     HStack(spacing: 8) {
                         Button {
-                            startCollapse { uploadProgress.cancel() }
+                            uploadProgress.cancel()
                         } label: {
                             Text(NSLocalizedString("Cancel", comment: ""))
                                 .font(.system(size: 13, weight: .medium))
@@ -82,6 +89,7 @@ struct UploadProgressPanel: View {
 
             // Progress bar - always present, animates size
             Button {
+                guard uploadProgress.transferResult == nil else { return }
                 withAnimation(.spring()) {
                     uploadProgress.isExpanded.toggle()
                 }
@@ -119,23 +127,55 @@ struct UploadProgressPanel: View {
                 }
             }
         }
+        .onChange(of: uploadProgress.transferResult) { result in
+            handleResultChange(result)
+        }
         .onAppear {
             // Sync local state if the view appears while already expanded
             if uploadProgress.isExpanded {
                 buttonsVisible = true
                 textVisible = true
             }
+            if let result = uploadProgress.transferResult {
+                resultDate = Date()
+                shownResult = result
+                iconVisible = true
+            }
         }
     }
 
     // MARK: - Progress Bar Content
 
-    @ViewBuilder
     var progressBarContent: some View {
-        if uploadProgress.isIndeterminate {
-            indeterminateBarContent
-        } else {
-            determinateBarContent
+        ZStack {
+            if uploadProgress.isIndeterminate {
+                indeterminateBarContent
+            } else {
+                determinateBarContent
+            }
+            resultIcon
+        }
+    }
+
+    private var fillColor: Color {
+        shownResult == .failed ? .calliopeRed : .calliopeGreen
+    }
+
+    @ViewBuilder
+    private var resultIcon: some View {
+        if let shownResult {
+            Image(systemName: shownResult == .succeeded ? "checkmark" : "xmark")
+                .font(.system(size: 18, weight: .bold))
+                .foregroundColor(.white)
+                .scaleEffect(iconVisible ? 1 : 0.3)
+                .opacity(iconVisible ? 1 : 0)
+                .id(shownResult)
+                .transition(.scale.combined(with: .opacity))
+                .accessibilityLabel(
+                    shownResult == .succeeded
+                        ? NSLocalizedString("Transfer succeeded", comment: "")
+                        : NSLocalizedString("Transfer failed", comment: "")
+                )
         }
     }
 
@@ -148,14 +188,15 @@ struct UploadProgressPanel: View {
 
             GeometryReader { geometry in
                 Rectangle()
-                    .fill(Color.calliopeGreen)
-                    .frame(width: max(geometry.size.width * uploadProgress.progress, 0))
+                    .fill(fillColor)
+                    .frame(width: shownResult == nil ? max(geometry.size.width * uploadProgress.progress, 0) : geometry.size.width)
             }
 
             Text("\(Int(uploadProgress.progress * 100))%")
                 .font(.system(size: 14, weight: .bold, design: .rounded))
                 .foregroundColor(.primary)
                 .frame(maxWidth: .infinity)
+                .opacity(shownResult == nil ? 1 : 0)
         }
         .clipShape(Capsule())
     }
@@ -169,21 +210,15 @@ struct UploadProgressPanel: View {
 
             // TimelineView drives position purely from wall-clock time so it cannot be
             // interrupted by parent spring animations or geometry changes during expansion.
-            TimelineView(.animation) { context in
+            TimelineView(.animation(minimumInterval: nil, paused: resultDate != nil)) { context in
                 GeometryReader { geometry in
                     let capsuleWidth = geometry.size.width * 0.30
                     let maxOffset = geometry.size.width - capsuleWidth
-                    // 2-second period: 0→1→0 triangle wave, smoothed with easeInOut cubic
-                    let t = context.date.timeIntervalSinceReferenceDate
-                        .truncatingRemainder(dividingBy: 2.0) / 2.0
-                    let linear: Double = t < 0.5 ? t * 2.0 : 2.0 - t * 2.0
-                    let eased: Double = linear < 0.5
-                        ? 4.0 * linear * linear * linear
-                        : 1.0 - pow(-2.0 * linear + 2.0, 3) / 2.0
+                    let position = bouncePosition(at: resultDate ?? context.date)
                     Capsule()
-                        .fill(Color.calliopeGreen)
-                        .frame(width: capsuleWidth, height: geometry.size.height)
-                        .offset(x: CGFloat(eased) * maxOffset)
+                        .fill(fillColor)
+                        .frame(width: shownResult == nil ? capsuleWidth : geometry.size.width, height: geometry.size.height)
+                        .offset(x: shownResult == nil ? CGFloat(position) * maxOffset : 0)
                 }
             }
 
@@ -191,8 +226,64 @@ struct UploadProgressPanel: View {
                 .font(.system(size: 14, weight: .bold, design: .rounded))
                 .foregroundColor(.primary)
                 .frame(maxWidth: .infinity)
+                .opacity(shownResult == nil ? 1 : 0)
         }
         .clipShape(Capsule())
+    }
+
+    // 2-second period: 0→1→0 triangle wave, smoothed with easeInOut cubic
+    private func bouncePosition(at date: Date) -> Double {
+        let t = date.timeIntervalSinceReferenceDate
+            .truncatingRemainder(dividingBy: 2.0) / 2.0
+        let linear: Double = t < 0.5 ? t * 2.0 : 2.0 - t * 2.0
+        return linear < 0.5
+            ? 4.0 * linear * linear * linear
+            : 1.0 - pow(-2.0 * linear + 2.0, 3) / 2.0
+    }
+
+    // MARK: - Result Animation
+
+    // Folds an expanded panel back into the bar first, then fills the bar.
+    private func handleResultChange(_ result: TransferResult?) {
+        guard let result else {
+            var transaction = Transaction()
+            transaction.disablesAnimations = true
+            withTransaction(transaction) {
+                shownResult = nil
+                resultDate = nil
+                iconVisible = false
+            }
+            return
+        }
+        if shownResult != nil {
+            withAnimation(.easeInOut(duration: fillDuration)) {
+                shownResult = result
+            }
+            return
+        }
+        guard uploadProgress.isExpanded else {
+            showResult(result)
+            return
+        }
+        startCollapse {
+            withAnimation(.spring(duration: animationDuration)) {
+                uploadProgress.isExpanded = false
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration) {
+                guard uploadProgress.transferResult == result, shownResult == nil else { return }
+                showResult(result)
+            }
+        }
+    }
+
+    private func showResult(_ result: TransferResult) {
+        resultDate = Date()
+        withAnimation(.easeInOut(duration: fillDuration)) {
+            shownResult = result
+        }
+        withAnimation(.spring(response: 0.35, dampingFraction: 0.6).delay(fillDuration * 0.6)) {
+            iconVisible = true
+        }
     }
 
     // MARK: - Expand Animation (two-stage opening)
@@ -220,8 +311,7 @@ struct UploadProgressPanel: View {
     // MARK: - Collapse Animation (inverse of two-stage opening)
 
     // Sequences: text fades out → buttons merge into progress bar → `done()` is called.
-    // For the X button, `done` collapses the background (stage 1 reverse).
-    // For Cancel, `done` calls cancel() which removes the view entirely.
+    // For the X button and a finished transfer, `done` collapses the background (stage 1 reverse).
     private func startCollapse(done: @escaping () -> Void) {
         // Step 1: fade out the text first (mirror of the text-fade-in at the end of opening).
         withAnimation(.easeIn(duration: animationDuration * 0.45)) {

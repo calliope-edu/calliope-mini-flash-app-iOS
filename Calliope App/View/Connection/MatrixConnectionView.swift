@@ -644,25 +644,12 @@ struct GlassElementModifier: ViewModifier {
                     Spacer()
 
                     if !uploadViewModel.isUploading {
-                        Button("Start Upload") {
-                            uploadViewModel.startProgress()
-                            // Simulate progress over 5 seconds
-                            timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
-                                Task { @MainActor in
-                                    if uploadViewModel.progress < 1.0 {
-                                        uploadViewModel.updateProgress(uploadViewModel.progress + 0.005)
-                                    } else {
-                                        timer?.invalidate()
-                                        try? await Task.sleep(nanoseconds: 500_000_000)
-                                        uploadViewModel.finishProgress()
-                                    }
-                                }
-                            }
+                        HStack {
+                            startButton("Success", result: .succeeded)
+                            startButton("Failure", result: .failed)
+                            startButton("USB Success", result: .succeeded, isIndeterminate: true)
+                            startButton("USB Failure", result: .failed, isIndeterminate: true)
                         }
-                        .padding()
-                        .background(Color.calliopeGreen)
-                        .foregroundColor(.white)
-                        .cornerRadius(12)
                     } else {
                         Text("Uploading: \(Int(uploadViewModel.progress * 100))%")
                             .font(.caption)
@@ -676,6 +663,33 @@ struct GlassElementModifier: ViewModifier {
                 timer?.invalidate()
                 uploadViewModel.finishProgress()
             }
+        }
+
+        // Simulates a 5-second transfer; a failure stops at 60%. Cancel in the panel ends it as failed.
+        func startButton(_ title: String, result: TransferResult, isIndeterminate: Bool = false) -> some View {
+            Button(title) {
+                uploadViewModel.startProgress(isIndeterminate: isIndeterminate, statusText: isIndeterminate ? "Transferring to Calliope" : "")
+                let end = result == .succeeded ? 1.0 : 0.6
+                timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+                    Task { @MainActor in
+                        guard uploadViewModel.transferResult == nil else {
+                            timer?.invalidate()
+                            return
+                        }
+                        let next = uploadViewModel.progress + 0.02
+                        if next < end {
+                            uploadViewModel.updateProgress(next)
+                        } else {
+                            timer?.invalidate()
+                            uploadViewModel.finishProgress(result: result)
+                        }
+                    }
+                }
+            }
+            .padding()
+            .background(result == .succeeded ? Color.calliopeGreen : Color.calliopeRed)
+            .foregroundColor(.white)
+            .cornerRadius(12)
         }
     }
     return UploadTransitionPreview()
