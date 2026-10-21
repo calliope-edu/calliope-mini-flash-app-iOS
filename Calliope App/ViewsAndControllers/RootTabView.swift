@@ -29,7 +29,8 @@ struct RootTabView: View {
         let uploadViewModel = UploadViewModel(
             flashService: dependencies.flashService,
             connection: dependencies.connection,
-            connectionPanel: dependencies.connectionPanel
+            connectionPanel: dependencies.connectionPanel,
+            usbPolicy: dependencies.usbPolicy
         )
         _uploadViewModel = StateObject(wrappedValue: uploadViewModel)
         _editorsViewModel = StateObject(wrappedValue: EditorsAndProgramsViewModel(uploadViewModel: uploadViewModel))

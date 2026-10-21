@@ -12,6 +12,7 @@ import UIKit
 final class CalliopeConnectionService: ConnectionControl, CalliopeDiscoveryContext {
 
     private let makeDiscovery: DeviceDiscovery.Factory
+    private let usbPolicy: USBTransferPolicy
     private let stateSubject = CurrentValueSubject<DeviceConnectionState, Never>(.idle)
     private let matrixSubject = CurrentValueSubject<[[Bool]], Never>(Array(repeating: Array(repeating: false, count: 5), count: 5))
     private let usbModeSubject = CurrentValueSubject<Bool, Never>(false)
@@ -30,7 +31,8 @@ final class CalliopeConnectionService: ConnectionControl, CalliopeDiscoveryConte
         }
     }
 
-    init(makeDiscovery: @escaping DeviceDiscovery.Factory = { CalliopeDiscovery($0, context: $1) }) {
+    init(usbPolicy: USBTransferPolicy, makeDiscovery: @escaping DeviceDiscovery.Factory = { CalliopeDiscovery($0, context: $1) }) {
+        self.usbPolicy = usbPolicy
         self.makeDiscovery = makeDiscovery
         connector = makeDiscovery(Self.buildBLEDevice, nil)
         connector.context = self
@@ -212,9 +214,8 @@ final class CalliopeConnectionService: ConnectionControl, CalliopeDiscoveryConte
         connector.handleUSBFolderPicked(url)
     }
 
-    // Where the destination is picked per flash, a cancelled copy may leave the volume unusable, so the user has to pick it again.
     func resetUsbConnectionAfterCopy() {
-        guard UIDevice.current.usbNeedsExportPicker, isUsbMode else { return }
+        guard usbPolicy.dropsConnectionAfterCancelledCopy, isUsbMode else { return }
 
         // Next main-queue turn: the finish callback may still run a connect() of its own, and this teardown has to win.
         DispatchQueue.main.async { [weak self] in

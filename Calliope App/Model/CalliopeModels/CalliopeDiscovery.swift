@@ -359,11 +359,11 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate {
     /// picked per flash through `USBCalliope`'s export picker instead.
     ///
     /// Used wherever the destination has to be picked per flash — Shared iPad
-    /// and iPadOS below 26 (see `UIDevice.usbNeedsExportPicker`) — in place of
+    /// and iPadOS below 26 (see `USBTransferPolicy.picksDestinationPerFlash`) — in place of
     /// `handleUSBFolderPicked`, which needs a one-time folder URL the sandbox
     /// will not grant there.
     func connectExportPickerUsbCalliope() {
-        LogNotify.log("Folder picker unavailable (shared iPad: \(UIDevice.current.isSharedIPad), iOS \(ProcessInfo.processInfo.operatingSystemVersion.majorVersion)) - using export-picker flow")
+        LogNotify.log("Destination is picked per flash - using export-picker flow")
         let discovered = DiscoveredUSBDevice(exportPickerName: CalliopeDiscovery.usbCalliopeName)
         disconnectFromCalliope()
         discovered.state = .discovered

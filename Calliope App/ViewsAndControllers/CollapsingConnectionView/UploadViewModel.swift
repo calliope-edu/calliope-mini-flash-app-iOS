@@ -30,6 +30,7 @@ final class UploadViewModel: ObservableObject {
     private let flashService: FlashService
     private let connection: DeviceConnectionService
     private let connectionPanel: MatrixConnectionViewModel
+    private let usbPolicy: USBTransferPolicy
 
     private var cancelAction: (() -> Void)?
     // The flash whose progress is on screen; nil while the panel shows something else or nothing.
@@ -38,10 +39,11 @@ final class UploadViewModel: ObservableObject {
 
     private static let hardwareInformationLink = "https://calliope.cc/programmieren/mobil/ipad#hardware"
 
-    init(flashService: FlashService, connection: DeviceConnectionService, connectionPanel: MatrixConnectionViewModel) {
+    init(flashService: FlashService, connection: DeviceConnectionService, connectionPanel: MatrixConnectionViewModel, usbPolicy: USBTransferPolicy) {
         self.flashService = flashService
         self.connection = connection
         self.connectionPanel = connectionPanel
+        self.usbPolicy = usbPolicy
         // Flashes are ended by FlashService; this covers progress shown for other jobs (data logger).
         connectionLostSubscription = connection.connectionLost.sink { [weak self] in
             guard let self, self.isUploading, self.progressFlashID == nil else { return }
@@ -52,7 +54,7 @@ final class UploadViewModel: ObservableObject {
     // MARK: - Uploads
 
     func upload(_ program: Hex, name: String? = nil, completion: (() -> Void)? = nil) {
-        guard connection.currentCalliope != nil || (connectionPanel.isInUsbMode && connectionPanel.isSharedIpad) else {
+        guard connection.currentCalliope != nil || (connection.isUsbMode && usbPolicy.allowsUploadWithoutDevice) else {
             LogNotify.error("No calliope connected. Canceling upload.")
             alert = .cannotUpload()
             connectionPanel.animateBounce()
@@ -237,6 +239,12 @@ final class UploadViewModel: ObservableObject {
 
     static func preview() -> UploadViewModel {
         let connection = PreviewDeviceConnectionService()
-        return UploadViewModel(flashService: FlashService(connection: connection), connection: connection, connectionPanel: MatrixConnectionViewModel(connection: connection))
+        let usbPolicy = USBTransferPolicy(isSharedIPad: false, systemMajorVersion: 26)
+        return UploadViewModel(
+            flashService: FlashService(connection: connection),
+            connection: connection,
+            connectionPanel: MatrixConnectionViewModel(connection: connection, usbPolicy: usbPolicy),
+            usbPolicy: usbPolicy
+        )
     }
 }

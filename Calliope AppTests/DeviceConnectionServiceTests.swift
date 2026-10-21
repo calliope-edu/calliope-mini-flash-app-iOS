@@ -14,6 +14,8 @@ final class DeviceConnectionServiceTests: XCTestCase {
 
     private let nameA = Matrix.heights2friendly([1, 2, 3, 4, 5])!
     private let nameB = Matrix.heights2friendly([5, 4, 3, 2, 1])!
+    private let folderPolicy = USBTransferPolicy(isSharedIPad: false, systemMajorVersion: 26)
+    private let pickPerFlashPolicy = USBTransferPolicy(isSharedIPad: false, systemMajorVersion: 18)
 
     private var savedDefaults: [String: Any] = [:]
     private var discoveries: [FakeDiscovery] = []
@@ -32,14 +34,7 @@ final class DeviceConnectionServiceTests: XCTestCase {
         }
         UserDefaults.standard.set(false, forKey: SettingsKey.restoreLastMatrix.rawValue)
 
-        discoveries = []
-        service = CalliopeConnectionService(makeDiscovery: { [unowned self] _, context in
-            let discovery = FakeDiscovery(context: context)
-            discoveries.append(discovery)
-            return discovery
-        })
-        viewModel = MatrixConnectionViewModel(connection: service)
-        service.start()
+        makeService(usbPolicy: folderPolicy)
     }
 
     override func tearDown() {
@@ -142,6 +137,44 @@ final class DeviceConnectionServiceTests: XCTestCase {
         XCTAssertTrue(service.currentCalliope === calliope)
     }
 
+    func testConnectingUsbWithAFolderOpensTheFolderPicker() {
+        viewModel.isInUsbMode = true
+        viewModel.startUsbConnect()
+
+        XCTAssertTrue(viewModel.isFolderPickerPresented)
+        XCTAssertNil(viewModel.alert)
+    }
+
+    func testSwitchingUsbOnShowsTheHeadsUpWhenTheDestinationIsPickedPerFlash() {
+        makeService(usbPolicy: pickPerFlashPolicy)
+
+        viewModel.isInUsbMode = true
+        drainMainQueue()
+
+        XCTAssertEqual(viewModel.alert?.title, AppAlert.usbExportPickerNotice(isSharedIPad: false) {}.title)
+        XCTAssertFalse(viewModel.isFolderPickerPresented)
+    }
+
+    func testCancelledCopyKeepsUsbWithAFolder() {
+        viewModel.isInUsbMode = true
+
+        service.resetUsbConnectionAfterCopy()
+        drainMainQueue()
+
+        XCTAssertTrue(service.isUsbMode)
+    }
+
+    func testCancelledCopyDropsUsbWhenTheDestinationIsPickedPerFlash() {
+        makeService(usbPolicy: pickPerFlashPolicy)
+        viewModel.isInUsbMode = true
+
+        service.resetUsbConnectionAfterCopy()
+        drainMainQueue()
+
+        XCTAssertFalse(service.isUsbMode)
+        XCTAssertFalse(viewModel.isInUsbMode)
+    }
+
     // MARK: - DFU
 
     func testDfuModeKeepsDiscoveryFromConnecting() {
@@ -213,6 +246,23 @@ final class DeviceConnectionServiceTests: XCTestCase {
     }
 
     // MARK: - Helpers
+
+    private func makeService(usbPolicy: USBTransferPolicy) {
+        discoveries = []
+        service = CalliopeConnectionService(usbPolicy: usbPolicy, makeDiscovery: { [unowned self] _, context in
+            let discovery = FakeDiscovery(context: context)
+            discoveries.append(discovery)
+            return discovery
+        })
+        viewModel = MatrixConnectionViewModel(connection: service, usbPolicy: usbPolicy)
+        service.start()
+    }
+
+    private func drainMainQueue() {
+        let drained = expectation(description: "main queue drained")
+        DispatchQueue.main.async { drained.fulfill() }
+        wait(for: [drained], timeout: 1)
+    }
 
     private func select(_ name: String) {
         viewModel.matrix = Matrix.friendly2Matrix(name)

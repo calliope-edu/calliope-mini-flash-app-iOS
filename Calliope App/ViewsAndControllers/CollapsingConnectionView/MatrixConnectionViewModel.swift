@@ -50,13 +50,18 @@ protocol MatrixConnectionViewModelProtocol: ObservableObject {
 
 class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable, ConnectionPanel {
     // Only USBCalliope still reaches the panel through the singleton; AppDependencies takes it from here.
-    static let instance = MatrixConnectionViewModel(connection: CalliopeConnectionService())
+    static let instance: MatrixConnectionViewModel = {
+        let usbPolicy = USBTransferPolicy.current
+        return MatrixConnectionViewModel(connection: CalliopeConnectionService(usbPolicy: usbPolicy), usbPolicy: usbPolicy)
+    }()
 
     let connection: ConnectionControl
+    let usbPolicy: USBTransferPolicy
     private var subscriptions: Set<AnyCancellable> = []
 
-    init(connection: ConnectionControl) {
+    init(connection: ConnectionControl, usbPolicy: USBTransferPolicy) {
         self.connection = connection
+        self.usbPolicy = usbPolicy
         connection.matrixChanges
             .sink { [weak self] matrix in
                 guard let self, self.matrix != matrix else { return }
@@ -100,7 +105,7 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable, C
             //
             // Only on switching ON — `resetUsbConnectionAfterCopy` switches it off,
             // so this cannot loop.
-            if isInUsbMode, UIDevice.current.usbNeedsExportPicker {
+            if isInUsbMode, usbPolicy.picksDestinationPerFlash {
                 DispatchQueue.main.async { [weak self] in
                     guard let self, self.isInUsbMode else { return }
                     LogNotify.log("USB switch turned on - connecting straight away (export-picker device)")
@@ -124,7 +129,9 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable, C
             set: { self.alert = $0 }
         )
     }
-    @Published var isSharedIpad: Bool = UIDevice.current.isSharedIPad
+    var isSharedIpad: Bool {
+        usbPolicy.isSharedIPad
+    }
     @Published private(set) var usbExportRequest: UsbExportRequest?
 
     var usbExportPresentedBinding: Binding<Bool> {
@@ -164,7 +171,7 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable, C
         // destination per flash via the export picker. A one-time heads-up
         // alert explains that before the first USB activation of a session;
         // later activations connect straight away.
-        if UIDevice.current.usbNeedsExportPicker {
+        if usbPolicy.picksDestinationPerFlash {
             guard !hasShownUsbPickerAlert else {
                 connection.connectExportPickerUsb()
                 return

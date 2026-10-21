@@ -326,7 +326,7 @@ extension AppAlert {
 
     /// Heads-up shown once per session before the first per-flash export
     /// picker (Shared iPad, or any iPadOS below 26 — see
-    /// `UIDevice.usbNeedsExportPicker`), since there the folder picker cannot
+    /// `USBTransferPolicy.picksDestinationPerFlash`), since there the folder picker cannot
     /// be used and the Calliope mini has to be reselected before every copy.
     static func usbExportPickerNotice(isSharedIPad: Bool, continueAction: @escaping () -> Void) -> AppAlert {
         let message = isSharedIPad
