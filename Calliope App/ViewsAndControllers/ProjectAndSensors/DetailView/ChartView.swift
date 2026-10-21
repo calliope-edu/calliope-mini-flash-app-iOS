@@ -2,91 +2,349 @@
 //  ChartView.swift
 //  Calliope App
 //
-//  Created by itestra on 02.07.24.
-//  Copyright © 2024 calliope. All rights reserved.
+//  Created by Calliope on 29.05.26.
+//  Copyright © 2026 calliope. All rights reserved.
 //
 
+import Charts
 import Foundation
-import DGCharts
+import SwiftUI
 
+struct ChartView: View {
+    @ObservedObject var viewModel: ChartViewModel
+    let onRemoveTapped: () -> Void
+    @State var showMenu = false
 
-extension LineChartView {
-    func layoutChartView() {
-        self.xAxis.enabled = true
-        self.xAxis.drawGridLinesEnabled = false
-        self.xAxis.drawLabelsEnabled = true
-        self.xAxis.labelPosition = .bottom
-        self.xAxis.granularityEnabled = true
-        self.xAxis.granularity = 1000  // label every 10 seconds
-        self.xAxis.labelRotationAngle = 0
+    var body: some View {
+        VStack {
+            ChartHeaderView(
+                viewModel: viewModel,
+                onRemoveTapped: onRemoveTapped
+            )
 
-        self.leftAxis.enabled = true
-        self.leftAxis.drawGridLinesEnabled = true
-        self.leftAxis.drawLabelsEnabled = true
-        self.leftAxis.zeroLineWidth = 3
+            MetricsRowView(viewModel: viewModel)
 
-        self.rightAxis.enabled = false
-        self.rightAxis.drawGridLinesEnabled = true
-        self.rightAxis.drawLabelsEnabled = true
+            LineChart(viewModel: viewModel)
 
-        self.drawGridBackgroundEnabled = false
-        self.legend.enabled = false
-        self.drawBordersEnabled = true
-        self.minOffset = 20
-        self.backgroundColor = .white
-        self.borderColor = .white
-        self.drawMarkers = true
-    }
-
-    func setupView(service: CalliopeService) {
-        self.data?.clearValues()
-        self.notifyDataSetChanged()
-        self.layoutChartView()
+            Slider(value: $viewModel.sliderPosition, in: 0.0...1.0)
+        }
+        .onLongPressGesture(minimumDuration: 1) {
+            showMenu = true
+        }
+        .confirmationDialog(
+            "",
+            isPresented: $showMenu,
+            titleVisibility: .visible
+        ) {
+            Button("Delete", role: .destructive) { onRemoveTapped() }
+            Button("Export (CSV)") { viewModel.exportAsCSV() }
+        }
     }
 }
 
-class TimeAxisValueFormatter: AxisValueFormatter {
-    private let baseTime: Double
-    private let formatter: DateFormatter = {
+struct LineChart: View {
+    @ObservedObject var viewModel: ChartViewModel
+    @GestureState var gestureScale: CGFloat = 1.0
+    @GestureState var gestureOffset: CGSize = .zero
+
+    var maxRange: ClosedRange<Double> {
+        return (viewModel.minimumX ?? 0)...(viewModel.maximumX ?? 1)
+    }
+
+    fileprivate func zoomGesture(_ geo: GeometryProxy) -> _EndedGesture<
+        GestureStateGesture<MagnificationGesture, CGFloat>
+    > {
+        return MagnificationGesture()
+            .updating($gestureScale) { value, state, _ in
+                if !viewModel.isRecording {
+                    state = 1 / value
+                    state = min(viewModel.maximumGraphScale / viewModel.currentScale, state)
+                    state = max(viewModel.minimumGraphScale / viewModel.currentScale, state)
+                    viewModel.ensureOffsetInBounds(graphWidth: geo.size.width)
+                    viewModel.updateDisplayedRange(graphWidth: geo.size.width, gestureOffset: gestureOffset, gestureScale: gestureScale)
+                    viewModel.updateMarkedLocation()
+                }
+            }
+            .onEnded { value in
+                if !viewModel.isRecording {
+                    viewModel.currentScale /= value
+                    viewModel.currentScale = max(viewModel.minimumGraphScale, min(viewModel.maximumGraphScale, viewModel.currentScale))
+                    viewModel.ensureOffsetInBounds(graphWidth: geo.size.width)
+                    viewModel.updateDisplayedRange(graphWidth: geo.size.width, gestureOffset: gestureOffset, gestureScale: gestureScale)
+                    viewModel.updateMarkedLocation()
+                }
+            }
+    }
+
+    fileprivate func dragGesture(_ geo: GeometryProxy) -> _EndedGesture<
+        GestureStateGesture<DragGesture, CGSize>
+    > {
+        let displayedRangeWidth = viewModel.totalRangeWidth * viewModel.currentScale * gestureScale
+        let minimumOffset = (viewModel.minimumX ?? 0) + (displayedRangeWidth / 2)
+        let maximumOffset = (viewModel.maximumX ?? 1) - (displayedRangeWidth / 2)
+        return DragGesture()
+            .updating($gestureOffset) { value, state, _ in
+                if !viewModel.isRecording {
+                    state.width = -value.translation.width * viewModel.currentScale * gestureScale * (viewModel.totalRangeWidth / geo.size.width)
+                    state.width = min(maximumOffset - viewModel.currentOffset.width, state.width)
+                    state.width = max(minimumOffset - viewModel.currentOffset.width, state.width)
+                    viewModel.updateDisplayedRange(graphWidth: geo.size.width, gestureOffset: gestureOffset, gestureScale: gestureScale)
+                    viewModel.updateMarkedLocation()
+                }
+            }
+
+            .onEnded { value in
+                if !viewModel.isRecording {
+                    viewModel.currentOffset.width -=
+                        value.translation.width * viewModel.currentScale * gestureScale * (viewModel.totalRangeWidth / geo.size.width)
+                    viewModel.currentOffset.width = max(minimumOffset, min(maximumOffset, viewModel.currentOffset.width))
+                    viewModel.updateDisplayedRange(graphWidth: geo.size.width, gestureOffset: gestureOffset, gestureScale: gestureScale)
+                    viewModel.updateMarkedLocation()
+                }
+            }
+    }
+
+    var body: some View {
+        VStack {
+            GeometryReader { geo in
+                chart
+                    .chartLegend(.hidden)
+                    .chartYAxis {
+                        AxisMarks(position: .leading)  // puts the y axis on the left side of the view
+                    }
+                    .chartYScale(
+                        domain: (viewModel.absoluteMinimum ?? 0)...(viewModel
+                            .absoluteMaximum ?? 1)
+                    )
+                    .chartXAxis {
+                        axisMarks
+                    }
+                    .chartXScale(
+                        domain: viewModel.displayedRange ?? maxRange
+                    )
+                    .gesture(
+                        SimultaneousGesture(
+                            zoomGesture(geo),
+                            dragGesture(geo)
+                        )
+                    )
+                    .onAppear {
+                        viewModel.currentOffset.width = viewModel.totalRangeWidth / 2  // ensures that it zooms around the center in the beginning
+                        viewModel.updateDisplayedRange(graphWidth: geo.size.width, gestureOffset: gestureOffset, gestureScale: gestureScale)
+                        viewModel.updateMarkedLocation()
+                    }
+                    .frame(minHeight: 250)
+                    .background(Color.white)
+            }
+            .frame(minHeight: 250)
+        }
+        .padding()  // space between chart and container edge
+        .background(Color.white)
+        .cornerRadius(12)
+    }
+
+    var axisMarks: AxisMarks<some AxisMark> {
+        AxisMarks { value in
+            AxisGridLine()
+            AxisValueLabel {
+                if let timestamp = value.as(Double.self) {
+                    Text(
+                        TimeAxisValueFormatter.stringForValue(
+                            baseTime: viewModel.baseTime
+                                ?? 0,
+                            timestamp
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+    var chart: some View {
+        Charts.Chart {
+            ForEach(viewModel.displayedChartData) { dataPoint in
+                lineMarker(dataPoint: dataPoint)
+            }
+            sliderMarker
+        }
+    }
+
+    func lineMarker(dataPoint: ChartDataPoint) -> some ChartContent {
+        let xValue: PlottableValue = .value("Time", dataPoint.x)
+        let yValue: PlottableValue = .value(
+            dataPoint.series,
+            dataPoint.y
+        )
+        let seriesValue: PlottableValue = .value(
+            "Axis",
+            dataPoint.series
+        )
+
+        return LineMark(
+            x: xValue,
+            y: yValue,
+            series: seriesValue
+        )
+        .foregroundStyle(
+            viewModel.getColorForAxis(axis: dataPoint.series)
+        )
+    }
+
+    @ChartContentBuilder
+    var sliderMarker: some ChartContent {
+        if viewModel.displayedRange != nil {
+            RuleMark(
+                x: .value("Time", viewModel.sliderAxisValue)
+            ).foregroundStyle(viewModel.getMarkerColor())
+
+        }
+    }
+}
+
+struct MetricsRowView: View {
+    @ObservedObject var viewModel: ChartViewModel
+
+    var body: some View {
+        HStack {
+            Spacer()
+            MetricView(
+                metricName: String(localized: "Minimum"),
+                metricValue: viewModel.dislpayedMinimum
+            )
+            Spacer()
+            MetricView(
+                metricName: String(localized: "Average"),
+                metricValue: viewModel.displayedAverage
+            )
+            Spacer()
+            MetricView(
+                metricName: String(localized: "Maximum"),
+                metricValue: viewModel.dislpayedMaximum
+            )
+            Spacer()
+            MetricView(
+                metricName: String(localized: "Current"),
+                metricValue: viewModel.displayedCurrent
+            )
+            Spacer()
+        }
+    }
+}
+
+struct ChartDataPoint: Identifiable {
+    let id = UUID()
+    let x: Double
+    let y: Double
+    let series: String
+    let location: IdentifiableLocation?
+}
+
+struct ChartHeaderView: View {
+    @ObservedObject var viewModel: ChartViewModel
+    var onRemoveTapped: () -> Void
+    @State var showMenu = false
+
+    var body: some View {
+        HStack {
+            sensorDropdown.frame(maxWidth: .infinity, alignment: .leading)
+                .frame(minWidth: 150)
+            axisDropdown.frame(maxWidth: .infinity, alignment: .center)
+                .frame(minWidth: 150)
+            recordButton.frame(maxWidth: .infinity, alignment: .trailing)
+        }
+    }
+
+    private var sensorDropdown: some View {
+        DropDownMenu(
+            options: viewModel.sensorOptions,
+            selectedOption: $viewModel.selectedSensor,
+            onSelectionChanged: viewModel.selectSensor,
+            placeholder: viewModel.sensorOptions.count > 0
+            ? String(localized: "Select Sensor") : String(localized: "No Sensor Available")
+        ).disabled(
+            viewModel.sensorOptions.count == 0
+                || viewModel.data.count != 0
+        )
+    }
+
+    private var axisDropdown: some View {
+        DropDownMenu(
+            options: viewModel.axisOptions,
+            selectedOption: $viewModel.selectedAxis,
+            onSelectionChanged: viewModel.selectAxis,
+            placeholder: viewModel.axisOptions.count == 0
+                ? "-" : String(localized: "Select Axis")
+        ).disabled(viewModel.axisOptions.count == 0)
+    }
+
+    private var recordButton: some View {
+        IconButton(
+            imageSystemName: viewModel.isRecording
+                ? "pause.circle" : "play.circle",
+            action: viewModel.toggleRecording,
+            rotation: 0,
+            iconColor: viewModel.selectedSensor == nil
+                ? Color(.gray) : Color(.white),
+            backgroundColor: Color(.white).opacity(0)
+        ).disabled(viewModel.selectedSensor == nil)
+    }
+}
+
+struct MetricView: View {
+    var metricName: String
+    var metricValue: Double?
+
+    var body: some View {
+        VStack {
+            Text(metricName).foregroundColor(Color(.white))
+                .fontWeight(.bold)
+            Text(
+                metricValue != nil ? String(format: "%.1f", metricValue!) : "-"
+            )
+        }
+    }
+}
+
+struct DropDownOption<T>: Identifiable {
+    var id = UUID()
+    var name: String
+    var object: T
+}
+
+struct DropDownMenu<T>: View {
+    var options: [DropDownOption<T>]
+    @Binding var selectedOption: DropDownOption<T>?
+    let onSelectionChanged: (DropDownOption<T>) -> Void
+    var placeholder: String
+
+    var body: some View {
+        Menu {
+            ForEach(options) { option in
+                Button(option.name, action: { onSelectionChanged(option) })
+            }
+        } label: {
+            Label(
+                selectedOption?.name ?? placeholder,
+                systemImage: "chevron.down"
+            )
+            .padding()
+            .background(Color.gray.opacity(0.2))
+            .cornerRadius(32)
+        }
+    }
+}
+
+class TimeAxisValueFormatter {
+    static private let formatter: DateFormatter = {
         let f = DateFormatter()
         f.dateFormat = "HH:mm:ss"
         return f
     }()
 
-    init(baseTime: Double) {
-        self.baseTime = baseTime
-    }
-
-    func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-        let date = Date(timeIntervalSinceReferenceDate: (value + baseTime) / 100.0)
+    static func stringForValue(baseTime: Double, _ value: Double) -> String {
+        let date = Date(
+            timeIntervalSinceReferenceDate: (value + baseTime) / 100.0
+        )
         return formatter.string(from: date)
-    }
-}
-
-extension LineChartDataSet {
-    func layoutDataSet(color: NSUIColor) -> LineChartDataSet {
-        self.setColor(color)
-        self.lineWidth = 3
-        self.mode = .linear
-        self.drawValuesEnabled = false
-        self.drawCirclesEnabled = false
-        self.drawFilledEnabled = false
-
-        self.drawHorizontalHighlightIndicatorEnabled = false
-        self.highlightLineWidth = 2
-        self.highlightColor = .calliopeGreen
-        self.visible = true
-        return self
-    }
-}
-
-extension LineChartData {
-    func getLineChartDataSetForLabel(_ label: String) -> LineChartDataSet? {
-        for dataSet in self.dataSets {
-            if dataSet.label == label {
-                return dataSet as? LineChartDataSet
-            }
-        }
-        return nil
     }
 }

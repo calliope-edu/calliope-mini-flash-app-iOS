@@ -7,7 +7,7 @@
 //  Receives JSON envelopes `{id, op, args}` from the embedded
 //  `@calliope-edu/mini-connection-widget` (see widget src/native-bridge.ts)
 //  and dispatches them against the existing iOS BLE + DFU machinery via
-//  `MatrixConnectionViewController.instance.usageReadyCalliope`. Pushes
+//  the injected `DeviceConnectionService`. Pushes
 //  events back to JS as `window.__calliopeNative.onMessage('<json>')`.
 //
 //  Protocol matches the Android `CalliopeProxyBridge`/`BridgeController`
@@ -36,6 +36,8 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     private weak var webView: WKWebView?
+    private let connection: DeviceConnectionService
+    private let connectionPanel: ConnectionPanel
 
     /// One `gattSubscribe` the widget asked for. Keeps the raw `serviceId` /
     /// `characteristicId` values the web side sent alongside the parsed UUIDs,
@@ -190,8 +192,10 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
     private static let flashReconnectScanRearmSeconds = 15.0
     private static let flashReconnectPollMs = 500
 
-    init(webView: WKWebView) {
+    init(webView: WKWebView, connection: DeviceConnectionService, connectionPanel: ConnectionPanel) {
         self.webView = webView
+        self.connection = connection
+        self.connectionPanel = connectionPanel
         super.init()
         installConnectionObservers()
     }
@@ -317,8 +321,8 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
         // the reply normally. If they don't, we time out with a helpful
         // error.
         pendingConnectReplyId = id
-        DispatchQueue.main.async {
-            MatrixConnectionViewController.instance?.animateBounce()
+        DispatchQueue.main.async { [connectionPanel] in
+            connectionPanel.animateBounce()
         }
         sendEvent(kind: "log", data: [
             "direction": "info",
@@ -974,18 +978,13 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
         // (Re)arm discovery — `startCalliopeDiscovery` self-stops after ~20 s.
         var scanRearm = lastScanRearmMs
         if elapsedMs == 0 || elapsedMs - lastScanRearmMs >= Int(Self.flashReconnectScanRearmSeconds * 1000) {
-            MatrixConnectionViewController.instance?.moveToForeground()
+            connection.enterForeground()
             scanRearm = elapsedMs
         }
 
         // If the target mini is visible and idle, connect to it. The connect is
         // async; a later tick sees `activeCalliope()` once it reaches usageReady.
-        if let connector = MatrixConnectionViewController.instance?.connector,
-           connector.state != .connecting,
-           let target = flashReconnectTarget(in: connector),
-           target.state == .discovered {
-            connector.connectToCalliope(target)
-        }
+        connection.reconnect(preferredName: lastFriendlyName)
 
         // Surface the A+B+Reset prompt once the optimistic window passes (or
         // immediately when the editor told us the program has no BLE).
@@ -1022,16 +1021,6 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
         timer.resume()
     }
 
-    /// The mini to reconnect to before flashing: the one we last connected to
-    /// (by friendly name), else the single visible BLE mini if unambiguous.
-    private func flashReconnectTarget(in connector: CalliopeDiscovery) -> DiscoveredDevice? {
-        if let key = lastFriendlyName, let dev = connector.discoveredCalliopes[key] {
-            return dev
-        }
-        let bleDevices = connector.discoveredCalliopes.values.filter { $0 is DiscoveredBLEDevice }
-        return bleDevices.count == 1 ? bleDevices.first : nil
-    }
-
     private func cancelFlashReconnect() {
         flashReconnectTimer?.cancel()
         flashReconnectTimer = nil
@@ -1043,15 +1032,15 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
     /// upload. Split from handleFlash so the async probe completion can
     /// inject `forceFullDfu` before we touch the BLE stack.
     private func beginFlash(id: String, cal: BLECalliope, hexFile: HexFile, forceFullDfu: Bool) {
-        // Mirror the legacy FirmwareUpload.upload setup so partial-flash
+        // Mirror the FlashJob setup so partial-flash
         // works identically here: enable DFU-mode on the connection view,
         // and forward the partial-flash mid-flow disconnect request to
         // the host's connector. Without these the partial-flash post-reboot
         // step would stall.
-        MatrixConnectionViewController.instance?.enableDfuMode(mode: true)
+        connection.setDfuMode(true)
         if let flashable = cal as? FlashableBLECalliope {
-            flashable.requestDisconnectCallback = {
-                MatrixConnectionViewController.instance?.connector.disconnectForReboot()
+            flashable.requestDisconnectCallback = { [connection] in
+                connection.disconnectForReboot()
             }
             flashable.forceFullDfuForNextUpload = forceFullDfu
         }
@@ -1061,7 +1050,7 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
         } catch {
             pendingFlashReplyId = nil
             Self.inFlightFlasher = nil
-            MatrixConnectionViewController.instance?.enableDfuMode(mode: false)
+            connection.setDfuMode(false)
             replyError(id: id, message: "upload failed: \(error.localizedDescription)")
         }
     }
@@ -1071,7 +1060,7 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
     /// widget's `program-type.ts probeBle` heuristic.
     ///
     /// The implementation lives on `BLECalliope` so the legacy
-    /// download-capture path (`FirmwareUpload`) applies the exact same
+    /// download-capture path (`FlashJob`) applies the exact same
     /// detection — see `BLECalliope.probeBlocksRuntime`.
     private func probeBlocksRuntime(on cal: BLECalliope, onResult: @escaping (Bool) -> Void) {
         cal.probeBlocksRuntime(completion: onResult)
@@ -1080,7 +1069,7 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
     // MARK: - Helpers
 
     private func activeCalliope() -> BLECalliope? {
-        return MatrixConnectionViewController.instance?.usageReadyCalliope as? BLECalliope
+        return connection.currentCalliope as? BLECalliope
     }
 
     private func parseUuid(_ any: Any?) -> CBUUID? {
@@ -1205,7 +1194,7 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
         // the campus — but if the new program has no BLE and never comes back,
         // the debounce still fires and we go red after the window.
         flashSettleDeadline = Date(timeIntervalSinceNow: Self.flashSettleSeconds)
-        MatrixConnectionViewController.instance?.enableDfuMode(mode: false)
+        connection.setDfuMode(false)
         if success {
             emitFlashProgress(phase: "finalising", progress: 100)
             sendEvent(kind: "flashDone", data: [:])

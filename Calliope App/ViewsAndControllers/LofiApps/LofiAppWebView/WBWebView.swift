@@ -45,7 +45,6 @@ class WBWebView: WKWebView, WKNavigationDelegate {
     // MARK: - Initializers
     required public override init(frame: CGRect, configuration: WKWebViewConfiguration) {
         super.init(frame: frame, configuration: configuration)
-        wbMessageHandler = WBMessageHandler(webView: self)
     }
 
     convenience public required init?(coder: NSCoder) {
@@ -63,16 +62,16 @@ class WBWebView: WKWebView, WKNavigationDelegate {
         // will think we're Safari
         let shortVersionString = Bundle.main.infoDictionary?["CFBundleShortVersionString"] ?? "<no-version>"
         let bundleName = Bundle.main.infoDictionary?["CFBundleName"] ?? "<no-app-name>"
-        let shortOSVersion = (
-            UIDevice.current.systemVersion.replacingOccurrences(
-                of: "(\\d+\\.\\d+)(.\\d+)?$", with: "$1", options: [.regularExpression]
-            )
-        )
-        webCfg.applicationNameForUserAgent = (
-            "Version/\(shortOSVersion) "
-            + "\(bundleName)/\(shortVersionString) "
-            + "(like Safari)"
-        )
+        let shortOSVersion =
+            (UIDevice.current.systemVersion.replacingOccurrences(
+                of: "(\\d+\\.\\d+)(.\\d+)?$",
+                with: "$1",
+                options: [.regularExpression]
+            ))
+        webCfg.applicationNameForUserAgent =
+            ("Version/\(shortOSVersion) "
+                + "\(bundleName)/\(shortVersionString) "
+                + "(like Safari)")
 
         self.init(
             frame: CGRect(),
@@ -89,7 +88,8 @@ class WBWebView: WKWebView, WKNavigationDelegate {
         ds.removeData(
             ofTypes: websiteDataTypes,
             modifiedSince: NSDate(timeIntervalSince1970: 0) as Date,
-            completionHandler:{})
+            completionHandler: {}
+        )
 
         // Load js
         for jsfilename in [
@@ -101,9 +101,9 @@ class WBWebView: WKWebView, WKNavigationDelegate {
             "WBBluetoothRemoteGATTServer",
             "WBBluetoothRemoteGATTService",
             "WBBluetoothRemoteGATTCharacteristic",
-            "WBPolyfill"
+            "WBPolyfill",
         ] {
-            guard let filePath = Bundle(for: WBWebView.self).path(forResource: jsfilename, ofType:"js") else {
+            guard let filePath = Bundle(for: WBWebView.self).path(forResource: jsfilename, ofType: "js") else {
                 NSLog("Failed to find polyfill \(jsfilename)")
                 return
             }
@@ -115,8 +115,10 @@ class WBWebView: WKWebView, WKNavigationDelegate {
                 return
             }
             let userScript = WKUserScript(
-                source: polyfillScriptContent, injectionTime: .atDocumentStart,
-                forMainFrameOnly: false)
+                source: polyfillScriptContent,
+                injectionTime: .atDocumentStart,
+                forMainFrameOnly: false
+            )
             userController.addUserScript(userScript)
         }
 
@@ -130,25 +132,25 @@ class WBWebView: WKWebView, WKNavigationDelegate {
         self._navDelegates.append(del)
     }
     open func removeNavigationDelegate(_ del: WKNavigationDelegate) {
-        self._navDelegates.removeAll(where: {$0.isEqual(del)})
+        self._navDelegates.removeAll(where: { $0.isEqual(del) })
     }
 
     // MARK: - WKNavigationDelegate
     // Propagates the notification to all the registered delegates
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        self._navDelegates.forEach{$0.webView?(webView, didStartProvisionalNavigation: navigation)}
+        self._navDelegates.forEach { $0.webView?(webView, didStartProvisionalNavigation: navigation) }
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         self._enableBluetoothInView()
-        self._navDelegates.forEach{$0.webView?(webView, didFinish: navigation)}
+        self._navDelegates.forEach { $0.webView?(webView, didFinish: navigation) }
     }
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        self._navDelegates.forEach{$0.webView?(webView, didFail: navigation, withError: error)}
+        self._navDelegates.forEach { $0.webView?(webView, didFail: navigation, withError: error) }
     }
 
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        self._navDelegates.forEach{$0.webView?(webView, didFailProvisionalNavigation: navigation, withError: error)}
+        self._navDelegates.forEach { $0.webView?(webView, didFailProvisionalNavigation: navigation, withError: error) }
     }
 
     // MARK: - Internal
@@ -162,15 +164,20 @@ class WBWebView: WKWebView, WKNavigationDelegate {
             }
         )
     }
-    
-    public func threadsafeEvaluateJavaScript(_ javaScript: String) -> Void {
-        // This functions should always run on the main thread. This seems to be ensured by it being attached to an UI element.
-        self.evaluateJavaScript(javaScript, completionHandler: {
-            _, error in
-            if let err = error {
-                LogNotify.log("Error evaluating javascript: \(err)", level: LogNotify.LEVEL.ERROR)
-            }
-        })
+
+    public func threadsafeEvaluateJavaScript(_ javaScript: String) {
+        DispatchQueue.main.async {
+            self.evaluateJavaScript(
+                javaScript,
+                completionHandler: {
+                    _,
+                    error in
+                    if let err = error {
+                        LogNotify.log("Error evaluating javascript: \(err)", level: LogNotify.LEVEL.ERROR)
+                    }
+                }
+            )
+        }
     }
 }
 

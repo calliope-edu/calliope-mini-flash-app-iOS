@@ -9,7 +9,7 @@
 import CoreLocation
 import Foundation
 
-class DataController {
+class DataController: NSObject, CLLocationManagerDelegate {
 
     var availableSensors: [Sensor] = []
     static var activeServices: [CalliopeService] = []
@@ -19,19 +19,19 @@ class DataController {
 
     var uartValue: [Any] = []
 
-    var getLastLocation: (() -> CLLocationCoordinate2D?)?
+//    var getLastLocation: (() -> CLLocationCoordinate2D?)?
+    let locationManager = CLLocationManager()
+    private let connection: DeviceConnectionService
 
-    /// The Bluetooth-connected Calliope mini, if it can deliver sensor values.
-    /// Deliberately not `usageReadyCalliope`: that follows the USB/Bluetooth
-    /// switch and reports the USB device (or nil) while the switch is on USB,
-    /// even though sensor values only ever come over Bluetooth.
-    private static var sensorCapableCalliope: CalliopeAPI? {
-        MatrixConnectionViewController.instance.connector
-            .connectedCalliope?.usageReadyCalliope as? CalliopeAPI
+    // Not `currentCalliope`: sensor values only come over BLE, and that follows the USB switch.
+    private var sensorCapableCalliope: CalliopeAPI? {
+        connection.bleCalliope as? CalliopeAPI
     }
 
-    init() {
-        guard let connectedCalliope = DataController.sensorCapableCalliope else {
+    init(connection: DeviceConnectionService) {
+        self.connection = connection
+        super.init()
+        guard let connectedCalliope = sensorCapableCalliope else {
             return
         }
         self.apiCalliope = connectedCalliope
@@ -42,11 +42,13 @@ class DataController {
     }
 
     func getAvailableSensors() -> [Sensor] {
-        apiCalliope = DataController.sensorCapableCalliope
+        apiCalliope = sensorCapableCalliope
         return apiCalliope?.discoveredOptionalServices.compactMap { key in
             return SensorUtility.serviceSensorMap[key]
         } ?? []
     }
+    
+    var baseTime: Double?
 
     func sensorStartRecordingFor(chart: Chart, response: @escaping ((String, Double, Double, CLLocationCoordinate2D?)) -> Void) {
         if DataController.activeServices.contains(chart.sensorType ?? .empty) {
@@ -60,11 +62,13 @@ class DataController {
                 self.sensorStopRecordingFor(chart: chart)
                 return
             }
+            askForLocationAuthorization()
+            self.baseTime = (Date().timeIntervalSinceReferenceDate * 100).rounded(toPlaces: 0)
             self.timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
                 let newValue = self.fetchValue(service: chart.sensorType ?? .empty)
                 for (axis, time, value) in newValue {
                     let parsedValue = DataParser.encode(data: [axis: value], service: chart.sensorType ?? .empty)
-                    let coordinates = self.getLastLocation?()
+                    let coordinates = self.getLastLocation()
                     Value.insertValue(value: parsedValue, coordinates: coordinates, chartsId: chart.id!)
                     response((axis, time, value, coordinates))
                 }
@@ -80,6 +84,26 @@ class DataController {
             LogNotify.log("Sensor \(String(describing: chart.sensorType)) is not among the available sensors \(self.getAvailableSensors().map { $0.calliopeService }) - not recording")
         }
     }
+    
+    func randomlyAlterLocation(_ location: CLLocationCoordinate2D?) -> CLLocationCoordinate2D? {
+        if location == nil {
+            return nil
+        }
+        
+        let latitudeNoise = Double(Int.random(in: 0...100)) / 10000
+        let longitudeNoise = Double(Int.random(in: 0...100)) / 10000
+        return CLLocationCoordinate2D(latitude: location!.latitude + latitudeNoise, longitude: location!.longitude + longitudeNoise)
+    }
+    
+    func linearlyAlterLocation(location: CLLocationCoordinate2D?, time: Double) -> CLLocationCoordinate2D? {
+        if location == nil {
+            return nil
+        }
+        
+        let longitudeShift = (time - self.baseTime!) / 10000
+        return CLLocationCoordinate2D(latitude: location!.latitude, longitude: location!.longitude + longitudeShift)
+    }
+    
 
     func sensorStopRecordingFor(chart: Chart) {
         timer?.invalidate()
@@ -118,10 +142,10 @@ class DataController {
                         value in
                         self.uartValue.append(value)
                     }
-                    return [("", 0, 0.0)]
+                    return []
                 }
                 guard let uartValue = self.uartValue as? [String] else {
-                    return [("", 0, 0.0)]
+                    return []
                 }
                 var returnValues: [(String, Double, Double)] = []
                 for element in uartValue {
@@ -145,8 +169,40 @@ class DataController {
                 self.uartValue.removeAll()
                 return returnValues
             default:
-                return [("", 0, 0.0)]
+                return []
             }
+        }
+    }
+    
+    // #MARK: LOCATION RELEVANT FUNCTIONS
+    private let COORDINATE_PRECISION = 4
+
+    func setupLocationManager() {
+        LogNotify.log("Init Location Updates; Auth status \(locationManager.authorizationStatus)")
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.requestWhenInUseAuthorization()
+    }
+
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        LogNotify.log("Maps will be \(self.isAuthorizedForLocation() ? "shown" : "hidden"), as Auth Status \(locationManager.authorizationStatus)")
+    }
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        LogNotify.log("Got new Location Data - Location Manager holds Long: \(self.locationManager.location?.coordinate.longitude ?? 0.0) Lat: \(self.locationManager.location?.coordinate.latitude ?? 0.0)")
+    }
+
+    private func getLastLocation() -> CLLocationCoordinate2D? {
+        return self.locationManager.location?.coordinate.rounded(toPlaces: COORDINATE_PRECISION) ?? nil
+    }
+    
+    private func isAuthorizedForLocation() -> Bool {
+        [CLAuthorizationStatus.authorizedAlways, CLAuthorizationStatus.authorizedWhenInUse].contains(self.locationManager.authorizationStatus)
+    }
+    
+    private func askForLocationAuthorization() {
+        if !isAuthorizedForLocation() && self.locationManager.authorizationStatus == CLAuthorizationStatus.notDetermined {
+            locationManager.requestWhenInUseAuthorization()
         }
     }
 }

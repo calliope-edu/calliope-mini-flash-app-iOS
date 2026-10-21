@@ -81,7 +81,7 @@ extension DownloadableHexFile {
                     data.count > 0,
                     let hexFile = try? HexFileManager.store(name: self.loadableProgramName, data: data)
                 else {
-                    completion(error ?? NSLocalizedString("Could not save file or download is not a proper hex file", comment: ""))
+                    completion(error ?? NSLocalizedString("Could not save or download a hex file", comment: ""))
                     return
                 }
 
@@ -109,7 +109,7 @@ extension DownloadableHexFile {
                 completion(nil)
             } else {
                 guard error == nil, let data = data, data.count > 0 else {
-                    completion(error ?? NSLocalizedString("Could not save file or download is not a proper hex file", comment: ""))
+                    completion(error ?? NSLocalizedString("Could not save or download a hex file", comment: ""))
                     return
                 }
                 let hexFile = HexFile(url: url, name: self.name, date: Date())

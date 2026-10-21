@@ -7,30 +7,30 @@
 //
 
 import GRDB
-import DeepDiff
 
-struct Chart: Codable, FetchableRecord, PersistableRecord, DiffAware {
+struct Chart: Codable, FetchableRecord, PersistableRecord,
+    Identifiable, Hashable
+{
 
     static let databaseTableName = "charts"
 
     var id: Int64?
     var sensorType: CalliopeService?
-    var projectsId: Int64?
+    var groupsId: Int64?
 
-    typealias DiffId = String
-    var diffId: DiffId {
-        return ""
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+        hasher.combine(sensorType)
+        hasher.combine(groupsId)
     }
 
-    static func compareContent(_ a: Chart, _ b: Chart) -> Bool {
-        a.sensorType == b.sensorType && a.id == b.id
-    }
-
-    static func insertChart(sensorType: CalliopeService?, projectsId: Int64?) -> Chart? {
+    static func insertChart(sensorType: CalliopeService?, groupsId: Int64?)
+        -> Chart?
+    {
         var tmpChart: Chart? = nil
         do {
             try DatabaseManager.shared.databaseQueue?.write { db in
-                let chart = Chart(sensorType: sensorType, projectsId: projectsId)
+                let chart = Chart(sensorType: sensorType, groupsId: groupsId)
                 tmpChart = try chart.inserted(db)
                 tmpChart?.id = db.lastInsertedRowID
             }
@@ -41,13 +41,30 @@ struct Chart: Codable, FetchableRecord, PersistableRecord, DiffAware {
         return tmpChart
     }
 
-    static func fetchChartsBy(projectsId: Int64?) -> [Chart] {
+    static func setSensorType(chart: Chart) {
+        guard chart.sensorType != nil else {
+            LogNotify.log(
+                "Tried to set sensor type, but no sensor type given.",
+                level: LogNotify.LEVEL.ERROR
+            )
+            return
+        }
+        do {
+            try DatabaseManager.shared.databaseQueue?.write { db in
+                try chart.update(db)
+            }
+        } catch {
+            LogNotify.log("Error setting the sensor type of chart: \(error)")
+        }
+    }
+
+    static func fetchChartsBy(groupsId: Int64?) -> [Chart] {
         var retrievedCharts: [Chart] = []
         do {
             try DatabaseManager.shared.databaseQueue?.read { db in
                 retrievedCharts = try Chart.fetchAll(db)
                 retrievedCharts = retrievedCharts.filter({ chart in
-                    return chart.projectsId == projectsId
+                    return chart.groupsId == groupsId
                 })
             }
         } catch {
@@ -75,10 +92,9 @@ extension Chart {
         try db.create(table: databaseTableName) { t in
             t.autoIncrementedPrimaryKey("id")
             t.column("sensorType", .any)
-            t.column("projectsId", .double).notNull()
-            t.foreignKey(["projectsId"], references: "projects", onDelete: .cascade)
+            t.column("groupsId", .double).notNull()
+            t.foreignKey(["groupsId"], references: "groups", onDelete: .cascade)
         }
         LogNotify.log("project table created")
     }
 }
-
