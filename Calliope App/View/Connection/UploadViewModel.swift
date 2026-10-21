@@ -9,6 +9,11 @@ import Combine
 import SwiftUI
 import UIKit
 
+enum TransferResult {
+    case succeeded
+    case failed
+}
+
 @MainActor
 final class UploadViewModel: ObservableObject {
 
@@ -17,6 +22,8 @@ final class UploadViewModel: ObservableObject {
     @Published var isExpanded = false
     @Published var isIndeterminate = false
     @Published var statusText = ""
+    // Set while the finished transfer's result is shown, before the panel morphs back.
+    @Published private(set) var transferResult: TransferResult?
 
     @Published var alert: AppAlert?
     @Published var isSharingLog = false
@@ -31,19 +38,24 @@ final class UploadViewModel: ObservableObject {
     private let connection: DeviceConnectionService
     private let connectionPanel: MatrixConnectionViewModel
     private let usbPolicy: USBTransferPolicy
+    private let resultDisplayDuration: TimeInterval
 
     private var cancelAction: (() -> Void)?
     // The flash whose progress is on screen; nil while the panel shows something else or nothing.
     private var progressFlashID: UUID?
     private var connectionLostSubscription: AnyCancellable?
+    private var hideResultWork: DispatchWorkItem?
+    // Alerts wait until the result has been shown, so they don't cover it.
+    private var afterResult: (() -> Void)?
 
     private static let hardwareInformationLink = "https://calliope.cc/programmieren/mobil/ipad#hardware"
 
-    init(flashService: FlashService, connection: DeviceConnectionService, connectionPanel: MatrixConnectionViewModel, usbPolicy: USBTransferPolicy) {
+    init(flashService: FlashService, connection: DeviceConnectionService, connectionPanel: MatrixConnectionViewModel, usbPolicy: USBTransferPolicy, resultDisplayDuration: TimeInterval = 2.0) {
         self.flashService = flashService
         self.connection = connection
         self.connectionPanel = connectionPanel
         self.usbPolicy = usbPolicy
+        self.resultDisplayDuration = resultDisplayDuration
         // Flashes are ended by FlashService; this covers progress shown for other jobs (data logger).
         connectionLostSubscription = connection.connectionLost.sink { [weak self] in
             guard let self, self.isUploading, self.progressFlashID == nil else { return }
@@ -120,12 +132,17 @@ final class UploadViewModel: ObservableObject {
                 } else if let value {
                     self.updateProgress(value)
                 }
-            case .completed, .cancelled:
-                self.finishProgress(of: flashID)
+            case .completed:
+                self.finishProgress(of: flashID, result: .succeeded)
+                self.finish(completion)
+            case .cancelled:
+                self.finishProgress(of: flashID, result: .failed)
                 self.finish(completion)
             case .failed(let error):
-                self.finishProgress(of: flashID)
-                self.presentFailure(error, isUSB: isUSB, usesExportPicker: usesExportPicker)
+                self.finishProgress(of: flashID, result: .failed)
+                self.runAfterResult { [weak self] in
+                    self?.presentFailure(error, isUSB: isUSB, usesExportPicker: usesExportPicker)
+                }
             }
         }
     }
@@ -133,10 +150,11 @@ final class UploadViewModel: ObservableObject {
     // MARK: - Progress
 
     func startProgress(isIndeterminate: Bool = false, statusText: String = "", cancel: (() -> Void)? = nil) {
-        if isUploading {
+        if isUploading && transferResult == nil {
             LogNotify.debug("Started upload while another one is running. Canceling the current upload in favor of the new one.")
-            self.cancel()
+            cancelAction?()
         }
+        finishProgress()
         isUploading = true
         progress = 0.0
         isExpanded = false
@@ -146,31 +164,59 @@ final class UploadViewModel: ObservableObject {
     }
 
     func updateProgress(_ value: Double) {
-        if isUploading {
+        if isUploading && transferResult == nil {
             progress = min(max(value, 0.0), 1.0)
         }
     }
 
+    // Hides the panel at once, without showing a result.
     func finishProgress() {
+        hideResultWork?.cancel()
+        hideResultWork = nil
         isUploading = false
         progress = 0.0
         isExpanded = false
         isIndeterminate = false
         statusText = ""
+        transferResult = nil
         cancelAction = nil
         progressFlashID = nil
+        let pending = afterResult
+        afterResult = nil
+        pending?()
+    }
+
+    // Shows the result for resultDisplayDuration, then hides the panel.
+    func finishProgress(result: TransferResult) {
+        guard isUploading, transferResult != result else { return }
+        cancelAction = nil
+        transferResult = result
+        hideResultWork?.cancel()
+        let work = DispatchWorkItem { [weak self] in self?.finishProgress() }
+        hideResultWork = work
+        DispatchQueue.main.asyncAfter(deadline: .now() + resultDisplayDuration, execute: work)
     }
 
     func cancel() {
+        guard transferResult == nil else { return }
+        let cancelAction = cancelAction
+        finishProgress(result: .failed)
         cancelAction?()
-        finishProgress()
     }
 
     // MARK: - Private Helpers
 
-    private func finishProgress(of flashID: UUID) {
+    private func finishProgress(of flashID: UUID, result: TransferResult) {
         if progressFlashID == flashID {
-            finishProgress()
+            finishProgress(result: result)
+        }
+    }
+
+    private func runAfterResult(_ action: @escaping () -> Void) {
+        if transferResult == nil {
+            action()
+        } else {
+            afterResult = action
         }
     }
 
