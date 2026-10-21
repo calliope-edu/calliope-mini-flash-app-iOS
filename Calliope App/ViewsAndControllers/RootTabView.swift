@@ -53,7 +53,13 @@ struct RootTabView: View {
                     .tabItem { Label("Sensordaten", systemImage: "menubar.rectangle") }
                     .tag(2)
                 LofiAppsView(viewModel: lofiAppsViewModel)
-                    .tabItem { Label("Apps", systemImage: "rectangle.grid.3x3") }
+                    .tabItem {
+                        Label {
+                            Text("Apps")
+                        } icon: {
+                            Image(uiImage: UIImage(systemName: "square.grid.3x3") ?? UIImage())
+                        }
+                    }
                     .tag(3)
             }
             .tint(Color("calliope-lilablau"))
