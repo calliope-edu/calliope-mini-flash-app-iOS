@@ -17,7 +17,7 @@ struct RootTabView: View {
     @StateObject private var uploadViewModel: UploadViewModel
     @StateObject private var editorsViewModel: EditorsAndProgramsViewModel
     @StateObject private var sensordataViewModel: SensordataViewModel
-    @StateObject private var lofiAppsViewModel = LofiAppsViewModel()
+    @StateObject private var appsViewModel = AppsScreenViewModel()
     @StateObject private var rootAlertPublisher = RootAlertPublisher()
     @ObservedObject private var matrixConnectionViewModel: MatrixConnectionViewModel
     @ObservedObject private var usbDestinationPicker: USBDestinationPickerViewModel
@@ -52,7 +52,7 @@ struct RootTabView: View {
                 SensordataView(viewModel: sensordataViewModel)
                     .tabItem { Label("Sensordaten", systemImage: "menubar.rectangle") }
                     .tag(2)
-                LofiAppsView(viewModel: lofiAppsViewModel)
+                AppsScreenView(viewModel: appsViewModel)
                     .tabItem {
                         Label {
                             Text("Apps")

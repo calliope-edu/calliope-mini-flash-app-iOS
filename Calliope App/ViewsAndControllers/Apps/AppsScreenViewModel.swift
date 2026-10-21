@@ -1,5 +1,5 @@
 //
-//  LofiAppsViewModel.swift
+//  AppsScreenViewModel.swift
 //  Calliope App
 //
 //  Created by Calliope on 14.08.26.
@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-class LofiAppsViewModel: ObservableObject, Alertable {
+class AppsScreenViewModel: ObservableObject, Alertable {
     let infoItem = AppItem(tileItem: TileItem(title: "INFO", imageSource: ImageSource.local("info"), color: Color("calliope-pink"), textColor: .white), url: "https://calliope.cc/programmieren/mobil/ble-anwendungen")
     @Published var tileData = TileData<AppItem>(rightItems: [
         AppItem(tileItem: TileItem(title: "ROBOTER MIT GESICHTSERKENNUNG STEUERN", imageSource: ImageSource.local("facerobot"), color: Color("calliope-lilablau"), textColor: .white), url: "https://go.calliope.cc/facerobot?mobile=true"),

@@ -1,5 +1,5 @@
 //
-//  LofiAppsView.swift
+//  AppsScreenView.swift
 //  Calliope App
 //
 //  Created by Calliope on 14.08.26.
@@ -9,14 +9,14 @@
 import Foundation
 import SwiftUI
 
-enum LofiAppsRoute: Hashable {
+enum AppsScreenRoute: Hashable {
     case appDetail(app: AppItem)
     case info
 }
 
-struct LofiAppsView: View {
-    @ObservedObject var viewModel: LofiAppsViewModel
-    @StateObject private var router = Router<LofiAppsRoute>()
+struct AppsScreenView: View {
+    @ObservedObject var viewModel: AppsScreenViewModel
+    @StateObject private var router = Router<AppsScreenRoute>()
 
     var body: some View {
         NavigationStack(path: $router.path) {
@@ -26,7 +26,7 @@ struct LofiAppsView: View {
                 leftItemOnTap: { _ in router.push(.info) },
                 rightItemsOnTap: { app in router.push(.appDetail(app: app)) }
             )
-            .navigationDestination(for: LofiAppsRoute.self) { route in
+            .navigationDestination(for: AppsScreenRoute.self) { route in
                 switchRoutes(route: route)
             }
         }
@@ -34,10 +34,10 @@ struct LofiAppsView: View {
     }
 
     @ViewBuilder
-    func switchRoutes(route: LofiAppsRoute) -> some View {
+    func switchRoutes(route: AppsScreenRoute) -> some View {
         switch route {
         case .appDetail(let app):
-            LofiAppDetailView(app: app, alertPublisher: viewModel)
+            AppsDetailView(app: app, alertPublisher: viewModel)
         case .info:
             WebView(url: URL(string: viewModel.infoItem.url))
                 .navigationTitle("Apps Info")
@@ -45,7 +45,7 @@ struct LofiAppsView: View {
     }
 }
 
-struct LofiAppDetailView: View {
+struct AppsDetailView: View {
     let app: AppItem
     let alertPublisher: Alertable
     @Environment(\.deviceConnection) private var connection
