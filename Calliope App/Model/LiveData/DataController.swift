@@ -142,10 +142,10 @@ class DataController: NSObject, CLLocationManagerDelegate {
                         value in
                         self.uartValue.append(value)
                     }
-                    return [("", 0, 0.0)]
+                    return []
                 }
                 guard let uartValue = self.uartValue as? [String] else {
-                    return [("", 0, 0.0)]
+                    return []
                 }
                 var returnValues: [(String, Double, Double)] = []
                 for element in uartValue {
@@ -169,7 +169,7 @@ class DataController: NSObject, CLLocationManagerDelegate {
                 self.uartValue.removeAll()
                 return returnValues
             default:
-                return [("", 0, 0.0)]
+                return []
             }
         }
     }
