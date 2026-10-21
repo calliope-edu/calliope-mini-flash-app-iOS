@@ -2513,6 +2513,7 @@
       }
     },
     "Transfer program from your iPhone or iPad directly to your Calliope mini or save them in your Calliope mini folder." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

@@ -197,20 +197,6 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
         }
     }
 
-    var fileToCalliopeTile: some View {
-        VStack(alignment: .leading) {
-            Text("Transfer program from your iPhone or iPad directly to your Calliope mini or save them in your Calliope mini folder.").fontWeight(
-                .bold
-            )
-            let hexFileType = UTType.init(filenameExtension: "hex")!
-            boxButton(label: "Choose File", iconName: "doc", isSystemImage: true, action: { presentingFileImporter = true })
-                .fileImporter(isPresented: $presentingFileImporter, allowedContentTypes: [hexFileType]) { result in
-                    viewModel.openFile(result: result)
-                    presentingFileImporter = false
-                }
-        }
-    }
-
     var programsTile: some View {
         VStack(alignment: .leading) {
             Text("Select a program to transfer, share, rename or delete it.")
