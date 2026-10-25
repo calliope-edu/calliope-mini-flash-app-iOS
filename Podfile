@@ -1,29 +1,20 @@
-platform :ios, '15.0'
+platform :ios, '16.6'
 
 target 'Calliope App' do
 
   use_frameworks!
   
-  pod 'TPKeyboardAvoiding'
-  pod 'SnapKit'
   pod 'iOSDFULibrary'
-  pod 'UICircularProgressRing'
-  pod 'DeepDiff'
-  pod 'Highlightr'
-  ## MDC
-  pod 'MaterialComponents'
-  ## ZipArchive
-  pod 'SSZipArchive', '2.1.1'
-  ## SnapKit
-  pod 'SnapKit'
-  pod 'SQLite.swift', '~> 0.14.0'
   pod 'GRDB.swift', '~> 6.24'
-  pod 'DGCharts'
+
+  target 'Calliope AppTests' do
+    inherit! :search_paths
+  end
 
   post_install do |installer|
     installer.pods_project.targets.each do |target|
       target.build_configurations.each do |config|
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '16.6'
       end
     end
   end

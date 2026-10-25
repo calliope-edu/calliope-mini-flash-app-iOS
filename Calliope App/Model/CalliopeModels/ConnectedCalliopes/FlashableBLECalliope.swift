@@ -48,7 +48,7 @@ class FlashableBLECalliope: CalliopeAPI {
     /// exactly once).
     ///
     /// Call this immediately before `upload(...)` on the legacy
-    /// download-capture path (`FirmwareUpload`). Without it, switching from
+    /// download-capture path (`FlashJob`). Without it, switching from
     /// Blocks/Campus to any other editor (MakeCode, Open Roberta, …) would
     /// partial-flash a blocks-runtime device and leave a broken hybrid — the
     /// DAL hashes match across pxt-blocks-runtime and pxt-calliope, so partial
@@ -147,7 +147,7 @@ class FlashableBLECalliope: CalliopeAPI {
         let hexTypes = file.getHexTypes()
         if hexTypes.contains(.arcade) {
             LogNotify.log("Arcade files cannot be uploaded via Bluetooth")
-            statusDelegate?.dfuError(.unsupportedResponse, didOccurWithMessage: NSLocalizedString("Arcade-Dateien können nur per USB übertragen werden.", comment: ""))
+            statusDelegate?.dfuError(.unsupportedResponse, didOccurWithMessage: NSLocalizedString("Arcade files can only be transferred via USB.", comment: ""))
             return
         }
 

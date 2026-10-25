@@ -636,7 +636,7 @@ extension BLECalliope {
     /// missing, read failed, or 1.5 s timeout).
     ///
     /// Shared by the native-proxy bridge (Calliope Campus) and the legacy
-    /// download-capture flash path (`FirmwareUpload`). Both need it because the
+    /// download-capture flash path (`FlashJob`). Both need it because the
     /// partial-flash protocol cannot detect a blocks-runtime device on its own:
     /// pxt-blocks-runtime and pxt-calliope share the same DAL hash, so the DAL
     /// check inside partial flashing passes and only the user-program area gets
