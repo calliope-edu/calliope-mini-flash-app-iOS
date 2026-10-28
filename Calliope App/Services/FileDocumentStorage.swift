@@ -39,4 +39,31 @@ final class FileDocumentStorage: DocumentStorage {
         try fileManager.moveItem(at: file, to: destination)
         return destination
     }
+
+    func fileExists(named fileName: String) throws -> Bool {
+        fileManager.fileExists(atPath: try directory().appendingPathComponent(fileName).path)
+    }
+
+    func files(withExtensions extensions: Set<String>) throws -> [URL] {
+        try fileManager.contentsOfDirectory(
+            at: directory(),
+            includingPropertiesForKeys: [.ubiquitousItemDownloadingStatusKey],
+            options: .skipsSubdirectoryDescendants
+        )
+        .filter { extensions.contains($0.pathExtension.lowercased()) }
+    }
+
+    func rename(_ file: URL, to fileName: String) throws -> URL {
+        let destination = file.deletingLastPathComponent().appendingPathComponent(fileName)
+        try fileManager.moveItem(at: file, to: destination)
+        return destination
+    }
+
+    func delete(_ file: URL) throws {
+        try fileManager.removeItem(at: file)
+    }
+
+    func startDownloadIfNeeded(_ file: URL) {
+        StorageDirectory.shared.startDownloadIfNeeded(at: file)
+    }
 }

@@ -69,4 +69,47 @@ final class FileDocumentStorageTests: XCTestCase {
         XCTAssertThrowsError(try storage.moveIn(source))
         XCTAssertEqual(try Data(contentsOf: folder.appendingPathComponent("session.json")), Data("kept".utf8))
     }
+
+    func testFileExistsReportsSavedFilesOnly() throws {
+        try storage.save(Data(), as: "program.hex", atomically: false)
+
+        XCTAssertTrue(try storage.fileExists(named: "program.hex"))
+        XCTAssertFalse(try storage.fileExists(named: "other.hex"))
+    }
+
+    func testFilesListsOnlyTheRequestedExtensionsIgnoringCase() throws {
+        try storage.save(Data(), as: "a.hex", atomically: false)
+        try storage.save(Data(), as: "b.PY", atomically: false)
+        try storage.save(Data(), as: "c.csv", atomically: false)
+
+        let names = try storage.files(withExtensions: ["hex", "py"]).map(\.lastPathComponent).sorted()
+
+        XCTAssertEqual(names, ["a.hex", "b.PY"])
+    }
+
+    func testRenameMovesTheFileToTheNewName() throws {
+        let file = try storage.save(Data("print()".utf8), as: "old.py", atomically: false)
+
+        let renamed = try storage.rename(file, to: "new.py")
+
+        XCTAssertEqual(renamed, folder.appendingPathComponent("new.py"))
+        XCTAssertEqual(try Data(contentsOf: renamed), Data("print()".utf8))
+        XCTAssertFalse(try storage.fileExists(named: "old.py"))
+    }
+
+    func testRenameFailsWhenTheNewNameIsTaken() throws {
+        let file = try storage.save(Data("a".utf8), as: "a.hex", atomically: false)
+        try storage.save(Data("b".utf8), as: "b.hex", atomically: false)
+
+        XCTAssertThrowsError(try storage.rename(file, to: "b.hex"))
+        XCTAssertEqual(try Data(contentsOf: folder.appendingPathComponent("b.hex")), Data("b".utf8))
+    }
+
+    func testDeleteRemovesTheFile() throws {
+        let file = try storage.save(Data(), as: "program.hex", atomically: false)
+
+        try storage.delete(file)
+
+        XCTAssertFalse(try storage.fileExists(named: "program.hex"))
+    }
 }
