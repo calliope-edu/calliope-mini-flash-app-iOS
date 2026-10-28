@@ -23,10 +23,10 @@ struct USBTransferDiagnostics {
 
     // onRejected can arrive after the result, once DAPLink has checked the hex.
     @MainActor
-    func run(_ method: USBTransferMethod, program: URL, onRejected: @escaping (String) -> Void) async -> String {
+    func run(_ method: USBTransferMethod, program: URL, onRejected: @escaping (String) -> Void) async -> (outcome: USBTransferOutcome, summary: String) {
         let start = Date()
         guard await downloadIfNeeded(program) else {
-            return "FAILED – program not downloaded from iCloud after \(Self.seconds(since: start))"
+            return (.failed, "FAILED – program not downloaded from iCloud after \(Self.seconds(since: start))")
         }
         let name = USBCalliope.sanitizedDAPLinkName(from: program.lastPathComponent)
         let bytes = USBHexWriter.byteCount(of: program)
@@ -47,7 +47,7 @@ struct USBTransferDiagnostics {
             result = "Cancelled"
         }
         LogNotify.log("USB diagnostics: \(method.label) - \(result)")
-        return "\(result) (\(Self.seconds(since: start)))"
+        return (outcome, "\(result) (\(Self.seconds(since: start)))")
     }
 
     // MARK: - Private Helpers

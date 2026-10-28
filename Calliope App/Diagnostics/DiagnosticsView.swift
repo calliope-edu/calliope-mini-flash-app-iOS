@@ -24,6 +24,7 @@ struct DiagnosticsView: View {
             await viewModel.load()
         }
         .modifier(DiagnosticsFolderPickerModifier(picker: viewModel.folderPicker))
+        .modifier(AlertModifier(alert: $viewModel.alert))
     }
 
     @ViewBuilder

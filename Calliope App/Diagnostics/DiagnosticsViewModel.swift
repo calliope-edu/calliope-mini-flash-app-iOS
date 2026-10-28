@@ -20,6 +20,7 @@ final class DiagnosticsViewModel: ObservableObject {
     @Published private(set) var programs: [URL] = []
     @Published var selectedProgram: URL?
     @Published var selectedUSBTransferMethod: USBTransferMethod = .placeholderThenWrite
+    @Published var alert: AppAlert?
 
     private let diagnostics: DeviceDiagnostics
     private let storageDiagnostics: StorageDiagnostics
@@ -67,8 +68,12 @@ final class DiagnosticsViewModel: ObservableObject {
                     self?.appendToUSBTransferEntry(label, "DAPLink rejected: \(reason)")
                 }
             }
-            usbTransferEntries.append(DiagnosticsReport.Entry(label: label, value: result))
+            usbTransferEntries.append(DiagnosticsReport.Entry(label: label, value: result.summary))
             isTestingUSBTransfer = false
+            // Nothing was sent to the mini, so there is nothing to check.
+            if result.outcome != .cancelledByUser {
+                askWhetherProgramRuns(label: label)
+            }
         }
     }
 
@@ -92,6 +97,22 @@ final class DiagnosticsViewModel: ObservableObject {
     }
 
     // MARK: - Private Helpers
+
+    private func askWhetherProgramRuns(label: String) {
+        let answer = { [weak self] (text: String) in
+            LogNotify.log("USB diagnostics: \(label) - program runs: \(text)")
+            self?.appendToUSBTransferEntry(label, "Program runs: \(text)")
+        }
+        alert = AppAlert(
+            title: NSLocalizedString("Does the Calliope mini run the program?", comment: ""),
+            message: NSLocalizedString("Check the Calliope mini and choose what it does now.", comment: ""),
+            actions: [
+                StandardAlertAction(NSLocalizedString("Yes, it runs the program", comment: "")) { answer("yes") },
+                StandardAlertAction(NSLocalizedString("No, it keeps the old program", comment: "")) { answer("no, old program") },
+                StandardAlertAction(NSLocalizedString("No, it shows an error", comment: "")) { answer("no, error shown") },
+            ]
+        )
+    }
 
     private func appendToUSBTransferEntry(_ label: String, _ text: String) {
         guard let index = usbTransferEntries.firstIndex(where: { $0.label == label }) else { return }

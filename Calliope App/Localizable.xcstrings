@@ -620,6 +620,16 @@
         }
       }
     },
+    "Check the Calliope mini and choose what it does now." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schau auf den Calliope mini und wähle aus, was er jetzt macht."
+          }
+        }
+      }
+    },
     "Check your internet connection or the snippets url in settings.\n\nThe error description is:\n%@" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1072,6 +1082,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Möchtest du %@ auf deinen Calliope mini laden?"
+          }
+        }
+      }
+    },
+    "Does the Calliope mini run the program?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Führt der Calliope mini das Programm aus?"
           }
         }
       }
@@ -1748,6 +1768,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kein Sensor verfügbar"
+          }
+        }
+      }
+    },
+    "No, it keeps the old program" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nein, er hat noch das alte Programm"
+          }
+        }
+      }
+    },
+    "No, it shows an error" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nein, er zeigt einen Fehler"
           }
         }
       }
@@ -2856,6 +2896,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ja"
+          }
+        }
+      }
+    },
+    "Yes, it runs the program" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ja, er führt das Programm aus"
           }
         }
       }
