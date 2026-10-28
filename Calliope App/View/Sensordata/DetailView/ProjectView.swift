@@ -16,13 +16,14 @@ struct ProjectDetailView: View {
     var onDelete: () -> Void
     @StateObject var viewModel: ProjectViewModel
 
-    init(projectID: Int64, connection: DeviceConnectionService, onDelete: @escaping () -> Void) {
+    init(projectID: Int64, connection: DeviceConnectionService, documentStorage: DocumentStorage, onDelete: @escaping () -> Void) {
         self.projectID = projectID
         self.onDelete = onDelete
         _viewModel = StateObject(
             wrappedValue: ProjectViewModel(
                 project: Project.fetchProject(id: Int(projectID)) ?? Project(id: projectID, name: ""),
                 connection: connection,
+                documentStorage: documentStorage,
                 onDelete: onDelete
             )
         )
@@ -107,6 +108,6 @@ struct IconButton: View {
 
 struct ProjectView_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectView(viewModel: ProjectViewModel(project: Project(id: 1, name: "Test"), connection: PreviewDeviceConnectionService()))
+        ProjectView(viewModel: ProjectViewModel(project: Project(id: 1, name: "Test"), connection: PreviewDeviceConnectionService(), documentStorage: FileDocumentStorage()))
     }
 }

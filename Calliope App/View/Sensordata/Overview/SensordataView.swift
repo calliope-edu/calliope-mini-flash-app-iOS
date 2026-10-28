@@ -34,6 +34,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
     @State private var isImportingDataLoggerFile = false
     @EnvironmentObject private var uploadViewModel: UploadViewModel
     @Environment(\.deviceConnection) private var connection
+    @Environment(\.documentStorage) private var documentStorage
 
     var body: some View {
         NavigationStack(path: $router.path) {
@@ -46,7 +47,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
                 .navigationDestination(for: ProjectAndSensorsRoute.self) { route in
                     switch route {
                     case .project(let id):
-                        ProjectDetailView(projectID: id, connection: connection, onDelete: { router.pop() })
+                        ProjectDetailView(projectID: id, connection: connection, documentStorage: documentStorage, onDelete: { router.pop() })
                     case .dataLogger(let url):
                         DataLoggerDetailView(url: url)
                     case .infoWebView(let url):

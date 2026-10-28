@@ -10,20 +10,9 @@ import Foundation
 
 class CSVHandler {
     
-    static func exportToCSVFile(contents: String, fileName: String) {
-        let documentsURL: URL
+    static func exportToCSVFile(contents: String, fileName: String, storage: DocumentStorage) {
         do {
-            documentsURL = try StorageDirectory.shared.documentsDirectory()
-        } catch {
-            LogNotify.log("Error getting documents directory URL: \(error)")
-            return
-        }
-
-        let fileURL = documentsURL.appendingPathComponent("\(fileName).csv")
-        
-        // Write the string to the file
-        do {
-            try contents.write(to: fileURL, atomically: true, encoding: .utf8)
+            let fileURL = try storage.save(Data(contents.utf8), as: "\(fileName).csv", atomically: true)
             LogNotify.log("File saved: \(fileURL)")
         } catch {
             LogNotify.log("Error writing to file: \(error)")

@@ -80,6 +80,7 @@ struct RootTabView: View {
         }
         .environmentObject(uploadViewModel)
         .environment(\.deviceConnection, dependencies.connection)
+        .environment(\.documentStorage, dependencies.documentStorage)
         .environment(\.connectionPanel, dependencies.connectionPanel)
         .fileExporter(
             isPresented: usbDestinationPicker.isPresentedBinding,

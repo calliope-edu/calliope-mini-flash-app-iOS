@@ -26,6 +26,7 @@ class ProjectViewModel: ObservableObject, Alertable {
     private var calliopeDisconnectedSubscription: NSObjectProtocol!
     private let onDelete: () -> Void
     private let connection: DeviceConnectionService
+    private let documentStorage: DocumentStorage
 
     // Not `currentCalliope`: recording needs BLE, and that follows the USB switch.
     private var sensorCapableCalliope: CalliopeAPI? {
@@ -42,15 +43,17 @@ class ProjectViewModel: ObservableObject, Alertable {
             GroupViewModel(
                 group: $0,
                 connection: connection,
+                documentStorage: documentStorage,
                 openFileNameDialog: openFileNameDialog,
                 deleteGroup: deleteGroup
             )
         }
     }
 
-    init(project: Project, connection: DeviceConnectionService, onDelete: @escaping () -> Void = {}) {
+    init(project: Project, connection: DeviceConnectionService, documentStorage: DocumentStorage, onDelete: @escaping () -> Void = {}) {
         self.project = project
         self.connection = connection
+        self.documentStorage = documentStorage
         self.onDelete = onDelete
 
         loadGroups()
@@ -132,6 +135,7 @@ class ProjectViewModel: ObservableObject, Alertable {
             GroupViewModel(
                 group: group,
                 connection: connection,
+                documentStorage: documentStorage,
                 openFileNameDialog: openFileNameDialog,
                 deleteGroup: deleteGroup
             )
@@ -148,7 +152,7 @@ class ProjectViewModel: ObservableObject, Alertable {
             let string = CSVHandler.convertToCSVString(
                 project: self.project?.id ?? nil
             )
-            CSVHandler.exportToCSVFile(contents: string, fileName: filename)
+            CSVHandler.exportToCSVFile(contents: string, fileName: filename, storage: self.documentStorage)
         })
     }
 

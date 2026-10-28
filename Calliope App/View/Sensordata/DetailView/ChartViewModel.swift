@@ -46,6 +46,7 @@ class ChartViewModel: ObservableObject, Identifiable {
     let markLocation: (_ location: IdentifiableLocation, _ chart: Chart) -> Void
     let getMarkerColorForChart: (_ chart: Chart) -> Color
     let dataController: DataController
+    private let documentStorage: DocumentStorage
     @Published var data: [String: [DataPoint]] = [:]
     @Published var sensorOptions: [DropDownOption<Sensor>] = []
     @Published var selectedSensor: DropDownOption<Sensor>?
@@ -202,6 +203,7 @@ class ChartViewModel: ObservableObject, Identifiable {
     init(
         chart: Chart,
         connection: DeviceConnectionService,
+        documentStorage: DocumentStorage,
         openFileNameDialog:
             @escaping (@escaping (_ filename: String) -> Void) -> Void,
         onNewLocation: @escaping (_ location: IdentifiableLocation, _ chart: Chart) -> Void,
@@ -209,6 +211,7 @@ class ChartViewModel: ObservableObject, Identifiable {
         getMarkerColorForChart: @escaping (_ chart: Chart) -> Color
     ) {
         self.chart = chart
+        self.documentStorage = documentStorage
         self.openFileNameDialog = openFileNameDialog
         self.onNewLocation = onNewLocation
         self.markLocation = markLocation
@@ -346,7 +349,7 @@ class ChartViewModel: ObservableObject, Identifiable {
                 chartId: self.chart.id!,
                 sensorType: self.chart.sensorType
             )
-            CSVHandler.exportToCSVFile(contents: string, fileName: filename)
+            CSVHandler.exportToCSVFile(contents: string, fileName: filename, storage: self.documentStorage)
         })
     }
 

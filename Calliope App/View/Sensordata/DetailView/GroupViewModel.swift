@@ -13,6 +13,7 @@ import SwiftUI
 class GroupViewModel: ObservableObject, Identifiable {
     var group: Group
     private let connection: DeviceConnectionService
+    private let documentStorage: DocumentStorage
     var openFileNameDialog: (@escaping (_ filename: String) -> Void) -> Void
     var deleteGroup: (_ groupId: Int64) -> Void
     @Published var chartViewModels: [ChartViewModel] = []
@@ -33,12 +34,14 @@ class GroupViewModel: ObservableObject, Identifiable {
     init(
         group: Group,
         connection: DeviceConnectionService,
+        documentStorage: DocumentStorage,
         openFileNameDialog:
             @escaping (@escaping (_ filename: String) -> Void) -> Void,
         deleteGroup: @escaping (_ groupId: Int64) -> Void
     ) {
         self.group = group
         self.connection = connection
+        self.documentStorage = documentStorage
         self.openFileNameDialog = openFileNameDialog
         self.deleteGroup = deleteGroup
 
@@ -56,6 +59,7 @@ class GroupViewModel: ObservableObject, Identifiable {
                 ChartViewModel(
                     chart: chart,
                     connection: connection,
+                    documentStorage: documentStorage,
                     openFileNameDialog: openFileNameDialog,
                     onNewLocation: onNewLocation,
                     markLocation: markLocation,
@@ -171,6 +175,7 @@ class GroupViewModel: ObservableObject, Identifiable {
                 ChartViewModel(
                     chart: chart,
                     connection: connection,
+                    documentStorage: documentStorage,
                     openFileNameDialog: openFileNameDialog,
                     onNewLocation: onNewLocation,
                     markLocation: markLocation,
