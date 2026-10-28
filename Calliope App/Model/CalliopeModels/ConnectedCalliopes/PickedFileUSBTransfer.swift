@@ -51,7 +51,7 @@ struct PickedFileUSBTransfer: USBTransferStrategy {
     ///    was rejected. Reading it may be denied by the sandbox, so read access
     ///    is probed with `DETAILS.TXT` first — otherwise a missing `FAIL.TXT`
     ///    would look like success when we simply cannot see it.
-    private static func verifyFlashOutcome(destinationURL: URL, expectedBytes: Int, onRejected: @escaping (String) -> Void) {
+    static func verifyFlashOutcome(destinationURL: URL, expectedBytes: Int, onRejected: @escaping (String) -> Void) {
         let volumeRoot = destinationURL.deletingLastPathComponent()
         DispatchQueue.global(qos: .utility).async {
             pollDestinationDelivery(destinationURL, expectedBytes: expectedBytes)

@@ -16,7 +16,7 @@ final class FakeUSBDestinationPicker: USBDestinationPicker {
     var onRequest: (() -> Void)?
     private(set) var requestedFilenames: [String] = []
 
-    func pickDestination(filename: String, completion: @escaping (Result<URL, Error>?) -> Void) {
+    func pickDestination(filename: String, contents: Data, completion: @escaping (Result<URL, Error>?) -> Void) {
         requestedFilenames.append(filename)
         onRequest?()
         if !staysOpen {

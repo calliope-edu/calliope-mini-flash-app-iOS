@@ -10,6 +10,7 @@ import Foundation
 enum USBTransferMethod: String, CaseIterable, Identifiable {
     case placeholderThenWrite
     case placeholderThenWriteWithoutDelay
+    case exporterWritesHex
 
     var id: String { rawValue }
 
@@ -19,6 +20,8 @@ enum USBTransferMethod: String, CaseIterable, Identifiable {
             return "Placeholder, then write (current)"
         case .placeholderThenWriteWithoutDelay:
             return "Placeholder, then write without delay (7174000)"
+        case .exporterWritesHex:
+            return "Exporter writes the hex (0ff05b0)"
         }
     }
 
@@ -28,6 +31,8 @@ enum USBTransferMethod: String, CaseIterable, Identifiable {
             return PickedFileUSBTransfer(picker: exportPicker)
         case .placeholderThenWriteWithoutDelay:
             return PickedFileUSBTransfer(picker: exportPicker, writeDelay: 0)
+        case .exporterWritesHex:
+            return ExportedHexUSBTransfer(picker: exportPicker)
         }
     }
 }

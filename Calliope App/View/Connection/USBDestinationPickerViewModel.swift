@@ -12,6 +12,7 @@ final class USBDestinationPickerViewModel: ObservableObject, USBDestinationPicke
     struct Request {
         let id = UUID()
         let filename: String
+        let contents: Data
         let completion: (Result<URL, Error>?) -> Void
     }
 
@@ -31,8 +32,8 @@ final class USBDestinationPickerViewModel: ObservableObject, USBDestinationPicke
         )
     }
 
-    func pickDestination(filename: String, completion: @escaping (Result<URL, Error>?) -> Void) {
-        request = Request(filename: filename, completion: completion)
+    func pickDestination(filename: String, contents: Data, completion: @escaping (Result<URL, Error>?) -> Void) {
+        request = Request(filename: filename, contents: contents, completion: completion)
     }
 
     // A nil result means the user cancelled the export picker.

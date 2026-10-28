@@ -88,8 +88,8 @@ struct RootTabView: View {
         .environment(\.connectionPanel, dependencies.connectionPanel)
         .fileExporter(
             isPresented: usbDestinationPicker.isPresentedBinding,
-            document: EmptyHexDocument(),
-            contentType: EmptyHexDocument.hexType,
+            document: HexDocument(contents: usbDestinationPicker.request?.contents ?? Data()),
+            contentType: HexDocument.hexType,
             defaultFilename: usbDestinationPicker.request?.filename
         ) { result in
             usbDestinationPicker.complete(result)
@@ -197,16 +197,21 @@ final class RootAlertPublisher: ObservableObject, Alertable {
     }
 }
 
-// The app writes the hex content itself after the export, see USBCalliope.uploadViaExportPicker.
-private struct EmptyHexDocument: FileDocument {
+private struct HexDocument: FileDocument {
     static let hexType = UTType(filenameExtension: "hex") ?? .data
     static var readableContentTypes: [UTType] { [hexType] }
 
-    init() {}
+    let contents: Data
 
-    init(configuration: ReadConfiguration) throws {}
+    init(contents: Data) {
+        self.contents = contents
+    }
+
+    init(configuration: ReadConfiguration) throws {
+        contents = configuration.file.regularFileContents ?? Data()
+    }
 
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-        FileWrapper(regularFileWithContents: Data())
+        FileWrapper(regularFileWithContents: contents)
     }
 }
