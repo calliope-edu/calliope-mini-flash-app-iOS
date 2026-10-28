@@ -179,26 +179,6 @@ final class DeviceConnectionServiceTests: XCTestCase {
         XCTAssertFalse(viewModel.isFolderPickerPresented)
     }
 
-    func testCancelledCopyKeepsUsbWithAFolder() {
-        viewModel.isInUsbMode = true
-
-        service.resetUsbConnectionAfterCopy()
-        drainMainQueue()
-
-        XCTAssertTrue(service.isUsbMode)
-    }
-
-    func testCancelledCopyDropsUsbWhenTheDestinationIsPickedPerFlash() {
-        makeService(usbPolicy: pickPerFlashPolicy)
-        viewModel.isInUsbMode = true
-
-        service.resetUsbConnectionAfterCopy()
-        drainMainQueue()
-
-        XCTAssertFalse(service.isUsbMode)
-        XCTAssertFalse(viewModel.isInUsbMode)
-    }
-
     // MARK: - DFU
 
     func testDfuModeKeepsDiscoveryFromConnecting() {

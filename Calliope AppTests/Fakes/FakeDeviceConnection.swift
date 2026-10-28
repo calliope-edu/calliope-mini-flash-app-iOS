@@ -37,5 +37,4 @@ final class FakeDeviceConnection: DeviceConnectionService {
     func reconnect(preferredName: String?) {}
     func setDfuMode(_ enabled: Bool) {}
     func disconnectForReboot() {}
-    func resetUsbConnectionAfterCopy() {}
 }

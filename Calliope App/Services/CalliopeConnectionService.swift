@@ -220,17 +220,6 @@ final class CalliopeConnectionService: ConnectionControl, CalliopeDiscoveryConte
         connector.connectUsbCalliope(to: .folder(url))
     }
 
-    func resetUsbConnectionAfterCopy() {
-        guard usbPolicy.dropsConnectionAfterCancelledCopy, isUsbMode else { return }
-
-        // Next main-queue turn: the finish callback may still run a connect() of its own, and this teardown has to win.
-        DispatchQueue.main.async { [weak self] in
-            guard let self, self.isUsbMode else { return }
-            LogNotify.log("USB copy finished - dropping connection and switching USB off")
-            self.setUsbMode(false)
-        }
-    }
-
     func reportInvalidUsbLocation() {
         eventSubject.send(.invalidUsbLocation)
     }

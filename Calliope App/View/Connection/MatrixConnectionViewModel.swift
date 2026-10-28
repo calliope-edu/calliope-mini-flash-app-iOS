@@ -96,9 +96,6 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable, C
             //
             // iPadOS 26+ on a personal device keeps the button: there the folder
             // picker opens and needs a deliberate action anyway.
-            //
-            // Only on switching ON — `resetUsbConnectionAfterCopy` switches it off,
-            // so this cannot loop.
             if isInUsbMode, usbPolicy.picksDestinationPerFlash {
                 DispatchQueue.main.async { [weak self] in
                     guard let self, self.isInUsbMode else { return }

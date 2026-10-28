@@ -26,7 +26,6 @@ protocol DeviceConnectionService: AnyObject {
     func reconnect(preferredName: String?)
     func setDfuMode(_ enabled: Bool)
     func disconnectForReboot()
-    func resetUsbConnectionAfterCopy()
 }
 
 // What the connection panel needs on top: choosing the device and following the connection state.
@@ -64,7 +63,6 @@ final class PreviewDeviceConnectionService: ConnectionControl {
     func reconnect(preferredName: String?) {}
     func setDfuMode(_ enabled: Bool) {}
     func disconnectForReboot() {}
-    func resetUsbConnectionAfterCopy() {}
 
     var state: DeviceConnectionState { .idle }
     var stateChanges: AnyPublisher<DeviceConnectionState, Never> { Just(.idle).eraseToAnyPublisher() }

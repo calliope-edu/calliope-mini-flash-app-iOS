@@ -51,10 +51,6 @@ final class FlashJob {
         guard !isEnded else { return }
         _ = target.cancelUpload()
         end()
-        // The picked USB volume may be unusable after an interrupted copy.
-        if target is USBCalliope {
-            connection.resetUsbConnectionAfterCopy()
-        }
         emit(.cancelled)
     }
 

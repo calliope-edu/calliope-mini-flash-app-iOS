@@ -14,7 +14,6 @@ final class USBTransferPolicyTests: XCTestCase {
         let policy = USBTransferPolicy(isSharedIPad: false, systemMajorVersion: 26)
 
         XCTAssertFalse(policy.picksDestinationPerFlash)
-        XCTAssertFalse(policy.dropsConnectionAfterCancelledCopy)
         XCTAssertFalse(policy.allowsUploadWithoutDevice)
     }
 
@@ -22,7 +21,6 @@ final class USBTransferPolicyTests: XCTestCase {
         let policy = USBTransferPolicy(isSharedIPad: false, systemMajorVersion: 18)
 
         XCTAssertTrue(policy.picksDestinationPerFlash)
-        XCTAssertTrue(policy.dropsConnectionAfterCancelledCopy)
         XCTAssertTrue(policy.allowsUploadWithoutDevice)
     }
 

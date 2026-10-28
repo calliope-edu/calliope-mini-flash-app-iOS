@@ -17,11 +17,6 @@ struct USBTransferPolicy {
         picksDestinationPerFlash = isSharedIPad || systemMajorVersion < 26
     }
 
-    // A cancelled copy may leave the picked volume unusable, so the user has to pick it again.
-    var dropsConnectionAfterCancelledCopy: Bool {
-        picksDestinationPerFlash
-    }
-
     // Without a folder there is no device to connect to before the first flash.
     var allowsUploadWithoutDevice: Bool {
         picksDestinationPerFlash
