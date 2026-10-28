@@ -652,6 +652,16 @@
         }
       }
     },
+    "Collecting information…" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informationen werden gesammelt…"
+          }
+        }
+      }
+    },
     "Connect" : {
       "localizations" : {
         "de" : {
@@ -783,6 +793,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fortfahren"
+          }
+        }
+      }
+    },
+    "Copied" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopiert"
+          }
+        }
+      }
+    },
+    "Copy" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopieren"
           }
         }
       }
@@ -969,6 +999,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "DFU-Prozess abgebrochen!"
+          }
+        }
+      }
+    },
+    "Diagnostics" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diagnose"
           }
         }
       }
@@ -2776,6 +2816,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mit Hilfe der Editoren kannst du deinen Calliope mini programmieren."
+          }
+        }
+      }
+    },
+    "You can share this report using “Share” or “Copy”." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du kannst diesen Bericht mit „Teilen“ oder „Kopieren“ weitergeben."
           }
         }
       }

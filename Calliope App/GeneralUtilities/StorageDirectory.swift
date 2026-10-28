@@ -12,7 +12,7 @@ final class StorageDirectory {
 
     static let shared = StorageDirectory()
 
-    private static let containerIdentifier = "iCloud.cc.calliope.ios.flash"
+    static let containerIdentifier = "iCloud.cc.calliope.ios.flash"
 
     private var cachedDirectory: URL?
     private let lock = NSLock()

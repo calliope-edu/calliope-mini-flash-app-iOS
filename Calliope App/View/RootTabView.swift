@@ -61,6 +61,11 @@ struct RootTabView: View {
                         }
                     }
                     .tag(3)
+                if DiagnosticsFeature.isEnabled {
+                    DiagnosticsView(viewModel: DiagnosticsViewModel(diagnostics: DeviceDiagnostics(usbPolicy: dependencies.usbPolicy)))
+                        .tabItem { Label("Diagnostics", systemImage: "stethoscope") }
+                        .tag(4)
+                }
             }
             .tint(Color("calliope-lilablau"))
             
