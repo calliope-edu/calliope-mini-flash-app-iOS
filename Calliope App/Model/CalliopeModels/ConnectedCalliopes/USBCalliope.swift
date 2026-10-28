@@ -136,7 +136,7 @@ class USBCalliope: Calliope {
     /// DAPLink's MSD parser tolerates LFNs but parses 8.3 most reliably,
     /// especially for files coming from MakeCode with long project names
     /// (e.g. "microbit-My-Project-2026.hex").
-    private static func sanitizedDAPLinkName(from filename: String) -> String {
+    static func sanitizedDAPLinkName(from filename: String) -> String {
         let base = (filename as NSString).deletingPathExtension.lowercased()
         let allowed = Set("abcdefghijklmnopqrstuvwxyz0123456789-_")
         let sanitized: String = String(base.compactMap { ch -> Character? in

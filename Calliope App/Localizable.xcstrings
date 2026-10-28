@@ -693,6 +693,16 @@
         }
       }
     },
+    "Connect the Calliope mini via USB, choose a program and a method, then pick the MINI drive when asked." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbinde den Calliope mini per USB, wähle ein Programm und eine Methode und wähle dann das Laufwerk MINI aus, wenn danach gefragt wird."
+          }
+        }
+      }
+    },
     "Connect to Bluetooth Calliope mini" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1585,6 +1595,16 @@
         }
       }
     },
+    "Method" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Methode"
+          }
+        }
+      }
+    },
     "Microphone" : {
       "localizations" : {
         "de" : {
@@ -1918,6 +1938,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Drücke die Tasten A und B, um zum Menü zu gelangen"
+          }
+        }
+      }
+    },
+    "Program" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programm"
           }
         }
       }
@@ -2300,12 +2330,32 @@
         }
       }
     },
+    "Test USB transfer" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "USB-Übertragung testen"
+          }
+        }
+      }
+    },
     "Test saving" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Speichern testen"
+          }
+        }
+      }
+    },
+    "Testing USB transfer…" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "USB-Übertragung wird getestet…"
           }
         }
       }
@@ -2641,6 +2691,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Übertragung läuft"
+          }
+        }
+      }
+    },
+    "USB transfer" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "USB-Übertragung"
           }
         }
       }

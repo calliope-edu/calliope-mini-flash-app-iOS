@@ -9,6 +9,9 @@ import Foundation
 
 enum USBHexWriter {
 
+    // Without this delay the first flash after plug-in fails sporadically, because DAPLink may have not finished remounting
+    static let remountDelay: TimeInterval = 0.25
+
     /**
      USB flashing on Calliope mini (DAPLink-based) via the Files / Documents API.
 
@@ -28,11 +31,10 @@ enum USBHexWriter {
        on success — verifying that the file still exists after the copy is
        misleading and was producing false negatives.
      */
-    static func write(_ source: URL, to destination: URL, securityScope: URL, coordination: NSFileCoordinator.WritingOptions, waitsForFile: Bool, completion: @escaping (Bool) -> Void) {
+    static func write(_ source: URL, to destination: URL, securityScope: URL, coordination: NSFileCoordinator.WritingOptions, waitsForFile: Bool, delay: TimeInterval = remountDelay, completion: @escaping (Bool) -> Void) {
         let expectedBytes = byteCount(of: source)
 
-        // Without this delay the first flash after plug-in fails sporadically, because DAPLink may have not finished remounting
-        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.25) {
+        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + delay) {
             let accessed = securityScope.startAccessingSecurityScopedResource()
             defer {
                 if accessed {

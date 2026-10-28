@@ -57,6 +57,7 @@ struct DiagnosticsView: View {
                     }
                     .disabled(viewModel.isTestingStorage)
                 }
+                usbTransferSection
                 ForEach(report.sections) { section in
                     Section(section.title) {
                         ForEach(section.entries) { entry in
@@ -70,6 +71,41 @@ struct DiagnosticsView: View {
             }
         } else {
             ProgressView("Collecting information…")
+        }
+    }
+
+    private var usbTransferSection: some View {
+        Section {
+            Text("Connect the Calliope mini via USB, choose a program and a method, then pick the MINI drive when asked.")
+            Picker("Program", selection: $viewModel.selectedProgram) {
+                ForEach(viewModel.programs, id: \.self) { program in
+                    Text(verbatim: program.lastPathComponent).tag(Optional(program))
+                }
+            }
+            Picker("Method", selection: $viewModel.selectedUSBTransferMethod) {
+                ForEach(USBTransferMethod.allCases) { method in
+                    Text(verbatim: method.label).tag(method)
+                }
+            }
+            .pickerStyle(.inline)
+            Button {
+                viewModel.testUSBTransfer()
+            } label: {
+                if viewModel.isTestingUSBTransfer {
+                    HStack {
+                        ProgressView()
+                        Text("Testing USB transfer…")
+                    }
+                } else {
+                    rowLabel("Test USB transfer", systemImage: "cable.connector")
+                }
+            }
+            .disabled(viewModel.isTestingUSBTransfer || viewModel.selectedProgram == nil)
+        } header: {
+            Text("USB transfer")
+        }
+        .onAppear {
+            viewModel.reloadPrograms()
         }
     }
 

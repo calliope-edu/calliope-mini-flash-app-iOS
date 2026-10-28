@@ -64,7 +64,8 @@ struct RootTabView: View {
                 if DiagnosticsFeature.isEnabled {
                     DiagnosticsView(viewModel: DiagnosticsViewModel(
                         diagnostics: DeviceDiagnostics(usbPolicy: dependencies.usbPolicy),
-                        storageDiagnostics: StorageDiagnostics(storage: dependencies.documentStorage)
+                        storageDiagnostics: StorageDiagnostics(storage: dependencies.documentStorage),
+                        usbTransferDiagnostics: USBTransferDiagnostics(storage: dependencies.documentStorage, exportPicker: dependencies.usbDestinationPicker)
                     ))
                         .tabItem { Label("Diagnostics", systemImage: "stethoscope") }
                         .tag(4)

@@ -10,6 +10,7 @@ import Foundation
 struct PickedFileUSBTransfer: USBTransferStrategy {
 
     let picker: USBDestinationPicker
+    var writeDelay = USBHexWriter.remountDelay
 
     // There is no volume URL before the picker, so the copy itself has to show whether the mini is there.
     var isConnected: Bool {
@@ -28,7 +29,7 @@ struct PickedFileUSBTransfer: USBTransferStrategy {
             case .success(let url):
                 let expectedBytes = USBHexWriter.byteCount(of: source)
                 // .forReplacing could make the file provider recreate the picked file instead of writing into it.
-                USBHexWriter.write(source, to: url, securityScope: url, coordination: [], waitsForFile: true) { success in
+                USBHexWriter.write(source, to: url, securityScope: url, coordination: [], waitsForFile: true, delay: writeDelay) { success in
                     completion(success ? .written : .failed)
                     if success {
                         Self.verifyFlashOutcome(destinationURL: url, expectedBytes: expectedBytes, onRejected: onRejected)
