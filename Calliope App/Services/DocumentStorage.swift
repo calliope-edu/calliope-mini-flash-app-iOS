@@ -8,6 +8,8 @@
 import Foundation
 
 protocol DocumentStorage: AnyObject {
+    var isICloud: Bool { get }
+
     func directory() throws -> URL
 
     @discardableResult

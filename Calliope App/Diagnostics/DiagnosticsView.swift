@@ -43,6 +43,19 @@ struct DiagnosticsView: View {
                             rowLabel("Copy", systemImage: "doc.on.doc")
                         }
                     }
+                    Button {
+                        viewModel.testStorage()
+                    } label: {
+                        if viewModel.isTestingStorage {
+                            HStack {
+                                ProgressView()
+                                Text("Testing saving…")
+                            }
+                        } else {
+                            rowLabel("Test saving", systemImage: "externaldrive.badge.checkmark")
+                        }
+                    }
+                    .disabled(viewModel.isTestingStorage)
                 }
                 ForEach(report.sections) { section in
                     Section(section.title) {

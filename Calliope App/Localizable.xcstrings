@@ -2300,6 +2300,26 @@
         }
       }
     },
+    "Test saving" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speichern testen"
+          }
+        }
+      }
+    },
+    "Testing saving…" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speichern wird getestet…"
+          }
+        }
+      }
+    },
     "The Calliope mini accepted the file." : {
       "comment" : "Diagnostics verdict, success",
       "extractionState" : "stale",

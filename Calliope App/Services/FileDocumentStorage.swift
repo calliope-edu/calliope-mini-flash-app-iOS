@@ -22,6 +22,11 @@ final class FileDocumentStorage: DocumentStorage {
 
     // MARK: - Public API
 
+    var isICloud: Bool {
+        guard let directory = try? directory() else { return false }
+        return fileManager.isUbiquitousItem(at: directory)
+    }
+
     func directory() throws -> URL {
         try resolveDirectory()
     }

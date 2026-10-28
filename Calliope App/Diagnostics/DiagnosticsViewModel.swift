@@ -11,20 +11,38 @@ import Foundation
 @MainActor
 final class DiagnosticsViewModel: ObservableObject {
 
-    @Published private(set) var report: DiagnosticsReport?
+    @Published private var deviceReport: DiagnosticsReport?
+    @Published private var storageSection: DiagnosticsReport.Section?
     @Published private(set) var didCopy = false
+    @Published private(set) var isTestingStorage = false
 
     private let diagnostics: DeviceDiagnostics
+    private let storageDiagnostics: StorageDiagnostics
 
-    init(diagnostics: DeviceDiagnostics) {
+    init(diagnostics: DeviceDiagnostics, storageDiagnostics: StorageDiagnostics) {
         self.diagnostics = diagnostics
+        self.storageDiagnostics = storageDiagnostics
     }
 
     // MARK: - Public API
 
+    var report: DiagnosticsReport? {
+        guard let deviceReport else { return nil }
+        return DiagnosticsReport(sections: deviceReport.sections + [storageSection].compactMap { $0 })
+    }
+
     func load() async {
-        report = await diagnostics.collect()
+        deviceReport = await diagnostics.collect()
         LogNotify.log("Diagnostics report created")
+    }
+
+    func testStorage() {
+        guard !isTestingStorage else { return }
+        isTestingStorage = true
+        Task {
+            storageSection = await storageDiagnostics.run()
+            isTestingStorage = false
+        }
     }
 
     func copyReport() {
