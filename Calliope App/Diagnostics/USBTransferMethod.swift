@@ -18,13 +18,13 @@ enum USBTransferMethod: String, CaseIterable, Identifiable {
     var label: String {
         switch self {
         case .placeholderThenWrite:
-            return "Placeholder, then write (current)"
+            return "fileExporter and write with delay (current)"
         case .placeholderThenWriteWithoutDelay:
-            return "Placeholder, then write without delay (7174000)"
+            return "fileExporter and write without delay (7174000)"
         case .exporterWritesHex:
-            return "Exporter writes the hex (0ff05b0)"
+            return "fileExporter writes the hex (0ff05b0)"
         case .folderPickedPerFlash:
-            return "Pick the folder every time, then write"
+            return "filePicker and write (normal)"
         }
     }
 
