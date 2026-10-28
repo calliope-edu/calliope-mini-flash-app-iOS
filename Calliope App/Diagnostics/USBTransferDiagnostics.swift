@@ -11,6 +11,7 @@ struct USBTransferDiagnostics {
 
     let storage: DocumentStorage
     let exportPicker: USBDestinationPicker
+    let folderPicker = DiagnosticsFolderPicker()
     var downloadTimeout: TimeInterval = 15
 
     // MARK: - Public API
@@ -32,7 +33,7 @@ struct USBTransferDiagnostics {
         LogNotify.log("USB diagnostics: \(method.label) with \(program.lastPathComponent) (\(bytes) bytes) as \(name)")
 
         let outcome = await withCheckedContinuation { continuation in
-            method.strategy(exportPicker: exportPicker).transfer(program, named: name, onRejected: onRejected) { outcome in
+            method.strategy(exportPicker: exportPicker, folderPicker: folderPicker).transfer(program, named: name, onRejected: onRejected) { outcome in
                 continuation.resume(returning: outcome)
             }
         }

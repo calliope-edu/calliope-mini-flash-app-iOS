@@ -25,6 +25,10 @@ final class DiagnosticsViewModel: ObservableObject {
     private let storageDiagnostics: StorageDiagnostics
     private let usbTransferDiagnostics: USBTransferDiagnostics
 
+    var folderPicker: DiagnosticsFolderPicker {
+        usbTransferDiagnostics.folderPicker
+    }
+
     init(diagnostics: DeviceDiagnostics, storageDiagnostics: StorageDiagnostics, usbTransferDiagnostics: USBTransferDiagnostics) {
         self.diagnostics = diagnostics
         self.storageDiagnostics = storageDiagnostics
