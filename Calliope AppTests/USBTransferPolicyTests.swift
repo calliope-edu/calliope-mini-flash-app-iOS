@@ -10,21 +10,21 @@ import XCTest
 
 final class USBTransferPolicyTests: XCTestCase {
 
-    func testPersonalIPadOnCurrentSystemUsesAFolder() {
+    func testPersonalCurrentIPad() {
         let policy = USBTransferPolicy(isSharedIPad: false, systemMajorVersion: 26)
 
         XCTAssertFalse(policy.picksDestinationPerFlash)
         XCTAssertFalse(policy.allowsUploadWithoutDevice)
     }
 
-    func testOlderSystemPicksTheDestinationPerFlash() {
+    func testPersonalOlderIPad() {
         let policy = USBTransferPolicy(isSharedIPad: false, systemMajorVersion: 18)
 
         XCTAssertTrue(policy.picksDestinationPerFlash)
         XCTAssertTrue(policy.allowsUploadWithoutDevice)
     }
 
-    func testSharedIPadPicksTheDestinationPerFlashOnAnySystem() {
+    func testSharedCurrentIPad() {
         let policy = USBTransferPolicy(isSharedIPad: true, systemMajorVersion: 26)
 
         XCTAssertTrue(policy.picksDestinationPerFlash)
