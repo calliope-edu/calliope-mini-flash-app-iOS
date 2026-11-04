@@ -712,7 +712,7 @@ struct GlassElementModifier: ViewModifier {
 #Preview("On EditorsAndPrograms") {
     let uploadViewModel = UploadViewModel.preview()
     ZStack {
-        EditorsAndProgramsView(viewModel: EditorsAndProgramsViewModel(uploadViewModel: uploadViewModel))
+        EditorsAndProgramsView(viewModel: EditorsAndProgramsViewModel(uploadViewModel: uploadViewModel, settings: UserDefaultsSettingsStore()))
             .environmentObject(RootCoordinator())
 
         MatrixConnectionView(viewModel: PreviewMatrixConnectionViewModel())

@@ -10,6 +10,8 @@ import Foundation
 protocol SettingsStore: AnyObject {
     var restoresLastMatrix: Bool { get }
     var lastMatrix: String { get set }
+    var defaultProgramV3Url: String { get }
+    var defaultProgramV1AndV2Url: String { get }
 }
 
 final class UserDefaultsSettingsStore: SettingsStore {
@@ -26,5 +28,13 @@ final class UserDefaultsSettingsStore: SettingsStore {
     var lastMatrix: String {
         get { defaults.string(forKey: SettingsKey.lastMatrix.rawValue) ?? "" }
         set { defaults.set(newValue, forKey: SettingsKey.lastMatrix.rawValue) }
+    }
+
+    var defaultProgramV3Url: String {
+        defaults.string(forKey: SettingsKey.defaultProgramV3Url.rawValue) ?? Settings.defaultProgramV3
+    }
+
+    var defaultProgramV1AndV2Url: String {
+        defaults.string(forKey: SettingsKey.defaultProgramV1AndV2Url.rawValue) ?? Settings.defaultProgramV2andV1
     }
 }

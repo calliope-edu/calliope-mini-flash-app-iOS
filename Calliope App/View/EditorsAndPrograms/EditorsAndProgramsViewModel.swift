@@ -69,6 +69,7 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
 
     var programSubscription: NSObjectProtocol!
     private let uploadViewModel: UploadViewModel
+    private let settings: SettingsStore
 
     func loadPrograms() {
         programs = []
@@ -79,8 +80,9 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
         }
     }
 
-    init(uploadViewModel: UploadViewModel) {
+    init(uploadViewModel: UploadViewModel, settings: SettingsStore) {
         self.uploadViewModel = uploadViewModel
+        self.settings = settings
         loadPrograms()
         programSubscription = NotificationCenter.default.addObserver(
             forName: NotificationConstants.hexFileChanged,
@@ -129,7 +131,7 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
     func uploadDefaultV3Program() {
         let program = DefaultProgram(
             programName: NSLocalizedString("Calliope mini V3", comment: ""),
-            url: UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV3Url.rawValue)!
+            url: settings.defaultProgramV3Url
         )
         uploadViewModel.upload(downloadable: program)
     }
@@ -137,7 +139,7 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
     func uploadDefaultV1And2Program() {
         let program = DefaultProgram(
             programName: NSLocalizedString("Calliope mini V1 + 2", comment: ""),
-            url: UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV1AndV2Url.rawValue)!
+            url: settings.defaultProgramV1AndV2Url
         )
         uploadViewModel.upload(downloadable: program)
     }

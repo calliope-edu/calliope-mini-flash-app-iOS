@@ -43,4 +43,17 @@ final class UserDefaultsSettingsStoreTests: XCTestCase {
 
         XCTAssertEqual(UserDefaultsSettingsStore(defaults: defaults).lastMatrix, "zuzaz")
     }
+
+    func testDefaultProgramUrlsReflectThePreferences() {
+        defaults.set("https://example.com/v3.hex", forKey: SettingsKey.defaultProgramV3Url.rawValue)
+        defaults.set("https://example.com/v1.hex", forKey: SettingsKey.defaultProgramV1AndV2Url.rawValue)
+
+        XCTAssertEqual(store.defaultProgramV3Url, "https://example.com/v3.hex")
+        XCTAssertEqual(store.defaultProgramV1AndV2Url, "https://example.com/v1.hex")
+    }
+
+    func testDefaultProgramUrlsFallBackToTheBuiltInUrls() {
+        XCTAssertEqual(store.defaultProgramV3Url, Settings.defaultProgramV3)
+        XCTAssertEqual(store.defaultProgramV1AndV2Url, Settings.defaultProgramV2andV1)
+    }
 }

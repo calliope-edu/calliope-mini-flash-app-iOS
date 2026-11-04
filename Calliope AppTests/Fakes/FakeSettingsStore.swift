@@ -11,4 +11,6 @@ import Foundation
 final class FakeSettingsStore: SettingsStore {
     var restoresLastMatrix = false
     var lastMatrix = ""
+    var defaultProgramV3Url = "https://example.com/v3.hex"
+    var defaultProgramV1AndV2Url = "https://example.com/v1.hex"
 }
