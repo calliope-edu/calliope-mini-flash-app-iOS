@@ -72,4 +72,14 @@ final class UserDefaultsSettingsStoreTests: XCTestCase {
         XCTAssertEqual(store.robertaUrl, URL(string: Settings.defaultOpenRobertaUrl))
         XCTAssertEqual(store.microPythonUrl, URL(string: Settings.defaultMicroPythonUrl))
     }
+
+    func testNewsUrlReflectsThePreference() {
+        defaults.set("https://example.com/news.json", forKey: SettingsKey.newsURL.rawValue)
+
+        XCTAssertEqual(store.newsUrl, URL(string: "https://example.com/news.json"))
+    }
+
+    func testNewsUrlFallsBackToTheBuiltInUrl() {
+        XCTAssertEqual(store.newsUrl, URL(string: Settings.defaultNewsUrl))
+    }
 }

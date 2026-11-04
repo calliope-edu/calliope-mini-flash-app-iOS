@@ -19,18 +19,13 @@ protocol NewsItemProtocol {
 }
 
 struct NewsManager {
-	static func getNews(_ completion: @escaping (Result<[NewsItem], Error>) -> ()) {
+	static func getNews(from url: URL?, _ completion: @escaping (Result<[NewsItem], Error>) -> ()) {
 
 		#if DEBUG
 		URLCache.shared.removeAllCachedResponses()
 		#endif
 
-        var urlString = UserDefaults.standard.string(forKey: SettingsKey.newsURL.rawValue)
-        let defaultUrlString = Settings.defaultNewsUrl
-        if urlString == nil {
-            urlString = defaultUrlString
-        }
-        guard let url = URL(string: urlString!) else {
+        guard let url else {
             completion(.failure("news url not valid"))
             return
         }

@@ -15,6 +15,7 @@ protocol SettingsStore: AnyObject {
     var makeCodeUrl: URL? { get }
     var robertaUrl: URL? { get }
     var microPythonUrl: URL? { get }
+    var newsUrl: URL? { get }
 }
 
 final class UserDefaultsSettingsStore: SettingsStore {
@@ -51,5 +52,9 @@ final class UserDefaultsSettingsStore: SettingsStore {
 
     var microPythonUrl: URL? {
         URL(string: defaults.string(forKey: SettingsKey.microPythonUrl.rawValue) ?? Settings.defaultMicroPythonUrl)
+    }
+
+    var newsUrl: URL? {
+        URL(string: defaults.string(forKey: SettingsKey.newsURL.rawValue) ?? Settings.defaultNewsUrl)
     }
 }

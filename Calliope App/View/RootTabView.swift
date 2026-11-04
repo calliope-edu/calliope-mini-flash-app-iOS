@@ -13,7 +13,7 @@ import UniformTypeIdentifiers
 struct RootTabView: View {
     @Environment(\.scenePhase) private var scenePhase
     @StateObject private var coordinator = RootCoordinator()
-    @StateObject private var homeViewModel = HomeScreenViewModel()
+    @StateObject private var homeViewModel: HomeScreenViewModel
     @StateObject private var uploadViewModel: UploadViewModel
     @StateObject private var editorsViewModel: EditorsAndProgramsViewModel
     @StateObject private var sensordataViewModel: SensordataViewModel
@@ -35,6 +35,7 @@ struct RootTabView: View {
             usbPolicy: dependencies.usbPolicy
         )
         _uploadViewModel = StateObject(wrappedValue: uploadViewModel)
+        _homeViewModel = StateObject(wrappedValue: HomeScreenViewModel(settings: dependencies.settings))
         _editorsViewModel = StateObject(wrappedValue: EditorsAndProgramsViewModel(uploadViewModel: uploadViewModel, settings: dependencies.settings))
         _sensordataViewModel = StateObject(wrappedValue: SensordataViewModel(connection: dependencies.connection))
     }

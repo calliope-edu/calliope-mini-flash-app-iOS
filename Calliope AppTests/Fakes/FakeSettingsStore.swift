@@ -16,4 +16,5 @@ final class FakeSettingsStore: SettingsStore {
     var makeCodeUrl = URL(string: "https://makecode.example.com/")
     var robertaUrl = URL(string: "https://roberta.example.com/")
     var microPythonUrl = URL(string: "https://python.example.com/")
+    var newsUrl = URL(string: "https://example.com/news.json")
 }

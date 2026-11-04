@@ -67,8 +67,10 @@ class HomeScreenViewModel: ObservableObject {
     private var loadedOnlineContent = false
     private var appsPage: TilePageLayout<NewsItem>? = nil
     @Published var tileData: TileData<NewsItem> = TileData(rightItems: [])
+    private let settings: SettingsStore
 
-    init() {
+    init(settings: SettingsStore) {
+        self.settings = settings
         if !loadedOnlineContent {
             loadNews()
         }
@@ -76,7 +78,7 @@ class HomeScreenViewModel: ObservableObject {
 
     func loadNews() {
         guard !loadedOnlineContent else { return }
-        NewsManager.getNews { [weak self] result in
+        NewsManager.getNews(from: settings.newsUrl) { [weak self] result in
             switch result {
             case .success(let news):
                 self?.newsItems = news
