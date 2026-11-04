@@ -179,8 +179,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
     }
 
     func changeMakeCodeURL(url: String) -> PopupEditorWebView {
-        let makeCode = MakeCode()
-        makeCode.url = URL(string: url)
+        let makeCode = MakeCode(url: URL(string: url))
         return PopupEditorWebView(editor: makeCode, alertPublisher: viewModel)
     }
 

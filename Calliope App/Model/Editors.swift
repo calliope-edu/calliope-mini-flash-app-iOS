@@ -46,9 +46,11 @@ final class BlocksMiniEditor: Editor {
 
 final class MakeCode: Editor {
     public let name = "MakeCode"
-    public lazy var url: URL? = {
-        return URL(string: UserDefaults.standard.string(forKey: SettingsKey.makecodeUrl.rawValue)!)
-    }()
+    public let url: URL?
+
+    init(url: URL?) {
+        self.url = url
+    }
 
     func download(_ request: URLRequest) -> EditorDownload? {
 //        LogNotify.log("\(request)")
@@ -74,9 +76,11 @@ final class MakeCode: Editor {
 // https://lab.open-roberta.org/c0d66d4c-5cc9-4ed9-9b7d-6940aa291f4a
 final class RobertaEditor: Editor {
     public let name = "Open Roberta NEPO®"
-    public lazy var url: URL? = {
-        return URL(string: UserDefaults.standard.string(forKey: SettingsKey.robertaUrl.rawValue)!)
-    }()
+    public let url: URL?
+
+    init(url: URL?) {
+        self.url = url
+    }
 
     func allowNavigation(_ request: URLRequest) -> Bool {
         guard let url = request.url else {
@@ -88,7 +92,7 @@ final class RobertaEditor: Editor {
     }
 
     func getNavigationTargetViewForRequest(_ request: URLRequest) -> NavigationTargetView {
-        guard let url = request.url, let robertaEditorUrlPrefix = UserDefaults.standard.string(forKey: SettingsKey.robertaUrl.rawValue) else {
+        guard let url = request.url, let robertaEditorUrlPrefix = self.url?.absoluteString else {
             return NavigationTargetView.externalWebView
         }
 
@@ -119,9 +123,11 @@ final class RobertaEditor: Editor {
 
 final class MicroPython: Editor {
     public let name = "MicroPython"
-    public lazy var url: URL? = {
-        return URL(string: UserDefaults.standard.string(forKey: SettingsKey.microPythonUrl.rawValue)!)
-    }()
+    public let url: URL?
+
+    init(url: URL?) {
+        self.url = url
+    }
    
 
     
@@ -189,7 +195,7 @@ extension CampusBridgedEditor {
     /// MakeCode flavour can still trigger a classic hex download (e.g. "save to
     /// computer"), and capturing it is strictly better than dropping it.
     func download(_ request: URLRequest) -> EditorDownload? {
-        return MakeCode().download(request)
+        return MakeCode(url: nil).download(request)
     }
 
     func isBackNavigation(_ request: URLRequest) -> Bool {

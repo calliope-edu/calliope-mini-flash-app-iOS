@@ -56,4 +56,20 @@ final class UserDefaultsSettingsStoreTests: XCTestCase {
         XCTAssertEqual(store.defaultProgramV3Url, Settings.defaultProgramV3)
         XCTAssertEqual(store.defaultProgramV1AndV2Url, Settings.defaultProgramV2andV1)
     }
+
+    func testEditorUrlsReflectThePreferences() {
+        defaults.set("https://makecode.example.com/", forKey: SettingsKey.makecodeUrl.rawValue)
+        defaults.set("https://roberta.example.com/", forKey: SettingsKey.robertaUrl.rawValue)
+        defaults.set("https://python.example.com/", forKey: SettingsKey.microPythonUrl.rawValue)
+
+        XCTAssertEqual(store.makeCodeUrl, URL(string: "https://makecode.example.com/"))
+        XCTAssertEqual(store.robertaUrl, URL(string: "https://roberta.example.com/"))
+        XCTAssertEqual(store.microPythonUrl, URL(string: "https://python.example.com/"))
+    }
+
+    func testEditorUrlsFallBackToTheBuiltInUrls() {
+        XCTAssertEqual(store.makeCodeUrl, URL(string: Settings.defaultMakecodeUrl))
+        XCTAssertEqual(store.robertaUrl, URL(string: Settings.defaultOpenRobertaUrl))
+        XCTAssertEqual(store.microPythonUrl, URL(string: Settings.defaultMicroPythonUrl))
+    }
 }

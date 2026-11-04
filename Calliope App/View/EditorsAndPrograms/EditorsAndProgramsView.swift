@@ -105,11 +105,11 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
         case .qrCodeView:
             QRCodeView { url in router.push(.qrCodeToMakeCode(url: url)) }
         case .makeCode:
-            PopupEditorWebView(editor: MakeCode(), alertPublisher: viewModel)
+            PopupEditorWebView(editor: MakeCode(url: settings.makeCodeUrl), alertPublisher: viewModel)
         case .micropython:
-            PopupEditorWebView(editor: MicroPython(), alertPublisher: viewModel)
+            PopupEditorWebView(editor: MicroPython(url: settings.microPythonUrl), alertPublisher: viewModel)
         case .openRobertaLab:
-            PopupEditorWebView(editor: RobertaEditor(), alertPublisher: viewModel)
+            PopupEditorWebView(editor: RobertaEditor(url: settings.robertaUrl), alertPublisher: viewModel)
         case .calliopeMiniBlocks:
             CalliopeMiniBlocksView(viewModel: CalliopeMiniBlocksViewModel(uploadViewModel: uploadViewModel, connectionPanel: connectionPanel, settings: settings))
         case .arcadeLanding:
@@ -124,8 +124,7 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
     }
 
     func changeMakeCodeURL(url: String) -> PopupEditorWebView {
-        let makeCode = MakeCode()
-        makeCode.url = URL(string: url) ?? makeCode.url
+        let makeCode = MakeCode(url: URL(string: url) ?? settings.makeCodeUrl)
         return PopupEditorWebView(editor: makeCode, alertPublisher: viewModel)
     }
 
