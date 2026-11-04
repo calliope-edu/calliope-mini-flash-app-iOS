@@ -21,6 +21,10 @@ private struct DocumentStorageKey: EnvironmentKey {
     static let defaultValue: DocumentStorage = FileDocumentStorage()
 }
 
+private struct SettingsStoreKey: EnvironmentKey {
+    static let defaultValue: SettingsStore = UserDefaultsSettingsStore()
+}
+
 extension EnvironmentValues {
     var deviceConnection: DeviceConnectionService {
         get { self[DeviceConnectionKey.self] }
@@ -35,5 +39,10 @@ extension EnvironmentValues {
     var documentStorage: DocumentStorage {
         get { self[DocumentStorageKey.self] }
         set { self[DocumentStorageKey.self] = newValue }
+    }
+
+    var settings: SettingsStore {
+        get { self[SettingsStoreKey.self] }
+        set { self[SettingsStoreKey.self] = newValue }
     }
 }

@@ -17,11 +17,11 @@ final class DeviceConnectionServiceTests: XCTestCase {
     private let folderPolicy = USBTransferPolicy(isSharedIPad: false, systemMajorVersion: 26)
     private let pickPerFlashPolicy = USBTransferPolicy(isSharedIPad: false, systemMajorVersion: 18)
 
-    private var savedDefaults: [String: Any] = [:]
     private var discoveries: [FakeDiscovery] = []
     private var viewModel: MatrixConnectionViewModel!
     private var service: CalliopeConnectionService!
     private var picker: FakeUSBDestinationPicker!
+    private var settings: FakeSettingsStore!
     private var subscriptions: Set<AnyCancellable> = []
 
     private var discovery: FakeDiscovery {
@@ -30,20 +30,12 @@ final class DeviceConnectionServiceTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        for key in [SettingsKey.restoreLastMatrix.rawValue, SettingsKey.lastMatrix.rawValue] {
-            savedDefaults[key] = UserDefaults.standard.object(forKey: key)
-        }
-        UserDefaults.standard.set(false, forKey: SettingsKey.restoreLastMatrix.rawValue)
-
         makeService(usbPolicy: folderPolicy)
     }
 
     override func tearDown() {
         subscriptions = []
         Calliope.isConnectionSwitching = false
-        for (key, value) in savedDefaults {
-            UserDefaults.standard.set(value, forKey: key)
-        }
         super.tearDown()
     }
 
@@ -111,8 +103,27 @@ final class DeviceConnectionServiceTests: XCTestCase {
 
         XCTAssertTrue(service.currentCalliope === calliope)
         XCTAssertTrue(service.bleCalliope === calliope)
-        XCTAssertEqual(UserDefaults.standard.string(forKey: SettingsKey.lastMatrix.rawValue), service.matrixString)
+        XCTAssertEqual(settings.lastMatrix, service.matrixString)
         XCTAssertEqual(viewModel.connectionMenuButtonState, .connected)
+    }
+
+    func testStartRestoresTheLastMatrixWhenEnabled() {
+        let settings = FakeSettingsStore()
+        settings.restoresLastMatrix = true
+        settings.lastMatrix = "1000011000111001111011111"
+
+        makeService(usbPolicy: folderPolicy, settings: settings)
+
+        XCTAssertEqual(service.matrixString, settings.lastMatrix)
+    }
+
+    func testStartKeepsAnEmptyMatrixWhenRestoringIsDisabled() {
+        let settings = FakeSettingsStore()
+        settings.lastMatrix = "1000011000111001111011111"
+
+        makeService(usbPolicy: folderPolicy, settings: settings)
+
+        XCTAssertFalse(service.matrix.joined().contains(true))
     }
 
     func testAutoReconnectToAnotherDeviceAdoptsItsMatrix() {
@@ -251,10 +262,11 @@ final class DeviceConnectionServiceTests: XCTestCase {
 
     // MARK: - Helpers
 
-    private func makeService(usbPolicy: USBTransferPolicy) {
+    private func makeService(usbPolicy: USBTransferPolicy, settings: FakeSettingsStore = FakeSettingsStore()) {
         discoveries = []
         picker = FakeUSBDestinationPicker()
-        service = CalliopeConnectionService(usbPolicy: usbPolicy, usbDestinationPicker: picker, makeDiscovery: { [unowned self] _, context in
+        self.settings = settings
+        service = CalliopeConnectionService(usbPolicy: usbPolicy, usbDestinationPicker: picker, settings: settings, makeDiscovery: { [unowned self] _, context in
             let discovery = FakeDiscovery(context: context)
             discoveries.append(discovery)
             return discovery

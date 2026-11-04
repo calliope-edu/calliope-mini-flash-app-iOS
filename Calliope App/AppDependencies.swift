@@ -14,6 +14,7 @@ final class AppDependencies {
     let connectionPanel: MatrixConnectionViewModel
     let flashService: FlashService
     let documentStorage: DocumentStorage
+    let settings: SettingsStore
 
     init() {
         usbPolicy = USBTransferPolicy(
@@ -21,8 +22,9 @@ final class AppDependencies {
             systemMajorVersion: ProcessInfo.processInfo.operatingSystemVersion.majorVersion
         )
         LogNotify.log("USB transfer: Shared iPad \(usbPolicy.isSharedIPad), destination picked per flash \(usbPolicy.picksDestinationPerFlash)")
+        settings = UserDefaultsSettingsStore()
         usbDestinationPicker = USBDestinationPickerViewModel()
-        let service = CalliopeConnectionService(usbPolicy: usbPolicy, usbDestinationPicker: usbDestinationPicker)
+        let service = CalliopeConnectionService(usbPolicy: usbPolicy, usbDestinationPicker: usbDestinationPicker, settings: settings)
         connection = service
         connectionPanel = MatrixConnectionViewModel(connection: service, usbPolicy: usbPolicy)
         flashService = FlashService(connection: connection)

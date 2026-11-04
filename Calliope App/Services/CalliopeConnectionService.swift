@@ -14,6 +14,7 @@ final class CalliopeConnectionService: ConnectionControl, CalliopeDiscoveryConte
     private let makeDiscovery: DeviceDiscovery.Factory
     private let usbPolicy: USBTransferPolicy
     private let usbDestinationPicker: USBDestinationPicker
+    private let settings: SettingsStore
     private let stateSubject = CurrentValueSubject<DeviceConnectionState, Never>(.idle)
     private let matrixSubject = CurrentValueSubject<[[Bool]], Never>(Array(repeating: Array(repeating: false, count: 5), count: 5))
     private let usbModeSubject = CurrentValueSubject<Bool, Never>(false)
@@ -21,7 +22,7 @@ final class CalliopeConnectionService: ConnectionControl, CalliopeDiscoveryConte
     private let connectionLostSubject = PassthroughSubject<Void, Never>()
     private let deviceDisconnectedSubject = PassthroughSubject<String, Never>()
 
-    private let restoreLastMatrixEnabled = UserDefaults.standard.bool(forKey: SettingsKey.restoreLastMatrix.rawValue)
+    private let restoreLastMatrixEnabled: Bool
     private var isStarted = false
     private var isInDfuMode = false
     private var hasEverConnected = false
@@ -35,10 +36,13 @@ final class CalliopeConnectionService: ConnectionControl, CalliopeDiscoveryConte
     init(
         usbPolicy: USBTransferPolicy,
         usbDestinationPicker: USBDestinationPicker,
+        settings: SettingsStore,
         makeDiscovery: @escaping DeviceDiscovery.Factory = { CalliopeDiscovery($0, context: $1) }
     ) {
         self.usbPolicy = usbPolicy
         self.usbDestinationPicker = usbDestinationPicker
+        self.settings = settings
+        restoreLastMatrixEnabled = settings.restoresLastMatrix
         self.makeDiscovery = makeDiscovery
         connector = makeDiscovery(Self.buildBLEDevice, nil)
         connector.context = self
@@ -263,7 +267,7 @@ final class CalliopeConnectionService: ConnectionControl, CalliopeDiscoveryConte
         guard restoreLastMatrixEnabled, !matrix.joined().contains(true) else {
             return
         }
-        setMatrixString(pattern: UserDefaults.standard.string(forKey: SettingsKey.lastMatrix.rawValue) ?? "")
+        setMatrixString(pattern: settings.lastMatrix)
     }
 
     // The preferred mini if visible, else the single visible BLE mini if unambiguous.
@@ -335,7 +339,7 @@ final class CalliopeConnectionService: ConnectionControl, CalliopeDiscoveryConte
             stateSubject.send(.preparing)
         case .usageReady:
             LogNotify.log("last pattern:\r\(matrixString)")
-            UserDefaults.standard.set(matrixString, forKey: SettingsKey.lastMatrix.rawValue)
+            settings.lastMatrix = matrixString
             hasEverConnected = true
             stateSubject.send(.ready)
         case .wrongMode:
