@@ -26,6 +26,38 @@ final class UserDefaultsSettingsStoreTests: XCTestCase {
         super.tearDown()
     }
 
+    func testPreparingForLaunchRegistersTheDefaults() {
+        store.prepareForLaunch(appVersion: nil)
+
+        XCTAssertTrue(store.restoresLastMatrix)
+    }
+
+    func testPreparingForLaunchResetsTheSettingsWhenRequested() {
+        store.lastMatrix = "1111100000111110000011111"
+        defaults.set(false, forKey: SettingsKey.restoreLastMatrix.rawValue)
+        defaults.set(true, forKey: SettingsKey.resetSettings.rawValue)
+
+        store.prepareForLaunch(appVersion: nil)
+
+        XCTAssertEqual(store.lastMatrix, "")
+        XCTAssertTrue(store.restoresLastMatrix)
+        XCTAssertFalse(defaults.bool(forKey: SettingsKey.resetSettings.rawValue))
+    }
+
+    func testPreparingForLaunchKeepsTheSettingsWithoutAResetRequest() {
+        store.lastMatrix = "1111100000111110000011111"
+
+        store.prepareForLaunch(appVersion: nil)
+
+        XCTAssertEqual(store.lastMatrix, "1111100000111110000011111")
+    }
+
+    func testPreparingForLaunchStoresTheAppVersionForTheSettingsApp() {
+        store.prepareForLaunch(appVersion: "4.2.0")
+
+        XCTAssertEqual(defaults.string(forKey: SettingsKey.appVersion.rawValue), "4.2.0")
+    }
+
     func testRestoresLastMatrixReflectsThePreference() {
         defaults.set(true, forKey: SettingsKey.restoreLastMatrix.rawValue)
         XCTAssertTrue(store.restoresLastMatrix)

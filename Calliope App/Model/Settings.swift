@@ -100,7 +100,7 @@ public struct Settings {
 
     static var defaultResetSettingsValue = false
 
-    private static func defaultForKey(_ key: SettingsKey) -> Any {
+    static func defaultValue(for key: SettingsKey) -> Any {
         switch key {
 
         case .localEditor:
@@ -165,33 +165,6 @@ public struct Settings {
             return true
         case .calliopeBlocksUrl:
             return defaultCalliopeBlocksUrl
-        }
-    }
-
-    static func registerDefaults() {
-        var defaultSettings: [String: Any] = [:]
-        for key in SettingsKey.allCases {
-            let defaultValue = defaultForKey(key)
-            defaultSettings[key.rawValue] = defaultValue
-        }
-        UserDefaults.standard.register(defaults: defaultSettings)
-    }
-
-    static func updateAppVersion() {
-        let versionString: String? = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-        UserDefaults.standard.set(versionString, forKey: SettingsKey.appVersion.rawValue)
-    }
-
-
-    static func resetSettingsIfRequired() {
-        if UserDefaults.standard.bool(forKey: SettingsKey.resetSettings.rawValue) {
-            resetSettings()
-        }
-    }
-
-    private static func resetSettings() {
-        SettingsKey.allCases.forEach {
-            UserDefaults.standard.removeObject(forKey: $0.rawValue)
         }
     }
 }

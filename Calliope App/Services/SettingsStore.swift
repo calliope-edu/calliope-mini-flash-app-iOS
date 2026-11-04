@@ -25,6 +25,15 @@ final class UserDefaultsSettingsStore: SettingsStore {
         self.defaults = defaults
     }
 
+    // Must run before anything reads a setting.
+    func prepareForLaunch(appVersion: String?) {
+        defaults.register(defaults: Dictionary(uniqueKeysWithValues: SettingsKey.allCases.map { ($0.rawValue, Settings.defaultValue(for: $0)) }))
+        if defaults.bool(forKey: SettingsKey.resetSettings.rawValue) {
+            SettingsKey.allCases.forEach { defaults.removeObject(forKey: $0.rawValue) }
+        }
+        defaults.set(appVersion, forKey: SettingsKey.appVersion.rawValue)
+    }
+
     var restoresLastMatrix: Bool {
         defaults.bool(forKey: SettingsKey.restoreLastMatrix.rawValue)
     }

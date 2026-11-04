@@ -22,7 +22,9 @@ final class AppDependencies {
             systemMajorVersion: ProcessInfo.processInfo.operatingSystemVersion.majorVersion
         )
         LogNotify.log("USB transfer: Shared iPad \(usbPolicy.isSharedIPad), destination picked per flash \(usbPolicy.picksDestinationPerFlash)")
-        settings = UserDefaultsSettingsStore()
+        let settingsStore = UserDefaultsSettingsStore()
+        settingsStore.prepareForLaunch(appVersion: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String)
+        settings = settingsStore
         usbDestinationPicker = USBDestinationPickerViewModel()
         let service = CalliopeConnectionService(usbPolicy: usbPolicy, usbDestinationPicker: usbDestinationPicker, settings: settings)
         connection = service
