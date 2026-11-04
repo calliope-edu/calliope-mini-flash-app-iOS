@@ -40,7 +40,7 @@
 /* (No Comment) */
 "URL" = "URL";
 
-"Arcade (nur USB)" = "Arcade (USB only)";
+"Arcade" = "Arcade";
 "MakeCode Arcade öffnen" = "Open MakeCode Arcade";
 "arcade_info_text" = "With MakeCode Arcade you can create games for your Calliope mini in combination with a display or even a console.Transfer only works via USB cable.";
 "Arcade-Datei" = "Arcade File";

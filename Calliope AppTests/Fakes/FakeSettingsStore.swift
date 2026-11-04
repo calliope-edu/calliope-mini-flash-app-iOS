@@ -19,4 +19,5 @@ final class FakeSettingsStore: SettingsStore {
     var newsUrl = URL(string: "https://example.com/news.json")
     var blocksMiniEditorUrl = URL(string: "https://blocks.example.com/")
     var campusUrl = URL(string: "https://campus.example.com")
+    var arcadeUrl = URL(string: "https://arcade.example.com")
 }

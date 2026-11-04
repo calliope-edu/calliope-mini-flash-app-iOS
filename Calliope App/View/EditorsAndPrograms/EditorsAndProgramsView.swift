@@ -115,7 +115,7 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
         case .arcadeLanding:
             ArcadeView(viewModel: ArcadeViewModel(openArcade: { router.push(.arcadeEditor) }))
         case .arcadeEditor:
-            PopupEditorWebView(editor: ArcadeEditor(), alertPublisher: viewModel)
+            PopupEditorWebView(editor: ArcadeEditor(url: settings.arcadeUrl), alertPublisher: viewModel)
         case .makeCodeLink(let url):
             changeMakeCodeURL(url: url)
         case .qrCodeToMakeCode(let url):
@@ -150,7 +150,7 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
                                 router.push(.calliopeMiniBlocks)
                             case "Micropython":
                                 router.push(.micropython)
-                            case "Arcade (USB only)":
+                            case "Arcade":
                                 router.push(.arcadeLanding)
                             default:
                                 break

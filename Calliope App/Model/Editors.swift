@@ -249,9 +249,11 @@ final class CampusPythonEditor: CampusBridgedEditor {
 
 final class ArcadeEditor: Editor {
     public let name = "MakeCode Arcade"
-    public lazy var url: URL? = {
-        return URL(string: "https://arcade.makecode.com")
-    }()
+    public let url: URL?
+
+    init(url: URL?) {
+        self.url = url
+    }
     
     func download(_ request: URLRequest) -> EditorDownload? {
         guard let s = request.url?.absoluteString else {

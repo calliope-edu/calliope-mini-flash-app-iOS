@@ -18,6 +18,7 @@ protocol SettingsStore: AnyObject {
     var newsUrl: URL? { get }
     var blocksMiniEditorUrl: URL? { get }
     var campusUrl: URL? { get }
+    var arcadeUrl: URL? { get }
 }
 
 final class UserDefaultsSettingsStore: SettingsStore {
@@ -75,5 +76,9 @@ final class UserDefaultsSettingsStore: SettingsStore {
 
     var campusUrl: URL? {
         URL(string: defaults.string(forKey: SettingsKey.campusUrl.rawValue) ?? SettingsDefaults.campusUrl)
+    }
+
+    var arcadeUrl: URL? {
+        URL(string: defaults.string(forKey: SettingsKey.arcadeUrl.rawValue) ?? SettingsDefaults.arcadeUrl)
     }
 }

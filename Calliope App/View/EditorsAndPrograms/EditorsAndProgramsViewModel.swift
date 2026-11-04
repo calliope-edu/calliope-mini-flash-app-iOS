@@ -53,7 +53,7 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
         EditorTileConfig(name: "Open Roberta Lab", iconName: "editors_nepo"),
         EditorTileConfig(name: "Calliope mini Blocks", iconName: "editors_blocks_transparent", backgroundColor: Color.white, imageSize: 0.9),
         EditorTileConfig(name: "Micropython", iconName: "editors_python"),
-        EditorTileConfig(name: "Arcade (USB only)", iconName: "editors_swift"),
+        EditorTileConfig(name: "Arcade", iconName: "editors_swift"),
         EditorTileConfig(name: "Scan", iconName: "qr_code_scan_button", backgroundColor: Color.white, imageSize: 0.65)
     ]
 
@@ -166,7 +166,7 @@ class PreviewEditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, O
         EditorTileConfig(name: "Open Roberta Lab", iconName: "editors_nepo"),
         EditorTileConfig(name: "Calliope mini Blocks", iconName: "editors_blocks_transparent", backgroundColor: Color.white, imageSize: 0.9),
         EditorTileConfig(name: "Micropython", iconName: "editors_python"),
-        EditorTileConfig(name: "Arcade (USB only)", iconName: "editors_swift"),
+        EditorTileConfig(name: "Arcade", iconName: "editors_swift"),
         EditorTileConfig(name: "Scan", iconName: "qr_code_scan_button", backgroundColor: Color.white, imageSize: 0.65)
     ]
 

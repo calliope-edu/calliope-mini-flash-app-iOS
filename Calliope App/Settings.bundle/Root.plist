@@ -40,7 +40,7 @@
 			<key>Key</key>
 			<string>arcadeUrlPreference</string>
 			<key>DefaultValue</key>
-			<string>https://arcade.makecode.com</string>
+			<string>https://arcade.calliope.cc</string>
 			<key>KeyboardType</key>
 			<string>URL</string>
 			<key>AutocapitalizationType</key>

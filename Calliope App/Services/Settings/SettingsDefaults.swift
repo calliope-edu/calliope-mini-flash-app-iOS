@@ -16,7 +16,7 @@ enum SettingsDefaults {
     static let makeCodeUrl = "https://makecode.calliope.cc/"
     static let defaultProgramV3Url = "https://go.calliope.cc/downloads/Demov3.hex"
     static let defaultProgramV1AndV2Url = "https://go.calliope.cc/downloads/Demov1.hex"
-    static let arcadeUrl = "https://arcade.makecode.com"
+    static let arcadeUrl = "https://arcade.calliope.cc"
     static let calliopeBlocksUrl = "https://calliope.cc/downloads/blocks.hex"
     static let blocksMiniEditorUrl = "https://blocks.calliope.cc"
     static let microPythonUrl = "https://python.calliope.cc?mobile=true"
