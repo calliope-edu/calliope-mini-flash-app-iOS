@@ -16,6 +16,8 @@ protocol SettingsStore: AnyObject {
     var robertaUrl: URL? { get }
     var microPythonUrl: URL? { get }
     var newsUrl: URL? { get }
+    var blocksMiniEditorUrl: URL? { get }
+    var campusUrl: URL? { get }
 }
 
 final class UserDefaultsSettingsStore: SettingsStore {
@@ -65,5 +67,13 @@ final class UserDefaultsSettingsStore: SettingsStore {
 
     var newsUrl: URL? {
         URL(string: defaults.string(forKey: SettingsKey.newsURL.rawValue) ?? SettingsDefaults.newsUrl)
+    }
+
+    var blocksMiniEditorUrl: URL? {
+        URL(string: defaults.string(forKey: SettingsKey.blocksMiniEditorUrl.rawValue) ?? SettingsDefaults.blocksMiniEditorUrl)
+    }
+
+    var campusUrl: URL? {
+        URL(string: defaults.string(forKey: SettingsKey.campusUrl.rawValue) ?? SettingsDefaults.campusUrl)
     }
 }

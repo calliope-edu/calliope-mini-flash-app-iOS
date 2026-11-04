@@ -31,9 +31,12 @@ extension Editor {
 
 final class BlocksMiniEditor: Editor {
     public let name = "Calliope mini Blocks Editor"
-    public lazy var url: URL? = {
-        return URL(string: UserDefaults.standard.string(forKey: SettingsKey.blocksMiniEditorUrl.rawValue)!)
-    }()
+    public let url: URL?
+
+    init(url: URL?) {
+        self.url = url
+    }
+
     func download(_ request: URLRequest) -> EditorDownload? {
         LogNotify.log("Blocks Editor does not download a file, but communicates directly with the mini")
         return nil
@@ -159,9 +162,9 @@ enum CampusRoute {
     /// origin also means the deployment bump reaches those installs, which
     /// `UserDefaults.register(defaults:)` alone would not — a value the user (or
     /// an older build) has written wins over a registered default forever.
-    static func url(path: String) -> URL? {
-        guard let configured = UserDefaults.standard.string(forKey: SettingsKey.campusUrl.rawValue),
-              var components = URLComponents(string: configured),
+    static func url(path: String, on campus: URL?) -> URL? {
+        guard let campus,
+              var components = URLComponents(url: campus, resolvingAgainstBaseURL: false),
               components.scheme != nil, components.host != nil
         else {
             return nil
@@ -183,11 +186,12 @@ enum CampusRoute {
 protocol CampusBridgedEditor: Editor {
     /// Route under the campus origin. "" is the campus home.
     var campusPath: String { get }
+    var campusUrl: URL? { get }
 }
 
 extension CampusBridgedEditor {
     var url: URL? {
-        return CampusRoute.url(path: campusPath)
+        return CampusRoute.url(path: campusPath, on: campusUrl)
     }
 
     /// Campus never hands a file to the app on the flash path — the bridge does
@@ -206,21 +210,41 @@ extension CampusBridgedEditor {
 final class CampusEditor: CampusBridgedEditor {
     public let name = "Calliope Campus"
     public let campusPath = ""
+    public let campusUrl: URL?
+
+    init(campusUrl: URL?) {
+        self.campusUrl = campusUrl
+    }
 }
 
 final class CampusBlocksEditor: CampusBridgedEditor {
     public let name = "Campus Blocks"
     public let campusPath = "blocks"
+    public let campusUrl: URL?
+
+    init(campusUrl: URL?) {
+        self.campusUrl = campusUrl
+    }
 }
 
 final class CampusMakeCodeEditor: CampusBridgedEditor {
     public let name = "Campus MakeCode"
     public let campusPath = "makecode"
+    public let campusUrl: URL?
+
+    init(campusUrl: URL?) {
+        self.campusUrl = campusUrl
+    }
 }
 
 final class CampusPythonEditor: CampusBridgedEditor {
     public let name = "Campus Python"
     public let campusPath = "python"
+    public let campusUrl: URL?
+
+    init(campusUrl: URL?) {
+        self.campusUrl = campusUrl
+    }
 }
 
 final class ArcadeEditor: Editor {
