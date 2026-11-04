@@ -85,8 +85,8 @@ final class UserDefaultsSettingsStoreTests: XCTestCase {
     }
 
     func testDefaultProgramUrlsFallBackToTheBuiltInUrls() {
-        XCTAssertEqual(store.defaultProgramV3Url, Settings.defaultProgramV3)
-        XCTAssertEqual(store.defaultProgramV1AndV2Url, Settings.defaultProgramV2andV1)
+        XCTAssertEqual(store.defaultProgramV3Url, SettingsDefaults.defaultProgramV3Url)
+        XCTAssertEqual(store.defaultProgramV1AndV2Url, SettingsDefaults.defaultProgramV1AndV2Url)
     }
 
     func testEditorUrlsReflectThePreferences() {
@@ -100,9 +100,9 @@ final class UserDefaultsSettingsStoreTests: XCTestCase {
     }
 
     func testEditorUrlsFallBackToTheBuiltInUrls() {
-        XCTAssertEqual(store.makeCodeUrl, URL(string: Settings.defaultMakecodeUrl))
-        XCTAssertEqual(store.robertaUrl, URL(string: Settings.defaultOpenRobertaUrl))
-        XCTAssertEqual(store.microPythonUrl, URL(string: Settings.defaultMicroPythonUrl))
+        XCTAssertEqual(store.makeCodeUrl, URL(string: SettingsDefaults.makeCodeUrl))
+        XCTAssertEqual(store.robertaUrl, URL(string: SettingsDefaults.robertaUrl))
+        XCTAssertEqual(store.microPythonUrl, URL(string: SettingsDefaults.microPythonUrl))
     }
 
     func testNewsUrlReflectsThePreference() {
@@ -112,6 +112,6 @@ final class UserDefaultsSettingsStoreTests: XCTestCase {
     }
 
     func testNewsUrlFallsBackToTheBuiltInUrl() {
-        XCTAssertEqual(store.newsUrl, URL(string: Settings.defaultNewsUrl))
+        XCTAssertEqual(store.newsUrl, URL(string: SettingsDefaults.newsUrl))
     }
 }

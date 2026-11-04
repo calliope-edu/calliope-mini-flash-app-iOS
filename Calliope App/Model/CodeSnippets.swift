@@ -18,7 +18,7 @@ struct CodeSnippets {
     static func reload(failure: @escaping (Error?) -> (), completion: @escaping () -> ()) {
 
         var urlString = UserDefaults.standard.string(forKey: SettingsKey.arcadeUrl.rawValue)
-        let defaultUrlString = Settings.defaultArcadeUrl
+        let defaultUrlString = SettingsDefaults.arcadeUrl
         if urlString == nil {
             urlString = defaultUrlString
         }

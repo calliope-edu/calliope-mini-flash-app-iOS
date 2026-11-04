@@ -27,7 +27,7 @@ final class UserDefaultsSettingsStore: SettingsStore {
 
     // Must run before anything reads a setting.
     func prepareForLaunch(appVersion: String?) {
-        defaults.register(defaults: Dictionary(uniqueKeysWithValues: SettingsKey.allCases.map { ($0.rawValue, Settings.defaultValue(for: $0)) }))
+        defaults.register(defaults: Dictionary(uniqueKeysWithValues: SettingsKey.allCases.map { ($0.rawValue, SettingsDefaults.value(for: $0)) }))
         if defaults.bool(forKey: SettingsKey.resetSettings.rawValue) {
             SettingsKey.allCases.forEach { defaults.removeObject(forKey: $0.rawValue) }
         }
@@ -44,26 +44,26 @@ final class UserDefaultsSettingsStore: SettingsStore {
     }
 
     var defaultProgramV3Url: String {
-        defaults.string(forKey: SettingsKey.defaultProgramV3Url.rawValue) ?? Settings.defaultProgramV3
+        defaults.string(forKey: SettingsKey.defaultProgramV3Url.rawValue) ?? SettingsDefaults.defaultProgramV3Url
     }
 
     var defaultProgramV1AndV2Url: String {
-        defaults.string(forKey: SettingsKey.defaultProgramV1AndV2Url.rawValue) ?? Settings.defaultProgramV2andV1
+        defaults.string(forKey: SettingsKey.defaultProgramV1AndV2Url.rawValue) ?? SettingsDefaults.defaultProgramV1AndV2Url
     }
 
     var makeCodeUrl: URL? {
-        URL(string: defaults.string(forKey: SettingsKey.makecodeUrl.rawValue) ?? Settings.defaultMakecodeUrl)
+        URL(string: defaults.string(forKey: SettingsKey.makecodeUrl.rawValue) ?? SettingsDefaults.makeCodeUrl)
     }
 
     var robertaUrl: URL? {
-        URL(string: defaults.string(forKey: SettingsKey.robertaUrl.rawValue) ?? Settings.defaultOpenRobertaUrl)
+        URL(string: defaults.string(forKey: SettingsKey.robertaUrl.rawValue) ?? SettingsDefaults.robertaUrl)
     }
 
     var microPythonUrl: URL? {
-        URL(string: defaults.string(forKey: SettingsKey.microPythonUrl.rawValue) ?? Settings.defaultMicroPythonUrl)
+        URL(string: defaults.string(forKey: SettingsKey.microPythonUrl.rawValue) ?? SettingsDefaults.microPythonUrl)
     }
 
     var newsUrl: URL? {
-        URL(string: defaults.string(forKey: SettingsKey.newsURL.rawValue) ?? Settings.defaultNewsUrl)
+        URL(string: defaults.string(forKey: SettingsKey.newsURL.rawValue) ?? SettingsDefaults.newsUrl)
     }
 }

@@ -146,7 +146,7 @@ final class MicroPython: Editor {
 ///
 /// The campus home and every campus-hosted editor flavour live on the SAME
 /// deployment, so they all derive from the single `campusUrl` preference —
-/// bumping the deployment is then one edit (`Settings.defaultCampusUrl`)
+/// bumping the deployment is then one edit (`SettingsDefaults.campusUrl`)
 /// instead of one per editor, and the set can never end up half-migrated.
 enum CampusRoute {
 
