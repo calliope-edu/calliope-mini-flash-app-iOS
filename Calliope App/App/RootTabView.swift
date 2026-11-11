@@ -55,7 +55,7 @@ struct RootTabView: View {
                 CampusView(viewModel: campusViewModel)
                     .tabItem { Label("Calliope Campus", image: "calliope_campus") }
                     .tag(2)
-                AppsScreenView(viewModel: appsViewModel)
+                AppsScreenView(viewModel: appsViewModel, sensordataViewModel: sensordataViewModel)
                     .tabItem { Label("Apps", image: "apps") }
                     .tag(4)
             }

@@ -985,12 +985,32 @@
         }
       }
     },
+    "DATA LOGGER & SENSORS" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DATALOGGER & SENSOREN"
+          }
+        }
+      }
+    },
     "Data Logger" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Datalogger"
+          }
+        }
+      }
+    },
+    "Data Logger & Sensors" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datalogger & Sensoren"
           }
         }
       }
