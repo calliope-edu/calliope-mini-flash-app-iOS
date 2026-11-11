@@ -21,7 +21,7 @@ struct TilePageLayout<ItemType: HasTileItem>: View {
     @State private var orientation: Orientation = Orientation.landscape
     @State private var tileSize: CGSize = CGSize(width: 0, height: 0)
 
-    let leftItem: ItemType
+    let leftItem: ItemType?
     @ObservedObject var data: TileData<ItemType>
     let leftItemOnTap: (ItemType) -> Void
     let rightItemsOnTap: (ItemType) -> Void
@@ -54,9 +54,12 @@ struct TilePageLayout<ItemType: HasTileItem>: View {
 
     func getStackContent(orientation: Orientation, tileSize: CGSize) -> some View {
         SwiftUI.Group {
-            Tile(tileItem: leftItem.tileItem, size: tileSize).onTapGesture {
-                leftItemOnTap(leftItem)
+            if let leftItem = leftItem {
+                Tile(tileItem: leftItem.tileItem, size: tileSize).onTapGesture {
+                    leftItemOnTap(leftItem)
+                }
             }
+            
             TileGridView(tileSize: tileSize, orientation: orientation, items: data.rightItems) { selectedItem in
                 rightItemsOnTap(selectedItem)
             }

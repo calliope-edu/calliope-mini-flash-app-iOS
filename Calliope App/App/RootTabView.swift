@@ -35,7 +35,7 @@ struct RootTabView: View {
             usbPolicy: dependencies.usbPolicy
         )
         _uploadViewModel = StateObject(wrappedValue: uploadViewModel)
-        _homeViewModel = StateObject(wrappedValue: HomeScreenViewModel(settings: dependencies.settings))
+        _homeViewModel = StateObject(wrappedValue: HomeScreenViewModel(newsService: dependencies.newsService))
         _editorsViewModel = StateObject(wrappedValue: EditorsAndProgramsViewModel(uploadViewModel: uploadViewModel, settings: dependencies.settings))
         _sensordataViewModel = StateObject(wrappedValue: SensordataViewModel(connection: dependencies.connection))
     }

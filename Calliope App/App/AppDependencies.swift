@@ -15,6 +15,7 @@ final class AppDependencies {
     let flashService: FlashService
     let documentStorage: DocumentStorage
     let settings: SettingsStore
+    let newsService: NewsService
 
     init() {
         usbPolicy = USBTransferPolicy(
@@ -31,6 +32,7 @@ final class AppDependencies {
         connectionPanel = MatrixConnectionViewModel(connection: service, usbPolicy: usbPolicy)
         flashService = FlashService(connection: connection)
         documentStorage = FileDocumentStorage()
+        newsService = RemoteNewsService(settings: settings)
         connection.start()
     }
 }

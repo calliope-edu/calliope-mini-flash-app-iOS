@@ -22,7 +22,7 @@ struct HomeScreenView: View {
     var body: some View {
         NavigationStack(path: $router.path) {
             TilePageLayout(
-                leftItem: viewModel.gettingStartedItem,
+                leftItem: viewModel.leftItem,
                 data: viewModel.tileData,
                 leftItemOnTap: onTileSelected,
                 rightItemsOnTap: onTileSelected
@@ -53,8 +53,10 @@ struct HomeScreenView: View {
     }
 }
 
+@MainActor
 class HomeScreenViewModel: ObservableObject {
-    @Published var gettingStartedItem = NewsItem(
+    @Published var leftItem: NewsItem? = nil
+    private var offlineLeftItem = NewsItem(
         tileItem: TileItem(
             title: NSLocalizedString("GETTING STARTED", comment: ""),
             imageSource: ImageSource.local("teaser_onboarding"),
@@ -63,14 +65,13 @@ class HomeScreenViewModel: ObservableObject {
         ),
         url: "https://calliope.cc/programmieren/mobil/ipad"
     )
-    private var newsItems: [NewsItem] = []
     private var loadedOnlineContent = false
     private var appsPage: TilePageLayout<NewsItem>? = nil
     @Published var tileData: TileData<NewsItem> = TileData(rightItems: [])
-    private let settings: SettingsStore
+    private let newsService: NewsService
 
-    init(settings: SettingsStore) {
-        self.settings = settings
+    init(newsService: NewsService) {
+        self.newsService = newsService
         if !loadedOnlineContent {
             loadNews()
         }
@@ -78,24 +79,22 @@ class HomeScreenViewModel: ObservableObject {
 
     func loadNews() {
         guard !loadedOnlineContent else { return }
-        NewsManager.getNews(from: settings.newsUrl) { [weak self] result in
-            switch result {
-            case .success(let news):
-                self?.newsItems = news
-                self?.loadedOnlineContent = true
-            case .failure(_):
-                self?.newsItems = NewsManager.getDefaultNews()
-                self?.loadedOnlineContent = false
+        Task {
+            let newsItems: [NewsItem]
+            do {
+                newsItems = try await newsService.fetchNews()
+                loadedOnlineContent = true
+            } catch {
+                newsItems = NewsManager.getDefaultNews()
+                loadedOnlineContent = false
             }
-            DispatchQueue.main.async {
-                guard let self else { return }
-                // agreed with calliope that the first item in the news.json is shown on the left side
-                if self.loadedOnlineContent, let first = self.newsItems.first {
-                    self.gettingStartedItem = first
-                    self.tileData.rightItems = Array(self.newsItems.dropFirst())
-                } else {
-                    self.tileData.rightItems = self.newsItems
-                }
+            // agreed with calliope that the first item in the news.json is shown on the left side
+            if loadedOnlineContent, let first = newsItems.first {
+                leftItem = first
+                tileData.rightItems = Array(newsItems.dropFirst())
+            } else {
+                leftItem = offlineLeftItem
+                tileData.rightItems = newsItems
             }
         }
     }
