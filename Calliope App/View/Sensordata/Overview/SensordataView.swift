@@ -228,7 +228,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
             }
             .padding(.vertical, 12)
             .padding(.horizontal, 24)
-            .background(enabled ? Color.calliopeGreen : Color.calliopeGray, in: Capsule())
+            .background(enabled ? Color.calliopeDarkgreen : Color.calliopeGray, in: Capsule())
             .foregroundColor(.white)
         }
         .disabled(!enabled)

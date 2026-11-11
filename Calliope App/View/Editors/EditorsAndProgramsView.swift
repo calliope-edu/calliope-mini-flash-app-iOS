@@ -250,7 +250,7 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
             Text(LocalizedStringKey(label))  // need the LocalizedStringKey, so it is translated to German
                 .padding(.vertical, 12)
                 .padding(.horizontal, 24)
-                .background(Color.calliopeGreen, in: Capsule())
+                .background(Color.calliopeDarkgreen, in: Capsule())
                 .foregroundColor(.white)
         }
     }
