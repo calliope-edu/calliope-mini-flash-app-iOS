@@ -35,7 +35,7 @@ class USBCalliope: Calliope {
         case .folder(let url):
             transferStrategy = FolderUSBTransfer(folder: url)
         case .pickPerFlash(let picker):
-            transferStrategy = PickedFileUSBTransfer(picker: picker)
+            transferStrategy = PickedFileUSBTransfer(picker: picker, writeDelay: 0)
         }
         super.init()
         Calliope.startConnectionSwitch()

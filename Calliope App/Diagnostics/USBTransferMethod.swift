@@ -18,9 +18,9 @@ enum USBTransferMethod: String, CaseIterable, Identifiable {
     var label: String {
         switch self {
         case .placeholderThenWrite:
-            return "fileExporter and write with delay (current)"
+            return "fileExporter and write with delay"
         case .placeholderThenWriteWithoutDelay:
-            return "fileExporter and write without delay (7174000)"
+            return "fileExporter and write without delay (current)"
         case .exporterWritesHex:
             return "fileExporter writes the hex (0ff05b0)"
         case .folderPickedPerFlash:
