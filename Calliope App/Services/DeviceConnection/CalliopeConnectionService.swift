@@ -264,10 +264,12 @@ final class CalliopeConnectionService: ConnectionControl, CalliopeDiscoveryConte
     }
 
     private func restoreLastMatrix() {
-        guard restoreLastMatrixEnabled, !matrix.joined().contains(true) else {
+        // An all-off pattern (saved after a USB connect) would re-trigger this endlessly via select(matrix:).
+        let pattern = settings.lastMatrix
+        guard restoreLastMatrixEnabled, !matrix.joined().contains(true), pattern.contains("1") else {
             return
         }
-        setMatrixString(pattern: settings.lastMatrix)
+        setMatrixString(pattern: pattern)
     }
 
     // The preferred mini if visible, else the single visible BLE mini if unambiguous.
