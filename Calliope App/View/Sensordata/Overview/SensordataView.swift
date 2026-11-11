@@ -20,55 +20,27 @@ enum ProjectAndSensorsRoute: Hashable {
 
 struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObject & Alertable>: View {
     @ObservedObject var viewModel: ViewModelType
-    @StateObject private var router = Router<ProjectAndSensorsRoute>()
-
-    private var shouldHideTabBar: Bool {
-        switch router.path.last {
-        case .project, .infoWebView:
-            return true
-        default:
-            return false
-        }
-    }
-    @Environment(\.openURL) var openURL
+    let navigator: any SensordataNavigator
     @State private var isImportingDataLoggerFile = false
     @EnvironmentObject private var uploadViewModel: UploadViewModel
     @Environment(\.deviceConnection) private var connection
-    @Environment(\.documentStorage) private var documentStorage
 
     var body: some View {
-        NavigationStack(path: $router.path) {
-            ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 500))]) {
-                    sendDataTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
-                    dataLoggerTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
-                }.frame(maxWidth: .infinity)
-            }.padding()
-                .navigationDestination(for: ProjectAndSensorsRoute.self) { route in
-                    switch route {
-                    case .project(let id):
-                        ProjectDetailView(projectID: id, connection: connection, documentStorage: documentStorage, onDelete: { router.pop() })
-                    case .dataLogger(let url):
-                        DataLoggerDetailView(url: url)
-                    case .infoWebView(let url):
-                        changeMakeCodeURL(url: url.absoluteString)
-                    case .dataLoggerInfo:
-                        DataLoggerInfoView(router: router)
-                    case .projectsInfo:
-                        ProjectsInfoView(router: router)
-                    }
+        ScrollView {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 500))]) {
+                sendDataTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
+                dataLoggerTile.tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
+            }.frame(maxWidth: .infinity)
+        }.padding()
+            .fileImporter(
+                isPresented: $isImportingDataLoggerFile,
+                allowedContentTypes: [UTType(filenameExtension: "htm")!]
+            ) { result in
+                if case .success(let url) = result {
+                    pushDataLogger(url: url)
                 }
-                .fileImporter(
-                    isPresented: $isImportingDataLoggerFile,
-                    allowedContentTypes: [UTType(filenameExtension: "htm")!]
-                ) { result in
-                    if case .success(let url) = result {
-                        pushDataLogger(url: url)
-                    }
-                }
-        }
-        .modifier(AlertModifier(alert: viewModel.alertBinding))
-        .toolbar(shouldHideTabBar ? .hidden : .automatic, for: .tabBar)
+            }
+            .modifier(AlertModifier(alert: viewModel.alertBinding))
     }
 
     var sendDataTile: some View {
@@ -76,7 +48,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
             Text("Projects").fontWeight(.bold)
             SizedBox(height: 12)
             Button {
-                router.push(.projectsInfo)
+                navigator.push(.projectsInfo)
             } label: {
                 HStack {
                     Spacer()
@@ -91,7 +63,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
             VStack {
                 ForEach(viewModel.projects) { project in
                     ProjectItem(project: project, viewModel: viewModel) {
-                        router.push(.project(id: project.id!))
+                        navigator.push(.project(id: project.id!))
                     }
                 }
             }
@@ -103,7 +75,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
             Button {
                 viewModel.alert = .newProjectName { name in
                     if let project = Project.insertProject(name: name), let id = project.id {
-                        router.push(.project(id: id))
+                        navigator.push(.project(id: id))
                     }
                 }
             } label: {
@@ -124,7 +96,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
         VStack(alignment: .leading) {
             Text("Data Logger").fontWeight(.bold)
 //            Button {
-//                router.push(.dataLoggerInfo)
+//                navigator.push(.dataLoggerInfo)
 //            } label: {
 //                HStack {
 //                    Image(systemName: "info.circle")
@@ -139,7 +111,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
             //            Text("1. This template can be used with the extension:")
             //            imageButton(
             //                imageName: "calliope_datalogger_extension",
-            //                action: { router.push(.infoWebView(url: URL(string: "https://makecode.calliope.cc/#pub:_Dv9J1xCp6HRy")!)) }
+            //                action: { navigator.push(.infoWebView(url: URL(string: "https://makecode.calliope.cc/#pub:_Dv9J1xCp6HRy")!)) }
             //            )
             //            Text("2. Create the program with the respective data and define the required columns and se tthe corresponding (sensor) data as values.")
             //            Text("3. Transfer the program to your Calliope mini")
@@ -147,7 +119,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
 
             SizedBox(height: 12)
             Button {
-                router.push(.dataLoggerInfo)
+                navigator.push(.dataLoggerInfo)
             } label: {
                 HStack {
                     Spacer()
@@ -176,11 +148,6 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
             }
             Spacer()
         }
-    }
-
-    func changeMakeCodeURL(url: String) -> PopupEditorWebView {
-        let makeCode = MakeCode(url: URL(string: url))
-        return PopupEditorWebView(editor: makeCode, alertPublisher: viewModel)
     }
 
     private func openDataLogger() {
@@ -214,7 +181,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
                     do {
                         try result.write(to: tempURL)
                         uploadViewModel.finishProgress()
-                        router.push(.dataLogger(url: tempURL))
+                        navigator.push(.dataLogger(url: tempURL))
                     } catch {
                         LogNotify.log("Failed to store datalogger data: \(error)")
                         uploadViewModel.finishProgress()
@@ -246,7 +213,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
             let tempURL = FileManager.default.temporaryDirectory
                 .appendingPathComponent("datalogger_\(Int(Date().timeIntervalSince1970)).htm")
             try data.write(to: tempURL)
-            router.push(.dataLogger(url: tempURL))
+            navigator.push(.dataLogger(url: tempURL))
         } catch {
             LogNotify.log("Failed to read datalogger file: \(error)")
         }
@@ -274,7 +241,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
             FlowLayout(spacing: 12) {
                 ForEach(viewModel.projects) { project in
                     ProjectItem(project: project, viewModel: viewModel) {
-                        router.push(.project(id: project.id!))
+                        navigator.push(.project(id: project.id!))
                     }
                 }
             }.padding(.vertical, 12)
@@ -284,7 +251,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
                 action: {
                     viewModel.alert = .newProjectName { name in
                         if let project = Project.insertProject(name: name), let id = project.id {
-                            router.push(.project(id: id))
+                            navigator.push(.project(id: id))
                         }
                     }
                 },
@@ -336,8 +303,8 @@ struct SensordataView_Previews: PreviewProvider {
             ],
             dataLoggerButtonEnabled: true
         )
-        SensordataView(viewModel: viewModel3Projects).previewInterfaceOrientation(.portrait)
-        SensordataView(viewModel: viewModel3Projects).previewInterfaceOrientation(.landscapeLeft)
+        NavigationStack { SensordataView(viewModel: viewModel3Projects, navigator: Router<ProjectAndSensorsRoute>()) }.previewInterfaceOrientation(.portrait)
+        NavigationStack { SensordataView(viewModel: viewModel3Projects, navigator: Router<ProjectAndSensorsRoute>()) }.previewInterfaceOrientation(.landscapeLeft)
         let viewModelManyProjects = PreviewSensordataViewModel(
             projects: [
                 Project(id: 1, name: "Test 1"), Project(id: 2, name: "Test 2"), Project(id: 1, name: "Test 3"), Project(id: 2, name: "Test 4"),
@@ -345,8 +312,8 @@ struct SensordataView_Previews: PreviewProvider {
             ],
             dataLoggerButtonEnabled: false
         )
-        SensordataView(viewModel: viewModelManyProjects).previewInterfaceOrientation(.portrait)
-        SensordataView(viewModel: viewModelManyProjects).previewInterfaceOrientation(.landscapeLeft)
+        NavigationStack { SensordataView(viewModel: viewModelManyProjects, navigator: Router<ProjectAndSensorsRoute>()) }.previewInterfaceOrientation(.portrait)
+        NavigationStack { SensordataView(viewModel: viewModelManyProjects, navigator: Router<ProjectAndSensorsRoute>()) }.previewInterfaceOrientation(.landscapeLeft)
 
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 
 struct ProjectsInfoView: View {
-    var router: Router<ProjectAndSensorsRoute>
+    let navigator: any SensordataNavigator
 
     var body: some View {
         AdaptiveColumnLayout {
@@ -46,7 +46,7 @@ struct ProjectsInfoView: View {
                     .cornerRadius(12)
                     .frame(width: 300)
                     .onTapGesture {
-                        router.push(.infoWebView(url: URL(string: "https://makecode.calliope.cc/#pub:_30A13o6dM9L2")!))
+                        navigator.push(.infoWebView(url: URL(string: "https://makecode.calliope.cc/#pub:_30A13o6dM9L2")!))
                     }
                     Spacer()
                 }
@@ -80,7 +80,7 @@ struct ProjectsInfoView: View {
 
 struct ProjectsInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectsInfoView(router: Router<ProjectAndSensorsRoute>()).previewInterfaceOrientation(.landscapeLeft)
-        ProjectsInfoView(router: Router<ProjectAndSensorsRoute>()).previewInterfaceOrientation(.portrait)
+        ProjectsInfoView(navigator: Router<ProjectAndSensorsRoute>()).previewInterfaceOrientation(.landscapeLeft)
+        ProjectsInfoView(navigator: Router<ProjectAndSensorsRoute>()).previewInterfaceOrientation(.portrait)
     }
 }

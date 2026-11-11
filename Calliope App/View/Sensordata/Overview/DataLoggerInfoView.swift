@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 
 struct DataLoggerInfoView: View {
-    var router: Router<ProjectAndSensorsRoute>
+    let navigator: any SensordataNavigator
 
     var body: some View {
         AdaptiveColumnLayout {
@@ -42,7 +42,7 @@ struct DataLoggerInfoView: View {
                     .foregroundColor(.white)
                     .frame(width: 300)
                     .cornerRadius(12).onTapGesture {
-                        router.push(.infoWebView(url: URL(string: "https://makecode.calliope.cc/#pub:_Dv9J1xCp6HRy")!))
+                        navigator.push(.infoWebView(url: URL(string: "https://makecode.calliope.cc/#pub:_Dv9J1xCp6HRy")!))
                     }
                     Spacer()
                 }
@@ -71,7 +71,7 @@ struct DataLoggerInfoView: View {
 
 struct DataLoggerInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        DataLoggerInfoView(router: Router<ProjectAndSensorsRoute>()).previewInterfaceOrientation(.landscapeLeft)
-        DataLoggerInfoView(router: Router<ProjectAndSensorsRoute>()).previewInterfaceOrientation(.portrait)
+        DataLoggerInfoView(navigator: Router<ProjectAndSensorsRoute>()).previewInterfaceOrientation(.landscapeLeft)
+        DataLoggerInfoView(navigator: Router<ProjectAndSensorsRoute>()).previewInterfaceOrientation(.portrait)
     }
 }
