@@ -61,7 +61,7 @@ struct DataLoggerInfoView: View {
 
                 HStack(alignment: .center) {
                     Image("num_04").resizable().scaledToFit().frame(maxHeight: 35)
-                    Text("Press \"Load Data From Calliope\" on the Sensordata page to display the recorded data.")
+                    Text("Press \"Show Data\" on the Sensordata page to display the recorded data, or \"Import Data\" to open a MY_DATA.HTM file.")
                 }
             }
         }

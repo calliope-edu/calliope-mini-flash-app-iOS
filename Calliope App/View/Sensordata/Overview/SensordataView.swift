@@ -34,10 +34,10 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
         }.padding()
             .fileImporter(
                 isPresented: $isImportingDataLoggerFile,
-                allowedContentTypes: [UTType(filenameExtension: "htm")!]
+                allowedContentTypes: [.html]
             ) { result in
-                if case .success(let url) = result {
-                    pushDataLogger(url: url)
+                if let url = viewModel.importDataLogger(from: result) {
+                    navigator.push(.dataLogger(url: url))
                 }
             }
             .modifier(AlertModifier(alert: viewModel.alertBinding))
@@ -107,7 +107,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
 
             SizedBox(height: 12)
             HStack(spacing: 36) {
-                pillButton(label: "Import Data") { openDataLogger() }
+                pillButton(label: "Import Data") { isImportingDataLoggerFile = true }
                 pillButton(label: "Show Data", enabled: viewModel.dataLoggerButtonEnabled) { openDataLogger() }
             }
             .frame(maxWidth: .infinity)
@@ -204,18 +204,6 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
                 }
             }
         )
-    }
-
-    private func pushDataLogger(url: URL) {
-        do {
-            let data = try url.asData()
-            let tempURL = FileManager.default.temporaryDirectory
-                .appendingPathComponent("datalogger_\(Int(Date().timeIntervalSince1970)).htm")
-            try data.write(to: tempURL)
-            navigator.push(.dataLogger(url: tempURL))
-        } catch {
-            LogNotify.log("Failed to read datalogger file: \(error)")
-        }
     }
 
     func pillButton(label: LocalizedStringKey, systemImage: String? = nil, enabled: Bool = true, action: @escaping () -> Void) -> some View {

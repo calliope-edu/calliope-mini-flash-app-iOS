@@ -18,6 +18,7 @@ protocol SensorDataViewModelProtocol {
     
     func deleteProject(id: Int64)
     func openBluetoothExtensionPage(openURL: OpenURLAction)
+    func importDataLogger(from result: Result<URL, Error>) -> URL?
 }
 
 class SensordataViewModel: ObservableObject, SensorDataViewModelProtocol, Alertable {
@@ -63,6 +64,33 @@ class SensordataViewModel: ObservableObject, SensorDataViewModelProtocol, Alerta
         }
     }
     
+    func importDataLogger(from result: Result<URL, Error>) -> URL? {
+        do {
+            let data = try result.get().asData()
+            // Every datalogger page loads the log viewer script (dl.js); other HTML files would show an empty page.
+            guard String(decoding: data, as: UTF8.self).contains("/dl.js") else {
+                alert = .ok(
+                    title: NSLocalizedString("Not a Datalogger File", comment: ""),
+                    message: NSLocalizedString("Please choose the MY_DATA.HTM file recorded by the datalogger on your Calliope mini.", comment: ""),
+                    completion: {}
+                )
+                return nil
+            }
+            let tempURL = FileManager.default.temporaryDirectory
+                .appendingPathComponent("datalogger_\(Int(Date().timeIntervalSince1970)).htm")
+            try data.write(to: tempURL)
+            return tempURL
+        } catch {
+            LogNotify.log("Failed to import datalogger file: \(error)")
+            alert = .ok(
+                title: NSLocalizedString("Datalogger Import Failed!", comment: ""),
+                message: NSLocalizedString("The selected file could not be read. Please try again.", comment: ""),
+                completion: {}
+            )
+            return nil
+        }
+    }
+
     private func loadProjects() {
         projects = Project.fetchProjects()
     }
@@ -139,5 +167,8 @@ class PreviewSensordataViewModel: SensorDataViewModelProtocol, ObservableObject,
     }
     func openBluetoothExtensionPage(openURL: OpenURLAction) {
         
+    }
+    func importDataLogger(from result: Result<URL, Error>) -> URL? {
+        nil
     }
 }

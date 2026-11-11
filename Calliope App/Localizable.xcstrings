@@ -1046,6 +1046,16 @@
         }
       }
     },
+    "Datalogger Import Failed!" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datalogger Import fehlgeschlagen!"
+          }
+        }
+      }
+    },
     "DataLogger View" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1926,6 +1936,16 @@
         }
       }
     },
+    "Not a Datalogger File" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Datalogger-Datei"
+          }
+        }
+      }
+    },
     "OK" : {
       "localizations" : {
         "de" : {
@@ -2062,6 +2082,16 @@
         }
       }
     },
+    "Please choose the MY_DATA.HTM file recorded by the datalogger on your Calliope mini." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bitte wähle die Datei MY_DATA.HTM, die der Datalogger auf deinem Calliope mini aufgezeichnet hat."
+          }
+        }
+      }
+    },
     "Please put the Calliope mini into Bluetooth mode (A+B+Reset) to transfer a program." : {
       "comment" : "Manual DFU mode instruction",
       "localizations" : {
@@ -2084,12 +2114,12 @@
         }
       }
     },
-    "Press \"Load Data From Calliope\" on the Sensordata page to display the recorded data." : {
+    "Press \"Show Data\" on the Sensordata page to display the recorded data, or \"Import Data\" to open a MY_DATA.HTM file." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "Drücke auf der Sensordaten-Seite auf „Daten von Calliope laden“, um die aufgezeichneten Daten anzuzeigen."
+            "state" : "translated",
+            "value" : "Drücke auf der Sensordaten-Seite auf „Daten anzeigen“, um die aufgezeichneten Daten anzuzeigen, oder auf „Daten importieren“, um eine MY_DATA.HTM-Datei zu öffnen."
           }
         }
       }
@@ -2710,6 +2740,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Das Ergebnis lässt sich nicht prüfen: Die App darf den Calliope mini nicht lesen."
+          }
+        }
+      }
+    },
+    "The selected file could not be read. Please try again." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die ausgewählte Datei konnte nicht gelesen werden. Bitte versuche es erneut."
           }
         }
       }
