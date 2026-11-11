@@ -140,7 +140,7 @@
 			<key>Key</key>
 			<string>campusOnUrlPreference</string>
 			<key>DefaultValue</key>
-			<string>https://rc-v1-1-3.calliope-campus.pages.dev</string>
+			<string>https://campus.calliope.cc</string>
 			<key>KeyboardType</key>
 			<string>URL</string>
 			<key>AutocapitalizationType</key>

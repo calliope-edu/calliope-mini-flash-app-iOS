@@ -20,14 +20,11 @@ enum SettingsDefaults {
     static let calliopeBlocksUrl = "https://calliope.cc/downloads/blocks.hex"
     static let blocksMiniEditorUrl = "https://blocks.calliope.cc"
     static let microPythonUrl = "https://python.calliope.cc?mobile=true"
-    // Cloudflare Pages branch alias of campus `rc-v1.1.3`. Switch to
-    // https://campus.calliope.cc once the proxy ships.
-    //
     // ORIGIN ONLY — no path. Every campus-hosted editor (the campus home plus
     // the /blocks, /makecode and /python flavours) derives its URL from this
     // one value via `CampusRoute`, so bumping the deployment is a one-line
     // change here.
-    static let campusUrl = "https://rc-v1-1-3.calliope-campus.pages.dev"
+    static let campusUrl = "https://campus.calliope.cc"
 
     static let localEditorEnabled = false
     static let makeCodeEnabled = true
