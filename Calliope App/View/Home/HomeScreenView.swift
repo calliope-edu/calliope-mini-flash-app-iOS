@@ -88,7 +88,14 @@ class HomeScreenViewModel: ObservableObject {
                 self?.loadedOnlineContent = false
             }
             DispatchQueue.main.async {
-                self!.tileData.rightItems = self!.newsItems
+                guard let self else { return }
+                // agreed with calliope that the first item in the news.json is shown on the left side
+                if self.loadedOnlineContent, let first = self.newsItems.first {
+                    self.gettingStartedItem = first
+                    self.tileData.rightItems = Array(self.newsItems.dropFirst())
+                } else {
+                    self.tileData.rightItems = self.newsItems
+                }
             }
         }
     }
