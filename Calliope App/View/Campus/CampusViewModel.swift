@@ -21,6 +21,7 @@ final class CampusViewModel: ObservableObject, Alertable {
     }
 
     init(settings: SettingsStore) {
+        LogNotify.debug("Opening campus at \(settings.campusUrl, default: "missing url")")
         editor = CampusEditor(campusUrl: settings.campusUrl)
     }
 }

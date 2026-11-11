@@ -558,6 +558,7 @@ final class EditorWebView: UIView {
         }
         showLoading()
 
+        webView!.scrollView.isScrollEnabled = !(editor is CampusEditor)
         webView!.configuration.applicationNameForUserAgent = editor is BlocksMiniEditor ? "Scrub" : nil
         webView!.customUserAgent =
             traitCollection.userInterfaceIdiom == .pad && !(editor is BlocksMiniEditor)
