@@ -16,6 +16,7 @@ final class DeviceConnectionServiceTests: XCTestCase {
     private let nameB = Matrix.heights2friendly([5, 4, 3, 2, 1])!
     private let folderPolicy = USBTransferPolicy(isSharedIPad: false, systemMajorVersion: 26)
     private let pickPerFlashPolicy = USBTransferPolicy(isSharedIPad: false, systemMajorVersion: 18)
+    private let sharedIPadPolicy = USBTransferPolicy(isSharedIPad: true, systemMajorVersion: 26)
 
     private var discoveries: [FakeDiscovery] = []
     private var viewModel: MatrixConnectionViewModel!
@@ -187,6 +188,19 @@ final class DeviceConnectionServiceTests: XCTestCase {
         drainMainQueue()
 
         XCTAssertEqual(viewModel.alert?.title, AppAlert.usbExportPickerNotice(isSharedIPad: false) {}.title)
+        XCTAssertFalse(viewModel.isFolderPickerPresented)
+    }
+
+    func testUsbCannotBeSwitchedOnOnSharedIPad() {
+        makeService(usbPolicy: sharedIPadPolicy)
+
+        viewModel.isInUsbMode = true
+        viewModel.startUsbConnect()
+        drainMainQueue()
+
+        XCTAssertFalse(viewModel.isInUsbMode)
+        XCTAssertFalse(service.isUsbMode)
+        XCTAssertNil(viewModel.alert)
         XCTAssertFalse(viewModel.isFolderPickerPresented)
     }
 

@@ -39,7 +39,7 @@ protocol MatrixConnectionViewModelProtocol: ObservableObject {
     var connectButtonState: ConnectButtonState { get }
     var connectionMenuButtonBounceTrigger: Int { get }
     var connectButtonBounceTrigger: Int { get }
-    var isSharedIpad: Bool { get }
+    var allowsUsb: Bool { get }
 
     func connect()
     func startUsbConnect()
@@ -84,6 +84,10 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable, C
     }
     @Published var isInUsbMode = false {
         didSet {
+            if isInUsbMode, !usbPolicy.allowsUsb {
+                isInUsbMode = false
+                return
+            }
             if isInUsbMode != connection.isUsbMode {
                 connection.setUsbMode(isInUsbMode)
             }
@@ -120,8 +124,8 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable, C
             set: { self.alert = $0 }
         )
     }
-    var isSharedIpad: Bool {
-        usbPolicy.isSharedIPad
+    var allowsUsb: Bool {
+        usbPolicy.allowsUsb
     }
 
     /// Whether the one-time heads-up alert before the per-flash export picker
@@ -140,6 +144,7 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable, C
     }
 
     func startUsbConnect() {
+        guard usbPolicy.allowsUsb else { return }
         connection.startUsbConnect()
 
         // Where no writable folder URL can be obtained (Shared iPad, or any
@@ -153,7 +158,7 @@ class MatrixConnectionViewModel: MatrixConnectionViewModelProtocol, Alertable, C
                 return
             }
             hasShownUsbPickerAlert = true
-            alert = .usbExportPickerNotice(isSharedIPad: isSharedIpad) { [weak self] in
+            alert = .usbExportPickerNotice(isSharedIPad: usbPolicy.isSharedIPad) { [weak self] in
                 self?.connection.connectExportPickerUsb()
             }
             return
@@ -269,7 +274,7 @@ class PreviewMatrixConnectionViewModel: MatrixConnectionViewModelProtocol {
     @Published var connectionMenuButtonBounceTrigger: Int = 0
     @Published var connectButtonBounceTrigger: Int = 0
     @Published var isFolderPickerPresented = false
-    @Published var isSharedIpad: Bool = false
+    @Published var allowsUsb: Bool = true
 
     init(connectionMenuButtonState: ConnectionMenuButtonState = .disconnected, connectButtonState: ConnectButtonState = .readyToConnect) {
         self.connectionMenuButtonState = connectionMenuButtonState

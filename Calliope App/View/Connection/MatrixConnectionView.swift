@@ -31,16 +31,19 @@ struct MatrixConnectionView<ViewModelType: MatrixConnectionViewModelProtocol>: V
                         Rectangle().opacity(0).frame(width: 40, height: 40)  // To keep the closing button free
                     }.frame(maxWidth: 300)
 
-                    Toggle("Connect with cable", isOn: $viewModel.isInUsbMode).frame(maxWidth: 300).padding(.bottom, 8)
+                    if viewModel.allowsUsb {
+                        Toggle("Connect with cable", isOn: $viewModel.isInUsbMode).frame(maxWidth: 300).padding(.bottom, 8)
+                    } else {
+                        Text("Connecting with a cable is not available on a Shared iPad. Please use Bluetooth.")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                            .frame(maxWidth: 300, alignment: .leading)
+                            .padding(.bottom, 8)
+                    }
 
                     VStack(alignment: .leading, spacing: 4) {
                         if displayedIsUsb {
-                            if viewModel.isSharedIpad {
-                                Text("On a Shared iPad the Calliope mini has to be selected for every file copy. Transferring over the cable is not reliable here, so we recommend transferring via Bluetooth.")
-                            }
-                            else{
-                                selectUSBCalliopeButton
-                            }
+                            selectUSBCalliopeButton
                         } else {
                             bluetoothMenu
                         }

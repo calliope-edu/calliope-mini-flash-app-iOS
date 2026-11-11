@@ -766,6 +766,17 @@
         }
       }
     },
+    "Connecting with a cable is not available on a Shared iPad. Please use Bluetooth." : {
+      "comment" : "Notice instead of the cable switch on Shared iPad",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Verbindung per Kabel ist auf einem geteilten iPad nicht verfügbar. Bitte verwende Bluetooth."
+          }
+        }
+      }
+    },
     "Connection required for data collection." : {
       "localizations" : {
         "de" : {

@@ -15,6 +15,7 @@ final class USBTransferPolicyTests: XCTestCase {
 
         XCTAssertFalse(policy.picksDestinationPerFlash)
         XCTAssertFalse(policy.allowsUploadWithoutDevice)
+        XCTAssertTrue(policy.allowsUsb)
     }
 
     func testPersonalOlderIPad() {
@@ -29,5 +30,6 @@ final class USBTransferPolicyTests: XCTestCase {
 
         XCTAssertTrue(policy.picksDestinationPerFlash)
         XCTAssertTrue(policy.allowsUploadWithoutDevice)
+        XCTAssertFalse(policy.allowsUsb)
     }
 }
