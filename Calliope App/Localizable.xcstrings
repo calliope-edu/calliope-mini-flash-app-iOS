@@ -1184,6 +1184,7 @@
       }
     },
     "Download the original program for your Calliope mini. Connect your device and transfer the program!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2041,6 +2042,12 @@
         }
       }
     },
+    "PROGRAMME ÜBERTRAGEN" : {
+
+    },
+    "PROGRAMMIERUMGEBUNGEN" : {
+
+    },
     "Projects" : {
       "localizations" : {
         "de" : {
@@ -2368,6 +2375,9 @@
           }
         }
       }
+    },
+    "STARTPGROGRAMM ÜBERTRAGEN" : {
+
     },
     "Switching to Bluetooth avoids this." : {
       "extractionState" : "stale",
@@ -2867,6 +2877,15 @@
         }
       }
     },
+    "Wähle deine Calliope mini Version aus und übertrage das Startprogramm auf deinen verbundenen Calliope mini." : {
+
+    },
+    "Wähle den Editor, mit dem du deinen Calliope mini programmieren möchtest." : {
+
+    },
+    "Wähle ein Programm aus, das du teilen oder auf den Calliope mini übertragen möchtests." : {
+
+    },
     "Welcome" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2971,6 +2990,7 @@
       }
     },
     "You can program your Calliope mini with the help of the editors." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

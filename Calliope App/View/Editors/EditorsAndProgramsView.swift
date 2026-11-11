@@ -40,40 +40,42 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
         }
     }
 
+    private let editorColumns = Array(repeating: GridItem(.flexible(), spacing: 20, alignment: .top), count: 3)
+
     var body: some View {
         NavigationStack(path: $router.path) {
             GeometryReader { geo in
-                ScrollView {
+                SwiftUI.Group {
                     if geo.size.width > 1000 {
-                        // Landscape: original program tile full width on top, editors and programs side by side below
-                        VStack(spacing: 16) {
-                            originalProgramTile(isLandscape: true)
-                                .tiled(color: Color.calliopeTurqoise, takeRemainingSpace: true, padding: 30)
-                            HStack(alignment: .top, spacing: 16) {
-                                editorsTile
-                                    .tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
-                                    .fixedSize(horizontal: false, vertical: true)
-                                programsTile
-                                    .tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
-                                    .fixedSize(horizontal: false, vertical: true)
-                            }
+                        HStack(alignment: .top, spacing: 16) {
+                            editorsTile(centersGrid: true)
+                                .padding(30)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                                .background(Color.calliopeLightgray, in: RoundedRectangle(cornerRadius: 12))
+                                VStack(spacing: 16) {
+                                    originalProgramTile(isLandscape: true)
+                                    SizedBox(height:10)
+                                    programsTile
+                                }
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(30)
                         }
                     } else {
-                        // Portrait: all tiles stacked vertically
-                        VStack(spacing: 16) {
-                            originalProgramTile(isLandscape: false)
-                                .tiled(color: Color.calliopeTurqoise, takeRemainingSpace: true, padding: 30)
-                            editorsTile
-                                .tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
-                                .fixedSize(horizontal: false, vertical: true)
-                            programsTile
-                                .tiled(color: Color.calliopeLightgray, takeRemainingSpace: true, padding: 30)
-                                .fixedSize(horizontal: false, vertical: true)
+                        ScrollView {
+                            VStack(spacing: 16) {
+                                editorsTile(centersGrid: false)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(30)
+                                    .background(Color.calliopeLightgray, in: RoundedRectangle(cornerRadius: 12))
+                                SwiftUI.Group {
+                                    originalProgramTile(isLandscape: false)
+                                    programsTile
+                                }
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(30)
+                            }
                         }
                     }
-                }
-                .refreshable {
-                    viewModel.loadPrograms()
                 }
                 .padding()
             }
@@ -128,14 +130,35 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
         return PopupEditorWebView(editor: makeCode, alertPublisher: viewModel)
     }
 
-    var editorsTile: some View {
+    func editorsTile(centersGrid: Bool) -> some View {
         VStack(alignment: .leading) {
-            Text("You can program your Calliope mini with the help of the editors.").fontWeight(.bold)
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 20) {
-                ForEach(0..<viewModel.editors.count) { i in
+            editorsHeader
+            if centersGrid {
+                Spacer(minLength: 0)
+                editorsGrid
+                Spacer(minLength: 0)
+                // Invisible copy so the grid is centered in the whole column, not just below the header
+                editorsHeader.hidden()
+            } else {
+                editorsGrid
+            }
+        }
+    }
+
+    var editorsHeader: some View {
+        VStack(alignment: .leading) {
+            Text("PROGRAMMIERUMGEBUNGEN")
+                .font(.title2)
+            Text("Wähle den Editor, mit dem du deinen Calliope mini programmieren möchtest.")
+        }
+    }
+
+    var editorsGrid: some View {
+        LazyVGrid(columns: editorColumns, spacing: 20) {
+            ForEach(0..<viewModel.editors.count) { i in
+                SwiftUI.Group {
                     if viewModel.editors[i].name == "Scan" {
-                        EditorTile(config: viewModel.editors[i])
-                            .info(NSLocalizedString("Open a program in MakeCode using a QR code. Simply scan it and off you go!", comment: ""))
+                        EditorTile(config: viewModel.editors[i], infoText: NSLocalizedString("Open a program in MakeCode using a QR code. Simply scan it and off you go!", comment: ""))
                             .onTapGesture {
                                 router.push(.qrCodeView)
                             }
@@ -158,149 +181,116 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
                         }
                     }
                 }
+                .anchorPreference(key: MakeCodeGroupBoundsKey.self, value: .bounds) { bounds in
+                    ["Makecode", "Scan"].contains(viewModel.editors[i].name) ? [bounds] : []
+                }
+            }
+        }
+        .backgroundPreferenceValue(MakeCodeGroupBoundsKey.self) { anchors in
+            GeometryReader { proxy in
+                let rect = anchors.map { proxy[$0] }.reduce(CGRect.null) { $0.union($1) }.insetBy(dx: -8, dy: -8)
+                if !rect.isNull {
+                    RoundedRectangle(cornerRadius: 14)
+                        .fill(Color.black.opacity(0.06))
+                        .frame(width: rect.width, height: rect.height)
+                        .offset(x: rect.minX, y: rect.minY)
+                }
             }
         }
     }
 
     func originalProgramTile(isLandscape: Bool) -> some View {
         VStack(alignment: .leading) {
-            if isLandscape {
-                Text("Download the original program for your Calliope mini. Connect your device and transfer the program!")
-                    .fontWeight(.bold)
-                    .foregroundStyle(Color.white)
-
-                HStack {
-                    Image("demoa_01").resizable().scaledToFit().frame(maxWidth: 300).padding(.vertical, 10)
-                    SizedBox(width: 100)
-                    boxButton(label: "Calliope mini 1+2", iconName: "button_icon_upload", action: { viewModel.uploadDefaultV1And2Program() })
-                    boxButton(label: "Calliope mini 3", iconName: "button_icon_upload", action: { viewModel.uploadDefaultV3Program() })
-
-                }
-            } else {
-                HStack {
-                    Spacer()
-                    VStack {
-                        Text("Download the original program for your Calliope mini. Connect your device and transfer the program!")
-                            .fontWeight(.bold)
-                            .foregroundStyle(Color.white)
-                        Image("demoa_01").resizable().scaledToFit().frame(maxWidth: 300).padding(.vertical, 10)
-                    }
-                    Spacer()
-                }
-
-                HStack {
-                    boxButton(label: "Calliope mini 1+2", iconName: "button_icon_upload", action: { viewModel.uploadDefaultV1And2Program() })
-                    boxButton(label: "Calliope mini 3", iconName: "button_icon_upload", action: { viewModel.uploadDefaultV3Program() })
-
-                }
+            Text("STARTPGROGRAMM ÜBERTRAGEN")
+                .font(.title2)
+            Text("Wähle deine Calliope mini Version aus und übertrage das Startprogramm auf deinen verbundenen Calliope mini.")
+            SizedBox(height:10)
+            HStack(alignment: .top, spacing: 16) {
+                startProgramColumn(imageName: "startprogramm1+2", label: "Calliope mini 1+2", boxColor: Color.calliopeTurqoise, action: { viewModel.uploadDefaultV1And2Program() })
+                startProgramColumn(imageName: "startprogramm3", label: "Calliope mini 3", boxColor: Color.calliopePink, action: { viewModel.uploadDefaultV3Program() })
             }
         }
+    }
+
+    func startProgramColumn(imageName: String, label: String, boxColor: Color, action: @escaping () -> Void) -> some View {
+        VStack(spacing: 10) {
+            Image(imageName)
+                .resizable()
+                .scaledToFit()
+                .frame(maxWidth: .infinity, maxHeight: 120)
+                .padding()
+                .background(boxColor)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+            SizedBox(height:1)
+            pillButton(label: label, action: action)
+        }
+        .frame(maxWidth: .infinity)
     }
 
     var programsTile: some View {
         VStack(alignment: .leading) {
-            Text("Select a program to transfer, share, rename or delete it.")
-                .fontWeight(.bold)
+            Text("PROGRAMME ÜBERTRAGEN")
+                .font(.title2)
+            Text("Wähle ein Programm aus, das du teilen oder auf den Calliope mini übertragen möchtests.")
             let hexFileType = UTType.init(filenameExtension: "hex")!
-            boxButton(label: "Open File", iconName: "doc", isSystemImage: true, action: { presentingFileImporter = true })
+            SizedBox(height:10)
+            pillButton(label: "Open File", action: { presentingFileImporter = true })
                 .fileImporter(isPresented: $presentingFileImporter, allowedContentTypes: [hexFileType]) { result in
                     viewModel.openFile(result: result)
                     presentingFileImporter = false
                 }
-            SizedBox(height: 10)
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 200))], spacing: 20) {
-                ForEach(viewModel.programs) { config in
-                    ProgramTile(config: config, editorsAndProgramsViewModel: viewModel)
-                        .tiled(color: Color.calliopeGray)
-                }
-            }
+                .frame(maxWidth: .infinity)
         }
     }
 
-    func boxButton(label: String, iconName: String, isSystemImage: Bool = false, action: @escaping () -> Void) -> some View {
-        return Button {
+    func pillButton(label: String, action: @escaping () -> Void) -> some View {
+        Button {
             action()
         } label: {
-            HStack {
-                Text(LocalizedStringKey(label))  // need the LocalizedStringKey, so it is translated to German
-                Spacer()
-                (isSystemImage ? Image(systemName: iconName) : Image(iconName))
-                    .resizable().scaledToFit().frame(width: 30, height: 30)
-            }
-            .frame(maxWidth: .infinity)
-            .padding()
-            .background(Color.calliopeGreen)
-            .foregroundColor(.white)
-            .cornerRadius(12)
-
+            Text(LocalizedStringKey(label))  // need the LocalizedStringKey, so it is translated to German
+                .padding(.vertical, 12)
+                .padding(.horizontal, 24)
+                .background(Color.calliopeGreen, in: Capsule())
+                .foregroundColor(.white)
         }
     }
 }
 
-struct ProgramTile<viewModelType: EditorsAndProgramsViewModelProtocol & ObservableObject>: View {
-    let config: ProgramTileConfig
-    let editorsAndProgramsViewModel: viewModelType
-    @State var showMenu = false
+private struct MakeCodeGroupBoundsKey: PreferenceKey {
+    static var defaultValue: [Anchor<CGRect>] = []
 
-    var body: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                Text(config.name).foregroundStyle(Color.white)
-                Text(config.lastUsed.formatted()).foregroundStyle(Color.white)
-            }
-            Spacer()
-            // Only a hex can go to the mini. A stored Python source can be
-            // shared, renamed and deleted, but offering "Transfer" for it
-            // would fail, so the upload icon is hidden for it.
-            if config.hexFile.isFlashable {
-                Image("button_icon_upload")
-                    .resizable().scaledToFit().frame(maxWidth: 30)
-                    .onTapGesture {
-                        editorsAndProgramsViewModel.downloadProgram(program: config)
-                    }
-            }
-        }
-        .frame(maxWidth: 250)
-        .contentShape(Rectangle())
-        .onTapGesture {
-            showMenu = true
-        }
-        .simultaneousGesture(
-            LongPressGesture(minimumDuration: 0.5)
-                .onEnded { _ in showMenu = true }
-        )
-        .confirmationDialog(
-            "",
-            isPresented: $showMenu,
-            titleVisibility: .visible
-        ) {
-            // Same rule as the upload icon: transferring is hex-only.
-            if config.hexFile.isFlashable {
-                Button("Transfer", systemImage: "arrow.left.arrow.right") { editorsAndProgramsViewModel.downloadProgram(program: config) }
-            }
-            ShareLink("Share", item: config.hexFile.url)
-            Button("Rename", systemImage: "rectangle.and.pencil.and.ellipsis") { editorsAndProgramsViewModel.renameProgram(program: config) }
-            Button("Delete", systemImage: "trash", role: .destructive) { editorsAndProgramsViewModel.deleteProgram(program: config) }
-        }
+    static func reduce(value: inout [Anchor<CGRect>], nextValue: () -> [Anchor<CGRect>]) {
+        value += nextValue()
     }
 }
 
 struct EditorTile: View {
     let config: EditorTileConfig
+    var infoText: String? = nil
 
     var body: some View {
         VStack {
-            ZStack {
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(config.backgroundColor != nil ? config.backgroundColor! : Color.clear)
-                    .frame(width: 130, height: 130)
+            if let infoText {
+                iconBox.info(infoText)
+            } else {
+                iconBox
+            }
+            Text(config.name).multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: .infinity)
+    }
+
+    private var iconBox: some View {
+        RoundedRectangle(cornerRadius: 10)
+            .fill(config.backgroundColor ?? Color.clear)
+            .aspectRatio(1, contentMode: .fit)
+            .overlay {
                 Image(config.iconName)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: config.imageSize * 130, height: config.imageSize * 130)
+                    .scaleEffect(config.imageSize)
             }
-            Text(config.name).multilineTextAlignment(.center)
-        }.frame(width: 150, height: 180, alignment: .top)
+            .frame(maxWidth: 130)
     }
 }
 
@@ -331,9 +321,7 @@ struct InfoModifier: ViewModifier {
                         .background(.calliopePink, in: Circle())
                 }
                 .buttonStyle(.plain)
-                // The padding is fine tuned for its currently only usage on the EditorAndPrograms page
-                .padding(.vertical, 4)
-                .padding(.horizontal, 12)
+                .padding(6)
                 .popover(isPresented: $showHelp) {
                     Text(helpText)
                         .font(.body)

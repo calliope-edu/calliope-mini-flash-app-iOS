@@ -23,24 +23,12 @@ struct EditorTileConfig {
     }
 }
 
-struct ProgramTileConfig: Identifiable {
-    let id = UUID()
-    let name: String
-    let lastUsed: Date
-    let hexFile: HexFile
-}
-
 @MainActor
 protocol EditorsAndProgramsViewModelProtocol {
     var editors: [EditorTileConfig] { get }
-    var programs: [ProgramTileConfig] { get }
     var alert: AppAlert? { get set }
     var alertBinding: Binding<AppAlert?> { get }
 
-    func loadPrograms()
-    func downloadProgram(program: ProgramTileConfig)
-    func renameProgram(program: ProgramTileConfig)
-    func deleteProgram(program: ProgramTileConfig)
     func uploadDefaultV3Program()
     func uploadDefaultV1And2Program()
     func openFile(result: Result<URL, Error>)
@@ -49,15 +37,13 @@ protocol EditorsAndProgramsViewModelProtocol {
 class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, ObservableObject, @preconcurrency Alertable {
 
     @Published var editors: [EditorTileConfig] = [
-        EditorTileConfig(name: "Makecode", iconName: "editors_makecode"),
-        EditorTileConfig(name: "Open Roberta Lab", iconName: "editors_nepo"),
         EditorTileConfig(name: "Calliope mini Blocks", iconName: "editors_blocks_transparent", backgroundColor: Color.white, imageSize: 0.9),
+        EditorTileConfig(name: "Makecode", iconName: "editors_makecode"),
+        EditorTileConfig(name: "Scan", iconName: "qr_code_scan_button", backgroundColor: Color.white, imageSize: 0.65),
         EditorTileConfig(name: "Micropython", iconName: "editors_python"),
         EditorTileConfig(name: "Arcade", iconName: "editors_swift"),
-        EditorTileConfig(name: "Scan", iconName: "qr_code_scan_button", backgroundColor: Color.white, imageSize: 0.65)
+        EditorTileConfig(name: "Open Roberta Lab", iconName: "editors_nepo")
     ]
-
-    @Published var programs: [ProgramTileConfig] = []
 
     @Published var alert: AppAlert? = nil
     var alertBinding: Binding<AppAlert?> {
@@ -67,65 +53,12 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
         )
     }
 
-    var programSubscription: NSObjectProtocol!
     private let uploadViewModel: UploadViewModel
     private let settings: SettingsStore
-
-    func loadPrograms() {
-        programs = []
-        do {
-            programs = try HexFileManager.stored().map { ProgramTileConfig(name: $0.name, lastUsed: $0.date, hexFile: $0) }
-        } catch {
-            LogNotify.error("Could not load programs \(error)")
-        }
-    }
 
     init(uploadViewModel: UploadViewModel, settings: SettingsStore) {
         self.uploadViewModel = uploadViewModel
         self.settings = settings
-        loadPrograms()
-        programSubscription = NotificationCenter.default.addObserver(
-            forName: NotificationConstants.hexFileChanged,
-            object: nil,
-            queue: nil,
-            using: { [weak self] (_) in
-                DispatchQueue.main.async {
-                    self!.loadPrograms()
-                    LogNotify.debug("\(self!.programs.count) programs loaded")
-                }
-            }
-        )
-
-    }
-
-    func downloadProgram(program: ProgramTileConfig) {
-        uploadViewModel.upload(program.hexFile, name: program.name)
-    }
-
-    func renameProgram(program: ProgramTileConfig) {
-        let alert = AppAlert.renameProgram(defaultName: program.name, onRename: { newName in
-                if newName != "" {
-                    var renamableProgram = program.hexFile
-                    renamableProgram.name = newName
-                    if renamableProgram.name != newName {
-                        //rename was not successful
-                        let failedAlert = AppAlert.renameFailed(oldName: renamableProgram.name, newName: newName)
-                        self.alert = failedAlert
-                    }
-                }
-        })
-        self.alert = alert
-    }
-
-    func deleteProgram(program: ProgramTileConfig) {
-        let hexFile = program.hexFile
-        self.alert = .deleteProgram(program: hexFile) {
-            do {
-                try HexFileManager.delete(file: hexFile)
-            } catch {
-                self.alert = .deleteProgramFailed(program: hexFile, error: error)
-            }
-        }
     }
 
     func uploadDefaultV3Program() {
@@ -154,39 +87,16 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
             LogNotify.error("Program import failed: \(error)")
         }
     }
-
-    deinit {
-        NotificationCenter.default.removeObserver(programSubscription!)
-    }
 }
 
 class PreviewEditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, ObservableObject, Alertable {
     @Published var editors: [EditorTileConfig] = [
-        EditorTileConfig(name: "Makecode", iconName: "editors_makecode"),
-        EditorTileConfig(name: "Open Roberta Lab", iconName: "editors_nepo"),
         EditorTileConfig(name: "Calliope mini Blocks", iconName: "editors_blocks_transparent", backgroundColor: Color.white, imageSize: 0.9),
+        EditorTileConfig(name: "Makecode", iconName: "editors_makecode"),
+        EditorTileConfig(name: "Scan", iconName: "qr_code_scan_button", backgroundColor: Color.white, imageSize: 0.65),
         EditorTileConfig(name: "Micropython", iconName: "editors_python"),
         EditorTileConfig(name: "Arcade", iconName: "editors_swift"),
-        EditorTileConfig(name: "Scan", iconName: "qr_code_scan_button", backgroundColor: Color.white, imageSize: 0.65)
-    ]
-
-    @Published var programs: [ProgramTileConfig] = [
-        ProgramTileConfig(name: "Test 1", lastUsed: Date.now, hexFile: HexFile(url: URL(fileURLWithPath: ""), name: "", date: Date.now)),
-        ProgramTileConfig(
-            name: "Test 2",
-            lastUsed: Date.now.addingTimeInterval(100),
-            hexFile: HexFile(url: URL(fileURLWithPath: ""), name: "", date: Date.now.addingTimeInterval(100))
-        ),ProgramTileConfig(name: "Test 1", lastUsed: Date.now, hexFile: HexFile(url: URL(fileURLWithPath: ""), name: "", date: Date.now)),
-        ProgramTileConfig(
-            name: "Test 2",
-            lastUsed: Date.now.addingTimeInterval(100),
-            hexFile: HexFile(url: URL(fileURLWithPath: ""), name: "", date: Date.now.addingTimeInterval(100))
-        ),ProgramTileConfig(name: "Test 1", lastUsed: Date.now, hexFile: HexFile(url: URL(fileURLWithPath: ""), name: "", date: Date.now)),
-        ProgramTileConfig(
-            name: "Test 2",
-            lastUsed: Date.now.addingTimeInterval(100),
-            hexFile: HexFile(url: URL(fileURLWithPath: ""), name: "", date: Date.now.addingTimeInterval(100))
-        ),
+        EditorTileConfig(name: "Open Roberta Lab", iconName: "editors_nepo")
     ]
 
     @Published var alert: AppAlert? = nil
@@ -195,22 +105,6 @@ class PreviewEditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, O
             get: { self.alert },
             set: { self.alert = $0 }
         )
-    }
-
-    func loadPrograms() {
-        print("Trying to load programs")
-    }
-
-    func downloadProgram(program: ProgramTileConfig) {
-        print("Trying to open program \(program.name)")
-    }
-
-    func renameProgram(program: ProgramTileConfig) {
-        print("Trying to rename program \(program.name)")
-    }
-
-    func deleteProgram(program: ProgramTileConfig) {
-        print("Trying to delete program \(program.name)")
     }
 
     func uploadDefaultV3Program() {
