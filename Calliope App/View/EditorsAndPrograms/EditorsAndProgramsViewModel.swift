@@ -91,7 +91,7 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
             using: { [weak self] (_) in
                 DispatchQueue.main.async {
                     self!.loadPrograms()
-                    print(self!.programs.count)
+                    LogNotify.debug("\(self!.programs.count) programs loaded")
                 }
             }
         )
