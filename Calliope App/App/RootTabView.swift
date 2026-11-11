@@ -46,36 +46,18 @@ struct RootTabView: View {
         ZStack {
             TabView(selection: $coordinator.selectedTab) {
                 HomeScreenView(viewModel: homeViewModel)
-                    .tabItem { Label("Home", image: "IconDevice") }
+                    .tabItem { Label("Home", image: "home") }
                     .tag(0)
                 EditorsAndProgramsView(viewModel: editorsViewModel)
                     .environmentObject(coordinator)
-                    .tabItem { Label("Editors and Programs", image: "IconCode") }
+                    .tabItem { Label("Editors", image: "editors") }
                     .tag(1)
                 CampusView(viewModel: campusViewModel)
-                    .tabItem { Label("Campus", systemImage: "graduationcap") }
+                    .tabItem { Label("Calliope Campus", image: "calliope_campus") }
                     .tag(2)
-                SensordataView(viewModel: sensordataViewModel)
-                    .tabItem { Label("Sensordaten", systemImage: "menubar.rectangle") }
-                    .tag(3)
                 AppsScreenView(viewModel: appsViewModel)
-                    .tabItem {
-                        Label {
-                            Text("Apps")
-                        } icon: {
-                            Image(uiImage: UIImage(systemName: "square.grid.3x3") ?? UIImage())
-                        }
-                    }
+                    .tabItem { Label("Apps", image: "apps") }
                     .tag(4)
-                if DiagnosticsFeature.isEnabled {
-                    DiagnosticsView(viewModel: DiagnosticsViewModel(
-                        diagnostics: DeviceDiagnostics(usbPolicy: dependencies.usbPolicy),
-                        storageDiagnostics: StorageDiagnostics(storage: dependencies.documentStorage),
-                        usbTransferDiagnostics: USBTransferDiagnostics(storage: dependencies.documentStorage, exportPicker: dependencies.usbDestinationPicker)
-                    ))
-                        .tabItem { Label("Diagnostics", systemImage: "stethoscope") }
-                        .tag(5)
-                }
             }
             .tint(Color("calliope-lilablau"))
             

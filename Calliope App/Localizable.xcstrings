@@ -525,6 +525,9 @@
         }
       }
     },
+    "Calliope Campus" : {
+
+    },
     "Calliope mini Discovery State now: (state)" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -589,6 +592,7 @@
       }
     },
     "Campus" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -702,6 +706,16 @@
         }
       }
     },
+    "Connect the Calliope mini via USB, choose a program and a method, then pick the MINI drive when asked." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbinde den Calliope mini per USB, wähle ein Programm und eine Methode und wähle dann das Laufwerk MINI aus, wenn danach gefragt wird."
+          }
+        }
+      }
+    },
     "Connect to a Calliope mini to finish the tutorial" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -709,16 +723,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Verbinde dich hier mit dem Calliope mini."
-          }
-        }
-      }
-    },
-    "Connect the Calliope mini via USB, choose a program and a method, then pick the MINI drive when asked." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Verbinde den Calliope mini per USB, wähle ein Programm und eine Methode und wähle dann das Laufwerk MINI aus, wenn danach gefragt wird."
           }
         }
       }
@@ -1210,7 +1214,11 @@
         }
       }
     },
+    "Editors" : {
+
+    },
     "Editors and Programs" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2255,6 +2263,7 @@
       }
     },
     "Sensordaten" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2391,16 +2400,6 @@
         }
       }
     },
-    "Test USB transfer" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "USB-Übertragung testen"
-          }
-        }
-      }
-    },
     "Test saving" : {
       "localizations" : {
         "de" : {
@@ -2411,12 +2410,12 @@
         }
       }
     },
-    "Testing USB transfer…" : {
+    "Test USB transfer" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "USB-Übertragung wird getestet…"
+            "value" : "USB-Übertragung testen"
           }
         }
       }
@@ -2427,6 +2426,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Speichern wird getestet…"
+          }
+        }
+      }
+    },
+    "Testing USB transfer…" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "USB-Übertragung wird getestet…"
           }
         }
       }
@@ -2756,16 +2765,6 @@
         }
       }
     },
-    "USB transfer" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "USB-Übertragung"
-          }
-        }
-      }
-    },
     "Upload" : {
       "localizations" : {
         "de" : {
@@ -2824,6 +2823,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "USB-Verbindung erforderlich"
+          }
+        }
+      }
+    },
+    "USB transfer" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "USB-Übertragung"
           }
         }
       }
