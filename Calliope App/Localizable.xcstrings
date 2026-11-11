@@ -985,16 +985,6 @@
         }
       }
     },
-    "DATA LOGGER & SENSORS" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "DATALOGGER & SENSOREN"
-          }
-        }
-      }
-    },
     "Data Logger" : {
       "localizations" : {
         "de" : {
@@ -1011,6 +1001,27 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Datalogger & Sensoren"
+          }
+        }
+      }
+    },
+    "DATA LOGGER & SENSORS" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DATALOGGER & SENSOREN"
+          }
+        }
+      }
+    },
+    "DATALOGGER" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DATALOGGER"
           }
         }
       }
@@ -1613,12 +1624,33 @@
         }
       }
     },
+    "Import Data" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daten importieren"
+          }
+        }
+      }
+    },
     "Import Data From File" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Daten von Datei importieren"
+          }
+        }
+      }
+    },
+    "Instructions" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anleitung"
           }
         }
       }
@@ -1665,6 +1697,7 @@
       }
     },
     "Load Data From Calliope" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2113,11 +2146,22 @@
       }
     },
     "Projects" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Projekte"
+          }
+        }
+      }
+    },
+    "PROJECTS" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PROJEKTE"
           }
         }
       }
@@ -2411,6 +2455,16 @@
         }
       }
     },
+    "Show Data" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daten anzeigen"
+          }
+        }
+      }
+    },
     "Speaker" : {
       "localizations" : {
         "de" : {
@@ -2453,6 +2507,7 @@
       }
     },
     "Tap for instructions" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

@@ -45,20 +45,25 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
 
     var sendDataTile: some View {
         VStack(alignment: .leading) {
-            Text("Projects").fontWeight(.bold)
+            tileHeader(
+                title: "PROJECTS",
+                description: "Send sensor data live from your Calliope mini to the app via Bluetooth.",
+                imageName: "calliope_bluetooth_extension 1",
+                onInstructions: { navigator.push(.projectsInfo) }
+            )
             SizedBox(height: 12)
-            Button {
-                navigator.push(.projectsInfo)
-            } label: {
-                HStack {
-                    Spacer()
-                    Image("calliope_bluetooth_extension 1")
-                        .resizable().scaledToFit().frame(height: 200)
-                    Spacer()
+            pillButton(label: "New Project", systemImage: "plus") {
+                viewModel.alert = .newProjectName { name in
+                    if let project = Project.insertProject(name: name), let id = project.id {
+                        navigator.push(.project(id: id))
+                    }
                 }
             }
-            Text("Tap for instructions").font(.caption).foregroundColor(Color.calliopePink).frame(maxWidth: .infinity)
-            SizedBox(height: 12)
+            .frame(maxWidth: .infinity)
+
+            if !viewModel.projects.isEmpty {
+                SizedBox(height: 24)
+            }
 
             VStack {
                 ForEach(viewModel.projects) { project in
@@ -67,34 +72,17 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
                     }
                 }
             }
-           
-            if(viewModel.projects.count > 0) {
-                SizedBox(height: 12)
-            }
-
-            Button {
-                viewModel.alert = .newProjectName { name in
-                    if let project = Project.insertProject(name: name), let id = project.id {
-                        navigator.push(.project(id: id))
-                    }
-                }
-            } label: {
-                HStack {
-                    Spacer()
-                    Image(systemName: "plus")
-                        .foregroundColor(Color(.white))
-                    Text("New Project")
-                        .foregroundColor(Color(.white))
-                    Spacer()
-                }
-                .tiled(color: Color.calliopeDarkgray)
-            }
         }.frame(maxHeight: .infinity, alignment: .top)
     }
 
     var dataLoggerTile: some View {
         VStack(alignment: .leading) {
-            Text("Data Logger").fontWeight(.bold)
+            tileHeader(
+                title: "DATALOGGER",
+                description: "With the datalogger extension the Calliope mini 3 can record data. Afterwards you can transfer it to the app and view it in a table.",
+                imageName: "calliope_datalogger_extension",
+                onInstructions: { navigator.push(.dataLoggerInfo) }
+            )
 //            Button {
 //                navigator.push(.dataLoggerInfo)
 //            } label: {
@@ -118,23 +106,34 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
             //            Text("4. Open the datalogger view")
 
             SizedBox(height: 12)
-            Button {
-                navigator.push(.dataLoggerInfo)
-            } label: {
-                HStack {
-                    Spacer()
-                    Image("calliope_datalogger_extension")
-                        .resizable().scaledToFit().frame(height: 200)
-                    Spacer()
-                }
+            HStack(spacing: 36) {
+                pillButton(label: "Import Data") { openDataLogger() }
+                pillButton(label: "Show Data", enabled: viewModel.dataLoggerButtonEnabled) { openDataLogger() }
             }
-            Text("Tap for instructions").font(.caption).foregroundColor(Color.calliopePink).frame(maxWidth: .infinity)
-            SizedBox(height: 12)
-
-
-            boxButton(label: NSLocalizedString("Load Data From Calliope", comment: ""), action: { openDataLogger() }, enabled: viewModel.dataLoggerButtonEnabled)
-            boxButton(label: NSLocalizedString("Import Data From File", comment: ""), action: { openDataLogger() }, enabled: true)
+            .frame(maxWidth: .infinity)
         }.frame(maxHeight: .infinity, alignment: .top)
+    }
+
+    func tileHeader(title: LocalizedStringKey, description: LocalizedStringKey, imageName: String, onInstructions: @escaping () -> Void) -> some View {
+        VStack(alignment: .leading) {
+            Text(title)
+                .font(.title2)
+            Text(description)
+                .fixedSize(horizontal: false, vertical: true)
+            SizedBox(height: 12)
+            Button(action: onInstructions) {
+                Text("Instructions")
+                    .padding(.vertical, 12)
+                    .padding(.horizontal, 24)
+                    .foregroundColor(.black)
+                    .overlay(Capsule().stroke(Color.black, lineWidth: 2))
+            }
+            .frame(maxWidth: .infinity)
+            SizedBox(height: 12)
+            Image(imageName)
+                .resizable().scaledToFit().frame(height: 200)
+                .frame(maxWidth: .infinity)
+        }
     }
 
     func imageButton(imageName: String, action: @escaping () -> Void) -> some View {
@@ -219,17 +218,20 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
         }
     }
 
-    func boxButton(label: String, action: @escaping () -> Void, enabled: Bool) -> some View {
-        return Button {
-            action()
-        } label: {
-            Text(LocalizedStringKey(label))
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(enabled ? Color.calliopePink : Color.calliopeGray)
-                .foregroundColor(.white)
-                .cornerRadius(12)
-        }.disabled(!enabled)
+    func pillButton(label: LocalizedStringKey, systemImage: String? = nil, enabled: Bool = true, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            HStack {
+                if let systemImage {
+                    Image(systemName: systemImage)
+                }
+                Text(label)
+            }
+            .padding(.vertical, 12)
+            .padding(.horizontal, 24)
+            .background(enabled ? Color.calliopeGreen : Color.calliopeGray, in: Capsule())
+            .foregroundColor(.white)
+        }
+        .disabled(!enabled)
     }
 
     var projectsTile: some View {
