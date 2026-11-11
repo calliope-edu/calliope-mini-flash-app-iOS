@@ -1654,6 +1654,16 @@
         }
       }
     },
+    "LIVE SENSORDATA AND DATALOGGER" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LIVE SENSORDATEN UND DATALOGGER"
+          }
+        }
+      }
+    },
     "Load Data From Calliope" : {
       "localizations" : {
         "de" : {
