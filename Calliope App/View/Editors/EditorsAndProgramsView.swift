@@ -147,9 +147,9 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
 
     var editorsHeader: some View {
         VStack(alignment: .leading) {
-            Text("PROGRAMMIERUMGEBUNGEN")
+            Text("PROGRAMMING ENVIRONMENTS")
                 .font(.title2)
-            Text("Wähle den Editor, mit dem du deinen Calliope mini programmieren möchtest.")
+            Text("Choose the editor you want to program your Calliope mini with.")
         }
     }
 
@@ -201,9 +201,9 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
 
     func originalProgramTile(isLandscape: Bool) -> some View {
         VStack(alignment: .leading) {
-            Text("STARTPGROGRAMM ÜBERTRAGEN")
+            Text("TRANSFER START PROGRAM")
                 .font(.title2)
-            Text("Wähle deine Calliope mini Version aus und übertrage das Startprogramm auf deinen verbundenen Calliope mini.")
+            Text("Choose your Calliope mini version and transfer the start program to your connected Calliope mini.")
             SizedBox(height:10)
             HStack(alignment: .top, spacing: 16) {
                 startProgramColumn(imageName: "startprogramm1+2", label: "Calliope mini 1+2", boxColor: Color.calliopeTurqoise, action: { viewModel.uploadDefaultV1And2Program() })
@@ -229,9 +229,9 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
 
     var programsTile: some View {
         VStack(alignment: .leading) {
-            Text("PROGRAMME ÜBERTRAGEN")
+            Text("TRANSFER PROGRAMS")
                 .font(.title2)
-            Text("Wähle ein Programm aus, das du teilen oder auf den Calliope mini übertragen möchtests.")
+            Text("Choose a program you want to share or transfer to your Calliope mini.")
             let hexFileType = UTType.init(filenameExtension: "hex")!
             SizedBox(height:10)
             pillButton(label: "Open File", action: { presentingFileImporter = true })

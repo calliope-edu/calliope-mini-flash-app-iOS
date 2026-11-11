@@ -655,6 +655,16 @@
         }
       }
     },
+    "Choose a program you want to share or transfer to your Calliope mini." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wähle ein Programm aus, das du teilen oder auf den Calliope mini übertragen möchtest."
+          }
+        }
+      }
+    },
     "Choose File" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -662,6 +672,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Datei auswählen"
+          }
+        }
+      }
+    },
+    "Choose the editor you want to program your Calliope mini with." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wähle den Editor, mit dem du deinen Calliope mini programmieren möchtest."
+          }
+        }
+      }
+    },
+    "Choose your Calliope mini version and transfer the start program to your connected Calliope mini." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wähle deine Calliope mini Version aus und übertrage das Startprogramm auf deinen verbundenen Calliope mini."
           }
         }
       }
@@ -2042,11 +2072,15 @@
         }
       }
     },
-    "PROGRAMME ÜBERTRAGEN" : {
-
-    },
-    "PROGRAMMIERUMGEBUNGEN" : {
-
+    "PROGRAMMING ENVIRONMENTS" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PROGRAMMIERUMGEBUNGEN"
+          }
+        }
+      }
     },
     "Projects" : {
       "localizations" : {
@@ -2197,6 +2231,7 @@
       }
     },
     "Select a program to transfer, share, rename or delete it." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2375,9 +2410,6 @@
           }
         }
       }
-    },
-    "STARTPGROGRAMM ÜBERTRAGEN" : {
-
     },
     "Switching to Bluetooth avoids this." : {
       "extractionState" : "stale",
@@ -2723,6 +2755,26 @@
         }
       }
     },
+    "TRANSFER PROGRAMS" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PROGRAMME ÜBERTRAGEN"
+          }
+        }
+      }
+    },
+    "TRANSFER START PROGRAM" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "STARTPROGRAMM ÜBERTRAGEN"
+          }
+        }
+      }
+    },
     "Transfer succeeded" : {
       "localizations" : {
         "de" : {
@@ -2876,15 +2928,6 @@
           }
         }
       }
-    },
-    "Wähle deine Calliope mini Version aus und übertrage das Startprogramm auf deinen verbundenen Calliope mini." : {
-
-    },
-    "Wähle den Editor, mit dem du deinen Calliope mini programmieren möchtest." : {
-
-    },
-    "Wähle ein Programm aus, das du teilen oder auf den Calliope mini übertragen möchtests." : {
-
     },
     "Welcome" : {
       "extractionState" : "stale",
