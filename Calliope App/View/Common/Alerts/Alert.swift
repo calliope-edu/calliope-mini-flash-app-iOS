@@ -194,13 +194,13 @@ private struct CalliopeAlertCard: View {
                 .clipShape(Capsule())
                 .overlay(
                     Capsule()
-                        .strokeBorder(Color("calliope-lilablau"), lineWidth: action.role == .cancel ? 1.5 : 0)
+                        .strokeBorder(Color.black, lineWidth: action.role == .cancel ? 1.5 : 0)
                 )
         }
     }
 
     private func foregroundColor(for role: ButtonRole?) -> Color {
-        role == .cancel ? Color("calliope-lilablau") : .white
+        role == .cancel ? .black : .white
     }
 
     private func background(for role: ButtonRole?) -> Color {
@@ -210,7 +210,7 @@ private struct CalliopeAlertCard: View {
         case .cancel:
             return .clear
         default:
-            return Color("calliope-lilablau")
+            return .black
         }
     }
 }
