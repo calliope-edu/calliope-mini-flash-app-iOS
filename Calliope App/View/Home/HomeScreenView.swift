@@ -22,7 +22,6 @@ struct NewsItem: HasTileItem {
 
 struct HomeScreenView: View {
     @ObservedObject var viewModel: HomeScreenViewModel
-    var network: Network = Network()
     @StateObject private var router = Router<HomeScreenRoute>()
 
     var body: some View {
@@ -48,13 +47,8 @@ struct HomeScreenView: View {
     }
     
     func onTileSelected(tile: NewsItem) {
-        if network.isNetworkAvailable() {
-            let url = URL(string: tile.url)
-            if url != nil {
-                router.push(.newsDetailView(url: url!))
-            }
-        } else {
-            router.push(.offlineOnboardingView)
+        if let url = URL(string: tile.url) {
+            router.push(.newsDetailView(url: url))
         }
     }
 }
