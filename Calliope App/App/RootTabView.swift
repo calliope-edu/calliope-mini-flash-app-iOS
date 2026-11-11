@@ -18,6 +18,7 @@ struct RootTabView: View {
     @StateObject private var editorsViewModel: EditorsAndProgramsViewModel
     @StateObject private var sensordataViewModel: SensordataViewModel
     @StateObject private var appsViewModel = AppsScreenViewModel()
+    @StateObject private var campusViewModel: CampusViewModel
     @StateObject private var rootAlertPublisher = RootAlertPublisher()
     @ObservedObject private var matrixConnectionViewModel: MatrixConnectionViewModel
     @ObservedObject private var usbDestinationPicker: USBDestinationPickerViewModel
@@ -38,6 +39,7 @@ struct RootTabView: View {
         _homeViewModel = StateObject(wrappedValue: HomeScreenViewModel(newsService: dependencies.newsService))
         _editorsViewModel = StateObject(wrappedValue: EditorsAndProgramsViewModel(uploadViewModel: uploadViewModel, settings: dependencies.settings))
         _sensordataViewModel = StateObject(wrappedValue: SensordataViewModel(connection: dependencies.connection))
+        _campusViewModel = StateObject(wrappedValue: CampusViewModel(settings: dependencies.settings))
     }
 
     var body: some View {
@@ -50,9 +52,12 @@ struct RootTabView: View {
                     .environmentObject(coordinator)
                     .tabItem { Label("Editors and Programs", image: "IconCode") }
                     .tag(1)
+                CampusView(viewModel: campusViewModel)
+                    .tabItem { Label("Campus", systemImage: "graduationcap") }
+                    .tag(2)
                 SensordataView(viewModel: sensordataViewModel)
                     .tabItem { Label("Sensordaten", systemImage: "menubar.rectangle") }
-                    .tag(2)
+                    .tag(3)
                 AppsScreenView(viewModel: appsViewModel)
                     .tabItem {
                         Label {
@@ -61,7 +66,7 @@ struct RootTabView: View {
                             Image(uiImage: UIImage(systemName: "square.grid.3x3") ?? UIImage())
                         }
                     }
-                    .tag(3)
+                    .tag(4)
                 if DiagnosticsFeature.isEnabled {
                     DiagnosticsView(viewModel: DiagnosticsViewModel(
                         diagnostics: DeviceDiagnostics(usbPolicy: dependencies.usbPolicy),
@@ -69,7 +74,7 @@ struct RootTabView: View {
                         usbTransferDiagnostics: USBTransferDiagnostics(storage: dependencies.documentStorage, exportPicker: dependencies.usbDestinationPicker)
                     ))
                         .tabItem { Label("Diagnostics", systemImage: "stethoscope") }
-                        .tag(4)
+                        .tag(5)
                 }
             }
             .tint(Color("calliope-lilablau"))
