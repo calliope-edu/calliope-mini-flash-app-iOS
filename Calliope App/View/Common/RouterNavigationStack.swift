@@ -19,6 +19,8 @@ struct RouterNavigationStack<RouteType: Hashable, Root: View, Destination: View>
                 .navigationDestination(for: RouteType.self) { route in
                     destination(route)
                         .navigationBarTitleDisplayMode(.inline)
+                        // Since iOS 26 the bar only gets a background from a scroll view below it unless one is set explicitly
+                        .toolbarBackground(.bar, for: .navigationBar)
                         .toolbarBackground(.visible, for: .navigationBar)
                 }
         }
