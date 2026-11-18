@@ -25,6 +25,10 @@ private struct SettingsStoreKey: EnvironmentKey {
     static let defaultValue: SettingsStore = UserDefaultsSettingsStore()
 }
 
+private struct SubpageShownChangedKey: EnvironmentKey {
+    static let defaultValue: (Bool) -> Void = { _ in }
+}
+
 extension EnvironmentValues {
     var deviceConnection: DeviceConnectionService {
         get { self[DeviceConnectionKey.self] }
@@ -44,5 +48,10 @@ extension EnvironmentValues {
     var settings: SettingsStore {
         get { self[SettingsStoreKey.self] }
         set { self[SettingsStoreKey.self] = newValue }
+    }
+
+    var subpageShownChanged: (Bool) -> Void {
+        get { self[SubpageShownChangedKey.self] }
+        set { self[SubpageShownChangedKey.self] = newValue }
     }
 }

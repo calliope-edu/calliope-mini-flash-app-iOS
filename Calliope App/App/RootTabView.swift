@@ -23,6 +23,7 @@ struct RootTabView: View {
     @ObservedObject private var matrixConnectionViewModel: MatrixConnectionViewModel
     @ObservedObject private var usbDestinationPicker: USBDestinationPickerViewModel
     @State private var wasInBackground = false
+    @State private var tabsShowingSubpage: Set<Int> = []
     private let dependencies: AppDependencies
 
     init(dependencies: AppDependencies) {
@@ -48,21 +49,26 @@ struct RootTabView: View {
                 HomeScreenView(viewModel: homeViewModel)
                     .tabItem { Label("Home", image: "home") }
                     .tag(0)
+                    .environment(\.subpageShownChanged, subpageShownChanged(tab: 0))
                 EditorsAndProgramsView(viewModel: editorsViewModel)
                     .environmentObject(coordinator)
                     .tabItem { Label("Editors", image: "editors") }
                     .tag(1)
+                    .environment(\.subpageShownChanged, subpageShownChanged(tab: 1))
                 CampusView(viewModel: campusViewModel)
                     .tabItem { Label("Calliope Campus", image: "calliope_campus") }
                     .tag(2)
                 AppsScreenView(viewModel: appsViewModel, sensordataViewModel: sensordataViewModel)
                     .tabItem { Label("Apps", image: "apps") }
                     .tag(4)
+                    .environment(\.subpageShownChanged, subpageShownChanged(tab: 4))
             }
             .tint(Color("calliope-lilablau"))
             
             MatrixConnectionView(viewModel: matrixConnectionViewModel)
-                .offset(x: -8)
+                .offset(x: -8, y: tabsShowingSubpage.contains(coordinator.selectedTab) ? 8 : 0)
+                // The navigation push/pop transaction would otherwise animate the offset too
+                .animation(nil, value: tabsShowingSubpage.contains(coordinator.selectedTab))
         }
         .modifier(AlertModifier(alert: matrixConnectionViewModel.alertBinding))
         .modifier(AlertModifier(alert: rootAlertPublisher.alertBinding))
@@ -105,6 +111,16 @@ struct RootTabView: View {
                 applyCompactSizeClassOverride()
             default:
                 break
+            }
+        }
+    }
+
+    private func subpageShownChanged(tab: Int) -> (Bool) -> Void {
+        { shown in
+            if shown {
+                tabsShowingSubpage.insert(tab)
+            } else {
+                tabsShowingSubpage.remove(tab)
             }
         }
     }

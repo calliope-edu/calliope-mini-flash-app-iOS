@@ -10,6 +10,7 @@ import SwiftUI
 
 struct RouterNavigationStack<RouteType: Hashable, Root: View, Destination: View>: View {
     @ObservedObject var router: Router<RouteType>
+    @Environment(\.subpageShownChanged) private var subpageShownChanged
     @ViewBuilder let root: () -> Root
     @ViewBuilder let destination: (RouteType) -> Destination
 
@@ -26,5 +27,8 @@ struct RouterNavigationStack<RouteType: Hashable, Root: View, Destination: View>
         }
         .statusBarHidden(!router.path.isEmpty)
         .toolbar(router.path.isEmpty ? .automatic : .hidden, for: .tabBar)
+        .onChange(of: router.path.isEmpty) { isEmpty in
+            subpageShownChanged(!isEmpty)
+        }
     }
 }
