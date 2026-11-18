@@ -31,6 +31,7 @@ Apache License, Version 2.0, not the MIT License above. See
 Calliope App/WebBridges/WebBluetooth/LICENSE for the license text.
 
 - Calliope App/GeneralUtilities/Jsonifiable.swift
+- Calliope App/View/Apps/AppWebView/WBCore.storyboard (modified by Calliope gGmbH, 2026)
 - Calliope App/View/Apps/AppWebView/WBWebView.swift
 - Calliope App/View/Apps/AppWebView/WBWebViewContainerController.swift
 - Calliope App/View/Apps/AppWebView/WBWebViewController.swift
