@@ -3,6 +3,7 @@
 //  BleBrowser
 //
 //  Copyright 2016-2017 David Park. All rights reserved.
+//  Modified by Calliope gGmbH, 2026.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
