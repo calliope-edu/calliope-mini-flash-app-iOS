@@ -44,6 +44,7 @@ struct HomeScreenView: View {
                     }
                 }
         }
+        .statusBarHidden(!router.path.isEmpty)
     }
     
     func onTileSelected(tile: NewsItem) {

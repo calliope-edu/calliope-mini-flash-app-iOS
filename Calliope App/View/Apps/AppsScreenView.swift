@@ -34,6 +34,7 @@ struct AppsScreenView: View {
             }
         }
         .modifier(AlertModifier(alert: viewModel.alertBinding))
+        .statusBarHidden(!router.path.isEmpty)
     }
 
     func route(for app: AppItem) -> AppsScreenRoute {

@@ -85,6 +85,7 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
         }
         .modifier(AlertModifier(alert: viewModel.alertBinding))
         .toolbar(isEditorWebViewOpen ? .hidden : .automatic, for: .tabBar)
+        .statusBarHidden(!router.path.isEmpty)
         .onAppear {
             handlePendingEditorsRoute()
         }
