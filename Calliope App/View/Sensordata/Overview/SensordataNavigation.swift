@@ -27,12 +27,10 @@ struct SensordataRouteView<ViewModelType: SensorDataViewModelProtocol & Observab
         switch route {
         case .project(let id):
             ProjectDetailView(projectID: id, connection: connection, documentStorage: documentStorage, onDelete: { navigator.pop() })
-                .toolbar(.hidden, for: .tabBar)
         case .dataLogger(let url):
             DataLoggerDetailView(url: url)
         case .infoWebView(let url):
             PopupEditorWebView(editor: MakeCode(url: url), alertPublisher: viewModel)
-                .toolbar(.hidden, for: .tabBar)
         case .dataLoggerInfo:
             DataLoggerInfoView(navigator: navigator)
         case .projectsInfo:

@@ -25,5 +25,6 @@ struct RouterNavigationStack<RouteType: Hashable, Root: View, Destination: View>
                 }
         }
         .statusBarHidden(!router.path.isEmpty)
+        .toolbar(router.path.isEmpty ? .automatic : .hidden, for: .tabBar)
     }
 }

@@ -31,15 +31,6 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
     @Environment(\.connectionPanel) private var connectionPanel
     @Environment(\.settings) private var settings
 
-    private var isEditorWebViewOpen: Bool {
-        switch router.path.last {
-        case .makeCode, .micropython, .openRobertaLab, .arcadeEditor, .makeCodeLink, .qrCodeToMakeCode:
-            return true
-        default:
-            return false
-        }
-    }
-
     private let editorColumns = Array(repeating: GridItem(.flexible(), spacing: 20, alignment: .top), count: 3)
 
     var body: some View {
@@ -83,7 +74,6 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
             switchRoutes(route: route)
         }
         .modifier(AlertModifier(alert: viewModel.alertBinding))
-        .toolbar(isEditorWebViewOpen ? .hidden : .automatic, for: .tabBar)
         .onAppear {
             handlePendingEditorsRoute()
         }
