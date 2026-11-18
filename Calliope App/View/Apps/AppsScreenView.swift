@@ -53,10 +53,10 @@ struct AppsScreenView: View {
             AppsDetailView(url: url, title: title, alertPublisher: viewModel)
         case .info(let url):
             WebView(url: URL(string: url))
-                .navigationTitle("Apps Info")
+                .subpageTitle(Text("Apps Info"))
         case .sensordata:
             SensordataView(viewModel: sensordataViewModel, navigator: AppsSensordataNavigator(router: router))
-                .navigationTitle("Data Logger & Sensors")
+                .subpageTitle(Text("Data Logger & Sensors"))
         case .sensordataRoute(let sensordataRoute):
             SensordataRouteView(route: sensordataRoute, navigator: AppsSensordataNavigator(router: router), viewModel: sensordataViewModel)
         }
@@ -84,7 +84,7 @@ struct AppsDetailView: View {
 
     var body: some View {
         RepresentableWBWebView(url: URL(string: url)!, alertPublisher: alertPublisher, connection: connection, connectionPanel: connectionPanel)
-            .navigationTitle(title)
+            .subpageTitle(Text(verbatim: title))
     }
 }
 

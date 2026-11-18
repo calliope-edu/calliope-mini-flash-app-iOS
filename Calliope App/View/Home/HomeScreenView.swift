@@ -39,10 +39,10 @@ struct HomeScreenView: View {
                     router.pop()
                     router.push(.offlineOnboardingView)
                 }
-                .navigationTitle(title)
+                .subpageTitle(Text(verbatim: title))
             case .offlineOnboardingView:
                 OfflineOnboardingView()
-                    .navigationTitle("Offline Information")
+                    .subpageTitle(Text("Offline Information"))
             }
         }
     }

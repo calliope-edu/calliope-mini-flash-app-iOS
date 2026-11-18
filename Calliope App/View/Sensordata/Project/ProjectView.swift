@@ -64,6 +64,7 @@ struct ProjectView: View {
                     HStack(spacing: 4) {
                         Text(viewModel.project!.name)
                             .font(.headline)
+                            .textCase(.uppercase)
                             .foregroundStyle(.white)
                         Image(systemName: "chevron.down")
                             .font(.caption)

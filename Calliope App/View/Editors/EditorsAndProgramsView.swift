@@ -95,7 +95,7 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
         switch route {
         case .qrCodeView:
             QRCodeView { url in router.push(.qrCodeToMakeCode(url: url)) }
-                .navigationTitle("Scan QR Code")
+                .subpageTitle(Text("Scan QR Code"))
         case .makeCode:
             editorWebView(MakeCode(url: settings.makeCodeUrl))
         case .micropython:
@@ -104,10 +104,10 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
             editorWebView(RobertaEditor(url: settings.robertaUrl))
         case .calliopeMiniBlocks:
             CalliopeMiniBlocksView(viewModel: CalliopeMiniBlocksViewModel(uploadViewModel: uploadViewModel, connectionPanel: connectionPanel, settings: settings))
-                .navigationTitle(Text(verbatim: "Calliope mini Blocks"))
+                .subpageTitle(Text(verbatim: "Calliope mini Blocks"))
         case .arcadeLanding:
             ArcadeView(viewModel: ArcadeViewModel(openArcade: { router.push(.arcadeEditor) }))
-                .navigationTitle(Text(verbatim: "MakeCode Arcade"))
+                .subpageTitle(Text(verbatim: "MakeCode Arcade"))
         case .arcadeEditor:
             editorWebView(ArcadeEditor(url: settings.arcadeUrl))
         case .makeCodeLink(let url):
@@ -119,7 +119,7 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
 
     func editorWebView(_ editor: Editor) -> some View {
         PopupEditorWebView(editor: editor, alertPublisher: viewModel)
-            .navigationTitle(editor.name)
+            .subpageTitle(Text(verbatim: editor.name))
     }
 
     func changeMakeCodeURL(url: String) -> some View {

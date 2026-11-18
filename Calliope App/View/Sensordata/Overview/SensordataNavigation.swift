@@ -29,16 +29,16 @@ struct SensordataRouteView<ViewModelType: SensorDataViewModelProtocol & Observab
             ProjectDetailView(projectID: id, connection: connection, documentStorage: documentStorage, onDelete: { navigator.pop() })
         case .dataLogger(let url):
             DataLoggerDetailView(url: url)
-                .navigationTitle("Data Logger")
+                .subpageTitle(Text("Data Logger"))
         case .infoWebView(let url):
             PopupEditorWebView(editor: MakeCode(url: url), alertPublisher: viewModel)
-                .navigationTitle(Text(verbatim: "MakeCode"))
+                .subpageTitle(Text(verbatim: "MakeCode"))
         case .dataLoggerInfo:
             DataLoggerInfoView(navigator: navigator)
-                .navigationTitle("Data Logger Info")
+                .subpageTitle(Text("Data Logger Info"))
         case .projectsInfo:
             ProjectsInfoView(navigator: navigator)
-                .navigationTitle("Projects Info")
+                .subpageTitle(Text("Projects Info"))
         }
     }
 }
