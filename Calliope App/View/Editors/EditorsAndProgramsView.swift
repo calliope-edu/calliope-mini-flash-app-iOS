@@ -45,7 +45,7 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
                                 .background(Color.calliopeLightgray, in: RoundedRectangle(cornerRadius: 12))
                                 VStack(spacing: 16) {
                                     originalProgramTile(isLandscape: true)
-                                    SizedBox(height:10)
+                                    SizedBox(height:50)
                                     programsTile
                                 }
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -131,12 +131,12 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
             editorsHeader
             if centersGrid {
                 Spacer(minLength: 0)
-                editorsGrid
+                editorsGrid(isLandscape: true)
                 Spacer(minLength: 0)
                 // Invisible copy so the grid is centered in the whole column, not just below the header
                 editorsHeader.hidden()
             } else {
-                editorsGrid
+                editorsGrid(isLandscape: false)
             }
         }
     }
@@ -149,8 +149,8 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
         }
     }
 
-    var editorsGrid: some View {
-        LazyVGrid(columns: editorColumns, spacing: 20) {
+    func editorsGrid(isLandscape: Bool) -> some View {
+        LazyVGrid(columns: editorColumns, spacing: isLandscape ? 80 : 20) {
             ForEach(0..<viewModel.editors.count) { i in
                 SwiftUI.Group {
                     if viewModel.editors[i].name == "Scan" {
