@@ -43,7 +43,7 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
     private let editorColumns = Array(repeating: GridItem(.flexible(), spacing: 20, alignment: .top), count: 3)
 
     var body: some View {
-        NavigationStack(path: $router.path) {
+        RouterNavigationStack(router: router) {
             GeometryReader { geo in
                 SwiftUI.Group {
                     if geo.size.width > 1000 {
@@ -79,13 +79,11 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
                 }
                 .padding()
             }
-            .navigationDestination(for: EditorsAndProgramRoute.self) { route in
-                switchRoutes(route: route)
-            }
+        } destination: { route in
+            switchRoutes(route: route)
         }
         .modifier(AlertModifier(alert: viewModel.alertBinding))
         .toolbar(isEditorWebViewOpen ? .hidden : .automatic, for: .tabBar)
-        .statusBarHidden(!router.path.isEmpty)
         .onAppear {
             handlePendingEditorsRoute()
         }

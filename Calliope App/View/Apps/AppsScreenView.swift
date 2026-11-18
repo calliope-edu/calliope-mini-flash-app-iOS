@@ -22,19 +22,17 @@ struct AppsScreenView: View {
     @StateObject private var router = Router<AppsScreenRoute>()
 
     var body: some View {
-        NavigationStack(path: $router.path) {
+        RouterNavigationStack(router: router) {
             TilePageLayout(
                 leftItem: viewModel.infoItem,
                 data: viewModel.tileData,
                 leftItemOnTap: { app in router.push(route(for: app)) },
                 rightItemsOnTap: { app in router.push(route(for: app)) }
             )
-            .navigationDestination(for: AppsScreenRoute.self) { route in
-                switchRoutes(route: route)
-            }
+        } destination: { route in
+            switchRoutes(route: route)
         }
         .modifier(AlertModifier(alert: viewModel.alertBinding))
-        .statusBarHidden(!router.path.isEmpty)
     }
 
     func route(for app: AppItem) -> AppsScreenRoute {

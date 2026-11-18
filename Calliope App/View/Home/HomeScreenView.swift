@@ -25,26 +25,24 @@ struct HomeScreenView: View {
     @StateObject private var router = Router<HomeScreenRoute>()
 
     var body: some View {
-        NavigationStack(path: $router.path) {
+        RouterNavigationStack(router: router) {
             TilePageLayout(
                 leftItem: viewModel.leftItem,
                 data: viewModel.tileData,
                 leftItemOnTap: onTileSelected,
                 rightItemsOnTap: onTileSelected
             ).onAppear { viewModel.loadNews() }
-                .navigationDestination(for: HomeScreenRoute.self) { route in
-                    switch route {
-                    case .newsDetailView(let url):
-                        NewsDetailWebView(url: url) {
-                            router.pop()
-                            router.push(.offlineOnboardingView)
-                        }
-                    case .offlineOnboardingView:
-                        OfflineOnboardingView()
-                    }
+        } destination: { route in
+            switch route {
+            case .newsDetailView(let url):
+                NewsDetailWebView(url: url) {
+                    router.pop()
+                    router.push(.offlineOnboardingView)
                 }
+            case .offlineOnboardingView:
+                OfflineOnboardingView()
+            }
         }
-        .statusBarHidden(!router.path.isEmpty)
     }
     
     func onTileSelected(tile: NewsItem) {
