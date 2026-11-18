@@ -87,29 +87,10 @@
 	</dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>RobotoMono-ThinItalic.ttf</string>
-		<string>RobotoMono-Thin.ttf</string>
-		<string>RobotoMono-Regular.ttf</string>
-		<string>RobotoMono-MediumItalic.ttf</string>
-		<string>RobotoMono-Medium.ttf</string>
-		<string>RobotoMono-LightItalic.ttf</string>
-		<string>RobotoMono-Light.ttf</string>
-		<string>RobotoMono-Italic.ttf</string>
-		<string>RobotoMono-BoldItalic.ttf</string>
-		<string>RobotoMono-Bold.ttf</string>
-		<string>Roboto-ThinItalic.ttf</string>
-		<string>Roboto-MediumItalic.ttf</string>
 		<string>Roboto-Regular.ttf</string>
-		<string>Roboto-Thin.ttf</string>
-		<string>Roboto-Light.ttf</string>
-		<string>Roboto-LightItalic.ttf</string>
 		<string>Roboto-Medium.ttf</string>
-		<string>Roboto-Italic.ttf</string>
 		<string>Roboto-Bold.ttf</string>
-		<string>Roboto-BoldItalic.ttf</string>
-		<string>Roboto-BlackItalic.ttf</string>
-		<string>Roboto-Black.ttf</string>
-		<string>RobotoCondensed-Bold.ttf</string>
+		<string>Roboto_Condensed-Bold.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

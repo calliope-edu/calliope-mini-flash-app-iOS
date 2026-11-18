@@ -41,8 +41,6 @@
 		A6A7E27E29E947218CD26CA8 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Fonts/Roboto_Mono/LICENSE.txt,
-				Fonts/Roboto/LICENSE.txt,
 				Info.plist,
 				PrivacyInfo.xcprivacy,
 			);
