@@ -62,7 +62,7 @@ struct RootTabView: View {
             .tint(Color("calliope-lilablau"))
             
             MatrixConnectionView(viewModel: matrixConnectionViewModel)
-                .offset(x: -8, y: 8)
+                .offset(x: -8)
         }
         .modifier(AlertModifier(alert: matrixConnectionViewModel.alertBinding))
         .modifier(AlertModifier(alert: rootAlertPublisher.alertBinding))

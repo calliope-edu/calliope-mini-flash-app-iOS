@@ -277,7 +277,7 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
     @EnvironmentObject private var uploadProgress: UploadViewModel
     @Namespace private var glassNamespace
 
-    var connectionButtonSize: CGFloat = 50
+    var connectionButtonSize: CGFloat = 40
 
     @ViewBuilder var content: () -> Content
 
@@ -330,7 +330,8 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-        .padding()
+        // Small top inset so the button sits vertically centered in the subpages' navigation bar
+        .padding(EdgeInsets(top: 5, leading: 16, bottom: 16, trailing: 16))
         .animation(.spring(), value: uploadProgress.isUploading)
     }
 
@@ -417,7 +418,7 @@ struct ExpandablePanel<Content: View, ViewModelType: MatrixConnectionViewModelPr
     }
 
     var menuButtonImage: some View {
-        let imageSize = 55.0
+        let imageSize = connectionButtonSize * 1.1
         switch viewModel.connectionMenuButtonState {
         case .disabled:
             return AnyView(Image("liveviewconnect/bluetooth_disabled").resizable().scaledToFit().frame(width: imageSize, height: imageSize))
@@ -719,7 +720,7 @@ struct GlassElementModifier: ViewModifier {
             .environmentObject(RootCoordinator())
 
         MatrixConnectionView(viewModel: PreviewMatrixConnectionViewModel())
-            .offset(x: -8, y: 8)
+            .offset(x: -8)
     }
     .environmentObject(uploadViewModel)
 }
