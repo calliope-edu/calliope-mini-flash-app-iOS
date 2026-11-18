@@ -920,6 +920,8 @@ class FlashableBLECalliope: CalliopeAPI {
             LogNotify.log("[PartialFlash] Starting full DFU after cleanup delay")
             self.updateCallback("Starting full DFU flash")
             
+            // Without it the DFU-mode reboot takes the plain reconnect path, which replaces this calliope mid-DFU.
+            self.shouldRebootOnDisconnect = true
             do {
                 try self.startFullFlashing()
             } catch {
