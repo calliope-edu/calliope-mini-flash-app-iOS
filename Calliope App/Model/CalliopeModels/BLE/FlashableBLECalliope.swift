@@ -13,6 +13,7 @@ class FlashableBLECalliope: CalliopeAPI {
 
     // MARK: common
     private var rebootingForPartialFlashing = false
+    private var fallingBackAfterHandshakeDisconnect = false
     internal var isPartiallyFlashing = false
     
     // Tracks whether DFU has completed successfully and we're waiting for reconnect
@@ -86,6 +87,12 @@ class FlashableBLECalliope: CalliopeAPI {
                 updateQueue.asyncAfter(deadline: .now() + 0.2) {
                     self.startPartialFlashing()
                 }
+            } else if fallingBackAfterHandshakeDisconnect {
+                fallingBackAfterHandshakeDisconnect = false
+                LogNotify.log("[PartialFlash] Device reconnected after handshake disconnect, falling back to full DFU")
+                updateQueue.asyncAfter(deadline: .now() + 0.2) {
+                    self.fallbackToFullFlash()
+                }
             } else if dfuCompletedAwaitingReconnect {
                 // Nach DFU wieder verbunden - Reset der Flags
                 LogNotify.log("Reconnected after DFU completion!")
@@ -94,8 +101,20 @@ class FlashableBLECalliope: CalliopeAPI {
             }
             
         case .discovered:
-            if isPartiallyFlashing {
+            partialFlashingStateLock.lock()
+            let partialFlashInProgress = isPartiallyFlashing || isPartialFlashingActive
+            partialFlashingStateLock.unlock()
+            if partialFlashInProgress && !rebootingForPartialFlashing && !hasPartialFlashStartedTransfer {
+                // Nothing written yet, so a full DFU after the reconnect is safe.
+                LogNotify.log("[PartialFlash] Lost connection during handshake, will fall back to full DFU after reconnect")
+                partialFlashingStateLock.lock()
+                isPartialFlashingActive = false
+                isPartiallyFlashing = false
+                partialFlashingStateLock.unlock()
+                fallingBackAfterHandshakeDisconnect = true
+            } else if partialFlashInProgress && !rebootingForPartialFlashing {
                 LogNotify.log("Lost connection to Calliope mini during partial flashing")
+                shouldRebootOnDisconnect = false
                 
                 // Clear ALL partial flashing state to prevent inconsistent state on reconnect
                 rebootingForPartialFlashing = false
@@ -174,6 +193,7 @@ class FlashableBLECalliope: CalliopeAPI {
         // Reset flags
         dfuCompletedAwaitingReconnect = false
         rebootingForPartialFlashing = false
+        fallingBackAfterHandshakeDisconnect = false
 
         // Consume the one-shot override now so any early return below doesn't
         // leak it into the next upload call.
@@ -443,6 +463,9 @@ class FlashableBLECalliope: CalliopeAPI {
             fallbackToFullFlash()
             return
         }
+
+        // Keeps this calliope across a disconnect, so a fallback to full DFU can still report to the flash job.
+        shouldRebootOnDisconnect = true
 
         // Initialize enhanced partial flashing state BEFORE enabling notifications
         // to ensure we don't miss any responses
@@ -859,6 +882,7 @@ class FlashableBLECalliope: CalliopeAPI {
         // If so, don't fallback to full DFU - user should retry
         if hasPartialFlashStartedTransfer {
             LogNotify.log("[PartialFlash] Transfer already started - not falling back to full DFU")
+            shouldRebootOnDisconnect = false
             
             // Clean up partial flashing state
             partialFlashingStateLock.lock()
