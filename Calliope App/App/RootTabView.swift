@@ -95,6 +95,9 @@ struct RootTabView: View {
         .onAppear {
             applyCompactSizeClassOverride()
         }
+        .onChange(of: coordinator.selectedTab) { tab in
+            applyCampusInterfaceStyle(selectedTab: tab)
+        }
         .onChange(of: scenePhase) { phase in
             switch phase {
             case .background:
@@ -171,6 +174,23 @@ struct RootTabView: View {
         #endif
 
         coordinator.navigateToEditor(.makeCodeLink(url: url.absoluteString))
+    }
+
+    // Dark on the Campus tab for a light status bar over its black background; set on the window
+    // instead of via preferredColorScheme so the switch can cross-fade.
+    private func applyCampusInterfaceStyle(selectedTab: Int) {
+        guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+            let window = scene.windows.first
+        else {
+            return
+        }
+        let style: UIUserInterfaceStyle = selectedTab == 2 ? .dark : .unspecified
+        guard window.overrideUserInterfaceStyle != style else {
+            return
+        }
+        UIView.transition(with: window, duration: 0.25, options: .transitionCrossDissolve) {
+            window.overrideUserInterfaceStyle = style
+        }
     }
 
     // Replaces the old MainContainerViewController.updateTraitOverrides():
