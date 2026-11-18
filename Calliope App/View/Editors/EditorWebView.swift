@@ -58,6 +58,7 @@ struct EditorWebViewRepresentable: UIViewRepresentable {
     func makeUIView(context: Context) -> EditorWebView {
         return EditorWebView(
             frame: .zero,
+            editor: editor,
             alertPublisher: alertPublisher,
             connection: connection,
             connectionPanel: connectionPanel,
@@ -423,6 +424,7 @@ final class EditorWebView: UIView {
 
     init(
         frame: CGRect,
+        editor: Editor,
         alertPublisher: Alertable,
         connection: DeviceConnectionService,
         connectionPanel: ConnectionPanel,
@@ -434,7 +436,7 @@ final class EditorWebView: UIView {
         self.uploadFirmware = uploadFirmware
         super.init(frame: frame)
         setupLoadingIndicator()
-        webView = setupWebView()
+        webView = setupWebView(registersNativeBridge: editor is CampusBridgedEditor)
         scratchLink.setup(webView: webView!)
         scratchLink.delegate = self
     }
@@ -455,7 +457,7 @@ final class EditorWebView: UIView {
         ])
     }
 
-    private func setupWebView() -> WKWebView {
+    private func setupWebView(registersNativeBridge: Bool) -> WKWebView {
         backgroundColor = Styles.colorWhite
 
         let controller = WKUserContentController()
@@ -505,7 +507,7 @@ final class EditorWebView: UIView {
         // (where iOS WKWebView has neither WebUSB nor Web Bluetooth →
         // status = unsupported). Same pattern used by the working
         // WBWebView reference impl.
-        if editor is CampusBridgedEditor {
+        if registersNativeBridge {
             let handler = CalliopeProxyMessageHandler(webView: webView, connection: connection, connectionPanel: connectionPanel)
             self.proxyMessageHandler = handler
             webView.configuration.userContentController.add(
