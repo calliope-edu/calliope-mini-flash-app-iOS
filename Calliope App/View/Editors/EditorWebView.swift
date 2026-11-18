@@ -412,6 +412,7 @@ final class EditorWebView: UIView {
     private var proxyMessageHandler: CalliopeProxyMessageHandler?
     
     private var latestDownloadedTargetFile: URL?
+    private var urlObservation: NSKeyValueObservation?
 
     /// Retained while the "where do you want to save this?" dialog for a
     /// non-hex editor download is on screen, so its delegate stays alive.
@@ -444,6 +445,10 @@ final class EditorWebView: UIView {
         webView = setupWebView(registersNativeBridge: editor is CampusBridgedEditor)
         scratchLink.setup(webView: webView!)
         scratchLink.delegate = self
+        // KVO on url also catches the Campus SPA's pushState navigations, which skip the navigation delegate.
+        urlObservation = webView?.observe(\.url) { [weak self] _, _ in
+            self?.updateScrollEnabled()
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -565,7 +570,7 @@ final class EditorWebView: UIView {
         }
         showLoading()
 
-        webView!.scrollView.isScrollEnabled = !(editor is CampusEditor)
+        updateScrollEnabled()
         webView!.configuration.applicationNameForUserAgent = editor is BlocksMiniEditor ? "Scrub" : nil
         webView!.customUserAgent =
             traitCollection.userInterfaceIdiom == .pad && !(editor is BlocksMiniEditor)
@@ -575,6 +580,12 @@ final class EditorWebView: UIView {
         var request = URLRequest(url: editor.url!)
         request.cachePolicy = .useProtocolCachePolicy
         webView!.load(request)
+    }
+
+    private func updateScrollEnabled() {
+        let path = webView?.url?.path ?? ""
+        let isInCampusRoom = editor is CampusEditor && (path.hasPrefix("/raum/") || path.hasPrefix("/room/"))
+        webView?.scrollView.isScrollEnabled = !isInCampusRoom
     }
 
     override func willMove(toWindow newWindow: UIWindow?) {
