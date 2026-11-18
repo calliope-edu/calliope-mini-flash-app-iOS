@@ -241,11 +241,11 @@ struct TwoLineText: View {
     let color: Color
 
     var body: some View {
-        Text("\n").font(.system(size: 30, weight: .regular))
+        Text("\n").font(.custom("RobotoCondensed-Bold", size: 30))
             .frame(maxWidth: .infinity)
             .padding(12)
             .overlay(
-                Text(content).font(.system(size: 30, weight: .regular))
+                Text(content).font(.custom("RobotoCondensed-Bold", size: 30))
                     .foregroundColor(color)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(12),

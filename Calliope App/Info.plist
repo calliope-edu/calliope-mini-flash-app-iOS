@@ -109,6 +109,7 @@
 		<string>Roboto-BoldItalic.ttf</string>
 		<string>Roboto-BlackItalic.ttf</string>
 		<string>Roboto-Black.ttf</string>
+		<string>RobotoCondensed-Bold.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
