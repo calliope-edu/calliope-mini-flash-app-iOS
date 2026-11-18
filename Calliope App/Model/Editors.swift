@@ -78,7 +78,7 @@ final class MakeCode: Editor {
 
 // https://lab.open-roberta.org/c0d66d4c-5cc9-4ed9-9b7d-6940aa291f4a
 final class RobertaEditor: Editor {
-    public let name = "Open Roberta NEPO®"
+    public let name = "Open Roberta Lab"
     public let url: URL?
 
     init(url: URL?) {
@@ -248,7 +248,7 @@ final class CampusPythonEditor: CampusBridgedEditor {
 }
 
 final class ArcadeEditor: Editor {
-    public let name = "MakeCode Arcade"
+    public let name = "Arcade"
     public let url: URL?
 
     init(url: URL?) {

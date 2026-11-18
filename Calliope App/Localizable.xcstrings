@@ -1016,6 +1016,16 @@
         }
       }
     },
+    "Data Logger Info" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datalogger-Info"
+          }
+        }
+      }
+    },
     "DATALOGGER" : {
       "localizations" : {
         "de" : {
@@ -1946,6 +1956,16 @@
         }
       }
     },
+    "Offline Information" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Offline-Informationen"
+          }
+        }
+      }
+    },
     "OK" : {
       "localizations" : {
         "de" : {
@@ -2196,6 +2216,16 @@
         }
       }
     },
+    "Projects Info" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Projekte-Info"
+          }
+        }
+      }
+    },
     "Reconnecting to your Calliope mini before flashing …" : {
       "comment" : "Proxy bridge: reopening a stale connection before a flash",
       "localizations" : {
@@ -2288,6 +2318,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Scannen"
+          }
+        }
+      }
+    },
+    "Scan QR Code" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "QR-Code scannen"
           }
         }
       }

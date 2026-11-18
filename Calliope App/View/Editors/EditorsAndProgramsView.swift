@@ -95,18 +95,21 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
         switch route {
         case .qrCodeView:
             QRCodeView { url in router.push(.qrCodeToMakeCode(url: url)) }
+                .navigationTitle("Scan QR Code")
         case .makeCode:
-            PopupEditorWebView(editor: MakeCode(url: settings.makeCodeUrl), alertPublisher: viewModel)
+            editorWebView(MakeCode(url: settings.makeCodeUrl))
         case .micropython:
-            PopupEditorWebView(editor: MicroPython(url: settings.microPythonUrl), alertPublisher: viewModel)
+            editorWebView(MicroPython(url: settings.microPythonUrl))
         case .openRobertaLab:
-            PopupEditorWebView(editor: RobertaEditor(url: settings.robertaUrl), alertPublisher: viewModel)
+            editorWebView(RobertaEditor(url: settings.robertaUrl))
         case .calliopeMiniBlocks:
             CalliopeMiniBlocksView(viewModel: CalliopeMiniBlocksViewModel(uploadViewModel: uploadViewModel, connectionPanel: connectionPanel, settings: settings))
+                .navigationTitle(Text(verbatim: "Calliope mini Blocks"))
         case .arcadeLanding:
             ArcadeView(viewModel: ArcadeViewModel(openArcade: { router.push(.arcadeEditor) }))
+                .navigationTitle(Text(verbatim: "MakeCode Arcade"))
         case .arcadeEditor:
-            PopupEditorWebView(editor: ArcadeEditor(url: settings.arcadeUrl), alertPublisher: viewModel)
+            editorWebView(ArcadeEditor(url: settings.arcadeUrl))
         case .makeCodeLink(let url):
             changeMakeCodeURL(url: url)
         case .qrCodeToMakeCode(let url):
@@ -114,9 +117,13 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
         }
     }
 
-    func changeMakeCodeURL(url: String) -> PopupEditorWebView {
-        let makeCode = MakeCode(url: URL(string: url) ?? settings.makeCodeUrl)
-        return PopupEditorWebView(editor: makeCode, alertPublisher: viewModel)
+    func editorWebView(_ editor: Editor) -> some View {
+        PopupEditorWebView(editor: editor, alertPublisher: viewModel)
+            .navigationTitle(editor.name)
+    }
+
+    func changeMakeCodeURL(url: String) -> some View {
+        editorWebView(MakeCode(url: URL(string: url) ?? settings.makeCodeUrl))
     }
 
     func editorsTile(centersGrid: Bool) -> some View {

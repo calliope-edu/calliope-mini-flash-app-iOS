@@ -11,7 +11,7 @@ import SwiftUI
 
 enum HomeScreenRoute: Hashable {
     case offlineOnboardingView
-    case newsDetailView(url: URL)
+    case newsDetailView(url: URL, title: String)
 }
 
 struct NewsItem: HasTileItem {
@@ -34,20 +34,22 @@ struct HomeScreenView: View {
             ).onAppear { viewModel.loadNews() }
         } destination: { route in
             switch route {
-            case .newsDetailView(let url):
+            case .newsDetailView(let url, let title):
                 NewsDetailWebView(url: url) {
                     router.pop()
                     router.push(.offlineOnboardingView)
                 }
+                .navigationTitle(title)
             case .offlineOnboardingView:
                 OfflineOnboardingView()
+                    .navigationTitle("Offline Information")
             }
         }
     }
     
     func onTileSelected(tile: NewsItem) {
         if let url = URL(string: tile.url) {
-            router.push(.newsDetailView(url: url))
+            router.push(.newsDetailView(url: url, title: tile.tileItem.title))
         }
     }
 }
