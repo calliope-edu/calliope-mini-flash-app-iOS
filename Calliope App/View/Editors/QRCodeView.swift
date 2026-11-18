@@ -30,7 +30,11 @@ struct QRCodeView: View {
                 Spacer()
                 VStack {
                     if camera.scannedCode == nil {
-                        ProgressView("Searching for QR code")
+                        HStack(spacing: 8) {
+                            ProgressView()
+                                .tint(.black)
+                            Text("Searching for QR code")
+                        }
                     } else {
                         Button("Open program") {
                             camera.stop()
@@ -38,11 +42,10 @@ struct QRCodeView: View {
                         }
                     }
                 }
-                .padding()
-                .padding(.horizontal, 16)
-                .background(Color.calliopeGreen)
+                .padding(.vertical, 12)
+                .padding(.horizontal, 24)
+                .background(camera.scannedCode == nil ? Color.calliopeYellow : Color.calliopeGreen, in: Capsule())
                 .foregroundColor(.black)
-                .cornerRadius(12)
                 .padding()
             }
         }
