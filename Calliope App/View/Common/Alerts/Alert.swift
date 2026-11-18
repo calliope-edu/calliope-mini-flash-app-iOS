@@ -59,6 +59,8 @@ struct AlertModifier: ViewModifier {
 
                 if let alert {
                     CalliopeAlertCard(alert: alert, textFieldContent: $textFieldContent, perform: dismissAfter)
+                        // The Campus tab darkens the window, but the card's buttons are designed for light only
+                        .environment(\.colorScheme, .light)
                         .padding(.horizontal, 40)
                         .transition(.scale(scale: 0.7).combined(with: .opacity))
                 }
