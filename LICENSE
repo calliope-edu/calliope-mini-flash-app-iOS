@@ -19,3 +19,28 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+Third-party code
+
+The following files are derived from WebBLE (https://github.com/daphtdazz/WebBLE),
+Copyright 2016-2020 David Park and Paul Theriault, as included in
+https://github.com/calliope-edu/BLE_UART_Connect. They are licensed under the
+Apache License, Version 2.0, not the MIT License above. See
+Calliope App/WebBridges/WebBluetooth/LICENSE for the license text.
+
+- Calliope App/GeneralUtilities/Jsonifiable.swift
+- Calliope App/View/Apps/AppWebView/WBWebView.swift
+- Calliope App/View/Apps/AppWebView/WBWebViewContainerController.swift
+- Calliope App/View/Apps/AppWebView/WBWebViewController.swift
+- Calliope App/WebBridges/WebBluetooth/WBMessageHandler.swift
+- Calliope App/WebBridges/WebBluetooth/WBTransaction.swift
+- Calliope App/WebBridges/WebBluetooth/Polyfill/WBBluetoothRemoteGATTCharacteristic.js
+- Calliope App/WebBridges/WebBluetooth/Polyfill/WBBluetoothRemoteGATTServer.js
+- Calliope App/WebBridges/WebBluetooth/Polyfill/WBBluetoothRemoteGATTService.js
+- Calliope App/WebBridges/WebBluetooth/Polyfill/WBBluetoothUUID.js
+- Calliope App/WebBridges/WebBluetooth/Polyfill/WBDevice.js
+- Calliope App/WebBridges/WebBluetooth/Polyfill/WBEventTarget.js
+- Calliope App/WebBridges/WebBluetooth/Polyfill/WBPolyfill.js
+- Calliope App/WebBridges/WebBluetooth/Polyfill/WBUtils.js
