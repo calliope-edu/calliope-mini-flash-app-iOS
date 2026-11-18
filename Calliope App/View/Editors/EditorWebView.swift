@@ -71,6 +71,11 @@ struct EditorWebViewRepresentable: UIViewRepresentable {
         guard editorWebView.editor?.url != editor.url else { return }
         editorWebView.load(editor: editor)
     }
+
+    // Not in willMove(toWindow:): that also fires on every tab switch, which killed the Campus tab's bridge.
+    static func dismantleUIView(_ editorWebView: EditorWebView, coordinator: ()) {
+        editorWebView.removeNativeBridge()
+    }
 }
 
 final class EditorWebView: UIView {
@@ -577,11 +582,10 @@ final class EditorWebView: UIView {
         guard newWindow == nil else { return }
 
         connection.resumeBluetooth()
+    }
 
-        // Tear down the proxy bridge — WKUserContentController retains
-        // script-message handlers strongly, so without an explicit remove
-        // the handler (and its captured BLE notify subscriptions) would
-        // outlive the editor.
+    func removeNativeBridge() {
+        // WKUserContentController retains script-message handlers strongly.
         if proxyMessageHandler != nil {
             webView?.configuration.userContentController.removeScriptMessageHandler(
                 forName: CalliopeProxyMessageHandler.handlerName
