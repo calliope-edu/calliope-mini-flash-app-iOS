@@ -176,7 +176,7 @@ struct RootTabView: View {
         coordinator.navigateToEditor(.makeCodeLink(url: url.absoluteString))
     }
 
-    // Dark on the Campus tab for a light status bar over its black background; set on the window
+    // Dark on the Campus tab for a light status bar over its dark background; set on the window
     // instead of via preferredColorScheme so the switch can cross-fade.
     private func applyCampusInterfaceStyle(selectedTab: Int) {
         guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
