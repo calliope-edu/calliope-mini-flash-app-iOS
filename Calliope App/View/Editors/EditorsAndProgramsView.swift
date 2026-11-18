@@ -144,7 +144,7 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
     var editorsHeader: some View {
         VStack(alignment: .leading) {
             Text("PROGRAMMING ENVIRONMENTS")
-                .font(.title2)
+                .font(.custom("RobotoCondensed-Bold", size: 22, relativeTo: .title2))
             Text("Choose the editor you want to program your Calliope mini with.")
         }
     }
@@ -198,7 +198,7 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
     func originalProgramTile(isLandscape: Bool) -> some View {
         VStack(alignment: .leading) {
             Text("TRANSFER START PROGRAM")
-                .font(.title2)
+                .font(.custom("RobotoCondensed-Bold", size: 22, relativeTo: .title2))
             Text("Choose your Calliope mini version and transfer the start program to your connected Calliope mini.")
             SizedBox(height:10)
             HStack(alignment: .top, spacing: 16) {
@@ -226,7 +226,7 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
     var programsTile: some View {
         VStack(alignment: .leading) {
             Text("TRANSFER PROGRAMS")
-                .font(.title2)
+                .font(.custom("RobotoCondensed-Bold", size: 22, relativeTo: .title2))
             Text("Choose a program you want to share or transfer to your Calliope mini.")
             let hexFileType = UTType.init(filenameExtension: "hex")!
             SizedBox(height:10)
