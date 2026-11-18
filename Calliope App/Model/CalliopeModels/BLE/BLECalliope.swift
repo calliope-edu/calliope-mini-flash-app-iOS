@@ -99,11 +99,18 @@ class BLECalliope: Calliope {
     var bleOperationsGroup: DispatchGroup? = nil
     var bleError: Error? = nil
     var operationCharacteristic: CBCharacteristic? = nil
+    var operationType: OperationType? = nil
     var bleResultValue: Data? = nil
+
+    // Match the type too, or a notify on/off confirmation can complete a pending read of the same characteristic.
+    private func isPendingOperation(_ type: OperationType, for characteristic: CBCharacteristic) -> Bool {
+        return operationType == type && operationCharacteristic?.uuid == characteristic.uuid
+    }
     
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
-        if let writingCharacteristic = operationCharacteristic, characteristic.uuid == writingCharacteristic.uuid {
+        if isPendingOperation(.write, for: characteristic) {
             operationCharacteristic = nil
+            operationType = nil
             //set potential error and move on
             bleError = error
             if let error = error {
@@ -127,7 +134,7 @@ class BLECalliope: Calliope {
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        if let readingCharac = operationCharacteristic, characteristic.uuid == readingCharac.uuid {
+        if isPendingOperation(.read, for: characteristic) {
             explicitReadResponse(for: characteristic, error: error)
             return
         }
@@ -161,7 +168,7 @@ class BLECalliope: Calliope {
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
-        if let writingCharacteristic = operationCharacteristic, characteristic.uuid == writingCharacteristic.uuid {
+        if isPendingOperation(.setNotify, for: characteristic) {
             explicitSetNotifyResponse(error)
             return
         } else {
@@ -183,6 +190,7 @@ class BLECalliope: Calliope {
     
     private func explicitSetNotifyResponse(_ error: Error?) {
         operationCharacteristic = nil
+        operationType = nil
         //set potential error and move on
         bleError = error
         if let error = error {
@@ -195,6 +203,7 @@ class BLECalliope: Calliope {
     
     private func explicitReadResponse(for characteristic: CBCharacteristic, error: Error?) {
         operationCharacteristic = nil
+        operationType = nil
         //answer to explicit read request
         if let error = error {
             LogNotify.log("received error from reading \(characteristic): \(error)")
@@ -322,6 +331,7 @@ class BLECalliope: Calliope {
     private func executeBLEOperation(characteristic: CBCharacteristic, operation: @escaping () -> Void, timeout: Double, completion: @escaping (Result<Void, Error>) -> Void, type: OperationType) {
         bleOperationsQueue.async {
             self.operationCharacteristic = characteristic
+            self.operationType = type
             
             self.bleOperationsGroup = DispatchGroup()
             self.bleOperationsGroup!.enter()
