@@ -832,7 +832,7 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
             with: "-",
             options: .regularExpression
         )
-        let argForceFullDfu = (args["forceFullDfu"] as? Bool) ?? false
+        let argForceFullDfu = ((args["forceFullDfu"] as? Bool) ?? false) || CampusUrls.requiresFullDfu(webView?.url)
         // Optional editor hint: does the program being flashed leave BLE on?
         // Omitted ⇒ unknown (optimistically try to reconnect first). `false` ⇒
         // the editor already knows BLE will be off (MicroPython / MakeCode with
@@ -1290,6 +1290,16 @@ private enum CampusUrls {
         guard let scheme = scheme, scheme.lowercased() == "https" else { return false }
         guard let host = host?.lowercased(), !host.isEmpty else { return false }
         return allowedHosts.contains { host == $0 || host.hasSuffix(".\($0)") }
+    }
+
+    // The mini drops the connection on the partial-flash STATUS query while the Teachable Machine program runs.
+    static let fullDfuOnlyHosts = [
+        "teachablemachine.calliope.cc",
+    ]
+
+    static func requiresFullDfu(_ url: URL?) -> Bool {
+        guard let host = url?.host?.lowercased() else { return false }
+        return fullDfuOnlyHosts.contains { host == $0 || host.hasSuffix(".\($0)") }
     }
 
     /// Convenience for gating a full URL (e.g. the configured campus URL).
