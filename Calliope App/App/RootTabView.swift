@@ -70,6 +70,7 @@ struct RootTabView: View {
                 // The navigation push/pop transaction would otherwise animate the offset too
                 .animation(nil, value: tabsShowingSubpage.contains(coordinator.selectedTab))
         }
+        .statusBarHidden()
         .modifier(AlertModifier(alert: matrixConnectionViewModel.alertBinding))
         .modifier(AlertModifier(alert: rootAlertPublisher.alertBinding))
         .modifier(AlertModifier(alert: uploadViewModel.alertBinding))

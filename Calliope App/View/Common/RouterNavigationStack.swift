@@ -25,7 +25,6 @@ struct RouterNavigationStack<RouteType: Hashable, Root: View, Destination: View>
                         .toolbarBackground(.visible, for: .navigationBar)
                 }
         }
-        .statusBarHidden(!router.path.isEmpty)
         .toolbar(router.path.isEmpty ? .automatic : .hidden, for: .tabBar)
         .onChange(of: router.path.isEmpty) { isEmpty in
             subpageShownChanged(!isEmpty)
