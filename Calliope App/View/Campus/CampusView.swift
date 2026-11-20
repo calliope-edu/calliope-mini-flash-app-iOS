@@ -22,6 +22,7 @@ struct CampusView: View {
             connectionPanel: connectionPanel,
             uploadFirmware: uploadViewModel.uploadWithoutConfirmation
         )
+            .ignoresSafeArea(.keyboard)
             .background(Color.campusBackground.ignoresSafeArea())
             .modifier(AlertModifier(alert: viewModel.alertBinding))
     }

@@ -26,6 +26,7 @@ struct PopupEditorWebView: View {
             connectionPanel: connectionPanel,
             uploadFirmware: uploadViewModel.uploadWithoutConfirmation
         )
+            .ignoresSafeArea(.keyboard)
             .background(DisableSwipeBackGestureView())
     }
 }
