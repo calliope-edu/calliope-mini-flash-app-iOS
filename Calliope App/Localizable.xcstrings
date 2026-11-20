@@ -2578,12 +2578,32 @@
         }
       }
     },
+    "Start recording" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufnahme starten"
+          }
+        }
+      }
+    },
     "Start the program on your Calliope mini." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Starte das Programm auf deinem Calliope mini."
+          }
+        }
+      }
+    },
+    "Stop recording" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufnahme beenden"
           }
         }
       }

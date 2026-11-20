@@ -278,15 +278,22 @@ struct ChartHeaderView: View {
     }
 
     private var recordButton: some View {
-        IconButton(
-            imageSystemName: viewModel.isRecording
-                ? "pause.circle" : "play.circle",
-            action: viewModel.toggleRecording,
-            rotation: 0,
-            iconColor: viewModel.selectedSensor == nil
-                ? Color(.gray) : Color(.white),
-            backgroundColor: Color(.white).opacity(0)
-        ).disabled(viewModel.selectedSensor == nil)
+        Button(action: viewModel.toggleRecording) {
+            ZStack {
+                Circle().fill(Color(.white)).frame(width: 40, height: 40)
+                if viewModel.isRecording {
+                    Image(systemName: "pause.fill")
+                        .font(.system(size: 18))
+                        .foregroundStyle(Color(.red))
+                } else {
+                    Circle().fill(Color(.red)).frame(width: 18, height: 18)
+                }
+            }
+            .frame(width: 44, height: 44)
+            .opacity(viewModel.selectedSensor == nil ? 0.4 : 1)
+        }
+        .accessibilityLabel(viewModel.isRecording ? Text("Stop recording") : Text("Start recording"))
+        .disabled(viewModel.selectedSensor == nil)
     }
 }
 
