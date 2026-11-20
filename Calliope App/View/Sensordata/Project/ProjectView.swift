@@ -50,10 +50,6 @@ struct ProjectView: View {
             viewModel.stopRecording()
         }
         .modifier(AlertModifier(alert: viewModel.alertBinding))
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(Color("calliope-turqoise"), for: .navigationBar)
-        .toolbarBackground(.visible, for: .navigationBar)
-        .toolbarColorScheme(.dark, for: .navigationBar)
         .toolbar {
             ToolbarItem(placement: .principal) {
                 Menu {
@@ -65,10 +61,10 @@ struct ProjectView: View {
                         Text(viewModel.project!.name)
                             .font(.headline)
                             .textCase(.uppercase)
-                            .foregroundStyle(.white)
+                            .foregroundStyle(.primary)
                         Image(systemName: "chevron.down")
                             .font(.caption)
-                            .foregroundStyle(.white)
+                            .foregroundStyle(.primary)
                     }
                 }
             }
