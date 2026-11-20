@@ -95,9 +95,14 @@ struct RootTabView: View {
         }
         .onAppear {
             applyCompactSizeClassOverride()
+            updateTabBarInset()
         }
         .onChange(of: coordinator.selectedTab) { tab in
             applyCampusInterfaceStyle(selectedTab: tab)
+            updateTabBarInset()
+        }
+        .onChange(of: tabsShowingSubpage) { _ in
+            updateTabBarInset()
         }
         .onChange(of: scenePhase) { phase in
             switch phase {
@@ -207,6 +212,19 @@ struct RootTabView: View {
             return
         }
         rootViewController.traitOverrides.horizontalSizeClass = .compact
+    }
+
+    // Lowers the tab bar into the safe area; skipped on subpages, where the bar is hidden
+    private func updateTabBarInset() {
+        let amount: CGFloat =  16
+        guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+            let window = scene.windows.first,
+            let rootViewController = window.rootViewController
+        else {
+            return
+        }
+        let showsTabBar = !tabsShowingSubpage.contains(coordinator.selectedTab)
+        rootViewController.additionalSafeAreaInsets.bottom = showsTabBar ? -min(amount, window.safeAreaInsets.bottom) : 0
     }
 }
 
