@@ -1027,6 +1027,7 @@
       }
     },
     "Data Logger Info" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1542,6 +1543,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Home"
+          }
+        }
+      }
+    },
+    "How it works" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "So geht's"
           }
         }
       }

@@ -20,7 +20,7 @@ struct DataLoggerInfoView: View {
             }
         } right: {
             VStack(alignment: .leading, spacing: 16) {
-                Text("Data Logger").fontWeight(.bold)
+                Text("How it works").fontWeight(.bold)
                 Text(
                     "With the datalogger extension the Calliope mini 3 can record data. Afterwards you can transfer it to the app and view it in a table."
                 )
@@ -30,22 +30,11 @@ struct DataLoggerInfoView: View {
                     Text("Use the example program, or create your own MakeCode project and add the DataLogger Extension.")
                 }
 
-                HStack {
-                    Spacer()
-                    HStack {
-                        Text("Open Example Program")
-                        Image(systemName: "arrow.up.right")
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.calliopePink)
-                    .foregroundColor(.white)
-                    .frame(width: 300)
-                    .cornerRadius(12).onTapGesture {
-                        navigator.push(.infoWebView(url: URL(string: "https://makecode.calliope.cc/#pub:_Dv9J1xCp6HRy")!))
-                    }
-                    Spacer()
+                Button("Open Example Program") {
+                    navigator.push(.infoWebView(url: URL(string: "https://makecode.calliope.cc/#pub:_Dv9J1xCp6HRy")!))
                 }
+                .buttonStyle(.pill)
+                .frame(maxWidth: .infinity)
 
                 HStack(alignment: .center) {
                     Image("num_02").resizable().scaledToFit().frame(maxHeight: 35)

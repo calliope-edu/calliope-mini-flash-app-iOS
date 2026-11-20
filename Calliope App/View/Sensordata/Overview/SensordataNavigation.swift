@@ -35,7 +35,7 @@ struct SensordataRouteView<ViewModelType: SensorDataViewModelProtocol & Observab
                 .subpageTitle(Text(verbatim: "MakeCode"))
         case .dataLoggerInfo:
             DataLoggerInfoView(navigator: navigator)
-                .subpageTitle(Text("Data Logger Info"))
+                .subpageTitle(Text("Data Logger"))
         case .projectsInfo:
             ProjectsInfoView(navigator: navigator)
                 .subpageTitle(Text("Projects Info"))
