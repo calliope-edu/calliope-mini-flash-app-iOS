@@ -84,6 +84,7 @@ struct AppsDetailView: View {
 
     var body: some View {
         RepresentableWBWebView(url: URL(string: url)!, alertPublisher: alertPublisher, connection: connection, connectionPanel: connectionPanel)
+            .background(DisableSwipeBackGestureView())
             .subpageTitle(Text(verbatim: title))
     }
 }

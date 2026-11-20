@@ -49,6 +49,10 @@ class WBWebView: WKWebView, WKNavigationDelegate {
     }
 
     convenience public required init?(coder: NSCoder) {
+        self.init()
+    }
+
+    convenience init() {
         // load polyfill script
         let webCfg = WKWebViewConfiguration()
         let userController = WKUserContentController()
