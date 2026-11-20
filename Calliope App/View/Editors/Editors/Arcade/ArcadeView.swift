@@ -16,7 +16,7 @@ struct ArcadeView<viewModelType: ArcadeViewModelProtocol & ObservableObject>: Vi
         AdaptiveColumnLayout {
             VStack {
                 Text("Game development with MakeCode Arcade")
-                    .font(.custom("RobotoCondensed-Bold", size: 22, relativeTo: .title2))
+                    .tileHeading()
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Text("With MakeCode Arcade, you can create games for your Calliope mini and play them with an additional display or even a game console.")
                 SizedBox(height: 8)
