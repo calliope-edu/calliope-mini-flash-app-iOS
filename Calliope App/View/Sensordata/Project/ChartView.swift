@@ -290,10 +290,14 @@ struct ChartHeaderView: View {
                 }
             }
             .frame(width: 44, height: 44)
-            .opacity(viewModel.selectedSensor == nil ? 0.4 : 1)
+            .opacity(recordButtonEnabled ? 1 : 0.4)
         }
         .accessibilityLabel(viewModel.isRecording ? Text("Stop recording") : Text("Start recording"))
-        .disabled(viewModel.selectedSensor == nil)
+        .disabled(!recordButtonEnabled)
+    }
+
+    private var recordButtonEnabled: Bool {
+        viewModel.isRecording || viewModel.canRecord
     }
 }
 

@@ -51,6 +51,7 @@ class ChartViewModel: ObservableObject, Identifiable {
     @Published var sensorOptions: [DropDownOption<Sensor>] = []
     @Published var selectedSensor: DropDownOption<Sensor>?
     @Published var isRecording: Bool = false
+    @Published private(set) var canRecord: Bool = false
     @Published var axisOptions: [DropDownOption<Bool?>] = []
     @Published var selectedAxis: DropDownOption<Bool?>?
     var baseTime: Double?
@@ -225,6 +226,7 @@ class ChartViewModel: ObservableObject, Identifiable {
             sensorOption.object.calliopeService.uuid
                 == self.chart.sensorType?.uuid
         })
+        updateCanRecord()
     }
 
     func markValueForLocation(location: IdentifiableLocation) {
@@ -256,6 +258,15 @@ class ChartViewModel: ObservableObject, Identifiable {
     func selectSensor(selection: DropDownOption<Sensor>) {
         selectedSensor = selection
         chart.sensorType = selection.object.calliopeService
+        updateCanRecord()
+    }
+
+    private func updateCanRecord() {
+        guard let service = selectedSensor?.object.calliopeService else {
+            canRecord = false
+            return
+        }
+        canRecord = dataController.getAvailableSensors().contains { $0.calliopeService == service }
     }
 
     func selectAxis(selection: DropDownOption<Bool?>) {
@@ -440,6 +451,7 @@ class ChartViewModel: ObservableObject, Identifiable {
                 DispatchQueue.main.async {
                     LogNotify.log("Received usage ready Notification")
                     self?.updateAvailableSensors()
+                    self?.updateCanRecord()
                 }
             }
         )
@@ -452,7 +464,7 @@ class ChartViewModel: ObservableObject, Identifiable {
                 using: { [weak self] (_) in
                     DispatchQueue.main.async {
                         self?.stopRecording()
-                        self?.selectedSensor = nil
+                        self?.updateCanRecord()
                     }
                 }
             )
