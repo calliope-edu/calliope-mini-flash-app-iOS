@@ -1728,6 +1728,7 @@
       }
     },
     "Live Bluetooth Sensor Data" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2261,6 +2262,7 @@
       }
     },
     "Projects Info" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

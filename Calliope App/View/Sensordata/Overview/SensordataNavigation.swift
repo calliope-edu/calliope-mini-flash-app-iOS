@@ -38,7 +38,7 @@ struct SensordataRouteView<ViewModelType: SensorDataViewModelProtocol & Observab
                 .subpageTitle(Text("Data Logger"))
         case .projectsInfo:
             ProjectsInfoView(navigator: navigator)
-                .subpageTitle(Text("Projects Info"))
+                .subpageTitle(Text("LIVE SENSOR DATA"))
         }
     }
 }

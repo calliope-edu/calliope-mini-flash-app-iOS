@@ -21,7 +21,7 @@ struct ProjectsInfoView: View {
         } right: {
 
             VStack(alignment: .leading, spacing: 16) {
-                Text("Live Bluetooth Sensor Data").fontWeight(.bold)
+                Text("How it works").fontWeight(.bold)
                 Text(
                     "Send sensor data live from your Calliope mini to the app via Bluetooth."
                 )
@@ -33,23 +33,11 @@ struct ProjectsInfoView: View {
                     )
                 }
 
-                HStack {
-                    Spacer()
-                    HStack {
-                        Text("Open Example Program")
-                        Image(systemName: "arrow.up.right")
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.calliopePink)
-                    .foregroundColor(.white)
-                    .cornerRadius(12)
-                    .frame(width: 300)
-                    .onTapGesture {
-                        navigator.push(.infoWebView(url: URL(string: "https://makecode.calliope.cc/#pub:_30A13o6dM9L2")!))
-                    }
-                    Spacer()
+                Button("Open Example Program") {
+                    navigator.push(.infoWebView(url: URL(string: "https://makecode.calliope.cc/#pub:_30A13o6dM9L2")!))
                 }
+                .buttonStyle(.pill)
+                .frame(maxWidth: .infinity)
 
                 HStack(alignment: .center) {
                     Image("num_02").resizable().scaledToFit().frame(maxHeight: 35)
