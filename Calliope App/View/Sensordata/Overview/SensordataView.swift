@@ -52,13 +52,16 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
                 onInstructions: { navigator.push(.projectsInfo) }
             )
             SizedBox(height: 12)
-            pillButton(label: "New Project", systemImage: "plus") {
+            Button {
                 viewModel.alert = .newProjectName { name in
                     if let project = Project.insertProject(name: name), let id = project.id {
                         navigator.push(.project(id: id))
                     }
                 }
+            } label: {
+                Label("New Project", systemImage: "plus")
             }
+            .buttonStyle(.pill)
             .frame(maxWidth: .infinity)
 
             if !viewModel.projects.isEmpty {
@@ -107,8 +110,11 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
 
             SizedBox(height: 12)
             HStack(spacing: 36) {
-                pillButton(label: "Import Data") { isImportingDataLoggerFile = true }
-                pillButton(label: "Show Data", enabled: viewModel.dataLoggerButtonEnabled) { openDataLogger() }
+                Button("Import Data") { isImportingDataLoggerFile = true }
+                    .buttonStyle(.pill)
+                Button("Show Data") { openDataLogger() }
+                    .buttonStyle(.pill)
+                    .disabled(!viewModel.dataLoggerButtonEnabled)
             }
             .frame(maxWidth: .infinity)
         }.frame(maxHeight: .infinity, alignment: .top)
@@ -204,22 +210,6 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
                 }
             }
         )
-    }
-
-    func pillButton(label: LocalizedStringKey, systemImage: String? = nil, enabled: Bool = true, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            HStack {
-                if let systemImage {
-                    Image(systemName: systemImage)
-                }
-                Text(label)
-            }
-            .padding(.vertical, 12)
-            .padding(.horizontal, 24)
-            .background(enabled ? Color.calliopeDarkgreen : Color.calliopeGray, in: Capsule())
-            .foregroundColor(.white)
-        }
-        .disabled(!enabled)
     }
 
     var projectsTile: some View {

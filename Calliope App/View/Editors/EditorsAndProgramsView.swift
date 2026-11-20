@@ -218,7 +218,8 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
                 .background(boxColor)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
             SizedBox(height:1)
-            pillButton(label: label, action: action)
+            Button(LocalizedStringKey(label), action: action)  // need the LocalizedStringKey, so it is translated to German
+                .buttonStyle(.pill)
         }
         .frame(maxWidth: .infinity)
     }
@@ -230,24 +231,13 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
             Text("Choose a program you want to share or transfer to your Calliope mini.")
             let hexFileType = UTType.init(filenameExtension: "hex")!
             SizedBox(height:10)
-            pillButton(label: "Open File", action: { presentingFileImporter = true })
+            Button("Open File") { presentingFileImporter = true }
+                .buttonStyle(.pill)
                 .fileImporter(isPresented: $presentingFileImporter, allowedContentTypes: [hexFileType]) { result in
                     viewModel.openFile(result: result)
                     presentingFileImporter = false
                 }
                 .frame(maxWidth: .infinity)
-        }
-    }
-
-    func pillButton(label: String, action: @escaping () -> Void) -> some View {
-        Button {
-            action()
-        } label: {
-            Text(LocalizedStringKey(label))  // need the LocalizedStringKey, so it is translated to German
-                .padding(.vertical, 12)
-                .padding(.horizontal, 24)
-                .background(Color.calliopeDarkgreen, in: Capsule())
-                .foregroundColor(.white)
         }
     }
 }

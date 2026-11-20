@@ -26,20 +26,9 @@ struct ArcadeView<viewModelType: ArcadeViewModelProtocol & ObservableObject>: Vi
             VStack {
                 Image("editors_swift")
                 SizedBox(height: 8)
-                pillButton(label: "Let's get started!", action: { viewModel.openArcadeButtonTapped() })
+                Button("Let's get started!") { viewModel.openArcadeButtonTapped() }
+                    .buttonStyle(.pill)
             }
-        }
-    }
-
-    func pillButton(label: String, action: @escaping () -> Void) -> some View {
-        Button {
-            action()
-        } label: {
-            Text(LocalizedStringKey(label))  // need the LocalizedStringKey, so it is translated to German
-                .padding(.vertical, 12)
-                .padding(.horizontal, 24)
-                .background(Color.calliopeDarkgreen, in: Capsule())
-                .foregroundColor(.white)
         }
     }
 }
