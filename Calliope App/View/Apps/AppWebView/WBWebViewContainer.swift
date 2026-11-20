@@ -52,6 +52,7 @@ final class WBWebViewContainer: UIView, WKNavigationDelegate, WKUIDelegate {
     private let wbLogger = WBLogger()
     private var pendingURL: URL?
     private var loadedURL: URL?
+    private var urlObservation: NSKeyValueObservation?
 
     /// Native-proxy bridge, non-nil only for pages that use the Campus API
     /// (currently teachablemachine.calliope.cc). Every other page keeps the
@@ -118,6 +119,10 @@ final class WBWebViewContainer: UIView, WKNavigationDelegate, WKUIDelegate {
         webView.addNavigationDelegate(self)
         webView.uiDelegate = self
         webView.configuration.userContentController.add(wbLogger, name: "logger")
+        // KVO on url also catches the Teachable Machine SPA's pushState navigations, which skip the navigation delegate.
+        urlObservation = webView.observe(\.url) { [weak self] _, _ in
+            self?.updateScrollEnabled()
+        }
 
         #if DEBUG
         if #available(iOS 16.4, *) {
@@ -188,6 +193,15 @@ final class WBWebViewContainer: UIView, WKNavigationDelegate, WKUIDelegate {
     }
 
     // MARK: - Private Helpers
+
+    private func updateScrollEnabled() {
+        guard let webView, let url = webView.url, url.host == "teachablemachine.calliope.cc" else {
+            webView?.scrollView.isScrollEnabled = true
+            return
+        }
+        let isHomepage = url.path.isEmpty || url.path == "/"
+        webView.scrollView.isScrollEnabled = isHomepage
+    }
 
     private func maybeShowErrorUI(_ error: Error) {
         let nserror = error as NSError
