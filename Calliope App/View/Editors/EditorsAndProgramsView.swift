@@ -161,7 +161,7 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
                     } else {
                         EditorTile(config: viewModel.editors[i]).onTapGesture {
                             switch viewModel.editors[i].name {
-                            case "Makecode":
+                            case "MakeCode":
                                 router.push(.makeCode)
                             case "Open Roberta Lab":
                                 router.push(.openRobertaLab)
@@ -178,7 +178,7 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
                     }
                 }
                 .anchorPreference(key: MakeCodeGroupBoundsKey.self, value: .bounds) { bounds in
-                    ["Makecode", "Scan"].contains(viewModel.editors[i].name) ? [bounds] : []
+                    ["MakeCode", "Scan"].contains(viewModel.editors[i].name) ? [bounds] : []
                 }
             }
         }

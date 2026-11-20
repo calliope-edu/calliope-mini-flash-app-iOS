@@ -38,7 +38,7 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
 
     @Published var editors: [EditorTileConfig] = [
         EditorTileConfig(name: "Calliope mini Blocks", iconName: "editors_blocks_transparent", backgroundColor: Color.white, imageSize: 0.9),
-        EditorTileConfig(name: "Makecode", iconName: "editors_makecode"),
+        EditorTileConfig(name: "MakeCode", iconName: "editors_makecode"),
         EditorTileConfig(name: "Scan", iconName: "qr_code_scan_button", backgroundColor: Color.white, imageSize: 0.65),
         EditorTileConfig(name: "Micropython", iconName: "editors_python"),
         EditorTileConfig(name: "Arcade", iconName: "editors_swift"),
@@ -92,7 +92,7 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
 class PreviewEditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, ObservableObject, Alertable {
     @Published var editors: [EditorTileConfig] = [
         EditorTileConfig(name: "Calliope mini Blocks", iconName: "editors_blocks_transparent", backgroundColor: Color.white, imageSize: 0.9),
-        EditorTileConfig(name: "Makecode", iconName: "editors_makecode"),
+        EditorTileConfig(name: "MakeCode", iconName: "editors_makecode"),
         EditorTileConfig(name: "Scan", iconName: "qr_code_scan_button", backgroundColor: Color.white, imageSize: 0.65),
         EditorTileConfig(name: "Micropython", iconName: "editors_python"),
         EditorTileConfig(name: "Arcade", iconName: "editors_swift"),
