@@ -46,7 +46,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
     var sendDataTile: some View {
         VStack(alignment: .leading) {
             tileHeader(
-                title: "PROJECTS",
+                title: "LIVE SENSOR DATA",
                 description: "Send sensor data live from your Calliope mini to the app via Bluetooth.",
                 imageName: "calliope_bluetooth_extension 1",
                 onInstructions: { navigator.push(.projectsInfo) }
@@ -81,7 +81,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
     var dataLoggerTile: some View {
         VStack(alignment: .leading) {
             tileHeader(
-                title: "DATALOGGER",
+                title: "LONG-TERM MEASUREMENT",
                 description: "With the datalogger extension the Calliope mini 3 can record data. Afterwards you can transfer it to the app and view it in a table.",
                 imageName: "calliope_datalogger_extension",
                 onInstructions: { navigator.push(.dataLoggerInfo) }
@@ -123,7 +123,7 @@ struct SensordataView<ViewModelType: SensorDataViewModelProtocol & ObservableObj
     func tileHeader(title: LocalizedStringKey, description: LocalizedStringKey, imageName: String, onInstructions: @escaping () -> Void) -> some View {
         VStack(alignment: .leading) {
             Text(title)
-                .font(.title2)
+                .tileHeading()
             Text(description)
                 .fixedSize(horizontal: false, vertical: true)
             SizedBox(height: 12)
