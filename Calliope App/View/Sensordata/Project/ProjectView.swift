@@ -72,13 +72,11 @@ struct ProjectView: View {
     }
 
     var addGroupButton: some View {
-        IconButton(
-            imageSystemName: "plus.circle",
-            action: viewModel.addGroup,
-            rotation: 0,
-            iconColor: Color(.white),
-            backgroundColor: viewModel.addGroupButtonEnabled ? Color("calliope-turqoise") : Color(.gray)
-        ).disabled(!viewModel.addGroupButtonEnabled)
+        Button(action: viewModel.addGroup) {
+            Label("Record sensor data", systemImage: "plus")
+        }
+        .buttonStyle(.pill)
+        .disabled(!viewModel.addGroupButtonEnabled)
 
     }
 

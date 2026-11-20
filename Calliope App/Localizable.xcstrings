@@ -2250,6 +2250,16 @@
         }
       }
     },
+    "Record sensor data" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensordaten aufzeichnen"
+          }
+        }
+      }
+    },
     "Remove paired device" : {
       "extractionState" : "manual",
       "localizations" : {
