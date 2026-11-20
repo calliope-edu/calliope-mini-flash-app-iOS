@@ -441,8 +441,9 @@ final class EditorWebView: UIView {
         self.connectionPanel = connectionPanel
         self.uploadFirmware = uploadFirmware
         super.init(frame: frame)
-        setupLoadingIndicator()
-        webView = setupWebView(registersNativeBridge: editor is CampusBridgedEditor)
+        let isCampus = editor is CampusEditor
+        setupLoadingIndicator(color: isCampus ? .white : nil)
+        webView = setupWebView(registersNativeBridge: editor is CampusBridgedEditor, background: isCampus ? .campusBackground : nil)
         scratchLink.setup(webView: webView!)
         scratchLink.delegate = self
         // KVO on url also catches the Campus SPA's pushState navigations, which skip the navigation delegate.
@@ -455,9 +456,12 @@ final class EditorWebView: UIView {
         fatalError("init(coder:) is not supported")
     }
 
-    private func setupLoadingIndicator() {
+    private func setupLoadingIndicator(color: UIColor?) {
         loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
         loadingIndicator.hidesWhenStopped = true
+        if let color {
+            loadingIndicator.color = color
+        }
 
         addSubview(loadingIndicator)
 
@@ -467,8 +471,8 @@ final class EditorWebView: UIView {
         ])
     }
 
-    private func setupWebView(registersNativeBridge: Bool) -> WKWebView {
-        backgroundColor = Styles.colorWhite
+    private func setupWebView(registersNativeBridge: Bool, background: UIColor?) -> WKWebView {
+        backgroundColor = background ?? Styles.colorWhite
 
         let controller = WKUserContentController()
 
@@ -492,7 +496,12 @@ final class EditorWebView: UIView {
 
         let webView = WKWebView(frame: .zero, configuration: configuration)
         webView.translatesAutoresizingMaskIntoConstraints = false
-        webView.backgroundColor = Styles.colorWhite
+        webView.backgroundColor = background ?? Styles.colorWhite
+        if let background {
+            // A WKWebView paints white until the first page frame unless it is transparent
+            webView.isOpaque = false
+            webView.underPageBackgroundColor = background
+        }
 
         webView.navigationDelegate = self
         webView.uiDelegate = self
