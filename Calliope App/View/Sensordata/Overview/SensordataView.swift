@@ -254,7 +254,7 @@ extension View {
     }
 }
 
-struct ProjectItem<ViewModelType: SensorDataViewModelProtocol & ObservableObject>: View {
+struct ProjectItem<ViewModelType: SensorDataViewModelProtocol & ObservableObject & Alertable>: View {
     let project: Project
     let viewModel: ViewModelType
     var onOpen: () -> Void
@@ -265,7 +265,9 @@ struct ProjectItem<ViewModelType: SensorDataViewModelProtocol & ObservableObject
                 .foregroundColor(Color(.white))
                 .lineLimit(1)
             Spacer()
-            Button("", systemImage: "trash", action: { viewModel.deleteProject(id: project.id!) }).foregroundColor(Color(.white))
+            Button("", systemImage: "trash", action: {
+                viewModel.alert = .deleteProject(name: project.name) { viewModel.deleteProject(id: project.id!) }
+            }).foregroundColor(Color(.white))
         }
         .tiled(color: Color.calliopeDarkgray)
         .onTapGesture {

@@ -263,6 +263,17 @@ extension AppAlert {
         )
     }
 
+    static func deleteProject(name: String, onDelete: @escaping () -> Void) -> AppAlert {
+        AppAlert(
+            title: NSLocalizedString("Delete project?", comment: ""),
+            message: String(format: NSLocalizedString("All recorded data of \"%@\" will be lost.", comment: ""), name),
+            actions: [
+                StandardAlertAction(NSLocalizedString("Delete", comment: ""), role: .destructive, handler: onDelete),
+                StandardAlertAction(NSLocalizedString("Cancel", comment: ""), role: .cancel, handler: {}),
+            ]
+        )
+    }
+
     static func exportCSVName(onOk: @escaping (_ text: String) -> Void) -> AppAlert {
         AppAlert(
             title: NSLocalizedString("Export Data", comment: ""),

@@ -301,6 +301,16 @@
         }
       }
     },
+    "All recorded data of \"%@\" will be lost." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle aufgezeichneten Daten von „%@“ gehen verloren."
+          }
+        }
+      }
+    },
     "An introduction to Scratch programming with the Calliope mini Blocks app, instructions and project ideas can be found on the website." : {
       "localizations" : {
         "de" : {
@@ -1083,6 +1093,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Löschen fehlgeschlagen"
+          }
+        }
+      }
+    },
+    "Delete project?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Projekt löschen?"
           }
         }
       }
