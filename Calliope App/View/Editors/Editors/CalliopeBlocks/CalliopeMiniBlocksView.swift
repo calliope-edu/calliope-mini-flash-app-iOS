@@ -29,9 +29,9 @@ struct CalliopeMiniBlocksView<viewModelType: CalliopeMiniBlocksViewModelProtocol
                         Text("First transfer the Scratch program to your Calliope mini to run the Scratch programs directly.")
                     }
                     HStack {
-                        boxButton(label: "BlocksV2.hex", iconName: "button_icon_upload", action: { viewModel.uploadBlocksV2Program() })
+                        boxButton(label: "BlocksV2.hex", action: { viewModel.uploadBlocksV2Program() })
 
-                        boxButton(label: "BlocksV3.hex", iconName: "button_icon_upload", action: { viewModel.uploadBlocksV3Program() })
+                        boxButton(label: "BlocksV3.hex", action: { viewModel.uploadBlocksV3Program() })
                     }
                     SizedBox(height: 16)
 
@@ -54,9 +54,7 @@ struct CalliopeMiniBlocksView<viewModelType: CalliopeMiniBlocksViewModelProtocol
                     ).multilineTextAlignment(.center)
                     boxButton(
                         label: "Let's get started!",
-                        iconName: nil,
-                        action: { viewModel.openLinkToCalliopeBlocksGetStatedPage() },
-                        backgroundColor: Color.calliopePink
+                        action: { viewModel.openLinkToCalliopeBlocksGetStatedPage() }
                     )
                     SizedBox(height: 16)
                     Text(
@@ -69,24 +67,9 @@ struct CalliopeMiniBlocksView<viewModelType: CalliopeMiniBlocksViewModelProtocol
         )
     }
 
-    func boxButton(label: String, iconName: String?, action: @escaping () -> Void, backgroundColor: Color = Color.calliopeGreen) -> some View {
-        return Button {
-            action()
-        } label: {
-            HStack {
-                Text(LocalizedStringKey(label))  // need the LocalizedStringKey, so it is translated to German
-                if iconName != nil {
-                    (Image(iconName!))
-                        .resizable().scaledToFit().frame(width: 30, height: 30)
-                }
-            }
-            .padding()
-            .padding(.horizontal, 16)
-            .background(backgroundColor)
-            .foregroundColor(.white)
-            .cornerRadius(12)
-
-        }
+    func boxButton(label: String, action: @escaping () -> Void) -> some View {
+        Button(LocalizedStringKey(label), action: action)  // need the LocalizedStringKey, so it is translated to German
+            .buttonStyle(.pill)
     }
 }
 
