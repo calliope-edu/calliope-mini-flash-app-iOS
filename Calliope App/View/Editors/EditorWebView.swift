@@ -441,8 +441,19 @@ final class EditorWebView: UIView {
         self.connectionPanel = connectionPanel
         self.uploadFirmware = uploadFirmware
         super.init(frame: frame)
+        self.editor = editor
         let isCampus = editor is CampusEditor
+        backgroundColor = isCampus ? .campusBackground : Styles.colorWhite
         setupLoadingIndicator(color: isCampus ? .white : nil)
+        showLoading()
+        // Creating the first WKWebView blocks the main thread; deferring it lets the tab/navigation switch render first
+        DispatchQueue.main.async { [weak self] in
+            self?.setupWebViewAndLoad(editor: editor)
+        }
+    }
+
+    private func setupWebViewAndLoad(editor: Editor) {
+        let isCampus = editor is CampusEditor
         webView = setupWebView(registersNativeBridge: editor is CampusBridgedEditor, background: isCampus ? .campusBackground : nil)
         scratchLink.setup(webView: webView!)
         scratchLink.delegate = self
@@ -450,6 +461,7 @@ final class EditorWebView: UIView {
         urlObservation = webView?.observe(\.url) { [weak self] _, _ in
             self?.updateScrollEnabled()
         }
+        load(editor: self.editor ?? editor)
     }
 
     required init?(coder: NSCoder) {
@@ -472,8 +484,6 @@ final class EditorWebView: UIView {
     }
 
     private func setupWebView(registersNativeBridge: Bool, background: UIColor?) -> WKWebView {
-        backgroundColor = background ?? Styles.colorWhite
-
         let controller = WKUserContentController()
 
         #if DEBUG
@@ -573,10 +583,8 @@ final class EditorWebView: UIView {
             return
         }
         self.editor = editor
-        guard webView != nil else {
-            LogNotify.error("WebView is nil. This should not happen.")
-            return
-        }
+        // Not created yet: setupWebViewAndLoad loads the latest editor once it is
+        guard webView != nil else { return }
         showLoading()
 
         updateScrollEnabled()
