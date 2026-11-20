@@ -1,6 +1,5 @@
 import UIKit
 import NordicDFU
-import DeepDiff
 
 protocol Hex {
     var name: String { get }
@@ -75,7 +74,7 @@ extension Hex {
     }
 }
 
-struct HexFile: Hex, Equatable, DiffAware {
+struct HexFile: Hex, Equatable {
     
     private(set) var url: URL
 
@@ -207,19 +206,6 @@ struct HexFile: Hex, Equatable, DiffAware {
     }
 
     var downloadFile: Bool = true
-
-    // MARK: - DeepDiff DiffAware
-    typealias DiffId = String
-
-    var diffId: DiffId {
-        // Use file URL path as a stable identity across reloads
-        return url.path
-    }
-
-    static func compareContent(_ a: HexFile, _ b: HexFile) -> Bool {
-        // Consider content equal if name and date are the same
-        return a.name == b.name && a.date == b.date
-    }
 
     static func ==(lhs: HexFile, rhs: HexFile) -> Bool {
         return lhs.url == rhs.url && lhs.name == rhs.name

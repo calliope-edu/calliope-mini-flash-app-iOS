@@ -11,7 +11,7 @@ import Foundation
 class DefaultProgram: DownloadableHexFile {
 
     var loadableProgramName: String
-    var loadableProgramURL = UserDefaults.standard.string(forKey: SettingsKey.defaultProgramV3Url.rawValue)!
+    var loadableProgramURL: String
     var downloadFile: Bool = true
     
     lazy var downloadedHexFile: HexFile? = storedHexFileInitializer()

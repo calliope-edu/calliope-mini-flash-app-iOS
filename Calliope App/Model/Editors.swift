@@ -31,9 +31,12 @@ extension Editor {
 
 final class BlocksMiniEditor: Editor {
     public let name = "Calliope mini Blocks Editor"
-    public lazy var url: URL? = {
-        return URL(string: UserDefaults.standard.string(forKey: SettingsKey.blocksMiniEditorUrl.rawValue)!)
-    }()
+    public let url: URL?
+
+    init(url: URL?) {
+        self.url = url
+    }
+
     func download(_ request: URLRequest) -> EditorDownload? {
         LogNotify.log("Blocks Editor does not download a file, but communicates directly with the mini")
         return nil
@@ -46,9 +49,11 @@ final class BlocksMiniEditor: Editor {
 
 final class MakeCode: Editor {
     public let name = "MakeCode"
-    public lazy var url: URL? = {
-        return URL(string: UserDefaults.standard.string(forKey: SettingsKey.makecodeUrl.rawValue)!)
-    }()
+    public let url: URL?
+
+    init(url: URL?) {
+        self.url = url
+    }
 
     func download(_ request: URLRequest) -> EditorDownload? {
 //        LogNotify.log("\(request)")
@@ -73,10 +78,12 @@ final class MakeCode: Editor {
 
 // https://lab.open-roberta.org/c0d66d4c-5cc9-4ed9-9b7d-6940aa291f4a
 final class RobertaEditor: Editor {
-    public let name = "Open Roberta NEPO®"
-    public lazy var url: URL? = {
-        return URL(string: UserDefaults.standard.string(forKey: SettingsKey.robertaUrl.rawValue)!)
-    }()
+    public let name = "Open Roberta Lab"
+    public let url: URL?
+
+    init(url: URL?) {
+        self.url = url
+    }
 
     func allowNavigation(_ request: URLRequest) -> Bool {
         guard let url = request.url else {
@@ -88,7 +95,7 @@ final class RobertaEditor: Editor {
     }
 
     func getNavigationTargetViewForRequest(_ request: URLRequest) -> NavigationTargetView {
-        guard let url = request.url, let robertaEditorUrlPrefix = UserDefaults.standard.string(forKey: SettingsKey.robertaUrl.rawValue) else {
+        guard let url = request.url, let robertaEditorUrlPrefix = self.url?.absoluteString else {
             return NavigationTargetView.externalWebView
         }
 
@@ -119,9 +126,11 @@ final class RobertaEditor: Editor {
 
 final class MicroPython: Editor {
     public let name = "MicroPython"
-    public lazy var url: URL? = {
-        return URL(string: UserDefaults.standard.string(forKey: SettingsKey.microPythonUrl.rawValue)!)
-    }()
+    public let url: URL?
+
+    init(url: URL?) {
+        self.url = url
+    }
    
 
     
@@ -140,7 +149,7 @@ final class MicroPython: Editor {
 ///
 /// The campus home and every campus-hosted editor flavour live on the SAME
 /// deployment, so they all derive from the single `campusUrl` preference —
-/// bumping the deployment is then one edit (`Settings.defaultCampusUrl`)
+/// bumping the deployment is then one edit (`SettingsDefaults.campusUrl`)
 /// instead of one per editor, and the set can never end up half-migrated.
 enum CampusRoute {
 
@@ -153,9 +162,9 @@ enum CampusRoute {
     /// origin also means the deployment bump reaches those installs, which
     /// `UserDefaults.register(defaults:)` alone would not — a value the user (or
     /// an older build) has written wins over a registered default forever.
-    static func url(path: String) -> URL? {
-        guard let configured = UserDefaults.standard.string(forKey: SettingsKey.campusUrl.rawValue),
-              var components = URLComponents(string: configured),
+    static func url(path: String, on campus: URL?) -> URL? {
+        guard let campus,
+              var components = URLComponents(url: campus, resolvingAgainstBaseURL: false),
               components.scheme != nil, components.host != nil
         else {
             return nil
@@ -177,11 +186,12 @@ enum CampusRoute {
 protocol CampusBridgedEditor: Editor {
     /// Route under the campus origin. "" is the campus home.
     var campusPath: String { get }
+    var campusUrl: URL? { get }
 }
 
 extension CampusBridgedEditor {
     var url: URL? {
-        return CampusRoute.url(path: campusPath)
+        return CampusRoute.url(path: campusPath, on: campusUrl)
     }
 
     /// Campus never hands a file to the app on the flash path — the bridge does
@@ -189,7 +199,7 @@ extension CampusBridgedEditor {
     /// MakeCode flavour can still trigger a classic hex download (e.g. "save to
     /// computer"), and capturing it is strictly better than dropping it.
     func download(_ request: URLRequest) -> EditorDownload? {
-        return MakeCode().download(request)
+        return MakeCode(url: nil).download(request)
     }
 
     func isBackNavigation(_ request: URLRequest) -> Bool {
@@ -200,28 +210,50 @@ extension CampusBridgedEditor {
 final class CampusEditor: CampusBridgedEditor {
     public let name = "Calliope Campus"
     public let campusPath = ""
+    public let campusUrl: URL?
+
+    init(campusUrl: URL?) {
+        self.campusUrl = campusUrl
+    }
 }
 
 final class CampusBlocksEditor: CampusBridgedEditor {
     public let name = "Campus Blocks"
     public let campusPath = "blocks"
+    public let campusUrl: URL?
+
+    init(campusUrl: URL?) {
+        self.campusUrl = campusUrl
+    }
 }
 
 final class CampusMakeCodeEditor: CampusBridgedEditor {
     public let name = "Campus MakeCode"
     public let campusPath = "makecode"
+    public let campusUrl: URL?
+
+    init(campusUrl: URL?) {
+        self.campusUrl = campusUrl
+    }
 }
 
 final class CampusPythonEditor: CampusBridgedEditor {
     public let name = "Campus Python"
     public let campusPath = "python"
+    public let campusUrl: URL?
+
+    init(campusUrl: URL?) {
+        self.campusUrl = campusUrl
+    }
 }
 
 final class ArcadeEditor: Editor {
-    public let name = "MakeCode Arcade"
-    public lazy var url: URL? = {
-        return URL(string: "https://arcade.makecode.com")
-    }()
+    public let name = "Arcade"
+    public let url: URL?
+
+    init(url: URL?) {
+        self.url = url
+    }
     
     func download(_ request: URLRequest) -> EditorDownload? {
         guard let s = request.url?.absoluteString else {

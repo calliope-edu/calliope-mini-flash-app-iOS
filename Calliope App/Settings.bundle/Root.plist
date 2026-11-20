@@ -40,7 +40,7 @@
 			<key>Key</key>
 			<string>arcadeUrlPreference</string>
 			<key>DefaultValue</key>
-			<string>https://arcade.makecode.com</string>
+			<string>https://arcade.calliope.cc</string>
 			<key>KeyboardType</key>
 			<string>URL</string>
 			<key>AutocapitalizationType</key>
@@ -140,7 +140,7 @@
 			<key>Key</key>
 			<string>campusOnUrlPreference</string>
 			<key>DefaultValue</key>
-			<string>https://rc-v1-1-3.calliope-campus.pages.dev</string>
+			<string>https://campus.calliope.cc</string>
 			<key>KeyboardType</key>
 			<string>URL</string>
 			<key>AutocapitalizationType</key>
@@ -285,6 +285,20 @@
 			<string>resetSettingsPreference</string>
 			<key>DefaultValue</key>
 			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Legal</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+			<key>Title</key>
+			<string>Acknowledgements</string>
+			<key>File</key>
+			<string>Acknowledgements</string>
 		</dict>
 	</array>
 </dict>

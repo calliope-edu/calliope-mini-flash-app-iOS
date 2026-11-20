@@ -1,0 +1,164 @@
+//
+//  WBMessageHandler.swift
+//  Based on WBManager.swift from WebBLE.
+//
+//  Copyright 2016-2017 Paul Theriault and David Park.
+//  Modified by Calliope gGmbH, 2026.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+//
+
+import Foundation
+import Combine
+import CoreBluetooth
+import WebKit
+import Dispatch
+
+open class WBMessageHandler: NSObject, WKScriptMessageHandler
+{
+    private weak var webView: WBWebView?
+    private let connection: DeviceConnectionService
+    private var disconnectSubscription: AnyCancellable?
+    
+    init(webView: WBWebView, connection: DeviceConnectionService) {
+        self.webView = webView
+        self.connection = connection
+        super.init()
+        disconnectSubscription = connection.deviceDisconnected.sink { [weak self] uuid in
+            self?.onDeviceDisconnect(uuid)
+        }
+    }
+    
+    // MARK: - Embedded types
+    enum ManagerRequests: String {
+        case device, requestDevice, getAvailability
+    }
+    
+    enum DeviceRequests: String {
+        case connectGATT, disconnectGATT, getPrimaryServices,
+        getCharacteristic, getCharacteristics, readCharacteristicValue, startNotifications,
+        stopNotifications,
+        writeCharacteristicValue
+    }
+    
+    // MARK: - WKScriptMessageHandler
+    open func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        
+        guard let trans = WBTransaction(withMessage: message) else {
+            /* The transaction will have handled the error */
+            return
+        }
+        
+        self.triageManagerRequests(transaction: trans)
+    }
+    
+    // MARK: - Private
+    private func triageManagerRequests(transaction: WBTransaction){
+        
+        guard
+            transaction.typeComponents.count > 0,
+            let managerMessageType = ManagerRequests(
+                rawValue: transaction.typeComponents[0])
+        else {
+            transaction.resolveAsFailure(withMessage: "Request type components not recognised \(transaction.typeComponents)")
+            return
+        }
+        
+        switch managerMessageType
+        {
+        case .device:
+            triageDeviceRequests(transaction: transaction)
+        case .getAvailability:
+            let bluetoothEnabled = connection.isBluetoothAvailable
+            transaction.resolveAsSuccess(withObject: bluetoothEnabled)
+        case .requestDevice:
+            let connectedCalliope = connection.currentCalliope
+            if(connectedCalliope != nil && connectedCalliope is BLECalliope) {
+                transaction.resolveAsSuccess(withObject: connectedCalliope! as! BLECalliope)
+            }
+            else {
+                transaction.resolveAsFailure(withMessage: "Not connected")
+            }
+        }
+    }
+    
+    func triageDeviceRequests(transaction: WBTransaction) {
+        let tc = transaction.typeComponents
+        guard
+            tc.count > 1,
+            let deviceMessageType = DeviceRequests(rawValue: tc[1])
+        else {
+            transaction.resolveAsFailure(withMessage: "Unknown request type \(tc.joined(separator: ":"))")
+            return
+        }
+        
+        guard let calliope = connection.currentCalliope as? BLECalliope else {
+            transaction.resolveAsFailure(withMessage: "There is no bluetooth device connected!")
+            LogNotify.log("WB Bluetooth device call although no device was connected", level: LogNotify.LEVEL.ERROR)
+            return
+        }
+
+        switch deviceMessageType {
+        case .connectGATT:
+            LogNotify.log("Webview tries to connect to GATT", level: LogNotify.LEVEL.DEBUG)
+            // already ensured that the app is connected to the calliope
+            transaction.resolveAsSuccess();
+            
+        case .disconnectGATT:
+            LogNotify.log("Webview tries to disconnect to GATT", level: LogNotify.LEVEL.DEBUG)
+            // the webview is not allowed to disconnect the app
+            transaction.resolveAsSuccess();
+            
+        case .getPrimaryServices:
+            calliope.getPrimaryServices(transaction: transaction)
+
+        case .getCharacteristic:
+            calliope.getCharacteristic(transaction: transaction)
+
+        case .getCharacteristics:
+            calliope.getCharacteristics(transaction: transaction)
+
+        case .readCharacteristicValue:
+            calliope.readCharacteristicValue(transaction: transaction)
+
+        case .writeCharacteristicValue:
+            calliope.writeCharacteristicValue(transaction: transaction)
+
+        case .startNotifications:
+            calliope.startNotifications(transaction: transaction, onNotificationCallback: onNotificationReceived)
+            
+        case .stopNotifications:
+            calliope.stopNotifications(transaction: transaction)
+        }
+    }
+    
+    func onNotificationReceived(deviceUUID: String, characteristicUUID: String, characteristicValue: String) {
+        guard let webView = self.webView else {
+            LogNotify.log("No webview attached to this message handler. This should not happen.", level: LogNotify.LEVEL.ERROR)
+            return
+        }
+        webView.threadsafeEvaluateJavaScript("receiveCharacteristicValueNotification(" +
+                "'\(deviceUUID)', " +
+                "\(characteristicUUID.lowercased().jsonify()), " +
+                "\(characteristicValue)" +
+                ")")
+    }
+    
+    func onDeviceDisconnect(_ uuid: String) {
+        guard let webView = self.webView else {
+            LogNotify.log("No webview attached to this message handler. This should not happen.", level: LogNotify.LEVEL.ERROR)
+            return
+        }
+        webView.threadsafeEvaluateJavaScript("window.receiveDeviceDisconnectEvent('\(uuid)');\n")
+    }
+}

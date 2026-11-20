@@ -1,0 +1,66 @@
+//
+//  DataLoggerInfoView.swift
+//  Calliope App
+//
+//  Created by Calliope on 18.08.26.
+//  Copyright © 2026 calliope. All rights reserved.
+//
+
+import Foundation
+import SwiftUI
+
+struct DataLoggerInfoView: View {
+    let navigator: any SensordataNavigator
+
+    var body: some View {
+        AdaptiveColumnLayout {
+            VStack(spacing: 8) {
+                Image("calliope_datalogger_extension")
+                    .resizable().scaledToFit().frame(maxHeight: 200)
+            }
+        } right: {
+            VStack(alignment: .leading, spacing: 16) {
+                Text("How it works").fontWeight(.bold)
+                Text(
+                    "With the datalogger extension the Calliope mini 3 can record data. Afterwards you can transfer it to the app and view it in a table."
+                )
+
+                HStack(alignment: .center) {
+                    Image("num_01").resizable().scaledToFit().frame(maxHeight: 35)
+                    Text("Use the example program, or create your own MakeCode project and add the DataLogger Extension.")
+                }
+
+                Button("Open Example Program") {
+                    navigator.push(.infoWebView(url: URL(string: "https://makecode.calliope.cc/#pub:_Dv9J1xCp6HRy")!))
+                }
+                .buttonStyle(.pill)
+                .frame(maxWidth: .infinity)
+
+                HStack(alignment: .center) {
+                    Image("num_02").resizable().scaledToFit().frame(maxHeight: 35)
+                    Text(
+                        "Create the program with the respective data and define the required columns and set the corresponding sensor data as values."
+                    )
+                }
+
+                HStack(alignment: .center) {
+                    Image("num_03").resizable().scaledToFit().frame(maxHeight: 35)
+                    Text("Transfer the program to your Calliope mini.")
+                }
+
+                HStack(alignment: .center) {
+                    Image("num_04").resizable().scaledToFit().frame(maxHeight: 35)
+                    Text("Press \"Show Data\" on the Sensordata page to display the recorded data, or \"Import Data\" to open a MY_DATA.HTM file.")
+                }
+            }
+        }
+    }
+
+}
+
+struct DataLoggerInfoView_Previews: PreviewProvider {
+    static var previews: some View {
+        DataLoggerInfoView(navigator: Router<ProjectAndSensorsRoute>()).previewInterfaceOrientation(.landscapeLeft)
+        DataLoggerInfoView(navigator: Router<ProjectAndSensorsRoute>()).previewInterfaceOrientation(.portrait)
+    }
+}
