@@ -15,7 +15,10 @@ struct ArcadeView<viewModelType: ArcadeViewModelProtocol & ObservableObject>: Vi
     var body: some View {
         AdaptiveColumnLayout {
             VStack {
-                Text("With MakeCode Arcade, you can create games for your Calliope mini and play them with an additional display or even a game console. The files can only be transferred via USB cable.").fontWeight(.bold)
+                Text("Game development with MakeCode Arcade")
+                    .font(.custom("RobotoCondensed-Bold", size: 22, relativeTo: .title2))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text("With MakeCode Arcade, you can create games for your Calliope mini and play them with an additional display or even a game console.")
                 SizedBox(height: 8)
                 Image("Arcade_Homescreen")
             }
@@ -23,28 +26,20 @@ struct ArcadeView<viewModelType: ArcadeViewModelProtocol & ObservableObject>: Vi
             VStack {
                 Image("editors_swift")
                 SizedBox(height: 8)
-                boxButton(label: "Let's get started!", iconName: nil, action: {viewModel.openArcadeButtonTapped()}, backgroundColor: Color.calliopePink)
+                pillButton(label: "Let's get started!", action: { viewModel.openArcadeButtonTapped() })
             }
         }
     }
 
-    func boxButton(label: String, iconName: String?, action: @escaping () -> Void, backgroundColor: Color = Color.calliopeGreen) -> some View {
-        return Button {
+    func pillButton(label: String, action: @escaping () -> Void) -> some View {
+        Button {
             action()
         } label: {
-            HStack {
-                Text(LocalizedStringKey(label))  // need the LocalizedStringKey, so it is translated to German
-                if iconName != nil {
-                    (Image(iconName!))
-                        .resizable().scaledToFit().frame(width: 30, height: 30)
-                }
-            }
-            .padding()
-            .padding(.horizontal, 16)
-            .background(backgroundColor)
-            .foregroundColor(.white)
-            .cornerRadius(12)
-
+            Text(LocalizedStringKey(label))  // need the LocalizedStringKey, so it is translated to German
+                .padding(.vertical, 12)
+                .padding(.horizontal, 24)
+                .background(Color.calliopeDarkgreen, in: Capsule())
+                .foregroundColor(.white)
         }
     }
 }

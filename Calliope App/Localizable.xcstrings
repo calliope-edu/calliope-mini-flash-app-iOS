@@ -1486,6 +1486,16 @@
         }
       }
     },
+    "Game development with MakeCode Arcade" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spieleentwicklung mit MakeCode Arcade"
+          }
+        }
+      }
+    },
     "Gesture" : {
       "localizations" : {
         "de" : {
@@ -3105,7 +3115,18 @@
         }
       }
     },
+    "With MakeCode Arcade, you can create games for your Calliope mini and play them with an additional display or even a game console." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mit MakeCode Arcade kannst du Spiele für deinen Calliope mini erstellen und sie mit einem zusätzlichen Display oder sogar einer Spielekonsole spielen."
+          }
+        }
+      }
+    },
     "With MakeCode Arcade, you can create games for your Calliope mini and play them with an additional display or even a game console. The files can only be transferred via USB cable." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
