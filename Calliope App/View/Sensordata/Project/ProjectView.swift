@@ -76,8 +76,6 @@ struct ProjectView: View {
             Label("Record sensor data", systemImage: "plus")
         }
         .buttonStyle(.pill)
-        .disabled(!viewModel.addGroupButtonEnabled)
-
     }
 
 }
