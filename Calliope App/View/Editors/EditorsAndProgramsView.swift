@@ -151,16 +151,16 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
 
     func editorsGrid(isLandscape: Bool) -> some View {
         LazyVGrid(columns: editorColumns, spacing: isLandscape ? 80 : 20) {
-            ForEach(0..<viewModel.editors.count) { i in
+            ForEach(viewModel.editors, id: \.name) { editor in
                 SwiftUI.Group {
-                    if viewModel.editors[i].name == "Scan" {
-                        EditorTile(config: viewModel.editors[i], infoText: NSLocalizedString("Open a program in MakeCode using a QR code. Simply scan it and off you go!", comment: ""))
+                    if editor.name == "Scan" {
+                        EditorTile(config: editor, infoText: NSLocalizedString("Open a program in MakeCode using a QR code. Simply scan it and off you go!", comment: ""))
                             .onTapGesture {
                                 router.push(.qrCodeView)
                             }
                     } else {
-                        EditorTile(config: viewModel.editors[i]).onTapGesture {
-                            switch viewModel.editors[i].name {
+                        EditorTile(config: editor).onTapGesture {
+                            switch editor.name {
                             case "MakeCode":
                                 router.push(.makeCode)
                             case "Open Roberta Lab":
@@ -178,7 +178,7 @@ struct EditorsAndProgramsView<viewModelType: EditorsAndProgramsViewModelProtocol
                     }
                 }
                 .anchorPreference(key: MakeCodeGroupBoundsKey.self, value: .bounds) { bounds in
-                    ["MakeCode", "Scan"].contains(viewModel.editors[i].name) ? [bounds] : []
+                    ["MakeCode", "Scan"].contains(editor.name) ? [bounds] : []
                 }
             }
         }

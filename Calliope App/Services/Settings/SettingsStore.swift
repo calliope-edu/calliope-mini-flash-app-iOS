@@ -19,6 +19,9 @@ protocol SettingsStore: AnyObject {
     var blocksMiniEditorUrl: URL? { get }
     var campusUrl: URL? { get }
     var arcadeUrl: URL? { get }
+    var isMakeCodeEnabled: Bool { get }
+    var isRobertaEnabled: Bool { get }
+    var isArcadeEnabled: Bool { get }
 }
 
 final class UserDefaultsSettingsStore: SettingsStore {
@@ -80,5 +83,17 @@ final class UserDefaultsSettingsStore: SettingsStore {
 
     var arcadeUrl: URL? {
         URL(string: defaults.string(forKey: SettingsKey.arcadeUrl.rawValue) ?? SettingsDefaults.arcadeUrl)
+    }
+
+    var isMakeCodeEnabled: Bool {
+        defaults.object(forKey: SettingsKey.makeCode.rawValue) as? Bool ?? SettingsDefaults.makeCodeEnabled
+    }
+
+    var isRobertaEnabled: Bool {
+        defaults.object(forKey: SettingsKey.roberta.rawValue) as? Bool ?? SettingsDefaults.robertaEnabled
+    }
+
+    var isArcadeEnabled: Bool {
+        defaults.object(forKey: SettingsKey.arcade.rawValue) as? Bool ?? SettingsDefaults.arcadeEnabled
     }
 }

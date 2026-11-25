@@ -20,4 +20,7 @@ final class FakeSettingsStore: SettingsStore {
     var blocksMiniEditorUrl = URL(string: "https://blocks.example.com/")
     var campusUrl = URL(string: "https://campus.example.com")
     var arcadeUrl = URL(string: "https://arcade.example.com")
+    var isMakeCodeEnabled = true
+    var isRobertaEnabled = true
+    var isArcadeEnabled = true
 }

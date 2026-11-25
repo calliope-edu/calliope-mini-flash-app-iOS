@@ -125,4 +125,20 @@ final class UserDefaultsSettingsStoreTests: XCTestCase {
     func testNewsUrlFallsBackToTheBuiltInUrl() {
         XCTAssertEqual(store.newsUrl, URL(string: SettingsDefaults.newsUrl))
     }
+
+    func testEditorSwitchesReflectThePreferences() {
+        defaults.set(false, forKey: SettingsKey.makeCode.rawValue)
+        defaults.set(false, forKey: SettingsKey.roberta.rawValue)
+        defaults.set(false, forKey: SettingsKey.arcade.rawValue)
+
+        XCTAssertFalse(store.isMakeCodeEnabled)
+        XCTAssertFalse(store.isRobertaEnabled)
+        XCTAssertFalse(store.isArcadeEnabled)
+    }
+
+    func testEditorsAreEnabledByDefault() {
+        XCTAssertTrue(store.isMakeCodeEnabled)
+        XCTAssertTrue(store.isRobertaEnabled)
+        XCTAssertTrue(store.isArcadeEnabled)
+    }
 }

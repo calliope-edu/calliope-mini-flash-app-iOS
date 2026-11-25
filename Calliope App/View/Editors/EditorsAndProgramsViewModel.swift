@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 import SwiftUI
 
 struct EditorTileConfig {
@@ -36,14 +37,7 @@ protocol EditorsAndProgramsViewModelProtocol {
 
 class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, ObservableObject, @preconcurrency Alertable {
 
-    @Published var editors: [EditorTileConfig] = [
-        EditorTileConfig(name: "Calliope mini Blocks", iconName: "editors_blocks_transparent", backgroundColor: Color.white, imageSize: 0.9),
-        EditorTileConfig(name: "MakeCode", iconName: "editors_makecode"),
-        EditorTileConfig(name: "Scan", iconName: "qr_code_scan_button", backgroundColor: Color.white, imageSize: 0.65),
-        EditorTileConfig(name: "Micropython", iconName: "editors_python"),
-        EditorTileConfig(name: "Arcade", iconName: "editors_swift"),
-        EditorTileConfig(name: "Open Roberta Lab", iconName: "editors_nepo")
-    ]
+    @Published var editors: [EditorTileConfig] = []
 
     @Published var alert: AppAlert? = nil
     var alertBinding: Binding<AppAlert?> {
@@ -55,10 +49,40 @@ class EditorsAndProgramsViewModel: EditorsAndProgramsViewModelProtocol, Observab
 
     private let uploadViewModel: UploadViewModel
     private let settings: SettingsStore
+    private var settingsObserver: AnyCancellable?
 
-    init(uploadViewModel: UploadViewModel, settings: SettingsStore) {
+    init(uploadViewModel: UploadViewModel, settings: SettingsStore, notificationCenter: NotificationCenter = .default) {
         self.uploadViewModel = uploadViewModel
         self.settings = settings
+        editors = enabledEditors()
+        // Also posted when the user returns from changing the switches in the Settings app
+        settingsObserver = notificationCenter.publisher(for: UserDefaults.didChangeNotification)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.reloadEditors() }
+    }
+
+    private func reloadEditors() {
+        let enabled = enabledEditors()
+        if enabled.map(\.name) != editors.map(\.name) {
+            editors = enabled
+        }
+    }
+
+    private func enabledEditors() -> [EditorTileConfig] {
+        var editors = [EditorTileConfig(name: "Calliope mini Blocks", iconName: "editors_blocks_transparent", backgroundColor: Color.white, imageSize: 0.9)]
+        if settings.isMakeCodeEnabled {
+            // Scanned codes always open in MakeCode
+            editors.append(EditorTileConfig(name: "MakeCode", iconName: "editors_makecode"))
+            editors.append(EditorTileConfig(name: "Scan", iconName: "qr_code_scan_button", backgroundColor: Color.white, imageSize: 0.65))
+        }
+        editors.append(EditorTileConfig(name: "Micropython", iconName: "editors_python"))
+        if settings.isArcadeEnabled {
+            editors.append(EditorTileConfig(name: "Arcade", iconName: "editors_swift"))
+        }
+        if settings.isRobertaEnabled {
+            editors.append(EditorTileConfig(name: "Open Roberta Lab", iconName: "editors_nepo"))
+        }
+        return editors
     }
 
     func uploadDefaultV3Program() {
