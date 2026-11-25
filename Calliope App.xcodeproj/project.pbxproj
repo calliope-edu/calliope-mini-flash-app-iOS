@@ -10,8 +10,8 @@
 		1F0DF42AE360D626C22B07CC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F99A3887E27CA071FDC4D19 /* Foundation.framework */; };
 		604938BE2E1BAF6C008BCE40 /* DummyModules in Frameworks */ = {isa = PBXBuildFile; productRef = 604938BD2E1BAF6C008BCE40 /* DummyModules */; };
 		604938C02E1BAF6C008BCE40 /* ScratchLinkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 604938BF2E1BAF6C008BCE40 /* ScratchLinkKit */; };
-		8823E37DD10F45F839AD2121 /* Pods_Calliope_AppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C08714ABB55868EBB7300B55 /* Pods_Calliope_AppTests.framework */; };
-		B16DD0D6E28647BDAC9EA8CB /* Pods_Calliope_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B15F9E6DE42C49A76EC47B /* Pods_Calliope_App.framework */; };
+		608EDC4630B73D6F0088BACC /* NordicDFU in Frameworks */ = {isa = PBXBuildFile; productRef = 608EDC4530B73D6F0088BACC /* NordicDFU */; };
+		608EDC4930B73E1F0088BACC /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 608EDC4830B73E1F0088BACC /* GRDB */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,14 +26,8 @@
 
 /* Begin PBXFileReference section */
 		2F61450C22BF75DE001C2734 /* Calliope App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Calliope App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		36B15F9E6DE42C49A76EC47B /* Pods_Calliope_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Calliope_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3849EA7340C0FAB5DB1A4000 /* Pods-Calliope App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.debug.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.debug.xcconfig"; sourceTree = "<group>"; };
-		394E26993699A879C976DAFE /* Pods-Calliope AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope AppTests.debug.xcconfig"; path = "Target Support Files/Pods-Calliope AppTests/Pods-Calliope AppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		604938B42E1BAF1D008BCE40 /* ScratchLinkKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ScratchLinkKit; sourceTree = "<group>"; };
-		7C89FDCADE4B0E20C4BB76D8 /* Pods-Calliope AppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope AppTests.release.xcconfig"; path = "Target Support Files/Pods-Calliope AppTests/Pods-Calliope AppTests.release.xcconfig"; sourceTree = "<group>"; };
 		9F99A3887E27CA071FDC4D19 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		BD1AFC4008F992EADC1C557D /* Pods-Calliope App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calliope App.release.xcconfig"; path = "Target Support Files/Pods-Calliope App/Pods-Calliope App.release.xcconfig"; sourceTree = "<group>"; };
-		C08714ABB55868EBB7300B55 /* Pods_Calliope_AppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Calliope_AppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F86D92A0CAA799DBE4966CB2 /* Calliope AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Calliope AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -61,7 +55,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F0DF42AE360D626C22B07CC /* Foundation.framework in Frameworks */,
-				8823E37DD10F45F839AD2121 /* Pods_Calliope_AppTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,9 +62,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B16DD0D6E28647BDAC9EA8CB /* Pods_Calliope_App.framework in Frameworks */,
 				604938C02E1BAF6C008BCE40 /* ScratchLinkKit in Frameworks */,
+				608EDC4630B73D6F0088BACC /* NordicDFU in Frameworks */,
 				604938BE2E1BAF6C008BCE40 /* DummyModules in Frameworks */,
+				608EDC4930B73E1F0088BACC /* GRDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,9 +75,7 @@
 		2521C112B48B4BBD7252C3D2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				36B15F9E6DE42C49A76EC47B /* Pods_Calliope_App.framework */,
 				87C153F291D9538CEE2047EE /* iOS */,
-				C08714ABB55868EBB7300B55 /* Pods_Calliope_AppTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -94,7 +86,6 @@
 				D27C149EB4184041A986ECD9 /* Calliope App */,
 				604938B32E1BAF16008BCE40 /* Packages */,
 				2F61450D22BF75DE001C2734 /* Products */,
-				5764819361F6510AB656C448 /* Pods */,
 				2521C112B48B4BBD7252C3D2 /* Frameworks */,
 				4DB7183A9E47407A49DCE399 /* Calliope AppTests */,
 			);
@@ -107,17 +98,6 @@
 				F86D92A0CAA799DBE4966CB2 /* Calliope AppTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		5764819361F6510AB656C448 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				3849EA7340C0FAB5DB1A4000 /* Pods-Calliope App.debug.xcconfig */,
-				BD1AFC4008F992EADC1C557D /* Pods-Calliope App.release.xcconfig */,
-				7C89FDCADE4B0E20C4BB76D8 /* Pods-Calliope AppTests.release.xcconfig */,
-				394E26993699A879C976DAFE /* Pods-Calliope AppTests.debug.xcconfig */,
-			);
-			path = Pods;
 			sourceTree = "<group>";
 		};
 		604938B32E1BAF16008BCE40 /* Packages */ = {
@@ -143,11 +123,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2F61452022BF75DF001C2734 /* Build configuration list for PBXNativeTarget "Calliope App" */;
 			buildPhases = (
-				5FC9862E769719F976D4061C /* [CP] Check Pods Manifest.lock */,
 				2F61450822BF75DE001C2734 /* Sources */,
 				2F61450922BF75DE001C2734 /* Frameworks */,
 				2F61450A22BF75DE001C2734 /* Resources */,
-				B5A7FEA0A7651CADF61E9B39 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -157,6 +135,10 @@
 				D27C149EB4184041A986ECD9 /* Calliope App */,
 			);
 			name = "Calliope App";
+			packageProductDependencies = (
+				608EDC4530B73D6F0088BACC /* NordicDFU */,
+				608EDC4830B73E1F0088BACC /* GRDB */,
+			);
 			productName = "Calliope App";
 			productReference = 2F61450C22BF75DE001C2734 /* Calliope App.app */;
 			productType = "com.apple.product-type.application";
@@ -165,7 +147,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B81CDE9C40A923FC4BECA485 /* Build configuration list for PBXNativeTarget "Calliope AppTests" */;
 			buildPhases = (
-				A1F9F6B95A63E11958D3E32F /* [CP] Check Pods Manifest.lock */,
 				CCA4B3F7A80F7BA6B581D4AD /* Sources */,
 				103964F970AA1AD68AAC909A /* Frameworks */,
 				BEEFE2EAA29F2BE48FF60829 /* Resources */,
@@ -323,6 +304,8 @@
 			mainGroup = 2F61450322BF75DE001C2734;
 			packageReferences = (
 				604938BC2E1BAF6C008BCE40 /* XCLocalSwiftPackageReference "Packages/ScratchLinkKit" */,
+				608EDC4430B73D6F0088BACC /* XCRemoteSwiftPackageReference "IOS-DFU-Library" */,
+				608EDC4730B73E1F0088BACC /* XCRemoteSwiftPackageReference "GRDB.swift" */,
 			);
 			productRefGroup = 2F61450D22BF75DE001C2734 /* Products */;
 			projectDirPath = "";
@@ -350,74 +333,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		5FC9862E769719F976D4061C /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Calliope App-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A1F9F6B95A63E11958D3E32F /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Calliope AppTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B5A7FEA0A7651CADF61E9B39 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Calliope App/Pods-Calliope App-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Calliope App/Pods-Calliope App-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Calliope App/Pods-Calliope App-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2F61450822BF75DE001C2734 /* Sources */ = {
@@ -448,7 +363,6 @@
 /* Begin XCBuildConfiguration section */
 		1D0F9581EF4F2A80AA22E169 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7C89FDCADE4B0E20C4BB76D8 /* Pods-Calliope AppTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -593,7 +507,6 @@
 		};
 		2F61452122BF75DF001C2734 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3849EA7340C0FAB5DB1A4000 /* Pods-Calliope App.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Calliope App/Calliope App.entitlements";
@@ -621,7 +534,6 @@
 		};
 		2F61452222BF75DF001C2734 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BD1AFC4008F992EADC1C557D /* Pods-Calliope App.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Calliope App/Calliope AppRelease.entitlements";
@@ -647,7 +559,6 @@
 		};
 		4D72D1A57341FEBE74FF6215 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 394E26993699A879C976DAFE /* Pods-Calliope AppTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -703,6 +614,25 @@
 		};
 /* End XCLocalSwiftPackageReference section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		608EDC4430B73D6F0088BACC /* XCRemoteSwiftPackageReference "IOS-DFU-Library" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nordicsemi/IOS-DFU-Library";
+			requirement = {
+				kind = exactVersion;
+				version = 4.15.3;
+			};
+		};
+		608EDC4730B73E1F0088BACC /* XCRemoteSwiftPackageReference "GRDB.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/groue/GRDB.swift.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 6.29.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		604938BD2E1BAF6C008BCE40 /* DummyModules */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -711,6 +641,16 @@
 		604938BF2E1BAF6C008BCE40 /* ScratchLinkKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ScratchLinkKit;
+		};
+		608EDC4530B73D6F0088BACC /* NordicDFU */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 608EDC4430B73D6F0088BACC /* XCRemoteSwiftPackageReference "IOS-DFU-Library" */;
+			productName = NordicDFU;
+		};
+		608EDC4830B73E1F0088BACC /* GRDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 608EDC4730B73E1F0088BACC /* XCRemoteSwiftPackageReference "GRDB.swift" */;
+			productName = GRDB;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
