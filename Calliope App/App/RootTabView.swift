@@ -66,6 +66,8 @@ struct RootTabView: View {
             .tint(Color("calliope-lilablau"))
             
             MatrixConnectionView(viewModel: matrixConnectionViewModel)
+                // Keeps the panel unaffected by the Campus tab's dark window override
+                .environment(\.colorScheme, .light)
                 .offset(x: -8, y: tabsShowingSubpage.contains(coordinator.selectedTab) ? 8 : 0)
                 // The navigation push/pop transaction would otherwise animate the offset too
                 .animation(nil, value: tabsShowingSubpage.contains(coordinator.selectedTab))
