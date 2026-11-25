@@ -421,12 +421,17 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate {
     // MARK: state of =the bluetooth manager
 
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        bluetoothStateDidChange()
+    }
+
+    func bluetoothStateDidChange() {
+        let bluetoothState = centralManager.state
         // Notify about Bluetooth state change
         updateQueue.async {
-            self.bluetoothStateChangedBlock(central.state)
+            self.bluetoothStateChangedBlock(bluetoothState)
         }
 
-        switch central.state {
+        switch bluetoothState {
         case .poweredOn:
             startCalliopeDiscovery()
             if lastConnected != nil {
