@@ -705,6 +705,16 @@ extension EditorWebView: WKNavigationDelegate {
 extension EditorWebView: WKUIDelegate {
     func webView(
         _ webView: WKWebView,
+        requestMediaCapturePermissionFor origin: WKSecurityOrigin,
+        initiatedByFrame frame: WKFrameInfo,
+        type: WKMediaCaptureType,
+        decisionHandler: @escaping (WKPermissionDecision) -> Void
+    ) {
+        decisionHandler(MediaCapturePolicy.decision(for: origin))
+    }
+
+    func webView(
+        _ webView: WKWebView,
         runJavaScriptAlertPanelWithMessage message: String,
         initiatedByFrame frame: WKFrameInfo,
         completionHandler: @escaping () -> Void

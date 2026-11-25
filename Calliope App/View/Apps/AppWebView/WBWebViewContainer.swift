@@ -192,6 +192,10 @@ final class WBWebViewContainer: UIView, WKNavigationDelegate, WKUIDelegate {
         alertPublisher.alert = .ok(title: message, completion: completionHandler)
     }
 
+    func webView(_ webView: WKWebView, requestMediaCapturePermissionFor origin: WKSecurityOrigin, initiatedByFrame frame: WKFrameInfo, type: WKMediaCaptureType, decisionHandler: @escaping (WKPermissionDecision) -> Void) {
+        decisionHandler(MediaCapturePolicy.decision(for: origin))
+    }
+
     // MARK: - Private Helpers
 
     private func updateScrollEnabled() {
