@@ -17,6 +17,7 @@ class AppsScreenViewModel: ObservableObject, Alertable {
 //        AppItem(tileItem: TileItem(title: "SPRACHROBOTER", imageSource: ImageSource.local("speak"), color: Color("calliope-orange"), textColor: .white), destination: .webApp(url: "https://cardboard.lofirobot.com/apps/talking-robots")),
         AppItem(tileItem: TileItem(title: "STEUERUNG PER COMPUTER", imageSource: ImageSource.local("control"), color: Color("calliope-turqoise"), textColor: .white), destination: .webApp(url: "https://go.calliope.cc/apps/control/index.html?mobile=true")),
         AppItem(tileItem: TileItem(title: "OBJEKTERKENNUNG MIT KÜNSTLICHER INTELLIGENZ", imageSource: ImageSource.local("teachablemachine"), color: Color("calliope-darkgreen"), textColor: .white), destination: .webApp(url: "https://teachablemachine.calliope.cc")),
+        AppItem(tileItem: TileItem(title: "BEWEGUNGSERKENNUNG MIT KÜNSTLICHER INTELLIGENZ", imageSource: ImageSource.local("teachablemachine"), color: Color("calliope-turqoise"), textColor: .white), destination: .webApp(url: "https://ki-training-dev.calliope.cc")),
     ])
 
     @Published var alert: AppAlert? = nil
