@@ -158,17 +158,24 @@ private struct CalliopeAlertCard: View {
     ) -> some View {
         if actions.count <= 2 {
             HStack(spacing: 12) {
-                ForEach(actions) { action in
+                ForEach(ordered(actions, cancelFirst: true)) { action in
                     alertButton(action, onSelect: onSelect)
                 }
             }
         } else {
             VStack(spacing: 12) {
-                ForEach(actions) { action in
+                ForEach(ordered(actions, cancelFirst: false)) { action in
                     alertButton(action, onSelect: onSelect)
                 }
             }
         }
+    }
+    
+    // Ensures cancel is either the first action or the last
+    private func ordered<Action: AlertActionType>(_ actions: [Action], cancelFirst: Bool) -> [Action] {
+        let cancel = actions.filter { $0.role == .cancel }
+        let others = actions.filter { $0.role != .cancel }
+        return cancelFirst ? cancel + others : others + cancel
     }
 
     private func alertButton<Action: AlertActionType>(
