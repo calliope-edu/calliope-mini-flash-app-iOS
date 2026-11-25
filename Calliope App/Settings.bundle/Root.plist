@@ -234,7 +234,7 @@
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 			<key>Title</key>
-			<string>Acknowledgements</string>
+			<string>Information</string>
 			<key>File</key>
 			<string>Acknowledgements</string>
 		</dict>
