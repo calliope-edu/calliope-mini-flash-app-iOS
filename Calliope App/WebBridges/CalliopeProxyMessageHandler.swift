@@ -1282,6 +1282,7 @@ private enum CampusUrls {
         "campus.calliope.cc",
         "campus-dev.calliope.cc",
         "teachablemachine.calliope.cc",
+        "ki-training-dev.calliope.cc",
     ]
 
     /// Mirrors Android `CampusUrls.isCampusUrl`, but split so it can gate a
