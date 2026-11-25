@@ -75,7 +75,7 @@ final class UserDefaultsSettingsStore: SettingsStore {
     }
 
     var campusUrl: URL? {
-        URL(string: defaults.string(forKey: SettingsKey.campusUrl.rawValue) ?? SettingsDefaults.campusUrl)
+        URL(string: SettingsDefaults.campusUrl)
     }
 
     var arcadeUrl: URL? {

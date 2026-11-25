@@ -5,27 +5,27 @@
 	<key>StringsTable</key>
 	<string>Settings</string>
 	<key>PreferenceSpecifiers</key>
-	       <array>
-			<dict>
-				<key>Type</key>
-				<string>PSToggleSwitchSpecifier</string>
-				<key>Title</key>
-				<string>Restore Last Matrix</string>
-				<key>Key</key>
-				<string>restoreLastMatrixPreference</string>
-				<key>DefaultValue</key>
-				<true/>
-			</dict>
-			<dict>
-				<key>Type</key>
-				<string>PSToggleSwitchSpecifier</string>
-				<key>Title</key>
-				<string>Enable Partial Flashing</string>
-				<key>Key</key>
-				<string>partialFlashingEnabled</string>
-				<key>DefaultValue</key>
-				<true/>
-			</dict>
+	<array>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Restore Last Matrix</string>
+			<key>Key</key>
+			<string>restoreLastMatrixPreference</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Enable Partial Flashing</string>
+			<key>Key</key>
+			<string>partialFlashingEnabled</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
 		<dict>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
@@ -123,68 +123,6 @@
 			<string>Enabled</string>
 			<key>Key</key>
 			<string>makecodeOnPreference</string>
-			<key>DefaultValue</key>
-			<true/>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-			<key>Title</key>
-			<string>Calliope Campus</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSTextFieldSpecifier</string>
-			<key>Title</key>
-			<string>Calliope Campus</string>
-			<key>Key</key>
-			<string>campusOnUrlPreference</string>
-			<key>DefaultValue</key>
-			<string>https://campus.calliope.cc</string>
-			<key>KeyboardType</key>
-			<string>URL</string>
-			<key>AutocapitalizationType</key>
-			<string>None</string>
-			<key>AutocorrectionType</key>
-			<string>No</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-			<key>Title</key>
-			<string>Enabled</string>
-			<key>Key</key>
-			<string>campusOnPreference</string>
-			<key>DefaultValue</key>
-			<true/>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-			<key>Title</key>
-			<string>Blocks (Campus)</string>
-			<key>Key</key>
-			<string>campusBlocksOnPreference</string>
-			<key>DefaultValue</key>
-			<true/>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-			<key>Title</key>
-			<string>MakeCode (Campus)</string>
-			<key>Key</key>
-			<string>campusMakecodeOnPreference</string>
-			<key>DefaultValue</key>
-			<true/>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-			<key>Title</key>
-			<string>Python (Campus)</string>
-			<key>Key</key>
-			<string>campusPythonOnPreference</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>

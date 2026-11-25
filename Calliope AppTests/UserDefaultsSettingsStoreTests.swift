@@ -98,10 +98,8 @@ final class UserDefaultsSettingsStoreTests: XCTestCase {
         XCTAssertEqual(store.robertaUrl, URL(string: "https://roberta.example.com/"))
         XCTAssertEqual(store.microPythonUrl, URL(string: "https://python.example.com/"))
         defaults.set("https://blocks.example.com/", forKey: SettingsKey.blocksMiniEditorUrl.rawValue)
-        defaults.set("https://campus.example.com", forKey: SettingsKey.campusUrl.rawValue)
 
         XCTAssertEqual(store.blocksMiniEditorUrl, URL(string: "https://blocks.example.com/"))
-        XCTAssertEqual(store.campusUrl, URL(string: "https://campus.example.com"))
     }
 
     func testEditorUrlsFallBackToTheBuiltInUrls() {
@@ -109,6 +107,12 @@ final class UserDefaultsSettingsStoreTests: XCTestCase {
         XCTAssertEqual(store.robertaUrl, URL(string: SettingsDefaults.robertaUrl))
         XCTAssertEqual(store.microPythonUrl, URL(string: SettingsDefaults.microPythonUrl))
         XCTAssertEqual(store.blocksMiniEditorUrl, URL(string: SettingsDefaults.blocksMiniEditorUrl))
+        XCTAssertEqual(store.campusUrl, URL(string: SettingsDefaults.campusUrl))
+    }
+
+    func testCampusUrlIgnoresAStoredPreference() {
+        defaults.set("https://campus.example.com", forKey: "campusOnUrlPreference")
+
         XCTAssertEqual(store.campusUrl, URL(string: SettingsDefaults.campusUrl))
     }
 

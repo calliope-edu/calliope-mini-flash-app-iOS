@@ -41,15 +41,4 @@ public enum SettingsKey: String, CaseIterable {
     
     case microPython = "microPythonOnPreference"
     case microPythonUrl = "microPythonUrlPreference"
-
-    case campus = "campusOnPreference"
-    case campusUrl = "campusOnUrlPreference"
-
-    // Campus-hosted flavours of the classic editors. They live under routes of
-    // the SAME deployment as `campusUrl` (/blocks, /makecode, /python), so they
-    // have no URL preference of their own — see `CampusRoute`. Only an on/off
-    // toggle each, so a release can hide them without a code change.
-    case campusBlocks = "campusBlocksOnPreference"
-    case campusMakeCode = "campusMakecodeOnPreference"
-    case campusPython = "campusPythonOnPreference"
 }

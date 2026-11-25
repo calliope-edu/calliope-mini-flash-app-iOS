@@ -33,15 +33,6 @@ enum SettingsDefaults {
     static let arcadeEnabled = true
     static let playgroundsEnabled = UIDevice.current.userInterfaceIdiom != .phone
     static let microPythonEnabled = UIDevice.current.userInterfaceIdiom != .phone
-    // Campus uses the native-proxy bridge for BLE/flash, so it works on
-    // iPhone too — the legacy iPad-only gate that other editors keep
-    // doesn't apply here.
-    static let campusEnabled = true
-    // The campus-hosted flavours of blocks / MakeCode / python. Same bridge, so
-    // same reasoning as `campusEnabled` — no iPad-only gate.
-    static let campusBlocksEnabled = true
-    static let campusMakeCodeEnabled = true
-    static let campusPythonEnabled = true
 
 
     static let restoreLastMatrixEnabled = true
@@ -80,18 +71,6 @@ enum SettingsDefaults {
             return microPythonEnabled
         case .microPythonUrl:
             return microPythonUrl
-
-        case .campus:
-            return campusEnabled
-        case .campusUrl:
-            return campusUrl
-
-        case .campusBlocks:
-            return campusBlocksEnabled
-        case .campusMakeCode:
-            return campusMakeCodeEnabled
-        case .campusPython:
-            return campusPythonEnabled
             
             
         case .appVersion:
