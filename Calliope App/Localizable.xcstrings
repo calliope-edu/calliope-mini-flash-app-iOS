@@ -963,6 +963,16 @@
         }
       }
     },
+    "Create Project" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Projekt erstellen"
+          }
+        }
+      }
+    },
     "Create the program with the respective data and define the required columns and set the corresponding sensor data as values." : {
       "localizations" : {
         "de" : {
@@ -1214,6 +1224,7 @@
       }
     },
     "Don't save" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

@@ -67,7 +67,7 @@ extension AppAlert {
                 defaultValue: defaultName,
                 actions: [
                     TextFieldAlertAction(NSLocalizedString("Save Program", comment: ""), handler: save),
-                    TextFieldAlertAction(NSLocalizedString("Don't save", comment: ""), handler: dontSave),
+                    TextFieldAlertAction(NSLocalizedString("Cancel", comment: ""), role: .cancel, handler: dontSave),
                 ]
             )
         )
@@ -87,7 +87,7 @@ extension AppAlert {
             message: NSLocalizedString("The program is downloaded. Do you want to upload it now?", comment: ""),
             actions: [
                 StandardAlertAction(NSLocalizedString("Yes", comment: ""), handler: upload),
-                StandardAlertAction(NSLocalizedString("No", comment: ""), handler: {}),
+                StandardAlertAction(NSLocalizedString("No", comment: ""), role: .cancel, handler: {}),
             ]
         )
     }
@@ -109,7 +109,7 @@ extension AppAlert {
             message: String(format: NSLocalizedString("Do you want to upload %@ to your Calliope mini?", comment: ""), name ?? defaultName),
             actions: [
                 StandardAlertAction(NSLocalizedString("Upload", comment: ""), handler: upload),
-                StandardAlertAction(NSLocalizedString("Cancel", comment: ""), handler: {}),
+                StandardAlertAction(NSLocalizedString("Cancel", comment: ""), role: .cancel, handler: {}),
             ]
         )
     }
@@ -123,7 +123,7 @@ extension AppAlert {
             ),
             actions: [
                 StandardAlertAction(NSLocalizedString("Futher Information", comment: ""), handler: goToInformation),
-                StandardAlertAction(NSLocalizedString("Cancel", comment: ""), handler: {}),
+                StandardAlertAction(NSLocalizedString("Cancel", comment: ""), role: .cancel, handler: {}),
             ],
             severity: .warning
         )
@@ -209,7 +209,7 @@ extension AppAlert {
                 defaultValue: defaultName,
                 actions: [
                     TextFieldAlertAction(NSLocalizedString("OK", comment: ""), handler: onRename),
-                    TextFieldAlertAction(NSLocalizedString("Cancel", comment: ""), handler: { _ in }),
+                    TextFieldAlertAction(NSLocalizedString("Cancel", comment: ""), role: .cancel, handler: { _ in }),
                 ]
             )
         )
@@ -257,7 +257,7 @@ extension AppAlert {
                 defaultValue: defaultName,
                 actions: [
                     TextFieldAlertAction(NSLocalizedString("OK", comment: ""), handler: onRename),
-                    TextFieldAlertAction(NSLocalizedString("Cancel", comment: ""), handler: { _ in }),
+                    TextFieldAlertAction(NSLocalizedString("Cancel", comment: ""), role: .cancel, handler: { _ in }),
                 ]
             )
         )
@@ -285,7 +285,7 @@ extension AppAlert {
                     TextFieldAlertAction(NSLocalizedString("OK", comment: ""), handler: { text in
                         onOk(text.isEmpty ? "CSV_Export" : text)
                     }),
-                    TextFieldAlertAction(NSLocalizedString("Cancel", comment: ""), handler: { _ in }),
+                    TextFieldAlertAction(NSLocalizedString("Cancel", comment: ""), role: .cancel, handler: { _ in }),
                 ]
             )
         )
@@ -314,7 +314,7 @@ extension AppAlert {
             message: NSLocalizedString("Bluetooth must be activated to send data to Calliope mini!", comment: "Bluetooth required message"),
             actions: [
                 StandardAlertAction(NSLocalizedString("Open Settings", comment: "Open Settings button"), handler: openSettings),
-                StandardAlertAction("OK", role: .cancel, handler: ok),
+                StandardAlertAction("Close", role: .cancel, handler: ok),
             ],
             severity: .warning
         )
@@ -329,7 +329,7 @@ extension AppAlert {
             ),
             actions: [
                 StandardAlertAction(NSLocalizedString("Open Settings", comment: ""), handler: openSettings),
-                StandardAlertAction("OK", role: .cancel, handler: {}),
+                StandardAlertAction("Close", role: .cancel, handler: {}),
             ],
             severity: .warning
         )
@@ -357,10 +357,10 @@ extension AppAlert {
                 hint: "Calliope Project",
                 defaultValue: nil,
                 actions: [
-                    TextFieldAlertAction(NSLocalizedString("OK", comment: ""), handler: { text in
+                    TextFieldAlertAction(NSLocalizedString("Create Project", comment: ""), handler: { text in
                         onCreate(text.isEmpty ? "Calliope Project" : text)
                     }),
-                    TextFieldAlertAction(NSLocalizedString("Cancel", comment: ""), handler: { _ in }),
+                    TextFieldAlertAction(NSLocalizedString("Cancel", comment: ""), role: .cancel, handler: { _ in }),
                 ]
             )
         )
