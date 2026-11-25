@@ -55,6 +55,7 @@ final class WBWebViewContainer: UIView, WKNavigationDelegate, WKUIDelegate {
     private var loadedURL: URL?
     private var urlObservation: NSKeyValueObservation?
 
+    private var webBluetoothBridge: WebBluetoothBridge?
     private var proxyMessageHandler: CalliopeProxyMessageHandler?
 
     init(bridge: WebAppBridge, alertPublisher: Alertable, connection: DeviceConnectionService, connectionPanel: ConnectionPanel) {
@@ -113,15 +114,16 @@ final class WBWebViewContainer: UIView, WKNavigationDelegate, WKUIDelegate {
 
     private func setupWebView() {
         let webView = WBWebView()
-        webView.wbMessageHandler = WBMessageHandler(webView: webView, connection: connection)
         webView.addNavigationDelegate(self)
         webView.uiDelegate = self
         webView.configuration.userContentController.add(wbLogger, name: "logger")
-        if bridge == .native {
-            // Must be registered before the first load: the page probes window.webkit.messageHandlers.calliope at script start.
-            let handler = CalliopeProxyMessageHandler(webView: webView, connection: connection, connectionPanel: connectionPanel)
-            proxyMessageHandler = handler
-            webView.configuration.userContentController.add(handler, name: CalliopeProxyMessageHandler.handlerName)
+        switch bridge {
+        case .webBluetooth:
+            installWebBluetoothBridge(in: webView)
+        case .native:
+            installNativeBridge(in: webView)
+        case .none:
+            break
         }
         // KVO on url also catches the Teachable Machine SPA's pushState navigations, which skip the navigation delegate.
         urlObservation = webView.observe(\.url) { [weak self] _, _ in
@@ -148,6 +150,19 @@ final class WBWebViewContainer: UIView, WKNavigationDelegate, WKUIDelegate {
             self.pendingURL = nil
             load(url: pendingURL)
         }
+    }
+
+    private func installWebBluetoothBridge(in webView: WBWebView) {
+        let bridge = WebBluetoothBridge(webView: webView, connection: connection)
+        bridge.install(in: webView)
+        webBluetoothBridge = bridge
+    }
+
+    private func installNativeBridge(in webView: WBWebView) {
+        // Must be registered before the first load: the page probes window.webkit.messageHandlers.calliope at script start.
+        let handler = CalliopeProxyMessageHandler(webView: webView, connection: connection, connectionPanel: connectionPanel)
+        webView.configuration.userContentController.add(handler, name: CalliopeProxyMessageHandler.handlerName)
+        proxyMessageHandler = handler
     }
 
     // MARK: - WKNavigationDelegate

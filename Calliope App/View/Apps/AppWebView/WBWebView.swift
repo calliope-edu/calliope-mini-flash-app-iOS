@@ -24,23 +24,6 @@ import UIKit
 import WebKit
 
 class WBWebView: WKWebView, WKNavigationDelegate {
-    let webBluetoothHandlerName = "bluetooth"
-    private var _wbMessageHandler: WBMessageHandler?
-    var wbMessageHandler: WBMessageHandler? {
-        get {
-            return self._wbMessageHandler
-        }
-        set(newWBMessageHandler) {
-            if self._wbMessageHandler != nil {
-                self.configuration.userContentController.removeScriptMessageHandler(forName: self.webBluetoothHandlerName)
-            }
-            self._wbMessageHandler = newWBMessageHandler
-            if let newMan = newWBMessageHandler {
-                self.configuration.userContentController.add(newMan, name: self.webBluetoothHandlerName)
-            }
-        }
-    }
-
     private var _navDelegates: [WKNavigationDelegate] = []
 
     // MARK: - Initializers
@@ -53,7 +36,6 @@ class WBWebView: WKWebView, WKNavigationDelegate {
     }
 
     convenience init() {
-        // load polyfill script
         let webCfg = WKWebViewConfiguration()
         let userController = WKUserContentController()
         webCfg.userContentController = userController
@@ -96,36 +78,6 @@ class WBWebView: WKWebView, WKNavigationDelegate {
             completionHandler: {}
         )
 
-        // Load js
-        for jsfilename in [
-            "WBUtils",
-            "WBEventTarget",
-            "WBBluetoothUUID",
-            "WBDevice",
-            "WBBluetoothRemoteGATTServer",
-            "WBBluetoothRemoteGATTService",
-            "WBBluetoothRemoteGATTCharacteristic",
-            "WBPolyfill",
-        ] {
-            guard let filePath = Bundle(for: WBWebView.self).path(forResource: jsfilename, ofType: "js") else {
-                NSLog("Failed to find polyfill \(jsfilename)")
-                return
-            }
-            var polyfillScriptContent: String
-            do {
-                polyfillScriptContent = try NSString(contentsOfFile: filePath, encoding: String.Encoding.utf8.rawValue) as String
-            } catch _ {
-                NSLog("Error loading polyfil")
-                return
-            }
-            let userScript = WKUserScript(
-                source: polyfillScriptContent,
-                injectionTime: .atDocumentStart,
-                forMainFrameOnly: false
-            )
-            userController.addUserScript(userScript)
-        }
-
         // WKWebView static config
         self.translatesAutoresizingMaskIntoConstraints = false
         self.allowsBackForwardNavigationGestures = true
@@ -146,7 +98,6 @@ class WBWebView: WKWebView, WKNavigationDelegate {
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        self._enableBluetoothInView()
         self._navDelegates.forEach { $0.webView?(webView, didFinish: navigation) }
     }
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
@@ -155,18 +106,6 @@ class WBWebView: WKWebView, WKNavigationDelegate {
 
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         self._navDelegates.forEach { $0.webView?(webView, didFailProvisionalNavigation: navigation, withError: error) }
-    }
-
-    // MARK: - Internal
-    open func _enableBluetoothInView() {
-        self.evaluateJavaScript(
-            "window.iOSNativeAPI.enableBluetooth()",
-            completionHandler: { _, error in
-                if let error_ = error {
-                    NSLog("Error enabling bluetooth in view: \(error_)")
-                }
-            }
-        )
     }
 
     public func threadsafeEvaluateJavaScript(_ javaScript: String) {
