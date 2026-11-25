@@ -572,10 +572,7 @@ final class EditorWebView: UIView {
 
         updateScrollEnabled()
         webView!.configuration.applicationNameForUserAgent = editor is BlocksMiniEditor ? "Scrub" : nil
-        webView!.customUserAgent =
-            traitCollection.userInterfaceIdiom == .pad && !(editor is BlocksMiniEditor)
-            ? "Mozilla/5.0 (iPad; CPU OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.1 Mobile/15E148 Safari/604.1"
-            : nil
+        webView!.customUserAgent = iPadEditorUserAgent
 
         var request = URLRequest(url: editor.url!)
         request.cachePolicy = .useProtocolCachePolicy
@@ -1016,11 +1013,18 @@ extension EditorWebView {
 
         LogNotify.log("Switching editor imperatives to handle non-scratch based editor")
         self.webView!.configuration.applicationNameForUserAgent = nil
-        self.webView!.customUserAgent =
-            traitCollection.userInterfaceIdiom == .pad
-            ? "Mozilla/5.0 (iPad; CPU OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.1 Mobile/15E148 Safari/604.1"
-            : nil
+        self.webView!.customUserAgent = iPadEditorUserAgent
         connection.resumeBluetooth()
+    }
+
+    // iPadOS 13+ reports itself as a desktop Mac, so the editors would show their desktop UI; Campus handles the real iPad user agent.
+    private var iPadEditorUserAgent: String? {
+        guard traitCollection.userInterfaceIdiom == .pad,
+              !(editor is BlocksMiniEditor),
+              !(editor is CampusBridgedEditor) else {
+            return nil
+        }
+        return "Mozilla/5.0 (iPad; CPU OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.1 Mobile/15E148 Safari/604.1"
     }
 }
 
