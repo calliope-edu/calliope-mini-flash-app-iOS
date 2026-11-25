@@ -118,9 +118,8 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate {
     }
     
     private let bluetoothQueue = DispatchQueue.global(qos: .userInitiated)
-    private lazy var centralManager: CBCentralManager = {
-        return CBCentralManager(delegate: nil, queue: bluetoothQueue)
-    }()
+    private let makeCentralManager: (DispatchQueue) -> CentralManaging
+    private lazy var centralManager: CentralManaging = makeCentralManager(bluetoothQueue)
     
     private var lastConnected: (UUID, String)? {
         get {
@@ -157,10 +156,12 @@ class CalliopeDiscovery: NSObject, CBCentralManagerDelegate {
     
     init(
         _ calliopeBuilder: @escaping (_ peripheral: CBPeripheral, _ name: String) -> DiscoveredBLEDevice,
-        context: CalliopeDiscoveryContext? = nil
+        context: CalliopeDiscoveryContext? = nil,
+        makeCentralManager: @escaping (DispatchQueue) -> CentralManaging = { CBCentralManager(delegate: nil, queue: $0) }
     ) {
         self.calliopeBuilder = calliopeBuilder
         self.context = context
+        self.makeCentralManager = makeCentralManager
         super.init()
         if centralManager.state == .poweredOn {
             attemptReconnect()
