@@ -86,12 +86,6 @@ private struct CalliopeAlertCard: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            if alert.severity != .none {
-                Rectangle()
-                    .fill(alert.severity.color)
-                    .frame(height: 8)
-            }
-
             VStack(spacing: 10) {
                 HStack(spacing: 8) {
                     if alert.severity != .none {
