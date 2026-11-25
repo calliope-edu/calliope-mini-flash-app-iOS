@@ -47,6 +47,7 @@ final class WBWebViewContainer: UIView, WKNavigationDelegate, WKUIDelegate {
     private let alertPublisher: Alertable
     private let connection: DeviceConnectionService
     private let connectionPanel: ConnectionPanel
+    private let onDownload: (_ filename: String, _ contents: Data) -> Void
 
     private var webView: WBWebView?
     private let loadingIndicator = UIActivityIndicatorView(style: .large)
@@ -54,15 +55,23 @@ final class WBWebViewContainer: UIView, WKNavigationDelegate, WKUIDelegate {
     private var pendingURL: URL?
     private var loadedURL: URL?
     private var urlObservation: NSKeyValueObservation?
+    private var downloadedFile: URL?
 
     private var webBluetoothBridge: WebBluetoothBridge?
     private var proxyMessageHandler: CalliopeProxyMessageHandler?
 
-    init(bridge: WebAppBridge, alertPublisher: Alertable, connection: DeviceConnectionService, connectionPanel: ConnectionPanel) {
+    init(
+        bridge: WebAppBridge,
+        alertPublisher: Alertable,
+        connection: DeviceConnectionService,
+        connectionPanel: ConnectionPanel,
+        onDownload: @escaping (_ filename: String, _ contents: Data) -> Void
+    ) {
         self.bridge = bridge
         self.alertPublisher = alertPublisher
         self.connection = connection
         self.connectionPanel = connectionPanel
+        self.onDownload = onDownload
         super.init(frame: .zero)
         backgroundColor = Styles.colorWhite
         loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
@@ -185,6 +194,10 @@ final class WBWebViewContainer: UIView, WKNavigationDelegate, WKUIDelegate {
         maybeShowErrorUI(error)
     }
 
+    func webView(_ webView: WKWebView, navigationAction: WKNavigationAction, didBecome download: WKDownload) {
+        download.delegate = self
+    }
+
     // MARK: - WKUIDelegate
 
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
@@ -192,6 +205,14 @@ final class WBWebViewContainer: UIView, WKNavigationDelegate, WKUIDelegate {
     }
 
     // MARK: - Private Helpers
+
+    private func removeDownloadedFile() {
+        guard let downloadedFile else {
+            return
+        }
+        try? FileManager.default.removeItem(at: downloadedFile.deletingLastPathComponent())
+        self.downloadedFile = nil
+    }
 
     private func updateScrollEnabled() {
         guard let webView, let url = webView.url, url.host == "teachablemachine.calliope.cc" else {
@@ -208,5 +229,43 @@ final class WBWebViewContainer: UIView, WKNavigationDelegate, WKUIDelegate {
             return
         }
         alertPublisher.alert = .webViewNavigationError(error: error)
+    }
+}
+
+// MARK: - WKDownloadDelegate
+
+extension WBWebViewContainer: WKDownloadDelegate {
+    func download(_ download: WKDownload, decideDestinationUsing response: URLResponse, suggestedFilename: String, completionHandler: @escaping (URL?) -> Void) {
+        removeDownloadedFile()
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent("webapp-download-\(UUID().uuidString)", isDirectory: true)
+        do {
+            try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        } catch {
+            LogNotify.log("Web app download: could not create temporary directory: \(error.localizedDescription)")
+            completionHandler(nil)
+            return
+        }
+        let file = directory.appendingPathComponent(suggestedFilename)
+        downloadedFile = file
+        completionHandler(file)
+    }
+
+    func downloadDidFinish(_ download: WKDownload) {
+        guard let downloadedFile else {
+            return
+        }
+        defer { removeDownloadedFile() }
+        do {
+            let contents = try Data(contentsOf: downloadedFile)
+            LogNotify.log("Web app download finished: \(downloadedFile.lastPathComponent) (\(contents.count) bytes)")
+            onDownload(downloadedFile.lastPathComponent, contents)
+        } catch {
+            LogNotify.log("Web app download: could not read \(downloadedFile.lastPathComponent): \(error.localizedDescription)")
+        }
+    }
+
+    func download(_ download: WKDownload, didFailWithError error: Error, resumeData: Data?) {
+        LogNotify.log("Web app download failed: \(error)")
+        removeDownloadedFile()
     }
 }

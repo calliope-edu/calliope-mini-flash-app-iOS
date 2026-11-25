@@ -108,6 +108,16 @@ class WBWebView: WKWebView, WKNavigationDelegate {
         self._navDelegates.forEach { $0.webView?(webView, didFailProvisionalNavigation: navigation, withError: error) }
     }
 
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        // WebKit doesn't flag in-memory blob: saves as downloads, so they would otherwise navigate nowhere.
+        let isBlobSave = navigationAction.request.url?.scheme == "blob" && navigationAction.targetFrame?.isMainFrame != false
+        decisionHandler(navigationAction.shouldPerformDownload || isBlobSave ? .download : .allow)
+    }
+
+    func webView(_ webView: WKWebView, navigationAction: WKNavigationAction, didBecome download: WKDownload) {
+        self._navDelegates.forEach { $0.webView?(webView, navigationAction: navigationAction, didBecome: download) }
+    }
+
     public func threadsafeEvaluateJavaScript(_ javaScript: String) {
         DispatchQueue.main.async {
             self.evaluateJavaScript(

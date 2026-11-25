@@ -82,12 +82,43 @@ struct AppsDetailView: View {
     let alertPublisher: Alertable
     @Environment(\.deviceConnection) private var connection
     @Environment(\.connectionPanel) private var connectionPanel
+    @State private var download: WebAppDownload?
 
     var body: some View {
-        RepresentableWBWebView(url: URL(string: url)!, bridge: bridge, alertPublisher: alertPublisher, connection: connection, connectionPanel: connectionPanel)
-            .background(DisableSwipeBackGestureView())
-            .subpageTitle(Text(verbatim: title))
+        RepresentableWBWebView(
+            url: URL(string: url)!,
+            bridge: bridge,
+            alertPublisher: alertPublisher,
+            connection: connection,
+            connectionPanel: connectionPanel,
+            onDownload: handleDownload
+        )
+        .background(DisableSwipeBackGestureView())
+        .subpageTitle(Text(verbatim: title))
+        .fileExporter(
+            isPresented: Binding(get: { download != nil }, set: { if !$0 { download = nil } }),
+            document: HexDocument(contents: download?.contents ?? Data()),
+            contentType: HexDocument.hexType,
+            defaultFilename: download?.filename
+        ) { result in
+            if case .failure(let error) = result {
+                LogNotify.log("Web app download: saving failed: \(error.localizedDescription)")
+            }
+        }
     }
+
+    private func handleDownload(filename: String, contents: Data) {
+        guard (filename as NSString).pathExtension.lowercased() == "hex" else {
+            LogNotify.log("Web app download: ignoring \(filename), only hex files can be saved")
+            return
+        }
+        download = WebAppDownload(filename: filename, contents: contents)
+    }
+}
+
+private struct WebAppDownload {
+    let filename: String
+    let contents: Data
 }
 
 struct AppItem: HasTileItem, Hashable {

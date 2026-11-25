@@ -16,9 +16,10 @@ struct RepresentableWBWebView: UIViewRepresentable {
     let alertPublisher: Alertable
     let connection: DeviceConnectionService
     let connectionPanel: ConnectionPanel
+    let onDownload: (_ filename: String, _ contents: Data) -> Void
 
     func makeUIView(context: Context) -> WBWebViewContainer {
-        WBWebViewContainer(bridge: bridge, alertPublisher: alertPublisher, connection: connection, connectionPanel: connectionPanel)
+        WBWebViewContainer(bridge: bridge, alertPublisher: alertPublisher, connection: connection, connectionPanel: connectionPanel, onDownload: onDownload)
     }
 
     func updateUIView(_ container: WBWebViewContainer, context: Context) {
