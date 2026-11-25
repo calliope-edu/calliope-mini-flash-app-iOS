@@ -43,6 +43,7 @@ final class WBWebViewContainer: UIView, WKNavigationDelegate, WKUIDelegate {
         }
     }
 
+    private let bridge: WebAppBridge
     private let alertPublisher: Alertable
     private let connection: DeviceConnectionService
     private let connectionPanel: ConnectionPanel
@@ -54,12 +55,10 @@ final class WBWebViewContainer: UIView, WKNavigationDelegate, WKUIDelegate {
     private var loadedURL: URL?
     private var urlObservation: NSKeyValueObservation?
 
-    /// Native-proxy bridge, non-nil only for pages that use the Campus API
-    /// (currently teachablemachine.calliope.cc). Every other page keeps the
-    /// Web Bluetooth shim that `WBWebView` enables on its own.
     private var proxyMessageHandler: CalliopeProxyMessageHandler?
 
-    init(alertPublisher: Alertable, connection: DeviceConnectionService, connectionPanel: ConnectionPanel) {
+    init(bridge: WebAppBridge, alertPublisher: Alertable, connection: DeviceConnectionService, connectionPanel: ConnectionPanel) {
+        self.bridge = bridge
         self.alertPublisher = alertPublisher
         self.connection = connection
         self.connectionPanel = connectionPanel
@@ -94,7 +93,6 @@ final class WBWebViewContainer: UIView, WKNavigationDelegate, WKUIDelegate {
             return
         }
         loadedURL = url
-        enableNativeBridgeIfNeeded(for: url, in: webView)
         webView.load(URLRequest(url: url))
     }
 
@@ -119,6 +117,12 @@ final class WBWebViewContainer: UIView, WKNavigationDelegate, WKUIDelegate {
         webView.addNavigationDelegate(self)
         webView.uiDelegate = self
         webView.configuration.userContentController.add(wbLogger, name: "logger")
+        if bridge == .native {
+            // Must be registered before the first load: the page probes window.webkit.messageHandlers.calliope at script start.
+            let handler = CalliopeProxyMessageHandler(webView: webView, connection: connection, connectionPanel: connectionPanel)
+            proxyMessageHandler = handler
+            webView.configuration.userContentController.add(handler, name: CalliopeProxyMessageHandler.handlerName)
+        }
         // KVO on url also catches the Teachable Machine SPA's pushState navigations, which skip the navigation delegate.
         urlObservation = webView.observe(\.url) { [weak self] _, _ in
             self?.updateScrollEnabled()
@@ -144,26 +148,6 @@ final class WBWebViewContainer: UIView, WKNavigationDelegate, WKUIDelegate {
             self.pendingURL = nil
             load(url: pendingURL)
         }
-    }
-
-    /// Registers the Campus native-proxy bridge for `url` if it's a Campus
-    /// page, instead of the Web Bluetooth shim. No-op once already enabled.
-    ///
-    /// Must run before `load`: the page probes
-    /// `window.webkit?.messageHandlers?.calliope` at script start, and a
-    /// handler added later would arrive too late. Uses
-    /// `webView.configuration.userContentController` — the LIVE controller —
-    /// since the webview already exists here, unlike a freshly created one.
-    private func enableNativeBridgeIfNeeded(for url: URL, in webView: WBWebView) {
-        guard proxyMessageHandler == nil, CalliopeProxyMessageHandler.supportsNativeBridge(url: url) else {
-            return
-        }
-
-        let handler = CalliopeProxyMessageHandler(webView: webView, connection: connection, connectionPanel: connectionPanel)
-        proxyMessageHandler = handler
-        webView.configuration.userContentController.add(
-            handler, name: CalliopeProxyMessageHandler.handlerName)
-        LogNotify.log("Native bridge enabled for \(url.host ?? "unknown host")")
     }
 
     // MARK: - WKNavigationDelegate

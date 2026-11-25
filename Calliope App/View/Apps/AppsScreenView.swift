@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 
 enum AppsScreenRoute: Hashable {
-    case appDetail(url: String, title: String)
+    case appDetail(url: String, title: String, bridge: WebAppBridge)
     case info(url: String)
     case sensordata
     case sensordataRoute(ProjectAndSensorsRoute)
@@ -39,8 +39,8 @@ struct AppsScreenView: View {
         switch app.destination {
         case .website(let url):
             return .info(url: url)
-        case .webApp(let url):
-            return .appDetail(url: url, title: app.tileItem.title)
+        case .webApp(let url, let bridge):
+            return .appDetail(url: url, title: app.tileItem.title, bridge: bridge)
         case .sensordata:
             return .sensordata
         }
@@ -49,8 +49,8 @@ struct AppsScreenView: View {
     @ViewBuilder
     func switchRoutes(route: AppsScreenRoute) -> some View {
         switch route {
-        case .appDetail(let url, let title):
-            AppsDetailView(url: url, title: title, alertPublisher: viewModel)
+        case .appDetail(let url, let title, let bridge):
+            AppsDetailView(url: url, title: title, bridge: bridge, alertPublisher: viewModel)
         case .info(let url):
             WebView(url: URL(string: url))
                 .subpageTitle(Text("Apps Info"))
@@ -78,12 +78,13 @@ private struct AppsSensordataNavigator: SensordataNavigator {
 struct AppsDetailView: View {
     let url: String
     let title: String
+    let bridge: WebAppBridge
     let alertPublisher: Alertable
     @Environment(\.deviceConnection) private var connection
     @Environment(\.connectionPanel) private var connectionPanel
 
     var body: some View {
-        RepresentableWBWebView(url: URL(string: url)!, alertPublisher: alertPublisher, connection: connection, connectionPanel: connectionPanel)
+        RepresentableWBWebView(url: URL(string: url)!, bridge: bridge, alertPublisher: alertPublisher, connection: connection, connectionPanel: connectionPanel)
             .background(DisableSwipeBackGestureView())
             .subpageTitle(Text(verbatim: title))
     }
@@ -96,6 +97,12 @@ struct AppItem: HasTileItem, Hashable {
 
 enum AppDestination: Hashable {
     case website(url: String)
-    case webApp(url: String)
+    case webApp(url: String, bridge: WebAppBridge)
     case sensordata
+}
+
+enum WebAppBridge: Hashable {
+    case none
+    case webBluetooth
+    case native
 }

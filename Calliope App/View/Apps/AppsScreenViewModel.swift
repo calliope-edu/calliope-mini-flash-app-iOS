@@ -13,11 +13,10 @@ class AppsScreenViewModel: ObservableObject, Alertable {
     let infoItem = AppItem(tileItem: TileItem(title: "INFO", imageSource: ImageSource.local("info"), color: Color("calliope-pink"), textColor: .white), destination: .website(url: "https://calliope.cc/programmieren/mobil/ble-anwendungen"))
     @Published var tileData = TileData<AppItem>(rightItems: [
         AppItem(tileItem: TileItem(title: NSLocalizedString("LIVE SENSORDATA AND DATALOGGER", comment: ""), imageSource: ImageSource.local("sensordata"), color: Color("calliope-turqoise"), textColor: .white), destination: .sensordata),
-        AppItem(tileItem: TileItem(title: "ROBOTER MIT GESICHTSERKENNUNG STEUERN", imageSource: ImageSource.local("facerobot"), color: Color("calliope-lilablau"), textColor: .white), destination: .webApp(url: "https://go.calliope.cc/facerobot?mobile=true")),
-//        AppItem(tileItem: TileItem(title: "SPRACHROBOTER", imageSource: ImageSource.local("speak"), color: Color("calliope-orange"), textColor: .white), destination: .webApp(url: "https://cardboard.lofirobot.com/apps/talking-robots")),
-        AppItem(tileItem: TileItem(title: "STEUERUNG PER COMPUTER", imageSource: ImageSource.local("control"), color: Color("calliope-turqoise"), textColor: .white), destination: .webApp(url: "https://go.calliope.cc/apps/control/index.html?mobile=true")),
-        AppItem(tileItem: TileItem(title: "OBJEKTERKENNUNG MIT KÜNSTLICHER INTELLIGENZ", imageSource: ImageSource.local("teachablemachine"), color: Color("calliope-darkgreen"), textColor: .white), destination: .webApp(url: "https://teachablemachine.calliope.cc")),
-        AppItem(tileItem: TileItem(title: "BEWEGUNGSERKENNUNG MIT KÜNSTLICHER INTELLIGENZ", imageSource: ImageSource.local("teachablemachine"), color: Color("calliope-turqoise"), textColor: .white), destination: .webApp(url: "https://ki-training-dev.calliope.cc")),
+        AppItem(tileItem: TileItem(title: "ROBOTER MIT GESICHTSERKENNUNG STEUERN", imageSource: ImageSource.local("facerobot"), color: Color("calliope-lilablau"), textColor: .white), destination: .webApp(url: "https://go.calliope.cc/facerobot?mobile=true", bridge: .webBluetooth)),
+        AppItem(tileItem: TileItem(title: "STEUERUNG PER COMPUTER", imageSource: ImageSource.local("control"), color: Color("calliope-turqoise"), textColor: .white), destination: .webApp(url: "https://go.calliope.cc/apps/control/index.html?mobile=true", bridge: .webBluetooth)),
+        AppItem(tileItem: TileItem(title: "OBJEKTERKENNUNG MIT KÜNSTLICHER INTELLIGENZ", imageSource: ImageSource.local("teachablemachine"), color: Color("calliope-darkgreen"), textColor: .white), destination: .webApp(url: "https://teachablemachine.calliope.cc", bridge: .native)),
+        AppItem(tileItem: TileItem(title: "BEWEGUNGSERKENNUNG MIT KÜNSTLICHER INTELLIGENZ", imageSource: ImageSource.local("teachablemachine"), color: Color("calliope-turqoise"), textColor: .white), destination: .webApp(url: "https://ki-training-dev.calliope.cc", bridge: .native)),
     ])
 
     @Published var alert: AppAlert? = nil

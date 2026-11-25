@@ -12,12 +12,13 @@ import WebKit
 
 struct RepresentableWBWebView: UIViewRepresentable {
     let url: URL
+    let bridge: WebAppBridge
     let alertPublisher: Alertable
     let connection: DeviceConnectionService
     let connectionPanel: ConnectionPanel
 
     func makeUIView(context: Context) -> WBWebViewContainer {
-        WBWebViewContainer(alertPublisher: alertPublisher, connection: connection, connectionPanel: connectionPanel)
+        WBWebViewContainer(bridge: bridge, alertPublisher: alertPublisher, connection: connection, connectionPanel: connectionPanel)
     }
 
     func updateUIView(_ container: WBWebViewContainer, context: Context) {

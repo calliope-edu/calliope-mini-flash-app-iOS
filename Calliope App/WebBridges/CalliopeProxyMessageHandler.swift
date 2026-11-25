@@ -26,15 +26,6 @@ final class CalliopeProxyMessageHandler: NSObject, WKScriptMessageHandler {
 
     static let handlerName = "calliope"
 
-    /// Whether a page may talk to the app through this bridge.
-    ///
-    /// Uses the very same allowlist that gates the bridge's own calls, so
-    /// enabling another page means adding its host to `CampusUrls.allowedHosts`
-    /// and nothing else — the two can never drift apart.
-    static func supportsNativeBridge(url: URL?) -> Bool {
-        CampusUrls.isCampusUrl(url)
-    }
-
     private weak var webView: WKWebView?
     private let connection: DeviceConnectionService
     private let connectionPanel: ConnectionPanel
@@ -1301,11 +1292,5 @@ private enum CampusUrls {
     static func requiresFullDfu(_ url: URL?) -> Bool {
         guard let host = url?.host?.lowercased() else { return false }
         return fullDfuOnlyHosts.contains { host == $0 || host.hasSuffix(".\($0)") }
-    }
-
-    /// Convenience for gating a full URL (e.g. the configured campus URL).
-    static func isCampusUrl(_ url: URL?) -> Bool {
-        guard let url = url else { return false }
-        return isAllowed(scheme: url.scheme, host: url.host)
     }
 }
