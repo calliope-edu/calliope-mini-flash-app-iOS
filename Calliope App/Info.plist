@@ -66,13 +66,13 @@
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>To connect to the calliope, this app uses bluetooth!</string>
 	<key>NSCameraUsageDescription</key>
-	<string>To read a QR Code this app uses the camera. </string>
+	<string>To read a QR Code and for some of the apps functionality this app uses the camera. </string>
 	<key>NSLocationUsageDescription</key>
 	<string>To record location of specific sensor value, this apps needs to have access to the current location!</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>To record location connected to a sensor value, this apps needs to have access to the current location!</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>To use Open Roberta, this app uses the Microphone</string>
+	<string>To use Open Roberta or record sounds in the Blocks editor in Campus, this app uses the Microphone</string>
 	<key>NSUbiquitousContainers</key>
 	<dict>
 		<key>iCloud.cc.calliope.ios.flash</key>
