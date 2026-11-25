@@ -22,7 +22,7 @@
 import UIKit
 import WebKit
 
-final class WBWebViewContainer: UIView, WKNavigationDelegate, WKUIDelegate {
+final class WBWebViewContainer: UIView, WKNavigationDelegate, WKUIDelegate, WKDownloadDelegate {
     private final class WBLogger: NSObject, WKScriptMessageHandler {
         func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
             switch message.body {
@@ -46,6 +46,7 @@ final class WBWebViewContainer: UIView, WKNavigationDelegate, WKUIDelegate {
     private let alertPublisher: Alertable
     private let connection: DeviceConnectionService
     private let connectionPanel: ConnectionPanel
+    private let onDownloadFinished: (URL) -> Void
 
     private var webView: WBWebView?
     private let loadingIndicator = UIActivityIndicatorView(style: .large)
@@ -53,16 +54,18 @@ final class WBWebViewContainer: UIView, WKNavigationDelegate, WKUIDelegate {
     private var pendingURL: URL?
     private var loadedURL: URL?
     private var urlObservation: NSKeyValueObservation?
+    private var downloadedFileURL: URL?
 
     /// Native-proxy bridge, non-nil only for pages that use the Campus API
     /// (currently teachablemachine.calliope.cc). Every other page keeps the
     /// Web Bluetooth shim that `WBWebView` enables on its own.
     private var proxyMessageHandler: CalliopeProxyMessageHandler?
 
-    init(alertPublisher: Alertable, connection: DeviceConnectionService, connectionPanel: ConnectionPanel) {
+    init(alertPublisher: Alertable, connection: DeviceConnectionService, connectionPanel: ConnectionPanel, onDownloadFinished: @escaping (URL) -> Void) {
         self.alertPublisher = alertPublisher
         self.connection = connection
         self.connectionPanel = connectionPanel
+        self.onDownloadFinished = onDownloadFinished
         super.init(frame: .zero)
         backgroundColor = Styles.colorWhite
         loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
@@ -184,6 +187,32 @@ final class WBWebViewContainer: UIView, WKNavigationDelegate, WKUIDelegate {
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         loadingIndicator.stopAnimating()
         maybeShowErrorUI(error)
+    }
+
+    func webView(_ webView: WKWebView, navigationAction: WKNavigationAction, didBecome download: WKDownload) {
+        download.delegate = self
+    }
+
+    // MARK: - WKDownloadDelegate
+
+    func download(_ download: WKDownload, decideDestinationUsing response: URLResponse, suggestedFilename: String, completionHandler: @escaping (URL?) -> Void) {
+        let target = FileManager.default.temporaryDirectory.appendingPathComponent(suggestedFilename)
+        try? FileManager.default.removeItem(at: target)
+        downloadedFileURL = target
+        completionHandler(target)
+    }
+
+    func downloadDidFinish(_ download: WKDownload) {
+        guard let url = downloadedFileURL else {
+            return
+        }
+        downloadedFileURL = nil
+        onDownloadFinished(url)
+    }
+
+    func download(_ download: WKDownload, didFailWithError error: Error, resumeData: Data?) {
+        LogNotify.log("Download failed: \(error)")
+        downloadedFileURL = nil
     }
 
     // MARK: - WKUIDelegate

@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftUI
+import UniformTypeIdentifiers
 
 enum AppsScreenRoute: Hashable {
     case appDetail(url: String, title: String)
@@ -81,11 +82,45 @@ struct AppsDetailView: View {
     let alertPublisher: Alertable
     @Environment(\.deviceConnection) private var connection
     @Environment(\.connectionPanel) private var connectionPanel
+    @State private var downloadedFile: URL?
 
     var body: some View {
-        RepresentableWBWebView(url: URL(string: url)!, alertPublisher: alertPublisher, connection: connection, connectionPanel: connectionPanel)
-            .background(DisableSwipeBackGestureView())
-            .subpageTitle(Text(verbatim: title))
+        RepresentableWBWebView(url: URL(string: url)!, alertPublisher: alertPublisher, connection: connection, connectionPanel: connectionPanel) { file in
+            downloadedFile = file
+        }
+        .background(DisableSwipeBackGestureView())
+        .subpageTitle(Text(verbatim: title))
+        .fileExporter(
+            isPresented: Binding(get: { downloadedFile != nil }, set: { if !$0 { downloadedFile = nil } }),
+            document: DownloadedFileDocument(url: downloadedFile),
+            contentType: downloadedFile.flatMap { UTType(filenameExtension: $0.pathExtension) } ?? .data,
+            defaultFilename: downloadedFile?.lastPathComponent
+        ) { result in
+            if case .failure(let error) = result {
+                LogNotify.log("Saving downloaded file failed: \(error)")
+            }
+        }
+    }
+}
+
+private struct DownloadedFileDocument: FileDocument {
+    static var readableContentTypes: [UTType] { [.data] }
+
+    let url: URL?
+
+    init(url: URL?) {
+        self.url = url
+    }
+
+    init(configuration: ReadConfiguration) throws {
+        url = nil
+    }
+
+    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
+        guard let url else {
+            throw CocoaError(.fileNoSuchFile)
+        }
+        return try FileWrapper(url: url, options: .immediate)
     }
 }
 

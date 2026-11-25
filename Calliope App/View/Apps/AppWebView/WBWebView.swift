@@ -157,6 +157,19 @@ class WBWebView: WKWebView, WKNavigationDelegate {
         self._navDelegates.forEach { $0.webView?(webView, didFailProvisionalNavigation: navigation, withError: error) }
     }
 
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        // WebKit doesn't flag every blob: save as a download, and allowing it silently drops the file.
+        if navigationAction.shouldPerformDownload || navigationAction.request.url?.scheme == "blob" {
+            decisionHandler(.download)
+        } else {
+            decisionHandler(.allow)
+        }
+    }
+
+    func webView(_ webView: WKWebView, navigationAction: WKNavigationAction, didBecome download: WKDownload) {
+        self._navDelegates.forEach { $0.webView?(webView, navigationAction: navigationAction, didBecome: download) }
+    }
+
     // MARK: - Internal
     open func _enableBluetoothInView() {
         self.evaluateJavaScript(
